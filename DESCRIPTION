@@ -17,4 +17,5 @@ Imports:
     ggforestplot,
     ggpattern,
     ggplot2,
-    ggthemes
+    ggthemes,
+    gridExtra
