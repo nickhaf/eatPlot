@@ -1,3 +1,6 @@
+library(readxl)
+library(tidyverse)
+
 bt21_Trend <- read_excel("Q:/BT2021/BT/60_Bericht/04_Mittelwerte/adjustierte Mittelwerte/Ergebnisse/02_mitTrend_z_standard.xlsx")
 
 bt21_Trend_years <- bt21_Trend %>%
@@ -17,16 +20,18 @@ bt21_Trend_years <- bt21_Trend %>%
   separate(parameter, c("parameter", "year")) %>%
   spread(parameter, estimate) %>%
   select(kb, adjust, TR_BUNDESLAND, year, est, p, se )
-test <- bt21_Trend_years %>%
-  mutate(year = as.factor(year))
 
+plot_line(bt21_Trend_years)
+
+
+test <- bt21_Trend_years %>%
+  mutate(year = as.factor(year)) %>%
+  filter(kb == "GL", TR_BUNDESLAND == "Berlin")
 
 levels(test$year) <- 1:3
 levels(test$year) <- as.numeric(levels(test$year))
 test$year <- as.numeric(test$year)
 
-test %>%
-  filter(kb == "GL", TR_BUNDESLAND == "Berlin")
-
+plot_line2(test)
 
 # statt grid.arrange: https://stackoverflow.com/questions/34838870/grid-arrange-from-gridextras-exiting-with-only-grobs-allowed-in-glist-afte
