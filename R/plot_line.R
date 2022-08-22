@@ -24,3 +24,5 @@ plot_line2 <- function(my_data){
   ggplot2::facet_wrap(~ TR_BUNDESLAND, ncol = 4) +
   colour_iqb
 }
+
+

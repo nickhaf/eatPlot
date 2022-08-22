@@ -1,4 +1,4 @@
-library(readxl)
+ibrary(readxl)
 library(tidyverse)
 
 bt21_Trend <- read_excel("Q:/BT2021/BT/60_Bericht/04_Mittelwerte/adjustierte Mittelwerte/Ergebnisse/02_mitTrend_z_standard.xlsx")
@@ -13,25 +13,32 @@ bt21_Trend_years <- bt21_Trend %>%
          # se_trend_2011.vs.2016_mean,
          # se_trend_2011.vs.2021_mean,
          # se_trend_2016.vs.2021_mean,
-         # p_trend_2011.vs.2016_mean,
-         # p_trend_2011.vs.2021_mean,
-         # p_trend_2016.vs.2021_mean)
+         #p_trend_2011.vs.2016_mean,
+          #p_trend_2011.vs.2021_mean,
+          #p_trend_2016.vs.2021_mean)
   ) %>%
   separate(parameter, c("parameter", "year")) %>%
   spread(parameter, estimate) %>%
-  select(kb, adjust, TR_BUNDESLAND, year, est, p, se )
-
-plot_line(bt21_Trend_years)
-
-
-test <- bt21_Trend_years %>%
-  mutate(year = as.factor(year)) %>%
-  filter(kb == "GL", TR_BUNDESLAND == "Berlin")
-
-levels(test$year) <- 1:3
-levels(test$year) <- as.numeric(levels(test$year))
-test$year <- as.numeric(test$year)
-
-plot_line2(test)
+  filter(kb == "GL", TR_BUNDESLAND == "Berlin") %>%
+  #select(kb, adjust, TR_BUNDESLAND, year, est, p, se )
+  mutate(year = as.numeric(year)) %>%
+  mutate(sig = ifelse(p < 0.05, "Sig", "noSig"))
 
 # statt grid.arrange: https://stackoverflow.com/questions/34838870/grid-arrange-from-gridextras-exiting-with-only-grobs-allowed-in-glist-afte
+
+p1 <- plot_points(bt21_Trend_years)
+
+bt21_Trend_sig <- bt21_Trend %>%
+  filter(kb == "GL", TR_BUNDESLAND == "Berlin") %>%
+  mutate(sig_2011.vs.2016 = ifelse(p_trend_2011.vs.2016_mean < 0.05, "Sig", "noSig")) %>%
+  mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021_mean < 0.05, "Sig", "noSig"))
+
+p1 +
+  connect_points(bt21_Trend_sig, "2011", "2016") +
+  connect_points(bt21_Trend_sig, "2016", "2021") +
+  linetype_iqb
+
+
+
+
+
