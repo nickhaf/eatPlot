@@ -24,3 +24,11 @@ fill_iqb_adj_sig <- ggplot2::scale_fill_manual(
 
 colour_iqb <- ggplot2::scale_colour_manual(values = c("ohneAdj" = rgb(147, 205, 221, maxColorValue = 255),
                                              "mitAdj" = "black"))
+
+linetype_iqb <- ggplot2::scale_linetype_manual(values=c("Sig" = 1,
+                                                        "noSig" = 2)
+                                               )
+
+pointshape_iqb <- ggplot2::scale_shape_manual(values=c("Sig" = 1,
+                                                        "noSig" = 2)
+)
