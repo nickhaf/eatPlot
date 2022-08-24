@@ -4,4 +4,4 @@ plot_points <- function(my_data){
     theme_line_iqb() +
     colour_iqb +
     scale_x_continuous(position = "top") # ins theme mit rein?
-}
+    }

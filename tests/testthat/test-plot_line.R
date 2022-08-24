@@ -47,7 +47,9 @@ p2 <- p1 +
   connect_points(bt21_Trend_sig, "2016", "2021") +
   linetype_iqb
 
-plot_list[[i]] <- p2
+p3 <- draw_brace(my_plot = p2, dat_long = dat_long)
+
+plot_list[[i]] <- p3
 
 }
 
