@@ -28,6 +28,8 @@ bt21_Trend_years <- bt21_Trend %>%
 
 
 plot_list <- list()
+min_est <- min(bt21_Trend_years$est)
+range_est <- range(bt21_Trend_years$est)
 
 for(i in unique(bt21_Trend$TR_BUNDESLAND)){
 
@@ -47,7 +49,11 @@ p2 <- p1 +
   connect_points(bt21_Trend_sig, "2016", "2021") +
   linetype_iqb
 
-p3 <- draw_brace(my_plot = p2, dat_long = dat_long)
+p3 <- draw_brace(my_plot = p2, dat_long = dat_long, range_est = range_est) +
+  labs(title = i) +
+  theme(
+    plot.title = element_text(size = 10, hjust = 0.5)
+  )
 
 plot_list[[i]] <- p3
 
@@ -56,7 +62,4 @@ plot_list[[i]] <- p3
 n <- length(plot_list)
 nCol <- floor(sqrt(n))
 do.call(eval(parse(text = "gridExtra::grid.arrange")), c(plot_list, ncol = nCol))
-
-
-
 
