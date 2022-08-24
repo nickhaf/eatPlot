@@ -1,6 +1,6 @@
 draw_brace <- function(dat_long){
 brace_res <- ggbrace::geom_brace(
-  aes(
+    aes(
       x = c(2016, 2021),
       y = c(min(dat_long$est) - 15, min(dat_long$est) - 12),
       label = "my_label \n my_label2"),
@@ -19,7 +19,7 @@ brace_res <- ggbrace::geom_brace(
     rotate = 180,
     size = 0.8,
     npoints = 200) +
-    coord_cartesian(ylim=range(dat_long$est), clip = "off")
+    coord_cartesian(ylim=range(dat_long$est), clip = "off") +
     theme(plot.margin = unit(c(0, 0, 0.40, 0), units="npc")) +
   NULL
 
