@@ -47,16 +47,43 @@ p1 <- plot_points(dat_long)
 p2 <- p1 +
   connect_points(bt21_Trend_sig, "2011", "2016") +
   connect_points(bt21_Trend_sig, "2016", "2021") +
-  linetype_iqb
+  linetype_iqb +
+    labs(title = i) +
+    theme(
+      plot.title = element_text(size = 10, hjust = 0.5)
+    ) +
 
-p3 <- draw_brace(my_plot = p2, dat_long = dat_long, range_est = range_est) +
-  labs(title = i) +
-  theme(
-    plot.title = element_text(size = 10, hjust = 0.5)
-  )
+## Folgendes in eigene Funktion umwandeln
+  ggbrace::geom_brace(
+    mapping = aes(
+      x = c(2016, 2021),
+      y = c(range_est[1] -62, range_est[1] - 92
+      ),
+      label = "my_label \n my_label2"),
+    inherit.data = F,
+    rotate = 180,
+    size = 0.8,
+    npoints = 200,
+    labelsize = 2) +
+ggbrace::geom_brace(
+  mapping = aes(
+    x = c(2011, 2021),
+    y = c(range_est[1] - 60, range_est[1] - 30),
+    label = "my_label"
+  ),
+  mid = 0.25,
+  inherit.data = F,
+  rotate = 180,
+  size = 0.8, npoints = 200) +
+coord_cartesian(ylim = c(range_est[1] - 30, range_est[2] + 30), clip = "off") + # limits without droping observations
+theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
+NULL
 
-plot_list[[i]] <- p3
 
+# p3 <- draw_brace(my_plot = p2, dat_long = dat_long, range_est = range_est) +
+
+
+plot_list[[i]] <- p2 # p3
 }
 
 n <- length(plot_list)

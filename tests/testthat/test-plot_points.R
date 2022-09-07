@@ -26,32 +26,3 @@ bt21_Trend_years <- bt21_Trend %>%
 
 
 p1 <- plot_points(bt21_Trend_years)
-p1 +
-  draw_brace(dat_long = bt21_Trend_years)
-
-  ggbrace::geom_brace(aes(
-                          x = c(2016, 2021),
-                          y = c(min(bt21_Trend_years$est) - 15, min(bt21_Trend_years$est) - 12),
-                          label = "my_label \n my_label2"
-                          ),
-                      inherit.data = F,
-                      rotate = 180,
-                      size = 0.8,
-                      npoints = 200,
-                      labelsize = 3) +
-  ggbrace::geom_brace(aes(
-                          x = c(2011, 2021),
-                          y = c(min(bt21_Trend_years$est) - 10, min(bt21_Trend_years$est) - 7),
-                          label = "my_label"
-                          ),
-                      mid = 0.25,
-                      inherit.data = F,
-                      rotate = 180,
-                      size = 0.8,
-                      npoints = 200) +
-  coord_cartesian(ylim=range(bt21_Trend_years$est), clip = "off") + #for the range just use the data for the respective axis
-  theme(plot.margin = unit(c(0, 0, 0.40, 0), units="npc"))
-  #ggbrace::geom_brace(aes(c(2,3), y = c(410, 425)), inherit.data = F, rotate = 180) +
-  #ggbrace::geom_brace(aes(c(1,3), y = c(430, 445)), mid = 0.25, inherit.data = F, rotate = 180) +
-  NULL
-

@@ -13,5 +13,11 @@ dat_long <- bt21_Trend_years %>%
 
 p1 <- plot_points(dat_long)
 
+range_est <- range(dat_long$est)
 
-draw_brace(dat_long = dat_long, my_plot = p1)
+p1 +
+draw_brace_small(dat_long = dat_long, range_est = range_est) +
+draw_brace_large(dat_long  = dat_long, range_est = range_est) +
+coord_cartesian(ylim = c(range_est[1] - 30, range_est[2] + 30), clip = "off") + # limits without droping observations
+theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
+NULL
