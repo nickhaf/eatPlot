@@ -10,7 +10,8 @@ theme_line_iqb <- function(){
       panel.grid.minor.x = element_blank(),
       legend.position = "none",
       axis.title.x = element_blank(),
-      axis.text.y = element_blank()
+      axis.text.y = element_blank(),
+      axis.title.y = element_blank()
 
     )
 }
