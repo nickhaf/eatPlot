@@ -30,9 +30,9 @@ bt21_Trend_years <- bt21_Trend %>%
 plot_list <- list()
 min_est <- min(bt21_Trend_years$est)
 range_est <- range(bt21_Trend_years$est)
+position <- 1
 
 for(i in unique(bt21_Trend$TR_BUNDESLAND)){
-
 dat_long <- bt21_Trend_years %>%
   filter(TR_BUNDESLAND == i)
 
@@ -56,13 +56,25 @@ NULL
 
 
 p3 <- p2 +
+  coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # limits without droping observations #, range_est[2] + 30
   draw_brace_small(dat_long = dat_long, range_est = range_est) +
   draw_brace_large(dat_long  = dat_long, range_est = range_est) +
-  coord_cartesian(ylim = c(range_est[1] - 30, range_est[2] + 30), clip = "off") + # limits without droping observations
   theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
   NULL
 
+if((position - 1) %% 4 == 0){
+p3 <- p3 +
+  theme(axis.text.y = element_text(),
+        axis.line.y = element_line(),
+        axis.ticks.y = element_line()
+        ) +
+  scale_y_continuous(breaks = seq(from = round(range_est[1]-10, -1), to = round(range_est[2], -1), by = 20))
+}
+
 plot_list[[i]] <- p3
+
+position <-  position + 1
+
 }
 
 n <- length(plot_list)
