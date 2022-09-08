@@ -24,5 +24,4 @@ bt21_Trend_years <- bt21_Trend %>%
   mutate(year = as.numeric(year)) %>%
   mutate(sig = ifelse(p < 0.05, "Sig", "noSig"))
 
-
-p1 <- plot_points(bt21_Trend_years)
+plot_points(bt21_Trend_years)
