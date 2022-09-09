@@ -24,9 +24,6 @@ bt21_Trend_years <- bt21_Trend %>%
   mutate(year = as.numeric(year)) %>%
   mutate(sig = ifelse(p < 0.05, "Sig", "noSig"))
 
-# statt grid.arrange: https://stackoverflow.com/questions/34838870/grid-arrange-from-gridextras-exiting-with-only-grobs-allowed-in-glist-afte
-
-
 plot_list <- list()
 min_est <- min(bt21_Trend_years$est)
 range_est <- range(bt21_Trend_years$est)
@@ -54,11 +51,10 @@ p2 <- p1 +
     ) +
 NULL
 
-
 p3 <- p2 +
   coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # necessary, so the brace can be drawn inside the plot
   draw_brace_small(dat_long = dat_long, range_est = range_est) +
-  draw_brace_large(dat_long  = dat_long, range_est = range_est) +
+  #draw_brace_large(dat_long  = dat_long, range_est = range_est) +
   theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
   NULL
 
@@ -81,3 +77,5 @@ n <- length(plot_list)
 nCol <- floor(sqrt(n))
 do.call(eval(parse(text = "gridExtra::grid.arrange")), c(plot_list, ncol = nCol))
 
+
+## Soziale Disparitäten lieber nehmen
