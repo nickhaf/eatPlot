@@ -1,9 +1,11 @@
 library(tidyverse)
 
 bt21 <- read_csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
-bt21_long <- bt21
-colnames(bt21_long) <- gsub("sig", "p", colnames(bt21_long))
-bt21_long <- bt21_long %>%
+colnames(bt21) <- gsub("sig", "p", colnames(bt21))
+
+# P-Werte aus BL vs. Whole group eintragen bei p Werten der Zeilen die dann genommen werden
+
+bt21_long <- bt21 %>%
   #filter(group %in% unique(bt21$TR_BUNDESLAND)[-1]) %>%
   filter(parameter == "mean") %>%
   filter(kb == "GL") %>%
@@ -35,8 +37,14 @@ for(i in unique(bt21$TR_BUNDESLAND)){
   dat_long <- bt21_long %>%
     filter(TR_BUNDESLAND == i)
 
-  bt21_sig <- bt21_long %>%
-    filter(kb == "GL", TR_BUNDESLAND == i) %>%
+  bt21_sig <- bt21 %>%
+    filter(kb == "GL",
+           TR_BUNDESLAND == i,
+           parameter == "mean",
+           kb == "GL",
+           is.na(comparison),
+           !is.na(KBuecher_imp3),
+           !(group %in% c("0","1"))) %>%
     mutate(sig_2011.vs.2016 = ifelse(p_trend_2011.vs.2016 < 0.05, "Sig", "noSig")) %>%
     mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig"))
 

@@ -25,4 +25,5 @@ bt21_Trend_years <- bt21_Trend %>%
   mutate(year = as.numeric(year)) %>%
   mutate(sig = ifelse(p < 0.05, "Sig", "noSig"))
 
+
 plot_points(bt21_Trend_years, grouping_var = "group_comparisons")
