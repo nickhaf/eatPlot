@@ -54,7 +54,7 @@ NULL
 p3 <- p2 +
   coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # necessary, so the brace can be drawn inside the plot
   draw_brace_small(dat_long = dat_long, range_est = range_est) +
-  #draw_brace_large(dat_long  = dat_long, range_est = range_est) +
+  draw_brace_large(dat_long  = dat_long, range_est = range_est) +
   theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
   NULL
 
