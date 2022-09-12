@@ -3,12 +3,22 @@ library(tidyverse)
 bt21 <- read_csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
 colnames(bt21) <- gsub("sig", "p", colnames(bt21))
 
-# P-Werte aus BL vs. Whole group eintragen bei p Werten der Zeilen die dann genommen werden
+bt21[bt21$group %in% unique(bt21$TR_BUNDESLAND)[-1], ]
 
-bt21_long <- bt21 %>%
+bt21 <- bt21 %>%
   #filter(group %in% unique(bt21$TR_BUNDESLAND)[-1]) %>%
   filter(parameter == "mean") %>%
-  filter(kb == "GL") %>%
+  filter(kb == "GL")
+
+
+for(i in unique(bt21$TR_BUNDESLAND)[-1]){
+  for(j in c("2011", "2016", "2021")){
+  bt21[grepl(i, bt21$group),"TR_BUNDESLAND"] <- i
+  bt21[grepl(paste0(i, "_0"), bt21$group), paste0("p_", j)] <- bt21[grepl(paste0(i, "_0", ".vs.wholeGroup"), bt21$group), paste0("p_",j )]
+}
+}
+
+bt21_long <- bt21 %>%
   filter(is.na(comparison)) %>%
   filter(!is.na(KBuecher_imp3)) %>%
   filter(!(group %in% c("0","1"))) %>%
@@ -49,9 +59,22 @@ for(i in unique(bt21$TR_BUNDESLAND)){
     mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig"))
 
 
+
+####### Ab hier
   p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3")
 
-  p2 <- p1 +
+   p1 +
+     geom_segment(data = bt21_sig,
+                  aes(
+                    x = rep(as.numeric(2011), nrow(bt21_sig)),
+                    xend = rep(as.numeric(2016), nrow(bt21_sig)),
+                    y = get(paste0("est_", 2011)),
+                    yend = get(paste0("est_", 2016)),
+                    colour = KBuecher_imp3,
+                    linetype = get(paste0("sig_", 2011, ".vs.", 2016))
+                  )) +
+     pointshape_iqb
+
     connect_points(bt21_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
     connect_points(bt21_sig, "2016", "2021", grouping_var = "KBuecher_imp3") +
     linetype_iqb +
