@@ -1,17 +1,28 @@
 library(tidyverse)
 
 bt21 <- read_csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
-bt21_long <- bt21 %>%
+bt21_long <- bt21
+colnames(bt21_long) <- gsub("sig", "p", colnames(bt21_long))
+bt21_long <- bt21_long %>%
+  #filter(group %in% unique(bt21$TR_BUNDESLAND)[-1]) %>%
+  filter(parameter == "mean") %>%
+  filter(kb == "GL") %>%
+  filter(is.na(comparison)) %>%
+  filter(!is.na(KBuecher_imp3)) %>%
+  filter(!(group %in% c("0","1"))) %>%
   gather(parameter, estimate, c(est_2011:est_2021,
                                 p_2011:p_2021,
                                 se_2011:se_2021)
   ) %>%
   separate(parameter, c("parameter", "year")) %>%
   spread(parameter, estimate) %>%
-  filter(kb == "GL") %>%
   #select(kb, adjust, TR_BUNDESLAND, year, est, p, se )
   mutate(year = as.numeric(year)) %>%
   mutate(sig = ifelse(p < 0.05, "Sig", "noSig"))
+
+for(i in unique(bt21$TR_BUNDESLAND)[-1]){
+  bt21_long[grepl(i, bt21_long$group),"TR_BUNDESLAND"] <- i
+}
 
 
 plot_list <- list()
@@ -19,21 +30,22 @@ min_est <- min(bt21_long$est)
 range_est <- range(bt21_long$est)
 position <- 1
 
+
 for(i in unique(bt21$TR_BUNDESLAND)){
   dat_long <- bt21_long %>%
     filter(TR_BUNDESLAND == i)
 
-  bt21_sig <- bt21 %>%
+  bt21_sig <- bt21_long %>%
     filter(kb == "GL", TR_BUNDESLAND == i) %>%
-    mutate(sig_2011.vs.2016 = ifelse(p_trend_2011.vs.2016_mean < 0.05, "Sig", "noSig")) %>%
-    mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021_mean < 0.05, "Sig", "noSig"))
+    mutate(sig_2011.vs.2016 = ifelse(p_trend_2011.vs.2016 < 0.05, "Sig", "noSig")) %>%
+    mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig"))
 
 
-  p1 <- plot_points(dat_long)
+  p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3")
 
   p2 <- p1 +
-    connect_points(bt21_sig, "2011", "2016") +
-    connect_points(bt21_sig, "2016", "2021") +
+    connect_points(bt21_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
+    connect_points(bt21_sig, "2016", "2021", grouping_var = "KBuecher_imp3") +
     linetype_iqb +
     labs(title = i) +
     theme(

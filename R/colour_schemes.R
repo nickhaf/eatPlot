@@ -6,8 +6,8 @@ fill_iqb <- ggplot2::scale_fill_manual(
              "mitAdj"  = rgb(33, 89, 104,
                              maxColorValue = 255
                              )
-             )
   )
+)
 
 
 fill_iqb_adj_sig <- ggplot2::scale_fill_manual(
@@ -17,18 +17,21 @@ fill_iqb_adj_sig <- ggplot2::scale_fill_manual(
              "Adj_Sig" = rgb(33, 89, 104, maxColorValue = 255),
              "noAdj_noSig" = "white",
              "Adj_noSig" = "white"
-             )
   )
+)
 
 
 
 colour_iqb <- ggplot2::scale_colour_manual(values = c("ohneAdj" = rgb(147, 205, 221, maxColorValue = 255),
-                                             "mitAdj" = "black"))
+                                                      "mitAdj" = "black")) # Gruppen immer als 1 und 0
+
+grouping_colours <- ggplot2::scale_colour_manual(values = c("0" = rgb(166, 166, 166, maxColorValue = 255),
+                                                            "1" = "black"))
 
 linetype_iqb <- ggplot2::scale_linetype_manual(values=c("Sig" = 1,
                                                         "noSig" = 2)
-                                               )
+)
 
 pointshape_iqb <- ggplot2::scale_shape_manual(values=c("Sig" = 1,
-                                                        "noSig" = 2)
+                                                       "noSig" = 2)
 )
