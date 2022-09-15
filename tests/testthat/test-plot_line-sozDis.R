@@ -122,8 +122,9 @@ p3 <- p2 +
   }
 
   plot_list[[i]] <- p3
+plot(plot_list[[i]])
 
-  position <-  position + 1
+  position <- position + 1
 
 }
 
