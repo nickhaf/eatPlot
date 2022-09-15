@@ -1,9 +1,15 @@
-plot_points <- function(my_data){
-  ggplot2::ggplot(data = my_data, aes(x = year, y = est, colour = adjust, group = adjust)) + #, shape = sig
-    ggplot2::geom_point() +
+plot_points <- function(my_data, grouping_var){
+  ggplot2::ggplot(data = my_data,
+                  aes(x = year,
+                      y = est,
+                      colour = .data[[grouping_var]],
+                      group = .data[[grouping_var]],
+                      shape = sig)
+                  ) +
+    ggplot2::geom_point(size = 2.3) +
     geom_text(aes(label = round(est, 0)), nudge_y = c(15, -15), size = 3) +
     theme_line_iqb() +
-    colour_iqb +
+    grouping_colours +
     scale_x_continuous(position = "top") # ins theme mit rein?
 }
 
