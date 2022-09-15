@@ -8,7 +8,9 @@ bt21[bt21$group %in% unique(bt21$TR_BUNDESLAND)[-1], ]
 bt21 <- bt21 %>%
   #filter(group %in% unique(bt21$TR_BUNDESLAND)[-1]) %>%
   filter(parameter == "mean") %>%
-  filter(kb == "GL")
+  filter(kb == "GL") %>%
+  filter(!is.na(TR_BUNDESLAND))
+
 
 
 for(i in unique(bt21$TR_BUNDESLAND)[-1]){
@@ -56,25 +58,12 @@ for(i in unique(bt21$TR_BUNDESLAND)){
            !is.na(KBuecher_imp3),
            !(group %in% c("0","1"))) %>%
     mutate(sig_2011.vs.2016 = ifelse(p_trend_2011.vs.2016 < 0.05, "Sig", "noSig")) %>%
-    mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig"))
+    mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig")) %>%
+    mutate(sig = "")
 
+p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3")
 
-
-####### Ab hier
-  p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3")
-
-   p1 +
-     geom_segment(data = bt21_sig,
-                  aes(
-                    x = rep(as.numeric(2011), nrow(bt21_sig)),
-                    xend = rep(as.numeric(2016), nrow(bt21_sig)),
-                    y = get(paste0("est_", 2011)),
-                    yend = get(paste0("est_", 2016)),
-                    colour = KBuecher_imp3,
-                    linetype = get(paste0("sig_", 2011, ".vs.", 2016))
-                  )) +
-     pointshape_iqb
-
+p2 <- p1 +
     connect_points(bt21_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
     connect_points(bt21_sig, "2016", "2021", grouping_var = "KBuecher_imp3") +
     linetype_iqb +
@@ -85,10 +74,16 @@ for(i in unique(bt21$TR_BUNDESLAND)){
     NULL
 
 
-  p3 <- p2 +
+upper_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2016.vs.2021), 0)
+lower_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$est_trend_2016.vs.2021), 0)
+
+upper_label_2011 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2011.vs.2021), 0)
+lower_label_2011 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$est_trend_2011.vs.2021), 0)
+
+p3 <- p2 +
     coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # necessary, so the brace can be drawn inside the plot
-    draw_brace_small(dat_long = dat_long, range_est = range_est) +
-    draw_brace_large(dat_long  = dat_long, range_est = range_est) +
+    draw_brace_small(dat_long = dat_long, range_est = range_est, upper_label = upper_label_2016, lower_label = lower_label_2016) +
+    draw_brace_large(dat_long  = dat_long, range_est = range_est, upper_label = upper_label_2011, lower_label = lower_label_2011) +
     theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
     NULL
 
