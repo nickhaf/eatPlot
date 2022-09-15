@@ -8,6 +8,7 @@ connect_points <- function(my_data, year1, year2, grouping_var ){
                              yend = get(paste0("est_", year2)),
                              colour = .data[[grouping_var]],
                              linetype = get(paste0("sig_", year1, ".vs.", year2))
-                           ))
+                           ),
+                           size = 0.7)
   return(plot_res)
 }

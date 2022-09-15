@@ -8,17 +8,20 @@ bt21[bt21$group %in% unique(bt21$TR_BUNDESLAND)[-1], ]
 bt21 <- bt21 %>%
   #filter(group %in% unique(bt21$TR_BUNDESLAND)[-1]) %>%
   filter(parameter == "mean") %>%
-  filter(kb == "GL") %>%
-  filter(!is.na(TR_BUNDESLAND))
+  filter(kb == "GL")
 
 
-
-for(i in unique(bt21$TR_BUNDESLAND)[-1]){
+for(i in unique(bt21$TR_BUNDESLAND)[!is.na(unique(bt21$TR_BUNDESLAND))]){
   for(j in c("2011", "2016", "2021")){
   bt21[grepl(i, bt21$group),"TR_BUNDESLAND"] <- i
+  # Eintragen der p-Werte in die entsprchende Zeile
   bt21[grepl(paste0(i, "_0"), bt21$group), paste0("p_", j)] <- bt21[grepl(paste0(i, "_0", ".vs.wholeGroup"), bt21$group), paste0("p_",j )]
 }
 }
+
+bt21 <- bt21 %>%
+  filter(!is.na(TR_BUNDESLAND))
+
 
 bt21_long <- bt21 %>%
   filter(is.na(comparison)) %>%
@@ -34,7 +37,7 @@ bt21_long <- bt21 %>%
   mutate(year = as.numeric(year)) %>%
   mutate(sig = ifelse(p < 0.05, "Sig", "noSig"))
 
-for(i in unique(bt21$TR_BUNDESLAND)[-1]){
+for(i in unique(bt21$TR_BUNDESLAND)){
   bt21_long[grepl(i, bt21_long$group),"TR_BUNDESLAND"] <- i
 }
 
@@ -61,8 +64,8 @@ for(i in unique(bt21$TR_BUNDESLAND)){
     mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig")) %>%
     mutate(sig = "")
 
-p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3")
-
+p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3") +
+  scale_shape_manual(values = c(16, 17, 16)) # Nochmal anschauen!
 p2 <- p1 +
     connect_points(bt21_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
     connect_points(bt21_sig, "2016", "2021", grouping_var = "KBuecher_imp3") +
