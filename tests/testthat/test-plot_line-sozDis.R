@@ -3,27 +3,25 @@ library(tidyverse)
 bt21 <- read_csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
 colnames(bt21) <- gsub("sig", "p", colnames(bt21))
 
-bt21[bt21$group %in% unique(bt21$TR_BUNDESLAND)[-1], ]
-
-bt21 <- bt21 %>%
+bt21a <- bt21 %>%
   #filter(group %in% unique(bt21$TR_BUNDESLAND)[-1]) %>%
   filter(parameter == "mean") %>%
   filter(kb == "GL")
 
 
-for(i in unique(bt21$TR_BUNDESLAND)[!is.na(unique(bt21$TR_BUNDESLAND))]){
+for(i in unique(bt21a$TR_BUNDESLAND)[!is.na(unique(bt21a$TR_BUNDESLAND))]){
   for(j in c("2011", "2016", "2021")){
-  bt21[grepl(i, bt21$group),"TR_BUNDESLAND"] <- i
+  bt21a[grepl(i, bt21a$group),"TR_BUNDESLAND"] <- i
   # Eintragen der p-Werte in die entsprchende Zeile
-  bt21[grepl(paste0(i, "_0"), bt21$group), paste0("p_", j)] <- bt21[grepl(paste0(i, "_0", ".vs.wholeGroup"), bt21$group), paste0("p_",j )]
+  bt21a[grepl(paste0(i, "_0"), bt21a$group), paste0("p_", j)] <- bt21a[grepl(paste0(i, "_0", ".vs.wholeGroup"), bt21a$group), paste0("p_",j )]
 }
 }
 
-bt21 <- bt21 %>%
+bt21a <- bt21a %>%
   filter(!is.na(TR_BUNDESLAND))
 
 
-bt21_long <- bt21 %>%
+bt21a_long <- bt21a %>%
   filter(is.na(comparison)) %>%
   filter(!is.na(KBuecher_imp3)) %>%
   filter(!(group %in% c("0","1"))) %>%
@@ -37,22 +35,22 @@ bt21_long <- bt21 %>%
   mutate(year = as.numeric(year)) %>%
   mutate(sig = ifelse(p < 0.05, "Sig", "noSig"))
 
-for(i in unique(bt21$TR_BUNDESLAND)){
-  bt21_long[grepl(i, bt21_long$group),"TR_BUNDESLAND"] <- i
+for(i in unique(bt21a$TR_BUNDESLAND)){
+  bt21a_long[grepl(i, bt21a_long$group),"TR_BUNDESLAND"] <- i
 }
 
 
 plot_list <- list()
-min_est <- min(bt21_long$est)
-range_est <- range(bt21_long$est)
+min_est <- min(bt21a_long$est)
+range_est <- range(bt21a_long$est)
 position <- 1
 
 
-for(i in unique(bt21$TR_BUNDESLAND)){
-  dat_long <- bt21_long %>%
+for(i in unique(bt21a$TR_BUNDESLAND)){
+  dat_long <- bt21a_long %>%
     filter(TR_BUNDESLAND == i)
 
-  bt21_sig <- bt21 %>%
+  bt21a_sig <- bt21a %>%
     filter(kb == "GL",
            TR_BUNDESLAND == i,
            parameter == "mean",
@@ -66,15 +64,39 @@ for(i in unique(bt21$TR_BUNDESLAND)){
 
 p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3") +
   scale_shape_manual(values = c(16, 17, 16)) # Nochmal anschauen!
+
+whole_group <- bt21 %>% filter(group == "wholeGroup", parameter == "mean", kb == "GL") %>%
+  mutate(sig = "")
+
 p2 <- p1 +
-    connect_points(bt21_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
-    connect_points(bt21_sig, "2016", "2021", grouping_var = "KBuecher_imp3") +
+    connect_points(bt21a_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
+    connect_points(bt21a_sig, "2016", "2021", grouping_var = "KBuecher_imp3") +
     linetype_iqb +
     labs(title = i) +
     theme(
       plot.title = element_text(size = 10, hjust = 0.5)
     ) +
-    NULL
+  geom_segment(data = whole_group,
+                           aes(
+                             x = rep(as.numeric(2011), nrow(whole_group)),
+                             xend = rep(as.numeric(2016), nrow(whole_group)),
+                             y = get(paste0("est_", 2011)),
+                             yend = get(paste0("est_", 2016))
+                           ),
+                           size = 0.7,
+               color = rgb(147, 205, 221,
+                           maxColorValue = 255)) +
+  geom_segment(data = whole_group,
+               aes(
+                 x = rep(as.numeric(2016), nrow(whole_group)),
+                 xend = rep(as.numeric(2021), nrow(whole_group)),
+                 y = get(paste0("est_", 2016)),
+                 yend = get(paste0("est_", 2021))
+               ),
+               size = 0.7,
+               color = rgb(147, 205, 221,
+                           maxColorValue = 255))
+
 
 
 upper_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2016.vs.2021), 0)
