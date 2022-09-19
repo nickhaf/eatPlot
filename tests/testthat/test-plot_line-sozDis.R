@@ -99,8 +99,7 @@ p2 <- p1 +
     theme(
       plot.title = element_text(size = 10, hjust = 0.5)
     )
-
-
+library(latex2exp)
 
 upper_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2016.vs.2021), 0)
 lower_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$est_trend_2016.vs.2021), 0)
@@ -113,6 +112,9 @@ p3 <- p2 +
     draw_brace_small(dat_long = dat_long, range_est = range_est, upper_label = upper_label_2016, lower_label = lower_label_2016) +
     draw_brace_large(dat_long  = dat_long, range_est = range_est, upper_label = upper_label_2011, lower_label = lower_label_2011) +
     theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
+    annotate("text", x = 2013.47, y = 330, size = 2,
+           label = "~bold(-24)",
+           parse = TRUE)
     NULL
 
   if((position - 1) %% 4 == 0){
