@@ -62,8 +62,9 @@ for(i in unique(bt21a$TR_BUNDESLAND)){
     mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig")) %>%
     mutate(sig = "")
 
-p1 <- plot_points(dat_long, grouping_var = "KBuecher_imp3") +
-  scale_shape_manual(values = c(16, 17, 16)) # Nochmal anschauen!
+  p1 <- ggplot2::ggplot(data = dat_long) +
+    plot_points(my_data = dat_long, grouping_var = "KBuecher_imp3")+
+    scale_shape_manual(values = c(16, 17, 16)) # Nochmal anschauen!
 
 whole_group <- bt21 %>% filter(group == "wholeGroup", parameter == "mean", kb == "GL") %>%
   mutate(sig = "")
