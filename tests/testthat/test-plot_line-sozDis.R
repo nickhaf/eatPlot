@@ -62,12 +62,34 @@ for(i in unique(bt21a$TR_BUNDESLAND)){
     mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig")) %>%
     mutate(sig = "")
 
-  p1 <- ggplot2::ggplot(data = dat_long) +
+  whole_group <- bt21 %>% filter(group == "wholeGroup", parameter == "mean", kb == "GL") %>%
+    mutate(sig = "")
+
+    p1 <- ggplot2::ggplot(data = dat_long) +
+    geom_segment(data = whole_group,
+                 aes(
+                   x = rep(as.numeric(2011), nrow(whole_group)),
+                   xend = rep(as.numeric(2016), nrow(whole_group)),
+                   y = get(paste0("est_", 2011)),
+                   yend = get(paste0("est_", 2016))
+                 ),
+                 size = 0.7,
+                 color = rgb(147, 205, 221,
+                             maxColorValue = 255)) +
+    geom_segment(data = whole_group,
+                 aes(
+                   x = rep(as.numeric(2016), nrow(whole_group)),
+                   xend = rep(as.numeric(2021), nrow(whole_group)),
+                   y = get(paste0("est_", 2016)),
+                   yend = get(paste0("est_", 2021))
+                 ),
+                 size = 0.7,
+                 color = rgb(147, 205, 221,
+                             maxColorValue = 255)) +
     plot_points(my_data = dat_long, grouping_var = "KBuecher_imp3")+
     scale_shape_manual(values = c(16, 17, 16)) # Nochmal anschauen!
 
-whole_group <- bt21 %>% filter(group == "wholeGroup", parameter == "mean", kb == "GL") %>%
-  mutate(sig = "")
+
 
 p2 <- p1 +
     connect_points(bt21a_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
@@ -76,27 +98,7 @@ p2 <- p1 +
     labs(title = i) +
     theme(
       plot.title = element_text(size = 10, hjust = 0.5)
-    ) +
-  geom_segment(data = whole_group,
-                           aes(
-                             x = rep(as.numeric(2011), nrow(whole_group)),
-                             xend = rep(as.numeric(2016), nrow(whole_group)),
-                             y = get(paste0("est_", 2011)),
-                             yend = get(paste0("est_", 2016))
-                           ),
-                           size = 0.7,
-               color = rgb(147, 205, 221,
-                           maxColorValue = 255)) +
-  geom_segment(data = whole_group,
-               aes(
-                 x = rep(as.numeric(2016), nrow(whole_group)),
-                 xend = rep(as.numeric(2021), nrow(whole_group)),
-                 y = get(paste0("est_", 2016)),
-                 yend = get(paste0("est_", 2021))
-               ),
-               size = 0.7,
-               color = rgb(147, 205, 221,
-                           maxColorValue = 255))
+    )
 
 
 
