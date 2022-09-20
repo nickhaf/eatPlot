@@ -1,10 +1,13 @@
 library(tidyverse)
 
+
+## Create necessary data sets: 1 long Trendset, and one long point estimate set
+
+
 bt21 <- read_csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
 colnames(bt21) <- gsub("sig", "p", colnames(bt21))
 
 bt21a <- bt21 %>%
-  #filter(group %in% unique(bt21$TR_BUNDESLAND)[-1]) %>%
   filter(parameter == "mean") %>%
   filter(kb == "GL")
 
@@ -18,7 +21,7 @@ for(i in unique(bt21a$TR_BUNDESLAND)[!is.na(unique(bt21a$TR_BUNDESLAND))]){
 }
 
 bt21a <- bt21a %>%
-  filter(!is.na(TR_BUNDESLAND))
+  filter(!is.na(TR_BUNDESLAND) | group %in% c("0", "1"))
 
 
 bt21a_long <- bt21a %>%
@@ -46,6 +49,13 @@ range_est <- range(bt21a_long$est)
 position <- 1
 
 
+
+# Finally, plot whole Germany
+if(position > length(unique(bt21a$TR_BUNDESLAND))){
+  dat_germany <- bt21 %>%
+    filter(group %in% c("0", "1"), parameter == "mean", kb == "GL")
+
+}
 
 
 
@@ -142,7 +152,10 @@ p3 <- p2 +
   plot_list[[i]] <- p3
 plot(plot_list[[i]])
 
+
   position <- position + 1
+
+
 
 }
 
