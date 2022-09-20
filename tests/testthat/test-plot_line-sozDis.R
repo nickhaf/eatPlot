@@ -100,6 +100,7 @@ p2 <- p1 +
       plot.title = element_text(size = 10, hjust = 0.5)
     )
 
+
 p3 <- p2 +
     coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # necessary, so the brace can be drawn inside the plot
     draw_brace(dat_long = dat_long, range_est = range_est, upper_label = upper_label_2016, lower_label = lower_label_2016, year_vec = c(2011, 2016, 2021)) +
