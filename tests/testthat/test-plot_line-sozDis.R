@@ -109,12 +109,8 @@ lower_label_2011 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$e
 
 p3 <- p2 +
     coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # necessary, so the brace can be drawn inside the plot
-    draw_brace_small(dat_long = dat_long, range_est = range_est, upper_label = upper_label_2016, lower_label = lower_label_2016) +
-    draw_brace_large(dat_long  = dat_long, range_est = range_est, upper_label = upper_label_2011, lower_label = lower_label_2011) +
+    draw_brace(dat_long = dat_long, range_est = range_est, upper_label = upper_label_2016, lower_label = lower_label_2016, year_vec = c(2011, 2016, 2021)) +
     theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
-    annotate("text", x = 2013.47, y = 330, size = 2,
-           label = "~bold(-24)",
-           parse = TRUE)
     NULL
 
   if((position - 1) %% 4 == 0){

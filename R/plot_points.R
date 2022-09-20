@@ -17,5 +17,6 @@ list(
     scale_x_continuous(position = "top"),
   scale_shape_manual(values = c(16, 17, 16)
 )
+)
 }
 
