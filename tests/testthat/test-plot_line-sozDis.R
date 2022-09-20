@@ -99,13 +99,6 @@ p2 <- p1 +
     theme(
       plot.title = element_text(size = 10, hjust = 0.5)
     )
-library(latex2exp)
-
-upper_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2016.vs.2021), 0)
-lower_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$est_trend_2016.vs.2021), 0)
-
-upper_label_2011 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2011.vs.2021), 0)
-lower_label_2011 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$est_trend_2011.vs.2021), 0)
 
 p3 <- p2 +
     coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # necessary, so the brace can be drawn inside the plot
