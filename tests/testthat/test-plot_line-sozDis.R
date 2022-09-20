@@ -46,9 +46,33 @@ range_est <- range(bt21a_long$est)
 position <- 1
 
 
+
+
+
 for(i in unique(bt21a$TR_BUNDESLAND)){
   dat_long <- bt21a_long %>%
     filter(TR_BUNDESLAND == i)
+
+  ## Trenddatensatz bauen --> trennen von Trend und Punktestimates. Außerdem year_start und year_end als eigene Spalten
+  dat_trend <- dat_long %>%
+    select(group, KBuecher_imp3, est_trend_2016.vs.2021, est_trend_2011.vs.2021, p_trend_2016.vs.2021, p_trend_2011.vs.2021) %>%
+    rename(estTrend_2016vs2021 = est_trend_2016.vs.2021,
+           estTrend_2011vs2021 = est_trend_2011.vs.2021,
+           pTrend_2016vs2021 = p_trend_2016.vs.2021,
+           pTrend_2011vs2021 = p_trend_2011.vs.2021) %>%
+    gather(parameter, estimate, c(estTrend_2011vs2021, estTrend_2016vs2021,
+                                  pTrend_2011vs2021, pTrend_2016vs2021)) %>%
+    unique %>%
+    separate(parameter, c("parameter", "trendyears")) %>%
+    separate(col = trendyears, into = c("year_start", "year_end"), sep = "vs") %>%
+    mutate(year_start = as.numeric(year_start),
+           year_end = as.numeric(year_end)) %>%
+    spread(parameter, estimate) %>%
+    mutate(sig_trend_2016 = ifelse(pTrend < 0.05, "bold", "plain")) %>%
+    mutate(brace_upper_y = ifelse(year_start == min(year_start), range_est[1] - 30, range_est[1] -62)) %>%
+    mutate(brace_lower_y = ifelse(year_start == min(year_start), range_est[1] - 60, range_est[1] -92)) %>%
+    mutate(label_pos = ifelse(KBuecher_imp3 == 1, range_est[1] - 103, range_est[1] - 123))
+
 
   bt21a_sig <- bt21a %>%
     filter(kb == "GL",
@@ -101,17 +125,8 @@ p2 <- p1 +
     )
 
 
-
-upper_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2016.vs.2021), 0)
-lower_label_2016 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$est_trend_2016.vs.2021), 0)
-
-upper_label_2011 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 1) %>% .$est_trend_2011.vs.2021), 0)
-lower_label_2011 <- round(unique(dat_long %>% filter(KBuecher_imp3 == 0) %>% .$est_trend_2011.vs.2021), 0)
-
 p3 <- p2 +
-    coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off") + # necessary, so the brace can be drawn inside the plot
-    draw_brace_small(dat_long = dat_long, range_est = range_est, upper_label = upper_label_2016, lower_label = lower_label_2016) +
-    draw_brace_large(dat_long  = dat_long, range_est = range_est, upper_label = upper_label_2011, lower_label = lower_label_2011) +
+    draw_brace(dat_trend = dat_trend, range_est = range_est) +
     theme(plot.margin = unit(c(0, 0, 0.30, 0), units="npc")) +
     NULL
 
