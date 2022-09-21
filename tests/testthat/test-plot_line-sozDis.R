@@ -4,7 +4,7 @@ library(tidyverse)
 ## Create necessary data sets: 1 long Trendset, and one long point estimate set
 
 
-bt21 <- read_csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
+bt21 <- read.csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
 colnames(bt21) <- gsub("sig", "p", colnames(bt21))
 
 bt21a <- bt21 %>%
@@ -12,10 +12,10 @@ bt21a <- bt21 %>%
   filter(kb == "GL")
 
 
-for(i in unique(bt21a$TR_BUNDESLAND)[!is.na(unique(bt21a$TR_BUNDESLAND))]){
+for(i in unique(bt21a$TR_BUNDESLAND)[-grepl("", unique(bt21a$TR_BUNDESLAND))]){
   for(j in c("2011", "2016", "2021")){
   bt21a[grepl(i, bt21a$group),"TR_BUNDESLAND"] <- i
-  # Eintragen der p-Werte in die entsprchende Zeile
+  # Eintragen der p-Werte in die entsprechende Zeile
   bt21a[grepl(paste0(i, "_0"), bt21a$group), paste0("p_", j)] <- bt21a[grepl(paste0(i, "_0", ".vs.wholeGroup"), bt21a$group), paste0("p_",j )]
 }
 }

@@ -1,13 +1,13 @@
-bt21 <- read_csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
+bt21 <- read.csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv")
 
 
 prepare_wide <- function(bt_data, competence){
 
   colnames(bt_data) <- gsub("sig", "p", colnames(bt_data))
-  bt_data <- bt_data[bt_data$parameter == "mean", ]
   bt_data <- bt_data[bt_data$kb == competence, ]
+  bt_data <- bt_data[bt_data$parameter == "mean", ]
 
-  for(i in unique(bt_data$TR_BUNDESLAND)[!is.na(unique(bt_data$TR_BUNDESLAND))]){
+  for(i in unique(bt_data$TR_BUNDESLAND)[-grepl("", unique(bt21a$TR_BUNDESLAND))]){
     for(j in c("2011", "2016", "2021")){
       bt_data[grepl(i, bt_data$group),"TR_BUNDESLAND"] <- i
       # Eintragen der p-Werte in die entsprchende Zeile
