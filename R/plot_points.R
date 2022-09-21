@@ -6,7 +6,7 @@ list(
                           y = est,
                           colour = .data[[grouping_var]],
                           group = .data[[grouping_var]],
-                          shape = sig),
+                          shape = sig_vsGermany),
                       size = 2.3),
     geom_text(aes(x = year,
                   y = est,

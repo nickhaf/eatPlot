@@ -4,15 +4,35 @@ library(tidyverse)
 ## Create necessary data sets: 1 long Trendset, and one long point estimate set
 
 
-bt21 <- read.csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv", na.strings = "")
+bt21 <- read.csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv", na.strings = "") %>%
+  filter(kb == "GL")
 
-bt21_prep <- prepare_general(bt21)
+bt21_prep <- prepare_general(bt21, competence = "GL")
 bt21_pointEstimates <- prepare_pointEstimates(bt21_prep, competence = "GL", grouping_var = "KBuecher_imp3")
+bt21_trend <- prepare_trend(bt21_prep, "KBuecher_imp3")
+
+## year_
+
+bt21_merged <- merge(bt21_trend,
+                     bt21_pointEstimates,
+                     by.x = c("TR_BUNDESLAND", "year_start", "KBuecher_imp3"),
+                     by.y = c("TR_BUNDESLAND", "year", "KBuecher_imp3"),
+                     all.y = TRUE)
+
+# bt21_last_year_ests <- bt21_pointEstimates[bt21_pointEstimates$year == 2021, c("TR_BUNDESLAND", "KBuecher_imp3","est")] %>%
+#   rename(est_2021 = est)
+#
+#
+# bt21_merged2 <-  merge(bt21_merged,
+#                        bt21_last_year_ests,
+#                        by.x = c("TR_BUNDESLAND", "KBuecher_imp3"),
+#                        by.y = c("TR_BUNDESLAND", "KBuecher_imp3"),
+#                        all.x = TRUE)
 
 bundeslaender <- unique(bt21_pointEstimates$TR_BUNDESLAND)
 
 plot_list <- list()
-range_est <- range(bt21a_long$est)
+range_est <- range(bt21_pointEstimates$est)
 position <- 1
 
 for(i in bundeslaender){
@@ -29,9 +49,10 @@ for(i in bundeslaender){
     mutate(sig_2016.vs.2021 = ifelse(p_trend_2016.vs.2021 < 0.05, "Sig", "noSig")) %>%
     mutate(sig = "")
 
+  bt21_pointEstimates <- bt21_pointEstimates %>% filter(TR_BUNDESLAND == i)
+
   whole_group <- bt21 %>%
-    filter(group == "wholeGroup", parameter == "mean", kb == "GL") %>%
-    mutate(sig = "")
+    filter(group == "wholeGroup", parameter == "mean", kb == "GL")
 
     p1 <- ggplot2::ggplot(data = bt21_pointEstimates) +
     geom_segment(data = whole_group,
@@ -54,7 +75,7 @@ for(i in bundeslaender){
                  size = 0.7,
                  color = rgb(147, 205, 221,
                              maxColorValue = 255)) +
-    plot_points(my_data = dat_long, grouping_var = "KBuecher_imp3") +
+    plot_points(my_data = bt21_pointEstimates, grouping_var = "KBuecher_imp3") +
     scale_shape_manual(values = c(16, 17, 16)) # Nochmal anschauen!
 
 
