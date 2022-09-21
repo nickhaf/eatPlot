@@ -18,4 +18,5 @@ Imports:
     ggpattern,
     ggplot2,
     ggthemes,
-    gridExtra
+    gridExtra,
+    tidyr
