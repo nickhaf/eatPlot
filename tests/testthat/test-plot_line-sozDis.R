@@ -28,7 +28,7 @@ final_dat <- merge_trend_point(trend1 = trend_within, trend2 = trend_germany,
                          point = pointEstimates, grouping_var = "KBuecher_imp3")
 
 
-bundeslaender <- unique(pointEstimates$TR_BUNDESLAND)
+bundeslaender <- c(unique(pointEstimates$TR_BUNDESLAND)[-1], "Deutschland")
 
 plot_list <- list()
 range_est <- range(pointEstimates$est)

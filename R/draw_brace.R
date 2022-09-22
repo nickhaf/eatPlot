@@ -3,11 +3,11 @@ draw_brace <- function(dat_trend, range_est, upper_label, lower_label, year_vec,
   range_est <- range(c(dat_trend$est_start, dat_trend$est_end))
 
   brace_coordinates <- dat_trend %>%
-    mutate(brace_upper_y = ifelse(year_start == min(year_start), range_est[1] - 30, range_est[1] -62)) %>%
-    mutate(brace_lower_y = ifelse(year_start == min(year_start), range_est[1] - 60, range_est[1] -92)) %>%
-    mutate(label_pos = ifelse(KBuecher_imp3 == 1, range_est[1] - 103, range_est[1] - 123))
+    mutate(brace_upper_y = ifelse(year_start == min(year_start), range_est[1] - 40, range_est[1] -72)) %>%
+    mutate(brace_lower_y = ifelse(year_start == min(year_start), range_est[1] - 70, range_est[1] -102)) %>%
+    mutate(label_pos = ifelse(KBuecher_imp3 == 1, range_est[1] - 113, range_est[1] - 143))
   c(
-    coord_cartesian(ylim = c(range_est[1] - 30, range_est[2]), clip = "off"), # necessary, so the brace can be drawn inside the plot
+    coord_cartesian(ylim = c(range_est[1] - 40, range_est[2] + 20), clip = "off"), # necessary, so the brace can be drawn inside the plot
 
     lapply(unique(dat_trend$year_start), function(x){
       coordinates <- brace_coordinates %>%
@@ -34,7 +34,7 @@ draw_brace <- function(dat_trend, range_est, upper_label, lower_label, year_vec,
               mapping = aes(
                 x = year_start + (year_end - max(year_start))/2,
                 y = label_pos,
-                label = estTrend_within,
+                label = round(estTrend_within, 0),
                 fontface = sigTrend_within
                 ),
               size = 3
