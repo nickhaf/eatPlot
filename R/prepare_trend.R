@@ -1,18 +1,19 @@
 
 prepare_trend <- function(data_prep, grouping_var){
 
-  trendEsts <- data_prep[grepl("wholeGroup", data_prep$group),]
-  trendEsts[, grouping_var] <- stringr::str_extract(trendEsts$group, "0|1")
-  trendEsts <- trendEsts[!is.na(trendEsts$KBuecher_imp3),]
+
+
 
 dat_trend <- trendEsts %>%
-  select(group, TR_BUNDESLAND, KBuecher_imp3, est_trend_2016.vs.2021, est_trend_2011.vs.2021, p_trend_2016.vs.2021, p_trend_2011.vs.2021) %>%
+  select(group, TR_BUNDESLAND, KBuecher_imp3, est_trend_2016.vs.2021, est_trend_2011.vs.2021, est_trend_2011.vs.2016, p_trend_2016.vs.2021, p_trend_2011.vs.2021, p_trend_2011.vs.2016) %>%
   rename(estTrend_2016vs2021 = est_trend_2016.vs.2021,
          estTrend_2011vs2021 = est_trend_2011.vs.2021,
+         estTrend_2011vs2016 = est_trend_2011.vs.2016,
          pTrend_2016vs2021 = p_trend_2016.vs.2021,
-         pTrend_2011vs2021 = p_trend_2011.vs.2021) %>%
-  gather(parameter, estimate, c(estTrend_2011vs2021, estTrend_2016vs2021,
-                                pTrend_2011vs2021, pTrend_2016vs2021)) %>%
+         pTrend_2011vs2021 = p_trend_2011.vs.2021,
+         pTrend_2011vs2016 = p_trend_2011.vs.2016) %>%
+  gather(parameter, estimate, c(estTrend_2011vs2021, estTrend_2016vs2021, estTrend_2011vs2016,
+                                pTrend_2011vs2021, pTrend_2016vs2021, pTrend_2011vs2016)) %>%
   unique %>%
   separate(parameter, c("parameter", "trendyears")) %>%
   separate(col = trendyears, into = c("year_start", "year_end"), sep = "vs") %>%

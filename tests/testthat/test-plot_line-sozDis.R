@@ -9,15 +9,24 @@ bt21 <- read.csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/
 
 bt21_prep <- prepare_general(bt21, competence = "GL")
 bt21_pointEstimates <- prepare_pointEstimates(bt21_prep, competence = "GL", grouping_var = "KBuecher_imp3")
-bt21_trend <- prepare_trend(bt21_prep, "KBuecher_imp3")
-
-## year_
+bt21_trend <- prepare_trend_wholeGroup(bt21_prep, "KBuecher_imp3")
 
 bt21_merged <- merge(bt21_trend,
                      bt21_pointEstimates,
                      by.x = c("TR_BUNDESLAND", "year_start", "KBuecher_imp3"),
                      by.y = c("TR_BUNDESLAND", "year", "KBuecher_imp3"),
-                     all.y = TRUE)
+                     all.x = TRUE,
+                     sort = FALSE) %>%
+  rename(est_start = est)
+
+
+bt21_merged2 <- merge(bt21_merged,
+                     bt21_pointEstimates[,c("TR_BUNDESLAND", "KBuecher_imp3", "year", "est")],
+                     by.x = c("TR_BUNDESLAND", "KBuecher_imp3", "year_end"),
+                     by.y = c("TR_BUNDESLAND", "KBuecher_imp3", "year"),
+                     all.x = TRUE,
+                     sort = FALSE) %>%
+  rename(est_end = est)
 
 # bt21_last_year_ests <- bt21_pointEstimates[bt21_pointEstimates$year == 2021, c("TR_BUNDESLAND", "KBuecher_imp3","est")] %>%
 #   rename(est_2021 = est)
@@ -78,9 +87,15 @@ for(i in bundeslaender){
     plot_points(my_data = bt21_pointEstimates, grouping_var = "KBuecher_imp3") +
     scale_shape_manual(values = c(16, 17, 16)) # Nochmal anschauen!
 
-
+bt21_merged3 <- bt21_merged2 %>%
+  filter(TR_BUNDESLAND == i) %>%
+  filter(!(year_start == 2011 & year_end == 2021))
 
 p2 <- p1 +
+  connect_points(bt21_merged3, grouping_var = "KBuecher_imp3")
+
+
+
     connect_points(bt21a_sig, "2011", "2016", grouping_var = "KBuecher_imp3") +
     connect_points(bt21a_sig, "2016", "2021", grouping_var = "KBuecher_imp3") +
     linetype_iqb +
