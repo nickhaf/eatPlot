@@ -12,13 +12,13 @@ bt21_prep <- prepare_general(bt21, competence = "GL")
 
 # Trend Comparisons within group
 trendEsts_w <- bt21_prep[!is.na(bt21_prep$TR_BUNDESLAND) | bt21_prep$group %in% c("0", "1"), ]
-trendEsts_w <- trendEsts_w[!is.na(trendEsts_w[,grouping_var]), ]
+trendEsts_w <- trendEsts_w[!is.na(trendEsts_w[,"KBuecher_imp3"]), ]
 trendEsts_w <- trendEsts_w[is.na(trendEsts_w$comparison), ]
 
 
 # Trend Comparisons against Germany
-trendEsts <- data_prep[grepl("wholeGroup", data_prep$group),]
-trendEsts[, grouping_var] <- stringr::str_extract(trendEsts$group, "0|1")
+trendEsts <- bt21_prep[grepl("wholeGroup", bt21_prep$group),]
+trendEsts[, "KBuecher_imp3"] <- stringr::str_extract(trendEsts$group, "0|1")
 trendEsts <- trendEsts[!is.na(trendEsts$KBuecher_imp3),]
 
 trend_within <- prepare_trend(trendEsts_w, "KBuecher_imp3", suffix = "within")
@@ -47,7 +47,7 @@ for(i in bundeslaender){
       draw_background_lines(bt21 %>% filter(group == "wholeGroup", parameter == "mean", kb == "GL")) +
       plot_points(my_data = pointEstimates2, grouping_var = "KBuecher_imp3") +
       connect_points(final_dat2, grouping_var = "KBuecher_imp3") +
-      draw_brace(dat_trend = final_dat, range_est = range_est, bundesland = i) +
+      draw_brace(dat_trend = final_dat, bundesland = i) +
       NULL
 
   if((position - 1) %% 4 == 0){

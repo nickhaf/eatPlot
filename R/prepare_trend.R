@@ -5,7 +5,10 @@ prepare_trend <- function(my_data, grouping_var, suffix){
                                            "est_trend_2011.vs.2016",
                                            "p_trend_2016.vs.2021",
                                            "p_trend_2011.vs.2021",
-                                           "p_trend_2011.vs.2016")
+                                           "p_trend_2011.vs.2016",
+                                           "se_trend_2016.vs.2021",
+                                           "se_trend_2011.vs.2021",
+                                           "se_trend_2011.vs.2016")
                   )
 
   colnames(my_data)[var_pos] <- gsub("\\.", "",
@@ -32,7 +35,7 @@ dat_trend2[grep("wholeGroup", dat_trend2$TR_BUNDESLAND), "TR_BUNDESLAND"] <- "De
 dat_trend2[dat_trend2$TR_BUNDESLAND %in% c("0", "1"), "TR_BUNDESLAND"] <- "Deutschland"
 dat_trend2$group <- NULL
 
-colnames(dat_trend2)[colnames(dat_trend2) %in% c("esttrend", "ptrend", "sig_trend")] <- c( paste0("estTrend_", suffix), paste0("pTrend_", suffix), paste0("sigTrend_", suffix))
+colnames(dat_trend2)[colnames(dat_trend2) %in% c("esttrend", "ptrend", "setrend","sig_trend")] <- c( paste0("estTrend_", suffix), paste0("pTrend_", suffix), paste0("seTrend_", suffix), paste0("sigTrend_", suffix))
 
 return(dat_trend2)
 
