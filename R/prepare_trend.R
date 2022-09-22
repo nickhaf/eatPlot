@@ -24,10 +24,7 @@ dat_trend2 <- dat_trend %>%
          year_end = as.numeric(year_end)) %>%
   spread(parameter, estimate) %>%
   mutate(sig_trend = ifelse(ptrend < 0.05, "bold", "plain")
-         ) #%>%
-  # mutate(brace_upper_y = ifelse(year_start == min(year_start), range_est[1] - 30, range_est[1] -62)) %>%
-  # mutate(brace_lower_y = ifelse(year_start == min(year_start), range_est[1] - 60, range_est[1] -92)) %>%
-  # mutate(label_pos = ifelse(KBuecher_imp3 == 1, range_est[1] - 103, range_est[1] - 123))
+         )
 
 
 dat_trend2$TR_BUNDESLAND <- sub("_.*", "", dat_trend2$group)
