@@ -8,7 +8,7 @@ connect_points <- function(my_data, grouping_var ){
                              y =  est_start,
                              yend = est_end,
                              colour = .data[[grouping_var]],
-                             linetype = sig_trend),
+                             linetype = sigTrend_within),
                            size = 0.7)
 
   )

@@ -28,8 +28,8 @@ colour_iqb <- ggplot2::scale_colour_manual(values = c("ohneAdj" = rgb(147, 205, 
 grouping_colours <- ggplot2::scale_colour_manual(values = c("0" = rgb(166, 166, 166, maxColorValue = 255),
                                                             "1" = "black"))
 
-linetype_iqb <- ggplot2::scale_linetype_manual(values=c("Sig" = 1,
-                                                        "noSig" = 2)
+linetype_iqb <- ggplot2::scale_linetype_manual(values=c("bold" = 1,
+                                                        "plain" = 2)
 )
 
 pointshape_iqb <- ggplot2::scale_shape_manual(values=c("Sig" = 1,
