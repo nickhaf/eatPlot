@@ -11,8 +11,9 @@ theme_line_iqb <- function(){
       legend.position = "none",
       axis.title.x = element_blank(),
       axis.text.y = element_blank(),
-      axis.title.y = element_blank()
-
+      axis.title.y = element_blank(),
+      plot.title = element_text(size = 10, hjust = 0.5),
+      plot.margin = unit(c(0, 0, 0.30, 0), units="npc")
     )
 }
 

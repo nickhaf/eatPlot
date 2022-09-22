@@ -1,14 +1,18 @@
-connect_points <- function(my_data, year1, year2, grouping_var ){
+connect_points <- function(my_data, grouping_var ){
 
+  list(
   plot_res <- geom_segment(data = my_data,
                            aes(
-                             x = rep(as.numeric(year1), nrow(my_data)),
-                             xend = rep(as.numeric(year2), nrow(my_data)),
-                             y = get(paste0("est_", year1)),
-                             yend = get(paste0("est_", year2)),
+                             x = year_start,
+                             xend = year_end,
+                             y =  est_start,
+                             yend = est_end,
                              colour = .data[[grouping_var]],
-                             linetype = get(paste0("sig_", year1, ".vs.", year2))
-                           ),
-                           size = 0.7)
+                             linetype = sigTrend_within),
+                           size = 0.7),
+  linetype_iqb
+  )
+
   return(plot_res)
 }
+
