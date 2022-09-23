@@ -19,6 +19,7 @@ Imports:
     ggplot2,
     ggtext,
     ggthemes,
+    grid,
     gridExtra,
     stringr,
     tidyr

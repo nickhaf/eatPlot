@@ -32,6 +32,6 @@ linetype_iqb <- ggplot2::scale_linetype_manual(values=c("bold" = 1,
                                                         "plain" = 2)
 )
 
-pointshape_iqb <- ggplot2::scale_shape_manual(values=c("Sig" = 1,
-                                                       "noSig" = 2)
+pointshape_iqb <- ggplot2::scale_shape_manual(values=c("Sig" = 17,
+                                                       "noSig" = 16)
 )

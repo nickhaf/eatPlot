@@ -6,8 +6,10 @@ prepare_pointEstimates <- function(bt_data, competence, grouping_var){
 
       bt_data[grepl(i, bt_data$group),"TR_BUNDESLAND"] <- i
 
-      # Eintragen der p-Werte in die entsprchende Zeile
+      # Eintragen der p-Werte in die entsprechende Zeile
       bt_data[grepl(paste0(i, "_0"), bt_data$group), paste0("p_", j)] <- bt_data[grepl(paste0(i, "_0", ".vs.wholeGroup"), bt_data$group), paste0("p_",j )]
+      bt_data[grepl(paste0(i, "_1"), bt_data$group), paste0("p_", j)] <- bt_data[grepl(paste0(i, "_1", ".vs.wholeGroup"), bt_data$group), paste0("p_",j )]
+
       }
     }
 

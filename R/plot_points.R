@@ -14,8 +14,7 @@ list(
                   color = .data[[grouping_var]],
                   label = round(est, 0)),
               nudge_y = c(-20, 20), size = 3, ...),
-  scale_shape_manual(values = c(16, 17, 16)
-)
+  pointshape_iqb
 )
 }
 

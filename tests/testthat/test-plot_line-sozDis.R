@@ -65,8 +65,6 @@ for(i in bundeslaender){
   }
 
   plot_list[[i]] <- p1
-  plot(plot_list[[i]])
-
   position <- position + 1
 }
 
