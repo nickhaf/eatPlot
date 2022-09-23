@@ -33,7 +33,7 @@ draw_brace <- function(dat_trend, upper_label, lower_label, year_vec, bundesland
                                          !(brace_coordinates$year_start == 2011 &
                                             brace_coordinates$year_end == 2016), ],
               mapping = aes(
-                x = year_start + (year_end - max(year_start))/2 - 0.35 ,
+                x = year_start + (year_end - max(year_start))/2 - 0.45 ,
                 y = label_pos,
                 label = paste0(round(estTrend_within, 0), sigTrend_vsGermany),
                 fontface = sigTrend_within
@@ -47,7 +47,7 @@ draw_brace <- function(dat_trend, upper_label, lower_label, year_vec, bundesland
                                          !(brace_coordinates$year_start == 2011 &
                                              brace_coordinates$year_end == 2016), ],
               mapping = aes(
-                x = year_start + (year_end - max(year_start))/2 + 0.35,
+                x = year_start + (year_end - max(year_start))/2 + 0.45,
                 y = label_pos,
                 label = paste0("(", format(round(seTrend_within, 1), nsmall = 1), ")")
               ),

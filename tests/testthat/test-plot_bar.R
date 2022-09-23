@@ -16,4 +16,8 @@ bt21_NoTrend_prep <- bt21_NoTrend %>%
   )) %>%
   filter(kb == "GL" & comparison == "crossDiff")
 
+
+pdf(file = "BarPlot_AdjMittel.pdf", width = 10, height = 10)
 plot_bar(bt21_NoTrend_prep)
+dev.off()
+

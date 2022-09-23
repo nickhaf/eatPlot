@@ -8,9 +8,11 @@ plot_settings <- function(my_data){
     linetype_iqb,
     labs(title = i),
     annotation_custom(
-      grob = grid::rectGrob( gp = grid::gpar(fill = rgb(128, 196, 214,
-                                                        maxColorValue = 255), alpha = .4, col = 0)), #, alpha = 165.7
-      xmin = -Inf, xmax = Inf, ymin = 580, ymax = 600
+      grob = grid::rectGrob(gp = grid::gpar(fill = rgb(128, 196, 214,
+                                                        maxColorValue = 255),
+                                            alpha = .4,
+                                            col = 0)),
+      xmin = -Inf, xmax = Inf, ymin = 580, ymax = 593
     )
 
   )

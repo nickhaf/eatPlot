@@ -29,6 +29,6 @@ theme_bar_iqb <- function(){
       legend.position = "none",
       axis.title.x = element_blank(),
       axis.title.y = element_blank(),
-      axis.text.y = element_blank()
+      #axis.text.y = element_blank()
     )
 }
