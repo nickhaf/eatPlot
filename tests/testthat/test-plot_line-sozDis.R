@@ -1,5 +1,5 @@
 library(tidyverse)
-
+library(ggtext)
 
 ## Create necessary data sets: 1 long Trendset, and one long point estimate set
 
