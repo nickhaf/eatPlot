@@ -1,14 +1,20 @@
 draw_brace <- function(dat_trend, upper_label, lower_label, year_vec, bundesland){
 
+  # Get range for y-axis
   range_est <- range(c(dat_trend$est_start, dat_trend$est_end))
 
+  # Calculate brace coordinates
   brace_coordinates <- dat_trend %>%
     mutate(brace_upper_y = ifelse(year_start == min(year_start), range_est[1] - 40, range_est[1] -72)) %>%
     mutate(brace_lower_y = ifelse(year_start == min(year_start), range_est[1] - 70, range_est[1] -102)) %>%
     mutate(label_pos = ifelse(KBuecher_imp3 == 1, range_est[1] - 113, range_est[1] - 143)) %>%
     mutate(sigTrend_vsGermany = ifelse(pTrend_vsGermany < 0.05, "<sup>a</sup>", ""))
+
+# Combine different ggplot functions
   c(
-    coord_cartesian(ylim = c(range_est[1] - 40, range_est[2] + 20), clip = "off"), # necessary, so the brace can be drawn inside the plot
+    # Clip Coordinate system. Necessary, so the brace can be drawn inside the plot
+    coord_cartesian(ylim = c(range_est[1] - 40, range_est[2] + 20), clip = "off"),
+
 
     lapply(unique(dat_trend$year_start), function(x){
       coordinates <- brace_coordinates %>%

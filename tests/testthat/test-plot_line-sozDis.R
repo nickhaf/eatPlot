@@ -71,7 +71,7 @@ for(i in bundeslaender){
 n <- length(plot_list)
 nCol <- floor(sqrt(n))
 
-pdf(file = "Trend_Soz_Dis.pdf", width = 16, height = 33)
+pdf(file = "Trend_Soz_Dis.pdf", width = 14, height = 25)
 do.call(eval(parse(text = "gridExtra::grid.arrange")), c(plot_list, ncol = nCol))
 dev.off()
 
