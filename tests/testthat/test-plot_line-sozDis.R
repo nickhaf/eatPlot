@@ -71,8 +71,7 @@ for(i in bundeslaender){
 n <- length(plot_list)
 nCol <- floor(sqrt(n))
 
-pdf(file = "Trend_Soz_Dis.pdf", width = 14, height = 25)
-do.call(eval(parse(text = "gridExtra::grid.arrange")), c(plot_list, ncol = nCol))
+margin = theme(plot.margin = margin(0.05, 0.03, 0.25, 0.03, "npc"))
+pdf(file = "Trend_Soz_Dis.pdf", width = 11, height = 22)
+do.call(eval(parse(text = "gridExtra::grid.arrange")), c(grobs = lapply(plot_list, "+", margin), ncol = nCol))
 dev.off()
-
-
