@@ -1,3 +1,5 @@
+# Build braces + labels
+
 draw_brace <- function(dat_trend, upper_label, lower_label, year_vec, bundesland){
 
   # Get range for y-axis
