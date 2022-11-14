@@ -1,9 +1,6 @@
-library(readxl)
 library(tidyverse)
 
-## https://stackoverflow.com/questions/31038709/how-to-write-a-test-for-a-ggplot-plot
-
-bt21_NoTrend <- read_excel("Q:/BT2021/BT/60_Bericht/04_Mittelwerte/adjustierte Mittelwerte/Ergebnisse/01_ohneTrend_z_standard.xlsx")
+bt21_NoTrend <- readxl::read_excel("Q:/BT2021/BT/60_Bericht/04_Mittelwerte/adjustierte Mittelwerte/Ergebnisse/01_ohneTrend_z_standard.xlsx")
 
 
 bt21_NoTrend_prep <- bt21_NoTrend %>%
