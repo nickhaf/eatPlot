@@ -14,4 +14,11 @@ t1 <- bt21_NoTrend %>%
   reshape(idvar = "group", timevar = "adjust" , direction = "wide", v.names = c("est"))
 
 p1 <- plot_bar(bt21_NoTrend_prep)
-grid.table(t1, theme = t1_theme)
+
+library(gridExtra)
+
+grid.table(t2)
+gridExtra::grid.arrange(grobs = list(tableGrob(t1), p1),
+                        nrow = 1
+                        )
+
