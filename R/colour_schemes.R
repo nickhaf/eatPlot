@@ -1,7 +1,8 @@
 # The IQB-specific colour schemes, linetypes and pointshapes.
 
 
-##
+# Filling colours ---------------------------------------------------------
+
 fill_iqb <- ggplot2::scale_fill_manual(
 
   values = c("ohneAdj" = rgb(147, 205, 221,
@@ -25,6 +26,7 @@ fill_iqb_adj_sig <- ggplot2::scale_fill_manual(
 )
 
 
+# Scale colours -----------------------------------------------------------
 
 colour_iqb <- ggplot2::scale_colour_manual(values = c("ohneAdj" = rgb(147, 205, 221, maxColorValue = 255),
                                                       "mitAdj" = "black")) # Gruppen immer als 1 und 0
@@ -32,6 +34,9 @@ colour_iqb <- ggplot2::scale_colour_manual(values = c("ohneAdj" = rgb(147, 205, 
 grouping_colours <- ggplot2::scale_colour_manual(values = c("0" = rgb(166, 166, 166, maxColorValue = 255),
                                                             "1" = "black"))
 
+
+
+# Shapes ------------------------------------------------------------------
 
 ## Linetype: solid and dashed
 linetype_iqb <- ggplot2::scale_linetype_manual(values=c("bold" = 1,
