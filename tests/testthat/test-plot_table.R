@@ -1,3 +1,10 @@
+
+library(tidyverse)
+library(grid)
+library(cowplot)
+library(gridExtra)
+
+
 bt21_NoTrend <- readxl::read_excel("Q:/BT2021/BT/60_Bericht/04_Mittelwerte/adjustierte Mittelwerte/Ergebnisse/01_ohneTrend_z_standard.xlsx")
 
 
@@ -26,10 +33,55 @@ t1 <- bt21_NoTrend %>%
   as.data.frame %>%
   reshape(idvar = "group", timevar = "adjust" , direction = "wide", v.names = c("est"))
 
-
+## Plot plot
 p1 <- plot_bar(bt21_NoTrend_prep) +
   scale_x_continuous(expand = c(0, 0)) +
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
+
+## convert to grobs
+t_grob_1 <- tableGrob(t1, theme = t1_theme)
+p_grob_1 <- ggplotGrob(p1)
+
+# Set widths/heights to 'fill whatever space I have'
+t_grob_1$widths <- unit(rep(1, ncol(t_grob_1)), "null")
+t_grob_1$heights <- unit(rep(1, nrow(t_grob_1)), "null")
+
+# Format table as plot
+p3 <- ggplot() +
+  annotation_custom(t_grob_1) +
+  theme(plot.margin = unit(c(0, -0.3, 0, 0), "cm")) +
+  scale_x_discrete(breaks = colnames(t1),
+                   limits = c(colnames(t1), ""))
+
+
+p3 + p1 + plot_layout(nrow = 1)
+
+
+
+## combine plot and table grob
+
+grid.arrange(t_grob_1, p_grob_1, ncol = 2,
+             widths = unit(c(1, 5), "cm"),
+             heights = unit(c(1, 5), "cm"),
+             clip = TRUE)
+
+##########################################
+## heights/widths argument verstehen ##
+############################################
+
+# mit cowplot:
+plot_grid(t_grob_1, p_grob_1, rel_widths = c(0.5, 0.5))
+
+
+library(ggpubr)
+ggarrange(t_grob_1, p_grob_1, ncol = 2, align = "h")
+
+
+
+# patchwork ---------------------------------------------------------------
+library(patchwork)
+
+
 
 
 # table als ggplot --------------------------------------------------------
@@ -40,15 +92,73 @@ t1_b <- t1 %>%
   mutate(Bundesland = group) %>%
   pivot_longer(cols = c("est.ohneAdj", "est.mitAdj", "Bundesland"), names_to = "estimate" )
 
-p2 <- ggplot(t1_b, aes(x = estimate, y = group)) +
+p2 <- ggplot(t1_b, aes(x =estimate, y = group)) +
   ggforestplot::geom_stripes(odd = rgb(219, 238, 244, maxColorValue = 255),
                              even = "#00000000") +
-  geom_text(aes(label = value), hjust = 0) +
+  geom_text(aes(label = value, group = estimate), hjust = "outward") +
   theme_bar_iqb() +
   scale_x_discrete(position = "top") +
   theme(plot.margin = unit(c(0, -0.1, 0, 0), "cm")) +
   NULL
 
+p2
 
-library(cowplot)
 plot_grid(p2, p1, nrow = 1, align = "h")
+
+
+# table as ggplot function ------------------------------------------------
+
+table_plot <- ggplot()+
+  theme_void() +
+geom_table(data = t1, label = list(t1), x = 0, y = 0) #  (ggpmsic)
+
+plot_grid(table_plot, p1, nrow = 1, align = "h")
+
+
+# cowplot -----------------------------------------------------------------
+
+plot_grid(grid.table(t1), p1, nrow = 1, rel_widths = c(1/2, 1/2))
+
+# gtable ------------------------------------------------------------------
+
+a <- tableGrob(t1)
+b <- grobTree(rectGrob(), textGrob("new\ncell"))
+c <- ggplotGrob(qplot(1:10,1:10))
+d <- linesGrob()
+mat <- matrix(list(a, b, c, d), nrow = 2)
+g <- gtable_matrix(name = "demo", grobs = mat,
+                   widths = unit(c(2, 4), "cm"),
+                   heights = unit(c(2, 5), c("in", "lines")))
+g
+
+plot(g)
+
+
+
+
+
+
+
+
+
+
+
+mat <- matrix(list(tableGrob(t1), p1), nrow = 1)
+gtable_matrix(name = "test", grobs = mat,
+              widths = unit(c(4, 4), "cm"),
+              heights = unit(c(5), "cm")
+              )
+
+a <- gtable(unit(c(5,5), c("cm")), unit(5, "cm"))
+
+gtable_show_layout(a)
+a <- gtable_add_grob(a, grobs = list(t_grob_1, p2), 1,1)
+a <- gtable_add_grob(a, as.grob(p2), 1, 1)
+grid.draw(a)
+
+
+# ggplotify ---------------------------------------------------------------
+
+# library(ggplotify)
+# p3 <- as.ggplot(tableGrob(t1)) +
+#   theme_minimal()
