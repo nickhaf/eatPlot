@@ -5,6 +5,8 @@ library(cowplot)
 library(gridExtra)
 
 
+# Daten laden -------------------------------------------------------------
+
 bt21_NoTrend <- readxl::read_excel("Q:/BT2021/BT/60_Bericht/04_Mittelwerte/adjustierte Mittelwerte/Ergebnisse/01_ohneTrend_z_standard.xlsx")
 
 
@@ -33,25 +35,59 @@ t1 <- bt21_NoTrend %>%
   as.data.frame %>%
   reshape(idvar = "group", timevar = "adjust" , direction = "wide", v.names = c("est"))
 
+t1_long <- t1 %>%
+  mutate_at(c("est.ohneAdj", "est.mitAdj"), round) %>%
+  mutate_at(c("est.ohneAdj", "est.mitAdj"), as.character) %>%
+  mutate(Bundesland = group) %>%
+  pivot_longer(cols = c("est.ohneAdj", "est.mitAdj", "Bundesland"), names_to = "estimate" )
+
+
+
+# Globales Setup ----------------------------------------------------------
 ## Plot plot
 p1 <- plot_bar(bt21_NoTrend_prep) +
   scale_x_continuous(expand = c(0, 0)) +
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 
+#ggplot_build(p1)$layout$panel_params[[1]]$y.labels
+
 ## convert to grobs
 t_grob_1 <- tableGrob(t1, theme = t1_theme)
-p_grob_1 <- ggplotGrob(p1)
 
 # Set widths/heights to 'fill whatever space I have'
 t_grob_1$widths <- unit(rep(1, ncol(t_grob_1)), "null")
 t_grob_1$heights <- unit(rep(1, nrow(t_grob_1)), "null")
 
+
+
+
+# Col spanners ------------------------------------------------------------
+colnames(t1) <- NULL
+
+header_t1 <- tableGrob(t1[1, 1:3], rows=NULL, cols=c("head1", "head2", "head3"))
+p_grob_1 <- ggplotGrob(p1)
+t_grob_1 <- gtable_combine(header_t1[1,], t_grob_1, along=2)
+#grid.draw(t_grob_1)
+
+
+
+
+
+# Table as plot -----------------------------------------------------------
+# Quelle:
+
 # Format table as plot
 p3 <- ggplot() +
   annotation_custom(t_grob_1) +
-  theme(plot.margin = unit(c(0, -0.3, 0, 0), "cm")) +
-  scale_x_discrete(breaks = colnames(t1),
-                   limits = c(colnames(t1), ""))
+  scale_x_continuous(breaks = c(1:3), limits = 1:3, expand = c(0,0)) +
+  theme(plot.margin = unit(c(0, -1, 0, 0), "cm")) +
+  NULL
+# scale_y_continuous(breaks = c(1:17),
+  #                    limits = c(1, 17),
+  #                    expand = c(0,0.4))
+
+  #scale_x_discrete(breaks = colnames(t1),
+  #                 limits = c(colnames(t1), ""))
 
 
 p3 + p1 + plot_layout(nrow = 1)
@@ -60,17 +96,60 @@ p3 + p1 + plot_layout(nrow = 1)
 
 ## combine plot and table grob
 
-grid.arrange(t_grob_1, p_grob_1, ncol = 2,
-             widths = unit(c(1, 5), "cm"),
-             heights = unit(c(1, 5), "cm"),
-             clip = TRUE)
+grid.arrange(t_grob_1, p_grob_1, ncol = 2#,
+             #widths = unit(c(1, 5), "cm"),
+             #heights = unit(c(1, 5), "cm"),
+             #clip = TRUE
+             )
+
+
+
+#
+
+# table as plot 2-----------------------------------------------------------
+# Quelle: https://stackoverflow.com/questions/73250489/how-to-align-table-with-forest-plot-ggplot2
+
+p3 <- ggplot(t1_long, aes(estimate, group, label = value)) +
+  geom_text(size = 3) +
+  scale_x_discrete(position = "top", labels = c("rr", "95% CI")) +
+  labs(y = NULL, x = NULL) +
+  theme_classic() +
+  theme(
+    strip.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_blank(),
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size = 12),
+    axis.ticks = element_blank(),
+    axis.title = element_text(face = "bold"),
+  )
+
+p3 + p1 + plot_layout(nrow = 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ##########################################
 ## heights/widths argument verstehen ##
 ############################################
 
 # mit cowplot:
-plot_grid(t_grob_1, p_grob_1, rel_widths = c(0.5, 0.5))
+plot_grid(t_grob_1, p_grob_1, align = "h") #, rel_widths = c(0.5, 0.5)
 
 
 library(ggpubr)
@@ -86,13 +165,8 @@ library(patchwork)
 
 # table als ggplot --------------------------------------------------------
 
-t1_b <- t1 %>%
-  mutate_at(c("est.ohneAdj", "est.mitAdj"), round) %>%
-  mutate_at(c("est.ohneAdj", "est.mitAdj"), as.character) %>%
-  mutate(Bundesland = group) %>%
-  pivot_longer(cols = c("est.ohneAdj", "est.mitAdj", "Bundesland"), names_to = "estimate" )
 
-p2 <- ggplot(t1_b, aes(x =estimate, y = group)) +
+p2 <- ggplot(t1_long, aes(x =estimate, y = group)) +
   ggforestplot::geom_stripes(odd = rgb(219, 238, 244, maxColorValue = 255),
                              even = "#00000000") +
   geom_text(aes(label = value, group = estimate), hjust = "outward") +
