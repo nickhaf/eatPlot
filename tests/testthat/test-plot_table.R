@@ -3,6 +3,7 @@ library(tidyverse)
 library(grid)
 library(cowplot)
 library(gridExtra)
+library(kableExtra)
 
 
 # Daten laden -------------------------------------------------------------
@@ -70,7 +71,8 @@ t_grob_1 <- gtable_combine(header_t1[1,], t_grob_1, along=2)
 #grid.draw(t_grob_1)
 
 
-
+kbl(t1) %>%
+  kable_classic
 
 
 # Table as plot -----------------------------------------------------------
@@ -181,7 +183,7 @@ plot_grid(p2, p1, nrow = 1, align = "h")
 
 
 # table as ggplot function ------------------------------------------------
-
+library(ggpmisc)
 table_plot <- ggplot()+
   theme_void() +
 geom_table(data = t1, label = list(t1), x = 0, y = 0) #  (ggpmsic)
@@ -236,3 +238,30 @@ grid.draw(a)
 # library(ggplotify)
 # p3 <- as.ggplot(tableGrob(t1)) +
 #   theme_minimal()
+
+
+
+# gtable ------------------------------------------------------------------
+library(gt)
+
+colnames(t1) <- c("Land", "nicht adjustiert (M)", "adjustiert (M)")
+gt_t1 <- t1 %>%
+  gt() %>%
+  tab_spanner(columns = c(2,3), label = "Mittelwerte") %>%
+  tab_style(
+    style = list(
+      cell_fill(color = rgb(219, 238, 244, maxColorValue = 255))
+    ),
+    locations = cells_body(
+     rows = c(2, 4, 6, 8, 10, 12, 14, 16))
+  )
+
+gtsave(gt_t1, filename = "gt_t1.png")
+
+# Idee: als Bild speichern, neu laden und dann als Grob ausrichten
+
+
+gt_t1
+
+
+
