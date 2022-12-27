@@ -5,6 +5,7 @@ library(cowplot)
 library(gridExtra)
 library(kableExtra)
 
+# https://statisticsglobe.com/insert-png-image-between-ggplot2-axis-positions-in-r
 
 # Daten laden -------------------------------------------------------------
 
