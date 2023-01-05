@@ -137,22 +137,31 @@ p3 <- ggplot(t1_long, aes(x = estimate, y = group, label = value)) + # x-Achse a
             hjust = "left",
             nudge_x = -0.55) +
 scale_x_discrete(position = "top",
-                 labels = c("Land", "adjustiert", "nicht adjustiert")) +
+                 labels = c("Land",
+                            expression(atop(underline(atop("nicht", "adjustiert")), italic("M"))),
+                            "adjustiert")) +
   labs(y = NULL, x = NULL) +
   theme_classic() +
   theme(
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
     panel.border = element_blank(),
-    axis.line = element_blank(),
+    axis.line.y = element_blank(),
     axis.text.y = element_blank(),
-    axis.text.x = element_text(size = 3),
+    axis.text.x = element_text(size = 10, hjust = 0.5, color = "black", face = "bold"),
     axis.ticks = element_blank(),
-    axis.title = element_text(face = "bold"),
+    #axis.title = element_text(face = "bold", hjust = 0),
     plot.margin = unit(c(0, -0.1, 0, 0), "cm")
   )
 
 p_bartable <- plot_grid(p3, p1, nrow = 1, align = "h")
+
+## Achtung: group wird noch dreimal übereinander eingezeichnet
+
+## column spanning labels:
+# https://stackoverflow.com/questions/44616530/axis-labels-on-two-lines-with-nested-x-variables-year-below-months
+# https://stackoverflow.com/questions/20571306/multi-row-x-axis-labels-in-ggplot-line-chart
+
 
 #p3 + p1 + plot_layout(nrow = 1)
 
