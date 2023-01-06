@@ -54,10 +54,9 @@ p1 <- plot_bar(bt21_NoTrend_prep) +
                      )
   ) +
   theme(axis.text.x.top = element_text(size = 10, hjust = 0.5, color = "black", face = "bold"),
-        axis.line.x.top = element_line()
+        axis.line.x.top = element_line()#,
+        #legend.position = "bottom"
         )
-
-
 
 
 # Grobs -------------------------------------------------------------------
@@ -158,8 +157,18 @@ scale_x_discrete(position = "top",
     axis.text.x = element_text(size = 10, hjust = 0.5, color = "black", face = "bold"),
     axis.ticks = element_blank(),
     #axis.title = element_text(face = "bold", hjust = 0),
-    plot.margin = unit(c(0, -0.1, 0, 0), "cm")
-  )
+    plot.margin = unit(c(0, -0.1, 0, 0), "cm"),
+    plot.caption = element_text(hjust = 0),
+    legend.position = "bottom"
+  ) +
+  labs(caption = "Anmerkungen. In der Tabelle werden gerundete Werte angegeben. \n
+        R2 = Determinationskoeffizient; M = Mittelwert. \n
+        Fett gedruckte Werte unterscheiden sind statistisch signifikant (p < .05) vom Wert für Deutschland insgesamt. \n
+        Schraffierte Balken zeigen eine statistisch nicht signifikante Differenz vom Wert für Deutschland insgesamt an.")
+
+
+library(patchwork)
+p3 + p1
 
 p_bartable <- plot_grid(p3, p1, nrow = 1, align = "h")
 p_bartable
