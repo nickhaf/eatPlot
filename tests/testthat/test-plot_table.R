@@ -46,10 +46,16 @@ t1_long <- t1 %>%
 
 ## Plot plot
 p1 <- plot_bar(bt21_NoTrend_prep) +
-  scale_x_continuous(expand = c(0, 0)) +
+  #scale_x_continuous(expand = c(0, 0)) +
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) +
-  ggtitle("Abweichungen vom Mittelwert für \n Deutschland insgesamt") +
-  theme(plot.title = element_text(hjust = 0.5))
+  scale_x_continuous(sec.axis= sec_axis(
+                     trans = ~ . * 1,
+                     labels = c("", "", "Abweichung vom Mittelwert für \n Deutschland insgesamt", "", "")
+                     )
+  ) +
+  theme(axis.text.x.top = element_text(size = 10, hjust = 0.5, color = "black", face = "bold"),
+        axis.line.x.top = element_line()
+        )
 
 
 
@@ -132,7 +138,8 @@ p3 <- ggplot(t1_long, aes(x = estimate, y = group, label = value)) + # x-Achse a
             hjust = "center"
             #nudge_x = c(-0.3, 0, 0)
             ) +
-  geom_text(aes(x = "Bundesland", label = group),
+  geom_text(data = t1_long %>% filter(estimate == "Bundesland"),
+            aes(x = "Bundesland", label = group),
             size = 3,
             hjust = "left",
             nudge_x = -0.55) +
@@ -155,8 +162,8 @@ scale_x_discrete(position = "top",
   )
 
 p_bartable <- plot_grid(p3, p1, nrow = 1, align = "h")
+p_bartable
 
-## Achtung: group wird noch dreimal übereinander eingezeichnet
 
 ## column spanning labels:
 # https://stackoverflow.com/questions/44616530/axis-labels-on-two-lines-with-nested-x-variables-year-below-months
