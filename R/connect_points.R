@@ -8,7 +8,7 @@
 #' @param my_data Data
 #' @param grouping_var Variable for grouping
 #'
-#' @return ggplot
+#' @return ggplot object
 #' @export
 #'
 

@@ -25,13 +25,6 @@ t1 <- bt21_NoTrend %>%
   as.data.frame %>%
   reshape(idvar = "group", timevar = "adjust" , direction = "wide", v.names = c("est"))
 
-# Longformat
-t1_long <- t1 %>%
-  mutate_at(c("est.ohneAdj", "est.mitAdj"), round) %>%
-  mutate_at(c("est.ohneAdj", "est.mitAdj"), as.character) %>%
-  mutate(Bundesland = group) %>%
-  pivot_longer(cols = c("est.ohneAdj", "est.mitAdj", "Bundesland"), names_to = "estimate" ) %>%
-  mutate(value = ifelse(estimate == "Bundesland", NA, value))
 
 
 ## Plot plot
