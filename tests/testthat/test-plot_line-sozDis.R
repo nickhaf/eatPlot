@@ -4,7 +4,7 @@ library(ggtext)
 ## Create necessary data sets: 1 long Trendset, and one long point estimate set
 
 
-bt21 <- read.csv2("Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/Abbildungen/01_KAS/Nicklas/Daten/Abb65Buecher_mitTrend_KOPIE.csv", na.strings = "") %>%
+bt21 <- read.csv2("q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/01_Rechnungen/KAS/alt/Abb65Buecher_mitTrend - Kopie.csv", na.strings = "") %>%
   filter(kb == "GL")
 
 bt21_prep <- prepare_general(bt21, competence = "GL")

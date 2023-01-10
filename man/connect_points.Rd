@@ -12,7 +12,7 @@ connect_points(my_data, grouping_var)
 \item{grouping_var}{Variable for grouping}
 }
 \value{
-ggplot
+ggplot object
 }
 \description{
 Connect Points
