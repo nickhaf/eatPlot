@@ -18,3 +18,22 @@ pdf(file = "BarPlot_AdjMittel.pdf", width = 10, height = 10)
 plot_bar(bt21_NoTrend_prep)
 dev.off()
 
+
+## Plot plot
+p1 <- plot_bar(data_prep) +
+  #scale_x_continuous(expand = c(0, 0)) +
+  theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) +
+  scale_x_continuous(sec.axis= sec_axis(
+    trans = ~ . * 1,
+    labels = c("", "", "Abweichung vom Mittelwert für \n Deutschland insgesamt", "", "")
+  )
+  ) +
+  theme(axis.text.x.top = element_text(size = 10, hjust = 0.5, color = "black", face = "bold"),
+        axis.line.x.top = element_line()#,
+        #legend.position = "bottom"
+  )
+
+
+
+p_bartable <- cowplot::plot_grid(p3, p1, nrow = 1, align = "h")
+p_bartable
