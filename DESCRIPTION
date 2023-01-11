@@ -5,8 +5,7 @@ Authors@R:
     person("Nicklas", "Hafiz", , "hafiznij@hu-berlin.de", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: Functions for plotting ... output. 
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
