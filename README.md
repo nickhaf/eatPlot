@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/nickhaf/eatPlot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nickhaf/eatPlot/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/nickhaf/eatPlot/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nickhaf/eatPlot?branch=main)
 <!-- badges: end -->
 
 The goal of eatPlot is to …
