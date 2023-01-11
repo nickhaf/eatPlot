@@ -6,7 +6,7 @@ adjusted_means_diff <- adjusted_means[!is.na(adjusted_means$comparison), ]
 # randomly permute values
 for(i in c("es", "est", "p", "se")){
 
-adjusted_means_diff[, i] <- sample(adjusted_means_diff[, i], replace = TRUE)
+  adjusted_means_diff[, i] <- sample(adjusted_means_diff[, i], replace = TRUE)
 
 }
 

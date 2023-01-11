@@ -20,5 +20,5 @@ Returns a \code{data.frame} which can be used as input for \code{plotTableBar}.
 Prepare data for plotting a TableBarplot
 }
 \examples{
-tbd
+#tbd
 }
