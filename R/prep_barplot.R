@@ -17,3 +17,5 @@ prep_barplot <- function(data, subGroups, sigNiveau){
   data <- data[data$comparison == "crossDiff", ]
 
 }
+
+## Reshape to wide, damit nur ein Datensatz bleibt (p_crossDiff....)

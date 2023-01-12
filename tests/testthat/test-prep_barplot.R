@@ -6,3 +6,5 @@ test_that("significance niveau is working correctly", {
   expect_false(isTRUE(all.equal(df$p < 0.05, as.logical(df$sig))))
 
 })
+
+test_that("")
