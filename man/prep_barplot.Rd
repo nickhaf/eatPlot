@@ -4,14 +4,14 @@
 \alias{prep_barplot}
 \title{Prepare data for plotting a barplot.}
 \usage{
-prep_barplot(data, subGroups, sigNiveau)
+prep_barplot(data, sub_groups, sig_niveau)
 }
 \arguments{
 \item{data}{Output from \code{}}
 
-\item{subGroups}{Subgroups which should be plotted in the same plot tile. E.g. you can distinguish between adjusted and not adjusted means.}
+\item{sub_groups}{sub_groups which should be plotted in the same plot tile. E.g. you can distinguish between adjusted and not adjusted means.}
 
-\item{sigNiveau}{At which significance niveau do p-values become significant?}
+\item{sig_niveau}{At which significance niveau do p-values become significant?}
 }
 \value{
 Returns a \code{data.frame} which can be used as input for \code{plot_bar}.

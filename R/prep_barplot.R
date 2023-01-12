@@ -1,20 +1,31 @@
 #' Prepare data for plotting a barplot.
 #'
 #' @param data Output from \code{}
-#' @param subGroups Subgroups which should be plotted in the same plot tile. E.g. you can distinguish between adjusted and not adjusted means.
-#' @param sigNiveau At which significance niveau do p-values become significant?
+#' @param sub_groups sub_groups which should be plotted in the same plot tile. E.g. you can distinguish between adjusted and not adjusted means.
+#' @param sig_niveau At which significance niveau do p-values become significant?
 #'
 #' @return Returns a \code{data.frame} which can be used as input for \code{plot_bar}.
 #' @export
 #'
 #' @examples #tbd
-prep_barplot <- function(data, subGroups, sigNiveau){
+prep_barplot <- function(data, sub_groups, sig_niveau){
 
-  data$subGroups <- data[, subGroups]
-  data$sig <- factor(ifelse(data$p < sigNiveau, TRUE, FALSE)) # Alternativer name: pattern
-  data$fill <- paste0(data[ , subGroups], "_", data$sig)
+  colnames(data)[colnames(data) == sub_groups] <- "sub_groups"
 
-  data <- data[data$comparison == "crossDiff", ]
+  if(any(is.na(data$p))){
+    stop("Your p-values should not contain any missings. Please check your input data.")
+  }else{
+  data$sig <- ifelse(data$p < sig_niveau & !is.na(data$p), TRUE, FALSE) ## alternativ:pattern
+  }
+
+  if(any(is.na(data$sub_groups))){
+    stop("Your subgroups should not contain any missings. Please check your input data.")
+  }else{
+  data$fill <- paste0(data$sub_groups, "_", data$sig)
+  }
+
+  data <- subset(data, data$parameter == "mean" & !is.na(data$parameter) &
+                       data$comparison == "crossDiff" & !is.na(data$comparison))
 
 }
 
