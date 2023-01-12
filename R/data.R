@@ -1,13 +1,13 @@
-#' BT21 adusted mean differences
+#' BT21 adusted means
 #'
-#' A randomly permuted data set stemming from the BT21 ajdusted means data file displaying the (randomly permuted!) the differnce of the countrys adjusted and unadjusted means from the german mean value.
+#' BT21 data set that contains the results of the adjusted means chapter.
 #'
-#' @format ## `adjusted_means_diff`
-#' A data frame with 128 rows and 12 columns:
+#' @format ## `adjusted_means`
+#' A data frame with 264 rows and 12 columns:
 #' \describe{
-#'   \item{est}{Mean difference}
+#'   \item{est}{Estimated value.}
 #'   \item{p}{p-value}
 #'   ...
 #' }
 #' @source <"Q:/BT2021/BT/60_Bericht/04_Mittelwerte/adjustierte Mittelwerte/Ergebnisse/01_ohneTrend_z_standard.xlsx">
-"adjusted_means_diff"
+"adjusted_means"
