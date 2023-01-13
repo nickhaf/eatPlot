@@ -1,0 +1,48 @@
+
+#prep_dat <- prep_barplot(adjusted_means, sub_groups = "adjust", sig_niveau = 0.05)
+
+plot_bar <- function(prep_dat, competence){ ##competence not necessary
+
+  prep_dat <- prep_dat[prep_dat$kb == competence, ]
+  prep_dat$sig <- gsub("FALSE", "no", prep_dat$sig)
+  prep_dat$sig <- gsub("TRUE", "yes", prep_dat$sig)
+  prep_dat$sig <- as.factor(prep_dat$sig)
+
+  ggplot2::ggplot(data = prep_dat,
+                  mapping = ggplot2::aes(
+                    x = est, y = group,
+                    fill = fill,
+                    pattern = sig)) +
+    ggforestplot::geom_stripes(odd = rgb(219, 238, 244, maxColorValue = 255),
+                               even = "#00000000") +
+
+    ggplot2::geom_vline(xintercept = seq(-40, 40, by = 10),
+                        linetype = "dashed", colour = "darkgrey") +
+
+    ggplot2::geom_vline(xintercept = 0,
+                        colour = "darkgrey") +
+
+    ggpattern::scale_pattern_manual(values = c(yes = "none",
+                                               no = "stripe")) +
+
+    ggpattern::scale_pattern_fill_manual(values = c("ohneAdj" = rgb(147, 205, 221, maxColorValue = 255),
+                                                    "mitAdj" = rgb(33, 89, 104, maxColorValue = 255))) +
+
+    ggpattern::geom_col_pattern(mapping = ggplot2::aes(
+      x = est,
+      y = group,
+      pattern_fill = sub_groups
+    ),
+    position = ggplot2::position_dodge(width = 0.8),
+    color = "black",
+    size = 0.6,
+    pattern_colour = "white",
+    pattern_angle = - 45,
+    pattern_density = 0.4, #Streifenbreite
+    pattern_spacing = 0.01, #Abstand
+    pattern_key_scale_factor = 0.6,
+    width = 0.4) +
+    ggplot2::scale_x_continuous(breaks = seq(-40, 40, by = 10)) #+
+    #fill_iqb_adj_sig +
+    #theme_bar_iqb()
+}
