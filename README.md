@@ -22,3 +22,5 @@ You can install the development version of eatPlot from
 # install.packages("devtools")
 devtools::install_github("nickhaf/eatPlot")
 ```
+
+## Examples
