@@ -13,7 +13,7 @@
 ##'
 plot_bar <- function(prep_dat){
 
-  ggplot2::ggplot(data = prep_dat,
+ggplot2::ggplot(data = prep_dat,
                   mapping = ggplot2::aes_string(
                     x = 'est', y = 'group',
                     fill = 'fill',
@@ -49,6 +49,7 @@ plot_bar <- function(prep_dat){
     ggpattern::scale_pattern_fill_manual(values = c("ohneAdj" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
                                                     "mitAdj" = grDevices::rgb(33, 89, 104, maxColorValue = 255))) +
     #fill_iqb_adj_sig +
-    #theme_bar_iqb() +
-  NULL
+theme_table_bar() +
+    NULL
+
 }

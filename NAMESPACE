@@ -2,3 +2,5 @@
 
 export(plot_bar)
 export(prep_barplot)
+export(theme_table_bar)
+importFrom(ggplot2,"%+replace%")
