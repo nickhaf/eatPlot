@@ -15,7 +15,7 @@ prep_barplot <- function(data, sub_groups, sig_niveau){
   if(any(is.na(data$p))){
     stop("Your p-values should not contain any missings. Please check your input data.")
   }else{
-  data$sig <- ifelse(data$p < sig_niveau & !is.na(data$p), TRUE, FALSE) ## alternativ:pattern
+  data$sig <- as.factor(ifelse(data$p < sig_niveau & !is.na(data$p), TRUE, FALSE))
   }
 
   if(any(is.na(data$sub_groups))){

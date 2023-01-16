@@ -23,7 +23,7 @@ test_that("significance niveau is working correctly", {
                "Your p-values should not contain any missings. Please check your input data.",
                fixed = TRUE)
 
-  expect_equal(df_2$sig, c(FALSE, FALSE, TRUE, FALSE))
+  expect_equal(df_2$sig, factor(c(FALSE, FALSE, TRUE, FALSE)))
 
 })
 
