@@ -1,22 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #' Plot an IQB barplot.
 #'
 #' @param prep_dat Data for the barplot. Has to be in the right format, ideally prepared with \link{prep_barplot}.
