@@ -1,12 +1,25 @@
+#' Plot an IQB barplot.
+#'
+#' @param prep_dat Data for the barplot. Has to be in the right format, ideally prepared with \link{prep_barplot}.
+#'
+#' @return ggplot object
+#' @export
+#'
+#' @examples #tbd
+#' @details text describing parameter inputs in more detail.
+##' \itemize{
+##'  \item{"prep_dat"}{Needs a specific data format.}
+##' }
+##'
 plot_bar <- function(prep_dat){
 
   ggplot2::ggplot(data = prep_dat,
-                  mapping = ggplot2::aes(
-                    x = est, y = group,
-                    fill = fill,
-                    pattern = sig)) +
+                  mapping = ggplot2::aes_string(
+                    x = 'est', y = 'group',
+                    fill = 'fill',
+                    pattern = 'sig')) +
 
-    ggforestplot::geom_stripes(odd = rgb(219, 238, 244, maxColorValue = 255),
+    ggforestplot::geom_stripes(odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
                                even = "#00000000") +
 
     ggplot2::geom_vline(xintercept = seq(-40, 40, by = 10),
@@ -15,10 +28,10 @@ plot_bar <- function(prep_dat){
     ggplot2::geom_vline(xintercept = 0,
                         colour = "darkgrey") +
 
-    ggpattern::geom_col_pattern(mapping = ggplot2::aes(
-      x = est,
-      y = group,
-      pattern_fill = sub_groups
+    ggpattern::geom_col_pattern(mapping = ggplot2::aes_string(
+      x = 'est',
+      y = 'group',
+      pattern_fill = 'sub_groups'
     ),
     position = ggplot2::position_dodge(width = 0.8),
     color = "black",
@@ -33,8 +46,8 @@ plot_bar <- function(prep_dat){
     ggpattern::scale_pattern_manual(values = c("TRUE" = "none",
                                                "FALSE" = "stripe")) +
 
-    ggpattern::scale_pattern_fill_manual(values = c("ohneAdj" = rgb(147, 205, 221, maxColorValue = 255),
-                                                    "mitAdj" = rgb(33, 89, 104, maxColorValue = 255))) +
+    ggpattern::scale_pattern_fill_manual(values = c("ohneAdj" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
+                                                    "mitAdj" = grDevices::rgb(33, 89, 104, maxColorValue = 255))) +
     #fill_iqb_adj_sig +
     #theme_bar_iqb() +
   NULL

@@ -20,3 +20,4 @@ Imports:
     ggforestplot,
     ggpattern,
     ggplot2
+Remotes: NightingaleHealth/ggforestplot 
