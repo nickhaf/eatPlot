@@ -20,5 +20,7 @@ LazyData: true
 Imports: 
     ggforestplot,
     ggpattern,
-    ggplot2
-Remotes: NightingaleHealth/ggforestplot 
+    ggplot2,
+    plyr,
+    rlang
+Remotes: github::NightingaleHealth/ggforestplot 

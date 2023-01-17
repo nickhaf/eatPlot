@@ -3,3 +3,5 @@ prep_dat <- prep_dat[prep_dat$kb == "GL",]
 
 
 plot_bar(prep_dat)
+
+
