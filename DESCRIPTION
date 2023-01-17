@@ -21,5 +21,6 @@ Imports:
     ggforestplot,
     ggpattern,
     ggplot2,
-    plyr
+    plyr,
+    rlang
 Remotes: NightingaleHealth/ggforestplot 

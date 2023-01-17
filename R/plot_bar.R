@@ -25,7 +25,7 @@ plot_bar <- function(prep_dat) {
       even = "#00000000"
     ) +
     ggplot2::geom_vline(
-      xintercept = seq(round_ten(prep_dat$est)[1], round_ten(prep_dat$est)[2], by = 10),
+      xintercept = seq(calc_plot_borders(prep_dat$est)[1], calc_plot_borders(prep_dat$est)[2], by = 10),
       linetype = "dashed", colour = "darkgrey"
     ) +
     ggplot2::geom_vline(
@@ -48,7 +48,7 @@ plot_bar <- function(prep_dat) {
       pattern_key_scale_factor = 0.6,
       width = 0.4
     ) +
-    ggplot2::scale_x_continuous(breaks = seq(round_ten(prep_dat$est)[1], round_ten(prep_dat$est)[2], by = 10)) +
+    ggplot2::scale_x_continuous(breaks = seq(calc_plot_borders(prep_dat$est)[1], calc_plot_borders(prep_dat$est)[2], by = 10)) +
     ggpattern::scale_pattern_manual(values = c(
       "TRUE" = "none",
       "FALSE" = "stripe"

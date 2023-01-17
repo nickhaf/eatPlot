@@ -1,14 +1,14 @@
 #' Get min and max of a vector and round them to 10.
 #' @description Currently only works, if the plot center is zero. Min and Max values of the input variable are calculated. The higher of these two values is put out as negative and positive value.
 #' @param x Numeric vector.
+#' @param accuracy Number to round to.
 #'
-#' @return
+#' @return Negative and positive plot borders.
 #' @export
 #'
 #' @examples
-#' round_ten(11)
-#' round_ten(-19)
-round_ten <- function(x, accuracy = 10){
+#' calc_plot_borders(c(11, -14))
+calc_plot_borders <- function(x, accuracy = 10){
 
   min_x <- min(x)
   max_x <- max(x)
