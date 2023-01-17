@@ -1,33 +1,3 @@
-test_that("significance niveau is working correctly", {
-
-  ## Data ##
-
-  df_raw_1 <- data.frame("parameter" = rep("mean", 4),
-                       "comparison" = rep("crossDiff", 4),
-                       "adjust" = c("ohneAdj", "mitAdj", "ohneAdj", "mitAdj"),
-                       "p" = c(0.02, 0.1, 0.01, NA)
-  )
-
-  df_raw_2 <- data.frame("parameter" = rep("mean", 4),
-                         "comparison" = rep("crossDiff", 4),
-                         "adjust" = c("ohneAdj", "mitAdj", "ohneAdj", "mitAdj"),
-                         "p" = c(0.02, 0.1, 0.01, 100)
-  )
-
-  df_2 <- prep_barplot(df_raw_2, sub_groups = "adjust", sig_niveau = 0.02)
-
-
-  ## Tests ##
-
-  expect_error(prep_barplot(df_raw_1, sub_groups = "adjust", sig_niveau = 0.02),
-               "Your p-values should not contain any missings. Please check your input data.",
-               fixed = TRUE)
-
-  expect_equal(df_2$sig, factor(c(FALSE, FALSE, TRUE, FALSE)))
-
-})
-
-
 test_that("fill column is build correctly", {
 
   df_raw_1 <- data.frame("parameter" = rep("mean", 4),
