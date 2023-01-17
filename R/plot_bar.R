@@ -14,10 +14,10 @@
 plot_bar <- function(prep_dat) {
   ggplot2::ggplot(
     data = prep_dat,
-    mapping = ggplot2::aes_string(
-      x = "est", y = "group",
-      fill = "fill",
-      pattern = "sig"
+    mapping = ggplot2::aes(
+      x = .data$est, y = .data$group,
+      fill = .data$fill,
+      pattern = .data$sig
     )
   ) +
     ggforestplot::geom_stripes(
@@ -25,7 +25,7 @@ plot_bar <- function(prep_dat) {
       even = "#00000000"
     ) +
     ggplot2::geom_vline(
-      xintercept = seq(-40, 40, by = 10),
+      xintercept = seq(round_ten(prep_dat$est)[1], round_ten(prep_dat$est)[2], by = 10),
       linetype = "dashed", colour = "darkgrey"
     ) +
     ggplot2::geom_vline(
@@ -33,10 +33,10 @@ plot_bar <- function(prep_dat) {
       colour = "darkgrey"
     ) +
     ggpattern::geom_col_pattern(
-      mapping = ggplot2::aes_string(
-        x = "est",
-        y = "group",
-        pattern_fill = "sub_groups"
+      mapping = ggplot2::aes(
+        x = .data$est,
+        y = .data$group,
+        pattern_fill = .data$sub_groups
       ),
       position = ggplot2::position_dodge(width = 0.8),
       color = "black",
@@ -48,7 +48,7 @@ plot_bar <- function(prep_dat) {
       pattern_key_scale_factor = 0.6,
       width = 0.4
     ) +
-    ggplot2::scale_x_continuous(breaks = seq(-40, 40, by = 10)) +
+    ggplot2::scale_x_continuous(breaks = seq(round_ten(prep_dat$est)[1], round_ten(prep_dat$est)[2], by = 10)) +
     ggpattern::scale_pattern_manual(values = c(
       "TRUE" = "none",
       "FALSE" = "stripe"
