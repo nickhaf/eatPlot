@@ -1,25 +1,31 @@
+test_that("significance niveau is working correctly", {
+
+  expect_error(calc_sig(data.frame("p" = c(0.02, 0.1, 0.01, NA)), sig_niveau = 0.02),
+               "Your p-values should not contain any missings. Please check your input data.",
+               fixed = TRUE)
+
+  df <- calc_sig(data.frame("p" = c(0.02, 0.1, 0.01, 12.4)), sig_niveau = 0.03)
+
+  expect_equal(colnames(df), c("p", "sig"))
+  expect_equal(df$sig, factor(c(TRUE, FALSE, TRUE, FALSE)))
+
+  df_2 <- calc_sig(data.frame("pvalue" = c(0.02, 0.1, 0.01, 12.4)), p_column = "pvalue")
+  expect_equal(df_2$sig, factor(c(TRUE, FALSE, TRUE, FALSE)))
+})
+
+
 test_that("fill column is build correctly", {
 
-  df_raw_1 <- data.frame("parameter" = rep("mean", 4),
-                       "comparison" = rep("crossDiff", 4),
-                       "adjust" = c("ohneAdj", "mitAdj", NA, "mitAdj"),
-                       "p" = c(0.02, 0.1, 0.01, 0.7)
-  )
-
-  df_raw_2 <- data.frame("parameter" = rep("mean", 4),
-                         "comparison" = rep("crossDiff", 4),
-                         "adjust" = c("ohneAdj", "mitAdj", "ohneAdj", "mitAdj"),
-                         "p" = c(0.02, 0.1, 0.01, 0.7)
-  )
-
-  df_2 <- prep_barplot(df_raw_2, sub_groups = "adjust", sig_niveau = 0.1)
-
-  expect_error(prep_barplot(df_raw_1, sub_groups = "adjust", sig_niveau = 0.1),
+  expect_error(calc_fill(data.frame("sub_groups" = c("ohneAdj", "mitAdj", NA, "mitAdj"),
+                                    "sig" = c(TRUE, FALSE, TRUE, FALSE))),
                "Your subgroups should not contain any missings. Please check your input data.",
                fixed = TRUE)
 
 
-  expect_equal(df_2$fill, c("ohneAdj_TRUE", "mitAdj_FALSE", "ohneAdj_TRUE", "mitAdj_FALSE"))
+  df <- data.frame("sub_groups" = c("ohneAdj", "mitAdj", "ohneAdj", "mitAdj"),
+                   "sig" = c(TRUE, FALSE, TRUE, FALSE))
+
+  expect_equal(calc_fill(df)$fill, c("ohneAdj_TRUE", "mitAdj_FALSE", "ohneAdj_TRUE", "mitAdj_FALSE"))
 
 })
 
