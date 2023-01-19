@@ -12,6 +12,9 @@
 ##' }
 ##'
 plot_bar <- function(prep_dat) {
+
+  prep_dat$y_position <- rep(rev(1:16),2 )
+
   ggplot2::ggplot(
     data = prep_dat,
     mapping = ggplot2::aes(
@@ -20,7 +23,7 @@ plot_bar <- function(prep_dat) {
       pattern = .data$sig
     )
   ) +
-    ggforestplot::geom_stripes(
+    ggstats::geom_stripped_rows(
       odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
       even = "#00000000"
     ) +
@@ -40,7 +43,7 @@ plot_bar <- function(prep_dat) {
       ),
       position = ggplot2::position_dodge(width = 0.8),
       color = "black",
-      size = 0.6,
+      linewidth = 0.6,
       pattern_colour = "white",
       pattern_angle = -45,
       pattern_density = 0.4, # Streifenbreite
@@ -57,7 +60,16 @@ plot_bar <- function(prep_dat) {
       "ohneAdj" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
       "mitAdj" = grDevices::rgb(33, 89, 104, maxColorValue = 255)
     )) +
-    # fill_iqb_adj_sig +
+    ggplot2::scale_fill_manual(
+      values = c(
+        "ohneAdj_TRUE" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
+        "mitAdj_TRUE" = grDevices::rgb(33, 89, 104, maxColorValue = 255),
+        "ohneAdj_FALSE" = "white",
+        "mitAdj_FALSE" = "white"
+      )
+    ) +
     theme_table_bar() +
     NULL
 }
+
+

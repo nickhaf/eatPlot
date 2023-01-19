@@ -8,21 +8,21 @@
 #'
 #' @examples
 #' calc_plot_borders(c(11, -14))
-calc_plot_borders <- function(x, accuracy = 10){
-
+calc_plot_borders <- function(x, accuracy = 10) {
   min_x <- min(x)
   max_x <- max(x)
 
-borders <- vapply(c(min_x, max_x), function(y){
-  if(y < 0){
-    plyr::round_any(y, accuracy = accuracy, floor)
-  }else{
-    plyr::round_any(y, accuracy = accuracy, ceiling)
+  borders <- vapply(c(min_x, max_x), function(y) {
+    if (y < 0) {
+      plyr::round_any(y, accuracy = accuracy, floor)
+    } else {
+      plyr::round_any(y, accuracy = accuracy, ceiling)
     }
-    },
-  FUN.VALUE = numeric(1))
+  },
+  FUN.VALUE = numeric(1)
+  )
 
-max_border <- max(abs(borders[1]), abs(borders[2]))
+  max_border <- max(abs(borders[1]), abs(borders[2]))
 
-return(c(-1 * max_border, max_border))
+  return(c(-1 * max_border, max_border))
 }
