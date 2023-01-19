@@ -7,7 +7,7 @@
 prep_barplot(data, sub_groups, sig_niveau)
 }
 \arguments{
-\item{data}{Output from \code{}}
+\item{data}{Output from \code{eatRep}.}
 
 \item{sub_groups}{sub_groups which should be plotted in the same plot tile. E.g. you can distinguish between adjusted and not adjusted means.}
 
@@ -20,5 +20,5 @@ Returns a \code{data.frame} which can be used as input for \code{plot_bar}.
 Prepare data for plotting a barplot.
 }
 \examples{
-#tbd
+# tbd
 }
