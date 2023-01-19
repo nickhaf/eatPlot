@@ -3,17 +3,17 @@
 #'
 #' @param data_prep Data prepared with \code{prep_tableplot()}.
 #'
-#' @return
+#' @return ggplot2 object
 #' @export
 #'
-#' @examples
+#' @examples #tbd
 build_columns <- function(data_prep) {
   c(
     ## y_label is build extra.
     ggplot2::geom_text(
       data = data_prep[data_prep$x_labels == "y_label", ],
       ggplot2::aes(x = "y_label", label = .data$group),
-      #size = 3,
+      size = 3,
       hjust = "left",
       nudge_x = -0.55
     ),
@@ -21,7 +21,7 @@ build_columns <- function(data_prep) {
     lapply(unique(data_prep$x_labels[data_prep$x_labels != "y_label"]), function(x_label) {
       ggplot2::geom_text(
         data = data_prep[data_prep$x_labels == x_label, ],
-        #size = 3,
+        size = 3,
         hjust = "center"
       )
     }),
@@ -40,7 +40,7 @@ build_columns <- function(data_prep) {
 #' @examples #tbd
 plot_table <- function(data_prep) {
   ggplot2::ggplot(data_prep, ggplot2::aes(x = .data$x_labels, y = .data$group, label = .data$value)) +
-    ggforestplot::geom_stripes(
+    ggstats::geom_stripped_rows(
       odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
       even = "#00000000"
     ) +

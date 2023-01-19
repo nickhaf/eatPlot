@@ -9,6 +9,12 @@ build_columns(data_prep)
 \arguments{
 \item{data_prep}{Data prepared with \code{prep_tableplot()}.}
 }
+\value{
+ggplot2 object
+}
 \description{
 Build columns from geom_text
+}
+\examples{
+#tbd
 }

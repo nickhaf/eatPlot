@@ -6,3 +6,4 @@ calc_sig <- function(data, sig_niveau = 0.05, p_column = "p") {
     return(data)
   }
 }
+
