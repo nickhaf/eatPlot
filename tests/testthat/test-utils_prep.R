@@ -1,8 +1,8 @@
 test_that("significance niveau is working correctly", {
-
   expect_error(calc_sig(data.frame("p" = c(0.02, 0.1, 0.01, NA)), sig_niveau = 0.02),
-               "Your p-values should not contain any missings. Please check your input data.",
-               fixed = TRUE)
+    "Your p-values should not contain any missings. Please check your input data.",
+    fixed = TRUE
+  )
 
   df <- calc_sig(data.frame("p" = c(0.02, 0.1, 0.01, 12.4)), sig_niveau = 0.03)
 

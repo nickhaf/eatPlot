@@ -59,7 +59,7 @@ plot_bar <- function(prep_dat) {
     )) +
     ggplot2::scale_fill_manual(
       values = c(
-        "ohneAdj_TRUE" = grDevices::rgb(147, 205, 221,maxColorValue = 255),
+        "ohneAdj_TRUE" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
         "mitAdj_TRUE" = grDevices::rgb(33, 89, 104, maxColorValue = 255),
         "ohneAdj_FALSE" = "white",
         "mitAdj_FALSE" = "white"
