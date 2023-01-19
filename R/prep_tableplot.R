@@ -11,7 +11,6 @@
 #' @examples # tbd
 prep_tableplot <- function(data, columns, competence, sig_niveau = 0.05){
 
-  data <- adjusted_means
   colnames(data)[colnames(data) == columns] <- "columns"
   data <- calc_sig(data)
   data <- data[data$group != "wholeGroup" & data$kb == competence, ]
