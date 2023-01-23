@@ -1,4 +1,6 @@
+test_that("Barplot is still the same", {
 prep_dat <- prep_barplot(adjusted_means, sub_groups = "adjust", sig_niveau = 0.05)
 prep_dat <- prep_dat[prep_dat$kb == "GL", ]
 
 vdiffr::expect_doppelganger("Bar plot", plot_bar(prep_dat))
+})
