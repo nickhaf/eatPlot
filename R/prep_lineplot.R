@@ -1,8 +1,5 @@
 
-prepare_trend <- function(data, grouping_var, sig_niveau, suffix){
-
-data <- trend_books
-grouping_var <- "KBuecher_imp3"
+prepare_trend <- function(data, grouping_var, sig_niveau){
 
 # Trend data --------------------------------------------------------------
   trend_cols_pos <- grep("est_trend|sig_trend", colnames(data))
@@ -40,7 +37,6 @@ grouping_var <- "KBuecher_imp3"
   # dat_trend2$group <- NULL
   #
   # colnames(dat_trend2)[colnames(dat_trend2) %in% c("esttrend", "ptrend", "setrend","sig_trend")] <- c( paste0("estTrend_", suffix), paste0("pTrend_", suffix), paste0("seTrend_", suffix), paste0("sigTrend_", suffix))
-
-  return(dat_trend2)
+  return(data_l)
 
 }
