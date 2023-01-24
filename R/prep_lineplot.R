@@ -1,4 +1,14 @@
 
+#' Title
+#'
+#' @param data Data for line plot.
+#' @param grouping_var Variable to group by.
+#' @param sig_niveau Significance niveau.
+#'
+#' @return Data frame in long format.
+#' @export
+#'
+#' @examples #tbd
 prepare_trend <- function(data, grouping_var, sig_niveau){
 
 # Trend data --------------------------------------------------------------
