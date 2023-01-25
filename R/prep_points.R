@@ -15,16 +15,16 @@ prepare_pointEstimates <- function(data, competence, grouping_var){
 ## Filter all rows with the pattern: "BL + _0|_1 + .vs.wholeGroup". This
 ## are the rows containing the p-Values for the point estimates of each
 ## Bundesland vs. the whole Group (Germany).
-  p_rows <- c(filter_rows(identifier = BLs, paste_vec = paste0("_0", ".vs.wholeGroup"), column = data$group),
-              filter_rows(identifier = BLs, paste_vec = paste0("_1", ".vs.wholeGroup"), column = data$group))
+  p_rows <- c(filter_strings(identifier = BLs, paste_vec = paste0("_0", ".vs.wholeGroup"), val_vec = data$group),
+              filter_strings(identifier = BLs, paste_vec = paste0("_1", ".vs.wholeGroup"), val_vec = data$group))
   data_p <- data[p_rows, c("TR_BUNDESLAND", "group", p_cols)]
 
   ## Filter all rows with the pattern: "BL + _0|_1 . This
   ## are the rows containing the point estimates of each
   ## Bundesland vs. the whole Group (Germany).
 
-  est_rows <- c(filter_rows(identifier = BLs, paste_vec = "_0$", column = data$group),
-              filter_rows(identifier = BLs, paste_vec = "_1$", column = data$group))
+  est_rows <- c(filter_strings(identifier = BLs, paste_vec = "_0$", val_vec = data$group),
+              filter_strings(identifier = BLs, paste_vec = "_1$", val_vec = data$group))
   data_est <- data[est_rows, c("TR_BUNDESLAND", "group", est_cols)]
 
 

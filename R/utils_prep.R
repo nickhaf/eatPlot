@@ -8,9 +8,9 @@ calc_sig <- function(data, sig_niveau = 0.05, p_column = "p") {
 }
 
 
-filter_rows <- function(identifier, paste_vec, column){
-  res <- vapply(identifier, function(x){
-      grep(paste0(x, paste_vec ), column)
+filter_strings <- function(identifier, paste_vec, val_vec){
+  vapply(identifier, function(x){
+      grep(paste0(x, paste_vec ), val_vec)
   },
   FUN.VALUE = numeric(1),
   USE.NAMES = FALSE)
