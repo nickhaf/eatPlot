@@ -3,7 +3,7 @@ competence = "GL"
 grouping_var = "KBuecher_imp3"
 
 
-prepare_pointEstimates <- function(data, competence, grouping_var){
+prep_points <- function(data, competence, grouping_var){
 
   data <- subset(data, kb == competence & parameter == "mean")
 
@@ -19,38 +19,31 @@ prepare_pointEstimates <- function(data, competence, grouping_var){
               filter_strings(identifier = BLs, paste_vec = paste0("_1", ".vs.wholeGroup"), val_vec = data$group))
   data_p <- data[p_rows, c("TR_BUNDESLAND", "group", p_cols)]
 
-  ## Filter all rows with the pattern: "BL + _0|_1 . This
-  ## are the rows containing the point estimates of each
-  ## Bundesland vs. the whole Group (Germany).
+  data_p$group <- gsub(".vs.wholeGroup", "", data_p$group)
+  data_p$TR_BUNDESLAND <- data_p$group
+  data_p$TR_BUNDESLAND <- gsub("_0", "", data_p$TR_BUNDESLAND)
+  data_p$TR_BUNDESLAND <- gsub("_1", "", data_p$TR_BUNDESLAND)
 
-  est_rows <- c(filter_strings(identifier = BLs, paste_vec = "_0$", val_vec = data$group),
+## Filter all rows with the pattern: "BL + _0|_1 . This
+## are the rows containing the point estimates of each
+## Bundesland vs. the whole Group (Germany).
+  est_rows <- c(## Germany:
+              grep("^0$", data$group), grep("^1$", data$group),
+              filter_strings(identifier = BLs, paste_vec = "_0$", val_vec = data$group),
               filter_strings(identifier = BLs, paste_vec = "_1$", val_vec = data$group))
-  data_est <- data[est_rows, c("TR_BUNDESLAND", "group", est_cols)]
+
+  data_est <- data[est_rows, c("TR_BUNDESLAND", "group", grouping_var, est_cols)]
+
+  ## Put Deutschland in the respective fields for the respective subgroups.
+  data_est[is.na(data_est$TR_BUNDESLAND), "TR_BUNDESLAND"] <- rep("Deutschland", length(which(is.na(data_est$TR_BUNDESLAND))))
+
+
+  data_wide <- merge(data_est, data_p, by = c("group", "TR_BUNDESLAND"), all.x = TRUE)
 
 
 
 
-
-  for(i in unique(bt_data$TR_BUNDESLAND)[-is.na(unique(bt_data$TR_BUNDESLAND))]){
-
-    for(j in c("2011", "2016", "2021")){
-
-      bt_data[grepl(i, bt_data$group),"TR_BUNDESLAND"] <- i
-
-      # Eintragen der p-Werte in die entsprechende Zeile
-      bt_data[grepl(paste0(i, "_0"), bt_data$group), paste0("p_", j)] <- bt_data[grepl(paste0(i, "_0", ".vs.wholeGroup"), bt_data$group), paste0("p_",j )]
-      bt_data[grepl(paste0(i, "_1"), bt_data$group), paste0("p_", j)] <- bt_data[grepl(paste0(i, "_1", ".vs.wholeGroup"), bt_data$group), paste0("p_",j )]
-
-    }
-  }
-
-  pointEsts <- bt_data[!is.na(bt_data$TR_BUNDESLAND) | bt_data$group %in% c("0", "1"), ]
-  pointEsts <- pointEsts[!is.na(pointEsts[,grouping_var]), ]
-  pointEsts <- pointEsts[is.na(pointEsts$comparison), ]
-
-  pointEsts[pointEsts$group %in% c("0","1"),"TR_BUNDESLAND"] <- rep("Deutschland", 2)
-
-  ## Into Long Format
+## Into Long Format
   pointEsts_long <- pointEsts %>%
     gather(parameter, estimate, c(est_2011:est_2021,
                                   p_2011:p_2021)
