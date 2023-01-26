@@ -23,7 +23,7 @@ plot_points <- function(grouping_var){
                        nudge_y = c(-0.2, 0.2),
                        size = 3
                        ),
-    pointshape_iqb
+    sig_point_shapes()
   )
 }
 

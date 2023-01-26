@@ -7,7 +7,7 @@
 theme_table_bar()
 }
 \value{
-ggplot theme.
+ggplot2 theme.
 }
 \description{
 Theme for barplot that will be combined with a table.
