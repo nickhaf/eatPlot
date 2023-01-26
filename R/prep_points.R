@@ -14,7 +14,7 @@ prep_points <- function(data, competence, grouping_var){
 
   p_cols <- grep("p_", colnames(data), value = TRUE)
   est_cols <- grep("est", colnames(data), value = TRUE)
-  est_cols <- grep("trend", est_cols, invert = TRUE, value = TRUE)
+  est_cols <- grep("trend", est_cols, invert = TRUE, value = TRUE) # remove trend estimates
   BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
 
 ## Filter all rows with the pattern: "BL + _0|_1 + .vs.wholeGroup". This

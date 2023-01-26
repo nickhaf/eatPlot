@@ -11,8 +11,14 @@ test_that("calc_sig(): significance niveau is working correctly", {
 
 
 test_that("filter_string(): correct rows are filtered", {
-  df <- data.frame(BL = c("Berlin", "Berlin", "Bremen", "Bremen"),
+df_1 <- data.frame(BL = c("Berlin", "Berlin"), col1 = c("Berlin_a", "Berlin_a"))
+
+  expect_error(filter_strings(identifier = unique(df_1$BL), paste_vec = "_a", val_vec = df_1$col1),
+               "Duplicated groups. For example, there might be two groups of the same type within the same Bundesland.",
+               fixed = TRUE)
+
+  df_2 <- data.frame(BL = c("Berlin", "Berlin", "Bremen", "Bremen"),
                    col1 = c("Berlin_a", "Berlin_b", "Bremen_a", "Bremen_b"))
 
-  expect_equal(filter_strings(identifier = unique(df$BL), paste_vec = "_a", val_vec = df$col1), c(1, 3))
+  expect_equal(filter_strings(identifier = unique(df_2$BL), paste_vec = "_a", val_vec = df_2$col1), c(1, 3))
 })
