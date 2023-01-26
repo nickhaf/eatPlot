@@ -1,8 +1,13 @@
-bt_data <- trend_books
-competence = "GL"
-grouping_var = "KBuecher_imp3"
-
-
+#' Title
+#'
+#' @param data Trend data.
+#' @param competence Competence area.
+#' @param grouping_var Variable that groups the cases.
+#'
+#' @return data.frame in long format.
+#' @export
+#'
+#' @examples # tbd
 prep_points <- function(data, competence, grouping_var){
 
   data <- subset(data, kb == competence & parameter == "mean")
@@ -40,22 +45,13 @@ prep_points <- function(data, competence, grouping_var){
 
   data_wide <- merge(data_est, data_p, by = c("group", "TR_BUNDESLAND"), all.x = TRUE)
 
-
-
-
 ## Into Long Format
-  pointEsts_long <- pointEsts %>%
-    gather(parameter, estimate, c(est_2011:est_2021,
-                                  p_2011:p_2021)
-    ) %>%
-    separate(parameter, c("parameter", "year")) %>%
-    spread(parameter, estimate)
 
-  pointEsts_long <- pointEsts_long[,c("kb", "TR_BUNDESLAND", grouping_var, "year", "est", "p")] %>%
-    rename(p_vsGermany = p) %>%
-    mutate(year = as.numeric(year)) %>%
-    mutate(sig_vsGermany = ifelse(p_vsGermany < 0.05, "Sig", "noSig"))
+  colnames(data_wide) <- gsub("_", "\\.", colnames(data_wide))
 
-  return(pointEsts_long)
+  data_long <- reshape(data_wide, direction = "long", varying = grep("est\\.|p\\.", colnames(data_wide), value = TRUE))
+  data_long <- calc_sig(data_long)
+
+  return(data_long)
 
 }
