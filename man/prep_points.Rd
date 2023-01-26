@@ -12,6 +12,8 @@ prep_points(data, competence, grouping_var, sig_niveau = 0.05)
 \item{competence}{Competence area.}
 
 \item{grouping_var}{Variable that groups the cases.}
+
+\item{sig_niveau}{When do p-values become significant?}
 }
 \value{
 Data frame in long format, which includes the relevant point estimates.

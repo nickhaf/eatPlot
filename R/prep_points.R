@@ -3,6 +3,7 @@
 #' @param data Trend data.
 #' @param competence Competence area.
 #' @param grouping_var Variable that groups the cases.
+#' @param sig_niveau When do p-values become significant?
 #'
 #' @return Data frame in long format, which includes the relevant point estimates.
 #' @export
@@ -10,7 +11,7 @@
 #' @examples # tbd
 prep_points <- function(data, competence, grouping_var, sig_niveau = 0.05){
 
-  data <- subset(data, kb == competence & parameter == "mean")
+  data <- data[data$kb == competence & data$parameter == "mean", ]
 
   p_cols <- grep("p_", colnames(data), value = TRUE)
   est_cols <- grep("est", colnames(data), value = TRUE)
@@ -49,11 +50,11 @@ prep_points <- function(data, competence, grouping_var, sig_niveau = 0.05){
 
   colnames(data_wide) <- gsub("_", "\\.", colnames(data_wide))
 
-  data_long <- reshape(data_wide, direction = "long", varying = grep("est\\.|p\\.", colnames(data_wide), value = TRUE))
+  data_long <- stats::reshape(data_wide, direction = "long", varying = grep("est\\.|p\\.", colnames(data_wide), value = TRUE))
   data_long <- calc_sig(data_long, sig_niveau = sig_niveau)
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
-  data_long <- subset(data_long, select = -id)
+  data_long$id <- NULL
 
   return(data_long)
 

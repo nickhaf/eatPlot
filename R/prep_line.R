@@ -25,7 +25,7 @@ prep_line <- function(data, grouping_var, sig_niveau = 0.05){
 
 
   # Longformat mit den TrendSpalten in einer:
-  data_l <- reshape(data, varying = trend_cols, direction = "long")
+  data_l <- stats::reshape(data, varying = trend_cols, direction = "long")
   years <- regmatches(data_l$time, gregexpr("[[:digit:]]+", data_l$time))
 
   # extract the years and add them to the long data frame
