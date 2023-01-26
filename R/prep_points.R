@@ -4,11 +4,11 @@
 #' @param competence Competence area.
 #' @param grouping_var Variable that groups the cases.
 #'
-#' @return data.frame in long format.
+#' @return Data frame in long format, which includes the relevant point estimates.
 #' @export
 #'
 #' @examples # tbd
-prep_points <- function(data, competence, grouping_var){
+prep_points <- function(data, competence, grouping_var, sig_niveau = 0.05){
 
   data <- subset(data, kb == competence & parameter == "mean")
 
@@ -50,8 +50,12 @@ prep_points <- function(data, competence, grouping_var){
   colnames(data_wide) <- gsub("_", "\\.", colnames(data_wide))
 
   data_long <- reshape(data_wide, direction = "long", varying = grep("est\\.|p\\.", colnames(data_wide), value = TRUE))
-  data_long <- calc_sig(data_long)
+  data_long <- calc_sig(data_long, sig_niveau = sig_niveau)
+
+  colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
+  data_long <- subset(data_long, select = -id)
 
   return(data_long)
 
 }
+

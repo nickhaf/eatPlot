@@ -5,7 +5,7 @@
 #' @param grouping_var Variable to group by.
 #' @param sig_niveau Significance niveau.
 #'
-#' @return Data frame in long format.
+#' @return Data frame in long format, which includes the relevant trend variables.
 #' @export
 #'
 #' @examples #tbd

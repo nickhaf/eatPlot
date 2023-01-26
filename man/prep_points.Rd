@@ -4,7 +4,7 @@
 \alias{prep_points}
 \title{Title}
 \usage{
-prep_points(data, competence, grouping_var)
+prep_points(data, competence, grouping_var, sig_niveau = 0.05)
 }
 \arguments{
 \item{data}{Trend data.}
@@ -14,7 +14,7 @@ prep_points(data, competence, grouping_var)
 \item{grouping_var}{Variable that groups the cases.}
 }
 \value{
-data.frame in long format.
+Data frame in long format, which includes the relevant point estimates.
 }
 \description{
 Title

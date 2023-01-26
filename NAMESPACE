@@ -3,6 +3,7 @@
 export(build_columns)
 export(calc_plot_borders)
 export(plot_bar)
+export(plot_points)
 export(plot_table)
 export(plot_table_bar)
 export(prep_barplot)

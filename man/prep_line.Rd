@@ -14,7 +14,7 @@ prep_line(data, grouping_var, sig_niveau = 0.05)
 \item{sig_niveau}{Significance niveau.}
 }
 \value{
-Data frame in long format.
+Data frame in long format, which includes the relevant trend variables.
 }
 \description{
 Title

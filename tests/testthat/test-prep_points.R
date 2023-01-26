@@ -12,7 +12,7 @@ test_that("data.frame is build correctly", {
                    )
   df_prep <- prep_points(df, competence = "a", grouping_var = "grouping")
 
-expect_equal(colnames(df_prep), c("group", "TR.BUNDESLAND", "grouping", "time", "est", "p", "id", "sig"))
+expect_equal(colnames(df_prep), c("group", "TR_BUNDESLAND", "grouping", "time", "est", "p", "sig"))
 expect_equal(nrow(df_prep), 12)
 
 })
