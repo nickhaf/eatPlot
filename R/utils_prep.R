@@ -21,3 +21,26 @@ filter_strings <- function(identifier, paste_vec, val_vec){
   return(res)
 }
 
+
+rename_column <- function(data, old, new){
+  colnames(data)[colnames(data) == old] <- new
+  return(data)
+}
+
+## Find the years that can be plotted as trend
+consecutive_numbers <- function(vec){
+
+  vec_ordered <- vec[order(vec)]
+  res <- list()
+i <- 1
+  while(i < length(vec_ordered)){
+    res_numbers <- c(vec_ordered[i], vec_ordered[i + 1])
+    if(res_numbers[[1]] != res_numbers[[2]]){
+    res[[i]] <- res_numbers
+    i <- i + 1}else{
+      i <- i + 1
+    }
+  }
+  return(res)
+  }
+

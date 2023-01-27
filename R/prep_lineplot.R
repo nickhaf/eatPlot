@@ -14,8 +14,12 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
     filter_strings(identifier = BLs, paste_vec = paste0("_", x, ".vs.wholeGroup"), val_vec = data$group)
   }, USE.NAMES = FALSE))
 
-  trend_whole_group <- data[whole_group_rows, ]
-  trend_whole_group$grouping_var <- get_group(trend_whole_group$group, groups = groups)
+  trend_whole <- data[whole_group_rows, ]
+  trend_whole$grouping_var <- get_group(trend_whole$group, groups = groups)
+  trend_whole_long <- prep_trend(data = trend_whole, sig_niveau = sig_niveau)
+  trend_whole_long <- rename_column(trend_whole_long, old = "esttrend", new = "est_trend_whole")
+  trend_whole_long <- rename_column(trend_whole_long, old = "sig", new = "sig_trend_whole")
+
 
   within_group_rows <- unlist(sapply(groups, function(group) {
     sapply(BLs, function(BL) {
@@ -23,12 +27,20 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
     }, USE.NAMES = FALSE)
   }))
 
-  trend_within_group <- data[within_group_rows, ]
-  trend_within_group$grouping_var <- get_group(trend_within_group$group, groups = groups)
+  trend_within <- data[within_group_rows, ]
+  trend_within$grouping_var <- get_group(trend_within$group, groups = groups)
+  trend_within_long <- prep_trend(data = trend_within, sig_niveau = sig_niveau)
+  trend_within_long <- rename_column(trend_within_long, old = "esttrend", new = "est_trend_within")
+  trend_within_long <- rename_column(trend_within_long, old = "sig", new = "sig_trend_within")
 
-  prep_list[["trend_whole_group"]] <- prep_trend(data = trend_whole_group, sig_niveau = sig_niveau)
-  prep_list[["trend_within_group"]] <- prep_trend(data = trend_within_group, sig_niveau = sig_niveau)
-  prep_list[["point_estimates"]] <- prep_points(data, sig_niveau = sig_niveau)
+  point_estiamtes <- prep_points(data, sig_niveau = sig_niveau)
+  point_estimates <- rename_column(point_estimates, old = "est", new = "est_point")
+  point_estimates <- rename_column(point_estimates, old = "sig", new = "sig_point")
+
+
+  prep_list[["trend_whole"]] <- trend_whole_long
+  prep_list[["trend_within_group"]] <- trend_within_long
+  prep_list[["point_estimates"]] <- point_estimates
 
   return(prep_list)
 }
