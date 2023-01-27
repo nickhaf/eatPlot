@@ -10,10 +10,10 @@ test_that("data.frame is build correctly", {
                    "group" = c("a_1.vs.wholeGroup", "a_0.vs.wholeGroup", "b_1.vs.wholeGroup", "b_0.vs.wholeGroup", "0", "1", "a_1", "a_0", "b_1", "b_0"),
                    "parameter" = rep("mean", 10)
                    )
-  df_prep <- prep_points(df, competence = "a", grouping_var = "grouping")
+  test_prep_line <- prep_points(df, grouping_var = "grouping")
 
-expect_equal(colnames(df_prep), c("group", "TR_BUNDESLAND", "grouping", "time", "est", "p", "sig"))
-expect_equal(nrow(df_prep), 12)
+expect_equal(colnames(test_prep_line), c("group", "TR_BUNDESLAND", "grouping", "time", "est", "p", "sig"))
+expect_equal(nrow(test_prep_line), 12)
 
 })
 

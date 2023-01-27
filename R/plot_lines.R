@@ -27,3 +27,4 @@ connect_points <- function(data_prep, grouping_var) {
 }
 
 ## Connection with prep_points, sig from prep_line
+## sig_trend_within vs. sig_trend_WholeGroup --> eigenlich nur den Inputframe verändern, oder?

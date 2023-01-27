@@ -9,9 +9,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_points <- function(data, competence, grouping_var, sig_niveau = 0.05){
-
-  data <- data[data$kb == competence & data$parameter == "mean", ]
+prep_points <- function(data, grouping_var, sig_niveau = 0.05){
 
   p_cols <- grep("p_", colnames(data), value = TRUE)
   est_cols <- grep("est", colnames(data), value = TRUE)
@@ -21,8 +19,8 @@ prep_points <- function(data, competence, grouping_var, sig_niveau = 0.05){
 ## Filter all rows with the pattern: "BL + _0|_1 + .vs.wholeGroup". This
 ## are the rows containing the p-Values for the point estimates of each
 ## Bundesland vs. the whole Group (Germany).
-  p_rows <- c(filter_strings(identifier = BLs, paste_vec = paste0("_0", ".vs.wholeGroup"), val_vec = data$group),
-              filter_strings(identifier = BLs, paste_vec = paste0("_1", ".vs.wholeGroup"), val_vec = data$group))
+  p_rows <- c(filter_strings(identifier = BLs, paste_vec = "_0.vs.wholeGroup"), val_vec = data$group),
+              filter_strings(identifier = BLs, paste_vec = "_1.vs.wholeGroup"), val_vec = data$group))
   data_p <- data[p_rows, c("TR_BUNDESLAND", "group", p_cols)]
 
   data_p$group <- gsub(".vs.wholeGroup", "", data_p$group)
