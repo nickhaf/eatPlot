@@ -22,10 +22,7 @@ plot_points <- function(grouping_var){
                                     label = round(.data$est, 0)),
                        nudge_y = c(-0.2, 0.2),
                        size = 3
-                       ),
-    sig_point_shapes()
+                       )
+
   )
 }
-
-
-

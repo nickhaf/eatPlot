@@ -17,7 +17,7 @@ prep_line <- function(data, grouping_var, sig_niveau = 0.05){
 
   colnames(data)[trend_cols_pos] <- gsub("\\.", "",
                                      gsub("_", "", trend_cols))
-  ## bevfore first number, insert ".". Needed by reshape() for automatically building the new columns.
+  ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
   colnames(data)[trend_cols_pos] <- sapply(colnames(data)[trend_cols_pos], function(x) sub("2", ".2", x)) ## use first number here
 
   data <- data[, c("group", "TR_BUNDESLAND", grouping_var, colnames(data)[trend_cols_pos])]
@@ -35,7 +35,7 @@ prep_line <- function(data, grouping_var, sig_niveau = 0.05){
   year_cols <- rbind(year_cols, years[[i]])
   }
 
-  colnames(year_cols) <- sapply(1:length(years[[1]]), function(x){paste0("year_", x)})
+  colnames(year_cols) <- c("year_start", "year_end")
   data_l <- cbind(data_l, year_cols)
   data_l <- calc_sig(data_l, p_column = "sigtrend", sig_niveau = sig_niveau)
 
