@@ -1,7 +1,12 @@
-prep_line <- function(data_points, data_trend){
 
-  trend_merged <- merge(data_trend[, c()],
-                        data_points,
+prep_list <- prep_lineplot(trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
+
+prep_lines <- function(prep_list){
+
+
+
+  trend_merged <- merge(prep_list[["trend_within_group"]],
+                        prep_list[["point_estimates"]],
                         by.x = c("TR_BUNDESLAND", "year_start", grouping_var),
                         by.y = c("TR_BUNDESLAND", "year", grouping_var),
                         all.x = TRUE,

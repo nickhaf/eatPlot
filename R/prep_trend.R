@@ -2,14 +2,13 @@
 #' Title
 #'
 #' @param data Data for line plot.
-#' @param grouping_var Variable to group by.
 #' @param sig_niveau Significance niveau.
 #'
 #' @return Data frame in long format, which includes the relevant trend variables.
 #' @export
 #'
 #' @examples #tbd
-prep_trend <- function(data, grouping_var, sig_niveau = 0.05){
+prep_trend <- function(data, sig_niveau = 0.05){
 
 # Trend data --------------------------------------------------------------
   trend_cols_pos <- grep("est_trend|sig_trend", colnames(data))
@@ -20,7 +19,7 @@ prep_trend <- function(data, grouping_var, sig_niveau = 0.05){
   ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
   colnames(data)[trend_cols_pos] <- sapply(colnames(data)[trend_cols_pos], function(x) sub("2", ".2", x)) ## use first number here
 
-  data <- data[, c("group", "TR_BUNDESLAND", grouping_var, colnames(data)[trend_cols_pos])]
+  data <- data[, c("group", "TR_BUNDESLAND", "grouping_var", colnames(data)[trend_cols_pos])]
   trend_cols <- colnames(data)[grep("trend", colnames(data))]
 
 

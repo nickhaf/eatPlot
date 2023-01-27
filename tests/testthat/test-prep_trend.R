@@ -9,7 +9,7 @@ df <- data.frame(group = c(0, 0, 1, 1),
                  grouping_var = c(1, 1, 0, 0)
                  )
 
-test_prep_trend <- prep_trend(df, grouping_var = "grouping_var", sig_niveau = 0.05)
+test_prep_trend <- prep_trend(df, sig_niveau = 0.05)
 
 expect_equal(unlist(test_prep_trend[1, c("year_start", "year_end")]), c(year_start = "2011", year_end = "2013"))
 
