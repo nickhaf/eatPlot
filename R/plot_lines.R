@@ -1,30 +1,22 @@
-#' Connect Points
+#' Adds a layer with trend lines to a ggplot.
 #'
-#' @param my_data Data
-#' @param grouping_var Variable for grouping
+#' @details Wrapper for \link[ggplot2]{geom_segment}.
+#' @param data_lines
 #'
-#' @return ggplot object
+#' @return ggplot2 object
 #' @export
 #'
-
-connect_points <- function(data_prep, grouping_var) {
-  list(
+#' @examples #tbd
+plot_lines <- function(data_lines){
     ggplot2::geom_segment(
-      data = my_data,
+      data = data_lines,
       ggplot2::aes(
-        x = year_start,
-        xend = year_end,
-        y = est_start,
-        yend = est_end,
-        colour = .data[[grouping_var]],
-        linetype = sigTrend_within
-      ),
-      size = 0.7),
-    linetype_iqb
+        x = .data$year_start,
+        xend = .data$year_end,
+        y = .data$est_point_start,
+        yend = .data$est_point_end,
+        colour = .data$grouping_var,
+        linetype = .data$sig_trend_within
+      )
   )
-
-  return(plot_res)
 }
-
-## Connection with prep_points, sig from prep_line
-## sig_trend_within vs. sig_trend_WholeGroup --> eigenlich nur den Inputframe verändern, oder?

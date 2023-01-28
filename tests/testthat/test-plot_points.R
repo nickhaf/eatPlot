@@ -7,7 +7,7 @@ test_that("Pointplot is still the same", {
                    sig = c(TRUE, TRUE, TRUE, rep(FALSE, 5) )
                  )
 
-  vdiffr::expect_doppelganger("Bar plot", ggplot2::ggplot(df) +
+  vdiffr::expect_doppelganger("Plotting Points", ggplot2::ggplot(df) +
     plot_points()
   )
 

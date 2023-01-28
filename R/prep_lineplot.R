@@ -33,13 +33,13 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
   trend_within_long <- rename_column(trend_within_long, old = "esttrend", new = "est_trend_within")
   trend_within_long <- rename_column(trend_within_long, old = "sig", new = "sig_trend_within")
 
-  point_estiamtes <- prep_points(data, sig_niveau = sig_niveau)
+  point_estimates <- prep_points(data, sig_niveau = sig_niveau)
   point_estimates <- rename_column(point_estimates, old = "est", new = "est_point")
   point_estimates <- rename_column(point_estimates, old = "sig", new = "sig_point")
 
 
   prep_list[["trend_whole"]] <- trend_whole_long
-  prep_list[["trend_within_group"]] <- trend_within_long
+  prep_list[["trend_within"]] <- trend_within_long
   prep_list[["point_estimates"]] <- point_estimates
 
   return(prep_list)
@@ -49,6 +49,7 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
 
 # utils
 
+# Extract grouping_var membership from group column
 get_group <- function(val_vec, groups){
 
   val_vec <- gsub("_", "\\.", val_vec)

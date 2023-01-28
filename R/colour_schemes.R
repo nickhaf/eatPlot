@@ -36,7 +36,7 @@ sig_pointshapes <- function(...){
 ## Linetype: solid and dashed
 sig_linetypes <- function(){
   ggplot2::scale_linetype_manual(values = c(
-  "bold" = 1,
-  "plain" = 2
+  `TRUE` = 1,
+  `FALSE` = 2
 ))
 }

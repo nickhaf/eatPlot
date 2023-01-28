@@ -10,10 +10,6 @@ prep_points(data, sig_niveau = 0.05)
 \item{data}{Trend data.}
 
 \item{sig_niveau}{When do p-values become significant?}
-
-\item{competence}{Competence area.}
-
-\item{grouping_var}{Variable that groups the cases.}
 }
 \value{
 Data frame in long format, which includes the relevant point estimates.

@@ -27,7 +27,7 @@ rename_column <- function(data, old, new){
   return(data)
 }
 
-## Find the years that can be plotted as trend
+## Find the years that can be plotted as trend. Returns all unique consecutive year combinations.
 consecutive_numbers <- function(vec){
 
   vec_ordered <- vec[order(vec)]
@@ -41,6 +41,8 @@ i <- 1
       i <- i + 1
     }
   }
+
+res <- unique(Filter(Negate(is.null), res))
   return(res)
   }
 

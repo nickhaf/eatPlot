@@ -10,8 +10,6 @@ prep_trend(data, sig_niveau = 0.05)
 \item{data}{Data for line plot.}
 
 \item{sig_niveau}{Significance niveau.}
-
-\item{grouping_var}{Variable to group by.}
 }
 \value{
 Data frame in long format, which includes the relevant trend variables.
