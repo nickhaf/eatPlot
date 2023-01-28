@@ -1,7 +1,7 @@
 #' Adds a layer with trend lines to a ggplot.
 #'
-#' @details Wrapper for \link[ggplot2]{geom_segment}.
-#' @param data_lines
+#' @details Wrapper for [ggplot2::geom_segment()].
+#' @param data_lines Output `data.frame` from [prep_lines()].
 #'
 #' @return ggplot2 object
 #' @export

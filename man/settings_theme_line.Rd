@@ -7,7 +7,7 @@
 settings_theme_line(time_points)
 }
 \arguments{
-\item{data_long}{Data in Long format}
+\item{time_points}{Data in Long format}
 }
 \value{
 ggplot2 plot settings

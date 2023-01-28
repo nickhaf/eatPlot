@@ -1,6 +1,6 @@
 #' Set theme, colours, pointshapes and linetypes for lineplot.
 #'
-#' @param data_long Data in Long format
+#' @param time_points Data in Long format
 #'
 #' @return ggplot2 plot settings
 #' @export

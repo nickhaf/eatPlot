@@ -7,7 +7,7 @@
 plot_lines(data_lines)
 }
 \arguments{
-\item{data_lines}{}
+\item{data_lines}{Output \code{data.frame} from \code{\link[=prep_lines]{prep_lines()}}.}
 }
 \value{
 ggplot2 object
@@ -16,7 +16,7 @@ ggplot2 object
 Adds a layer with trend lines to a ggplot.
 }
 \details{
-Wrapper for \link[ggplot2]{geom_segment}.
+Wrapper for \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.
 }
 \examples{
 #tbd
