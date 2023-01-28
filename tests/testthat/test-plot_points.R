@@ -1,4 +1,4 @@
-skip(test_that("Pointplot is still the same", {
+test_that("Pointplot is still the same", {
 
   df <- data.frame(grouping_var = rep(c("0","1"), 4),
                    time = c(2011, 2011, 2012, 2012, 2024, 2024, 2030, 2030),
@@ -12,4 +12,4 @@ skip(test_that("Pointplot is still the same", {
   )
 
 })
-)
+
