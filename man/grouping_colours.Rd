@@ -2,18 +2,18 @@
 % Please edit documentation in R/colour_schemes.R
 \name{grouping_colours}
 \alias{grouping_colours}
-\title{Wrapper around \link[ggplot2]{scale_manual} with two predefined colours.}
+\title{Wrapper around \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} with two predefined colours.}
 \usage{
 grouping_colours(...)
 }
 \arguments{
-\item{...}{Arguments for \link[ggplot2]{scale_manual}.}
+\item{...}{Arguments for \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}}.}
 }
 \value{
 ggplot2
 }
 \description{
-Wrapper around \link[ggplot2]{scale_manual} with two predefined colours.
+Wrapper around \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} with two predefined colours.
 }
 \details{
 Cases belonging to a group are plotted black, cases not belonging to this group are plotted blue.
