@@ -1,5 +1,42 @@
-## Pointshape: triangle and circle
-pointshape_iqb <- ggplot2::scale_shape_manual(values = c(
+
+#' Wrapper around \link[ggplot2]{scale_manual} with two predefined colours.
+#'
+#' @details Cases belonging to a group are plotted black, cases not belonging to this group are plotted blue.
+#' @param ... Arguments for \link[ggplot2]{scale_manual}.
+#' @return ggplot2
+#' @export
+#'
+#' @examples #tbd
+grouping_colours <- function(...){
+  ggplot2::scale_colour_manual(values = c(
+  "0" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
+  "1" = "black"
+), ... )
+}
+
+
+
+#' Wrapper around \link[ggplot2]{scale_manual} with two predefined shapes.
+#'
+#' @details Turns points int rectangles if the according p-value is significant.
+#' @param ... Arguments for \link[ggplot2]{scale_manual}.
+#'
+#' @return ggplot2
+#' @export
+#'
+#' @examples #tbd
+sig_pointshapes <- function(...){
+  ggplot2::scale_shape_manual(values = c(
   `TRUE` = 17,
   `FALSE` = 16
+) , ...)
+}
+
+
+## Linetype: solid and dashed
+sig_linetypes <- function(){
+  ggplot2::scale_linetype_manual(values = c(
+  `TRUE` = 1,
+  `FALSE` = 2
 ))
+}

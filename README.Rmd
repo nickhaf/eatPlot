@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/nickhaf/eatPlot/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nickhaf/eatPlot?branch=main)
 <!-- badges: end -->
 
-The goal of eatPlot is to easily plot results stemming from the eatModel package. 
+The goal of eatPlot is to easily plot results stemming from the eatRep package. 
 
 ## Installation
 

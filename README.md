@@ -10,7 +10,7 @@
 coverage](https://codecov.io/gh/nickhaf/eatPlot/branch/main/graph/badge.svg)](https://app.codecov.io/gh/nickhaf/eatPlot?branch=main)
 <!-- badges: end -->
 
-The goal of eatPlot is to easily plot results stemming from the eatModel
+The goal of eatPlot is to easily plot results stemming from the eatRep
 package.
 
 ## Installation

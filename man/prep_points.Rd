@@ -4,14 +4,10 @@
 \alias{prep_points}
 \title{Title}
 \usage{
-prep_points(data, competence, grouping_var, sig_niveau = 0.05)
+prep_points(data, sig_niveau = 0.05)
 }
 \arguments{
 \item{data}{Trend data.}
-
-\item{competence}{Competence area.}
-
-\item{grouping_var}{Variable that groups the cases.}
 
 \item{sig_niveau}{When do p-values become significant?}
 }
