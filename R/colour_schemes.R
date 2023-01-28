@@ -1,8 +1,8 @@
 
-#' Wrapper around \link[ggplot2]{scale_manual} with two predefined colours.
+#' Wrapper around [ggplot2::scale_colour_manual()] with two predefined colours.
 #'
 #' @details Cases belonging to a group are plotted black, cases not belonging to this group are plotted blue.
-#' @param ... Arguments for \link[ggplot2]{scale_manual}.
+#' @param ... Arguments for [ggplot2::scale_colour_manual()].
 #' @return ggplot2
 #' @export
 #'
@@ -16,10 +16,10 @@ grouping_colours <- function(...){
 
 
 
-#' Wrapper around \link[ggplot2]{scale_manual} with two predefined shapes.
+#' Wrapper around [ggplot2::scale_colour_manual()] with two predefined shapes.
 #'
 #' @details Turns points int rectangles if the according p-value is significant.
-#' @param ... Arguments for \link[ggplot2]{scale_manual}.
+#' @param ... Arguments for [ggplot2::scale_colour_manual()].
 #'
 #' @return ggplot2
 #' @export
@@ -33,10 +33,18 @@ sig_pointshapes <- function(...){
 }
 
 
-## Linetype: solid and dashed
-sig_linetypes <- function(){
+#' Wrapper around [ggplot2::scale_colour_manual()] with two predefined linetypes.
+#'
+#' @details Significant lines are solid, not-significant lines are dashed, according to the respective p-values.
+#' @param ... Arguments for [ggplot2::scale_colour_manual()].
+#'
+#' @return ggplot2
+#' @export
+#'
+#' @examples #tbd
+sig_linetypes <- function(...){
   ggplot2::scale_linetype_manual(values = c(
-  `TRUE` = 1,
-  `FALSE` = 2
+  `TRUE` = "solid",
+  `FALSE` = "dashed"
 ))
 }

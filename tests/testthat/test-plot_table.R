@@ -31,3 +31,4 @@ test_that("Table plot is still the same", {
 prep_dat <- prep_tableplot(adjusted_means, columns = "adjust", competence = "GL", sig_niveau = 0.05)
 vdiffr::expect_doppelganger("Table plot", plot_table(prep_dat))
 })
+

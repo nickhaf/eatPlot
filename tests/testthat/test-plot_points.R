@@ -12,3 +12,4 @@ test_that("Pointplot is still the same", {
   )
 
 })
+

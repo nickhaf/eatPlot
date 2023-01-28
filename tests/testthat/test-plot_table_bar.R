@@ -9,3 +9,4 @@ p_bar <- plot_bar(prep_bar)
 
 vdiffr::expect_doppelganger("Table bar plot", plot_table_bar(p_table, p_bar))
 })
+

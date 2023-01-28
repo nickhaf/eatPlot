@@ -10,3 +10,4 @@ df_lines <- data.frame(TR_BUNDESLAND = rep("Berlin", 4),
   vdiffr::expect_doppelganger("Plotting lines", ggplot2::ggplot() +
                                  plot_lines(data_lines = df_lines))
 })
+

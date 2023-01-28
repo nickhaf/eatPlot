@@ -2,18 +2,18 @@
 % Please edit documentation in R/colour_schemes.R
 \name{sig_pointshapes}
 \alias{sig_pointshapes}
-\title{Wrapper around \link[ggplot2]{scale_manual} with two predefined shapes.}
+\title{Wrapper around \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} with two predefined shapes.}
 \usage{
 sig_pointshapes(...)
 }
 \arguments{
-\item{...}{Arguments for \link[ggplot2]{scale_manual}.}
+\item{...}{Arguments for \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}}.}
 }
 \value{
 ggplot2
 }
 \description{
-Wrapper around \link[ggplot2]{scale_manual} with two predefined shapes.
+Wrapper around \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} with two predefined shapes.
 }
 \details{
 Turns points int rectangles if the according p-value is significant.
