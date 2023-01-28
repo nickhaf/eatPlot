@@ -42,7 +42,7 @@ sig_pointshapes <- function(...){
 #' @export
 #'
 #' @examples #tbd
-sig_linetypes <- function(){
+sig_linetypes <- function(...){
   ggplot2::scale_linetype_manual(values = c(
   `TRUE` = "solid",
   `FALSE` = "dashed"

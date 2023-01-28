@@ -4,7 +4,7 @@
 \alias{sig_linetypes}
 \title{Wrapper around \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} with two predefined linetypes.}
 \usage{
-sig_linetypes()
+sig_linetypes(...)
 }
 \arguments{
 \item{...}{Arguments for \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}}.}
