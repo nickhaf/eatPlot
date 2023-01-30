@@ -10,7 +10,7 @@
 #' @examples # tbd
 prep_barplot <- function(data, sub_groups, sig_niveau) {
   colnames(data)[colnames(data) == sub_groups] <- "sub_groups"
-  data <- calc_sig(data, sig_niveau)
+  data$sig <- calc_sig(data$p, sig_niveau)
   data <- calc_fill(data)
 
   data <- subset(data, data$parameter == "mean" & !is.na(data$parameter) &

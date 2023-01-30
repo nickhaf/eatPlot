@@ -11,8 +11,8 @@
 prep_trend <- function(data, sig_niveau = 0.05){
 
 # Trend data --------------------------------------------------------------
-  trend_cols_pos <- grep("est_trend|sig_trend", colnames(data))
-  trend_cols <- colnames(data)[grep("est_trend|sig_trend", colnames(data))]
+  trend_cols_pos <- grep("est_trend|sig_trend|se_trend", colnames(data))
+  trend_cols <- colnames(data)[grep("est_trend|sig_trend|se_trend", colnames(data))]
 
   colnames(data)[trend_cols_pos] <- gsub("\\.", "",
                                      gsub("_", "", trend_cols))
@@ -36,16 +36,8 @@ prep_trend <- function(data, sig_niveau = 0.05){
 
   colnames(year_cols) <- c("year_start", "year_end")
   data_l <- cbind(data_l, year_cols)
-  data_l <- calc_sig(data_l, p_column = "sigtrend", sig_niveau = sig_niveau)
+  data_l$sig_trend_within <- calc_sig(data_l$sigtrend, sig_niveau = sig_niveau)
 
-  ## Noch die richtigen Zeilen rausziehen (wahrscheinlich am Anfang). Evtl müssen die years doch in eine Spalte, also nochmal langgezogen werden.
-
-  # dat_trend2$TR_BUNDESLAND <- sub("_.*", "", dat_trend2$group)
-  # dat_trend2[grep("wholeGroup", dat_trend2$TR_BUNDESLAND), "TR_BUNDESLAND"] <- "Deutschland"
-  # dat_trend2[dat_trend2$TR_BUNDESLAND %in% c("0", "1"), "TR_BUNDESLAND"] <- "Deutschland"
-  # dat_trend2$group <- NULL
-  #
-  # colnames(dat_trend2)[colnames(dat_trend2) %in% c("esttrend", "ptrend", "setrend","sig_trend")] <- c( paste0("estTrend_", suffix), paste0("pTrend_", suffix), paste0("seTrend_", suffix), paste0("sigTrend_", suffix))
   return(data_l)
 
 }

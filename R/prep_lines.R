@@ -7,7 +7,8 @@
 #'
 #' @examples #tbd
 prep_lines <- function(prep_list) {
-  trend_within <- prep_list[["trend_within"]][, c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end", "sig_trend_within")]
+  trend_whole <- prep_list[["trend_whole"]][, c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end", "est_trend_whole","sig_trend_whole")]
+  trend_within <- prep_list[["trend_within"]][, c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end", "est_trend_within", "se_trend_within","sig_trend_within")]
   point_estimates <- prep_list[["point_estimates"]][, c("TR_BUNDESLAND", "grouping_var", "time", "est_point")]
 
 
