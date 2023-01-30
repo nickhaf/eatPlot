@@ -41,6 +41,9 @@ prep_lines <- function(prep_list) {
     sort = FALSE
   )
 
+  trend$year_start <- as.numeric(trend$year_start)
+  trend$year_end <- as.numeric(trend$year_end)
+
   trend <- rename_column(trend, "est_point", "est_point_end")
   return(trend)
 }

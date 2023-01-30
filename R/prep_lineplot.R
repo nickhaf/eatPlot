@@ -1,3 +1,14 @@
+#' Title
+#'
+#' @param data Trend data from eatRep.
+#' @param grouping_var Grouping variable.
+#' @param competence Competence area.
+#' @param sig_niveau Significance niveau.
+#'
+#' @return List of data.frames needed for different plot-functions.
+#' @export
+#'
+#' @examples #tbd
 prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
 
   colnames(data)[colnames(data) == grouping_var] <- "grouping_var"
@@ -41,6 +52,7 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
   prep_list[["trend_whole"]] <- trend_whole_long
   prep_list[["trend_within"]] <- trend_within_long
   prep_list[["point_estimates"]] <- point_estimates
+  prep_list[["trend_point"]] <- prep_lines(prep_list)
 
   return(prep_list)
 }
