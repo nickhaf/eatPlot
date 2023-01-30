@@ -61,7 +61,8 @@ calc_brace_coords <- function(data, coords){
   # Calculate brace coordinates
   data$brace_upper_y <- ifelse(data$year_start == min(data$year_start), coords[1], coords[1] - 72) ## Programmatisch lösen
   data$brace_lower_y <- ifelse(data$year_start == min(data$year_start), coords[1] - 70, coords[1] - 102)
-  data$label_pos <- ifelse(data$grouping_var == 1, range_est[1] - 113, range_est[1] - 133)
+  data$label_pos_y <- ifelse(data$grouping_var == 1, range_est[1] - 113, range_est[1] - 133)
+  data$label_pos_x <- data$year_start + (data$year_end - max(data$year_start)) / 2
   # data$estTrend_within_label <- ifelse(data$sigTrend_within == "bold", paste0("**", round(data$estTrend_within, 0), "**"), round(data$estTrend_within, 0))
   #   data$sigTrend_vsGermany <- ifelse(data$pTrend_vsGermany < 0.05, "<sup>a</sup>", "")
 
@@ -75,8 +76,8 @@ plot_brace_label <- function(data_trend_point, BL){
                               !(brace_coords$year_start == 2011 &
                                        brace_coords$year_end == 2016), ],
         mapping = ggplot2::aes(
-          x = year_start + (year_end - max(year_start)) / 2,
-          y = label_pos,
+          x = .data$year_start + (.data$year_end - max(.data$year_start)) / 2,
+          y = label_pos_y,
           label = paste0(.data$est_trend_within,
                          #sigTrend_vsGermany,
                          " (", round(.data$se_trend_within, 1), ")")
