@@ -43,54 +43,85 @@ plot_braces <- function(data_trend_point){
 
 
 
-# ggplot2::ggplot() +
-#   plot_lines(data_lines = data[["trend_point"]]) +
-#   plot_braces(data_trend_point) +
-#   ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
-#
-#
+
+
+## Utils
+
+## Calc coordinate system borders. Programmatisch lösen.
+calc_coords <- function(range_vec){
+  coords <- c(plyr::round_any(range_vec[1] - 40, accuracy = 10, f = floor),
+              plyr::round_any(range_vec[2] + 20, accuracy = 10, f = ceiling)
+              )
+  return(coords)
+}
+
+
+## Calc the coordinates for drawing the braces.
+calc_brace_coords <- function(data, coords){
+  # Calculate brace coordinates
+  data$brace_upper_y <- ifelse(data$year_start == min(data$year_start), coords[1], coords[1] - 72) ## Programmatisch lösen
+  data$brace_lower_y <- ifelse(data$year_start == min(data$year_start), coords[1] - 70, coords[1] - 102)
+  data$label_pos <- ifelse(data$grouping_var == 1, range_est[1] - 113, range_est[1] - 133)
+  # data$estTrend_within_label <- ifelse(data$sigTrend_within == "bold", paste0("**", round(data$estTrend_within, 0), "**"), round(data$estTrend_within, 0))
+  #   data$sigTrend_vsGermany <- ifelse(data$pTrend_vsGermany < 0.05, "<sup>a</sup>", "")
+
+  return(data)
+}
+
+
+plot_brace_label <- function(data_trend_point, BL){
+      ggtext::geom_richtext(
+        data = brace_coords[brace_coords$TR_BUNDESLAND == BL &
+                              !(brace_coords$year_start == 2011 &
+                                       brace_coords$year_end == 2016), ],
+        mapping = ggplot2::aes(
+          x = year_start + (year_end - max(year_start)) / 2,
+          y = label_pos,
+          label = paste0(.data$est_trend_within,
+                         #sigTrend_vsGermany,
+                         " (", round(.data$se_trend_within, 1), ")")
+        ),
+        size = 3,
+        label.padding = grid::unit(rep(0, 4), "pt"),
+        fill = NA,
+        label.color = NA
+      )
+}
+
+ggtext::geom_richtext(
+  data = brace_coordinates[brace_coordinates$TR_BUNDESLAND == bundesland &
+                             !(brace_coordinates$year_start == 2011 &
+                                 brace_coordinates$year_end == 2016), ],
+  mapping = aes(
+    x = year_start + (year_end - max(year_start)) / 2,
+    y = label_pos,
+    label = paste0(estTrend_within_label, sigTrend_vsGermany, " (", round(seTrend_within, 1), ")")
+  ),
+  size = 3,
+  label.padding = grid::unit(rep(0, 4), "pt"),
+  fill = NA,
+  label.color = NA
+)
 
 
 
 
-# ## Utils
-#
-# ## Calc coordinate system borders. Programmatisch lösen.
-# calc_coords <- function(range_vec){
-#   coords <- c(plyr::round_any(range_vec[1] - 40, accuracy = 10, f = floor),
-#               plyr::round_any(range_vec[2] + 20, accuracy = 10, f = ceiling)
-#               )
-#   return(coords)
-# }
-#
-#
-# ## Calc the coordinates for drawing the braces.
-# calc_brace_coords <- function(data, coords){
-#   # Calculate brace coordinates
-#   data$brace_upper_y <- ifelse(data$year_start == min(data$year_start), coords[1], coords[1] - 72) ## Programmatisch lösen
-#   data$brace_lower_y <- ifelse(data$year_start == min(data$year_start), coords[1] - 70, coords[1] - 102)
-#   data$label_pos <- ifelse(data$grouping_var == 1, range_est[1] - 113, range_est[1] - 133)
-#   # data$estTrend_within_label <- ifelse(data$sigTrend_within == "bold", paste0("**", round(data$estTrend_within, 0), "**"), round(data$estTrend_within, 0))
-#   #   data$sigTrend_vsGermany <- ifelse(data$pTrend_vsGermany < 0.05, "<sup>a</sup>", "")
-#
-#   return(data)
-# }
-#
-#
-# plot_brace_label <- function(data_trend_point){
-#
-# }
-#
-#
-#
-#
+data <- prep_lineplot(trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
+data_trend_point <- data[["trend_point"]]
+data_trend_point <- data_trend_point[data_trend_point$TR_BUNDESLAND == "Berlin", ]
+
+
+ggplot2::ggplot() +
+  plot_lines(data_lines = data[["trend_point"]]) +
+  plot_braces(data_trend_point) +
+  ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")) +
+  plot_brace_label(data_trend_point = data_trend_point, BL = "Berlin")
+
+
+
 # ######################################### Working example
 #
-#
-# data <- prep_lineplot(trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
-# data_trend_point <- data[["trend_point"]]
-# data_trend_point <- data_trend_point[data_trend_point$TR_BUNDESLAND == "Berlin", ]
-# dat_trend <- data_trend_point
+
 #
 # ## Old stuff
 # draw_brace <- function(dat_trend) {

@@ -36,7 +36,7 @@ prep_trend <- function(data, sig_niveau = 0.05){
 
   colnames(year_cols) <- c("year_start", "year_end")
   data_l <- cbind(data_l, year_cols)
-  data_l$sig_trend_within <- calc_sig(data_l$sigtrend, sig_niveau = sig_niveau)
+  data_l$sig_trend <- calc_sig(data_l$sigtrend, sig_niveau = sig_niveau)
 
   return(data_l)
 

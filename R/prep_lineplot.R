@@ -29,7 +29,9 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
   trend_whole$grouping_var <- get_group(trend_whole$group, groups = groups)
   trend_whole_long <- prep_trend(data = trend_whole, sig_niveau = sig_niveau)
   trend_whole_long <- rename_column(trend_whole_long, old = "esttrend", new = "est_trend_whole")
-  trend_whole_long <- rename_column(trend_whole_long, old = "sig", new = "sig_trend_whole")
+  trend_whole_long <- rename_column(trend_whole_long, old = "sig_trend", new = "sig_trend_whole")
+  trend_whole_long <- rename_column(trend_whole_long, old = "setrend", new = "se_trend_whole")
+
 
 
   within_group_rows <- unlist(sapply(groups, function(group) {
@@ -42,7 +44,9 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
   trend_within$grouping_var <- get_group(trend_within$group, groups = groups)
   trend_within_long <- prep_trend(data = trend_within, sig_niveau = sig_niveau)
   trend_within_long <- rename_column(trend_within_long, old = "esttrend", new = "est_trend_within")
-  trend_within_long <- rename_column(trend_within_long, old = "sig", new = "sig_trend_within")
+  trend_within_long <- rename_column(trend_within_long, old = "sig_trend", new = "sig_trend_within")
+  trend_within_long <- rename_column(trend_within_long, old = "setrend", new = "se_trend_within")
+
 
   point_estimates <- prep_points(data, sig_niveau = sig_niveau)
   point_estimates <- rename_column(point_estimates, old = "est", new = "est_point")
