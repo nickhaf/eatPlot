@@ -33,5 +33,8 @@ prep_lines <- function(prep_list) {
   trend$year_end <- as.numeric(trend$year_end)
 
   trend <- rename_column(trend, "est_point", "est_point_end")
+
+  trend_final <- merge(trend, trend_whole, by = c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end"))
+
   return(trend)
 }

@@ -29,10 +29,13 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
 
   trend_whole <- data[whole_group_rows, ]
   trend_whole$grouping_var <- get_group(trend_whole$group, groups = groups)
+  trend_whole$TR_BUNDESLAND <- get_group(trend_whole$group, groups = BLs)
   trend_whole_long <- prep_trend(data = trend_whole, sig_niveau = sig_niveau)
   trend_whole_long <- rename_column(trend_whole_long, old = "esttrend", new = "est_trend_whole")
   trend_whole_long <- rename_column(trend_whole_long, old = "sig_trend", new = "sig_trend_whole")
   trend_whole_long <- rename_column(trend_whole_long, old = "setrend", new = "se_trend_whole")
+
+
 
 ## Within group data.frame:
   within_group_rows <- unlist(sapply(groups, function(group) {
@@ -89,7 +92,7 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
 
 # utils
 
-# Extract grouping_var membership from group column
+# Extract grouping_var membership from group column. Splits String by "." and extracts the values that are found in the "gruops"-Vektor.
 get_group <- function(val_vec, groups){
 
   val_vec <- gsub("_", "\\.", val_vec)

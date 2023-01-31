@@ -15,8 +15,8 @@ plot_braces <- function(data_trend_point, BL) {
   coords <- calc_coords(range_est)
   brace_coords <- calc_brace_coords(data_trend_point, coords)
 
-  # data$estTrend_within_label <- ifelse(data$sigTrend_within == "bold", paste0("**", round(data$estTrend_within, 0), "**"), round(data$estTrend_within, 0))
-  # data$sigTrend_vsGermany <- ifelse(data$pTrend_vsGermany < 0.05, "<sup>a</sup>", "")
+  brace_coords$est_trend_within_label <- ifelse(brace_coords$sig_trend_within == TRUE, paste0("**", round(brace_coords$est_trend_within, 0), "**"), round(brace_coords$est_trend_within, 0))
+  brace_coords$sig_trend_whole_label <- ifelse(brace_coords$sig_trend_whole == TRUE, "<sup>a</sup>", "")
 
   c(
     ## Loop to draw a brace for every year_start
@@ -98,8 +98,8 @@ plot_brace_label <- function(brace_coords, BL) {
       x = .data$label_pos_x,
       y = .data$label_pos_y,
       label = paste0(
-        .data$est_trend_within,
-        # sigTrend_vsGermany,
+        .data$est_trend_within_label,
+        .data$sig_trend_whole_label,
         " (", round(.data$se_trend_within, 1), ")"
       )
     ),
