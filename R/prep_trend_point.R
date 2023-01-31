@@ -6,10 +6,10 @@
 #' @export
 #'
 #' @examples #tbd
-prep_lines <- function(prep_list) {
-  trend_whole <- prep_list[["trend_whole"]][, c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end", "est_trend_whole","sig_trend_whole")]
-  trend_within <- prep_list[["trend_within"]][, c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end", "est_trend_within", "se_trend_within","sig_trend_within")]
-  point_estimates <- prep_list[["point_estimates"]][, c("TR_BUNDESLAND", "grouping_var", "time", "est_point")]
+prep_trend_point <- function(trend_whole, trend_within, point_estimates) {
+  trend_whole <- trend_whole[, c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end", "est_trend_whole","sig_trend_whole")]
+  trend_within <- trend_within[, c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end", "est_trend_within", "se_trend_within","sig_trend_within")]
+  point_estimates <- point_estimates[, c("TR_BUNDESLAND", "grouping_var", "time", "est_point")]
 
   trend_start <- merge(trend_within,
     point_estimates,
@@ -34,7 +34,7 @@ prep_lines <- function(prep_list) {
 
   trend <- rename_column(trend, "est_point", "est_point_end")
 
-  trend_final <- merge(trend, trend_whole, by = c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end"))
+  trend_final <- merge(trend, trend_whole, by = c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end"), sort = FALSE)
 
-  return(trend)
+  return(trend_final)
 }
