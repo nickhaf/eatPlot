@@ -19,8 +19,11 @@ Depends:
 LazyData: true
 Imports: 
     cowplot,
+    ggbrace,
     ggpattern,
     ggplot2,
     ggstats,
+    ggtext,
     plyr,
     rlang
+Remotes: NicolasH2/ggbrace

@@ -51,7 +51,7 @@ prep_points <- function(data, sig_niveau = 0.05){
   colnames(data_wide) <- gsub("_", "\\.", colnames(data_wide))
 
   data_long <- stats::reshape(data_wide, direction = "long", varying = grep("est\\.|p\\.", colnames(data_wide), value = TRUE))
-  data_long <- calc_sig(data_long, sig_niveau = sig_niveau)
+  data_long$sig <- calc_sig(data_long$p, sig_niveau = sig_niveau)
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   data_long$id <- NULL

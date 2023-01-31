@@ -11,7 +11,7 @@
 #' @examples # tbd
 prep_tableplot <- function(data, columns, competence, sig_niveau = 0.05) {
   colnames(data)[colnames(data) == columns] <- "columns"
-  data <- calc_sig(data)
+  data$sig <- calc_sig(data$p, sig_niveau = sig_niveau)
   data <- data[data$group != "wholeGroup" & data$kb == competence, ]
   ## crossdiff p with and without adjustment in NA p at the respective place
   data <- data[is.na(data$comparison), ] # lookout: later we need the p values from data$comparison != NA

@@ -1,12 +1,11 @@
 test_that("calc_sig(): significance niveau is working correctly", {
 
-  df <- calc_sig(data.frame("p" = c(0.02, 0.1, 0.01, 12.4)), sig_niveau = 0.03)
+  test_sig <- calc_sig(c(0.02, 0.1, 0.01, 12.4), sig_niveau = 0.03)
 
-  expect_equal(colnames(df), c("p", "sig"))
-  expect_equal(df$sig, factor(c(TRUE, FALSE, TRUE, FALSE)))
+  expect_equal(test_sig, factor(c(TRUE, FALSE, TRUE, FALSE)))
 
-  df_2 <- calc_sig(data.frame("pvalue" = c(0.02, 0.1, 0.01, NA)), p_column = "pvalue")
-  expect_equal(df_2$sig, factor(c(TRUE, FALSE, TRUE, NA)))
+  test_sig_2 <- calc_sig(c(0.02, 0.1, 0.01, NA))
+  expect_equal(test_sig_2, factor(c(TRUE, FALSE, TRUE, NA)))
 })
 
 
