@@ -19,13 +19,29 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
   prep_list <- list()
 
   # whole group -------------------------------------------------------------
-  whole_group_rows <- unlist(sapply(groups, function(x) {
-    filter_strings(identifier = BLs, paste_vec = paste0("_", x, ".vs.wholeGroup"), val_vec = data$group)
+  data[unlist(filter_strings(identifier = groups, ".vs.wholeGroup", data$group)), ]
+
+
+
+
+  whole_group_rows_states <- unlist(sapply(groups, function(x) {
+    filter_strings(identifier = c(BLs, "wholeGroup"), paste_vec = paste0("_", x, ".vs.wholeGroup"), val_vec = data$group)
   }, USE.NAMES = FALSE))
+
+
+  ## grep wholeGroup:
+  whole_group_rows_whole <- unlist(sapply(groups, function(x) {
+    grep(paste0("^", x, ".vs.wholeGroup"), data$group)
+  }, USE.NAMES = FALSE))
+
+whole_group_rows <- c(whole_group_rows_states, whole_group_rows_whole)
+
 
   trend_whole <- data[whole_group_rows, ]
   trend_whole$grouping_var <- get_group(trend_whole$group, groups = groups)
   trend_whole$TR_BUNDESLAND <- get_group(trend_whole$group, groups = BLs)
+  trend_whole[is.na(trend_whole$TR_BUNDESLAND), "TR_BUNDESLAND"] <- "wholeGroup"
+
   trend_whole_long <- prep_trend(data = trend_whole, sig_niveau = sig_niveau)
   trend_whole_long <- rename_column(trend_whole_long, old = "esttrend", new = "est_trend_whole")
   trend_whole_long <- rename_column(trend_whole_long, old = "sig_trend", new = "sig_trend_whole")
@@ -41,6 +57,7 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
     }, USE.NAMES = FALSE)
   }))
 
+
   trend_within <- data[within_group_rows, ]
   trend_within$grouping_var <- get_group(trend_within$group, groups = groups)
   trend_within_long <- prep_trend(data = trend_within, sig_niveau = sig_niveau)
@@ -54,8 +71,8 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
 
 
   # Put into list -----------------------------------------------------------
-  prep_list[["trend_whole"]] <- trend_whole_long
-  prep_list[["trend_within"]] <- trend_within_long
+  # prep_list[["trend_whole"]] <- trend_whole_long
+  # prep_list[["trend_within"]] <- trend_within_long
   prep_list[["point_estimates"]] <- point_estimates
   prep_list[["trend_point"]] <- prep_trend_point(trend_whole = trend_whole_long, trend_within = trend_within_long, point_estimates = point_estimates)
   prep_list[["trend_braces"]] <- prep_list[["trend_point"]]
@@ -63,13 +80,13 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
 
   ## filter respective rows:
   ## only use consecutive years:
-  years_whole <- c(prep_list[["trend_whole"]]$year_start, prep_list[["trend_whole"]]$year_end)
-  plot_years <- consecutive_numbers(years_whole)
-  prep_list[["trend_whole"]] <- prep_list[["trend_whole"]][filter_years(prep_list[["trend_whole"]], plot_years), ]
-
-  years_within <- c(prep_list[["trend_within"]]$year_start, prep_list[["trend_within"]]$year_end)
-  plot_years <- consecutive_numbers(years_within)
-  prep_list[["trend_within"]] <- prep_list[["trend_within"]][filter_years(prep_list[["trend_within"]], plot_years), ]
+  # years_whole <- c(prep_list[["trend_whole"]]$year_start, prep_list[["trend_whole"]]$year_end)
+  # plot_years <- consecutive_numbers(years_whole)
+  # prep_list[["trend_whole"]] <- prep_list[["trend_whole"]][filter_years(prep_list[["trend_whole"]], plot_years), ]
+  #
+  # years_within <- c(prep_list[["trend_within"]]$year_start, prep_list[["trend_within"]]$year_end)
+  # plot_years <- consecutive_numbers(years_within)
+  # prep_list[["trend_within"]] <- prep_list[["trend_within"]][filter_years(prep_list[["trend_within"]], plot_years), ]
 
   years_trend_point <- c(prep_list[["trend_point"]]$year_start, prep_list[["trend_point"]]$year_end)
   plot_years <- consecutive_numbers(years_within)

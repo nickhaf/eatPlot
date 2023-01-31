@@ -14,7 +14,7 @@ plot_lineplot <- function(prep_list){
     })
 
     p1 <- ggplot2::ggplot() +
-      #plot_settings(my_data = pointEstimates) +
+      settings_lineplot(prep_list_state[["trend_point"]]) +
       # draw_background_lines(bt21 %>% filter(group == "wholeGroup", parameter == "mean", kb == "GL")) +
       plot_points(data_point_estimates = prep_list_state[["point_estimates"]]) +
       plot_lines(data_trend_point = prep_list_state[["trend_point"]]) +
