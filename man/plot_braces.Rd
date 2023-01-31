@@ -4,10 +4,12 @@
 \alias{plot_braces}
 \title{Plot braces below plot.}
 \usage{
-plot_braces(data_trend_point)
+plot_braces(data_trend_point, BL)
 }
 \arguments{
 \item{data_trend_point}{Prepared Trend data.}
+
+\item{BL}{Bundesland, for which the labels should be drawn.}
 }
 \value{
 ggplot2 object.

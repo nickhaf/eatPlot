@@ -4,10 +4,14 @@
 \alias{prep_trend_point}
 \title{Merge point estimates onto the resepective timepoints.}
 \usage{
-prep_trend_point(prep_list)
+prep_trend_point(trend_whole, trend_within, point_estimates)
 }
 \arguments{
-\item{prep_list}{List stemming from \code{prep_lineplot()}.}
+\item{trend_whole}{Data.frame with the trend comparisons against the whole group (e.g. Germany).}
+
+\item{trend_within}{Data.frame with the trend comparisons within the group (e.g. states).}
+
+\item{point_estimates}{Data.frame with the point estimates for the start and end years.}
 }
 \value{
 Data frame with the within significance estimates and the point estimates for start and end year.

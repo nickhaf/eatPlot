@@ -1,6 +1,8 @@
 #' Merge point estimates onto the resepective timepoints.
 #'
-#' @param prep_list List stemming from \code{prep_lineplot()}.
+#' @param trend_whole Data.frame with the trend comparisons against the whole group (e.g. Germany).
+#' @param trend_within Data.frame with the trend comparisons within the group (e.g. states).
+#' @param point_estimates Data.frame with the point estimates for the start and end years.
 #'
 #' @return Data frame with the within significance estimates and the point estimates for start and end year.
 #' @export

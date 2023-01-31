@@ -1,6 +1,7 @@
 #' Plot braces below plot.
 #'
 #' @param data_trend_point Prepared Trend data.
+#' @param BL Bundesland, for which the labels should be drawn.
 #'
 #' @return ggplot2 object.
 #' @export
