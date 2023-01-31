@@ -71,6 +71,10 @@ prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
   plot_years <- consecutive_numbers(years_within)
   prep_list[["trend_within"]] <- prep_list[["trend_within"]][filter_years(prep_list[["trend_within"]], plot_years), ]
 
+  years_trend_point <- c(prep_list[["trend_point"]]$year_start, prep_list[["trend_point"]]$year_end)
+  plot_years <- consecutive_numbers(years_within)
+  prep_list[["trend_point"]] <- prep_list[["trend_point"]][filter_years(prep_list[["trend_point"]], plot_years), ]
+
 
   ## for braces
   prep_list[["trend_braces"]] <- prep_list[["trend_braces"]][filter_years(

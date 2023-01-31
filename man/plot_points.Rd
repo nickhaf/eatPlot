@@ -4,10 +4,10 @@
 \alias{plot_points}
 \title{Plot Points.}
 \usage{
-plot_points(grouping_var)
+plot_points(data_point_estimates)
 }
 \arguments{
-\item{grouping_var}{Indicating which groups are getting distinct colours.}
+\item{data_point_estimates}{Data frame with the point estimates for every year. Prepared by ...}
 }
 \value{
 ggplot2 object
