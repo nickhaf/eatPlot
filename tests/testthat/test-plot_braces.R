@@ -1,46 +1,97 @@
-test_that("calc_brace_coords works", {
-df <- data.frame(TR_BUNDESLAND = rep("Berlin", 4),
-                 year_start = c(2011, 2011, 2015, 2015),
-                 year_end = c(2020, 2020, 2020, 2020),
-                 grouping_var = c(0, 1, 0, 1),
-                 est_trend_within = c(1:4),
-                 se_trend_within = c(1:4),
-                 sig_trend_wihtin = c(TRUE, FALSE, FALSE, TRUE),
-                 est_point_start = 400:403,
-                 est_point_end = 500:503
-                 )
+test_that("coords are calculated correctly", {
 
-
-ggplot2::ggplot() +
-  ggplot2::geom_point(df, mapping = ggplot2::aes(x = year_start, y = est_point_start)) +
-  ggplot2::geom_point(df, mapping = ggplot2::aes(x = year_end, y = est_point_end)) +
-plot_braces(df, BL = "Berlin") +
-  ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
-
-
-  })
-
-
-test_that("coordinate system ist build correctly", {
-
-
+ expect_equal(calc_coords(c(10, 100)), c(0, 110))
+ expect_equal(calc_coords(c(0, 1)), c(0, 10))
 
 })
 
 
+test_that("y limits are set correctly", {
+  df <- data.frame(TR_BUNDESLAND = rep("Berlin", 4),
+                   year_start = c(2011, 2011, 2015, 2015),
+                   year_end = c(2020, 2020, 2020, 2020),
+                   grouping_var = c(0, 1, 0, 1),
+                   est_trend_within = c(1:4),
+                   se_trend_within = c(1:4),
+                   sig_trend_wihtin = c(TRUE, FALSE, FALSE, TRUE),
+                   est_point_start = 400:403,
+                   est_point_end = 500:503
+  )
 
-data <- prep_lineplot(trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
-data_trend_point <- data[["trend_braces"]]
-data_trend_point <- data_trend_point[data_trend_point$TR_BUNDESLAND == "Berlin", ]
+test_p <- ggplot2::ggplot() +
+    plot_braces(df, BL = "Berlin")
+coords <- c(360, 530)
+
+expect_equal(test_p$coordinates$limits$y, coords)
+})
 
 
-ggplot2::ggplot() +
-  plot_lines(data_lines = data[["trend_point"]]) +
-  plot_braces(data_trend_point, BL = "Berlin") +
-  ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
+
+test_that("calc_brace_coords works", {
+  df <- data.frame(TR_BUNDESLAND = rep("Berlin", 4),
+                   year_start = c(2011, 2011, 2015, 2015),
+                   year_end = c(2020, 2020, 2020, 2020),
+                   grouping_var = c(0, 1, 0, 1),
+                   est_trend_within = c(1:4),
+                   se_trend_within = c(1:4),
+                   sig_trend_wihtin = c(TRUE, FALSE, FALSE, TRUE),
+                   est_point_start = 400:403,
+                   est_point_end = 500:503
+  )
+
+  coords <- c(360, 530)
+
+  test_braces <- calc_brace_coords(df, coords)
+
+  expect_equal(test_braces$brace_upper_y, c(360, 360, 324, 324))
+  expect_equal(test_braces$brace_lower_y, c(324, 324, 306, 306))
+  expect_equal(test_braces$label_pos_y, c(298.8, 306.0, 298.8, 306.0))
 
 
-# ## coord_cartesian: ylims, also wo ist die y-Achse? Ohne diese Limits werden die braces noch im Plot gezeichnet, sie sollen ja aber Unter der x-Achse losgehen.
-# ## Plot margin: Wie viel weiße Fläche (auf die auch z.B. die Braces passen), bleibt neben den Achsen frei?
-#
-#
+})
+
+test_that("x-position of brace label is calculated correctly", {
+
+  df <- data.frame(TR_BUNDESLAND = rep("Berlin", 4),
+                   year_start = c(2011, 2011, 2015, 2015),
+                   year_end = c(2020, 2020, 2020, 2020),
+                   grouping_var = c(0, 1, 0, 1),
+                   est_trend_within = c(1:4),
+                   se_trend_within = c(1:4),
+                   sig_trend_wihtin = c(TRUE, FALSE, FALSE, TRUE),
+                   est_point_start = 400:403,
+                   est_point_end = 500:503
+  )
+
+expect_equal(calc_pos_label_x(year_start = 0, year_end = 10, brace_indent_pos = 0.25), 2.5)
+expect_equal(ifelse(df$year_start == min(df$year_start),
+                    calc_pos_label_x(df$year_start, df$year_end, 0.25),
+                    calc_pos_label_x(df$year_start, df$year_end, 0.5)),
+             c(2013.25, 2013.25, 2017.5, 2017.5)
+
+
+             )
+
+})
+
+test_that("braces are plotted correctly", {
+
+  df <- data.frame(TR_BUNDESLAND = rep("Berlin", 4),
+                   year_start = c(2011, 2011, 2015, 2015),
+                   year_end = c(2020, 2020, 2020, 2020),
+                   grouping_var = c(0, 1, 0, 1),
+                   est_trend_within = c(1:4),
+                   se_trend_within = c(1:4),
+                   sig_trend_wihtin = c(TRUE, FALSE, FALSE, TRUE),
+                   est_point_start = 400:403,
+                   est_point_end = 500:503
+  )
+
+
+
+vdiffr::expect_doppelganger("Brace plot", ggplot2::ggplot() +
+                              plot_braces(df, BL = "Berlin") +
+                              ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")))
+
+
+})
