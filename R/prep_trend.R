@@ -15,7 +15,7 @@ prep_trend <- function(data, sig_niveau = 0.05){
   trend_cols <- colnames(data)[grep("est_trend|sig_trend|se_trend", colnames(data))]
 
   colnames(data)[trend_cols_pos] <- gsub("\\.", "",
-                                     gsub("_", "", trend_cols))
+                                         gsub("_", "", trend_cols))
   ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
   colnames(data)[trend_cols_pos] <- sapply(colnames(data)[trend_cols_pos], function(x) sub("2", ".2", x)) ## use first number here
 

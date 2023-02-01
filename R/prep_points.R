@@ -7,19 +7,18 @@
 #' @export
 #'
 #' @examples # tbd
-prep_points <- function(data, sig_niveau = 0.05){
+prep_points <- function(bl_point_estimates, sig_niveau = 0.05){
 
   p_cols <- grep("p_", colnames(data), value = TRUE)
   est_cols <- grep("est", colnames(data), value = TRUE)
   est_cols <- grep("trend", est_cols, invert = TRUE, value = TRUE) # remove trend estimates
   BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
 
+## Hierfür einen anderen data.frame aus der general_list einfügen:
 ## Filter all rows with the pattern: "BL + _0|_1 + .vs.wholeGroup". This
 ## are the rows containing the p-Values for the point estimates of each
 ## Bundesland vs. the whole Group (Germany).
-  p_rows <- unlist(sapply(unique(data[!is.na(data$grouping_var), "grouping_var"]), function(x){
-    filter_strings(identifier = BLs, paste_vec = paste0("_", x, ".vs.wholeGroup"), val_vec = data$group)
-  }, USE.NAMES =FALSE))
+
 
   data_p <- data[p_rows, c("TR_BUNDESLAND", "group", p_cols)]
 

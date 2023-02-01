@@ -35,6 +35,33 @@ test_that("get_group() filters the correct rows", {
   expect_equal(get_group(c("ab", "ac", "cb", "cc"), "c", starts_with = "^"), c(FALSE, FALSE, TRUE, TRUE))
   expect_equal(get_group(c("ab", "ac", "cb", "cc"), "c", ends_with = "$"), c(FALSE, TRUE, FALSE, TRUE))
   expect_equal(get_group(c("ab", "ac", "cb", "cc"), c("b","c"), ends_with = "$"), c(TRUE, TRUE, TRUE, TRUE))
+})
+
+
+test_that("reshaping to long format works", {
+df_wide <- data.frame("est.1" = 1:2,
+                      "est.2" = 3:4,
+                      "p.1" = 4:5,
+                      "p.2" = 6:7)
+
+df_long_test <- prep_long(df_wide, include_pattern = "est\\.|p\\.")
+
+expect_equal(df_long_test$est_, 1:4)
+expect_equal(df_long_test$year,  c(1, 1, 2, 2))
+expect_equal(colnames(df_long_test), c("year", "est_", "p_"))
+
+df_long_test_2 <- prep_long(df_wide, include_pattern = "est", remove_pattern = "p\\.", suffix = "test")
+
+expect_equal(colnames(df_long_test_2), c("year", "est_test"))
+
+})
+
+
+test_that("years are split correctly", {
+
+df_years <- data.frame(year = c("2011vs2016", "2013.2014"))
+
+expect_equal(split_years(df_years)$year_start, c(2011, 2013))
 
 
 

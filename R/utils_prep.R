@@ -61,3 +61,49 @@ get_wholeGroup <- function(val_vec){
 }
 
 
+
+# Helper functions for reshaping to long format ---------------------------
+prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = ""){
+
+  if(!is.null(remove_pattern)){
+  cols_removed <- grep(remove_pattern, colnames(data), invert = TRUE, value = TRUE)
+  data <- data[, cols_removed]
+  }
+
+  col_pos <- grep(include_pattern, colnames(data))
+  colnames(data)[col_pos] <- gsub("\\.|_", "", colnames(data)[col_pos])
+
+  ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
+  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], function(x) sub("2", ".2", x)) ## HACKY: use first number here instead of 2
+
+  data_long <- stats::reshape(data, direction = "long", varying = colnames(data)[col_pos])
+  data_long$id <- NULL
+
+  # put suffix on all new columns containing the values:
+  new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
+  for(i in new_colnames){
+  data_long <- rename_column(data_long, old = i, new = paste0(i, "_", suffix))
+  }
+
+  colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
+  data_long <- rename_column(data_long, old = paste0("time_", suffix), new = "year")
+
+  return(data_long)
+}
+
+## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
+split_years <- function(data){
+
+  years <- regmatches(data$year, gregexpr("[[:digit:]]+", data$year))
+
+  # extract the years and add them to the long data frame
+  year_cols <- data.frame()
+
+  for(i in 1:length(years)){
+    year_cols <- rbind(year_cols, as.numeric(years[[i]]))
+  }
+  colnames(year_cols) <- c("year_start", "year_end")
+  data <- cbind(data, year_cols)
+
+  return(data)
+}

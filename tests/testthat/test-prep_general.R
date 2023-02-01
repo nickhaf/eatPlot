@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("correct rows are filtered", {
   df_general_1 <- data.frame(
     group = c("a", "a.1.a", "a.2.a", "b"),
     TR_BUNDESLAND = c("a", "a", "a", "b"),
@@ -31,4 +31,18 @@ test_that("multiplication works", {
   expect_equal(test_general_2[["bl_vs_wholeGroup"]]$group, "a.wholeGroup")
   expect_equal(test_general_2[["wholeGroup_vs_wholeGroup"]]$group, "1.wholeGroup")
   expect_equal(dim(test_general_2[["bl_point_estimates"]]), c(0, 6))
+})
+
+test_that("grouping_var is optional", {
+  df_general <- data.frame(
+    group = c("a.wholeGroup", "b.wholeGroup", "wholeGroup.vs.wholeGroup", "b"),
+    TR_BUNDESLAND = c("a", "a", NA, "b"),
+    kb = rep("best", 4),
+    parameter = rep("mean", 4),
+    comparison = c("vs", "vs", "vs", NA)
+  )
+test_general <- prep_general(df_general, competence = "best")
+expect_equal(test_general[["wholeGroup_vs_wholeGroup"]]$group, "wholeGroup.vs.wholeGroup")
+expect_equal(dim(test_general[["bl_vs_bl"]]), c(0, 5))
+
 })
