@@ -26,3 +26,16 @@ test_that("consecutive numbers are correct", {
 
   expect_equal(consecutive_numbers(c(2011, 2012, 2013, 2012, 2013)), list(c(2011, 2012), c(2012, 2013)))
 })
+
+
+test_that("get_group() filters the correct rows", {
+
+  expect_true(unique(get_group(c("a", "b"), "c" )) == FALSE)
+  expect_equal(get_group(c("a", "b", "c"), c("a","b")), c(TRUE, TRUE, FALSE))
+  expect_equal(get_group(c("ab", "ac", "cb", "cc"), "c", starts_with = "^"), c(FALSE, FALSE, TRUE, TRUE))
+  expect_equal(get_group(c("ab", "ac", "cb", "cc"), "c", ends_with = "$"), c(FALSE, TRUE, FALSE, TRUE))
+  expect_equal(get_group(c("ab", "ac", "cb", "cc"), c("b","c"), ends_with = "$"), c(TRUE, TRUE, TRUE, TRUE))
+
+
+
+})

@@ -44,5 +44,20 @@ i <- 1
 
 res <- unique(Filter(Negate(is.null), res))
   return(res)
-  }
+}
+
+
+
+# extractor for specific types of rows ------------------------------------
+
+get_group <- function(val_vec, groups, starts_with = "", ends_with = ""){
+  grepl(paste0(
+    paste0(starts_with, groups, ends_with), collapse = "|"),
+        val_vec)
+}
+
+get_wholeGroup <- function(val_vec){
+  grepl("wholeGroup", val_vec)
+}
+
 
