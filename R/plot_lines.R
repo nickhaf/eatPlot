@@ -7,9 +7,9 @@
 #' @export
 #'
 #' @examples #tbd
-plot_lines <- function(data_trend_point){
+plot_lines <- function(data_plot_lines){
     ggplot2::geom_segment(
-      data = data_trend_point,
+      data = data_plot_lines,
       ggplot2::aes(
         x = .data$year_start,
         xend = .data$year_end,

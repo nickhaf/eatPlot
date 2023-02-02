@@ -1,12 +1,4 @@
-#' Title
-#'
-#' @param data Trend data.
-#' @param sig_niveau When do p-values become significant?
-#'
-#' @return Data frame in long format, which includes the relevant point estimates.
-#' @export
-#'
-#' @examples # tbd
+
 prep_points <- function(bl_point_estimates, sig_niveau = 0.05){
 
   p_cols <- grep("p_", colnames(data), value = TRUE)

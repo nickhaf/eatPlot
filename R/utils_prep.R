@@ -101,7 +101,7 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   colnames(data)[col_pos] <- gsub("\\.|_", "", colnames(data)[col_pos])
 
   ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
-  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], function(x) sub("2", ".2", x)) ## HACKY: use first number here instead of 2
+  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], function(x) insert_first_number(x, insertion = "\\."))
 
   data_long <- stats::reshape(data, direction = "long", varying = colnames(data)[col_pos])
   data_long$id <- NULL
@@ -134,3 +134,14 @@ split_years <- function(data){
 
   return(data)
 }
+
+
+
+
+
+insert_first_number <- function(char_string, insertion){
+    string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))[[1]]
+    res <- sub(string_number, paste0(insertion, string_number), char_string)
+    return(res)
+  }
+

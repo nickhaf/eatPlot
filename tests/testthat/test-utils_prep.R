@@ -73,3 +73,10 @@ expect_equal(split_years(df_years)$year_start, c(2011, 2013))
 
 
 })
+
+
+test_that("number insertion works", {
+  expect_equal(insert_first_number("a4b5", insertion = "\\."), "a.4b5")
+  expect_equal(insert_first_number("a45c6", insertion = "\\."), "a.45c6")
+
+})

@@ -5,3 +5,4 @@ test_that("groups are extracted correctly", {
 
 })
 
+data_plot <- prep_lineplot(trend_books, grouping_var = "KBuecher_imp3", competence = "GL", sig_niveau = 0.05)

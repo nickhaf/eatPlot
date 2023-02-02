@@ -1,134 +1,58 @@
-#' #' Title
-#' #'
-#' #' @param data Trend data from eatRep.
-#' #' @param grouping_var Grouping variable.
-#' #' @param competence Competence area.
-#' #' @param sig_niveau Significance niveau.
-#' #'
-#' #' @return List of data.frames needed for different plot-functions.
-#' #' @export
-#' #'
-#' #' @examples # tbd
-#' prep_lineplot <- function(data, grouping_var = "", competence = "", sig_niveau = 0.05) {
+#' Title
 #'
+#' @param data Trend data from eatRep.
+#' @param grouping_var Grouping variable.
+#' @param competence Competence area.
+#' @param sig_niveau Significance niveau.
 #'
-#' general_list <- prep_general(data, grouping_var = grouping_var, competence = competence)
+#' @return List of data.frames needed for different plot-functions.
+#' @export
 #'
-#'
-#' data_plot_list <- list()
-#' # Prep für spezifische Plots ----------------------------------------------
-#'
-#' ## plot_points ##
-#'
-#'
-#' point_estimates <- prep_points(data, sig_niveau = sig_niveau)
-#' point_estimates <- rename_column(point_estimates, old = "est", new = "est_point")
-#' point_estimates <- rename_column(point_estimates, old = "sig", new = "sig_point")
-#' point_estimates <- point_estimates[point_estimates$group != "wholeGroup", ]
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-#'   # whole group -------------------------------------------------------------
-#'   whole_group_rows <- unlist(filter_strings(identifier = groups, ".vs.wholeGroup", data$group))
-#'
-#'   trend_whole <- data[whole_group_rows, ]
-#'   trend_whole$grouping_var <- get_group(trend_whole$group, groups = groups)
-#'   trend_whole$TR_BUNDESLAND <- get_group(trend_whole$group, groups = BLs)
-#'   trend_whole[is.na(trend_whole$TR_BUNDESLAND), "TR_BUNDESLAND"] <- "wholeGroup"
-#'
-#'   trend_whole_long <- prep_trend(data = trend_whole, sig_niveau = sig_niveau)
-#'   trend_whole_long <- rename_column(trend_whole_long, old = "esttrend", new = "est_trend_whole")
-#'   trend_whole_long <- rename_column(trend_whole_long, old = "sig_trend", new = "sig_trend_whole")
-#'   trend_whole_long <- rename_column(trend_whole_long, old = "setrend", new = "se_trend_whole")
-#'
-#'
-#'   # within group ------------------------------------------------------------
-#'
-#' ## Also include 0.vs.wholeGroup here!!!
-#'
-#'   within_group_rows <- unlist(sapply(groups, function(group) {
-#'     sapply(BLs, function(BL) {
-#'       grep(paste0(BL, "_", group, ".vs.", BL), data$group)
-#'     }, USE.NAMES = FALSE)
-#'     }
-#'   )
-#'   )
-#'
-#'
-#' within_group_rows <- c(within_group_rows, whole_group_comp_rows)
-#' }
-#'
-#'   trend_within <- data[within_group_rows, ]
-#'   trend_within$grouping_var <- get_group(trend_within$group, groups = groups)
-#'   trend_within[is.na(trend_within$TR_BUNDESLAND), "TR_BUNDESLAND"] <- "wholeGroup"
-#'
-#'   trend_within_long <- prep_trend(data = trend_within, sig_niveau = sig_niveau)
-#'   trend_within_long <- rename_column(trend_within_long, old = "esttrend", new = "est_trend_within")
-#'   trend_within_long <- rename_column(trend_within_long, old = "sig_trend", new = "sig_trend_within")
-#'   trend_within_long <- rename_column(trend_within_long, old = "setrend", new = "se_trend_within")
-#'
-#'
-#'   point_estimates <- prep_points(data, sig_niveau = sig_niveau)
-#'   point_estimates <- rename_column(point_estimates, old = "est", new = "est_point")
-#'   point_estimates <- rename_column(point_estimates, old = "sig", new = "sig_point")
-#'   point_estimates <- point_estimates[point_estimates$group != "wholeGroup", ]
-#'
-#'   whole_group <- prep_points(data, sig_niveau = sig_niveau)
-#'   whole_group <- whole_group[whole_group$group == "wholeGroup", ]
-#'
-#'
-#'   # Put into list -----------------------------------------------------------
-#'   prep_list <- list()
-#'
-#'
-#'   # prep_list[["trend_whole"]] <- trend_whole_long
-#'   # prep_list[["trend_within"]] <- trend_within_long
-#'   prep_list[["point_estimates"]] <- point_estimates
-#'   prep_list[["trend_point"]] <- prep_trend_point(trend_whole = trend_whole_long, trend_within = trend_within_long, point_estimates = point_estimates)
-#'   prep_list[["trend_braces"]] <- prep_list[["trend_point"]]
-#'   prep_list[["whole_group"]] <- whole_group ### long format!
-#'
-#'   ## filter respective rows:
-#'   ## only use consecutive years:
-#'   # years_whole <- c(prep_list[["trend_whole"]]$year_start, prep_list[["trend_whole"]]$year_end)
-#'   # plot_years <- consecutive_numbers(years_whole)
-#'   # prep_list[["trend_whole"]] <- prep_list[["trend_whole"]][filter_years(prep_list[["trend_whole"]], plot_years), ]
-#'   #
-#'   # years_within <- c(prep_list[["trend_within"]]$year_start, prep_list[["trend_within"]]$year_end)
-#'   # plot_years <- consecutive_numbers(years_within)
-#'   # prep_list[["trend_within"]] <- prep_list[["trend_within"]][filter_years(prep_list[["trend_within"]], plot_years), ]
-#'
-#'   years_trend_point <- c(prep_list[["trend_point"]]$year_start, prep_list[["trend_point"]]$year_end)
-#'   plot_years <- consecutive_numbers(years_trend_point)
-#'   prep_list[["trend_point"]] <- prep_list[["trend_point"]][filter_years(prep_list[["trend_point"]], plot_years), ]
-#'
-#'
-#'   ## for braces
-#'   prep_list[["trend_braces"]] <- prep_list[["trend_braces"]][filter_years(
-#'     prep_list[["trend_braces"]],
-#'     list(c(2011, 2021), c(2016, 2021))
-#'   ), ]
-#'   return(prep_list)
-#' }
-#'
-#'
-#'
-#' # utils
-#'
+#' @examples # tbd
+prep_lineplot <- function(data, grouping_var = "", competence, sig_niveau = 0.05) {
 
-#'
-#' # Return rows with respective start and end years.
-#' filter_years <- function(data, year_list) {
-#'   # Filter the respective rows
-#'   year_rows <- unlist(lapply(year_list, function(x) {
-#'     which(data$year_start == x[1] & data$year_end == x[2])
-#'   }))
-#'   return(year_rows)
-#' }
+
+  data <- trend_books
+  BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
+  groups <- unique(data$grouping_var[!is.na(data$grouping_var)])
+
+
+plot_data <- list()
+
+  list_general <- prep_general(trend_books, grouping_var = grouping_var, competence = competence)
+  within_whole <- merge_within_whole(list_general[["trend_data"]], groups = groups, BLs = BLs)[["within_whole"]]
+  trend_point <- merge_trend_point(trend_data = within_whole, point_data = list_general[[1]])
+  wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
+
+
+plot_data[["plot_points"]] <- list_general[["point_data"]]
+
+  plot_years_trend <- consecutive_numbers(c(trend_point$year_start, trend_point$year_end))
+  plot_data[["plot_line"]] <- trend_point[filter_years(trend_point, plot_years_trend), ]
+
+
+  plot_years <- unique(c(trend_point$year_start, trend_point$year_end))
+
+  ## Draw braces from last year to every other year
+ plot_years_braces <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
+    c(x, max(plot_years))
+  })
+
+  plot_data[["plot_braces"]] <- trend_point[filter_years(trend_point, plot_years_braces), ]
+
+
+  return(plot_data)
+}
+
+
+
+# utils
+
+# Return rows with respective start and end years.
+filter_years <- function(data, year_list) {
+  # Filter the respective rows
+  year_rows <- unlist(lapply(year_list, function(x) {
+    which(data$year_start == x[1] & data$year_end == x[2])
+  }))
+  return(year_rows)
+}

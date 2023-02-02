@@ -1,27 +1,27 @@
 #' Plot braces below plot.
 #'
-#' @param data_trend_braces Prepared Trend data.
+#' @param data_plot_braces Prepared Trend data.
 #' @param BL Bundesland, for which the labels should be drawn.
 #'
 #' @return ggplot2 object.
 #' @export
 #'
 #' @examples ##
-plot_braces <- function(data_trend_braces, BL) {
+plot_braces <- function(data_plot_braces, BL) {
   # Get range for y-axis
-  range_est <- range(c(data_trend_braces$est_point_start, data_trend_braces$est_point_end))
+  range_est <- range(c(data_plot_braces$est_point_start, data_plot_braces$est_point_end), na.rm = TRUE)
 
   # Here the coordinates for the braces and brace labels are calculated.
   # Change in the functions for fine tuning.
   coords <- calc_coords(range_est)
-  brace_coords <- calc_brace_coords(data_trend_braces, coords)
+  brace_coords <- calc_brace_coords(data_plot_braces, coords)
 
   brace_coords$est_trend_within_label <- ifelse(brace_coords$sig_trend_within == TRUE, paste0("**", round(brace_coords$est_trend_within, 0), "**"), round(brace_coords$est_trend_within, 0))
   brace_coords$sig_trend_whole_label <- ifelse(brace_coords$sig_trend_whole == TRUE, "<sup>a</sup>", "")
 
   c(
     ## Loop to draw a brace for every year_start
-    lapply(unique(data_trend_braces$year_start), function(x) {
+    lapply(unique(data_plot_braces$year_start), function(x) {
       coordinates <- brace_coords[brace_coords$year_start == x, ]
       coordiantes <- unique(brace_coords[, c("year_start", "year_end", "brace_upper_y", "brace_lower_y")])
 

@@ -8,8 +8,13 @@
 #' @export
 #'
 #' @examples # tbd
-prep_general <- function(data, grouping_var = "", competence = "") {
-  colnames(data)[colnames(data) == grouping_var] <- "grouping_var"
+prep_general <- function(data, grouping_var = "", competence) {
+  if (grouping_var == "") {
+    data$grouping_var <- rep(NA, nrow(data))
+  } else {
+    colnames(data)[colnames(data) == grouping_var] <- "grouping_var"
+  }
+
   colnames(data) <- gsub("\\.", "_", colnames(data))
   colnames(data) <- gsub("sig_", "p_", colnames(data))
   data <- data[data$kb == competence & data$parameter == "mean", ]
@@ -24,13 +29,17 @@ prep_general <- function(data, grouping_var = "", competence = "") {
 
 
   # Prepare point estimates -------------------------------------------------
-  filtered_list[["point_data"]] <- prep_long(data[is.na(data$comparison), ],
-    include_pattern = "est_|p_|se_|es_",
-    remove_pattern = "trend",
-    suffix = "point"
-  )
-  filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$TR_BUNDESLAND) & (get_wholeGroup(filtered_list[["point_data"]]$group) | filtered_list[["point_data"]]$group %in% groups), "TR_BUNDESLAND"] <- "wholeGroup"
-
+  if (any(is.na(data$comparison))) {
+    filtered_list[["point_data"]] <- prep_long(data[is.na(data$comparison), ],
+      include_pattern = "est_|p_|se_|es_",
+      remove_pattern = "trend",
+      suffix = "point"
+    )
+    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$TR_BUNDESLAND) & (get_wholeGroup(filtered_list[["point_data"]]$group) | filtered_list[["point_data"]]$group %in% groups), "TR_BUNDESLAND"] <- "wholeGroup"
+    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$grouping_var), "grouping_var"] <- "noGroup"
+  } else {
+    filtered_list["point_data"] <- list(NULL)
+  }
 
   # Prepare trend data ------------------------------------------------------
   years_colnames <- unique(unlist(regmatches(colnames(data), gregexpr("[[:digit:]]+", colnames(data)))))
@@ -50,22 +59,52 @@ prep_general <- function(data, grouping_var = "", competence = "") {
     )
   ))
 
+  data_trend_raw <- data[!is.na(data$comparison) & data$comparison == "crossDiff", ]
 
-  filtered_list[["trend_data"]] <- prep_long(data[!is.na(data$comparison) & data$comparison == "crossDiff", ],
-    include_pattern = "est_trend|p_trend|se_trend|es_trend",
-    remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
-  )
-  filtered_list[["trend_data"]] <- split_years(filtered_list[["trend_data"]])
-  colnames(filtered_list[["trend_data"]]) <- gsub("trend", "_trend", colnames(filtered_list[["trend_data"]]))
-  filtered_list[["trend_data"]]$grouping_var <- write_group(filtered_list[["trend_data"]]$group, groups = groups)
-  filtered_list[["trend_data"]]$TR_BUNDESLAND <- write_group(filtered_list[["trend_data"]]$group, groups = BLs)
-  filtered_list[["trend_data"]][is.na(filtered_list[["trend_data"]]$TR_BUNDESLAND) & get_wholeGroup(filtered_list[["trend_data"]]$group), "TR_BUNDESLAND"] <- "wholeGroup"
+  if (nrow(data_trend_raw) != 0) {
+    filtered_list[["trend_data"]] <- prep_long(data_trend_raw,
+      include_pattern = "est_trend|p_trend|se_trend|es_trend",
+      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
+    )
+    filtered_list[["trend_data"]] <- split_years(filtered_list[["trend_data"]])
+    colnames(filtered_list[["trend_data"]]) <- gsub("trend", "_trend", colnames(filtered_list[["trend_data"]]))
+
+    ## Fill up NAs
+    filtered_list[["trend_data"]]$grouping_var <- write_group(filtered_list[["trend_data"]]$group, groups = groups)
+    filtered_list[["trend_data"]]$TR_BUNDESLAND <- write_group(filtered_list[["trend_data"]]$group, groups = BLs)
+    filtered_list[["trend_data"]][is.na(filtered_list[["trend_data"]]$TR_BUNDESLAND) & get_wholeGroup(filtered_list[["trend_data"]]$group), "TR_BUNDESLAND"] <- "wholeGroup"
+    filtered_list[["trend_data"]][is.na(filtered_list[["trend_data"]]$grouping_var), "grouping_var"] <- "noGroup"
+  } else {
+    filtered_list["trend_data"] <- list(NULL)
+  }
+
+  # Prepare WholeGroup ------------------------------------------------------
+  data_wholeGroup <- data[data$group == "wholeGroup", ]
+
+
+  if (nrow(data_wholeGroup) != 0) {
+    filtered_list[["wholeGroup_point"]] <- prep_long(data_wholeGroup,
+      include_pattern = c("est_|p_|se_|es_"),
+      remove_pattern = "trend",
+      suffix = "_point"
+    )
+
+
+
+    filtered_list[["wholeGroup_trend"]] <- prep_long(data_wholeGroup,
+      include_pattern = c("est_trend|p_trend|se_trend|es_trend"),
+      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|"),
+      suffix = "_trend"
+    )
+    filtered_list[["wholeGroup_trend"]] <- split_years(filtered_list[["wholeGroup_trend"]])
+    colnames(filtered_list[["wholeGroup_trend"]]) <- gsub("trend", "_trend", colnames(filtered_list[["wholeGroup_trend"]]))
+  }
+
 
   filtered_list <- add_sig_col(filtered_list, sig_niveau = sig_niveau)
 
   return(filtered_list)
 }
-
 
 
 # Utils -------------------------------------------------------------------
