@@ -4,7 +4,7 @@
 \alias{plot_points}
 \title{Plot Points.}
 \usage{
-plot_points(data_point_estimates)
+plot_points(data_plot_points)
 }
 \arguments{
 \item{data_point_estimates}{Data frame with the point estimates for every year. Prepared by ...}

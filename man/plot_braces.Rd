@@ -4,10 +4,10 @@
 \alias{plot_braces}
 \title{Plot braces below plot.}
 \usage{
-plot_braces(data_trend_braces, BL)
+plot_braces(data_plot_braces, BL)
 }
 \arguments{
-\item{data_trend_braces}{Prepared Trend data.}
+\item{data_plot_braces}{Prepared Trend data.}
 
 \item{BL}{Bundesland, for which the labels should be drawn.}
 }
