@@ -2,10 +2,17 @@ test_that("calc_sig(): significance niveau is working correctly", {
 
   test_sig <- calc_sig(c(0.02, 0.1, 0.01, 12.4), sig_niveau = 0.03)
 
-  expect_equal(test_sig, factor(c(TRUE, FALSE, TRUE, FALSE)))
+  expect_equal(test_sig, c(TRUE, FALSE, TRUE, FALSE))
 
   test_sig_2 <- calc_sig(c(0.02, 0.1, 0.01, NA))
-  expect_equal(test_sig_2, factor(c(TRUE, FALSE, TRUE, NA)))
+  expect_equal(test_sig_2, c(TRUE, FALSE, TRUE, NA))
+})
+
+
+test_that("write_group finds the correct group membership", {
+
+  expect_equal(write_group(c("a_1", NA, "b_1", "ab_1"), groups = "a"),
+               c("a", NA, NA, NA))
 })
 
 

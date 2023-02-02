@@ -1,8 +1,8 @@
 calc_sig <- function(p_vec, sig_niveau = 0.05) {
 
-    res <- as.factor(ifelse(is.na(p_vec), NA,
+    res <- ifelse(is.na(p_vec), NA,
                                  ifelse(p_vec < sig_niveau & !is.na(p_vec), TRUE, FALSE))
-                          )
+
     return(res)
 }
 
@@ -50,16 +50,43 @@ res <- unique(Filter(Negate(is.null), res))
 
 # extractor for specific types of rows ------------------------------------
 
-get_group <- function(val_vec, groups, starts_with = "", ends_with = ""){
+get_group <- function(val_vec, groups, starts_with = "", ends_with = "", log_res = TRUE){
+  if(log_res == TRUE){
   grepl(paste0(
     paste0(starts_with, groups, ends_with), collapse = "|"),
         val_vec)
+  }else{
+    grep(paste0(
+      paste0(starts_with, groups, ends_with), collapse = "|"),
+      val_vec,
+      value = TRUE)
 }
+    }
 
 get_wholeGroup <- function(val_vec){
   grepl("wholeGroup", val_vec)
 }
 
+
+# Extract group membership from group column. Splits String by "." and extracts the first value that is found in the group_vector
+write_group <- function(val_vec, groups) {
+  val_vec <- gsub("_", "\\.", val_vec)
+  group_vec <- strsplit(val_vec, split = "\\.")
+
+unlist(
+    lapply(group_vec, function(x) {
+      log_vec <- x %in% groups
+      if (all(log_vec == FALSE)) {
+        res <- NA
+      } else {
+        res <- x[log_vec][1]
+      }
+        return(res)
+
+    })
+  )
+
+}
 
 
 # Helper functions for reshaping to long format ---------------------------

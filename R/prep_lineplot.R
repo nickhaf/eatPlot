@@ -122,28 +122,7 @@
 #'
 #' # utils
 #'
-#' # Extract group membership from group column. Splits String by "." and extracts the values that are found in the "gruops"-Vektor.
-#' get_group <- function(val_vec, groups) {
-#'   val_vec <- gsub("_", "\\.", val_vec)
-#'   group_vec <- strsplit(val_vec, split = "\\.")
-#'
-#'   res_vec <- unlist(
-#'     lapply(group_vec, function(x) {
-#'       log_vec <- x %in% groups
-#'       if (all(log_vec == FALSE)) {
-#'         res <- NA
-#'       } else {
-#'         res <- x[log_vec]
-#'       }
-#'       if (length(res) > 1) {
-#'         stop("Multiple groups in your grouping column.")
-#'       } else {
-#'         return(res)
-#'       }
-#'     })
-#'   )
-#'   return(res_vec)
-#' }
+
 #'
 #' # Return rows with respective start and end years.
 #' filter_years <- function(data, year_list) {

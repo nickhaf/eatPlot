@@ -46,3 +46,13 @@ expect_equal(test_general[["wholeGroup_vs_wholeGroup"]]$group, "wholeGroup.vs.wh
 expect_equal(dim(test_general[["bl_vs_bl"]]), c(0, 5))
 
 })
+
+test_that("significance column is added", {
+  prepped_list <- list(a = data.frame(p_1 = c(0.04, 0.05)),
+                       b = data.frame(p_asdf = c(0.01, 0.04))
+                       )
+
+  prepped_list_sig <- add_sig_col(prepped_list, sig_niveau = 0.045)
+  expect_equal(prepped_list_sig[[1]]$sig, c(TRUE, FALSE))
+  expect_true(all(prepped_list_sig[[2]]$sig))
+})
