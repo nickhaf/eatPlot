@@ -1,7 +1,7 @@
 #' Adds a layer with trend lines to a ggplot.
 #'
 #' @details Wrapper for [ggplot2::geom_segment()].
-#' @param data_plot_lines Output `data.frame` from [prep_trend_point()].
+#' @param data_plot_lines data.
 #'
 #' @return ggplot2 object
 #' @export

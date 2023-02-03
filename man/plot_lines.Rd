@@ -7,7 +7,7 @@
 plot_lines(data_plot_lines)
 }
 \arguments{
-\item{data_plot_lines}{Output \code{data.frame} from \code{\link[=prep_trend_point]{prep_trend_point()}}.}
+\item{data_plot_lines}{data.}
 }
 \value{
 ggplot2 object
