@@ -7,7 +7,7 @@
 plot_points(data_plot_points)
 }
 \arguments{
-\item{data_point_estimates}{Data frame with the point estimates for every year. Prepared by ...}
+\item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
 }
 \value{
 ggplot2 object

@@ -1,6 +1,6 @@
 #' Plot Points.
 #'
-#' @param data_point_estimates Data frame with the point estimates for every year. Prepared by ...
+#' @param data_plot_points Data frame with the point estimates for every year. Prepared by ...
 #'
 #' @return ggplot2 object
 #' @export

@@ -1,17 +1,17 @@
 #' Title
 #'
-#' @param trend_data
-#' @param groups
-#' @param BLs
+#' @param trend_data Trend data.
+#' @param groups Groups.
+#' @param BLs States.
 #'
-#' @return
+#' @return list of data frames.
 #' @export
 #'
-#' @examples
+#' @examples #tbd
 merge_within_whole <- function(trend_data, groups, BLs){
 
 
-trend_data <- trend_data[ , -which(colnames(trend_data) %in% c("depVar", "modus", "comparison", "parameter", "kb"))]
+trend_data <- trend_data[ , !(colnames(trend_data) %in% c("depVar", "modus", "comparison", "parameter", "kb"))]
 
 
 
@@ -28,7 +28,7 @@ trend_data <- trend_data[ , -which(colnames(trend_data) %in% c("depVar", "modus"
                                             plot_data_list[["bl_vs_bl"]],
                                             by = c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end"),
                                             sort = FALSE,
-                                            suffixes = c("whole", "within"),
+                                            suffixes = c("_whole", "_within"),
                                             all = TRUE
   )
 

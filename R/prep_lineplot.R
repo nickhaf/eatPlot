@@ -11,8 +11,6 @@
 #' @examples # tbd
 prep_lineplot <- function(data, grouping_var = "", competence, sig_niveau = 0.05) {
 
-
-  data <- trend_books
   BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
   groups <- unique(data$grouping_var[!is.na(data$grouping_var)])
 
@@ -28,7 +26,7 @@ plot_data <- list()
 plot_data[["plot_points"]] <- list_general[["point_data"]]
 
   plot_years_trend <- consecutive_numbers(c(trend_point$year_start, trend_point$year_end))
-  plot_data[["plot_line"]] <- trend_point[filter_years(trend_point, plot_years_trend), ]
+  plot_data[["plot_lines"]] <- trend_point[filter_years(trend_point, plot_years_trend), ]
 
 
   plot_years <- unique(c(trend_point$year_start, trend_point$year_end))
@@ -41,7 +39,7 @@ plot_data[["plot_points"]] <- list_general[["point_data"]]
   plot_data[["plot_braces"]] <- trend_point[filter_years(trend_point, plot_years_braces), ]
 
 
-  plot_data[["plot_background_lines"]] <- wholeGroup_trend_point
+  plot_data[["plot_background_lines"]] <- wholeGroup_trend_point[filter_years(wholeGroup_trend_point, plot_years_trend), ]
 
   return(plot_data)
 }

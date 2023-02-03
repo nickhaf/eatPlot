@@ -3,6 +3,7 @@
 #' @param data eatRep output data.frame.
 #' @param grouping_var Variable with subgroups.
 #' @param competence Competence variable.
+#' @param sig_niveau Significance niveau.
 #'
 #' @return List of data frames with different filters.
 #' @export
@@ -67,7 +68,6 @@ prep_general <- function(data, grouping_var = "", competence, sig_niveau) {
       remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
     )
     filtered_list[["trend_data"]] <- split_years(filtered_list[["trend_data"]])
-    colnames(filtered_list[["trend_data"]]) <- gsub("trend", "_trend", colnames(filtered_list[["trend_data"]]))
 
     ## Fill up NAs
     filtered_list[["trend_data"]]$grouping_var <- write_group(filtered_list[["trend_data"]]$group, groups = groups)

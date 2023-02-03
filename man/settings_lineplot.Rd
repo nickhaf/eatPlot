@@ -7,7 +7,7 @@
 settings_lineplot(data_trend_point)
 }
 \arguments{
-\item{time_points}{Data in Long format}
+\item{data_trend_point}{Data in Long format}
 }
 \value{
 ggplot2 plot settings

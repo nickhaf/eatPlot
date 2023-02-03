@@ -4,7 +4,7 @@
 \alias{prep_general}
 \title{Prepare eatRep output for further data wrangling.}
 \usage{
-prep_general(data, grouping_var = "", competence)
+prep_general(data, grouping_var = "", competence, sig_niveau)
 }
 \arguments{
 \item{data}{eatRep output data.frame.}
@@ -12,6 +12,8 @@ prep_general(data, grouping_var = "", competence)
 \item{grouping_var}{Variable with subgroups.}
 
 \item{competence}{Competence variable.}
+
+\item{sig_niveau}{Significance niveau.}
 }
 \value{
 List of data frames with different filters.

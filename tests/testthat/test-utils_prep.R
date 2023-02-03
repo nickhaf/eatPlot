@@ -1,11 +1,8 @@
 test_that("calc_sig(): significance niveau is working correctly", {
 
   test_sig <- calc_sig(c(0.02, 0.1, 0.01, 12.4), sig_niveau = 0.03)
-
   expect_equal(test_sig, c(TRUE, FALSE, TRUE, FALSE))
 
-  test_sig_2 <- calc_sig(c(0.02, 0.1, 0.01, NA))
-  expect_equal(test_sig_2, c(TRUE, FALSE, TRUE, NA))
 })
 
 

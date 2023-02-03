@@ -7,8 +7,18 @@
 merge_within_whole(trend_data, groups, BLs)
 }
 \arguments{
-\item{BLs}{}
+\item{trend_data}{Trend data.}
+
+\item{groups}{Groups.}
+
+\item{BLs}{States.}
+}
+\value{
+list of data frames.
 }
 \description{
 Title
+}
+\examples{
+#tbd
 }

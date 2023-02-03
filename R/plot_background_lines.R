@@ -1,36 +1,23 @@
-#plot_data <- prep_lineplot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", sig_niveau = 0.05)
-
-
-## as plot_line!! (other color)
-
-
-draw_background_lines <- function(wholeGroup) {
-  list(
-    ggplot2::geom_segment(
-      data = wholeGroup,
-      aes(
-        x = rep(as.numeric(2011), nrow(wholeGroup)),
-        xend = rep(as.numeric(2016), nrow(wholeGroup)),
-        y = get(paste0("est_", 2011)),
-        yend = get(paste0("est_", 2016))
-      ),
-      size = 1.6,
-      color = rgb(147, 205, 221,
-                  maxColorValue = 255
-      )
+#' Plot background lines.
+#'
+#' @param data_plot_background_lines Data.
+#'
+#' @return ggplot2 object.
+#' @export
+#'
+#' @examples #tbd
+plot_background_lines <- function(data_plot_background_lines) {
+  ggplot2::geom_segment(
+    data = data_plot_background_lines,
+    ggplot2::aes(
+      x = .data$year_start,
+      xend = .data$year_end,
+      y = .data$est_point_start,
+      yend = .data$est_point_end
     ),
-    ggplot2::geom_segment(
-      data = wholeGroup,
-      aes(
-        x = rep(as.numeric(2016), nrow(wholeGroup)),
-        xend = rep(as.numeric(2021), nrow(wholeGroup)),
-        y = get(paste0("est_", 2016)),
-        yend = get(paste0("est_", 2021))
-      ),
-      size = 1.6,
-      color = rgb(147, 205, 221,
-                  maxColorValue = 255
-      )
+    linewidth = 1.6,
+    color = grDevices::rgb(147, 205, 221,
+      maxColorValue = 255
     )
   )
 }

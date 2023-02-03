@@ -1,34 +1,39 @@
-test_that("merging works correctly", {
+test_that("merging works correctly for BLs", {
 
-  trend_whole <- data.frame(
-    TR_BUNDESLAND = rep(c("Berlin", "Brandenburg"), 4),
-    grouping_var = rep(c(0, 0, 1, 1), 2),
-    year_start = c(rep(2011, 4), rep(2013, 4)),
-    year_end = c(rep(2013, 4), rep(2015, 4)),
-    sig_trend_whole = rep(TRUE, 8),
-    est_trend_whole = rep(11, 8),
-    se_trend_whole = rep(2, 8)
-  )
-  trend_within <- data.frame(
-    TR_BUNDESLAND = rep(c("Berlin", "Brandenburg"), 4),
-    grouping_var = rep(c(0, 0, 1, 1), 2),
-    year_start = c(rep(2011, 4), rep(2013, 4)),
-    year_end = c(rep(2013, 4), rep(2015, 4)),
-    sig_trend_within = rep(TRUE, 8),
-    est_trend_within = rep(11, 8),
-    se_trend_within = rep(2, 8)
-  )
-  point_estimates  <-  data.frame(
-    TR_BUNDESLAND = rep(c("Berlin", "Brandenburg"), 6),
-    grouping_var = rep(c(0, 0, 1, 1), 3),
-    time = c(rep(2011, 4), rep(2013, 4), rep(2015, 4)),
-    est_point = 10:21
+  df_trend <- data.frame(
+    TR_BUNDESLAND = rep("Brandenburg", 4),
+    grouping_var = c(0, 0, 1, 1),
+    year_start = rep(2011, 4),
+    year_end = c(rep(2013, 4)),
+    group = c("Brandenburg.0.vs.wholeGroup", "Brandenburg.0.vs.Brandenburg", "Brandenburg.1.vs.wholeGroup", "Brandenburg.1.vs.Brandenburg"),
+    est = 1:4
   )
 
-  test_prep_df <- prep_trend_point(trend_whole, trend_within, point_estimates)
 
-  expect_equal(test_prep_df$est_point_start, c(10:17))
-  expect_equal(test_prep_df$est_point_end, c(14:21))
-  expect_equal(test_prep_df$year_start, c(rep(2011, 4), rep(2013, 4)))
-  expect_equal(test_prep_df$year_end, c(rep(2013, 4), rep(2015, 4)))
+  test_merge_df <- merge_within_whole(df_trend, groups = c(0,1), BLs = c("Brandenburg"))
+
+  expect_equal(test_merge_df[["bl_vs_wholeGroup"]]$group, c("Brandenburg.0.vs.wholeGroup", "Brandenburg.1.vs.wholeGroup"))
+  expect_equal(test_merge_df[["within_whole"]]$est_whole, c(1, 3))
+  expect_equal(test_merge_df[["within_whole"]]$est_within, c(2, 4))
+
+})
+
+test_that("merging works correctly for wholeGroups", {
+
+  df_trend <- data.frame(
+    TR_BUNDESLAND = rep("wholeGroup", 2),
+    grouping_var = c(0, 1),
+    year_start = rep(2011, 2),
+    year_end = c(rep(2013, 2)),
+    group = c("0.vs.wholeGroup",  "1.vs.wholeGroup"),
+    est = 1:2
+  )
+
+
+  test_merge_df <- merge_within_whole(df_trend, groups = c(0,1), BLs = "")
+
+  expect_equal(test_merge_df[["bl_vs_wholeGroup"]]$group, c("0.vs.wholeGroup", "1.vs.wholeGroup"))
+  expect_equal(test_merge_df[["within_whole"]]$est_whole, c(1, 2))
+  expect_equal(test_merge_df[["within_whole"]]$est_within, c(1, 2))
+
 })
