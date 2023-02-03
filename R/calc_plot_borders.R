@@ -26,3 +26,15 @@ calc_plot_borders <- function(x, accuracy = 10) {
 
   return(c(-1 * max_border, max_border))
 }
+
+
+## Calc coordinate system borders.
+calc_coords <- function(range_vec) {
+  coords <- c(
+    plyr::round_any(range_vec[1] - range_vec[1] * 0.1,
+                    accuracy = 10, f = floor),
+    plyr::round_any(range_vec[2] + range_vec[2] * 0.04,
+                    accuracy = 10, f = ceiling)
+  )
+  return(coords)
+}

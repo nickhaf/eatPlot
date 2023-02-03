@@ -52,16 +52,6 @@ plot_braces <- function(data_plot_braces, BL) {
 
 ## Utils
 
-## Calc coordinate system borders.
-calc_coords <- function(range_vec) {
-  coords <- c(
-    plyr::round_any(range_vec[1] - range_vec[1] * 0.1,
-                    accuracy = 10, f = floor),
-    plyr::round_any(range_vec[2] + range_vec[2] * 0.04,
-                    accuracy = 10, f = ceiling)
-  )
-  return(coords)
-}
 
 
 ## Calc the coordinates for drawing the braces.
