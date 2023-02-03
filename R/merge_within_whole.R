@@ -11,7 +11,7 @@
 merge_within_whole <- function(trend_data, groups, BLs){
 
 
-trend_data <- prepped_list[["trend_data"]][ , -which(colnames(prepped_list[["trend_data"]]) %in% c("depVar", "modus", "comparison", "parameter", "kb"))]
+trend_data <- trend_data[ , -which(colnames(trend_data) %in% c("depVar", "modus", "comparison", "parameter", "kb"))]
 
 
 

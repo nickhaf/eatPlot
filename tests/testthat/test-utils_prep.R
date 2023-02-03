@@ -49,15 +49,17 @@ test_that("reshaping to long format works", {
 df_wide <- data.frame("est.1" = 1:2,
                       "est.2" = 3:4,
                       "p.1" = 4:5,
-                      "p.2" = 6:7)
+                      "p.2" = 6:7,
+                      "p_trend.1" = 1:2,
+                      "p_trend.2" = 2:3)
 
-df_long_test <- prep_long(df_wide, include_pattern = "est\\.|p\\.")
+df_long_test <- prep_long(df_wide, include_pattern = "est\\.|p\\.|trend\\.")
 
-expect_equal(df_long_test$est_, 1:4)
+expect_equal(df_long_test$est, 1:4)
 expect_equal(df_long_test$year,  c(1, 1, 2, 2))
-expect_equal(colnames(df_long_test), c("year", "est_", "p_"))
+expect_equal(colnames(df_long_test), c("year", "est", "p", "p_trend"))
 
-df_long_test_2 <- prep_long(df_wide, include_pattern = "est", remove_pattern = "p\\.", suffix = "test")
+df_long_test_2 <- prep_long(df_wide, include_pattern = "est", remove_pattern = "p\\.|trend", suffix = "_test")
 
 expect_equal(colnames(df_long_test_2), c("year", "est_test"))
 

@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_general <- function(data, grouping_var = "", competence) {
+prep_general <- function(data, grouping_var = "", competence, sig_niveau) {
   if (grouping_var == "") {
     data$grouping_var <- rep(NA, nrow(data))
   } else {
@@ -33,7 +33,7 @@ prep_general <- function(data, grouping_var = "", competence) {
     filtered_list[["point_data"]] <- prep_long(data[is.na(data$comparison), ],
       include_pattern = "est_|p_|se_|es_",
       remove_pattern = "trend",
-      suffix = "point"
+      suffix = "_point"
     )
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$TR_BUNDESLAND) & (get_wholeGroup(filtered_list[["point_data"]]$group) | filtered_list[["point_data"]]$group %in% groups), "TR_BUNDESLAND"] <- "wholeGroup"
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$grouping_var), "grouping_var"] <- "noGroup"
@@ -91,13 +91,13 @@ prep_general <- function(data, grouping_var = "", competence) {
 
 
 
-    filtered_list[["wholeGroup_trend"]] <- prep_long(data_wholeGroup,
+    filtered_list[["wholeGroup_trend"]] <- prep_long(
+      data = data_wholeGroup,
       include_pattern = c("est_trend|p_trend|se_trend|es_trend"),
-      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|"),
-      suffix = "_trend"
+      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
     )
     filtered_list[["wholeGroup_trend"]] <- split_years(filtered_list[["wholeGroup_trend"]])
-    colnames(filtered_list[["wholeGroup_trend"]]) <- gsub("trend", "_trend", colnames(filtered_list[["wholeGroup_trend"]]))
+
   }
 
 
@@ -109,11 +109,11 @@ prep_general <- function(data, grouping_var = "", competence) {
 
 # Utils -------------------------------------------------------------------
 
-add_sig_col <- function(filtered_list, sig_niveau = sig_niveau) {
+add_sig_col <- function(filtered_list, sig_niveau) {
   lapply(filtered_list, function(x) {
     p_col <- grep("p_", colnames(x), value = TRUE)
     sig_col <- gsub("p_", "sig_", p_col)
-    x[, sig_col] <- calc_sig(x[, p_col], sig_niveau = sig_niveau)
+    x[, sig_col] <- calc_sig(x[, p_col], sig_niveau)
     return(x)
   })
 }

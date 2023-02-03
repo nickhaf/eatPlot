@@ -1,3 +1,9 @@
+#plot_data <- prep_lineplot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", sig_niveau = 0.05)
+
+
+## as plot_line!! (other color)
+
+
 draw_background_lines <- function(wholeGroup) {
   list(
     ggplot2::geom_segment(

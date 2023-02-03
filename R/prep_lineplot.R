@@ -19,7 +19,7 @@ prep_lineplot <- function(data, grouping_var = "", competence, sig_niveau = 0.05
 
 plot_data <- list()
 
-  list_general <- prep_general(trend_books, grouping_var = grouping_var, competence = competence)
+  list_general <- prep_general(data, grouping_var = grouping_var, competence = competence, sig_niveau = sig_niveau)
   within_whole <- merge_within_whole(list_general[["trend_data"]], groups = groups, BLs = BLs)[["within_whole"]]
   trend_point <- merge_trend_point(trend_data = within_whole, point_data = list_general[[1]])
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
@@ -40,6 +40,8 @@ plot_data[["plot_points"]] <- list_general[["point_data"]]
 
   plot_data[["plot_braces"]] <- trend_point[filter_years(trend_point, plot_years_braces), ]
 
+
+  plot_data[["plot_background_lines"]] <- wholeGroup_trend_point
 
   return(plot_data)
 }
