@@ -37,6 +37,8 @@ plot_data[["plot_points"]] <- list_general[["point_data"]]
   })
 
   plot_data[["plot_braces"]] <- trend_point[filter_years(trend_point, plot_years_braces), ]
+  plot_data[["plot_braces"]] <- plot_data[["plot_braces"]][plot_data[["plot_braces"]]$grouping_var != "noGroup", ]
+
 
 
   plot_data[["plot_background_lines"]] <- wholeGroup_trend_point[filter_years(wholeGroup_trend_point, plot_years_trend), ]

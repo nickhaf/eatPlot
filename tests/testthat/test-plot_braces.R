@@ -118,8 +118,8 @@ test_that("significances are displayed correctly in the labels", {
 })
 
 
-# plot_data <- prep_lineplot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
-# ggplot2::ggplot() +
-#   plot_braces(plot_data[["plot_braces"]], BL = "Berlin") +
-#   ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
+plot_data <- prep_lineplot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
+ggplot2::ggplot() +
+  plot_braces(plot_data[["plot_braces"]], BL = "Berlin") +
+  ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
 
