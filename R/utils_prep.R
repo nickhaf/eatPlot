@@ -1,8 +1,8 @@
-calc_sig <- function(p_vec, sig_niveau = 0.05) {
+calc_sig <- function(p_vec, sig_niveau) {
 
-    res <- as.factor(ifelse(is.na(p_vec), NA,
+    res <- ifelse(is.na(p_vec), NA,
                                  ifelse(p_vec < sig_niveau & !is.na(p_vec), TRUE, FALSE))
-                          )
+
     return(res)
 }
 
@@ -44,5 +44,105 @@ i <- 1
 
 res <- unique(Filter(Negate(is.null), res))
   return(res)
+}
+
+
+
+# extractor for specific types of rows ------------------------------------
+
+get_group <- function(val_vec, groups, starts_with = "", ends_with = "", log_res = TRUE){
+  if(log_res == TRUE){
+  grepl(paste0(
+    paste0(starts_with, groups, ends_with), collapse = "|"),
+        val_vec)
+  }else{
+    grep(paste0(
+      paste0(starts_with, groups, ends_with), collapse = "|"),
+      val_vec,
+      value = TRUE)
+}
+    }
+
+get_wholeGroup <- function(val_vec){
+  grepl("wholeGroup", val_vec)
+}
+
+
+# Extract group membership from group column. Splits String by "." and extracts the first value that is found in the group_vector
+write_group <- function(val_vec, groups) {
+  val_vec <- gsub("_", "\\.", val_vec)
+  group_vec <- strsplit(val_vec, split = "\\.")
+
+unlist(
+    lapply(group_vec, function(x) {
+      log_vec <- x %in% groups
+      if (all(log_vec == FALSE)) {
+        res <- NA
+      } else {
+        res <- x[log_vec][1]
+      }
+        return(res)
+
+    })
+  )
+
+}
+
+
+# Helper functions for reshaping to long format ---------------------------
+prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = ""){
+
+  if(!is.null(remove_pattern)){
+  cols_removed <- grep(remove_pattern, colnames(data), invert = TRUE, value = TRUE)
+  data <- data[, cols_removed]
+  }
+
+  col_pos <- grep(include_pattern, colnames(data))
+  colnames(data)[col_pos] <- gsub("\\.|_", "", colnames(data)[col_pos])
+
+  ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
+  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], function(x) insert_first_number(x, insertion = "\\."))
+
+  data_long <- stats::reshape(data, direction = "long", varying = colnames(data)[col_pos])
+  data_long$id <- NULL
+
+  # put suffix on all new columns containing the values:
+  new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
+  for(i in new_colnames){
+  data_long <- rename_column(data_long, old = i, new = paste0(i, suffix))
+  }
+
+  colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
+  colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
+  data_long <- rename_column(data_long, old = paste0("time", suffix), new = "year")
+
+  return(data_long)
+}
+
+## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
+split_years <- function(data){
+
+  years <- regmatches(data$year, gregexpr("[[:digit:]]+", data$year))
+
+  # extract the years and add them to the long data frame
+  year_cols <- data.frame()
+
+  for(i in 1:length(years)){
+    year_cols <- rbind(year_cols, as.numeric(years[[i]]))
+  }
+  colnames(year_cols) <- c("year_start", "year_end")
+  data <- cbind(data, year_cols)
+
+  return(data)
+}
+
+
+
+
+
+insert_first_number <- function(char_string, insertion){
+    string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))[[1]]
+    res <- sub(string_number, paste0(insertion, string_number), char_string)
+    return(res)
   }
 

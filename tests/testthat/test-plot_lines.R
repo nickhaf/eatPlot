@@ -8,6 +8,9 @@ df_lines <- data.frame(TR_BUNDESLAND = rep("Berlin", 4),
                        grouping_var = c(0, 1, 0, 1)
                        )
   vdiffr::expect_doppelganger("Plotting lines", ggplot2::ggplot() +
-                                 plot_lines(data_lines = df_lines))
+                                 plot_lines(df_lines))
 })
 
+# plot_data <- prep_lineplot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
+# ggplot2::ggplot() +
+#   plot_lines(data_trend_point = plot_data[["plot_lines"]][plot_data[["plot_line"]]$TR_BUNDESLAND == "Berlin", ])

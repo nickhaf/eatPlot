@@ -9,103 +9,44 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(data, grouping_var, competence, sig_niveau = 0.05) {
+prep_lineplot <- function(data, grouping_var = "", competence, sig_niveau = 0.05) {
 
-  colnames(data)[colnames(data) == grouping_var] <- "grouping_var"
-  data <- data[data$kb == competence & data$parameter == "mean", ]
   BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
   groups <- unique(data$grouping_var[!is.na(data$grouping_var)])
 
-  prep_list <- list()
 
-  # whole group -------------------------------------------------------------
-  whole_group_rows <- unlist(sapply(groups, function(x) {
-    filter_strings(identifier = BLs, paste_vec = paste0("_", x, ".vs.wholeGroup"), val_vec = data$group)
-  }, USE.NAMES = FALSE))
+plot_data <- list()
 
-  trend_whole <- data[whole_group_rows, ]
-  trend_whole$grouping_var <- get_group(trend_whole$group, groups = groups)
-  trend_whole$TR_BUNDESLAND <- get_group(trend_whole$group, groups = BLs)
-  trend_whole_long <- prep_trend(data = trend_whole, sig_niveau = sig_niveau)
-  trend_whole_long <- rename_column(trend_whole_long, old = "esttrend", new = "est_trend_whole")
-  trend_whole_long <- rename_column(trend_whole_long, old = "sig_trend", new = "sig_trend_whole")
-  trend_whole_long <- rename_column(trend_whole_long, old = "setrend", new = "se_trend_whole")
+  list_general <- prep_general(data, grouping_var = grouping_var, competence = competence, sig_niveau = sig_niveau)
+  within_whole <- merge_within_whole(list_general[["trend_data"]], groups = groups, BLs = BLs)[["within_whole"]]
+  trend_point <- merge_trend_point(trend_data = within_whole, point_data = list_general[[1]])
+  wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
 
 
+plot_data[["plot_points"]] <- list_general[["point_data"]]
+
+  plot_years_trend <- consecutive_numbers(c(trend_point$year_start, trend_point$year_end))
+  plot_data[["plot_lines"]] <- trend_point[filter_years(trend_point, plot_years_trend), ]
 
 
-  # within group ------------------------------------------------------------
-  within_group_rows <- unlist(sapply(groups, function(group) {
-    sapply(BLs, function(BL) {
-      grep(paste0(BL, "_", group, ".vs.", BL), data$group)
-    }, USE.NAMES = FALSE)
-  }))
+  plot_years <- unique(c(trend_point$year_start, trend_point$year_end))
 
-  trend_within <- data[within_group_rows, ]
-  trend_within$grouping_var <- get_group(trend_within$group, groups = groups)
-  trend_within_long <- prep_trend(data = trend_within, sig_niveau = sig_niveau)
-  trend_within_long <- rename_column(trend_within_long, old = "esttrend", new = "est_trend_within")
-  trend_within_long <- rename_column(trend_within_long, old = "sig_trend", new = "sig_trend_within")
-  trend_within_long <- rename_column(trend_within_long, old = "setrend", new = "se_trend_within")
-  point_estimates <- prep_points(data, sig_niveau = sig_niveau)
-  point_estimates <- rename_column(point_estimates, old = "est", new = "est_point")
-  point_estimates <- rename_column(point_estimates, old = "sig", new = "sig_point")
+  ## Draw braces from last year to every other year
+ plot_years_braces <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
+    c(x, max(plot_years))
+  })
+
+  plot_data[["plot_braces"]] <- trend_point[filter_years(trend_point, plot_years_braces), ]
 
 
+  plot_data[["plot_background_lines"]] <- wholeGroup_trend_point[filter_years(wholeGroup_trend_point, plot_years_trend), ]
 
-  # Put into list -----------------------------------------------------------
-  prep_list[["trend_whole"]] <- trend_whole_long
-  prep_list[["trend_within"]] <- trend_within_long
-  prep_list[["point_estimates"]] <- point_estimates
-  prep_list[["trend_point"]] <- prep_trend_point(trend_whole = trend_whole_long, trend_within = trend_within_long, point_estimates = point_estimates)
-  prep_list[["trend_braces"]] <- prep_list[["trend_point"]]
-
-
-  ## filter respective rows:
-  ## only use consecutive years:
-  years_whole <- c(prep_list[["trend_whole"]]$year_start, prep_list[["trend_whole"]]$year_end)
-  plot_years <- consecutive_numbers(years_whole)
-  prep_list[["trend_whole"]] <- prep_list[["trend_whole"]][filter_years(prep_list[["trend_whole"]], plot_years), ]
-
-  years_within <- c(prep_list[["trend_within"]]$year_start, prep_list[["trend_within"]]$year_end)
-  plot_years <- consecutive_numbers(years_within)
-  prep_list[["trend_within"]] <- prep_list[["trend_within"]][filter_years(prep_list[["trend_within"]], plot_years), ]
-
-
-  ## for braces
-  prep_list[["trend_braces"]] <- prep_list[["trend_braces"]][filter_years(
-    prep_list[["trend_braces"]],
-    list(c(2011, 2021), c(2016, 2021))
-  ), ]
-  return(prep_list)
+  return(plot_data)
 }
 
 
 
 # utils
-
-# Extract group membership from group column. Splits String by "." and extracts the values that are found in the "gruops"-Vektor.
-get_group <- function(val_vec, groups) {
-  val_vec <- gsub("_", "\\.", val_vec)
-  group_vec <- strsplit(val_vec, split = "\\.")
-
-  res_vec <- unlist(
-    lapply(group_vec, function(x) {
-      log_vec <- x %in% groups
-      if (all(log_vec == FALSE)) {
-        res <- NA
-      } else {
-        res <- x[log_vec]
-      }
-      if (length(res) > 1) {
-        stop("Multiple groups in your grouping column.")
-      } else {
-        return(res)
-      }
-    })
-  )
-  return(res_vec)
-}
 
 # Return rows with respective start and end years.
 filter_years <- function(data, year_list) {

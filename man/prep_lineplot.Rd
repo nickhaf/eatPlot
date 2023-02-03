@@ -4,7 +4,7 @@
 \alias{prep_lineplot}
 \title{Title}
 \usage{
-prep_lineplot(data, grouping_var, competence, sig_niveau = 0.05)
+prep_lineplot(data, grouping_var = "", competence, sig_niveau = 0.05)
 }
 \arguments{
 \item{data}{Trend data from eatRep.}
