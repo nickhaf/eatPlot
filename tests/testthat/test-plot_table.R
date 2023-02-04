@@ -32,3 +32,5 @@ prep_dat <- prep_tableplot(adjusted_means, columns = "adjust", competence = "GL"
 vdiffr::expect_doppelganger("Table plot", plot_table(prep_dat))
 })
 
+# plot_data <- prep_no_trend(data = adjusted_means, grouping_var = "adjust", columns = "adjust", competence = "GL", sig_niveau = 0.05)
+# plot_table(plot_data[["plot_table"]])

@@ -5,3 +5,5 @@ test_bar <- test_bar[test_bar$kb == "GL", ]
 vdiffr::expect_doppelganger("Bar plot", plot_bar(test_bar))
 })
 
+# plot_data <- prep_no_trend(data = adjusted_means, grouping_var = "adjust", columns = "adjust", competence = "GL", sig_niveau = 0.05)
+# plot_bar(plot_data[["plot_bar"]])

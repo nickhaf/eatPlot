@@ -9,8 +9,8 @@
 #' @examples
 #' calc_plot_borders(c(11, -14))
 calc_plot_borders <- function(x, accuracy = 10) {
-  min_x <- min(x)
-  max_x <- max(x)
+  min_x <- min(x, na.rm = TRUE)
+  max_x <- max(x, na.rm = TRUE)
 
   borders <- vapply(c(min_x, max_x), function(y) {
     if (y < 0) {

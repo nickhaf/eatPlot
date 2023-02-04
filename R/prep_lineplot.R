@@ -11,11 +11,17 @@
 #' @examples # tbd
 prep_lineplot <- function(data, grouping_var = "", competence, sig_niveau = 0.05) {
 
+  data <- clean_data(data, grouping_var = grouping_var, competence = competence)
+
   BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
   groups <- unique(data$grouping_var[!is.na(data$grouping_var)])
 
 
 plot_data <- list()
+
+
+
+
 
   list_general <- prep_general(data, grouping_var = grouping_var, competence = competence, sig_niveau = sig_niveau)
   within_whole <- merge_within_whole(list_general[["trend_data"]], groups = groups, BLs = BLs)[["within_whole"]]
@@ -23,7 +29,7 @@ plot_data <- list()
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
 
 
-plot_data[["plot_points"]] <- list_general[["point_data"]]
+  plot_data[["plot_points"]] <- list_general[["point_data"]]
 
   plot_years_trend <- consecutive_numbers(c(trend_point$year_start, trend_point$year_end))
   plot_data[["plot_lines"]] <- trend_point[filter_years(trend_point, plot_years_trend), ]
