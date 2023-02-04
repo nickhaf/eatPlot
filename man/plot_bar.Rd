@@ -4,23 +4,43 @@
 \alias{plot_bar}
 \title{Plot an IQB barplot.}
 \usage{
-plot_bar(prep_dat)
+plot_bar(
+  no_trend_list,
+  x_value = "est_wholeGroup",
+  y_value = "TR_BUNDESLAND",
+  bar_pattern = "sig_wholeGroup",
+  bar_fill = "fill_wholeGroup",
+  bar_pattern_fill = "grouping_var",
+  bar_pattern_setting = sig_pattern,
+  bar_fill_setting = adj_fill,
+  bar_pattern_fill_setting = adj_pattern_fill
+)
 }
 \arguments{
-\item{prep_dat}{Data for the barplot. Has to be in the right format, ideally prepared with \link{prep_barplot}.}
+\item{no_trend_list}{Input is a list prepared by \code{\link[=prep_no_trend]{prep_no_trend()}}. You can also use the according data.frame named \code{plot_bar} from this list.}
+
+\item{x_value}{Character string of the column name containing the estimates that should be plotted on the x-axis. Defaults to \code{"est_wholeGroup"}, which are the estimates for the comparison of a state against the wholeGroup (Germany).}
+
+\item{y_value}{Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to \code{"TR_BUNDESLAND"}, so the states are depicted on the y-axis.}
+
+\item{bar_pattern}{Character string of the column containing the grouping for the pattern on the bar. Defaults to \code{sig_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern of the bars.}
+
+\item{bar_fill}{Character string of the column containing the grouping for the filling of the bar. Defaults to \code{fill_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.}
+
+\item{bar_pattern_fill}{Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to \code{fill_wholeGroup}, so the groups found in "data$grouping_var" are represented in the colours of the bar pattern.}
+
+\item{bar_pattern_setting}{Named vector with the pattern types. Names of the vector must be found in the column specified in \code{bar_pattern}. Defaults to ...}
+
+\item{bar_fill_setting}{Named vector with the bar filling colours. Names of the vector must be found in the column specified in \code{bar_fill}. Defaults to ...}
+
+\item{bar_pattern_fill_setting}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to ...}
 }
 \value{
-ggplot object
+Returns a \link{ggplot2} barplot.
 }
 \description{
 Plot an IQB barplot.
 }
-\details{
-text describing parameter inputs in more detail.
-\itemize{
-\item{"prep_dat"}{Needs a specific data format.}
-}
-}
 \examples{
-# tbd
+#tbd
 }

@@ -19,7 +19,7 @@ test_that("Pointplot is still the same", {
 
 })
 
-# plot_data <- prep_lineplot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", sig_niveau = 0.05)
+# plot_data <- prep_trend(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", sig_niveau = 0.05)
 # ggplot2::ggplot() +
 #   plot_points(plot_data[["plot_points"]][plot_data[["plot_points"]]$TR_BUNDESLAND == "Berlin", ])
 #

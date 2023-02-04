@@ -2,18 +2,20 @@
 % Please edit documentation in R/plot_table.R
 \name{plot_table}
 \alias{plot_table}
-\title{Draw a table in ggplot2.}
+\title{Draw an IQB table.}
 \usage{
-plot_table(data_prep)
+plot_table(no_trend_list, y_value = "est_point")
 }
 \arguments{
-\item{data_prep}{Data prepered with \code{prep_tableplot()}.}
+\item{no_trend_list}{Input is a list prepared by \code{\link[=prep_no_trend]{prep_no_trend()}}. You can also use the according data.frame named \code{plot_table} from this list.}
+
+\item{y_value}{Character string of the column name containing values that should be written in the table columns. Defaults to \code{"est_point"}, which are the ability estimates in the states.}
 }
 \value{
-ggplot2 object.
+ggplot2 table.
 }
 \description{
-Draw a table in ggplot2.
+\code{plot_table()} builds a table as ggplot2 object.
 }
 \examples{
 #tbd

@@ -31,15 +31,27 @@ build_columns <- function(data_plot_table) {
 }
 
 
-#' Draw a table in ggplot2.
+#' Draw an IQB table.
 #'
-#' @param data_plot_table Data prepered with \code{prep_tableplot()}.
+#' `plot_table()` builds a table as ggplot2 object.
 #'
-#' @return ggplot2 object.
+#' @param no_trend_list Input is a list prepared by [prep_no_trend()]. You can also use the according data.frame named `plot_table` from this list.
+#' @param y_value Character string of the column name containing values that should be written in the table columns. Defaults to `"est_point"`, which are the ability estimates in the states.
+
+#'
+#' @return ggplot2 table.
 #' @export
 #'
 #' @examples #tbd
-plot_table <- function(data_plot_table, y_value = "est_point") {
+plot_table <- function(no_trend_list, y_value = "est_point") {
+
+  if(inherits(no_trend_list, "list")){
+    data_plot_table <- no_trend_list[["plot_bar"]]
+  }else{
+    data_plot_table <- no_trend_list
+  }
+
+
   ggplot2::ggplot(data_plot_table, ggplot2::aes(x = .data$x_label, y = .data$group, label = .data[[y_value]])) +
     ggplot2::geom_text(
       data = data_plot_table[data_plot_table$x_label == "y_label", ],

@@ -1,19 +1,28 @@
 #' Plot an IQB barplot.
 #'
-#' @param data_plot_bar Data for the barplot. Has to be in the right format, ideally prepared with \link{prep_barplot}.
+#' @param no_trend_list Input is a list prepared by [prep_no_trend()]. You can also use the according data.frame named `plot_bar` from this list.
+#' @param x_value Character string of the column name containing the estimates that should be plotted on the x-axis. Defaults to `"est_wholeGroup"`, which are the estimates for the comparison of a state against the wholeGroup (Germany).
+#' @param y_value Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to `"TR_BUNDESLAND"`, so the states are depicted on the y-axis.
+#' @param bar_pattern Character string of the column containing the grouping for the pattern on the bar. Defaults to `sig_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern of the bars.
+#' @param bar_fill Character string of the column containing the grouping for the filling of the bar. Defaults to `fill_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.
+#' @param bar_pattern_fill Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to `fill_wholeGroup`, so the groups found in "data$grouping_var" are represented in the colours of the bar pattern.
+#' @param bar_pattern_setting Named vector with the pattern types. Names of the vector must be found in the column specified in `bar_pattern`. Defaults to ...
+#' @param bar_fill_setting Named vector with the bar filling colours. Names of the vector must be found in the column specified in `bar_fill`. Defaults to ...
+#' @param bar_pattern_fill_setting Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to ...
 #'
-#' @return ggplot object
+#' @return Returns a [ggplot2] barplot.
 #' @export
 #'
-#' @examples # tbd
-#' @details text describing parameter inputs in more detail.
-##' \itemize{
-##'  \item{"data_plot_bar"}{Needs a specific data format.}
-##' }
-##'
-plot_bar <- function(data_plot_bar, x_value = "est_wholeGroup", y_value = "TR_BUNDESLAND",
+#' @examples #tbd
+plot_bar <- function(no_trend_list, x_value = "est_wholeGroup", y_value = "TR_BUNDESLAND",
                      bar_pattern = "sig_wholeGroup", bar_fill = "fill_wholeGroup", bar_pattern_fill = "grouping_var",
                      bar_pattern_setting = sig_pattern, bar_fill_setting = adj_fill, bar_pattern_fill_setting = adj_pattern_fill){
+
+  if(inherits(no_trend_list, "list")){
+  data_plot_bar <- no_trend_list[["plot_bar"]]
+  }else{
+    data_plot_bar <- no_trend_list
+  }
 
   scale_breaks <- seq(calc_plot_borders(data_plot_bar[[x_value]])[1], calc_plot_borders(data_plot_bar[[x_value]])[2], by = 10)
 

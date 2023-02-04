@@ -137,6 +137,37 @@ split_years <- function(data){
 }
 
 
+calc_plot_borders <- function(x, accuracy = 10) {
+  min_x <- min(x, na.rm = TRUE)
+  max_x <- max(x, na.rm = TRUE)
+
+  borders <- vapply(c(min_x, max_x), function(y) {
+    if (y < 0) {
+      plyr::round_any(y, accuracy = accuracy, floor)
+    } else {
+      plyr::round_any(y, accuracy = accuracy, ceiling)
+    }
+  },
+  FUN.VALUE = numeric(1)
+  )
+
+  max_border <- max(abs(borders[1]), abs(borders[2]))
+
+  return(c(-1 * max_border, max_border))
+}
+
+
+## Calc coordinate system borders.
+calc_coords <- function(range_vec) {
+  coords <- c(
+    plyr::round_any(range_vec[1] - range_vec[1] * 0.1,
+                    accuracy = 10, f = floor),
+    plyr::round_any(range_vec[2] + range_vec[2] * 0.04,
+                    accuracy = 10, f = ceiling)
+  )
+  return(coords)
+}
+
 
 
 

@@ -1,10 +1,9 @@
 #' Prepare data for plotting a barplot.
 #'
-#' @param data Output from \code{eatRep}.
-#' @param sub_groups sub_groups which should be plotted in the same plot tile. E.g. you can distinguish between adjusted and not adjusted means.
-#' @param sig_niveau At which significance niveau do p-values become significant?
+#' @inheritParams prep_trend
+#' @param columns Character string containing the column in `data` that contains the column names for the table_plot.
 #'
-#' @return Returns a \code{data.frame} which can be used as input for \code{plot_bar}.
+#' @return Returns a data.frame which can be used as input for plot_bar.
 #' @export
 #'
 #' @examples # tbd

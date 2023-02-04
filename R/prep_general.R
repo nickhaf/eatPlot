@@ -1,9 +1,7 @@
 #' Prepare eatRep output for further data wrangling.
 #'
-#' @param data eatRep output data.frame.
-#' @param grouping_var Variable with subgroups.
-#' @param competence Competence variable.
-#' @param sig_niveau Significance niveau.
+#' @inheritParams prep_trend
+#' @param data_clean Input data.frame, that has already been cleaned with [clean_data()].
 #'
 #' @return List of data frames with different filters.
 #' @export
