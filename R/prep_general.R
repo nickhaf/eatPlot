@@ -1,26 +1,16 @@
 #' Prepare eatRep output for further data wrangling.
 #'
-#' @param data eatRep output data.frame.
-#' @param grouping_var Variable with subgroups.
-#' @param competence Competence variable.
-#' @param sig_niveau Significance niveau.
+#' @inheritParams prep_trend
+#' @param data_clean Input data.frame, that has already been cleaned with [clean_data()].
 #'
 #' @return List of data frames with different filters.
 #' @export
 #'
 #' @examples # tbd
-prep_general <- function(data, grouping_var = "", competence, sig_niveau) {
-  if (grouping_var == "") {
-    data$grouping_var <- rep(NA, nrow(data))
-  } else {
-    colnames(data)[colnames(data) == grouping_var] <- "grouping_var"
-  }
+prep_general <- function(data_clean, sig_niveau) {
 
-  colnames(data) <- gsub("\\.", "_", colnames(data))
-  colnames(data) <- gsub("sig_", "p_", colnames(data))
-  data <- data[data$kb == competence & data$parameter == "mean", ]
-  BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
-  groups <- unique(data$grouping_var[!is.na(data$grouping_var)])
+  BLs <- unique(data_clean$TR_BUNDESLAND)[!is.na(unique(data_clean$TR_BUNDESLAND))]
+  groups <- unique(data_clean$grouping_var[!is.na(data_clean$grouping_var)])
 
 
 
@@ -30,9 +20,9 @@ prep_general <- function(data, grouping_var = "", competence, sig_niveau) {
 
 
   # Prepare point estimates -------------------------------------------------
-  if (any(is.na(data$comparison))) {
-    filtered_list[["point_data"]] <- prep_long(data[is.na(data$comparison), ],
-      include_pattern = "est_|p_|se_|es_",
+  if (any(is.na(data_clean$comparison))) {
+    filtered_list[["point_data"]] <- prep_long(data_clean[is.na(data_clean$comparison), ],
+      include_pattern = "^est|^p$|^p_|^se|^es",
       remove_pattern = "trend",
       suffix = "_point"
     )
@@ -43,13 +33,13 @@ prep_general <- function(data, grouping_var = "", competence, sig_niveau) {
   }
 
   # Prepare trend data ------------------------------------------------------
-  years_colnames <- unique(unlist(regmatches(colnames(data), gregexpr("[[:digit:]]+", colnames(data)))))
+  years_colnames <- unique(unlist(regmatches(colnames(data_clean), gregexpr("[[:digit:]]+", colnames(data_clean)))))
   remove_columns <- unique(as.vector(
     sapply(c("es_", "est_", "se_", "p_"), function(val) {
       sapply(years_colnames, function(year) {
         grep(
           paste0("^", val, year, "$"),
-          colnames(data),
+          colnames(data_clean),
           value = TRUE
         )
       },
@@ -60,7 +50,7 @@ prep_general <- function(data, grouping_var = "", competence, sig_niveau) {
     )
   ))
 
-  data_trend_raw <- data[!is.na(data$comparison) & data$comparison == "crossDiff", ]
+  data_trend_raw <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
 
   if (nrow(data_trend_raw) != 0) {
     filtered_list[["trend_data"]] <- prep_long(data_trend_raw,
@@ -79,7 +69,7 @@ prep_general <- function(data, grouping_var = "", competence, sig_niveau) {
   }
 
   # Prepare WholeGroup ------------------------------------------------------
-  data_wholeGroup <- data[data$group == "wholeGroup", ]
+  data_wholeGroup <- data_clean[data_clean$group == "wholeGroup", ]
 
 
   if (nrow(data_wholeGroup) != 0) {

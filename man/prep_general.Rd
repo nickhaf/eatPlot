@@ -4,16 +4,12 @@
 \alias{prep_general}
 \title{Prepare eatRep output for further data wrangling.}
 \usage{
-prep_general(data, grouping_var = "", competence, sig_niveau)
+prep_general(data_clean, sig_niveau)
 }
 \arguments{
-\item{data}{eatRep output data.frame.}
+\item{data_clean}{Input data.frame, that has already been cleaned with \code{\link[=clean_data]{clean_data()}}.}
 
-\item{grouping_var}{Variable with subgroups.}
-
-\item{competence}{Competence variable.}
-
-\item{sig_niveau}{Significance niveau.}
+\item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 }
 \value{
 List of data frames with different filters.

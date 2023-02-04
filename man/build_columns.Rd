@@ -4,10 +4,10 @@
 \alias{build_columns}
 \title{Build columns from geom_text}
 \usage{
-build_columns(data_prep)
+build_columns(data_plot_table)
 }
 \arguments{
-\item{data_prep}{Data prepared with \code{prep_tableplot()}.}
+\item{data_plot_table}{Data prepared with \code{prep_tableplot()}.}
 }
 \value{
 ggplot2 object
