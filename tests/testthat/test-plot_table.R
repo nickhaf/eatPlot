@@ -6,7 +6,7 @@ test_that("Axis are labeled correctly", {
   )
 
   p1 <- ggplot2::ggplot_build(ggplot2::ggplot(data = df, ggplot2::aes(x = .data$x_labels, y = .data$group, label = .data$value)) +
-    build_columns(data_prep = df))
+    build_columns(df))
 
   expect_equal(p1$layout$panel_params[[1]]$x$get_labels(), c("y_label", "Adjusted"))
 
@@ -19,7 +19,7 @@ test_that("Axis are labeled correctly", {
   )
 
   p2 <- ggplot2::ggplot_build(ggplot2::ggplot(data = df_2, ggplot2::aes(x = .data$x_labels, y = .data$group, label = .data$value)) +
-    build_columns(data_prep = df_2))
+    build_columns(df_2))
 
   expect_equal(p2$layout$panel_params[[1]]$x$get_labels(), c("y_label", "col_3", "col_2", "col_1"))
   expect_equal(p2$layout$panel_params[[1]]$y$get_labels(), c("Berlin", "Brandenburg"))
@@ -28,9 +28,19 @@ test_that("Axis are labeled correctly", {
 
 # Test graphical output ---------------------------------------------------
 test_that("Table plot is still the same", {
-prep_dat <- prep_tableplot(adjusted_means, columns = "adjust", competence = "GL", sig_niveau = 0.05)
-vdiffr::expect_doppelganger("Table plot", plot_table(prep_dat))
+  df <- data.frame(
+    x_label = factor(c("Adjusted", "Adjusted", "y_label", "y_label"), levels = c("y_label", "Adjusted"), ordered = TRUE),
+    group = c("Berlin", "Brandenburg", "Berlin", "Brandenburg"),
+    y_value = c("12", "20", "14", "15")
+  )
+
+  vdiffr::expect_doppelganger("Table plot", plot_table(df, y_value = "y_value"))
 })
 
-# plot_data <- prep_no_trend(data = adjusted_means, grouping_var = "adjust", columns = "adjust", competence = "GL", sig_niveau = 0.05)
-# plot_table(plot_data[["plot_table"]])
+test_that("example plot is still the same", {
+
+  plot_data <- prep_no_trend(data = adjusted_means, grouping_var = "adjust", columns = "adjust", competence = "GL", sig_niveau = 0.05)
+
+  vdiffr::expect_doppelganger("Table plot trend_books", plot_table(plot_data[["plot_table"]]))
+
+})

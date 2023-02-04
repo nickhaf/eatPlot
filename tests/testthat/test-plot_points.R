@@ -1,6 +1,6 @@
 test_that("nudge is calculated correctly", {
-  expect_equal(calc_y_nudge(c(1,2,3), n_groups = 2), c(-0.02, 0.02))
-  expect_equal(calc_y_nudge(c(1:100), n_groups = 4), c(-0.99, 0.99, 0.99, 0.99))
+  expect_equal(calc_y_nudge(c(1,2,3), n_groups = 2), c(-0.05, 0.05))
+  expect_equal(calc_y_nudge(c(1:100), n_groups = 4), c(-2.475, 2.475, 2.475, 2.475))
 })
 
 

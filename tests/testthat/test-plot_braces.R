@@ -112,9 +112,12 @@ test_that("significances are displayed correctly in the labels", {
   expect_equal(plot_brace_build$data[[3]]$label, c("**1** (1)", "2<sup>a</sup> (2)", "3 (3)", "**4**<sup>a</sup> (4)"))
 })
 
-
+test_that("Example brace plot is still the same", {
 plot_data <- prep_lineplot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
-ggplot2::ggplot() +
+
+vdiffr::expect_doppelganger("Brace plot trend_books", ggplot2::ggplot() +
   plot_braces(plot_data[["plot_braces"]], BL = "Berlin") +
   ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
+)
 
+})

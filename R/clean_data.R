@@ -16,4 +16,5 @@ clean_data <- function(data, grouping_var, competence){
   data <- data[data$kb == competence & data$parameter == "mean", ]
   data <- data[ , !colnames(data) %in% c("modus","depVar", "modus", "parameter", "kb")]
 
+  return(data)
 }
