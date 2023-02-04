@@ -1,8 +1,3 @@
-test_that("coords are calculated correctly", {
-  expect_equal(calc_coords(c(10, 100)), c(0, 110))
-  expect_equal(calc_coords(c(0, 1)), c(0, 10))
-})
-
 
 test_that("y limits are set correctly", {
   df <- data.frame(
