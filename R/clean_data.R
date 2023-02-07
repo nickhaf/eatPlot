@@ -8,6 +8,8 @@
 #' * The group `wholeGroup` currently contains `NAs` in the columns `data$TR_BUNDESLAND` and `data$grouping_var`. These are subbed with `wholeGroup` or `noGroup` respectively.
 #' * The column `data$TR_BUNDESLAND` is filled up by extracting the first state found in `data$groups` for the respective row.
 #' @inheritParams prep_trend
+#' @param BLs bundesländer
+#' @param groups grouping_var groups
 #'
 #' @return `clean_data()` returns a `data` with renamend columns and filled in `NAs`.
 #' @export

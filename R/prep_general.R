@@ -2,6 +2,8 @@
 #'
 #' @inheritParams prep_trend
 #' @param data_clean Input data.frame, that has already been cleaned with [clean_data()].
+#' @param BLs Bundesländer.
+#' @param groups grouping_var groups
 #'
 #' @return List of data frames with different filters.
 #' @export

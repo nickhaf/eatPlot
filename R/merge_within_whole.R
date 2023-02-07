@@ -1,7 +1,7 @@
 #' Title
 #'
-#' @param trend_data Trend data.
-#' @param groups Groups.
+#' @param trend_comp_data Trend data containing trend comparisons.
+#' @param trend_no_comp_data Trend data containing estimates for the trends.
 #' @param BLs States.
 #' @param compare_against Should be compared against the wholeGroup, or grouping_vars wihtin the wholeGroup? Currently only "wholeGroup" necessary.
 #'

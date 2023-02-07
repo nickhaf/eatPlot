@@ -11,6 +11,10 @@ clean_data(data, grouping_var, BLs, groups, competence)
 
 \item{grouping_var}{Character string containing the column in \code{data} that should be used to distinguish between subgroups.}
 
+\item{BLs}{bundesländer}
+
+\item{groups}{grouping_var groups}
+
 \item{competence}{Character string containing the competence that should be plotted. Currently Has to be found in \code{data$kb} (even though that should be made optional in the future).}
 }
 \value{
