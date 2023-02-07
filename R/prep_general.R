@@ -2,22 +2,17 @@
 #'
 #' @inheritParams prep_trend
 #' @param data_clean Input data.frame, that has already been cleaned with [clean_data()].
+#' @param BLs Bundesländer.
+#' @param groups grouping_var groups
 #'
 #' @return List of data frames with different filters.
 #' @export
 #'
 #' @examples # tbd
-prep_general <- function(data_clean, sig_niveau) {
-
-  BLs <- unique(data_clean$TR_BUNDESLAND)[!is.na(unique(data_clean$TR_BUNDESLAND))]
-  groups <- unique(data_clean$grouping_var[!is.na(data_clean$grouping_var)])
-
-
+prep_general <- function(data_clean, sig_niveau, BLs, groups) {
 
   ## filter rows, so different types of data.frames can be build:
   filtered_list <- list()
-
-
 
   # Prepare point estimates -------------------------------------------------
   if (any(is.na(data_clean$comparison))) {
@@ -28,11 +23,12 @@ prep_general <- function(data_clean, sig_niveau) {
     )
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$TR_BUNDESLAND) & (get_wholeGroup(filtered_list[["point_data"]]$group) | filtered_list[["point_data"]]$group %in% groups), "TR_BUNDESLAND"] <- "wholeGroup"
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$grouping_var), "grouping_var"] <- "noGroup"
+    filtered_list[["point_data"]] <- filtered_list[["point_data"]][, !(colnames(filtered_list[["point_data"]]) %in% c("compare_1", "compare_2")), ]
   } else {
     filtered_list["point_data"] <- list(NULL)
   }
 
-  # Prepare trend data ------------------------------------------------------
+  # Prepare trend comparison data ------------------------------------------------------
   years_colnames <- unique(unlist(regmatches(colnames(data_clean), gregexpr("[[:digit:]]+", colnames(data_clean)))))
   remove_columns <- unique(as.vector(
     sapply(c("es_", "est_", "se_", "p_"), function(val) {
@@ -58,14 +54,22 @@ prep_general <- function(data_clean, sig_niveau) {
       remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
     )
     filtered_list[["trend_data"]] <- split_years(filtered_list[["trend_data"]])
-
-    ## Fill up NAs
-    filtered_list[["trend_data"]]$grouping_var <- write_group(filtered_list[["trend_data"]]$group, groups = groups)
-    filtered_list[["trend_data"]]$TR_BUNDESLAND <- write_group(filtered_list[["trend_data"]]$group, groups = BLs)
-    filtered_list[["trend_data"]][is.na(filtered_list[["trend_data"]]$TR_BUNDESLAND) & get_wholeGroup(filtered_list[["trend_data"]]$group), "TR_BUNDESLAND"] <- "wholeGroup"
-    filtered_list[["trend_data"]][is.na(filtered_list[["trend_data"]]$grouping_var), "grouping_var"] <- "noGroup"
   } else {
     filtered_list["trend_data"] <- list(NULL)
+  }
+
+
+
+# Prepare trend_point data ------------------------------------------------------
+  data_trend_point <- data_clean[is.na(data_clean$comparison), ]
+  if (nrow(data_trend_point) != 0) {
+    filtered_list[["trend_no_comp_data"]] <- prep_long(data_trend_point,
+                                               include_pattern = "est_trend|p_trend|se_trend|es_trend",
+                                               remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
+    )
+    filtered_list[["trend_no_comp_data"]] <- split_years(filtered_list[["trend_no_comp_data"]])
+  } else {
+    filtered_list["trend_no_comp_data"] <- list(NULL)
   }
 
   # Prepare WholeGroup ------------------------------------------------------

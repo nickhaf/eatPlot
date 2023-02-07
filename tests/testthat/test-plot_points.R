@@ -1,9 +1,3 @@
-test_that("nudge is calculated correctly", {
-  expect_equal(calc_y_nudge(c(1,2,3), n_groups = 2), c(-0.05, 0.05))
-  expect_equal(calc_y_nudge(c(1:100), n_groups = 4), c(-2.475, 2.475, 2.475, 2.475))
-})
-
-
 test_that("Pointplot is still the same", {
 
   df <- data.frame(grouping_var = rep(c("0","1"), 4),

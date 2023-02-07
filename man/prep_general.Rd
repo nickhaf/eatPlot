@@ -4,12 +4,16 @@
 \alias{prep_general}
 \title{Prepare eatRep output for further data wrangling.}
 \usage{
-prep_general(data_clean, sig_niveau)
+prep_general(data_clean, sig_niveau, BLs, groups)
 }
 \arguments{
 \item{data_clean}{Input data.frame, that has already been cleaned with \code{\link[=clean_data]{clean_data()}}.}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
+
+\item{BLs}{Bundesländer.}
+
+\item{groups}{grouping_var groups}
 }
 \value{
 List of data frames with different filters.

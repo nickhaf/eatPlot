@@ -30,12 +30,3 @@ plot_points <- function(data_plot_points){
   )
 }
 
-
-
-calc_y_nudge <- function(vec, n_groups){
-range_est <- range(vec, na.rm = TRUE)
-nudge_y_val <- (range_est[2]-range_est[1]) * 0.025
-nudge_y_vec <- rep(nudge_y_val, n_groups)
-nudge_y_vec[1] <- nudge_y_vec[1] * -1
-return(nudge_y_vec)
-}
