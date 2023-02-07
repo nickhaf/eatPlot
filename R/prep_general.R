@@ -26,7 +26,7 @@ prep_general <- function(data_clean, sig_niveau, BLs, groups) {
     filtered_list["point_data"] <- list(NULL)
   }
 
-  # Prepare trend data ------------------------------------------------------
+  # Prepare trend comparison data ------------------------------------------------------
   years_colnames <- unique(unlist(regmatches(colnames(data_clean), gregexpr("[[:digit:]]+", colnames(data_clean)))))
   remove_columns <- unique(as.vector(
     sapply(c("es_", "est_", "se_", "p_"), function(val) {
@@ -54,6 +54,20 @@ prep_general <- function(data_clean, sig_niveau, BLs, groups) {
     filtered_list[["trend_data"]] <- split_years(filtered_list[["trend_data"]])
   } else {
     filtered_list["trend_data"] <- list(NULL)
+  }
+
+
+
+# Prepare trend_point data ------------------------------------------------------
+  data_trend_point <- data_clean[is.na(data_clean$comparison), ]
+  if (nrow(data_trend_point) != 0) {
+    filtered_list[["trend_no_comp_data"]] <- prep_long(data_trend_point,
+                                               include_pattern = "est_trend|p_trend|se_trend|es_trend",
+                                               remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
+    )
+    filtered_list[["trend_no_comp_data"]] <- split_years(filtered_list[["trend_no_comp_data"]])
+  } else {
+    filtered_list["trend_no_comp_data"] <- list(NULL)
   }
 
   # Prepare WholeGroup ------------------------------------------------------

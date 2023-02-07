@@ -28,7 +28,7 @@ prep_trend <- function(data, grouping_var = "", competence, sig_niveau = 0.05) {
   plot_data <- list()
 
   list_general <- prep_general(data, sig_niveau = sig_niveau, BLs, groups)
-  within_whole <- merge_within_whole(list_general[["trend_data"]], BLs = BLs)[["within_whole"]]
+  within_whole <- merge_within_whole(trend_comp_data = list_general[["trend_data"]], trend_no_comp_data = list_general[["trend_no_comp_data"]], BLs = BLs)[["trend_data_final"]]
   trend_point <- merge_trend_point(trend_data = within_whole, point_data = list_general[[1]])
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
 
