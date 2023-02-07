@@ -1,15 +1,15 @@
 #' Title
 #'
-#' @param plot_data
+#' @param plot_data Input is a list prepared by [prep_trend()].
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
 #'
-#' @return
+#' @return [ggplot2] object.
 #' @export
 #'
-#' @examples
+#' @examples # tbd
 plot_lineplot <- function(plot_data, label_est = "est_trend_no_comp", label_se = "se_trend_no_comp", label_sig_high = "sig_trend_whole", label_sig_bold = "sig_trend_no_comp"){
 
   states <- unique(plot_data[[1]]$TR_BUNDESLAND)

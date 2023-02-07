@@ -6,7 +6,7 @@
 \usage{
 merge_within_whole(
   trend_comp_data,
-  trend_no_comp_data,
+  trend_no_comp_data = NULL,
   BLs,
   compare_against = "wholeGroup"
 )
