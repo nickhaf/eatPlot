@@ -1,4 +1,16 @@
-plot_lineplot <- function(plot_data){
+#' Title
+#'
+#' @param plot_data Input is a list prepared by [prep_trend()].
+#' @param label_est Character string of the column name containing the brace labels.
+#' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
+#' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
+#' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
+#'
+#' @return [ggplot2] object.
+#' @export
+#'
+#' @examples # tbd
+plot_lineplot <- function(plot_data, label_est = "est_trend_no_comp", label_se = "se_trend_no_comp", label_sig_high = "sig_trend_whole", label_sig_bold = "sig_trend_no_comp"){
 
   states <- unique(plot_data[[1]]$TR_BUNDESLAND)
 
@@ -14,10 +26,11 @@ plot_lineplot <- function(plot_data){
 
     p1 <- ggplot2::ggplot() +
       settings_lineplot(plot_data_state[["plot_lines"]]) +
+      plot_braces(plot_data[["plot_braces"]], BL = i, label_est, label_se, label_sig_high, label_sig_bold) +
       plot_background_lines(plot_data[["plot_background_lines"]]) +
       plot_points(plot_data_state[["plot_points"]]) +
       plot_lines(plot_data_state[["plot_lines"]]) +
-      plot_braces(plot_data[["plot_braces"]], BL = i) +
+      ggplot2::labs(title = paste0(i, "\n", " ")) + ## Title
       NULL
 
     if((position - 1) %% 4 == 0){
@@ -41,7 +54,8 @@ plot_lineplot <- function(plot_data){
   n <- length(plot_list)
   nCol <- floor(sqrt(n))
 
-  plot_margin <- ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
+  ## Padding of white space around the plot:
+  plot_margin <- ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.07, "npc"))
   #pdf(file = "Trend_Soz_Dis.pdf", width = 11, height = 22)
   line_plot <- do.call(eval(parse(text = "gridExtra::grid.arrange")), c(grobs = lapply(plot_list, "+", plot_margin), ncol = nCol))
   #dev.off()

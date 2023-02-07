@@ -12,15 +12,23 @@
 #'
 #' @examples # tbd
 prep_trend <- function(data, grouping_var = "", competence, sig_niveau = 0.05) {
-  data <- clean_data(data, grouping_var = grouping_var, competence = competence)
-
   BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
-  groups <- unique(data$grouping_var[!is.na(data$grouping_var)])
+  groups <- unique(data[ , grouping_var][!is.na(data[ ,grouping_var])])
+
+  data <- clean_data(data, grouping_var = grouping_var, competence = competence, BLs = BLs, groups = groups)
+
+  if(any(!is.na(BLs))){
+    data <- get_comparisons(data, "group",
+                                  BLs = BLs[BLs != "wholeGroup"],
+                                  groups = groups
+    )
+  }
+
 
   plot_data <- list()
 
-  list_general <- prep_general(data, sig_niveau = sig_niveau)
-  within_whole <- merge_within_whole(list_general[["trend_data"]], groups = groups, BLs = BLs)[["within_whole"]]
+  list_general <- prep_general(data, sig_niveau = sig_niveau, BLs, groups)
+  within_whole <- merge_within_whole(trend_comp_data = list_general[["trend_data"]], trend_no_comp_data = list_general[["trend_no_comp_data"]], BLs = BLs)[["trend_data_final"]]
   trend_point <- merge_trend_point(trend_data = within_whole, point_data = list_general[[1]])
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
 

@@ -1,6 +1,7 @@
 test_that("significance column is added", {
-  prepped_list <- list(a = data.frame(p_1 = c(0.04, 0.05)),
-                       b = data.frame(p_asdf = c(0.01, 0.04))
+  prepped_list <- list(
+    a = data.frame(p_1 = c(0.04, 0.05)),
+    b = data.frame(p_asdf = c(0.01, 0.04))
   )
 
   prepped_list_sig <- add_sig_col(prepped_list, sig_niveau = 0.045)
@@ -30,11 +31,9 @@ test_that("competence and grouping_var is optional", {
     p_trend_2vs3 = 1:4
   )
 
-test_general <- prep_general(df_general, sig_niveau = 0.05)
-expect_equal(test_general[["point_data"]]$grouping_var, rep("noGroup", 2))
-expect_equal(dim(test_general[["trend_data"]]), NULL)
-
-
+  test_general <- prep_general(df_general, groups = unique(df_general$grouping_var), BLs = unique(df_general$TR_BUNDESLAND), sig_niveau = 0.05)
+  expect_equal(test_general[["point_data"]]$grouping_var, rep("noGroup", 2))
+  expect_equal(dim(test_general[["trend_data"]]), NULL)
 })
 
 test_that("point estimates are optional", {
@@ -59,9 +58,8 @@ test_that("point estimates are optional", {
     p_trend_2vs3 = 1:4
   )
 
-  test_general <- prep_general(df_general, sig_niveau = 0.05)
+  test_general <- prep_general(df_general, groups = unique(df_general$grouping_var), BLs = unique(df_general$TR_BUNDESLAND), sig_niveau = 0.05)
   expect_equal(dim(test_general[["point_data"]]), NULL)
-
 })
 
 test_that("list ist build correctly without grouping_var", {
@@ -87,11 +85,11 @@ test_that("list ist build correctly without grouping_var", {
   )
 
 
-  test_general <- prep_general(df_general, sig_niveau = 0.05)
+  test_general <- prep_general(df_general, groups = unique(df_general$grouping_var), BLs = unique(df_general$TR_BUNDESLAND), sig_niveau = 0.05)
 
-  expect_equal(test_general[["point_data"]]$year, c(1,1,2,2))
-  expect_equal(test_general[["point_data"]]$est_point, c(1,2,1,2))
-  expect_equal(test_general[["trend_data"]]$year_start, c(1,1, 2, 2))
+  expect_equal(test_general[["point_data"]]$year, c(1, 1, 2, 2))
+  expect_equal(test_general[["point_data"]]$est_point, c(1, 2, 1, 2))
+  expect_equal(test_general[["trend_data"]]$year_start, c(1, 1, 2, 2))
   expect_equal(test_general[["trend_data"]]$year_end, c(2, 2, 3, 3))
   expect_equal(test_general[["trend_data"]]$est_trend, c(3, 4, 3, 4))
 })
@@ -119,14 +117,11 @@ test_that("list ist build correctly with grouping_var", {
   )
 
 
-  test_general <- prep_general(df_general, sig_niveau = 0.05)
+  test_general <- prep_general(df_general, groups = unique(df_general$grouping_var), BLs = unique(df_general$TR_BUNDESLAND), sig_niveau = 0.05)
 
-  expect_equal(test_general[["point_data"]]$year, c(1,1,2,2))
-  expect_equal(test_general[["point_data"]]$est_point, c(1,2,1,2))
-  expect_equal(test_general[["trend_data"]]$year_start, c(1,1, 2, 2))
+  expect_equal(test_general[["point_data"]]$year, c(1, 1, 2, 2))
+  expect_equal(test_general[["point_data"]]$est_point, c(1, 2, 1, 2))
+  expect_equal(test_general[["trend_data"]]$year_start, c(1, 1, 2, 2))
   expect_equal(test_general[["trend_data"]]$year_end, c(2, 2, 3, 3))
   expect_equal(test_general[["trend_data"]]$est_trend, c(3, 4, 3, 4))
 })
-
-
-

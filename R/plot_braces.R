@@ -2,12 +2,13 @@
 #'
 #' @param data_plot_braces Prepared Trend data.
 #' @param BL Bundesland, for which the labels should be drawn.
+#' @inheritParams plot_lineplot
 #'
 #' @return ggplot2 object.
 #' @export
 #'
 #' @examples ##
-plot_braces <- function(data_plot_braces, BL) {
+plot_braces <- function(data_plot_braces, BL, label_est, label_se, label_sig_high, label_sig_bold) {
   # Get range for y-axis
   range_est <- range(c(data_plot_braces$est_point_start, data_plot_braces$est_point_end), na.rm = TRUE)
 
@@ -16,8 +17,9 @@ plot_braces <- function(data_plot_braces, BL) {
   coords <- calc_coords(range_est)
   brace_coords <- calc_brace_coords(data_plot_braces, coords)
 
-  brace_coords$est_trend_within_label <- ifelse(brace_coords$sig_trend_within == TRUE, paste0("**", round(brace_coords$est_trend_within, 0), "**"), round(brace_coords$est_trend_within, 0))
-  brace_coords$sig_trend_whole_label <- ifelse(brace_coords$sig_trend_whole == TRUE, "<sup>a</sup>", "")
+  brace_coords$label_est <- ifelse(brace_coords[, label_sig_bold] == TRUE, paste0("**", round(brace_coords[, label_est], 0), "**"), round(brace_coords[, label_est], 0))
+  brace_coords$label_sig <- ifelse(brace_coords[, label_sig_high] == TRUE, "<sup>a</sup>", "")
+  brace_coords$label_se <- brace_coords[, label_se]
 
   c(
     ## Loop to draw a brace for every year_start
@@ -41,8 +43,9 @@ plot_braces <- function(data_plot_braces, BL) {
     # Clip Coordinate system. Necessary, so the brace can be drawn outside of the plot
     ggplot2::coord_cartesian(
       clip = "off",
-      ylim = coords,
-      expand = FALSE)
+      ylim = coords #,
+      #expand = FALSE
+      )
   )
 }
 
@@ -51,47 +54,16 @@ plot_braces <- function(data_plot_braces, BL) {
 
 
 ## Utils
-
-
-
-## Calc the coordinates for drawing the braces.
-calc_brace_coords <- function(data, coords) {
-  # Calculate brace coordinates ---------------------------------------------
-
-  data$brace_upper_y <- ifelse(data$year_start == min(data$year_start),
-    coords[1],
-    coords[1] - coords[1] * 0.10
-  )
-  data$brace_lower_y <- ifelse(data$year_start == min(data$year_start),
-    coords[1] - coords[1] * 0.10,
-    coords[1] - coords[1] * 0.15
-  )
-
-  data$label_pos_y <- ifelse(data$grouping_var == 1,
-    coords[1] - coords[1] * 0.15,
-    coords[1] - coords[1] * 0.17
-  )
-  data$label_pos_x <- ifelse(data$year_start == min(data$year_start),
-    calc_pos_label_x(data$year_start, data$year_end, 0.25),
-    calc_pos_label_x(data$year_start, data$year_end, 0.5)
-  )
-
-  return(data)
-}
-
-
 plot_brace_label <- function(brace_coords, BL) {
   ggtext::geom_richtext(
-    data = brace_coords[brace_coords$TR_BUNDESLAND == BL &
-      !(brace_coords$year_start == 2011 &
-        brace_coords$year_end == 2016), ],
+    data = brace_coords[brace_coords$TR_BUNDESLAND == BL, ],
     mapping = ggplot2::aes(
       x = .data$label_pos_x,
       y = .data$label_pos_y,
       label = paste0(
-        .data$est_trend_within_label,
-        .data$sig_trend_whole_label,
-        " (", round(.data$se_trend_within, 1), ")"
+        .data$label_est,
+        .data$label_sig,
+        " (", round(.data$label_se, 1), ")"
       )
     ),
     size = 3,

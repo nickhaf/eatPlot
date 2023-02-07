@@ -4,14 +4,21 @@
 \alias{merge_within_whole}
 \title{Title}
 \usage{
-merge_within_whole(trend_data, groups, BLs)
+merge_within_whole(
+  trend_comp_data,
+  trend_no_comp_data = NULL,
+  BLs,
+  compare_against = "wholeGroup"
+)
 }
 \arguments{
-\item{trend_data}{Trend data.}
+\item{trend_comp_data}{Trend data containing trend comparisons.}
 
-\item{groups}{Groups.}
+\item{trend_no_comp_data}{Trend data containing estimates for the trends.}
 
 \item{BLs}{States.}
+
+\item{compare_against}{Should be compared against the wholeGroup, or grouping_vars wihtin the wholeGroup? Currently only "wholeGroup" necessary.}
 }
 \value{
 list of data frames.

@@ -4,12 +4,16 @@
 \alias{clean_data}
 \title{Fill in and rename necessary columns}
 \usage{
-clean_data(data, grouping_var, competence)
+clean_data(data, grouping_var, BLs, groups, competence)
 }
 \arguments{
 \item{data}{Input data.frame stemming from eatRep.}
 
 \item{grouping_var}{Character string containing the column in \code{data} that should be used to distinguish between subgroups.}
+
+\item{BLs}{bundesländer}
+
+\item{groups}{grouping_var groups}
 
 \item{competence}{Character string containing the competence that should be plotted. Currently Has to be found in \code{data$kb} (even though that should be made optional in the future).}
 }
@@ -29,5 +33,5 @@ The following operations are performed on \code{data}:
 }
 }
 \examples{
-#tbd
+# tbd
 }
