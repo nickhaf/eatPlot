@@ -7,17 +7,10 @@
 #' @export
 #'
 #' @examples # tbd
-prep_general <- function(data_clean, sig_niveau) {
-
-  BLs <- unique(data_clean$TR_BUNDESLAND)[!is.na(unique(data_clean$TR_BUNDESLAND))]
-  groups <- unique(data_clean$grouping_var[!is.na(data_clean$grouping_var)])
-
-
+prep_general <- function(data_clean, sig_niveau, BLs, groups) {
 
   ## filter rows, so different types of data.frames can be build:
   filtered_list <- list()
-
-
 
   # Prepare point estimates -------------------------------------------------
   if (any(is.na(data_clean$comparison))) {
@@ -28,6 +21,7 @@ prep_general <- function(data_clean, sig_niveau) {
     )
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$TR_BUNDESLAND) & (get_wholeGroup(filtered_list[["point_data"]]$group) | filtered_list[["point_data"]]$group %in% groups), "TR_BUNDESLAND"] <- "wholeGroup"
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$grouping_var), "grouping_var"] <- "noGroup"
+    filtered_list[["point_data"]] <- filtered_list[["point_data"]][, !(colnames(filtered_list[["point_data"]]) %in% c("compare_1", "compare_2")), ]
   } else {
     filtered_list["point_data"] <- list(NULL)
   }
@@ -58,12 +52,6 @@ prep_general <- function(data_clean, sig_niveau) {
       remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
     )
     filtered_list[["trend_data"]] <- split_years(filtered_list[["trend_data"]])
-
-    ## Fill up NAs
-    filtered_list[["trend_data"]]$grouping_var <- write_group(filtered_list[["trend_data"]]$group, groups = groups)
-    filtered_list[["trend_data"]]$TR_BUNDESLAND <- write_group(filtered_list[["trend_data"]]$group, groups = BLs)
-    filtered_list[["trend_data"]][is.na(filtered_list[["trend_data"]]$TR_BUNDESLAND) & get_wholeGroup(filtered_list[["trend_data"]]$group), "TR_BUNDESLAND"] <- "wholeGroup"
-    filtered_list[["trend_data"]][is.na(filtered_list[["trend_data"]]$grouping_var), "grouping_var"] <- "noGroup"
   } else {
     filtered_list["trend_data"] <- list(NULL)
   }

@@ -92,3 +92,12 @@ test_that("number insertion works", {
   expect_equal(insert_first_number("a45c6", insertion = "\\."), "a.45c6")
 
 })
+
+test_that("comparison splits works", {
+
+df_comp <- data.frame(comp = c("a.vs.b", "b.vs.c"))
+
+expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "a", groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
+expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "b", groups = c("a"))$compare_2, c("BL", "c"))
+
+})

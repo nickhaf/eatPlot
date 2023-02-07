@@ -4,7 +4,7 @@
 \alias{prep_general}
 \title{Prepare eatRep output for further data wrangling.}
 \usage{
-prep_general(data_clean, sig_niveau)
+prep_general(data_clean, sig_niveau, BLs, groups)
 }
 \arguments{
 \item{data_clean}{Input data.frame, that has already been cleaned with \code{\link[=clean_data]{clean_data()}}.}

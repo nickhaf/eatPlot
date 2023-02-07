@@ -178,3 +178,22 @@ insert_first_number <- function(char_string, insertion){
   }
 
 
+
+## Split all groups containing "vs" to get the respective comparisons
+get_comparisons <- function(data, group_col, BLs, groups){
+
+  comparisons_log <- grepl("\\.vs\\.", data[, group_col])
+
+  data[comparisons_log, "compare_1"] <- sapply(strsplit(data[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[1]]})
+  data[comparisons_log, "compare_2"] <- sapply(strsplit(data[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[2]]})
+
+  for(i in c("compare_1", "compare_2")){
+  data[, i] <- gsub(paste0(BLs, collapse = "|"), "BL", data[, i])
+  data[, i] <- gsub(paste0(groups, collapse = "|"), "_groupingVar", data[, i])
+  data[, i] <- gsub("__|___", "_", data[, i])
+}
+
+
+  return(data)
+
+}

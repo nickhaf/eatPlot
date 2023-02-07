@@ -4,7 +4,7 @@
 \alias{clean_data}
 \title{Fill in and rename necessary columns}
 \usage{
-clean_data(data, grouping_var, competence)
+clean_data(data, grouping_var, BLs, groups, competence)
 }
 \arguments{
 \item{data}{Input data.frame stemming from eatRep.}
@@ -29,5 +29,5 @@ The following operations are performed on \code{data}:
 }
 }
 \examples{
-#tbd
+# tbd
 }

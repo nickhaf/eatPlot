@@ -9,7 +9,10 @@
 #' @examples # tbd
 prep_no_trend <- function(data, grouping_var, columns, competence, sig_niveau){
 
-  data <- clean_data(data, grouping_var = grouping_var, competence = competence)
+  BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
+  groups <- unique(data[ , grouping_var][!is.na(data[ ,grouping_var])])
+
+  data <- clean_data(data, grouping_var = grouping_var, competence = competence, BLs = BLs, groups = groups)
 
   data$sig <- calc_sig(data[, grep("^p_|^p$", colnames(data))], sig_niveau = sig_niveau)
   data <- calc_fill(data)
