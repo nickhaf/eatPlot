@@ -47,7 +47,10 @@ barplot_data <- prep_no_trend(
 
 or:
 ```{r}
-lineplot_data <- prep_trend(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", sig_niveau = 0.05)
+lineplot_data <- prep_trend(data = trend_books, 
+                            grouping_var = "KBuecher_imp3", 
+                            competence = "GL", 
+                            sig_niveau = 0.05)
 ```
 
 ### Plotting
@@ -60,6 +63,10 @@ p_bar <- plot_bar(barplot_data)
 plot_table_bar(p_table, p_bar)
 ```
 
+Or, if you want a lineplot:
+```{r}
+plot_lineplot(lineplot_data)
+```
 
 
 

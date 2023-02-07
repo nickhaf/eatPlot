@@ -8,7 +8,9 @@
 #' @examples #tbd
 plot_points <- function(data_plot_points){
 
+  data_plot_points <- data_plot_points[data_plot_points$grouping_var != "noGroup", ]
   nudge_y_vec <- calc_y_nudge(data_plot_points$est_point, n_groups = length(unique(data_plot_points$grouping_var)))
+
 
   list(
     ggplot2::geom_point(data = data_plot_points,
