@@ -4,32 +4,45 @@
 \alias{clean_data}
 \title{Fill in and rename necessary columns}
 \usage{
-clean_data(data, grouping_var, BLs, groups, competence)
+clean_data(
+  dat,
+  states,
+  sub_groups,
+  competence,
+  grouping_var = "",
+  group_var = "group",
+  state_var = "TR_BUNDESLAND",
+  competence_var = "kb"
+)
 }
 \arguments{
-\item{data}{Input data.frame stemming from \code{eatRep}.}
+\item{dat}{Input data.frame stemming from \code{eatRep}.}
 
-\item{grouping_var}{Character string containing the column in \code{data} that should be used to distinguish between subgroups.}
+\item{states}{Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).}
 
-\item{BLs}{bundesländer}
+\item{sub_groups}{Character vector of the different sub_groups.}
 
-\item{groups}{grouping_var groups}
+\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{dat$kb} (even though that should be made optional in the future).}
 
-\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{data$kb} (even though that should be made optional in the future).}
+\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
+
+\item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
+
+\item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
 }
 \value{
-\code{clean_data()} returns a \code{data} with renamend columns and filled in \code{NAs}.
+\code{clean_data()} returns a \code{data.frame} with renamend columns and filled in \code{NAs}.
 }
 \description{
 \code{clean_data()} performs some simple data wrangling to prepare the input \code{data.frame} for the more plot specific data transformations.
 }
 \details{
-The following operations are performed on \code{data}:
+The following operations are performed on \code{dat}:
 \itemize{
 \item For consistency, points in column names are subbed with underscores.
-\item Only rows containing \code{mean} in \code{data$parameter} are returend.
-\item The group \code{wholeGroup} currently contains \code{NAs} in the columns \code{data$TR_BUNDESLAND} and \code{data$grouping_var}. These are subbed with \code{wholeGroup} or \code{noGroup} respectively.
-\item The column \code{data$TR_BUNDESLAND} is filled up by extracting the first state found in \code{data$groups} for the respective row.
+\item Only rows containing \code{mean} in \code{dat$parameter} are returend.
+\item The group \code{wholeGroup} currently contains \code{NAs} in the columns \code{dat[ , state_var]} and \code{dat$grouping_var}. These are subbed with \code{wholeGroup} or \code{noGroup} respectively.
+\item The column \code{dat[ , state_var]} is filled up by extracting the first state found in \code{dat$groups} for the respective row.
 }
 }
 \examples{

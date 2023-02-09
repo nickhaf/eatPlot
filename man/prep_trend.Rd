@@ -5,23 +5,27 @@
 \title{Prepare trend data for plotting}
 \usage{
 prep_trend(
-  data,
+  dat,
+  competence,
   grouping_var = "",
   state_var = "TR_BUNDESLAND",
-  competence,
+  competence_var = "kb",
+  group_var = "group",
   sig_niveau = 0.05
 )
 }
 \arguments{
-\item{data}{Input data.frame stemming from \code{eatRep}.}
+\item{dat}{Input data.frame stemming from \code{eatRep}.}
 
-\item{grouping_var}{Character string containing the column in \code{data} that should be used to distinguish between subgroups.}
+\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{dat$kb} (even though that should be made optional in the future).}
 
-\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{data$kb} (even though that should be made optional in the future).}
+\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
+
+\item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
+
+\item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
-
-\item{state-var}{Character string containing the column in \code{data} that should be used to distinguish between different states ("Bundesländer"). Defaults to \code{"TR_BUNDESLAND"}.}
 }
 \value{
 \code{prep_trend()} returns a list containing four data.frames prepared for plotting with different \link{eatPlot} functions. This includes the data.frames:

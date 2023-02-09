@@ -21,8 +21,8 @@ test_that("calc_sig(): significance niveau is working correctly", {
 
 test_that("write_group finds the correct group membership", {
 
-  expect_equal(write_group(c("a_1", NA, "b_1", "ab_1"), groups = "a"),
-               c("a", NA, NA, NA))
+  expect_equal(write_group(c("a_1", NA, "b_1", "ab_1", "c_a_1"), groups = c("a", "c")),
+               c("a", NA, NA, NA, "c"))
 })
 
 

@@ -3,9 +3,10 @@
 #' Performs different data transformations, to bring the input data.frame into the correct formats for different kind of plots.
 #'
 #' @param dat Input data.frame stemming from `eatRep`.
-#' @param grouping_var Character string containing the column in `dat` that should be used to distinguish between subgroups.
-#' @param state_var Character string containing the column in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
+#' @param grouping_var Character string containing the column name in `dat` that should be used to distinguish between subgroups.
+#' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param competence Character string containing the competence that should be plotted. Currently has to be found in `dat$kb` (even though that should be made optional in the future).
+#' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #'
 #' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
@@ -16,9 +17,13 @@
 #' @export
 #'
 #' @examples # tbd
-prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", sig_niveau = 0.05) {
+prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", group_var = "group", sig_niveau = 0.05) {
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
+  if(grouping_var != ""){
   sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
+  }else{
+    sub_groups <- NULL
+  }
 
   dat <- clean_data(dat, grouping_var = grouping_var, competence = competence, BLs = states, sub_groups = sub_groups)
 

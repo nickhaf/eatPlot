@@ -7,13 +7,11 @@
 prep_no_trend(data, grouping_var, columns, competence, sig_niveau)
 }
 \arguments{
-\item{data}{Input data.frame stemming from \code{eatRep}.}
-
-\item{grouping_var}{Character string containing the column in \code{data} that should be used to distinguish between subgroups.}
+\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
 
 \item{columns}{Character string containing the column in \code{data} that contains the column names for the table_plot.}
 
-\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{data$kb} (even though that should be made optional in the future).}
+\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{dat$kb} (even though that should be made optional in the future).}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 }
