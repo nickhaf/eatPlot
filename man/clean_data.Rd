@@ -7,7 +7,7 @@
 clean_data(data, grouping_var, BLs, groups, competence)
 }
 \arguments{
-\item{data}{Input data.frame stemming from eatRep.}
+\item{data}{Input data.frame stemming from \code{eatRep}.}
 
 \item{grouping_var}{Character string containing the column in \code{data} that should be used to distinguish between subgroups.}
 
@@ -15,7 +15,7 @@ clean_data(data, grouping_var, BLs, groups, competence)
 
 \item{groups}{grouping_var groups}
 
-\item{competence}{Character string containing the competence that should be plotted. Currently Has to be found in \code{data$kb} (even though that should be made optional in the future).}
+\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{data$kb} (even though that should be made optional in the future).}
 }
 \value{
 \code{clean_data()} returns a \code{data} with renamend columns and filled in \code{NAs}.
