@@ -2,12 +2,16 @@
 #'
 #' Performs different data transformations, to bring the input data.frame into the correct formats for different kind of plots.
 #'
-#' @param data Input data.frame stemming from eatRep.
+#' @param data Input data.frame stemming from `eatRep`.
 #' @param grouping_var Character string containing the column in `data` that should be used to distinguish between subgroups.
-#' @param competence Character string containing the competence that should be plotted. Currently Has to be found in `data$kb` (even though that should be made optional in the future).
+#' @param competence Character string containing the competence that should be plotted. Currently has to be found in `data$kb` (even though that should be made optional in the future).
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #'
-#' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frame `plot_points` for plotting with [plot_points()], the data.frame `plot_lines` for plotting with [plot_lines()], the data.frame `plot_braces` for plotting with [plot_braces()] and the data.frame `plot_background_lines` for plotting wiht [plot_background_lines()].
+#' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
+#' * `plot_points` for plotting with [plot_points()]
+#' * `plot_lines` for plotting with [plot_lines()]
+#' * `plot_braces` for plotting with [plot_braces()]
+#' * `plot_background_lines` for plotting with [plot_background_lines()].
 #' @export
 #'
 #' @examples # tbd
