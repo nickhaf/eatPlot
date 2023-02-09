@@ -18,14 +18,14 @@
 #' @examples # tbd
 prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", sig_niveau = 0.05) {
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
-  groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
+  sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
 
-  dat <- clean_data(dat, grouping_var = grouping_var, competence = competence, BLs = states, groups = groups)
+  dat <- clean_data(dat, grouping_var = grouping_var, competence = competence, BLs = states, sub_groups = sub_groups)
 
   if (any(!is.na(states))) {
     dat <- get_comparisons(dat, "group",
       states = states[states != "wholeGroup"],
-      groups = groups
+      sub_groups = sub_groups
     )
   }
 

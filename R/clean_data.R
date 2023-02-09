@@ -2,39 +2,40 @@
 #'
 #' `clean_data()` performs some simple data wrangling to prepare the input `data.frame` for the more plot specific data transformations.
 #'
-#' The following operations are performed on `data`:
+#' The following operations are performed on `dat`:
 #' * For consistency, points in column names are subbed with underscores.
-#' * Only rows containing `mean` in `data$parameter` are returend.
-#' * The group `wholeGroup` currently contains `NAs` in the columns `data$TR_BUNDESLAND` and `data$grouping_var`. These are subbed with `wholeGroup` or `noGroup` respectively.
-#' * The column `data$TR_BUNDESLAND` is filled up by extracting the first state found in `data$groups` for the respective row.
+#' * Only rows containing `mean` in `dat$parameter` are returend.
+#' * The group `wholeGroup` currently contains `NAs` in the columns `dat$TR_BUNDESLAND` and `dat$grouping_var`. These are subbed with `wholeGroup` or `noGroup` respectively.
+#' * The column `dat$TR_BUNDESLAND` is filled up by extracting the first state found in `dat$groups` for the respective row.
 #' @inheritParams prep_trend
-#' @param BLs bundesländer
-#' @param groups grouping_var groups
+#' @param states Character vector of the different groups that should be plotted seperatly. Normally these should be
+#' @param sub_groups grouping_var groups
 #'
-#' @return `clean_data()` returns a `data` with renamend columns and filled in `NAs`.
+#' @return `clean_data()` returns a `data.frame` with renamend columns and filled in `NAs`.
 #' @export
 #'
 #' @examples # tbd
-clean_data <- function(data, grouping_var, BLs, groups, competence) {
+clean_data <- function(dat, grouping_var, states, sub_groups, competence) {
   if (grouping_var == "") {
-    data$grouping_var <- rep(NA, nrow(data))
+    dat$grouping_var <- rep(NA, nrow(dat))
   } else {
-    colnames(data)[colnames(data) == grouping_var] <- "grouping_var"
+    rename_column(data = data, old = grouping_var, new = "grouping_var")
   }
 
-  data[is.na(data$TR_BUNDESLAND), "TR_BUNDESLAND"] <- write_group(data[is.na(data$TR_BUNDESLAND), "group"], groups = BLs)
-  data[is.na(data$TR_BUNDESLAND) , "TR_BUNDESLAND"] <- "wholeGroup" #& data$group == "wholeGroup"
-  data[is.na(data$grouping_var), "grouping_var"] <- write_group(data[is.na(data$grouping_var), "group"], groups = groups)
-  data[is.na(data$grouping_var), "grouping_var"] <- "noGroup"
+  dat[is.na(dat$TR_BUNDESLAND), "TR_BUNDESLAND"] <- write_group(dat[is.na(dat$TR_BUNDESLAND), "group"], groups = BLs)
+  dat[is.na(dat$TR_BUNDESLAND) , "TR_BUNDESLAND"] <- "wholeGroup" #& dat$group == "wholeGroup"
+  dat[is.na(dat$grouping_var), "grouping_var"] <- write_group(dat[is.na(dat$grouping_var), "group"], groups = sub_groups)
+  dat[is.na(dat$grouping_var), "grouping_var"] <- "noGroup"
 
-  colnames(data) <- gsub("\\.", "_", colnames(data))
-  colnames(data) <- gsub("sig_", "p_", colnames(data))
-  data <- data[data$kb == competence & data$parameter == "mean", ]
-  data <- data[, !colnames(data) %in% c("modus", "depVar", "modus", "parameter", "kb")]
+  colnames(dat) <- gsub("\\.", "_", colnames(dat))
+  colnames(dat) <- gsub("sig_", "p_", colnames(dat))
+  dat <- dat[dat$kb == competence & dat$parameter == "mean", ]
+  dat <- dat[, !colnames(dat) %in% c("modus", "depVar", "modus", "parameter", "kb")]
 
 
-  return(data)
+  return(dat)
 }
 
+## Aims of this function:
+# Do global data cleaning, like removing unnecessary rows or columns, rename variables so they can be found be the other functions, and fill up NAs in some columns by values derived from the "group-column".
 
-## GroupingVar falsch für 0|1

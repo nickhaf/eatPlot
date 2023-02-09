@@ -101,3 +101,9 @@ expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "a", groups = c(
 expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "b", groups = c("a"))$compare_2, c("BL", "c"))
 
 })
+
+test_that("column renaming works", {
+  df_col <- data.frame(col1 = 1)
+
+  expect_equal(colnames(rename_column(df_col, "col1", "col_1")), "col_1")
+})
