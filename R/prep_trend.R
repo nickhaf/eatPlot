@@ -20,24 +20,26 @@
 #' @examples # tbd
 prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", group_var = "group", sig_niveau = 0.05) {
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
-  if(grouping_var != ""){
-  sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
-  }else{
+  if (grouping_var != "") {
+    sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
+  } else {
     sub_groups <- NULL
   }
 
-  dat <- clean_data(dat = dat,
-                    states = states,
-                    sub_groups = sub_groups,
-                    competence = competence,
-                    grouping_var = grouping_var,
-                    group_var = group_var,
-                    state_var = state_var,
-                    competence_var = competence_var)
+  dat <- clean_data(
+    dat = dat,
+    states = states,
+    sub_groups = sub_groups,
+    competence = competence,
+    grouping_var = grouping_var,
+    group_var = group_var,
+    state_var = state_var,
+    competence_var = competence_var
+  )
 
   if (any(!is.na(states))) {
     dat <- get_comparisons(dat,
-                           "group_var",
+      "group_var",
       states = states[states != "wholeGroup"],
       sub_groups = "sub_groups"
     )
@@ -48,7 +50,7 @@ prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDE
 
   list_general <- prep_general(dat, sig_niveau = sig_niveau, states, sub_groups)
   within_whole <- merge_within_whole(trend_comp_data = list_general[["trend_data"]], trend_no_comp_data = list_general[["trend_no_comp_data"]], BLs = states)[["trend_data_final"]]
-  trend_point <- merge_trend_point(trend_data = within_whole, point_dat = list_general[[1]])
+  trend_point <- merge_trend_point(trend_data = within_whole, point_data = list_general[[1]])
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
 
 

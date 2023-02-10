@@ -41,8 +41,8 @@ clean_data <- function(dat, states, sub_groups, competence, grouping_var = "", g
   dat <- dat[, !colnames(dat) %in% c("modus", "depVar", "modus", "parameter", "kb")]
 
   # Fill up NAs
-  dat <- fill_up_na(dat, info_to = "state_var", filling_group = states)
-  dat <- fill_up_na(dat, info_to = "grouping_var", filling_group = sub_groups)
+  dat <- fill_up_na(dat, info_to = "state_var", filling_groups = states)
+  dat <- fill_up_na(dat, info_to = "grouping_var", filling_groups = sub_groups)
   dat[is.na(dat$grouping_var), "grouping_var"] <- "noGroup"
   dat[is.na(dat$state_var) & (
     grepl("wholeGroup", dat$group_var) |
@@ -58,10 +58,6 @@ clean_data <- function(dat, states, sub_groups, competence, grouping_var = "", g
 
   return(dat)
 }
-
-## Aims of this function:
-# Do global data cleaning, like removing unnecessary rows or columns, rename variables so they can be found be the other functions, and fill up NAs in some columns by values derived from the "group-column".
-
 
 # Utils
 fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
