@@ -7,78 +7,90 @@
 #' @export
 #'
 #' @examples # tbd
-prep_no_trend <- function(data, grouping_var, columns, competence, sig_niveau){
+prep_no_trend <- function(dat, columns, competence, grouping_var = "", group_var = "group", state_var = "TR_BUNDESLAND", competence_var = "kb", sig_niveau = 0.05){
 
-  BLs <- unique(data$TR_BUNDESLAND)[!is.na(unique(data$TR_BUNDESLAND))]
-  groups <- unique(data[ , grouping_var][!is.na(data[ ,grouping_var])])
+  states <- unique(dat[ , state_var])[!is.na(unique(dat[ , state_var]))]
+  if(grouping_var != ""){
+    sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
+  }else{
+    sub_groups <- NULL
+  }
 
-  data <- clean_data(data, grouping_var = grouping_var, competence = competence, BLs = BLs, groups = groups)
+  dat <- clean_data(dat,
+                    states = states,
+                    sub_groups = sub_groups,
+                    competence = competence,
+                    grouping_var = grouping_var,
+                    group_var = group_var,
+                    state_var = state_var,
+                    competence_var = competence_var)
 
-  data$sig <- calc_sig(data[, grep("^p_|^p$", colnames(data))], sig_niveau = sig_niveau)
-  data <- calc_fill(data)
+  dat$sig <- calc_sig(dat[, grep("^p_|^p$", colnames(dat))], sig_niveau = sig_niveau)
+  dat <- calc_fill(dat, col_1 = "grouping_var", col_2 = "sig")
 
-  data_wholeGroup <- data[data$comparison == "crossDiff" & !is.na(data$comparison), ]
-  data_point <- data[is.na(data$comparison), ]
+  dat_wholeGroup <- dat[dat$comparison == "crossDiff" & !is.na(dat$comparison), ]
+  dat_point <- dat[is.na(dat$comparison), ]
 
-  data_no_trend <- merge(data_wholeGroup[, colnames(data_wholeGroup) != "comparison"], data_point[, colnames(data_wholeGroup) != "comparison"],
-                         by = c("group", "grouping_var", "TR_BUNDESLAND"),
+  dat_no_trend <- merge(dat_wholeGroup[, colnames(dat_wholeGroup) != "comparison"],
+                        dat_point[, colnames(dat_wholeGroup) != "comparison"],
+                         by = c("group_var", "grouping_var", "state_var"),
                          suffixes = c("_wholeGroup", "_point"),
                          all = TRUE)
 
 
   # wholeGroup must be plotted as empty row - fill up NAs with 0-values (bit hacky)---------------------
-  data_bar <- data_no_trend
-  data_bar[data_bar$group == "wholeGroup" & is.na(data_bar$sig_wholeGroup), "sig_wholeGroup" ] <- FALSE
-  data_bar[data_bar$group == "wholeGroup" & is.na(data_bar$fill_wholeGroup), "fill_wholeGroup" ] <- paste0(data_bar[data_bar$group == "wholeGroup" & is.na(data_bar$fill_wholeGroup), "grouping_var" ], "_", data_bar[data_bar$group == "wholeGroup" & is.na(data_bar$fill_wholeGroup), "sig_wholeGroup" ])
-  data_bar[data_bar$group == "wholeGroup" & is.na(data_bar$est_wholeGroup), "est_wholeGroup" ] <- 0
+  dat_bar <- dat_no_trend
+  dat_bar[grepl("^wholeGroup$", dat_bar$group_var) & is.na(dat_bar$sig_wholeGroup), "sig_wholeGroup" ] <- FALSE
+  dat_bar[grepl("^wholeGroup$", dat_bar$group_var) & is.na(dat_bar$fill_wholeGroup), "fill_wholeGroup" ] <- paste0(dat_bar[grepl("^wholeGroup$", dat_bar$group_var) &
+                                                                                                                             is.na(dat_bar$fill_wholeGroup), "grouping_var" ],
+                                                                                                                   "_",
+                                                                                                                   dat_bar[grepl("^wholeGroup$", dat_bar$group_var) &
+                                                                                                                             is.na(dat_bar$fill_wholeGroup), "sig_wholeGroup" ])
+  dat_bar[grepl("^wholeGroup$", dat_bar$group_var) & is.na(dat_bar$est_wholeGroup), "est_wholeGroup" ] <- 0
 
 
-  plot_data <- list()
-  plot_data[["plot_bar"]] <- data_bar
+  plot_dat <- list()
+  plot_dat[["plot_bar"]] <- dat_bar
 
 
 # Prepare tableplot -------------------------------------------------------
 
   if(grouping_var == columns){
-    data_no_trend$x_label <- data_no_trend$grouping_var
+    dat_no_trend$x_label <- dat_no_trend$grouping_var
   }else{
-    data_no_trend$x_label <- data_no_trend[, columns]
+    dat_no_trend$x_label <- dat_no_trend[, columns]
   }
 
 
-  data_y_labels <- data.frame(group = unique(data_no_trend$group),
+  dat_y_labels <- data.frame(group_var = unique(dat_no_trend$group_var),
                               x_label = rep("y_label",
-                                            length(unique(data_no_trend$group))
+                                            length(unique(dat_no_trend$group_var))
                                             )
                               )
 
 
   # fill in non-overlapping columns with NAs
-  data_no_trend[setdiff(names(data_y_labels), names(data_no_trend))] <- NA
-  data_y_labels[setdiff(names(data_no_trend), names(data_y_labels))] <- NA
+  dat_no_trend[setdiff(names(dat_y_labels), names(dat_no_trend))] <- NA
+  dat_y_labels[setdiff(names(dat_no_trend), names(dat_y_labels))] <- NA
 
 
-  data_table <- rbind(data_no_trend,
-                data_y_labels)
+  dat_table <- rbind(dat_no_trend,
+                dat_y_labels)
 
 
-  data_table$x_label <- factor(data_table$x_label, levels = c("y_label", unique(data_table$x_label[data_table$x_label != "y_label"])), ordered = TRUE)
+  dat_table$x_label <- factor(dat_table$x_label, levels = c("y_label", unique(dat_table$x_label[dat_table$x_label != "y_label"])), ordered = TRUE)
 
 
 
-  plot_data[["plot_table"]] <- data_table
+  plot_dat[["plot_table"]] <- dat_table
 
-  return(plot_data)
+  return(plot_dat)
   }
 
 
 ## Helpers
 
-calc_fill <- function(data) {
-  if (any(is.na(data$sub_groups))) {
-    stop("Your subgroups should not contain any missings. Please check your input data.")
-  } else {
-    data$fill <- paste0(data$grouping_var, "_", data$sig)
-    return(data)
-  }
+calc_fill <- function(dat, col_1, col_2) {
+  dat$fill <- ifelse(is.na(dat[, col_1]) | is.na(dat[, col_2]), NA,  paste0(dat[, col_1], "_", dat[, col_2]))
+    return(dat)
 }

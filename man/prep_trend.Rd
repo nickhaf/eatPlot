@@ -17,11 +17,13 @@ prep_trend(
 \arguments{
 \item{dat}{Input data.frame stemming from \code{eatRep}.}
 
-\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{dat$kb} (even though that should be made optional in the future).}
+\item{competence}{Character string containing the competence that should be plotted.}
 
 \item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
 
 \item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
+
+\item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
 
 \item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
 

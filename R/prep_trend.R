@@ -3,10 +3,11 @@
 #' Performs different data transformations, to bring the input data.frame into the correct formats for different kind of plots.
 #'
 #' @param dat Input data.frame stemming from `eatRep`.
+#' @param competence Character string containing the competence that should be plotted.
 #' @param grouping_var Character string containing the column name in `dat` that should be used to distinguish between subgroups.
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
-#' @param competence Character string containing the competence that should be plotted. Currently has to be found in `dat$kb` (even though that should be made optional in the future).
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
+#' @param competence_var Character string containing the column name in `dat` that contains the different competences. Defaults to `"kb"`.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #'
 #' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
@@ -25,19 +26,27 @@ prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDE
     sub_groups <- NULL
   }
 
-  dat <- clean_data(dat, grouping_var = grouping_var, competence = competence, BLs = states, sub_groups = sub_groups)
+  dat <- clean_data(dat = dat,
+                    states = states,
+                    sub_groups = sub_groups,
+                    competence = competence,
+                    grouping_var = grouping_var,
+                    group_var = group_var,
+                    state_var = state_var,
+                    competence_var = competence_var)
 
   if (any(!is.na(states))) {
-    dat <- get_comparisons(dat, "group",
+    dat <- get_comparisons(dat,
+                           "group_var",
       states = states[states != "wholeGroup"],
-      sub_groups = sub_groups
+      sub_groups = "sub_groups"
     )
   }
 
 
   plot_dat <- list()
 
-  list_general <- prep_general(dat, sig_niveau = sig_niveau, states, groups)
+  list_general <- prep_general(dat, sig_niveau = sig_niveau, states, sub_groups)
   within_whole <- merge_within_whole(trend_comp_data = list_general[["trend_data"]], trend_no_comp_data = list_general[["trend_no_comp_data"]], BLs = states)[["trend_data_final"]]
   trend_point <- merge_trend_point(trend_data = within_whole, point_dat = list_general[[1]])
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])

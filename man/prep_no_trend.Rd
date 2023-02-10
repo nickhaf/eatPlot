@@ -4,14 +4,31 @@
 \alias{prep_no_trend}
 \title{Prepare data for plotting a barplot.}
 \usage{
-prep_no_trend(data, grouping_var, columns, competence, sig_niveau)
+prep_no_trend(
+  dat,
+  columns,
+  competence,
+  grouping_var = "",
+  group_var = "group",
+  state_var = "TR_BUNDESLAND",
+  competence_var = "kb",
+  sig_niveau = 0.05
+)
 }
 \arguments{
-\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
+\item{dat}{Input data.frame stemming from \code{eatRep}.}
 
 \item{columns}{Character string containing the column in \code{data} that contains the column names for the table_plot.}
 
-\item{competence}{Character string containing the competence that should be plotted. Currently has to be found in \code{dat$kb} (even though that should be made optional in the future).}
+\item{competence}{Character string containing the competence that should be plotted.}
+
+\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
+
+\item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
+
+\item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
+
+\item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 }

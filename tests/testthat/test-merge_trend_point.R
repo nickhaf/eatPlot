@@ -1,7 +1,7 @@
 test_that("merging with grouping_var", {
 
     trend_data_1 <- data.frame(
-      TR_BUNDESLAND = rep(c("Berlin", "Brandenburg"), 4),
+      state_var = rep(c("Berlin", "Brandenburg"), 4),
       grouping_var = rep(c(0, 0, 1, 1), 2),
       year_start = c(rep(2011, 4), rep(2013, 4)),
       year_end = c(rep(2013, 4), rep(2015, 4)),
@@ -11,7 +11,7 @@ test_that("merging with grouping_var", {
     )
 
     point_data_1  <-  data.frame(
-      TR_BUNDESLAND = rep(c("Berlin", "Brandenburg"), 6),
+      state_var = rep(c("Berlin", "Brandenburg"), 6),
       grouping_var = rep(c(0, 0, 1, 1), 3),
       year = c(rep(2011, 4), rep(2013, 4), rep(2015, 4)),
       est_point = 10:21

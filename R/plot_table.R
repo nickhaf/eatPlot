@@ -12,7 +12,7 @@ build_columns <- function(data_plot_table) {
     ## y_label is build extra.
     ggplot2::geom_text(
       data = data_plot_table[data_plot_table$x_label == "y_label", ],
-      ggplot2::aes(x = "y_label", label = .data$group),
+      ggplot2::aes(x = "y_label", label = .data$group_var),
       size = 3,
       hjust = "left",
       nudge_x = -0.55
@@ -52,10 +52,10 @@ plot_table <- function(no_trend_list, y_value = "est_point") {
   }
 
 
-  ggplot2::ggplot(data_plot_table, ggplot2::aes(x = .data$x_label, y = .data$group, label = .data[[y_value]])) +
+  ggplot2::ggplot(data_plot_table, ggplot2::aes(x = .data$x_label, y = .data$group_var, label = .data[[y_value]])) +
     ggplot2::geom_text(
       data = data_plot_table[data_plot_table$x_label == "y_label", ],
-      ggplot2::aes(x = "y_label", label = .data$group),
+      ggplot2::aes(x = "y_label", label = .data$group_var),
       size = 3,
       hjust = "left",
       nudge_x = -0.55

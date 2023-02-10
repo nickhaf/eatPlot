@@ -97,8 +97,8 @@ test_that("comparison splits works", {
 
 df_comp <- data.frame(comp = c("a.vs.b", "b.vs.c"))
 
-expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "a", groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
-expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "b", groups = c("a"))$compare_2, c("BL", "c"))
+expect_equal(get_comparisons(df_comp, group_col = "comp", states = "a", sub_groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
+expect_equal(get_comparisons(df_comp, group_col = "comp", states = "b", sub_groups = c("a"))$compare_2, c("BL", "c"))
 
 })
 
