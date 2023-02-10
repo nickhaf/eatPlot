@@ -180,20 +180,21 @@ insert_first_number <- function(char_string, insertion){
 
 
 ## Split all groups containing "vs" to get the respective comparisons
-get_comparisons <- function(data, group_col, BLs, groups){
+get_comparisons <- function(dat, group_col, states, sub_groups){
 
-  comparisons_log <- grepl("\\.vs\\.", data[, group_col])
+  comparisons_log <- grepl("\\.vs\\.", dat[, group_col])
 
-  data[comparisons_log, "compare_1"] <- sapply(strsplit(data[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[1]]})
-  data[comparisons_log, "compare_2"] <- sapply(strsplit(data[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[2]]})
+  dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[1]]})
+  dat[comparisons_log, "compare_2"] <- sapply(strsplit(dat[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[2]]})
 
   for(i in c("compare_1", "compare_2")){
-  data[, i] <- gsub(paste0(BLs, collapse = "|"), "BL", data[, i])
-  data[, i] <- gsub(paste0(groups, collapse = "|"), "_groupingVar", data[, i])
-  data[, i] <- gsub("__|___", "_", data[, i])
+  dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
+  dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
+  dat[, i] <- gsub("__|___", "_", dat[, i])
 }
 
 
-  return(data)
+  return(dat)
 
 }
+

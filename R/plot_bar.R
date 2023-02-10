@@ -2,7 +2,7 @@
 #'
 #' @param no_trend_list Input is a list prepared by [prep_no_trend()]. You can also use the according data.frame named `plot_bar` from this list.
 #' @param x_value Character string of the column name containing the estimates that should be plotted on the x-axis. Defaults to `"est_wholeGroup"`, which are the estimates for the comparison of a state against the wholeGroup (Germany).
-#' @param y_value Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to `"TR_BUNDESLAND"`, so the states are depicted on the y-axis.
+#' @param y_value Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to `"state_var"`, so the states (Bundesländer) are depicted on the y-axis.
 #' @param bar_pattern Character string of the column containing the grouping for the pattern on the bar. Defaults to `sig_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern of the bars.
 #' @param bar_fill Character string of the column containing the grouping for the filling of the bar. Defaults to `fill_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.
 #' @param bar_pattern_fill Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to `fill_wholeGroup`, so the groups found in "data$grouping_var" are represented in the colours of the bar pattern.
@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples #tbd
-plot_bar <- function(no_trend_list, x_value = "est_wholeGroup", y_value = "TR_BUNDESLAND",
+plot_bar <- function(no_trend_list, x_value = "est_wholeGroup", y_value = "state_var",
                      bar_pattern = "sig_wholeGroup", bar_fill = "fill_wholeGroup", bar_pattern_fill = "grouping_var",
                      bar_pattern_setting = sig_pattern, bar_fill_setting = adj_fill, bar_pattern_fill_setting = adj_pattern_fill){
 

@@ -16,6 +16,10 @@ vdiffr::expect_doppelganger("Bar plot", plot_bar(df_bar, x_value = "x", y_value 
 
 
 test_that("Example barplot is still the same", {
-  plot_data <- prep_no_trend(data = adjusted_means, grouping_var = "adjust", columns = "adjust", competence = "GL", sig_niveau = 0.05)
+  plot_data <- prep_no_trend(dat = adjusted_means,
+                             columns = "adjust",
+                             grouping_var = "adjust",
+                             competence = "GL",
+                             sig_niveau = 0.05)
   vdiffr::expect_doppelganger("Bar plot for trend_books", plot_bar(plot_data[["plot_bar"]]))
 })

@@ -1,7 +1,7 @@
 test_that("merging works correctly for BLs", {
 
   df_trend <- data.frame(
-    TR_BUNDESLAND = rep("Brandenburg", 4),
+    state_var = rep("Brandenburg", 4),
     grouping_var = c(0, 0, 1, 1),
     year_start = rep(2011, 4),
     year_end = c(rep(2013, 4)),
@@ -23,7 +23,7 @@ test_that("merging works correctly for BLs", {
 test_that("merging works correctly for wholeGroups", {
 
   df_trend <- data.frame(
-    TR_BUNDESLAND = rep("wholeGroup", 2),
+    state_var = rep("wholeGroup", 2),
     grouping_var = c(0, 1),
     year_start = rep(2011, 2),
     year_end = c(rep(2013, 2)),

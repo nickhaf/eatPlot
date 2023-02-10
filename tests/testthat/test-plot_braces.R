@@ -89,7 +89,7 @@ test_that("significances are displayed correctly in the labels", {
 })
 
 test_that("Example brace plot is still the same", {
-plot_data <- prep_trend(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
+plot_data <- prep_trend(dat = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
 
 vdiffr::expect_doppelganger("Brace plot trend_books", ggplot2::ggplot() +
   plot_braces(plot_data[["plot_braces"]], BL = "Berlin", label_est = "est_trend_no_comp", label_se = "se_trend_no_comp", label_sig_high = "sig_trend_whole", label_sig_bold = "sig_trend_no_comp") +

@@ -4,19 +4,39 @@
 \alias{prep_trend}
 \title{Prepare trend data for plotting}
 \usage{
-prep_trend(data, grouping_var = "", competence, sig_niveau = 0.05)
+prep_trend(
+  dat,
+  competence,
+  grouping_var = "",
+  state_var = "TR_BUNDESLAND",
+  competence_var = "kb",
+  group_var = "group",
+  sig_niveau = 0.05
+)
 }
 \arguments{
-\item{data}{Input data.frame stemming from eatRep.}
+\item{dat}{Input data.frame stemming from \code{eatRep}.}
 
-\item{grouping_var}{Character string containing the column in \code{data} that should be used to distinguish between subgroups.}
+\item{competence}{Character string containing the competence that should be plotted.}
 
-\item{competence}{Character string containing the competence that should be plotted. Currently Has to be found in \code{data$kb} (even though that should be made optional in the future).}
+\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
+
+\item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
+
+\item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
+
+\item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 }
 \value{
-\code{prep_trend()} returns a list containing four data.frames prepared for plotting with different \link{eatPlot} functions. This includes the data.frame \code{plot_points} for plotting with \code{\link[=plot_points]{plot_points()}}, the data.frame \code{plot_lines} for plotting with \code{\link[=plot_lines]{plot_lines()}}, the data.frame \code{plot_braces} for plotting with \code{\link[=plot_braces]{plot_braces()}} and the data.frame \code{plot_background_lines} for plotting wiht \code{\link[=plot_background_lines]{plot_background_lines()}}.
+\code{prep_trend()} returns a list containing four data.frames prepared for plotting with different \link{eatPlot} functions. This includes the data.frames:
+\itemize{
+\item \code{plot_points} for plotting with \code{\link[=plot_points]{plot_points()}}
+\item \code{plot_lines} for plotting with \code{\link[=plot_lines]{plot_lines()}}
+\item \code{plot_braces} for plotting with \code{\link[=plot_braces]{plot_braces()}}
+\item \code{plot_background_lines} for plotting with \code{\link[=plot_background_lines]{plot_background_lines()}}.
+}
 }
 \description{
 Performs different data transformations, to bring the input data.frame into the correct formats for different kind of plots.

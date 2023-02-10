@@ -22,7 +22,7 @@ plot_data_list <- list()
 
   plot_data_list[["within_whole"]] <- merge(plot_data_list[["bl_vs_wholeGroup"]],
                                             plot_data_list[["bl_vs_bl"]],
-                                            by = c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end"),
+                                            by = c("state_var", "grouping_var", "year_start", "year_end"),
                                             sort = FALSE,
                                             suffixes = c("_whole", "_within"),
                                             all.y = TRUE)
@@ -33,7 +33,7 @@ plot_data_list <- list()
   trend_no_comp_data <- trend_no_comp_data[ , !(colnames(trend_no_comp_data) %in% c("depVar", "modus", "comparison", "parameter", "kb"))]
   plot_data_list[["trend_data_final"]] <- merge(plot_data_list[["within_whole"]],
                                                trend_no_comp_data,
-                                               by= c("TR_BUNDESLAND", "grouping_var", "year_start", "year_end"),
+                                               by= c("state_var", "grouping_var", "year_start", "year_end"),
                                                sort = FALSE,
                                                suffixes = c("_comp", "no_comp"),
                                                all = TRUE)

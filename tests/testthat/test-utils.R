@@ -21,8 +21,8 @@ test_that("calc_sig(): significance niveau is working correctly", {
 
 test_that("write_group finds the correct group membership", {
 
-  expect_equal(write_group(c("a_1", NA, "b_1", "ab_1"), groups = "a"),
-               c("a", NA, NA, NA))
+  expect_equal(write_group(c("a_1", NA, "b_1", "ab_1", "c_a_1"), groups = c("a", "c")),
+               c("a", NA, NA, NA, "c"))
 })
 
 
@@ -97,7 +97,13 @@ test_that("comparison splits works", {
 
 df_comp <- data.frame(comp = c("a.vs.b", "b.vs.c"))
 
-expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "a", groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
-expect_equal(get_comparisons(df_comp, group_col = "comp", BLs = "b", groups = c("a"))$compare_2, c("BL", "c"))
+expect_equal(get_comparisons(df_comp, group_col = "comp", states = "a", sub_groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
+expect_equal(get_comparisons(df_comp, group_col = "comp", states = "b", sub_groups = c("a"))$compare_2, c("BL", "c"))
 
+})
+
+test_that("column renaming works", {
+  df_col <- data.frame(col1 = 1)
+
+  expect_equal(colnames(rename_column(df_col, "col1", "col_1")), "col_1")
 })

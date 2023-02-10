@@ -14,8 +14,8 @@ merge_trend_point <- function(trend_data, point_data){
 
   trend_start <- merge(trend_data,
                      point_data,
-                     by.x = c("TR_BUNDESLAND", "year_start", "grouping_var"),
-                     by.y = c("TR_BUNDESLAND", "year", "grouping_var"),
+                     by.x = c("state_var", "year_start", "grouping_var"),
+                     by.y = c("state_var", "year", "grouping_var"),
                      all.x = TRUE,
                      all.y = FALSE,
                      sort = FALSE
@@ -25,8 +25,8 @@ colnames(trend_start) <- gsub("_point", "_point_start", colnames(trend_start))
 
 trend <- merge(trend_start,
                point_data,
-               by.x = c("TR_BUNDESLAND", "year_end", "grouping_var"),
-               by.y = c("TR_BUNDESLAND", "year", "grouping_var"),
+               by.x = c("state_var", "year_end", "grouping_var"),
+               by.y = c("state_var", "year", "grouping_var"),
                all.x = TRUE,
                all.y = FALSE,
                sort = FALSE

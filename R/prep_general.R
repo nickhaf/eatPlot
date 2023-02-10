@@ -21,7 +21,7 @@ prep_general <- function(data_clean, sig_niveau, BLs, groups) {
       remove_pattern = "trend",
       suffix = "_point"
     )
-    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$TR_BUNDESLAND) & (get_wholeGroup(filtered_list[["point_data"]]$group) | filtered_list[["point_data"]]$group %in% groups), "TR_BUNDESLAND"] <- "wholeGroup"
+    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$state_var) & (get_wholeGroup(filtered_list[["point_data"]]$group_var) | filtered_list[["point_data"]]$group_var %in% groups), "state_var"] <- "wholeGroup"
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$grouping_var), "grouping_var"] <- "noGroup"
     filtered_list[["point_data"]] <- filtered_list[["point_data"]][, !(colnames(filtered_list[["point_data"]]) %in% c("compare_1", "compare_2")), ]
   } else {
@@ -73,12 +73,12 @@ prep_general <- function(data_clean, sig_niveau, BLs, groups) {
   }
 
   # Prepare WholeGroup ------------------------------------------------------
-  data_wholeGroup <- data_clean[data_clean$group == "wholeGroup", ]
+  data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
 
 
   if (nrow(data_wholeGroup) != 0) {
     filtered_list[["wholeGroup_point"]] <- prep_long(data_wholeGroup,
-      include_pattern = c("est_|p_|se_|es_"),
+      include_pattern = c("est_|^p_|se_|es_"),
       remove_pattern = "trend",
       suffix = "_point"
     )
