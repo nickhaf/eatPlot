@@ -39,7 +39,7 @@ prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDE
 
   if (any(!is.na(states))) {
     dat <- get_comparisons(dat,
-      "group_var",
+      group_col = "group_var",
       states = states[states != "wholeGroup"],
       sub_groups = "sub_groups"
     )
