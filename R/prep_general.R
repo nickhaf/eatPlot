@@ -2,14 +2,14 @@
 #'
 #' @inheritParams prep_trend
 #' @param data_clean Input data.frame, that has already been cleaned with [clean_data()].
-#' @param BLs Bundesländer.
-#' @param groups grouping_var groups
+#' @param states Bundesländer.
+#' @param sub_groups grouping_var sub_groups
 #'
 #' @return List of data frames with different filters.
 #' @export
 #'
 #' @examples # tbd
-prep_general <- function(data_clean, sig_niveau, BLs, groups) {
+prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
 
   ## filter rows, so different types of data.frames can be build:
   filtered_list <- list()
@@ -21,7 +21,7 @@ prep_general <- function(data_clean, sig_niveau, BLs, groups) {
       remove_pattern = "trend",
       suffix = "_point"
     )
-    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$state_var) & (get_wholeGroup(filtered_list[["point_data"]]$group_var) | filtered_list[["point_data"]]$group_var %in% groups), "state_var"] <- "wholeGroup"
+    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$state_var) & (get_wholeGroup(filtered_list[["point_data"]]$group_var) | filtered_list[["point_data"]]$group_var %in% sub_groups), "state_var"] <- "wholeGroup"
     filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$grouping_var), "grouping_var"] <- "noGroup"
     filtered_list[["point_data"]] <- filtered_list[["point_data"]][, !(colnames(filtered_list[["point_data"]]) %in% c("compare_1", "compare_2")), ]
   } else {
@@ -105,7 +105,7 @@ prep_general <- function(data_clean, sig_niveau, BLs, groups) {
 
 add_sig_col <- function(filtered_list, sig_niveau) {
   lapply(filtered_list, function(x) {
-    p_col <- grep("p_", colnames(x), value = TRUE)
+    p_col <- grep("^p_", colnames(x), value = TRUE)
     sig_col <- gsub("p_", "sig_", p_col)
     x[, sig_col] <- calc_sig(x[, p_col], sig_niveau)
     return(x)

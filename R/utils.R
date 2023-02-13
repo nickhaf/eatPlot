@@ -198,3 +198,13 @@ get_comparisons <- function(dat, group_col, states, sub_groups){
 
 }
 
+
+
+calc_overlap <- function(year_start, year_end){
+
+  years <- c()
+  for( i in 1:length(year_start)){
+    years[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
+  }
+return(years)
+}

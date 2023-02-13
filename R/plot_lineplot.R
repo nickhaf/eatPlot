@@ -12,7 +12,7 @@
 #' @examples # tbd
 plot_lineplot <- function(plot_data, label_est = "est_trend_no_comp", label_se = "se_trend_no_comp", label_sig_high = "sig_trend_whole", label_sig_bold = "sig_trend_no_comp"){
 
-  states <- unique(plot_data[[1]]$TR_BUNDESLAND)
+  states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
   range_est <- range(c(plot_data[["plot_lines"]]$est_point_start, plot_data[["plot_lines"]]$est_point_start))
@@ -21,7 +21,7 @@ plot_lineplot <- function(plot_data, label_est = "est_trend_no_comp", label_se =
   for(i in states){
 
     plot_data_state <- lapply(plot_data[c("plot_points", "plot_lines")], function(x){
-      x[x$TR_BUNDESLAND == i, ]
+      x[x$state_var == i, ]
     })
 
     p1 <- ggplot2::ggplot() +

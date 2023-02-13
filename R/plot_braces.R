@@ -9,17 +9,26 @@
 #'
 #' @examples ##
 plot_braces <- function(data_plot_braces, BL, label_est, label_se, label_sig_high, label_sig_bold) {
+
   # Get range for y-axis
   range_est <- range(c(data_plot_braces$est_point_start, data_plot_braces$est_point_end), na.rm = TRUE)
 
   # Here the coordinates for the braces and brace labels are calculated.
-  # Change in the functions for fine tuning.
+  # Change within the functions for fine tuning.
   coords <- calc_coords(range_est)
   brace_coords <- calc_brace_coords(data_plot_braces, coords)
 
-  brace_coords$label_est <- ifelse(brace_coords[, label_sig_bold] == TRUE, paste0("**", round(brace_coords[, label_est], 0), "**"), round(brace_coords[, label_est], 0))
-  brace_coords$label_sig <- ifelse(brace_coords[, label_sig_high] == TRUE, "<sup>a</sup>", "")
-  brace_coords$label_se <- brace_coords[, label_se]
+  if(label_sig_bold %in% colnames(brace_coords)){
+  brace_coords$label_est <- ifelse(brace_coords[, label_sig_bold] == TRUE,
+                                   paste0("**", round(brace_coords[, label_est], 0), "**"),
+                                   round(brace_coords[, label_est], 0))
+  }else{brace_coords$label_est <- ""}
+
+  if(label_sig_high %in% colnames(brace_coords)){
+  brace_coords$label_sig <- ifelse(brace_coords[, label_sig_high] == TRUE, "<sup>a</sup>", "")}else{brace_coords$label_sig <- ""}
+
+  if(label_se %in% colnames(brace_coords)){
+  brace_coords$label_se <- brace_coords[, label_se]}else{brace_coords$label_se <- ""}
 
   c(
     ## Loop to draw a brace for every year_start
@@ -32,7 +41,7 @@ plot_braces <- function(data_plot_braces, BL, label_est, label_se, label_sig_hig
           x = c(coordinates$year_start, coordinates$year_end),
           y = c(coordinates$brace_upper_y, coordinates$brace_lower_y)
         ),
-        mid = ifelse(coordinates$year_start == min(brace_coords$year_start), 0.25, 0.5),
+        mid = ifelse(coordinates$year_start == min(brace_coords$year_start) & any(brace_coords$overlap == TRUE), 0.25, 0.5),
         inherit.data = F,
         rotate = 180,
         linewidth = 0.8,
@@ -55,8 +64,9 @@ plot_braces <- function(data_plot_braces, BL, label_est, label_se, label_sig_hig
 
 ## Utils
 plot_brace_label <- function(brace_coords, BL) {
+
   ggtext::geom_richtext(
-    data = brace_coords[brace_coords$TR_BUNDESLAND == BL, ],
+    data = brace_coords[brace_coords$state_var == BL, ],
     mapping = ggplot2::aes(
       x = .data$label_pos_x,
       y = .data$label_pos_y,
