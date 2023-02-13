@@ -1,25 +1,44 @@
 
 # Plot_braces -------------------------------------------------------------
-calc_brace_coords <- function(data, coords) {
-  data$brace_upper_y <- ifelse(data$year_start == min(data$year_start),
+calc_brace_coords <- function(dat, coords) {
+
+dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
+
+if(any(dat$overlap == TRUE)){
+# Upper and lower brace ---------------------------------------------------
+
+  dat$brace_upper_y <- ifelse(dat$year_start == min(dat$year_start),
                                coords[1],
                                coords[1] - coords[1] * 0.10
   )
-  data$brace_lower_y <- ifelse(data$year_start == min(data$year_start),
+  dat$brace_lower_y <- ifelse(dat$year_start == min(dat$year_start),
                                coords[1] - coords[1] * 0.10,
                                coords[1] - coords[1] * 0.15
   )
 
-  data$label_pos_y <- ifelse(data$grouping_var == 1,
+  dat$label_pos_y <- ifelse(dat$grouping_var == 1,
                              coords[1] - coords[1] * 0.17, # Position upper brace label
                              coords[1] - coords[1] * 0.23  # Position lower brace label
   )
-  data$label_pos_x <- ifelse(data$year_start == min(data$year_start),
-                             calc_pos_label_x(data$year_start, data$year_end, 0.25),
-                             calc_pos_label_x(data$year_start, data$year_end, 0.5)
+  dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
+                             calc_pos_label_x(dat$year_start, dat$year_end, 0.25),
+                             calc_pos_label_x(dat$year_start, dat$year_end, 0.5)
+  )
+}else{
+  dat$brace_upper_y <- coords[1]
+
+  dat$brace_lower_y <- coords[1] - coords[1] * 0.1
+
+  dat$label_pos_y <- ifelse(dat$grouping_var == 1,
+                            coords[1] - coords[1] * 0.13, # Position upper brace label
+                            coords[1] - coords[1] * 0.19  # Position lower brace label
   )
 
-  return(data)
+  dat$label_pos_x <- calc_pos_label_x(dat$year_start, dat$year_end, 0.5)
+
+}
+
+  return(dat)
 }
 
 

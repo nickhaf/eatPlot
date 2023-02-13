@@ -13,7 +13,7 @@ plot_braces <- function(data_plot_braces, BL, label_est, label_se, label_sig_hig
   range_est <- range(c(data_plot_braces$est_point_start, data_plot_braces$est_point_end), na.rm = TRUE)
 
   # Here the coordinates for the braces and brace labels are calculated.
-  # Change in the functions for fine tuning.
+  # Change within the functions for fine tuning.
   coords <- calc_coords(range_est)
   brace_coords <- calc_brace_coords(data_plot_braces, coords)
 
@@ -32,7 +32,7 @@ plot_braces <- function(data_plot_braces, BL, label_est, label_se, label_sig_hig
           x = c(coordinates$year_start, coordinates$year_end),
           y = c(coordinates$brace_upper_y, coordinates$brace_lower_y)
         ),
-        mid = ifelse(coordinates$year_start == min(brace_coords$year_start), 0.25, 0.5),
+        mid = ifelse(coordinates$year_start == min(brace_coords$year_start) & any(brace_coords$overlap == TRUE), 0.25, 0.5),
         inherit.data = F,
         rotate = 180,
         linewidth = 0.8,

@@ -107,3 +107,15 @@ test_that("column renaming works", {
 
   expect_equal(colnames(rename_column(df_col, "col1", "col_1")), "col_1")
 })
+
+
+test_that("brace_position is calculated correctly", {
+
+expect_equal(calc_overlap(year_start = c(1, 1, 2, 2), year_end = c(3, 3, 4, 4)),
+             c(FALSE, FALSE, TRUE, TRUE))
+
+expect_equal(calc_overlap(year_start = c(1, 1, 2, 2), year_end = c(2, 2, 3, 4)),
+               c(FALSE, FALSE, FALSE, FALSE))
+
+
+})

@@ -8,6 +8,7 @@
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
 #' @param competence_var Character string containing the column name in `dat` that contains the different competences. Defaults to `"kb"`.
+#' @param x_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #'
 #' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
@@ -18,7 +19,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", group_var = "group", sig_niveau = 0.05) {
+prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", group_var = "group", x_braces = NULL, sig_niveau = 0.05) {
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
@@ -54,16 +55,20 @@ prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDE
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
 
 
-  plot_dat[["plot_points"]] <- list_general[["point_dat"]]
+  plot_dat[["plot_points"]] <- list_general[["point_data"]]
 
   plot_years_trend <- consecutive_numbers(c(trend_point$year_start, trend_point$year_end))
   plot_dat[["plot_lines"]] <- trend_point[filter_years(trend_point, plot_years_trend), ]
 
+  if(is.null(x_braces)){
   ## Draw braces from last year to every other year
   plot_years <- unique(c(trend_point$year_start, trend_point$year_end))
   plot_years_braces <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
     c(x, max(plot_years))
   })
+  }else{
+  plot_years_braces <- x_braces
+  }
 
   plot_dat[["plot_braces"]] <- trend_point[filter_years(trend_point, plot_years_braces), ]
   plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]

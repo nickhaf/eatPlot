@@ -82,7 +82,12 @@ test_that("significances are displayed correctly in the labels", {
   )
 
   plot_brace_build <- ggplot2::ggplot_build(ggplot2::ggplot() +
-                                              plot_braces(df, BL = "Berlin", label_est = "est", label_se = "se", label_sig_high = "sig_2", "label_sig_bold" = "sig_1") +
+                                              plot_braces(df,
+                                                          BL = "Berlin",
+                                                          label_est = "est",
+                                                          label_se = "se",
+                                                          label_sig_high = "sig_2",
+                                                          label_sig_bold = "sig_1") +
                                               ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")))
 
   expect_equal(plot_brace_build$data[[3]]$label, c("**1** (1)", "2<sup>a</sup> (2)", "3 (3)", "**4**<sup>a</sup> (4)"))
@@ -97,3 +102,33 @@ vdiffr::expect_doppelganger("Brace plot trend_books", ggplot2::ggplot() +
 )
 
 })
+
+
+test_that("Braces are plotted next to each other", {
+  df <- data.frame(
+    TR_BUNDESLAND = rep("Berlin", 4),
+    year_start = c(2011, 2011, 2015, 2015),
+    year_end = c(2015, 2015, 2023, 2023),
+    grouping_var = c(0, 1, 0, 1),
+    est = c(1:4),
+    se = c(1:4),
+    sig_1 = c(TRUE, FALSE, FALSE, TRUE),
+    sig_2 = c(FALSE, TRUE, FALSE, TRUE),
+    est_point_start = 400:403,
+    est_point_end = 500:503
+  )
+
+ p_braces <- ggplot2::ggplot() +
+    plot_braces(df,
+                BL = "Berlin",
+                label_est = "est",
+                label_se = "se",
+                label_sig_high = "sig_2",
+                label_sig_bold = "sig_1") +
+    ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
+
+ vdiffr::expect_doppelganger("Braces are plotted next to each other", {
+   p_braces
+ })
+})
+s
