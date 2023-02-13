@@ -11,6 +11,7 @@ prep_trend(
   state_var = "TR_BUNDESLAND",
   competence_var = "kb",
   group_var = "group",
+  x_braces = NULL,
   sig_niveau = 0.05
 )
 }
@@ -26,6 +27,8 @@ prep_trend(
 \item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
 
 \item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
+
+\item{x_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 }
