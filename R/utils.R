@@ -1,6 +1,6 @@
 calc_sig <- function(p_vec, sig_niveau) {
 
-    res <- ifelse(is.na(p_vec), NA,
+    res <- ifelse(is.na(p_vec), FALSE, #NA
                                  ifelse(p_vec < sig_niveau & !is.na(p_vec), TRUE, FALSE))
 
     return(res)
