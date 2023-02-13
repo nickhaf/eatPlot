@@ -4,9 +4,3 @@ test_that("groups are extracted correctly", {
 
 })
 
-test_that("x_braces works", {
-
-
-})
-
-prep_trend(trend_books)

@@ -105,7 +105,7 @@ prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
 
 add_sig_col <- function(filtered_list, sig_niveau) {
   lapply(filtered_list, function(x) {
-    p_col <- grep("p_", colnames(x), value = TRUE)
+    p_col <- grep("^p_", colnames(x), value = TRUE)
     sig_col <- gsub("p_", "sig_", p_col)
     x[, sig_col] <- calc_sig(x[, p_col], sig_niveau)
     return(x)

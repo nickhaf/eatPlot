@@ -30,8 +30,8 @@ if(any(dat$overlap == TRUE)){
   dat$brace_lower_y <- coords[1] - coords[1] * 0.1
 
   dat$label_pos_y <- ifelse(dat$grouping_var == 1,
-                            coords[1] - coords[1] * 0.13, # Position upper brace label
-                            coords[1] - coords[1] * 0.19  # Position lower brace label
+                            coords[1] - coords[1] * 0.10, # Position upper brace label
+                            coords[1] - coords[1] * 0.16 # Position lower brace label
   )
 
   dat$label_pos_x <- calc_pos_label_x(dat$year_start, dat$year_end, 0.5)

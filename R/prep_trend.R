@@ -20,6 +20,7 @@
 #'
 #' @examples # tbd
 prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", group_var = "group", x_braces = NULL, sig_niveau = 0.05) {
+
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
