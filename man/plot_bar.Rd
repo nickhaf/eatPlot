@@ -36,7 +36,7 @@ plot_bar(
 
 \item{bar_pattern_fill_setting}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to ...}
 
-\item{sig_pattern}{Character string indicating whether groups should be rendered by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".}
+\item{sig_pattern}{Character string indicating whether significance levels should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".}
 }
 \value{
 Returns a \link{ggplot2} barplot.
