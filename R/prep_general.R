@@ -5,11 +5,12 @@
 #' @param states Bundesländer.
 #' @param sub_groups grouping_var sub_groups
 #'
-#' @return `prep_general()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
-#' * `plot_points` for plotting with [plot_points()]
-#' * `plot_lines` for plotting with [plot_lines()]
-#' * `plot_braces` for plotting with [plot_braces()]
-#' * `plot_background_lines` for plotting with [plot_background_lines()].
+#' @return `prep_general()` returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the `plot()` functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:
+#' * `point_data` contains point estimates for every years.
+#' * `trend_data` contains all trend variables performing some kind of comparison, e.g., state vs. germany.
+#' * `trend_no_comp_data` contains the trend estimates.
+#' * `wholeGroup_point` contains the point estimates of the wholeGroup.
+#' * `wholeGroup_trend` contains the trend estimates for the wholeGroup.
 #' @export
 #'
 #' @examples # tbd
@@ -18,7 +19,7 @@ prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
 
   # Prepare point estimates -------------------------------------------------
   if (any(is.na(data_clean$comparison))) {
-    point_long <- prep_long(dat[is.na(dat$comparison), ],
+    point_long <- prep_long(data_clean[is.na(data_clean$comparison), ],
                           include_pattern = "^est|^p$|^p_|^se|^es",
                           remove_pattern = "trend",
                           suffix = "_point"

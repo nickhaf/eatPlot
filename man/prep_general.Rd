@@ -2,7 +2,7 @@
 % Please edit documentation in R/prep_general.R
 \name{prep_general}
 \alias{prep_general}
-\title{Prepare eatRep output for further data wrangling.}
+\title{Prepare distinct building blocks, from which the data.frames for the plot-functions can be build by combining them.}
 \usage{
 prep_general(data_clean, sig_niveau, states, sub_groups)
 }
@@ -16,10 +16,17 @@ prep_general(data_clean, sig_niveau, states, sub_groups)
 \item{sub_groups}{grouping_var sub_groups}
 }
 \value{
-List of data frames with different filters.
+\code{prep_general()} returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the \code{plot()} functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:
+\itemize{
+\item \code{point_data} contains point estimates for every years.
+\item \code{trend_data} contains all trend variables performing some kind of comparison, e.g., state vs. germany.
+\item \code{trend_no_comp_data} contains the trend estimates.
+\item \code{wholeGroup_point} contains the point estimates of the wholeGroup.
+\item \code{wholeGroup_trend} contains the trend estimates for the wholeGroup.
+}
 }
 \description{
-Prepare eatRep output for further data wrangling.
+Prepare distinct building blocks, from which the data.frames for the plot-functions can be build by combining them.
 }
 \examples{
 # tbd
