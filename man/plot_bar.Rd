@@ -13,7 +13,8 @@ plot_bar(
   bar_pattern_fill = "grouping_var",
   bar_pattern_setting = sig_pattern,
   bar_fill_setting = adj_fill,
-  bar_pattern_fill_setting = adj_pattern_fill
+  bar_pattern_fill_setting = adj_pattern_fill,
+  sig_pattern = "pattern"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ plot_bar(
 \item{bar_fill_setting}{Named vector with the bar filling colours. Names of the vector must be found in the column specified in \code{bar_fill}. Defaults to ...}
 
 \item{bar_pattern_fill_setting}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to ...}
+
+\item{sig_pattern}{Character string indicating whether groups should be rendered by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".}
 }
 \value{
 Returns a \link{ggplot2} barplot.
