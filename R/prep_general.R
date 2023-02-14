@@ -10,20 +10,16 @@
 #'
 #' @examples # tbd
 prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
-
-  ## filter rows, so different types of data.frames can be build:
   filtered_list <- list()
 
   # Prepare point estimates -------------------------------------------------
   if (any(is.na(data_clean$comparison))) {
-    filtered_list[["point_data"]] <- prep_long(data_clean[is.na(data_clean$comparison), ],
-      include_pattern = "^est|^p$|^p_|^se|^es",
-      remove_pattern = "trend",
-      suffix = "_point"
+    point_long <- prep_long(dat[is.na(dat$comparison), ],
+                          include_pattern = "^est|^p$|^p_|^se|^es",
+                          remove_pattern = "trend",
+                          suffix = "_point"
     )
-    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$state_var) & (get_wholeGroup(filtered_list[["point_data"]]$group_var) | filtered_list[["point_data"]]$group_var %in% sub_groups), "state_var"] <- "wholeGroup"
-    filtered_list[["point_data"]][is.na(filtered_list[["point_data"]]$grouping_var), "grouping_var"] <- "noGroup"
-    filtered_list[["point_data"]] <- filtered_list[["point_data"]][, !(colnames(filtered_list[["point_data"]]) %in% c("compare_1", "compare_2")), ]
+    filtered_list[["point_data"]] <- point_long[, !(colnames(point_long) %in% c("compare_1", "compare_2")), ]
   } else {
     filtered_list["point_data"] <- list(NULL)
   }
@@ -60,12 +56,12 @@ prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
 
 
 
-# Prepare trend_point data ------------------------------------------------------
+  # Prepare trend_point data ------------------------------------------------------
   data_trend_point <- data_clean[is.na(data_clean$comparison), ]
   if (nrow(data_trend_point) != 0) {
     filtered_list[["trend_no_comp_data"]] <- prep_long(data_trend_point,
-                                               include_pattern = "est_trend|p_trend|se_trend|es_trend",
-                                               remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
+      include_pattern = "est_trend|p_trend|se_trend|es_trend",
+      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
     )
     filtered_list[["trend_no_comp_data"]] <- split_years(filtered_list[["trend_no_comp_data"]])
   } else {
@@ -91,7 +87,6 @@ prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
       remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
     )
     filtered_list[["wholeGroup_trend"]] <- split_years(filtered_list[["wholeGroup_trend"]])
-
   }
 
 

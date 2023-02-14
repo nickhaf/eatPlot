@@ -137,3 +137,31 @@ test_that("list ist build correctly with grouping_var", {
   expect_equal(test_general[["trend_data"]]$year_end, c(2, 2, 3, 3))
   expect_equal(test_general[["trend_data"]]$est_trend, c(3, 4, 3, 4))
 })
+
+
+
+
+# utils -------------------------------------------------------------------
+
+test_that("point_data is build correctly", {
+  df_clean <- data.frame(
+    group = c("a.0.wholeGroup", "a.1.wholeGroup", "b.0", "b.1"),
+    grouping_var = c(0, 1, 0, 1),
+    state_var = c("a", "a", "b", "b"),
+    kb = rep("best", 4),
+    parameter = rep("mean", 4),
+    comparison = c(NA, NA, "crossDiff", "crossDiff"),
+    est_1 = 1:4,
+    est_2 = 1:4,
+    p_1 = 1:4,
+    p_2 = 1:4,
+    est_trend_1vs2 = 1:4,
+    se_trend_1vs2 = 1:4,
+    es_trend_1vs2 = 1:4,
+    p_trend_1vs2 = 1:4,
+    est_trend_2vs3 = 1:4,
+    se_trend_2vs3 = 1:4,
+    es_trend_2vs3 = 1:4,
+    p_trend_2vs3 = 1:4
+  )
+})
