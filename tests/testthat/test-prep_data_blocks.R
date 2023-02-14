@@ -31,7 +31,7 @@ test_that("competence and grouping_var is optional", {
     p_trend_2vs3 = 1:4
   )
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
                                states = unique(df_general$state_var),
                                sig_niveau = 0.05)
@@ -61,7 +61,7 @@ test_that("point estimates are optional", {
     p_trend_2vs3 = 1:4
   )
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
                                states = unique(df_general$state_var),
                                sig_niveau = 0.05)
@@ -91,7 +91,7 @@ test_that("list ist build correctly without grouping_var", {
   )
 
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
                                states = unique(df_general$state_var),
                                sig_niveau = 0.05)
@@ -126,7 +126,7 @@ test_that("list ist build correctly with grouping_var", {
   )
 
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
                                states = unique(df_general$state_var),
                                sig_niveau = 0.05)

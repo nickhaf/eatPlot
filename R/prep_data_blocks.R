@@ -5,7 +5,7 @@
 #' @param states Bundesländer.
 #' @param sub_groups grouping_var sub_groups
 #'
-#' @return `prep_general()` returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the `plot()` functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:
+#' @return `prep_data_blocks()` returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the `plot()` functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:
 #' * `point_data` contains point estimates for every years.
 #' * `trend_data` contains all trend variables performing some kind of comparison, e.g., state vs. germany.
 #' * `trend_no_comp_data` contains the trend estimates.
@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
+prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   filtered_list <- list()
 
   # Prepare point estimates -------------------------------------------------
