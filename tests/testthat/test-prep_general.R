@@ -143,25 +143,37 @@ test_that("list ist build correctly with grouping_var", {
 
 # utils -------------------------------------------------------------------
 
-test_that("point_data is build correctly", {
-  df_clean <- data.frame(
-    group = c("a.0.wholeGroup", "a.1.wholeGroup", "b.0", "b.1"),
-    grouping_var = c(0, 1, 0, 1),
-    state_var = c("a", "a", "b", "b"),
-    kb = rep("best", 4),
-    parameter = rep("mean", 4),
-    comparison = c(NA, NA, "crossDiff", "crossDiff"),
-    est_1 = 1:4,
-    est_2 = 1:4,
-    p_1 = 1:4,
-    p_2 = 1:4,
-    est_trend_1vs2 = 1:4,
-    se_trend_1vs2 = 1:4,
-    es_trend_1vs2 = 1:4,
-    p_trend_1vs2 = 1:4,
-    est_trend_2vs3 = 1:4,
-    se_trend_2vs3 = 1:4,
-    es_trend_2vs3 = 1:4,
-    p_trend_2vs3 = 1:4
-  )
+test_that("years are extracted correctly", {
+  expect_equal(extract_numbers(c("1a", "ab2", "2012", "20a12")), c("1", "2", "2012", "20", "12"))
 })
+
+test_that("year columns are extracted correctly", {
+  expect_equal(get_year_cols(c("est_2012", "est_2012_vs", "se_20"), years = c("2012", "20")), c("est_2012", "se_20"))
+})
+
+
+
+
+#
+# test_that("point_data is build correctly", {
+#   df_clean <- data.frame(
+#     group = c("a.0.wholeGroup", "a.1.wholeGroup", "b.0", "b.1"),
+#     grouping_var = c(0, 1, 0, 1),
+#     state_var = c("a", "a", "b", "b"),
+#     kb = rep("best", 4),
+#     parameter = rep("mean", 4),
+#     comparison = c(NA, NA, "crossDiff", "crossDiff"),
+#     est_1 = 1:4,
+#     est_2 = 1:4,
+#     p_1 = 1:4,
+#     p_2 = 1:4,
+#     est_trend_1vs2 = 1:4,
+#     se_trend_1vs2 = 1:4,
+#     es_trend_1vs2 = 1:4,
+#     p_trend_1vs2 = 1:4,
+#     est_trend_2vs3 = 1:4,
+#     se_trend_2vs3 = 1:4,
+#     es_trend_2vs3 = 1:4,
+#     p_trend_2vs3 = 1:4
+#   )
+# })

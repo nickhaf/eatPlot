@@ -1,11 +1,15 @@
-#' Prepare eatRep output for further data wrangling.
+#' Prepare distinct building blocks, from which the data.frames for the plot-functions can be build by combining them.
 #'
 #' @inheritParams prep_trend
 #' @param data_clean Input data.frame, that has already been cleaned with [clean_data()].
 #' @param states Bundesländer.
 #' @param sub_groups grouping_var sub_groups
 #'
-#' @return List of data frames with different filters.
+#' @return `prep_general()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
+#' * `plot_points` for plotting with [plot_points()]
+#' * `plot_lines` for plotting with [plot_lines()]
+#' * `plot_braces` for plotting with [plot_braces()]
+#' * `plot_background_lines` for plotting with [plot_background_lines()].
 #' @export
 #'
 #' @examples # tbd
@@ -25,27 +29,14 @@ prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
   }
 
   # Prepare trend comparison data ------------------------------------------------------
-  years_colnames <- unique(unlist(regmatches(colnames(data_clean), gregexpr("[[:digit:]]+", colnames(data_clean)))))
-  remove_columns <- unique(as.vector(
-    sapply(c("es_", "est_", "se_", "p_"), function(val) {
-      sapply(years_colnames, function(year) {
-        grep(
-          paste0("^", val, year, "$"),
-          colnames(data_clean),
-          value = TRUE
-        )
-      },
-      USE.NAMES = FALSE
-      )
-    },
-    USE.NAMES = FALSE
-    )
-  ))
+  ## Data.frame containing all rows which make some kind of comparison, e.g. state vs. germany.
+  years_colnames <- extract_numbers(colnames(data_clean))
+  remove_columns <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
-  data_trend_raw <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
+  data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
 
-  if (nrow(data_trend_raw) != 0) {
-    filtered_list[["trend_data"]] <- prep_long(data_trend_raw,
+  if (nrow(data_trend_comp) != 0) {
+    filtered_list[["trend_data"]] <- prep_long(data_trend_comp,
       include_pattern = "est_trend|p_trend|se_trend|es_trend",
       remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
     )
@@ -53,8 +44,6 @@ prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
   } else {
     filtered_list["trend_data"] <- list(NULL)
   }
-
-
 
   # Prepare trend_point data ------------------------------------------------------
   data_trend_point <- data_clean[is.na(data_clean$comparison), ]
@@ -98,6 +87,7 @@ prep_general <- function(data_clean, sig_niveau, states, sub_groups) {
 
 # Utils -------------------------------------------------------------------
 
+## Add a column with significance values = TRUE/FALSE, depending on a p-value
 add_sig_col <- function(filtered_list, sig_niveau) {
   lapply(filtered_list, function(x) {
     p_col <- grep("^p_", colnames(x), value = TRUE)
@@ -105,4 +95,28 @@ add_sig_col <- function(filtered_list, sig_niveau) {
     x[, sig_col] <- calc_sig(x[, p_col], sig_niveau)
     return(x)
   })
+}
+
+## Extract Numbers from a string vector
+extract_numbers <- function(vec){
+  unique(unlist(regmatches(vec, gregexpr("[[:digit:]]+", vec))))
+}
+
+# Remove the point-estimates for the years. These are found in columns which end with a year.
+get_year_cols <- function(vec, years){
+unique(unlist(
+  sapply(c("es_", "est_", "se_", "p_"), function(val) {
+    sapply(years, function(year) {
+      grep(
+        paste0("^", val, year, "$"),
+        vec,
+        value = TRUE
+      )
+    },
+    USE.NAMES = FALSE
+    )
+  },
+  USE.NAMES = FALSE
+  )
+))
 }
