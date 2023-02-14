@@ -9,7 +9,7 @@
 #' @param bar_pattern_setting Named vector with the pattern types. Names of the vector must be found in the column specified in `bar_pattern`. Defaults to ...
 #' @param bar_fill_setting Named vector with the bar filling colours. Names of the vector must be found in the column specified in `bar_fill`. Defaults to ...
 #' @param bar_pattern_fill_setting Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to ...
-#' @param sig_pattern Character string indicating whether significance levels should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".
+#' @param sig_type Character string indicating whether significance levels should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".
 #'
 #' @return Returns a [ggplot2] barplot.
 #' @export
@@ -24,7 +24,7 @@ plot_bar <- function(no_trend_list,
                      bar_pattern_setting = sig_pattern,
                      bar_fill_setting = adj_fill,
                      bar_pattern_fill_setting = adj_pattern_fill,
-                     sig_pattern = "pattern") {
+                     sig_type = "pattern") {
 
   if (inherits(no_trend_list, "list")) {
     data_plot_bar <- no_trend_list[["plot_bar"]]
@@ -37,7 +37,7 @@ plot_bar <- function(no_trend_list,
     calc_plot_borders(data_plot_bar[[x_value]])[2],
     by = 10)
 
-  if (sig_pattern == "pattern") {
+  if (sig_type == "pattern") {
     ggplot2::ggplot(
       data = data_plot_bar,
       mapping = ggplot2::aes(
@@ -77,7 +77,7 @@ plot_bar <- function(no_trend_list,
       ggplot2::scale_fill_manual(values = bar_fill_setting) +
       theme_table_bar() +
       NULL
-  } else if (sig_pattern == "frame") {
+  } else if (sig_type == "frame") {
     ggplot2::ggplot(
       data = data_plot_bar,
       mapping = ggplot2::aes(
@@ -111,6 +111,6 @@ plot_bar <- function(no_trend_list,
       theme_table_bar() +
       NULL
   } else {
-    message("`sig_pattern` must be either \"frame\" or \"pattern\"")
+    message("`sig_type` must be either \"frame\" or \"pattern\"")
   }
 }
