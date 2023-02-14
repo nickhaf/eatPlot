@@ -37,30 +37,41 @@ plot_bar <- function(no_trend_list,
     calc_plot_borders(data_plot_bar[[x_value]])[2],
     by = 10)
 
-  if (sig_type == "pattern") {
+  base_plot <-
     ggplot2::ggplot(
-      data = data_plot_bar,
-      mapping = ggplot2::aes(
-        x = .data[[x_value]],
-        y = .data[[y_value]],
-        fill = .data[[bar_fill]],
-        pattern = .data[[bar_pattern]]
-      )
+    data = data_plot_bar,
+    mapping = ggplot2::aes(
+      x = .data[[x_value]],
+      y = .data[[y_value]],
+      fill = .data[[bar_fill]],
+      # TODO: maybe find another interface for this argument?
+      # TODO: linetype aes only works when specified here
+      #   - when specified on geom, the first bar colors in the test plot
+      #     for frame is exchanged
+      linetype = .data[[bar_pattern]],
+      pattern = .data[[bar_pattern]]
+    )
+  ) +
+    ggstats::geom_stripped_rows(
+      odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
+      even = "#00000000") +
+    ggplot2::geom_vline(
+      xintercept = scale_breaks,
+      linetype = "dashed", colour = "darkgrey"
     ) +
-      ggstats::geom_stripped_rows(
-        odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
-        even = "#00000000") +
-      ggplot2::geom_vline(
-        xintercept = scale_breaks,
-        linetype = "dashed", colour = "darkgrey"
-      ) +
-      ggplot2::geom_vline(
-        xintercept = 0,
-        colour = "darkgrey"
-      ) +
+    ggplot2::geom_vline(
+      xintercept = 0,
+      colour = "darkgrey"
+    )
+
+  if (sig_type == "pattern") {
+    base_plot +
       ## This chunk only works together with the ggpattern::scale-specifications.
       ggpattern::geom_col_pattern(
-        mapping = ggplot2::aes(pattern_fill = .data[[bar_pattern_fill]]),
+        mapping = ggplot2::aes(pattern_fill = .data[[bar_pattern_fill]],
+                               # TODO: seems to not completely eliminate
+                               #    dashed lines...
+                               linetype = NULL),
         position = ggplot2::position_dodge(width = 0.8),
         color = "black",
         linewidth = 0.6,
@@ -78,35 +89,20 @@ plot_bar <- function(no_trend_list,
       theme_table_bar() +
       NULL
   } else if (sig_type == "frame") {
-    ggplot2::ggplot(
-      data = data_plot_bar,
-      mapping = ggplot2::aes(
-        x = .data[[x_value]],
-        y = .data[[y_value]],
-        fill = .data[[bar_fill]],
-        linetype = .data[[bar_pattern]]
-      )
-    ) +
-      ggstats::geom_stripped_rows(
-        odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
-        even = "#00000000") +
+    base_plot +
       ggplot2::geom_col(
+        # TODO: deleting it above produces unexpected result
+        # mapping = ggplot2::aes(linetype = .data[[bar_pattern]]),
         position = ggplot2::position_dodge(width = 0.8),
         color = "black",
         linewidth = 0.6,
         width = 0.4
       ) +
-      ggplot2::geom_vline(
-        xintercept = scale_breaks,
-        linetype = "dashed", colour = "darkgrey"
-      ) +
-      ggplot2::geom_vline(
-        xintercept = 0,
-        colour = "darkgrey"
-      ) +
       ggplot2::scale_x_continuous(breaks = scale_breaks) +
-      ggpattern::scale_pattern_manual(values = bar_pattern_setting) +
-      ggpattern::scale_pattern_fill_manual(values = bar_pattern_fill_setting) +
+      # TODO: Original linetype (without manual setting) seems to be
+      # better but cannot be reproduced?
+      ggplot2::scale_linetype_manual(values = c(`FALSE` = "dashed",
+                                                `TRUE` = "solid")) +
       ggplot2::scale_fill_manual(values = bar_fill_setting) +
       theme_table_bar() +
       NULL
