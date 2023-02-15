@@ -2,22 +2,24 @@
 % Please edit documentation in R/merge_trend_data.R
 \name{merge_trend_data}
 \alias{merge_trend_data}
-\title{Wrapper for merging to trend dataframes by the year columns.}
+\title{Wrapper for merging to trend data.frames by the year columns.}
 \usage{
 merge_trend_data(trend_data_1, trend_data_2, suffixes, ...)
 }
 \arguments{
-\item{trend_data_1}{Trend data containing trend comparisons.}
+\item{trend_data_1}{Trend data.frame 1.}
 
-\item{trend_data_2}{Trend data containing estimates for the trends.}
+\item{trend_data_2}{Trend data.frame 2.}
 
 \item{suffixes}{Suffixes that should be added to duplicated columns.}
+
+\item{...}{Further arguments provided by \code{\link[=merge]{merge()}}.}
 }
 \value{
 Merged data.frame stemming from the input data.frames.
 }
 \description{
-Wrapper for merging to trend dataframes by the year columns.
+Wrapper for merging to trend data.frames by the year columns.
 }
 \examples{
 # tbd

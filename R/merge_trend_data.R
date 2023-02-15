@@ -1,9 +1,9 @@
-#' Wrapper for merging to trend dataframes by the year columns.
+#' Wrapper for merging to trend data.frames by the year columns.
 #'
-#' @inheritParams prep_data_blocks
-#' @param trend_data_1 Trend data containing trend comparisons.
-#' @param trend_data_2 Trend data containing estimates for the trends.
+#' @param trend_data_1 Trend data.frame 1.
+#' @param trend_data_2 Trend data.frame 2.
 #' @param suffixes Suffixes that should be added to duplicated columns.
+#' @param ... Further arguments provided by [merge()].
 #'
 #' @return Merged data.frame stemming from the input data.frames.
 #' @export

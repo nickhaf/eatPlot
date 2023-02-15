@@ -16,7 +16,7 @@ plot_lines <- function(data_plot_lines){
         y = .data$est_point_start,
         yend = .data$est_point_end,
         colour = .data$grouping_var,
-        linetype = .data$sig_trend_within
+        linetype = .data$sig_trend_comp_within
       )
   )
 }
