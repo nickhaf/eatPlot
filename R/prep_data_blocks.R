@@ -32,20 +32,21 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   # Prepare trend comparison data ------------------------------------------------------
   ## Data.frame containing all rows which make some kind of comparison, e.g. state vs. germany.
   years_colnames <- extract_numbers(colnames(data_clean))
-  remove_columns <- get_year_cols(vec = colnames(data_clean), years_colnames)
+  exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
   data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
-  filtered_list <- prep_trend_long(data_trend_comp, filtered_list, "trend_comp_data", remove_cols = remove_columns)
+  filtered_list <- prep_trend_long(data_trend_comp, filtered_list, "trend_comp_data", remove_cols = exclude_cols)
 
 
   # Prepare trend_point data ------------------------------------------------------
   ## Data.frame containing all trend rows which do not make a trend comparison
-  data_trend_point <- data_clean[is.na(data_clean$comparison), ]
-  filtered_list <- prep_trend_long(data_trend_point, filtered_list, "trend_no_comp_data", remove_cols = remove_columns)
+  data_trend_no_comp <- data_clean[is.na(data_clean$comparison), ]
+  data_trend_no_comp <- remove_columns(data_trend_no_comp, c("compare_1", "compare_2"))
+  filtered_list <- prep_trend_long(data_trend_no_comp, filtered_list, "trend_no_comp_data", remove_cols = exclude_cols)
 
 
   # Prepare WholeGroup ------------------------------------------------------
-  ## Migth be necessary to deal with the wholeGrou a bit differently, so it is include in two extra data frames
+  ## Might be necessary to deal with the wholeGrou a bit differently, so it is include in two extra data frames
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
 
   if (nrow(data_wholeGroup) != 0) {
@@ -55,7 +56,10 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
       suffix = "_point"
     )
   }
-  filtered_list <- prep_trend_long(data_wholeGroup, filtered_list, "wholeGroup_trend", remove_cols = remove_columns)
+  filtered_list <- prep_trend_long(dat = data_wholeGroup,
+                                   filtered_list,
+                                   "wholeGroup_trend",
+                                   remove_cols = exclude_cols)
 
 # Add significances -------------------------------------------------------
   filtered_list <- add_sig_col(filtered_list, sig_niveau = sig_niveau)
