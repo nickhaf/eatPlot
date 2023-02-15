@@ -50,8 +50,13 @@ prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDE
 
   plot_dat <- list()
 
-  list_general <- prep_data_blocks(dat, sig_niveau = sig_niveau, states, sub_groups)
-  within_whole <- merge_within_whole(trend_comp_data = list_general[["trend_comp_data"]], trend_no_comp_data = list_general[["trend_no_comp_data"]], BLs = states)[["trend_data_final"]]
+  list_general <- prep_data_blocks(dat,
+                                   sig_niveau = sig_niveau,
+                                   states,
+                                   sub_groups)
+  within_whole <- merge_within_whole(trend_comp_data = list_general[["trend_comp_data"]],
+                                     trend_no_comp_data = list_general[["trend_no_comp_data"]],
+                                     states = states)[["trend_data_final"]]
   trend_point <- merge_trend_point(trend_comp_data = within_whole, point_data = list_general[[1]])
   wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
 
