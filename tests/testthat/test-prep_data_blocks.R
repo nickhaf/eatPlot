@@ -152,28 +152,11 @@ test_that("year columns are extracted correctly", {
 })
 
 
+test_that("Trend data frame is build correctly", {
+
+expect_null(prep_trend_long(dat = data.frame(), filtered_list = list(), dat_name = "x" )[[1]])
+
+})
 
 
-#
-# test_that("point_data is build correctly", {
-#   df_clean <- data.frame(
-#     group = c("a.0.wholeGroup", "a.1.wholeGroup", "b.0", "b.1"),
-#     grouping_var = c(0, 1, 0, 1),
-#     state_var = c("a", "a", "b", "b"),
-#     kb = rep("best", 4),
-#     parameter = rep("mean", 4),
-#     comparison = c(NA, NA, "crossDiff", "crossDiff"),
-#     est_1 = 1:4,
-#     est_2 = 1:4,
-#     p_1 = 1:4,
-#     p_2 = 1:4,
-#     est_trend_1vs2 = 1:4,
-#     se_trend_1vs2 = 1:4,
-#     es_trend_1vs2 = 1:4,
-#     p_trend_1vs2 = 1:4,
-#     est_trend_2vs3 = 1:4,
-#     se_trend_2vs3 = 1:4,
-#     es_trend_2vs3 = 1:4,
-#     p_trend_2vs3 = 1:4
-#   )
-# })
+

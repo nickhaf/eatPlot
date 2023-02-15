@@ -20,9 +20,9 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   # Prepare point estimates -------------------------------------------------
   if (any(is.na(data_clean$comparison))) {
     point_long <- prep_long(data_clean[is.na(data_clean$comparison), ],
-                          include_pattern = "^est|^p$|^p_|^se|^es",
-                          remove_pattern = "trend",
-                          suffix = "_point"
+      include_pattern = "^est|^p$|^p_|^se|^es",
+      remove_pattern = "trend",
+      suffix = "_point"
     )
     filtered_list[["point_data"]] <- point_long[, !(colnames(point_long) %in% c("compare_1", "compare_2")), ]
   } else {
@@ -35,32 +35,16 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   remove_columns <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
   data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
+  filtered_list <- prep_trend_long(data_trend_comp, filtered_list, "trend_data")
 
-  if (nrow(data_trend_comp) != 0) {
-    filtered_list[["trend_data"]] <- prep_long(data_trend_comp,
-      include_pattern = "est_trend|p_trend|se_trend|es_trend",
-      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
-    )
-    filtered_list[["trend_data"]] <- split_years(filtered_list[["trend_data"]])
-  } else {
-    filtered_list["trend_data"] <- list(NULL)
-  }
 
   # Prepare trend_point data ------------------------------------------------------
   data_trend_point <- data_clean[is.na(data_clean$comparison), ]
-  if (nrow(data_trend_point) != 0) {
-    filtered_list[["trend_no_comp_data"]] <- prep_long(data_trend_point,
-      include_pattern = "est_trend|p_trend|se_trend|es_trend",
-      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
-    )
-    filtered_list[["trend_no_comp_data"]] <- split_years(filtered_list[["trend_no_comp_data"]])
-  } else {
-    filtered_list["trend_no_comp_data"] <- list(NULL)
-  }
+  filtered_list <- prep_trend_long(data_trend_point, filtered_list, "trend_no_comp_data")
+
 
   # Prepare WholeGroup ------------------------------------------------------
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
-
 
   if (nrow(data_wholeGroup) != 0) {
     filtered_list[["wholeGroup_point"]] <- prep_long(data_wholeGroup,
@@ -68,18 +52,10 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
       remove_pattern = "trend",
       suffix = "_point"
     )
-
-
-
-    filtered_list[["wholeGroup_trend"]] <- prep_long(
-      data = data_wholeGroup,
-      include_pattern = c("est_trend|p_trend|se_trend|es_trend"),
-      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
-    )
-    filtered_list[["wholeGroup_trend"]] <- split_years(filtered_list[["wholeGroup_trend"]])
   }
+  filtered_list <- prep_trend_long(data_wholeGroup, filtered_list, "wholeGroup_trend")
 
-
+# Add significances -------------------------------------------------------
   filtered_list <- add_sig_col(filtered_list, sig_niveau = sig_niveau)
 
   return(filtered_list)
@@ -99,25 +75,39 @@ add_sig_col <- function(filtered_list, sig_niveau) {
 }
 
 ## Extract Numbers from a string vector
-extract_numbers <- function(vec){
+extract_numbers <- function(vec) {
   unique(unlist(regmatches(vec, gregexpr("[[:digit:]]+", vec))))
 }
 
 # Remove the point-estimates for the years. These are found in columns which end with a year.
-get_year_cols <- function(vec, years){
-unique(unlist(
-  sapply(c("es_", "est_", "se_", "p_"), function(val) {
-    sapply(years, function(year) {
-      grep(
-        paste0("^", val, year, "$"),
-        vec,
-        value = TRUE
+get_year_cols <- function(vec, years) {
+  unique(unlist(
+    sapply(c("es_", "est_", "se_", "p_"), function(val) {
+      sapply(years, function(year) {
+        grep(
+          paste0("^", val, year, "$"),
+          vec,
+          value = TRUE
+        )
+      },
+      USE.NAMES = FALSE
       )
     },
     USE.NAMES = FALSE
     )
-  },
-  USE.NAMES = FALSE
-  )
-))
+  ))
+}
+
+# Wrapper for preparing the trend data
+prep_trend_long <- function(dat, filtered_list, dat_name) {
+  if (nrow(dat) != 0) {
+    dat <- prep_long(dat,
+      include_pattern = "est_trend|p_trend|se_trend|es_trend",
+      remove_pattern = paste0(paste0("^", remove_columns, "$"), collapse = "|")
+    )
+    filtered_list[[dat_name]] <- split_years(dat)
+  } else {
+    filtered_list[dat_name] <- list(NULL)
+  }
+  return(filtered_list)
 }
