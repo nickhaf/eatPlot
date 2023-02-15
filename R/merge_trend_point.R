@@ -1,18 +1,18 @@
 #' Merge point estimates onto the resepective timepoints.
 #'
-#' @param trend_data Data.frame with the trend comparisons.
+#' @param trend_comp_data Data.frame with the trend comparisons.
 #' @param point_data Data.frame with the point estimates for the start and end years.
 #'
 #' @return Data frame with the within significance estimates and the point estimates for start and end year.
 #' @export
 #'
 #' @examples #tbd
-merge_trend_point <- function(trend_data, point_data){
+merge_trend_point <- function(trend_comp_data, point_data){
 
-  trend_data <- trend_data[ , !colnames(trend_data) %in% c("depVar", "modus", "comparison", "parameter", "kb")]
+  trend_comp_data <- trend_comp_data[ , !colnames(trend_comp_data) %in% c("depVar", "modus", "comparison", "parameter", "kb")]
   point_data <- point_data[ , !colnames(point_data) %in% c("depVar", "modus", "comparison", "parameter", "kb", "group")]
 
-  trend_start <- merge(trend_data,
+  trend_start <- merge(trend_comp_data,
                      point_data,
                      by.x = c("state_var", "year_start", "grouping_var"),
                      by.y = c("state_var", "year", "grouping_var"),
