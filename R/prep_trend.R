@@ -20,8 +20,15 @@
 #' @export
 #'
 #' @examples # tbd
-prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDESLAND", competence_var = "kb", group_var = "group", x_braces = NULL, sig_niveau = 0.05, plot_mean = FALSE) {
-
+prep_trend <- function(dat,
+                       competence,
+                       grouping_var = "",
+                       state_var = "TR_BUNDESLAND",
+                       competence_var = "kb",
+                       group_var = "group",
+                       x_braces = NULL,
+                       sig_niveau = 0.05,
+                       plot_mean = FALSE) {
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
@@ -48,40 +55,82 @@ prep_trend <- function(dat, competence, grouping_var = "", state_var = "TR_BUNDE
     )
   }
 
+  list_building_blocks <- prep_data_blocks(
+    data_clean = dat,
+    sig_niveau = sig_niveau,
+    states,
+    sub_groups
+  )
+
+  # Prepare the trend-data.frame --------------------------------------------
+  # Data with comparison:
+  comp_wholeGroup <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "wholeGroup", ]
+  comp_state <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "BL" | list_building_blocks[["trend_comp_data"]]$compare_1 == "_groupingVar", ]
+
+  comp_within_whole <- merge_trend_data(
+    trend_data_1 = comp_state,
+    trend_data_2 = comp_wholeGroup,
+    suffixes = c("_comp_within", "_comp_whole"),
+    all.x = TRUE
+  )
+
+  ## Add data without comparison:
+  trend_data_merged <- merge_trend_data(
+    trend_data_1 = comp_within_whole,
+    trend_data_2 = list_building_blocks[["trend_no_comp_data"]],
+    suffixes = c("_comp", "_no_comp"),
+    all = TRUE
+  )
+  colnames(trend_data_merged) <- gsub("_trend$", "_trend_no_comp", colnames(trend_data_merged))
+
+
+  trend_data_final <- merge_trend_point(
+    trend_data = trend_data_merged,
+    point_data = list_building_blocks[["point_data"]]
+  )
+
+  # Prepare the wholeGroup data.frame ---------------------------------------
+  trend_data_wholeGroup <- merge_trend_point(
+    list_building_blocks[["wholeGroup_trend"]],
+    list_building_blocks[["wholeGroup_point"]]
+  )
+
+  # Fill up NAs -------------------------------------------------------------
+  ## Fill up NA significances with FALSE (those which emerged through merging)
+  for (i in grep("sig_", colnames(trend_data_final))) {
+    trend_data_final[, i] <- ifelse(is.na(trend_data_final[, i]), FALSE, trend_data_final[, i])
+  }
+
+  # Build plotlist ----------------------------------------------------------
   plot_dat <- list()
 
-  list_general <- prep_data_blocks(dat, sig_niveau = sig_niveau, states, sub_groups)
-  within_whole <- merge_within_whole(trend_comp_data = list_general[["trend_comp_data"]], trend_no_comp_data = list_general[["trend_no_comp_data"]], BLs = states)[["trend_data_final"]]
-  trend_point <- merge_trend_point(trend_comp_data = within_whole, point_data = list_general[[1]])
-  wholeGroup_trend_point <- merge_trend_point(list_general[["wholeGroup_trend"]], list_general[["wholeGroup_point"]])
+  # plot_points
+  plot_dat[["plot_points"]] <- list_building_blocks[["point_data"]]
 
+  # plot_lines
+  lineplot_years <- consecutive_numbers(c(trend_data_final$year_start, trend_data_final$year_end))
+  plot_dat[["plot_lines"]] <- trend_data_final[filter_years(trend_data_final, lineplot_years), ]
 
-  plot_dat[["plot_points"]] <- list_general[["point_data"]]
-
-  ## Fill up NA significances with FALSE (those which emerged through merging)
-  for(i in grep("sig_", colnames(trend_point))){
-    trend_point[,i] <- ifelse(is.na(trend_point[,i]), FALSE, trend_point[,i])
+  if (plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
+    plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
   }
 
-  plot_years_trend <- consecutive_numbers(c(trend_point$year_start, trend_point$year_end))
-  plot_dat[["plot_lines"]] <- trend_point[filter_years(trend_point, plot_years_trend), ]
-  if(plot_mean == FALSE){
-    plot_dat[["plot_lines"]] <-  plot_dat[["plot_lines"]][ plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
+  # plot_braces
+  if (is.null(x_braces)) {
+    ## Draw braces from last year to every other year
+    plot_years <- unique(c(trend_data_final$year_start, trend_data_final$year_end))
+    plot_years_braces <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
+      c(x, max(plot_years))
+    })
+  } else {
+    plot_years_braces <- x_braces
   }
 
-  if(is.null(x_braces)){
-  ## Draw braces from last year to every other year
-  plot_years <- unique(c(trend_point$year_start, trend_point$year_end))
-  plot_years_braces <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
-    c(x, max(plot_years))
-  })
-  }else{
-  plot_years_braces <- x_braces
-  }
-
-  plot_dat[["plot_braces"]] <- trend_point[filter_years(trend_point, plot_years_braces), ]
+  plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, plot_years_braces), ]
   plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
-  plot_dat[["plot_background_lines"]] <- wholeGroup_trend_point[filter_years(wholeGroup_trend_point, plot_years_trend), ]
+
+  # plot_background_lines
+  plot_dat[["plot_background_lines"]] <- trend_data_wholeGroup[filter_years(trend_data_wholeGroup, lineplot_years), ]
 
   return(plot_dat)
 }
@@ -98,3 +147,14 @@ filter_years <- function(dat, year_list) {
   }))
   return(year_rows)
 }
+
+#
+# dat <- trend_books
+# grouping_var = "KBuecher_imp3"
+# competence = "GL"
+# state_var = "TR_BUNDESLAND"
+# competence_var = "kb"
+# group_var = "group"
+# x_braces = NULL
+# sig_niveau = 0.05
+# plot_mean = FALSE

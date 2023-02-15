@@ -4,10 +4,10 @@
 \alias{merge_trend_point}
 \title{Merge point estimates onto the resepective timepoints.}
 \usage{
-merge_trend_point(trend_comp_data, point_data)
+merge_trend_point(trend_data, point_data)
 }
 \arguments{
-\item{trend_comp_data}{Data.frame with the trend comparisons.}
+\item{trend_data}{Data.frame with the trend comparisons.}
 
 \item{point_data}{Data.frame with the point estimates for the start and end years.}
 }

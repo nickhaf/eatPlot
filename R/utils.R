@@ -27,6 +27,13 @@ rename_column <- function(data, old, new){
   return(data)
 }
 
+remove_columns <- function(dat, cols){
+dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
+return(dat)
+}
+
+
+
 ## Find the years that can be plotted as trend. Returns all unique consecutive year combinations.
 consecutive_numbers <- function(vec){
 
@@ -132,6 +139,7 @@ split_years <- function(data){
   }
   colnames(year_cols) <- c("year_start", "year_end")
   data <- cbind(data, year_cols)
+  data <- remove_columns(data, "year")
 
   return(data)
 }

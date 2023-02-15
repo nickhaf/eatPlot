@@ -6,7 +6,7 @@ test_that("calc_brace_coords works", {
     grouping_var = c(0, 1, 0, 1),
     est_trend_within = c(1:4),
     se_trend_within = c(1:4),
-    sig_trend_within = c(TRUE, FALSE, FALSE, TRUE),
+    sig_trend_comp_within = c(TRUE, FALSE, FALSE, TRUE),
     sig_trend_whole = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503

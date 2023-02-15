@@ -11,16 +11,16 @@ prep_data_blocks(data_clean, sig_niveau, states, sub_groups)
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 
-\item{states}{Bundesländer.}
+\item{states}{Character vector of the different states (Bundesländer) found in the data.}
 
-\item{sub_groups}{grouping_var sub_groups}
+\item{sub_groups}{Character vector of the different groups found in \code{grouping_var}.}
 }
 \value{
 \code{prep_data_blocks()} returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the \code{plot()} functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:
 \itemize{
 \item \code{point_data} contains point estimates for every years.
 \item \code{trend_comp_data} contains all trend variables performing some kind of comparison, e.g., state vs. germany.
-\item \code{trend_no_comp_data} contains the trend estimates.
+\item \code{trend_no_comp_data} contains the trend estimates without comparisons.
 \item \code{wholeGroup_point} contains the point estimates of the wholeGroup.
 \item \code{wholeGroup_trend} contains the trend estimates for the wholeGroup.
 }

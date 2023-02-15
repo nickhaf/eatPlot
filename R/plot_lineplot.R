@@ -10,7 +10,11 @@
 #' @export
 #'
 #' @examples # tbd
-plot_lineplot <- function(plot_data, label_est = "est_trend_no_comp", label_se = "se_trend_no_comp", label_sig_high = "sig_trend_whole", label_sig_bold = "sig_trend_no_comp"){
+plot_lineplot <- function(plot_data,
+                          label_est = "est_trend_no_comp",
+                          label_se = "se_trend_no_comp",
+                          label_sig_high = "sig_trend_comp_whole",
+                          label_sig_bold = "sig_trend_no_comp"){
 
   states <- unique(plot_data[[1]]$state_var)
 
