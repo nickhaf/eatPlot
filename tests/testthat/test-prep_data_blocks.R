@@ -13,7 +13,7 @@ test_that("competence and grouping_var is optional", {
   df_general <- data.frame(
     group = c("a.wholeGroup", "b.wholeGroup", "wholeGroup.vs.wholeGroup", "b"),
     grouping_var = rep("noGroup", 4),
-    TR_BUNDESLAND = c("a", "a", NA, "b"),
+    state_var = c("a", "a", NA, "b"),
     kb = rep("best", 4),
     parameter = rep("mean", 4),
     comparison = c("vs", "vs", "vs", NA),
@@ -31,19 +31,19 @@ test_that("competence and grouping_var is optional", {
     p_trend_2vs3 = 1:4
   )
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
-                               states = unique(df_general$TR_BUNDESLAND),
+                               states = unique(df_general$state_var),
                                sig_niveau = 0.05)
   expect_equal(test_general[["point_data"]]$grouping_var, rep("noGroup", 2))
-  expect_equal(dim(test_general[["trend_data"]]), NULL)
+  expect_equal(dim(test_general[["trend_comp_data"]]), NULL)
 })
 
 test_that("point estimates are optional", {
   df_general <- data.frame(
     group = c("a.wholeGroup", "b.wholeGroup", "wholeGroup.vs.wholeGroup", "b"),
     grouping_var = rep(NA, 4),
-    TR_BUNDESLAND = c("a", "a", NA, "b"),
+    state_var = c("a", "a", NA, "b"),
     kb = rep("best", 4),
     parameter = rep("mean", 4),
     comparison = c("crossDiff", "crossDiff", "crossDifff", "crossDiff"),
@@ -61,9 +61,9 @@ test_that("point estimates are optional", {
     p_trend_2vs3 = 1:4
   )
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
-                               states = unique(df_general$TR_BUNDESLAND),
+                               states = unique(df_general$state_var),
                                sig_niveau = 0.05)
   expect_equal(dim(test_general[["point_data"]]), NULL)
 })
@@ -72,7 +72,7 @@ test_that("list ist build correctly without grouping_var", {
   df_general <- data.frame(
     group = c("a.wholeGroup", "b.wholeGroup", "wholeGroup.vs.wholeGroup", "b"),
     grouping_var = rep(NA, 4),
-    TR_BUNDESLAND = c("a", "a", NA, "b"),
+    state_var = c("a", "a", NA, "b"),
     kb = rep("best", 4),
     parameter = rep("mean", 4),
     comparison = c(NA, NA, "crossDiff", "crossDiff"),
@@ -91,23 +91,23 @@ test_that("list ist build correctly without grouping_var", {
   )
 
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
-                               states = unique(df_general$TR_BUNDESLAND),
+                               states = unique(df_general$state_var),
                                sig_niveau = 0.05)
 
   expect_equal(test_general[["point_data"]]$year, c(1, 1, 2, 2))
   expect_equal(test_general[["point_data"]]$est_point, c(1, 2, 1, 2))
-  expect_equal(test_general[["trend_data"]]$year_start, c(1, 1, 2, 2))
-  expect_equal(test_general[["trend_data"]]$year_end, c(2, 2, 3, 3))
-  expect_equal(test_general[["trend_data"]]$est_trend, c(3, 4, 3, 4))
+  expect_equal(test_general[["trend_comp_data"]]$year_start, c(1, 1, 2, 2))
+  expect_equal(test_general[["trend_comp_data"]]$year_end, c(2, 2, 3, 3))
+  expect_equal(test_general[["trend_comp_data"]]$est_trend, c(3, 4, 3, 4))
 })
 
 test_that("list ist build correctly with grouping_var", {
   df_general <- data.frame(
     group = c("a.0.wholeGroup", "a.1.wholeGroup", "b.0", "b.1"),
     grouping_var = c(0, 1, 0, 1),
-    TR_BUNDESLAND = c("a", "a", "b", "b"),
+    state_var = c("a", "a", "b", "b"),
     kb = rep("best", 4),
     parameter = rep("mean", 4),
     comparison = c(NA, NA, "crossDiff", "crossDiff"),
@@ -126,14 +126,37 @@ test_that("list ist build correctly with grouping_var", {
   )
 
 
-  test_general <- prep_general(df_general,
+  test_general <- prep_data_blocks(df_general,
                                sub_groups = unique(df_general$grouping_var),
-                               states = unique(df_general$TR_BUNDESLAND),
+                               states = unique(df_general$state_var),
                                sig_niveau = 0.05)
 
   expect_equal(test_general[["point_data"]]$year, c(1, 1, 2, 2))
   expect_equal(test_general[["point_data"]]$est_point, c(1, 2, 1, 2))
-  expect_equal(test_general[["trend_data"]]$year_start, c(1, 1, 2, 2))
-  expect_equal(test_general[["trend_data"]]$year_end, c(2, 2, 3, 3))
-  expect_equal(test_general[["trend_data"]]$est_trend, c(3, 4, 3, 4))
+  expect_equal(test_general[["trend_comp_data"]]$year_start, c(1, 1, 2, 2))
+  expect_equal(test_general[["trend_comp_data"]]$year_end, c(2, 2, 3, 3))
+  expect_equal(test_general[["trend_comp_data"]]$est_trend, c(3, 4, 3, 4))
 })
+
+
+
+
+# utils -------------------------------------------------------------------
+
+test_that("years are extracted correctly", {
+  expect_equal(extract_numbers(c("1a", "ab2", "2012", "20a12")), c("1", "2", "2012", "20", "12"))
+})
+
+test_that("year columns are extracted correctly", {
+  expect_equal(get_year_cols(c("est_2012", "est_2012_vs", "se_20"), years = c("2012", "20")), c("est_2012", "se_20"))
+})
+
+
+test_that("Trend data frame is build correctly", {
+
+expect_null(prep_trend_long(dat = data.frame(), filtered_list = list(), dat_name = "x" )[[1]])
+
+})
+
+
+
