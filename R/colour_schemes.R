@@ -9,9 +9,9 @@
 #' @examples #tbd
 grouping_colours <- function(...){
   ggplot2::scale_colour_manual(values = c(
-  "0" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-  "1" = "black"
-), ... )
+    "0" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
+    "1" = "black"
+  ), ... )
 }
 
 
@@ -27,9 +27,9 @@ grouping_colours <- function(...){
 #' @examples #tbd
 sig_pointshapes <- function(...){
   ggplot2::scale_shape_manual(values = c(
-  `TRUE` = 17,
-  `FALSE` = 16
-) , ...)
+    `TRUE` = 17,
+    `FALSE` = 16
+  ) , ...)
 }
 
 
@@ -44,27 +44,33 @@ sig_pointshapes <- function(...){
 #' @examples #tbd
 sig_linetypes <- function(...){
   ggplot2::scale_linetype_manual(values = c(
-  `TRUE` = "solid",
-  `FALSE` = "dashed"
-))
+    `TRUE` = "solid",
+    `FALSE` = "dashed"
+  ))
 }
 
-
-
+# Pattern settings --------------------------------------------------------
 sig_pattern <- c(
-    "TRUE" = "none",
-    "FALSE" = "stripe"
-  )
+  "TRUE" = "none",
+  "FALSE" = "stripe"
+)
 
 adj_pattern_fill <- c(
   "ohneAdj" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
   "mitAdj" = grDevices::rgb(33, 89, 104, maxColorValue = 255)
 )
 
+# Fill settings -----------------------------------------------------------
 adj_fill <- c(
-    "ohneAdj_TRUE" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
-    "mitAdj_TRUE" = grDevices::rgb(33, 89, 104, maxColorValue = 255),
-    "ohneAdj_FALSE" = "white",
-    "mitAdj_FALSE" = "white"
-  )
+  "ohneAdj_TRUE" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
+  "mitAdj_TRUE" = grDevices::rgb(33, 89, 104, maxColorValue = 255),
+  "ohneAdj_FALSE" = "white",
+  "mitAdj_FALSE" = "white"
+)
 
+# Frame settings ----------------------------------------------------------
+sig_frame <- c(
+  "FALSE" = "dashed",
+  "TRUE" = "solid"
+)
+# TODO: Original linetype (without manual setting) seems to be better but cannot be reproduced?
