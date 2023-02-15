@@ -10,7 +10,7 @@ test_that("Barplot is still the same", {
   vdiffr::expect_doppelganger("Bar plot",
                               plot_bar(df_bar,
                                        x_value = "x", y_value = "y",
-                                       bar_pattern = "bar_pattern",
+                                       grouping = "bar_pattern",
                                        bar_fill = "bar_fill",
                                        bar_pattern_fill = "bar_pattern_fill",
                                        bar_fill_setting = c(
@@ -46,5 +46,5 @@ test_that("Example barplot can be plotted with different frames", {
 
   vdiffr::expect_doppelganger("Bar plot with frames for trend_books",
                               plot_bar(plot_data[["plot_bar"]],
-                                       sig_type = "frame"))
+                                       grouping_type = "frame"))
 })
