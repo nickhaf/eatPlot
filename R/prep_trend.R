@@ -71,12 +71,14 @@ prep_trend <- function(dat,
   comp_wholeGroup <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "wholeGroup", ]
   comp_state <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "BL" | list_building_blocks[["trend_comp_data"]]$compare_1 == "_groupingVar", ]
 
+  if(nrow(comp_state) != 0){
   comp_within_whole <- merge_trend_data(
     trend_data_1 = comp_state,
     trend_data_2 = comp_wholeGroup,
     suffixes = c("_comp_within", "_comp_whole"),
     all.x = TRUE
   )
+  }else{comp_within_whole <- comp_wholeGroup}
 
   ## Add data without comparison:
   trend_data_merged <- merge_trend_data(

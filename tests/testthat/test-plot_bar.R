@@ -64,30 +64,31 @@ min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-2
 View(min_stand)
 
 data_plot_new <- prep_trend(min_stand, competence = "lesen")
+data_bar <- data_plot_new[["plot_points"]]
+data_bar <- data_bar[grepl("minVerfehlt", data_bar$keyword) & data_bar$year == "2021", ]
 
+## How to deal with the sig erreicht? Muss ja ein beidseitiger test sein, da muuss die Signifikanz anders berechnet werden
 
+plot_r <- ggplot2::ggplot(
+  data = data_bar,
+  mapping = ggplot2::aes(
+    x = est_point * 100,
+    y = state_var,
+    linetype = sig_point
+  )) +
+  ggstats::geom_stripped_rows(
+    odd = "lightgrey",
+    even = "#00000000") +
+  ggplot2::geom_col(
+    position = ggplot2::position_dodge(width = 0.8),
+    fill = grDevices::rgb(75, 172, 198, maxColorValue = 255),
+    color = "black",
+    linewidth = 0.9,
+    width = 0.4
+  ) +
+  ggplot2::scale_linetype_manual(values = c("over" = "solid", "same" = "blank", "under" = "dashed")) +
+  theme_table_bar()
 
-#
-# plot_r <- ggplot2::ggplot(
-#   data = df_min,
-#   mapping = ggplot2::aes(
-#     x = reg_erreicht,
-#     y = land,
-#     linetype = sig_reg_erreicht
-#   )) +
-#   ggstats::geom_stripped_rows(
-#     odd = "lightgrey",
-#     even = "#00000000") +
-#   ggplot2::geom_col(
-#     position = ggplot2::position_dodge(width = 0.8),
-#     fill = grDevices::rgb(75, 172, 198, maxColorValue = 255),
-#     color = "black",
-#     linewidth = 0.9,
-#     width = 0.4
-#   ) +
-#   ggplot2::scale_linetype_manual(values = c("over" = "solid", "same" = "blank", "under" = "dashed")) +
-#   theme_table_bar()
-#
 # plot_l <- ggplot2::ggplot(
 #   data = df_min,
 #   mapping = ggplot2::aes(
