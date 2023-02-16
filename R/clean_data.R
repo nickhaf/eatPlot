@@ -46,7 +46,7 @@ clean_data <- function(dat,
   colnames(dat) <- gsub("\\.", "_", colnames(dat))
   colnames(dat) <- gsub("sig_", "p_", colnames(dat))
   colnames(dat) <- gsub("^sig$", "p", colnames(dat))
-  dat <- dat[, !colnames(dat) %in% c("modus", "depVar", "modus", "parameter", "kb")]
+  dat <- dat[, !colnames(dat) %in% c("modus", "modus", "parameter", "kb")]
 
   # Fill up NAs
   dat <- fill_up_na(dat, info_to = "state_var", filling_groups = states)

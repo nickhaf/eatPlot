@@ -63,18 +63,25 @@ min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-2
 
 View(min_stand)
 
-data_plot_new <- prep_trend(min_stand, competence = "lesen")
-data_bar <- data_plot_new[["plot_points"]]
-data_bar <- data_bar[grepl("minVerfehlt", data_bar$keyword) & data_bar$year == "2021", ]
+data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
+data_bar <- data_plot_new[["plot_bar"]]
+data_bar <- data_bar[data_bar$depVar == "minVerfehlt" & data_bar$year == "2021", ]
 
 ## How to deal with the sig erreicht? Muss ja ein beidseitiger test sein, da muuss die Signifikanz anders berechnet werden
+
+plot_bar(data-bar,
+         x_value = "est_point_no_comp",
+         y_value = "state_var",
+         grouping = "",
+         bar_frame_setting = sig_frame)
+
 
 plot_r <- ggplot2::ggplot(
   data = data_bar,
   mapping = ggplot2::aes(
-    x = est_point * 100,
+    x = est_point_no_comp * 100,
     y = state_var,
-    linetype = sig_point
+    linetype = sig_point_comp
   )) +
   ggstats::geom_stripped_rows(
     odd = "lightgrey",
@@ -86,7 +93,8 @@ plot_r <- ggplot2::ggplot(
     linewidth = 0.9,
     width = 0.4
   ) +
-  ggplot2::scale_linetype_manual(values = c("over" = "solid", "same" = "blank", "under" = "dashed")) +
+  ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
+  ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
   theme_table_bar()
 
 # plot_l <- ggplot2::ggplot(

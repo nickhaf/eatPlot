@@ -30,7 +30,7 @@ prep_trend <- function(dat,
                        x_braces = NULL,
                        sig_niveau = 0.05,
                        plot_mean = FALSE,
-                       paramter = "mean") {
+                       parameter = "mean") {
   dat <- as.data.frame(dat)
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
   if (grouping_var != "") {
@@ -66,19 +66,22 @@ prep_trend <- function(dat,
     sub_groups
   )
 
+
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison:
   comp_wholeGroup <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "wholeGroup", ]
   comp_state <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "BL" | list_building_blocks[["trend_comp_data"]]$compare_1 == "_groupingVar", ]
 
-  if(nrow(comp_state) != 0){
-  comp_within_whole <- merge_trend_data(
-    trend_data_1 = comp_state,
-    trend_data_2 = comp_wholeGroup,
-    suffixes = c("_comp_within", "_comp_whole"),
-    all.x = TRUE
-  )
-  }else{comp_within_whole <- comp_wholeGroup}
+  if (nrow(comp_state) != 0) {
+    comp_within_whole <- merge_trend_data(
+      trend_data_1 = comp_state,
+      trend_data_2 = comp_wholeGroup,
+      suffixes = c("_comp_within", "_comp_whole"),
+      all.x = TRUE
+    )
+  } else {
+    comp_within_whole <- comp_wholeGroup
+  }
 
   ## Add data without comparison:
   trend_data_merged <- merge_trend_data(
@@ -92,7 +95,7 @@ prep_trend <- function(dat,
 
   trend_data_final <- merge_trend_point(
     trend_data = trend_data_merged,
-    point_data = list_building_blocks[["point_data"]]
+    point_data = list_building_blocks[["point_no_comp_data"]]
   )
 
   # Prepare the wholeGroup data.frame ---------------------------------------
@@ -111,7 +114,7 @@ prep_trend <- function(dat,
   plot_dat <- list()
 
   # plot_points
-  plot_dat[["plot_points"]] <- list_building_blocks[["point_data"]]
+  plot_dat[["plot_points"]] <- list_building_blocks[["point_no_comp_data"]]
 
   # plot_lines
   lineplot_years <- consecutive_numbers(c(trend_data_final$year_start, trend_data_final$year_end))
@@ -137,6 +140,14 @@ prep_trend <- function(dat,
 
   # plot_background_lines
   plot_dat[["plot_background_lines"]] <- trend_data_wholeGroup[filter_years(trend_data_wholeGroup, lineplot_years), ]
+
+  # plot_bar
+  plot_dat[["plot_bar"]] <- merge(list_building_blocks[["point_no_comp_data"]],
+    list_building_blocks[["point_comp_data"]],
+    by = c("state_var", "year", "grouping_var", "depVar"),
+    suffixes = c("_no_comp", "_comp"),
+    all = TRUE
+  )
 
   return(plot_dat)
 }
@@ -164,3 +175,4 @@ filter_years <- function(dat, year_list) {
 # x_braces = NULL
 # sig_niveau = 0.05
 # plot_mean = FALSE
+# parameter = "mean"
