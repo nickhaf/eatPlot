@@ -25,7 +25,8 @@ build_columns <- function(data_plot_table) {
         hjust = "center"
       )
     }),
-    ggplot2::scale_x_discrete(position = "top", limits = c("y_label", levels(data_plot_table$x_label)[levels(data_plot_table$x_label) != "y_label"]))
+    ggplot2::scale_x_discrete(position = "top",
+                              limits = c("y_label", levels(data_plot_table$x_label)[levels(data_plot_table$x_label) != "y_label"]))
   )
  return(column_settings)
 }
@@ -56,17 +57,7 @@ plot_table <- function(no_trend_list, y_value = "est_point") {
                   ggplot2::aes(x = .data$x_label,
                                y = .data$group_var,
                                label = .data[[y_value]])) +
-    ggplot2::geom_text(
-      data = data_plot_table[data_plot_table$x_label == "y_label", ],
-      ggplot2::aes(x = "y_label", label = .data$group_var),
-      size = 3,
-      hjust = "left",
-      nudge_x = -0.55
-    ) +
-    ggstats::geom_stripped_rows(
-      odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
-      even = "#00000000"
-    ) +
+    plot_y_axis(vec = unique(data_plot_table$state_var[!is.na(data_plot_table$state_var)])) +
     build_columns(data_plot_table) +
     theme_table() +
     ggplot2::labs(caption = "Anmerkungen. In der Tabelle werden gerundete Werte angegeben. \n

@@ -88,9 +88,11 @@ plot_l <- ggplot2::ggplot(
     linewidth = 0.9,
     width = 0.4
   ) +
+  ggplot2::geom_vline(xintercept = 0, color = "darkgrey") +
   ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
   ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
-  theme_table_bar()
+  theme_table_bar() +
+  ggplot2::ggtitle("Mindeststandard verfehlt (%)")
 
 plot_r <- ggplot2::ggplot(
   data = data_bar_r,
@@ -109,10 +111,45 @@ plot_r <- ggplot2::ggplot(
     linewidth = 0.9,
     width = 0.4
   ) +
+  ggplot2::geom_vline(xintercept = 0, color = "darkgrey") +
   ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
   ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
-  theme_table_bar()
+  theme_table_bar() +
+  ggplot2::ggtitle("Regelstandard erreicht (%)")
 
-plot_table_bar(plot_l, plot_r)
+p_merged <- plot_table_bar(plot_l, plot_r)
 
 
+# Tabelle -----------------------------------------------------------------
+
+data_t <- data_bar_l
+data_t$x_label <- rep("Land", nrow(data_t))
+y_value <- "state_var"
+
+y_axis_plot <- ggplot2::ggplot()+
+  ggstats::geom_stripped_rows(
+    odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
+    even = "#00000000"
+  ) +
+  ggplot2::geom_text(data = data_t,
+                     ggplot2::aes(x = .data$x_label,
+                                  y = .data$state_var,
+                                  label = .data$state_var),
+                     size = 3,
+                     hjust = "left",
+                     nudge_x = -0.55,
+                     inherit.aes = FALSE
+  )
+
+
+
+
+
+  plot_y_axis(vec = unique(data_bar_l$state_var)) +
+ +
+theme_table()
+
+cowplot::plot_grid(y_axis_plot, plot_l, plot_r, nrow = 1, align = "h",axis = "tblr", rel_width = c(1, 1, 1.5) )
+patchwork::wrap_plots(y_axis_plot, plot_l, plot_r)
+
+# neuen Plot: plot y-axis
