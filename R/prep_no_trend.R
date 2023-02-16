@@ -7,7 +7,14 @@
 #' @export
 #'
 #' @examples # tbd
-prep_no_trend <- function(dat, columns, competence, grouping_var = "", group_var = "group", state_var = "TR_BUNDESLAND", competence_var = "kb", sig_niveau = 0.05){
+prep_no_trend <- function(dat,
+                          columns,
+                          competence,
+                          grouping_var = "",
+                          group_var = "group",
+                          state_var = "TR_BUNDESLAND",
+                          competence_var = "kb",
+                          sig_niveau = 0.05){
 
   states <- unique(dat[ , state_var])[!is.na(unique(dat[ , state_var]))]
   if(grouping_var != ""){

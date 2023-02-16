@@ -48,3 +48,63 @@ test_that("Example barplot can be plotted with different frames", {
                               plot_bar(plot_data[["plot_bar"]],
                                        grouping_type = "frame"))
 })
+
+
+
+# Umsetzung der neuen Plots -----------------------------------------------
+# df_min <- data.frame(land = factor(c("Berlin", "Bremen", "Hessen")),
+#                      min_nicht = c(19, 14, 15),
+#                                  reg_erreicht = c(60, 50, 45),
+#                                  sig_reg_erreicht = c("over", "same", "under")
+#                                  )
+
+
+min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/Abb3.9_Balken_2021_Lesen.xlsx", sheet = "Daten BT21")
+
+View(min_stand)
+
+data_plot_new <- prep_trend(min_stand, competence = "lesen")
+
+
+
+#
+# plot_r <- ggplot2::ggplot(
+#   data = df_min,
+#   mapping = ggplot2::aes(
+#     x = reg_erreicht,
+#     y = land,
+#     linetype = sig_reg_erreicht
+#   )) +
+#   ggstats::geom_stripped_rows(
+#     odd = "lightgrey",
+#     even = "#00000000") +
+#   ggplot2::geom_col(
+#     position = ggplot2::position_dodge(width = 0.8),
+#     fill = grDevices::rgb(75, 172, 198, maxColorValue = 255),
+#     color = "black",
+#     linewidth = 0.9,
+#     width = 0.4
+#   ) +
+#   ggplot2::scale_linetype_manual(values = c("over" = "solid", "same" = "blank", "under" = "dashed")) +
+#   theme_table_bar()
+#
+# plot_l <- ggplot2::ggplot(
+#   data = df_min,
+#   mapping = ggplot2::aes(
+#     x = min_nicht,
+#     y = land,
+#     linetype = sig_reg_erreicht
+#   )) +
+#   ggstats::geom_stripped_rows(
+#     odd = "lightgrey",
+#     even = "#00000000") +
+#   ggplot2::geom_col(
+#     position = ggplot2::position_dodge(width = 0.8),
+#     fill = grDevices::rgb(49, 133, 156, maxColorValue = 255),
+#     color = "black",
+#     linewidth = 0.9,
+#     width = 0.4
+#   ) +
+#   ggplot2::scale_linetype_manual(values = c("over" = "solid", "same" = "blank", "under" = "dashed")) +
+#   theme_table_bar()
+# cowplot::plot_grid(plot_l, plot_r, nrow = 1, align = "h")

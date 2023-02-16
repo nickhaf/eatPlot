@@ -26,7 +26,8 @@ plot_bar <- function(no_trend_list,
                      bar_pattern_setting = sig_pattern,
                      bar_pattern_fill = "grouping_var",
                      bar_pattern_fill_setting = adj_pattern_fill,
-                     bar_frame_setting = sig_frame) {
+                     bar_frame_setting = sig_frame,
+                     parameter = "mean") {
 
   if (inherits(no_trend_list, "list")) {
     data_plot_bar <- no_trend_list[["plot_bar"]]

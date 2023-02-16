@@ -11,6 +11,7 @@
 #' @param x_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #' @param plot_mean Logical value indicating whether the mean of both subgroups should be plotted as well.
+#' @param parameter Character string of the parameter value that should be reported. Defaults to `"mean"`.
 #'
 #' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
 #' * `plot_points` for plotting with [plot_points()]
@@ -28,7 +29,9 @@ prep_trend <- function(dat,
                        group_var = "group",
                        x_braces = NULL,
                        sig_niveau = 0.05,
-                       plot_mean = FALSE) {
+                       plot_mean = FALSE,
+                       paramter = "mean") {
+  dat <- as.data.frame(dat)
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
@@ -44,14 +47,15 @@ prep_trend <- function(dat,
     grouping_var = grouping_var,
     group_var = group_var,
     state_var = state_var,
-    competence_var = competence_var
+    competence_var = competence_var,
+    parameter = parameter
   )
 
-  if (any(!is.na(states))) {
+  if (any(!is.na(dat$comparison))) {
     dat <- get_comparisons(dat,
       group_col = "group_var",
       states = states[states != "wholeGroup"],
-      sub_groups = "sub_groups"
+      sub_groups = sub_groups
     )
   }
 
