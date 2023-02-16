@@ -52,7 +52,10 @@ plot_table <- function(no_trend_list, y_value = "est_point") {
   }
 
 
-  ggplot2::ggplot(data_plot_table, ggplot2::aes(x = .data$x_label, y = .data$group_var, label = .data[[y_value]])) +
+  ggplot2::ggplot(data_plot_table,
+                  ggplot2::aes(x = .data$x_label,
+                               y = .data$group_var,
+                               label = .data[[y_value]])) +
     ggplot2::geom_text(
       data = data_plot_table[data_plot_table$x_label == "y_label", ],
       ggplot2::aes(x = "y_label", label = .data$group_var),

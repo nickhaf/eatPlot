@@ -65,19 +65,14 @@ View(min_stand)
 
 data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
 data_bar <- data_plot_new[["plot_bar"]]
-data_bar <- data_bar[data_bar$depVar == "minVerfehlt" & data_bar$year == "2021", ]
+data_bar_l <- data_bar[data_bar$depVar == "minVerfehlt" & data_bar$year == "2021", ]
+data_bar_r <- data_bar[data_bar$depVar == "regErreicht" & data_bar$year == "2021", ]
 
 ## How to deal with the sig erreicht? Muss ja ein beidseitiger test sein, da muuss die Signifikanz anders berechnet werden
 
-plot_bar(data-bar,
-         x_value = "est_point_no_comp",
-         y_value = "state_var",
-         grouping = "",
-         bar_frame_setting = sig_frame)
 
-
-plot_r <- ggplot2::ggplot(
-  data = data_bar,
+plot_l <- ggplot2::ggplot(
+  data = data_bar_l,
   mapping = ggplot2::aes(
     x = est_point_no_comp * 100,
     y = state_var,
@@ -97,23 +92,27 @@ plot_r <- ggplot2::ggplot(
   ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
   theme_table_bar()
 
-# plot_l <- ggplot2::ggplot(
-#   data = df_min,
-#   mapping = ggplot2::aes(
-#     x = min_nicht,
-#     y = land,
-#     linetype = sig_reg_erreicht
-#   )) +
-#   ggstats::geom_stripped_rows(
-#     odd = "lightgrey",
-#     even = "#00000000") +
-#   ggplot2::geom_col(
-#     position = ggplot2::position_dodge(width = 0.8),
-#     fill = grDevices::rgb(49, 133, 156, maxColorValue = 255),
-#     color = "black",
-#     linewidth = 0.9,
-#     width = 0.4
-#   ) +
-#   ggplot2::scale_linetype_manual(values = c("over" = "solid", "same" = "blank", "under" = "dashed")) +
-#   theme_table_bar()
-# cowplot::plot_grid(plot_l, plot_r, nrow = 1, align = "h")
+plot_r <- ggplot2::ggplot(
+  data = data_bar_r,
+  mapping = ggplot2::aes(
+    x = est_point_no_comp * 100,
+    y = state_var,
+    linetype = sig_point_comp
+  )) +
+  ggstats::geom_stripped_rows(
+    odd = "lightgrey",
+    even = "#00000000") +
+  ggplot2::geom_col(
+    position = ggplot2::position_dodge(width = 0.8),
+    fill = grDevices::rgb(75, 172, 198, maxColorValue = 255),
+    color = "black",
+    linewidth = 0.9,
+    width = 0.4
+  ) +
+  ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
+  ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
+  theme_table_bar()
+
+plot_table_bar(plot_l, plot_r)
+
+

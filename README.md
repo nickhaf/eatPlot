@@ -34,7 +34,7 @@ you can use either:
 ``` r
 library(eatPlot)
 barplot_data <- prep_no_trend(
-  data = adjusted_means,
+  dat = adjusted_means,
   grouping_var = "adjust",
   columns = "adjust",
   competence = "GL",
@@ -45,7 +45,7 @@ barplot_data <- prep_no_trend(
 or:
 
 ``` r
-lineplot_data <- prep_trend(data = trend_books, 
+lineplot_data <- prep_trend(dat = trend_books, 
                             grouping_var = "KBuecher_imp3", 
                             competence = "GL", 
                             sig_niveau = 0.05)

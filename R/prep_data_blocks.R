@@ -37,7 +37,10 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
   data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
-  filtered_list <- prep_trend_long(data_trend_comp, filtered_list, "trend_comp_data", remove_cols = exclude_cols)
+  filtered_list <- prep_trend_long(data_trend_comp,
+                                   filtered_list,
+                                   "trend_comp_data",
+                                   remove_cols = exclude_cols)
 
 
   # Prepare trend_point data ------------------------------------------------------
@@ -115,7 +118,7 @@ prep_trend_long <- function(dat, filtered_list, dat_name, remove_cols) {
     )
     filtered_list[[dat_name]] <- split_years(dat)
   } else {
-    filtered_list[dat_name] <- list(data.frame)
+    filtered_list[dat_name] <- list(data.frame())
   }
   return(filtered_list)
 }
