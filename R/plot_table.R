@@ -44,7 +44,7 @@ plot_table <- function(no_trend_list, y_axis = "state_var", y_value = "est_point
 
 
 y_plot <- ggplot2::ggplot() +
-  plot_y_axis(vec = unique(data_plot_table[[y_axis]][!is.na(data_plot_table[[y_axis]])])) +
+  plot_single_column(vec = unique(data_plot_table[[y_axis]][!is.na(data_plot_table[[y_axis]])])) +
   theme_table()
 
 
@@ -65,11 +65,15 @@ table_final <- patchwork::wrap_plots(y_plot, table_plot, widths = c(0.3, 1))  &
     # As margin is not perfectly eliminated
     axis.ticks.length.y = ggplot2::unit(0, "pt")
   )
-table_final +
-  patchwork::plot_annotation(
-  caption = "Anmerkungen. In der Tabelle werden gerundete Werte angegeben. \n
-        R2 = Determinationskoeffizient; M = Mittelwert. \n
-        Fett gedruckte Werte unterscheiden sind statistisch signifikant (p < .05) vom Wert fuer Deutschland insgesamt. \n
-        Schraffierte Balken zeigen eine statistisch nicht signifikante Differenz vom Wert fuer Deutschland insgesamt an.") +
-  NULL
+
+# table_final +
+#   patchwork::plot_annotation(
+#   caption = "Anmerkungen. In der Tabelle werden gerundete Werte angegeben. \n
+#         R2 = Determinationskoeffizient; M = Mittelwert. \n
+#         Fett gedruckte Werte unterscheiden sind statistisch signifikant (p < .05) vom Wert fuer Deutschland insgesamt. \n
+#         Schraffierte Balken zeigen eine statistisch nicht signifikante Differenz vom Wert fuer Deutschland insgesamt an.") +
+#   NULL
+
+return(table_final)
+
 }

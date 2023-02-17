@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples # tbd
-plot_y_axis <- function(vec) {
+plot_single_column <- function(vec) {
   dat <- as.data.frame(vec)
   dat$x_label <- rep("y_value", nrow(dat))
 
