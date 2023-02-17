@@ -120,7 +120,7 @@ prep_trend <- function(dat,
   lineplot_years <- consecutive_numbers(c(trend_data_final$year_start, trend_data_final$year_end))
   plot_dat[["plot_lines"]] <- trend_data_final[filter_years(trend_data_final, lineplot_years), ]
 
-  if (plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
+  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
   }
 
@@ -136,7 +136,9 @@ prep_trend <- function(dat,
   }
 
   plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, plot_years_braces), ]
+  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
   plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
+  }
 
   # plot_background_lines
   plot_dat[["plot_background_lines"]] <- trend_data_wholeGroup[filter_years(trend_data_wholeGroup, lineplot_years), ]

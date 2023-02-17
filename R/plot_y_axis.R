@@ -29,7 +29,8 @@ plot_y_axis <- function(vec) {
       hjust = "left",
       nudge_x = -0.55,
       inherit.aes = FALSE
-    )
+    ),
+    ggplot2::scale_x_discrete(position = "top")
 
   )
   return(y_axis_settings)

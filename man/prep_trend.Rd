@@ -13,7 +13,8 @@ prep_trend(
   group_var = "group",
   x_braces = NULL,
   sig_niveau = 0.05,
-  plot_mean = FALSE
+  plot_mean = FALSE,
+  parameter = "mean"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ prep_trend(
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 
 \item{plot_mean}{Logical value indicating whether the mean of both subgroups should be plotted as well.}
+
+\item{parameter}{Character string of the parameter value that should be reported. Defaults to \code{"mean"}.}
 }
 \value{
 \code{prep_trend()} returns a list containing four data.frames prepared for plotting with different \link{eatPlot} functions. This includes the data.frames:

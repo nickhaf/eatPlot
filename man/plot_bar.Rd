@@ -15,7 +15,8 @@ plot_bar(
   bar_pattern_setting = sig_pattern,
   bar_pattern_fill = "grouping_var",
   bar_pattern_fill_setting = adj_pattern_fill,
-  bar_frame_setting = sig_frame
+  bar_frame_setting = sig_frame,
+  parameter = "mean"
 )
 }
 \arguments{
@@ -33,7 +34,7 @@ plot_bar(
 
 \item{bar_fill_setting}{Named vector with the bar filling colours. Names of the vector must be found in the column specified in \code{bar_fill}. Defaults to ...}
 
-\item{bar_pattern_setting}{Named vector with the pattern types. Names of the vector must be found in the column specified in \code{bar_pattern}. Defaults to ...}
+\item{bar_pattern_setting}{Named vector with the pattern types. Names of the vector must be found in the column specified in \code{grouping}. Defaults to ...}
 
 \item{bar_pattern_fill}{Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to \code{fill_wholeGroup}, so the groups found in "data$grouping_var" are represented in the colours of the bar pattern.}
 
