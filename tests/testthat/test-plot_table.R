@@ -30,7 +30,7 @@ test_that("Axis are labeled correctly", {
 test_that("Table plot is still the same", {
   df <- data.frame(
     x_label = factor(c("Adjusted", "Adjusted", "y_label", "y_label"), levels = c("y_label", "Adjusted"), ordered = TRUE),
-    group_var = c("Berlin", "Brandenburg", "Berlin", "Brandenburg"),
+    state_var = c("Berlin", "Brandenburg", "Berlin", "Brandenburg"),
     y_value = c("12", "20", "14", "15")
   )
 
