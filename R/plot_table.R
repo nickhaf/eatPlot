@@ -10,13 +10,14 @@
 build_columns <- function(data_plot_table) {
  column_settings <-  c(
     lapply(unique(data_plot_table$x_label), function(x_label) {
+
       ggplot2::geom_text(
         data = data_plot_table[data_plot_table$x_label == x_label, ],
         size = 3,
         hjust = "center"
       )
     }),
-    ggplot2::scale_x_discrete(position = "top")
+    ggplot2::scale_x_discrete(position = "top", name = NULL)
   )
  return(column_settings)
 }
@@ -27,6 +28,7 @@ build_columns <- function(data_plot_table) {
 #' `plot_table()` builds a table as ggplot2 object.
 #'
 #' @param no_trend_list Input is a list prepared by [prep_no_trend()]. You can also use the according data.frame named `plot_table` from this list.
+#' @param y_axis Character string of the column name containing the y-axis labels. Defaults to `"state_var"`.
 #' @param y_value Character string of the column name containing values that should be written in the table columns. Defaults to `"est_point"`, which are the ability estimates in the states.
 
 #'
@@ -43,8 +45,9 @@ plot_table <- function(no_trend_list, y_axis = "state_var", y_value = "est_point
   }
 
 
-y_plot <- ggplot2::ggplot() +
-  plot_single_column(vec = unique(data_plot_table[[y_axis]][!is.na(data_plot_table[[y_axis]])])) +
+y_plot <- ggplot2::ggplot(data_plot_table, ggplot2::aes(y = .data[[y_axis]])) +
+  plot_stripes() +
+  plot_column(vec = unique(data_plot_table[[y_axis]][!is.na(data_plot_table[[y_axis]])])) +
   theme_table()
 
 
@@ -54,8 +57,8 @@ table_plot <- ggplot2::ggplot(
     x = .data$x_label,
     y = .data[[y_axis]],
     label = .data[[y_value]]
-  )
-) +
+  )) +
+    plot_stripes() +
     build_columns(data_plot_table) +
     theme_table()
 

@@ -75,7 +75,7 @@
 # y_value <- "state_var"
 #
 # y_axis_plot <- ggplot2::ggplot() +
-#   plot_single_column(vec = unique(data_bar_l$state_var)) +
+#   plot_column(vec = unique(data_bar_l$state_var)) +
 #   theme_y_axis()
 #
 # patchwork::wrap_plots(y_axis_plot,
@@ -111,7 +111,7 @@
 #   ggstats::geom_stripped_rows(
 #     odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
 #     even = "#00000000") +
-#   #plot_single_column(unique(dat_p$keyword_no_comp)) +
+#   #plot_column(unique(dat_p$keyword_no_comp)) +
 #   build_columns(data_plot_table = dat_p) +
 #   theme_table()
 #
