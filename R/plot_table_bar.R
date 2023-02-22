@@ -16,5 +16,10 @@ plot_table_bar <- function(p_1, p_2){
   p_2 <- p_2 +
     ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
 
-  cowplot::plot_grid(p_1, p_2, nrow = 1, align = "h")
-}
+  patchwork::wrap_plots(p_1, p_2, widths = c(0.3, 1))  &
+    ggplot2::theme(
+      plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"),
+      # As margin is not perfectly eliminated
+      axis.ticks.length.y = ggplot2::unit(0, "pt")
+    )
+  }

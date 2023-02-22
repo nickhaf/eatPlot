@@ -18,12 +18,12 @@ Depends:
     R (>= 2.10)
 LazyData: true
 Imports: 
-    cowplot,
     ggbrace,
     ggpattern,
     ggplot2,
     ggstats,
     ggtext,
+    patchwork,
     plyr,
     rlang
 Remotes: NicolasH2/ggbrace

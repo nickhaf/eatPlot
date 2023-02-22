@@ -15,8 +15,7 @@ plot_bar(
   bar_pattern_setting = sig_pattern,
   bar_pattern_fill = "grouping_var",
   bar_pattern_fill_setting = adj_pattern_fill,
-  bar_frame_setting = sig_frame,
-  parameter = "mean"
+  bar_frame_setting = sig_frame
 )
 }
 \arguments{

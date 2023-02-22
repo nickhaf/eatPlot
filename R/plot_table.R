@@ -1,33 +1,9 @@
-
-#' Build columns from geom_text
-#'
-#' @param data_plot_table Data prepared with \code{prep_tableplot()}.
-#'
-#' @return ggplot2 object
-#' @export
-#'
-#' @examples #tbd
-build_columns <- function(data_plot_table) {
- column_settings <-  c(
-    lapply(unique(data_plot_table$x_label), function(x_label) {
-
-      ggplot2::geom_text(
-        data = data_plot_table[data_plot_table$x_label == x_label, ],
-        size = 3,
-        hjust = "center"
-      )
-    }),
-    ggplot2::scale_x_discrete(position = "top", name = NULL)
-  )
- return(column_settings)
-}
-
-
 #' Draw an IQB table.
 #'
 #' `plot_table()` builds a table as ggplot2 object.
 #'
 #' @param no_trend_list Input is a list prepared by [prep_no_trend()]. You can also use the according data.frame named `plot_table` from this list.
+#' @param x_axis Character string of the column name containing the x-axis labels, meaning the column names. Defaults to `"grouping_var"`.
 #' @param y_axis Character string of the column name containing the y-axis labels. Defaults to `"state_var"`.
 #' @param y_value Character string of the column name containing values that should be written in the table columns. Defaults to `"est_point"`, which are the ability estimates in the states.
 
@@ -36,7 +12,7 @@ build_columns <- function(data_plot_table) {
 #' @export
 #'
 #' @examples #tbd
-plot_table <- function(no_trend_list, y_axis = "state_var", y_value = "est_point") {
+plot_table <- function(no_trend_list, x_axis = "grouping_var", y_axis = "state_var", y_value = "est_point") {
 
   if(inherits(no_trend_list, "list")){
     data_plot_table <- no_trend_list[["plot_bar"]]
@@ -54,12 +30,12 @@ y_plot <- ggplot2::ggplot(data_plot_table, ggplot2::aes(y = .data[[y_axis]])) +
 table_plot <- ggplot2::ggplot(
   data_plot_table,
   ggplot2::aes(
-    x = .data$x_label,
+    x = .data[[x_axis]],
     y = .data[[y_axis]],
     label = .data[[y_value]]
   )) +
     plot_stripes() +
-    build_columns(data_plot_table) +
+    build_columns(data_plot_table, x_axis) +
     theme_table()
 
 table_final <- patchwork::wrap_plots(y_plot, table_plot, widths = c(0.3, 1))  &
@@ -79,4 +55,30 @@ table_final <- patchwork::wrap_plots(y_plot, table_plot, widths = c(0.3, 1))  &
 
 return(table_final)
 
+}
+
+
+
+#' Build columns
+#'
+#' @param data_plot_table Data.
+#' @inheritParams plot_table
+#'
+#' @return ggplot2 object
+#' @export
+#'
+#' @examples #tbd
+build_columns <- function(data_plot_table, x_axis) {
+  column_settings <-  c(
+    lapply(unique(data_plot_table[[x_axis]]), function(x_label) {
+
+      ggplot2::geom_text(
+        data = data_plot_table[data_plot_table[[x_axis]] == x_label, ],
+        size = 3,
+        hjust = "center"
+      )
+    }),
+    ggplot2::scale_x_discrete(position = "top", name = NULL)
+  )
+  return(column_settings)
 }

@@ -4,10 +4,19 @@
 \alias{plot_table}
 \title{Draw an IQB table.}
 \usage{
-plot_table(no_trend_list, y_value = "est_point")
+plot_table(
+  no_trend_list,
+  x_axis = "grouping_var",
+  y_axis = "state_var",
+  y_value = "est_point"
+)
 }
 \arguments{
 \item{no_trend_list}{Input is a list prepared by \code{\link[=prep_no_trend]{prep_no_trend()}}. You can also use the according data.frame named \code{plot_table} from this list.}
+
+\item{x_axis}{Character string of the column name containing the x-axis labels, meaning the column names. Defaults to \code{"grouping_var"}.}
+
+\item{y_axis}{Character string of the column name containing the y-axis labels. Defaults to \code{"state_var"}.}
 
 \item{y_value}{Character string of the column name containing values that should be written in the table columns. Defaults to \code{"est_point"}, which are the ability estimates in the states.}
 }

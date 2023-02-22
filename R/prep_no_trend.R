@@ -60,44 +60,16 @@ prep_no_trend <- function(dat,
   plot_dat[["plot_bar"]] <- dat_bar
 
 
-# Prepare tableplot -------------------------------------------------------
-
-  if(grouping_var == columns){
-    dat_no_trend$x_label <- dat_no_trend$grouping_var
-  }else{
-    dat_no_trend$x_label <- dat_no_trend[, columns]
-  }
-
-
-  dat_y_labels <- data.frame(group_var = unique(dat_no_trend$group_var),
-                              x_label = rep("y_label",
-                                            length(unique(dat_no_trend$group_var))
-                                            )
-                              )
-
-
-  # fill in non-overlapping columns with NAs
-  dat_no_trend[setdiff(names(dat_y_labels), names(dat_no_trend))] <- NA
-  dat_y_labels[setdiff(names(dat_no_trend), names(dat_y_labels))] <- NA
-
-
-  dat_table <- rbind(dat_no_trend,
-                dat_y_labels)
-
-
-  dat_table$x_label <- factor(dat_table$x_label, levels = c("y_label", unique(dat_table$x_label[dat_table$x_label != "y_label"])), ordered = TRUE)
-
-
-
-  plot_dat[["plot_table"]] <- dat_table
+  # Prepare tableplot -------------------------------------------------------
+  plot_dat[["plot_table"]] <- dat_no_trend
 
   return(plot_dat)
-  }
+}
 
 
 ## Helpers
 
 calc_fill <- function(dat, col_1, col_2) {
   dat$fill <- ifelse(is.na(dat[, col_1]) | is.na(dat[, col_2]), NA,  paste0(dat[, col_1], "_", dat[, col_2]))
-    return(dat)
+  return(dat)
 }
