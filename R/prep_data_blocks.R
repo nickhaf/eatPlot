@@ -28,7 +28,7 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   if (any(!is.na(data_clean$comparison))) {
     filtered_list[["point_comp_data"]] <- prep_point_long(dat = data_clean[!is.na(data_clean$comparison), ])
   } else {
-    filtered_list["point_comp_data"] <- list(data.frame)
+    filtered_list["point_comp_data"] <- list(data.frame())
   }
 
   # Prepare trend comparison data ------------------------------------------------------
