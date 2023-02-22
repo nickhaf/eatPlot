@@ -2,18 +2,20 @@
 % Please edit documentation in R/plot_table.R
 \name{build_columns}
 \alias{build_columns}
-\title{Build columns from geom_text}
+\title{Build columns}
 \usage{
-build_columns(data_plot_table)
+build_columns(data_plot_table, x_axis)
 }
 \arguments{
-\item{data_plot_table}{Data prepared with \code{prep_tableplot()}.}
+\item{data_plot_table}{Data.}
+
+\item{x_axis}{Character string of the column name containing the x-axis labels, meaning the column names. Defaults to \code{"grouping_var"}.}
 }
 \value{
 ggplot2 object
 }
 \description{
-Build columns from geom_text
+Build columns
 }
 \examples{
 #tbd

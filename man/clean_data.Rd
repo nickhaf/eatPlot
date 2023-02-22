@@ -12,7 +12,8 @@ clean_data(
   grouping_var = "",
   group_var = "group",
   state_var = "TR_BUNDESLAND",
-  competence_var = "kb"
+  competence_var = "kb",
+  parameter = "mean"
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ clean_data(
 \item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
 
 \item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
+
+\item{parameter}{Character string of the parameter value that should be reported. Defaults to \code{"mean"}.}
 }
 \value{
 \code{clean_data()} returns a \code{data.frame} with renamend columns and filled in \code{NAs}.

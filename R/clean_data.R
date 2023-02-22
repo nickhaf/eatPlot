@@ -15,7 +15,15 @@
 #' @export
 #'
 #' @examples # tbd
-clean_data <- function(dat, states, sub_groups, competence, grouping_var = "", group_var = "group", state_var = "TR_BUNDESLAND", competence_var = "kb") {
+clean_data <- function(dat,
+                       states,
+                       sub_groups,
+                       competence,
+                       grouping_var = "",
+                       group_var = "group",
+                       state_var = "TR_BUNDESLAND",
+                       competence_var = "kb",
+                       parameter = "mean") {
 
   if(!(group_var %in% colnames(dat))){stop(paste0("group_var: '", group_var, "' not found in dat."))}
   if(!(state_var %in% colnames(dat))){stop(paste0("state_var: '", state_var, "' not found in dat."))}
@@ -23,7 +31,7 @@ clean_data <- function(dat, states, sub_groups, competence, grouping_var = "", g
 
   # Select relevant rows
   if ("parameter" %in% colnames(dat)) {
-    dat <- dat[dat$parameter == "mean", ]
+    dat <- dat[dat$parameter == parameter, ]
   }
   dat <- dat[dat[, competence_var] == competence, ]
 
@@ -38,7 +46,7 @@ clean_data <- function(dat, states, sub_groups, competence, grouping_var = "", g
   colnames(dat) <- gsub("\\.", "_", colnames(dat))
   colnames(dat) <- gsub("sig_", "p_", colnames(dat))
   colnames(dat) <- gsub("^sig$", "p", colnames(dat))
-  dat <- dat[, !colnames(dat) %in% c("modus", "depVar", "modus", "parameter", "kb")]
+  dat <- dat[, !colnames(dat) %in% c("modus", "modus", "parameter", "kb")]
 
   # Fill up NAs
   dat <- fill_up_na(dat, info_to = "state_var", filling_groups = states)

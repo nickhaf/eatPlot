@@ -48,3 +48,6 @@ test_that("Example barplot can be plotted with different frames", {
                               plot_bar(plot_data[["plot_bar"]],
                                        grouping_type = "frame"))
 })
+
+
+

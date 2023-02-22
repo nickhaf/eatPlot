@@ -11,6 +11,7 @@
 #' @param x_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #' @param plot_mean Logical value indicating whether the mean of both subgroups should be plotted as well.
+#' @param parameter Character string of the parameter value that should be reported. Defaults to `"mean"`.
 #'
 #' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
 #' * `plot_points` for plotting with [plot_points()]
@@ -28,7 +29,9 @@ prep_trend <- function(dat,
                        group_var = "group",
                        x_braces = NULL,
                        sig_niveau = 0.05,
-                       plot_mean = FALSE) {
+                       plot_mean = FALSE,
+                       parameter = "mean") {
+  dat <- as.data.frame(dat)
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
@@ -44,14 +47,15 @@ prep_trend <- function(dat,
     grouping_var = grouping_var,
     group_var = group_var,
     state_var = state_var,
-    competence_var = competence_var
+    competence_var = competence_var,
+    parameter = parameter
   )
 
-  if (any(!is.na(states))) {
+  if (any(!is.na(dat$comparison))) {
     dat <- get_comparisons(dat,
       group_col = "group_var",
       states = states[states != "wholeGroup"],
-      sub_groups = "sub_groups"
+      sub_groups = sub_groups
     )
   }
 
@@ -62,17 +66,22 @@ prep_trend <- function(dat,
     sub_groups
   )
 
+
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison:
   comp_wholeGroup <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "wholeGroup", ]
   comp_state <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "BL" | list_building_blocks[["trend_comp_data"]]$compare_1 == "_groupingVar", ]
 
-  comp_within_whole <- merge_trend_data(
-    trend_data_1 = comp_state,
-    trend_data_2 = comp_wholeGroup,
-    suffixes = c("_comp_within", "_comp_whole"),
-    all.x = TRUE
-  )
+  if (nrow(comp_state) != 0) {
+    comp_within_whole <- merge_trend_data(
+      trend_data_1 = comp_state,
+      trend_data_2 = comp_wholeGroup,
+      suffixes = c("_comp_within", "_comp_whole"),
+      all.x = TRUE
+    )
+  } else {
+    comp_within_whole <- comp_wholeGroup
+  }
 
   ## Add data without comparison:
   trend_data_merged <- merge_trend_data(
@@ -86,7 +95,7 @@ prep_trend <- function(dat,
 
   trend_data_final <- merge_trend_point(
     trend_data = trend_data_merged,
-    point_data = list_building_blocks[["point_data"]]
+    point_data = list_building_blocks[["point_no_comp_data"]]
   )
 
   # Prepare the wholeGroup data.frame ---------------------------------------
@@ -105,13 +114,13 @@ prep_trend <- function(dat,
   plot_dat <- list()
 
   # plot_points
-  plot_dat[["plot_points"]] <- list_building_blocks[["point_data"]]
+  plot_dat[["plot_points"]] <- list_building_blocks[["point_no_comp_data"]]
 
   # plot_lines
   lineplot_years <- consecutive_numbers(c(trend_data_final$year_start, trend_data_final$year_end))
   plot_dat[["plot_lines"]] <- trend_data_final[filter_years(trend_data_final, lineplot_years), ]
 
-  if (plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
+  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
   }
 
@@ -127,10 +136,20 @@ prep_trend <- function(dat,
   }
 
   plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, plot_years_braces), ]
+  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
   plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
+  }
 
   # plot_background_lines
   plot_dat[["plot_background_lines"]] <- trend_data_wholeGroup[filter_years(trend_data_wholeGroup, lineplot_years), ]
+
+  # plot_bar
+  plot_dat[["plot_bar"]] <- merge(list_building_blocks[["point_no_comp_data"]],
+    list_building_blocks[["point_comp_data"]],
+    by = c("state_var", "year", "grouping_var", "depVar"),
+    suffixes = c("_no_comp", "_comp"),
+    all = TRUE
+  )
 
   return(plot_dat)
 }
@@ -158,3 +177,4 @@ filter_years <- function(dat, year_list) {
 # x_braces = NULL
 # sig_niveau = 0.05
 # plot_mean = FALSE
+# parameter = "mean"
