@@ -2,7 +2,9 @@
 #'
 #' @param plot_data Input is a list prepared by [prep_trend()].
 #' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_point`.
-#' @param
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_point"`.
+#' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_point_start", "est_point_end")`.
+#' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_trend_comp_within"`.
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
@@ -14,6 +16,9 @@
 #' @examples # tbd
 plot_lineplot <- function(plot_data,
                           point_values = "est_point",
+                          point_sig = "sig_point",
+                          line_values = c("est_point_start", "est_point_end"),
+                          line_sig = "sig_trend_comp_within",
                           label_est = "est_trend_no_comp",
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
@@ -33,10 +38,20 @@ plot_lineplot <- function(plot_data,
 
     p1 <- ggplot2::ggplot() +
       settings_lineplot(plot_data_state[["plot_lines"]]) +
-      plot_braces(plot_data[["plot_braces"]], BL = i, label_est, label_se, label_sig_high, label_sig_bold) +
-      plot_background_lines(plot_data[["plot_background_lines"]]) +
-      plot_points(plot_data_state[["plot_points"]]) +
-      plot_lines(plot_data_state[["plot_lines"]]) +
+      plot_braces(plot_data[["plot_braces"]],
+                  BL = i,
+                  label_est,
+                  label_se,
+                  label_sig_high,
+                  label_sig_bold) +
+      plot_background_lines(plot_data[["plot_background_lines"]],
+                            line_values = line_values) +
+      plot_points(plot_data_state[["plot_points"]],
+                  point_values = point_values,
+                  point_sig = point_sig) +
+      plot_lines(plot_data_state[["plot_lines"]],
+                 line_values = line_values,
+                 line_sig = line_sig) +
       ggplot2::labs(title = paste0(i, "\n", " ")) + ## Title
       NULL
 
