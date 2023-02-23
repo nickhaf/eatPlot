@@ -1,6 +1,8 @@
 #' Title
 #'
 #' @param plot_data Input is a list prepared by [prep_trend()].
+#' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_point`.
+#' @param
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
@@ -11,6 +13,7 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(plot_data,
+                          point_values = "est_point",
                           label_est = "est_trend_no_comp",
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
@@ -19,7 +22,7 @@ plot_lineplot <- function(plot_data,
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
-  range_est <- range(c(plot_data[["plot_lines"]]$est_point_start, plot_data[["plot_lines"]]$est_point_start))
+  range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   position <- 1
 
   for(i in states){
