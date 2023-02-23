@@ -90,5 +90,6 @@ recode_to_factor <- function(col, grouping_var){
   }
   levels(col) <- c(levels(col), "noGroup")
   col[is.na(col)] <- "noGroup"
+  col <- droplevels(col)
 return(col)
   }
