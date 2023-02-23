@@ -8,7 +8,7 @@ test_that("Pointplot is still the same", {
                  )
 
   vdiffr::expect_doppelganger("Plotting Points", ggplot2::ggplot() +
-    plot_points(df)
+    plot_points(df, point_values = "est_point", point_sig = "sig_point")
   )
 
 })

@@ -8,7 +8,8 @@
 #'
 #' @examples #tbd
 grouping_colours <- function(...){
-  ggplot2::scale_colour_manual(values = c(
+  ggplot2::scale_colour_manual(
+    values = c(
     "0" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
     "1" = "black"
   ), ... )

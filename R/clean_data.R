@@ -37,10 +37,9 @@ clean_data <- function(dat,
 
   # Rename columns
   if (grouping_var == "") {
-    dat$grouping_var <- rep(NA, nrow(dat))
+    dat$grouping_var <- factor(rep(NA, nrow(dat)))
   } else {
     dat <- rename_column(data = dat, old = grouping_var, new = "grouping_var")
-    dat$grouping_var <- factor(dat$grouping_var)
   }
   dat <- rename_column(data = dat, old = state_var, new = "state_var")
   dat <- rename_column(data = dat, old = group_var, new = "group_var")
@@ -52,8 +51,8 @@ clean_data <- function(dat,
   # Fill up NAs
   dat <- fill_up_na(dat, info_to = "state_var", filling_groups = states)
   dat <- fill_up_na(dat, info_to = "grouping_var", filling_groups = sub_groups)
-  levels(dat$grouping_var) <- c(levels(dat$grouping_var), "noGroup")
   dat[is.na(dat$grouping_var), "grouping_var"] <- "noGroup"
+  dat$grouping_var <- factor(dat$grouping_var)
   dat[is.na(dat$state_var) & (
     grepl("wholeGroup", dat$group_var) |
       grepl(

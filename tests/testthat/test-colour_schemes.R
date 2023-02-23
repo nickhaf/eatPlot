@@ -1,6 +1,6 @@
 test_that("Pointplot is still the same", {
   df_points <- data.frame(
-    grouping_var = rep(c("0", "1"), 4),
+    grouping_var = factor(rep(c("0", "1"), 4)),
     year = c(2011, 2011, 2012, 2012, 2024, 2024, 2030, 2030),
     est_point = 100:107,
     p = seq(0.02, 0.09, by = 0.01),
@@ -13,17 +13,21 @@ test_that("Pointplot is still the same", {
                          sig_trend_comp_within = c(TRUE, FALSE, TRUE, FALSE),
                          est_point_start = c(10:13),
                          est_point_end = c(14:17),
-                         grouping_var = c(0, 1, 0, 1)
+                         grouping_var = factor(c(0, 1, 0, 1))
   )
 
 p_points <- ggplot2::ggplot() +
-    plot_points(df_points) +
+    plot_points(df_points,
+                point_values = "est_point",
+                point_sig = "sig_point") +
     grouping_colours()
 test_colour_points <- ggplot2::ggplot_build(p_points)
 
 
 p_lines <- ggplot2::ggplot() +
-  plot_lines(data_plot_lines = df_lines) +
+  plot_lines(data_plot_lines = df_lines,
+             line_values = c("est_point_start", "est_point_end"),
+             line_sig = "sig_trend_comp_within") +
   grouping_colours()
 test_colour_points <- ggplot2::ggplot_build(p_points)
 
