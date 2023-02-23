@@ -84,7 +84,7 @@ prep_trend <- function(dat,
   }
 
   ## Add data without comparison:
-  if (nrow(comp_within_whole != 0)) {
+  if (nrow(comp_within_whole) != 0) {
     trend_data_merged <- merge_trend_data(
       trend_data_1 = comp_within_whole,
       trend_data_2 = list_building_blocks[["trend_no_comp_data"]],
@@ -176,7 +176,6 @@ filter_years <- function(dat, year_list) {
   return(year_rows)
 }
 
-#
 # dat <- trend_books
 # grouping_var = "KBuecher_imp3"
 # competence = "GL"
