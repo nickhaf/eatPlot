@@ -84,12 +84,16 @@ prep_trend <- function(dat,
   }
 
   ## Add data without comparison:
-  trend_data_merged <- merge_trend_data(
-    trend_data_1 = comp_within_whole,
-    trend_data_2 = list_building_blocks[["trend_no_comp_data"]],
-    suffixes = c("_comp", "_no_comp"),
-    all = TRUE
-  )
+  if (nrow(comp_within_whole) != 0) {
+    trend_data_merged <- merge_trend_data(
+      trend_data_1 = comp_within_whole,
+      trend_data_2 = list_building_blocks[["trend_no_comp_data"]],
+      suffixes = c("_comp", "_no_comp"),
+      all = TRUE
+    )
+  } else {
+    trend_data_merged <- list_building_blocks[["trend_no_comp_data"]]
+  }
   colnames(trend_data_merged) <- gsub("_trend$", "_trend_no_comp", colnames(trend_data_merged))
 
 
@@ -137,20 +141,25 @@ prep_trend <- function(dat,
 
   plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, plot_years_braces), ]
   if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
-  plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
+    plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
   }
 
   # plot_background_lines
   plot_dat[["plot_background_lines"]] <- trend_data_wholeGroup[filter_years(trend_data_wholeGroup, lineplot_years), ]
 
   # plot_bar
-  plot_dat[["plot_bar"]] <- merge(list_building_blocks[["point_no_comp_data"]],
-    list_building_blocks[["point_comp_data"]],
-    by = c("state_var", "year", "grouping_var", "depVar"),
-    suffixes = c("_no_comp", "_comp"),
-    all = TRUE
-  )
 
+  if (nrow(comp_state) != 0) {
+    plot_dat[["plot_bar"]] <- merge(
+      list_building_blocks[["point_no_comp_data"]],
+      list_building_blocks[["point_comp_data"]],
+      by = c("state_var", "year", "grouping_var", "depVar"),
+      suffixes = c("_no_comp", "_comp"),
+      all = TRUE
+    )
+  } else {
+    plot_dat[["plot_bar"]] <- list_building_blocks[["point_no_comp_data"]]
+  }
   return(plot_dat)
 }
 
@@ -167,7 +176,6 @@ filter_years <- function(dat, year_list) {
   return(year_rows)
 }
 
-#
 # dat <- trend_books
 # grouping_var = "KBuecher_imp3"
 # competence = "GL"
