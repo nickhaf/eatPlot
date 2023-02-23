@@ -4,7 +4,7 @@ test_that("y limits are set correctly", {
     state_var = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
     year_end = c(2020, 2020, 2020, 2020),
-    grouping_var = c(0, 1, 0, 1),
+    grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
@@ -14,7 +14,12 @@ test_that("y limits are set correctly", {
   )
 
   test_p <- ggplot2::ggplot() +
-    plot_braces(df, BL = "Berlin", label_est = "est", label_se = "se", label_sig_high = "sig_1", "label_sig_bold" = "sig_2")
+    plot_braces(df,
+                BL = "Berlin",
+                label_est = "est",
+                label_se = "se",
+                label_sig_high = "sig_1",
+                label_sig_bold = "sig_2")
   coords <- c(360, 530)
 
   expect_equal(test_p$coordinates$limits$y, coords)
@@ -26,7 +31,7 @@ test_that("x-position of brace label is calculated correctly", {
     state_var = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
     year_end = c(2020, 2020, 2020, 2020),
-    grouping_var = c(0, 1, 0, 1),
+    grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
@@ -50,7 +55,7 @@ test_that("braces are plotted correctly", {
     state_var = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
     year_end = c(2020, 2020, 2020, 2020),
-    grouping_var = c(0, 1, 0, 1),
+    grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
@@ -81,7 +86,7 @@ test_that("significances are displayed correctly in the labels", {
     state_var = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
     year_end = c(2020, 2020, 2020, 2020),
-    grouping_var = c(0, 1, 0, 1),
+    grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
@@ -104,12 +109,19 @@ test_that("significances are displayed correctly in the labels", {
 })
 
 test_that("Example brace plot is still the same", {
-  plot_data <- prep_trend(dat = trend_books,
-                          grouping_var = "KBuecher_imp3",
-                          competence = "GL")
+  plot_data <- prep_trend(
+    dat = trend_books,
+    grouping_var = "KBuecher_imp3",
+    competence = "GL"
+  )
 
   vdiffr::expect_doppelganger("Brace plot trend_books", ggplot2::ggplot() +
-    plot_braces(plot_data[["plot_braces"]], BL = "Berlin", label_est = "est_trend_no_comp", label_se = "se_trend_no_comp", label_sig_high = "sig_trend_whole", label_sig_bold = "sig_trend_no_comp") +
+    plot_braces(plot_data[["plot_braces"]],
+                BL = "Berlin",
+                label_est = "est_trend_no_comp",
+                label_se = "se_trend_no_comp",
+                label_sig_high = "sig_trend_whole",
+                label_sig_bold = "sig_trend_no_comp") +
     ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")))
 })
 
@@ -119,7 +131,7 @@ test_that("Braces are plotted next to each other", {
     state_var = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
     year_end = c(2015, 2015, 2023, 2023),
-    grouping_var = c(0, 1, 0, 1),
+    grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
@@ -142,4 +154,3 @@ test_that("Braces are plotted next to each other", {
     p_braces
   })
 })
-

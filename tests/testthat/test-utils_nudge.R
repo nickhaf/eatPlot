@@ -3,7 +3,7 @@ test_that("calc_brace_coords works", {
     TR_BUNDESLAND = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
     year_end = c(2020, 2020, 2020, 2020),
-    grouping_var = c(0, 1, 0, 1),
+    grouping_var = factor(c(0, 1, 0, 1)),
     est_trend_within = c(1:4),
     se_trend_within = c(1:4),
     sig_trend_comp_within = c(TRUE, FALSE, FALSE, TRUE),
