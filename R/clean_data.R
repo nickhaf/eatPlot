@@ -79,17 +79,15 @@ fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
   return(dat)
 }
 
-recode_to_factor <- function(col, grouping_var){
+recode_to_factor <- function(vec, grouping_var){
   # Show a warning, if a grouping_var was provided, but not as factor.
-  if(!is.factor(col) & grouping_var != ""){
+  if(!is.factor(vec) & grouping_var != ""){
     warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
-    col <- factor(col)
+    vec <- as.factor(vec)
   }
-  if(!is.factor(col)){
-    col <- factor(col)
-  }
-  levels(col) <- c(levels(col), "noGroup")
-  col[is.na(col)] <- "noGroup"
-  col <- droplevels(col)
-return(col)
+  vec <- as.factor(vec)
+  levels(vec) <- c(levels(vec), "noGroup")
+  vec[is.na(vec)] <- "noGroup"
+  vec <- droplevels(vec)
+return(vec)
   }
