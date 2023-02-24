@@ -101,6 +101,7 @@ prep_trend <- function(dat,
     trend_data = trend_data_merged,
     point_data = list_building_blocks[["point_no_comp_data"]]
   )
+  trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
 
   # Prepare the wholeGroup data.frame ---------------------------------------
   trend_data_wholeGroup <- merge_trend_point(

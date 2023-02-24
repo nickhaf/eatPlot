@@ -4,10 +4,14 @@
 \alias{plot_lines}
 \title{Adds a layer with trend lines to a ggplot.}
 \usage{
-plot_lines(data_plot_lines)
+plot_lines(data_plot_lines, line_values, line_sig)
 }
 \arguments{
 \item{data_plot_lines}{data.}
+
+\item{line_values}{Character vector with two elements. Column names in \code{plot_data[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_point_start", "est_point_end")}.}
+
+\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_trend_comp_within"}.}
 }
 \value{
 ggplot2 object

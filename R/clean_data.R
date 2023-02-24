@@ -51,7 +51,8 @@ clean_data <- function(dat,
   # Fill up NAs
   dat <- fill_up_na(dat, info_to = "state_var", filling_groups = states)
   dat <- fill_up_na(dat, info_to = "grouping_var", filling_groups = sub_groups)
-  dat[is.na(dat$grouping_var), "grouping_var"] <- "noGroup"
+
+  dat$grouping_var <- recode_to_factor(dat$grouping_var, grouping_var = grouping_var)
   dat[is.na(dat$state_var) & (
     grepl("wholeGroup", dat$group_var) |
       grepl(
@@ -69,7 +70,24 @@ clean_data <- function(dat,
 
 # Utils
 fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
+  if(is.factor(dat[, info_to])){
+    new_levels <- filling_groups[!(filling_groups %in% levels(dat[, info_to]))]
+    levels(dat[, info_to]) <- c(levels(dat[,info_to]), new_levels)
+  }
   dat[is.na(dat[, info_to]), info_to] <- write_group(dat[is.na(dat[, info_to]), info_from], groups = filling_groups)
 
   return(dat)
 }
+
+recode_to_factor <- function(vec, grouping_var){
+  # Show a warning, if a grouping_var was provided, but not as factor.
+  if(!is.factor(vec) & grouping_var != ""){
+    warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
+    vec <- as.factor(vec)
+  }
+  vec <- as.factor(vec)
+  levels(vec) <- c(levels(vec), "noGroup")
+  vec[is.na(vec)] <- "noGroup"
+  vec <- droplevels(vec)
+return(vec)
+  }

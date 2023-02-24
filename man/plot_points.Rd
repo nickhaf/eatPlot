@@ -4,10 +4,14 @@
 \alias{plot_points}
 \title{Plot Points.}
 \usage{
-plot_points(data_plot_points)
+plot_points(data_plot_points, point_values, point_sig)
 }
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
+
+\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
+
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_point"}.}
 }
 \value{
 ggplot2 object
@@ -16,5 +20,5 @@ ggplot2 object
 Plot Points.
 }
 \examples{
-#tbd
+# tbd
 }
