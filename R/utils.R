@@ -209,11 +209,13 @@ get_comparisons <- function(dat, group_col, states, sub_groups){
 }
 
 
+# Overlap occurs, when one start point lies between a start and end point, or an end point lies between a start and an end point
 
 calc_overlap <- function(year_start, year_end){
 
   years <- c()
   for( i in 1:length(year_start)){
+
     years[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
   }
 return(years)

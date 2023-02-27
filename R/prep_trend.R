@@ -120,9 +120,6 @@ prep_trend <- function(dat,
   # Build plotlist ----------------------------------------------------------
   plot_dat <- list()
 
-  # plot_points
-  plot_dat[["plot_points"]] <- list_building_blocks[["point_no_comp_data"]]
-
   # plot_lines
 
   if(is.null(x_years)){
@@ -140,14 +137,14 @@ prep_trend <- function(dat,
   if (is.null(x_braces)) {
     ## Draw braces from last year to every other year
     plot_years <- unique(c(trend_data_final$year_start, trend_data_final$year_end))
-    plot_years_braces <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
+    braceplot_years <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
       c(x, max(plot_years))
     })
   } else {
-    plot_years_braces <- x_braces
+    braceplot_years <- x_braces
   }
 
-  plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, plot_years_braces), ]
+  plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, braceplot_years), ]
   if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
   }
@@ -168,6 +165,13 @@ prep_trend <- function(dat,
   } else {
     plot_dat[["plot_bar"]] <- list_building_blocks[["point_no_comp_data"]]
   }
+
+
+  # plot_points
+  plot_dat[["plot_points"]] <- list_building_blocks[["point_no_comp_data"]]
+  plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
+
+
   return(plot_dat)
 }
 
