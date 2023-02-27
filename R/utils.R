@@ -139,7 +139,7 @@ split_years <- function(data){
   }
   colnames(year_cols) <- c("year_start", "year_end")
   data <- cbind(data, year_cols)
-  data <- remove_columns(data, "year")
+  data <- rename_column(data, "year", "trend_years")
 
   return(data)
 }
