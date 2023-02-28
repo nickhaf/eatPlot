@@ -6,6 +6,8 @@
 \usage{
 plot_lineplot(
   plot_data,
+  left_plot_data = NULL,
+  right_plot_data = NULL,
   point_values = "est_point",
   point_sig = "sig_point",
   line_values = c("est_point_start", "est_point_end"),
@@ -18,6 +20,10 @@ plot_lineplot(
 }
 \arguments{
 \item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
+
+\item{left_plot_data}{Input data prepared by \code{\link[=prep_trend]{prep_trend()}} for the left part of a split lineplot. Only has to be specified if you want to plot split lineplots, and therefore defaults to \code{NULL}.}
+
+\item{right_plot_data}{Input data prepared by \code{\link[=prep_trend]{prep_trend()}} for the right part of a split lineplot. Only has to be specified if you want to plot split lineplots, and therefore defaults to \code{NULL}.}
 
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 

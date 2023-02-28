@@ -178,8 +178,8 @@ test_that("split plots are plotted correctly", {
   )
 
   vdiffr::expect_doppelganger("split grouped lineplot", plot_split_lineplot(
-    data_left_plot = test_plot_l,
-    data_right_plot = test_plot_r,
+    left_plot_data = test_plot_l,
+    right_plot_data = test_plot_r,
     y_range = c(180, 240),
     line_sig = "sig_trend",
     label_est = "est_label",

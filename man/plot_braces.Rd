@@ -6,6 +6,7 @@
 \usage{
 plot_braces(
   data_plot_braces,
+  y_range,
   BL,
   label_est,
   label_se,

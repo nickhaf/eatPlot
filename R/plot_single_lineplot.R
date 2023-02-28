@@ -44,8 +44,8 @@ plot_single_lineplot <- function(plot_data,
 }
 
 
-plot_split_lineplot <- function(data_left_plot,
-                                data_right_plot,
+plot_split_lineplot <- function(left_plot_data,
+                                right_plot_data,
                                 y_range,
                                 point_values = "est_point",
                                 point_sig = "sig_point",
@@ -55,10 +55,10 @@ plot_split_lineplot <- function(data_left_plot,
                                 label_se = "se_trend_no_comp",
                                 label_sig_high = "sig_trend_comp_whole",
                                 label_sig_bold = "sig_trend_no_comp") {
- res <- patchwork::wrap_plots(
+  res <- patchwork::wrap_plots(
     ggplot2::ggplot() +
       plot_single_lineplot(
-        plot_data = data_left_plot,
+        plot_data = left_plot_data,
         y_range = y_range,
         point_values = point_values,
         point_sig = point_sig,
@@ -72,7 +72,7 @@ plot_split_lineplot <- function(data_left_plot,
       ggplot2::labs(title = ggplot2::element_blank()),
     ggplot2::ggplot() +
       plot_single_lineplot(
-        plot_data = data_right_plot,
+        plot_data = right_plot_data,
         y_range = y_range,
         point_values = point_values,
         point_sig = point_sig,
@@ -86,9 +86,9 @@ plot_split_lineplot <- function(data_left_plot,
       ggplot2::labs(title = ggplot2::element_blank())
   )
 
- res_2 <- res &
-   patchwork::plot_annotation(title = unique(data_left_plot[["plot_braces"]]$state_var)) &
-   ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+  res_2 <- res &
+    patchwork::plot_annotation(title = unique(left_plot_data[["plot_braces"]]$state_var)) &
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 
- return(res_2)
+  return(res_2)
 }

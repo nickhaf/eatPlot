@@ -1,6 +1,8 @@
 #' Title
 #'
 #' @param plot_data Input is a list prepared by [prep_trend()].`
+#' @param left_plot_data Input data prepared by [prep_trend()] for the left part of a split lineplot. Only has to be specified if you want to plot split lineplots, and therefore defaults to `NULL`.
+#' @param right_plot_data Input data prepared by [prep_trend()] for the right part of a split lineplot. Only has to be specified if you want to plot split lineplots, and therefore defaults to `NULL`.
 #' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_point`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_point"`.
 #' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_point_start", "est_point_end")`.
@@ -15,6 +17,8 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(plot_data,
+                          left_plot_data = NULL,
+                          right_plot_data = NULL,
                           point_values = "est_point",
                           point_sig = "sig_point",
                           line_values = c("est_point_start", "est_point_end"),
@@ -31,13 +35,28 @@ plot_lineplot <- function(plot_data,
   position <- 1
 
   for(i in states){
+plot_data_states <- get_states(plot_data, state = i)
 
-    plot_data_state <- lapply(plot_data[c("plot_points", "plot_lines")], function(x){
-      x[x$state_var == i, ]
-    })
 
+if(!is.null(left_plot_data) & !is.null(right_plot_data)){
+  plot_data_states_left <- get_states(left_plot_data, state = i)
+  plot_data_states_right <- get_states(right_plot_data, state = i)
+
+  p1 <- plot_split_lineplot(left_plot_data = plot_data_states_left,
+                            right_plot_data = plot_data_states_right,
+                            y_range = range_est,
+                            point_values = point_values,
+                            point_sig = point_sig,
+                            line_values = line_values,
+                            line_sig = line_sig,
+                            label_est = label_est,
+                            label_se = label_se,
+                            label_sig_high = label_sig_high,
+                            label_sig_bold = label_sig_bold)
+}else{
     p1 <- ggplot2::ggplot() +
-      plot_single_lineplot(plot_data = plot_data,
+      plot_single_lineplot(plot_data = plot_data_states,
+                           y_range = range_est,
                            point_values = point_values,
                            point_sig = point_sig,
                            line_values = line_values,
@@ -46,7 +65,7 @@ plot_lineplot <- function(plot_data,
                            label_se = label_se,
                            label_sig_high = label_sig_high,
                            label_sig_bold = label_sig_bold)
-
+}
     if((position - 1) %% 4 == 0){
       p1 <- p1 +
         ggplot2::theme(axis.text.y = ggplot2::element_text(),
@@ -73,4 +92,12 @@ plot_lineplot <- function(plot_data,
   line_plot <- do.call(eval(parse(text = "gridExtra::grid.arrange")), c(grobs = lapply(plot_list, "+", plot_margin), ncol = nCol))
   #dev.off()
   return(line_plot)
+}
+
+get_states <- function(plot_data, state){
+  for(i in c("plot_points", "plot_lines")){
+    plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var == state, ]
+  }
+
+  return(plot_data)
 }
