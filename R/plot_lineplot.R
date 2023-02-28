@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @param plot_data Input is a list prepared by [prep_trend()].
+#' @param plot_data Input is a list prepared by [prep_trend()].`
 #' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_point`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_point"`.
 #' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_point_start", "est_point_end")`.
@@ -52,8 +52,7 @@ plot_lineplot <- function(plot_data,
         ggplot2::theme(axis.text.y = ggplot2::element_text(),
               axis.line.y = ggplot2::element_line(),
               axis.ticks.y = ggplot2::element_line()
-        ) +
-        ggplot2::scale_y_continuous(breaks = seq(from = round(range_est[1]-10, -1), to = round(range_est[2], -1), by = 20))
+        )
     }
 
     if(i == "wholeGroup"){
