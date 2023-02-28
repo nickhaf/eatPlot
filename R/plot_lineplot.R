@@ -37,23 +37,15 @@ plot_lineplot <- function(plot_data,
     })
 
     p1 <- ggplot2::ggplot() +
-      settings_lineplot(plot_data_state[["plot_lines"]]) +
-      plot_braces(plot_data[["plot_braces"]],
-                  BL = i,
-                  label_est,
-                  label_se,
-                  label_sig_high,
-                  label_sig_bold) +
-      plot_background_lines(plot_data[["plot_background_lines"]],
-                            line_values = line_values) +
-      plot_points(plot_data_state[["plot_points"]],
-                  point_values = point_values,
-                  point_sig = point_sig) +
-      plot_lines(plot_data_state[["plot_lines"]],
-                 line_values = line_values,
-                 line_sig = line_sig) +
-      ggplot2::labs(title = paste0(i, "\n", " ")) + ## Title
-      NULL
+      plot_single_lineplot(plot_data = plot_data,
+                           point_values = point_values,
+                           point_sig = point_sig,
+                           line_values = line_values,
+                           line_sig = line_sig,
+                           label_est = label_est,
+                           label_se = label_se,
+                           label_sig_high = label_sig_high,
+                           label_sig_bold = label_sig_bold)
 
     if((position - 1) %% 4 == 0){
       p1 <- p1 +
