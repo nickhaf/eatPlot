@@ -20,7 +20,7 @@ plot_single_lineplot <- function(plot_data,
   list(
     settings_lineplot(plot_data[["plot_lines"]]),
     plot_braces(plot_data[["plot_braces"]],
-                y_range = y_range,
+      y_range = y_range,
       BL = unique(plot_data[["plot_braces"]]$state_var),
       label_est,
       label_se,
@@ -44,8 +44,9 @@ plot_single_lineplot <- function(plot_data,
 }
 
 
-plot_split_lineplot <- function(plot_data,
-                                range_total,
+plot_split_lineplot <- function(data_left_plot,
+                                data_right_plot,
+                                y_range,
                                 point_values = "est_point",
                                 point_sig = "sig_point",
                                 line_values = c("est_point_start", "est_point_end"),
@@ -54,38 +55,40 @@ plot_split_lineplot <- function(plot_data,
                                 label_se = "se_trend_no_comp",
                                 label_sig_high = "sig_trend_comp_whole",
                                 label_sig_bold = "sig_trend_no_comp") {
-  left_plot <- ggplot2::ggplot() +
-    plot_single_lineplot(
-      plot_data = data_left_plot,
-      y_range = range_total,
-      point_values = point_values,
-      point_sig = point_sig,
-      line_values = line_values,
-      line_sig = line_sig,
-      label_est = label_est,
-      label_se = label_se,
-      label_sig_high = label_sig_high,
-      label_sig_bold = label_sig_bold
-    ) +
-    ggplot2::labs(title = ggplot2::element_blank())
+ res <- patchwork::wrap_plots(
+    ggplot2::ggplot() +
+      plot_single_lineplot(
+        plot_data = data_left_plot,
+        y_range = y_range,
+        point_values = point_values,
+        point_sig = point_sig,
+        line_values = line_values,
+        line_sig = line_sig,
+        label_est = label_est,
+        label_se = label_se,
+        label_sig_high = label_sig_high,
+        label_sig_bold = label_sig_bold
+      ) +
+      ggplot2::labs(title = ggplot2::element_blank()),
+    ggplot2::ggplot() +
+      plot_single_lineplot(
+        plot_data = data_right_plot,
+        y_range = y_range,
+        point_values = point_values,
+        point_sig = point_sig,
+        line_values = line_values,
+        line_sig = line_sig,
+        label_est = label_est,
+        label_se = label_se,
+        label_sig_high = label_sig_high,
+        label_sig_bold = label_sig_bold
+      ) +
+      ggplot2::labs(title = ggplot2::element_blank())
+  )
 
+ res_2 <- res &
+   patchwork::plot_annotation(title = unique(data_left_plot[["plot_braces"]]$state_var)) &
+   ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 
-  right_plot <- ggplot2::ggplot() +
-    plot_single_lineplot(
-      plot_data = data_right_plot,
-      y_range = range_total,
-      point_values = point_values,
-      point_sig = point_sig,
-      line_values = line_values,
-      line_sig = line_sig,
-      label_est = label_est,
-      label_se = label_se,
-      label_sig_high = label_sig_high,
-      label_sig_bold = label_sig_bold
-    ) +
-    ggplot2::labs(title = ggplot2::element_blank())
-
-  patchwork::wrap_plots(left_plot, right_plot) &
-    patchwork::plot_annotation(title = state) &
-    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+ return(res_2)
 }
