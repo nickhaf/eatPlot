@@ -26,55 +26,60 @@ plot_lineplot <- function(plot_data,
                           label_est = "est_trend_no_comp",
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
-                          label_sig_bold = "sig_trend_no_comp"){
-
+                          label_sig_bold = "sig_trend_no_comp") {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   position <- 1
 
-  for(i in states){
-plot_data_states <- get_states(plot_data, state = i)
+  for (i in states) {
+    plot_data_states <- get_states(plot_data, state = i)
 
 
-if(!is.null(left_plot_data) & !is.null(right_plot_data)){
-  plot_data_states_left <- get_states(left_plot_data, state = i)
-  plot_data_states_right <- get_states(right_plot_data, state = i)
+    if (!is.null(left_plot_data) & !is.null(right_plot_data)) {
+      plot_data_states_left <- get_states(left_plot_data, state = i)
+      plot_data_states_right <- get_states(right_plot_data, state = i)
 
-  p1 <- plot_split_lineplot(left_plot_data = plot_data_states_left,
-                            right_plot_data = plot_data_states_right,
-                            y_range = range_est,
-                            point_values = point_values,
-                            point_sig = point_sig,
-                            line_values = line_values,
-                            line_sig = line_sig,
-                            label_est = label_est,
-                            label_se = label_se,
-                            label_sig_high = label_sig_high,
-                            label_sig_bold = label_sig_bold)
-}else{
-    p1 <- ggplot2::ggplot() +
-      plot_single_lineplot(plot_data = plot_data_states,
-                           y_range = range_est,
-                           point_values = point_values,
-                           point_sig = point_sig,
-                           line_values = line_values,
-                           line_sig = line_sig,
-                           label_est = label_est,
-                           label_se = label_se,
-                           label_sig_high = label_sig_high,
-                           label_sig_bold = label_sig_bold)
-}
-    if((position - 1) %% 4 == 0){
-      p1 <- p1 +
-        ggplot2::theme(axis.text.y = ggplot2::element_text(),
-              axis.line.y = ggplot2::element_line(),
-              axis.ticks.y = ggplot2::element_line()
+      p1 <- plot_split_lineplot(
+        left_plot_data = plot_data_states_left,
+        right_plot_data = plot_data_states_right,
+        y_range = range_est,
+        point_values = point_values,
+        point_sig = point_sig,
+        line_values = line_values,
+        line_sig = line_sig,
+        label_est = label_est,
+        label_se = label_se,
+        label_sig_high = label_sig_high,
+        label_sig_bold = label_sig_bold
+      )
+    } else {
+      p1 <- ggplot2::ggplot() +
+        plot_single_lineplot(
+          plot_data = plot_data_states,
+          y_range = range_est,
+          point_values = point_values,
+          point_sig = point_sig,
+          line_values = line_values,
+          line_sig = line_sig,
+          label_est = label_est,
+          label_se = label_se,
+          label_sig_high = label_sig_high,
+          label_sig_bold = label_sig_bold
         )
     }
 
-    if(i == "wholeGroup"){
+    if ((position - 1) %% 4 == 0) {
+      p1 <- p1 +
+        ggplot2::theme(
+          axis.text.y = ggplot2::element_text(),
+          axis.line.y = ggplot2::element_line(),
+          axis.ticks.y = ggplot2::element_line()
+        )
+    }
+
+    if (i == "wholeGroup") {
       p1 <- p1 +
         ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
     }
@@ -86,16 +91,15 @@ if(!is.null(left_plot_data) & !is.null(right_plot_data)){
   n <- length(plot_list)
   nCol <- floor(sqrt(n))
 
-  ## Padding of white space around the plot:
-  plot_margin <- ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.07, "npc"))
-  #pdf(file = "Trend_Soz_Dis.pdf", width = 11, height = 22)
-  line_plot <- do.call(eval(parse(text = "gridExtra::grid.arrange")), c(grobs = lapply(plot_list, "+", plot_margin), ncol = nCol))
-  #dev.off()
-  return(line_plot)
-}
+  #plot_margin <- ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.07, "npc"))
+  patchwork::wrap_plots(plot_list, ncol = nCol) &
+    ggplot2::theme(
+      plot.margin = ggplot2::unit(c(0, 0, 0, 0), "npc")
+    )
+  }
 
-get_states <- function(plot_data, state){
-  for(i in c("plot_points", "plot_lines")){
+get_states <- function(plot_data, state) {
+  for (i in c("plot_points", "plot_lines")) {
     plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var == state, ]
   }
 

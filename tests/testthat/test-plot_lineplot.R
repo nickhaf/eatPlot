@@ -2,7 +2,7 @@
 #
 # p1 <- plot_lineplot(plot_data)
 
-test_that("correct states are chosen", {
+test_that("correct states are extracted", {
   test_plot_2 <- list(
     plot_points = data.frame(
       state_var = c("a", "b", "noGroup"),
@@ -45,3 +45,4 @@ expect_equal(get_states(test_plot_2, state = "a")$plot_points$state_var, c("a", 
 expect_equal(get_states(test_plot_2, state = "a")$plot_lines$state_var, c("a", "a"))
 
 })
+
