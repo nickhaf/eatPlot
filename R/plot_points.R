@@ -8,7 +8,6 @@
 #'
 #' @examples # tbd
 plot_points <- function(data_plot_points, point_values, point_sig) {
-  data_plot_points <- data_plot_points[data_plot_points$grouping_var != "noGroup", ]
   nudge_y_vec <- calc_y_nudge(data_plot_points[, point_values], n_groups = length(unique(data_plot_points$grouping_var)))
 
 

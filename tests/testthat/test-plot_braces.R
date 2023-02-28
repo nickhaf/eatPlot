@@ -15,6 +15,7 @@ test_that("y limits are set correctly", {
 
   test_p <- ggplot2::ggplot() +
     plot_braces(df,
+                y_range = c(400, 503),
                 BL = "Berlin",
                 label_est = "est",
                 label_se = "se",
@@ -70,6 +71,7 @@ test_that("braces are plotted correctly", {
     "Brace plot",
     ggplot2::ggplot() +
       plot_braces(df,
+                  y_range = c(400, 503),
         BL = "Berlin",
         label_est = "est",
         label_se = "se",
@@ -97,6 +99,7 @@ test_that("significances are displayed correctly in the labels", {
 
   plot_brace_build <- ggplot2::ggplot_build(ggplot2::ggplot() +
     plot_braces(df,
+                y_range = c(400, 503),
       BL = "Berlin",
       label_est = "est",
       label_se = "se",
@@ -117,6 +120,7 @@ test_that("Example brace plot is still the same", {
 
   vdiffr::expect_doppelganger("Brace plot trend_books", ggplot2::ggplot() +
     plot_braces(plot_data[["plot_braces"]],
+                y_range = c(397, 552),
                 BL = "Berlin",
                 label_est = "est_trend_no_comp",
                 label_se = "se_trend_no_comp",
@@ -142,6 +146,7 @@ test_that("Braces are plotted next to each other", {
 
   p_braces <- ggplot2::ggplot() +
     plot_braces(df,
+                y_range = c(400, 503),
       BL = "Berlin",
       label_est = "est",
       label_se = "se",

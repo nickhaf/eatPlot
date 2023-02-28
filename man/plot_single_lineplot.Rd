@@ -6,6 +6,7 @@
 \usage{
 plot_single_lineplot(
   plot_data,
+  y_range = NULL,
   point_values = "est_point",
   point_sig = "sig_point",
   line_values = c("est_point_start", "est_point_end"),
@@ -17,7 +18,9 @@ plot_single_lineplot(
 )
 }
 \arguments{
-\item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.}
+\item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
+
+\item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 
@@ -42,5 +45,5 @@ ggplot2 Object.
 Plot a single lineplot. Multiple of this lineplots are combined as tiles to the output of \code{\link[=plot_lineplot]{plot_lineplot()}}.
 }
 \examples{
-#tbd
+# tbd
 }

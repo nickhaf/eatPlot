@@ -17,7 +17,7 @@ plot_lineplot(
 )
 }
 \arguments{
-\item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.}
+\item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
 
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 

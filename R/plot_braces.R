@@ -8,14 +8,11 @@
 #' @export
 #'
 #' @examples ##
-plot_braces <- function(data_plot_braces, BL, label_est, label_se, label_sig_high, label_sig_bold) {
-
-  # Get range for y-axis
-  range_est <- range(c(data_plot_braces$est_point_start, data_plot_braces$est_point_end), na.rm = TRUE)
+plot_braces <- function(data_plot_braces, y_range, BL, label_est, label_se, label_sig_high, label_sig_bold) {
 
   # Here the coordinates for the braces and brace labels are calculated.
   # Change within the functions for fine tuning.
-  coords <- calc_coords(range_est)
+  coords <- calc_coords(y_range)
   brace_coords <- calc_brace_coords(data_plot_braces, coords)
 
   if(label_sig_bold %in% colnames(brace_coords)){

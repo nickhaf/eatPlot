@@ -170,6 +170,7 @@ prep_trend <- function(dat,
   # plot_points
   plot_dat[["plot_points"]] <- list_building_blocks[["point_no_comp_data"]]
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
+  plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
 
 
   return(plot_dat)
