@@ -89,7 +89,7 @@ plot_lineplot <- function(plot_data,
   }
 
   n <- length(plot_list)
-  nCol <- floor(sqrt(n))
+  nCol <- floor(sqrt(n)) * 2
 
   #plot_margin <- ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.07, "npc"))
   patchwork::wrap_plots(plot_list, ncol = nCol) &

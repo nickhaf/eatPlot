@@ -17,6 +17,8 @@ plot_braces(
 \arguments{
 \item{data_plot_braces}{Prepared Trend data.}
 
+\item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
+
 \item{BL}{Bundesland, for which the labels should be drawn.}
 
 \item{label_est}{Character string of the column name containing the brace labels.}

@@ -3,6 +3,7 @@
 #' @param data_plot_braces Prepared Trend data.
 #' @param BL Bundesland, for which the labels should be drawn.
 #' @inheritParams plot_lineplot
+#' @inheritParams plot_single_lineplot
 #'
 #' @return ggplot2 object.
 #' @export
