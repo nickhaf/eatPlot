@@ -220,3 +220,13 @@ calc_overlap <- function(year_start, year_end){
   }
 return(years)
 }
+
+
+
+## Function for checking which arguments are in the colnames, and returning those which are not
+check_colnames <- function(x, colnames_vec){
+  names(x[!x %in% colnames_vec])
+}
+
+
+

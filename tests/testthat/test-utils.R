@@ -129,3 +129,15 @@ test_that("columns are removed correctly", {
   df_cols <- data.frame("col_1" = 1, "col_2" = 2)
   expect_equal(colnames(remove_columns(df_cols, "col_2")), "col_1")
 })
+
+test_that("columns are checked correctly", {
+
+  a = "col_1"
+  b = ""
+
+
+  expect_equal(check_colnames(c("a" = a, "b" = b), c("col_1", "b")), "b")
+
+})
+
+

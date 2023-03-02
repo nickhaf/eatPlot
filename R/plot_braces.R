@@ -21,11 +21,29 @@ plot_braces <- function(dat,
   # Also make this function possible, if no labels are provided. For this, paste together the labels in the data preperation for this function.
   # Put calc_brace_coords in plot_braces already.
 
-  if(label_sig_bold %in% colnames(brace_coords)){
-    brace_coords <- rename_column()
-    brace_coords$label_est <- ifelse(brace_coords[, label_sig_bold] == TRUE,
-                                     paste0("**", round(brace_coords[, label_est], 0), "**"),
-                                     round(brace_coords[, label_est], 0))
+missing_cols <- check_colnames(c("label_est" = label_est,
+                                 "label_se" = label_se,
+                                 "label_sig_high" = label_sig_high,
+                                 "label_sig_bold" = label_sig_bold),
+                               colnames(dat))
+
+for(i in missing_cols){
+dat[, i] <- NA
+}
+
+# can this be evaled/parsed ...?
+dat <- rename_column(dat, label_est, "label_est")
+dat <- rename_column(dat, label_se, "label_se")
+dat <- rename_column(dat, label_sig_high, "label_sigh_high")
+dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
+
+
+
+  if(label_sig_bold %in% colnames(dat)){
+    dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
+    dat$label_est <- ifelse(dat[, label_sig_bold] == TRUE,
+                                     paste0("**", round(dat[, label_est], 0), "**"),
+                                     round(dat[, label_est], 0))
   }else{brace_coords$label_est <- ""}
 
   if(label_sig_high %in% colnames(brace_coords)){
