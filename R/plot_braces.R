@@ -19,7 +19,13 @@ plot_braces <- function(dat,
 
   # rename label columns to the arguments.
   # Also make this function possible, if no labels are provided. For this, paste together the labels in the data preperation for this function.
-  # Put calc_brace_coords in plot_braces already.
+  # Put calc_dat in plot_braces already.
+
+  label_est = ""
+  label_se = ""
+  label_sig_high = ""
+  label_sig_bold = ""
+
 
 missing_cols <- check_colnames(c("label_est" = label_est,
                                  "label_se" = label_se,
@@ -39,28 +45,32 @@ dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
 
 
 
-  if(label_sig_bold %in% colnames(dat)){
-    dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
-    dat$label_est <- ifelse(dat[, label_sig_bold] == TRUE,
-                                     paste0("**", round(dat[, label_est], 0), "**"),
+# Construct brace labels --------------------------------------------------
+    dat$label_est <- ifelse(dat[, "label_sig_bold"] == TRUE,
+                                     paste0("**", round(dat[, "label_est"], 0), "**"),
                                      round(dat[, label_est], 0))
-  }else{brace_coords$label_est <- ""}
+    dat$label_sig <- ifelse(dat[, "label_sig_high"] == TRUE, "<sup>a</sup>", "")
+    dat$label_se <- ifelse(is.na(dat$label_se),
+                       paste0(" (", round(dat$label_se, 1), ")")
+                       , "")
 
-  if(label_sig_high %in% colnames(brace_coords)){
-    brace_coords$label_sig <- ifelse(brace_coords[, label_sig_high] == TRUE, "<sup>a</sup>", "")}else{brace_coords$label_sig <- ""}
-
-  if(label_se %in% colnames(brace_coords)){
-    brace_coords$label_se <- brace_coords[, label_se]}else{brace_coords$label_se <- ""}
+    dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
 
 
-  coords <- calc_coords(y_range)
-  brace_coords <- calc_brace_coords(dat, coords)
+dat$brace_label <- paste0(
+      dat$label_est,
+      dat$label_sig,
+      dat$label_se
+    )
+
+coords <- calc_coords(y_range)
+dat <- calc_brace_coords(dat, coords)
 
 
   ## Bei calc_coord: neue Spalte ob brace indented sein soll oder nicht
   c(
-    draw_braces(brace_coords),
-    draw_brace_label(brace_coords, BL),
+    draw_braces(dat),
+    draw_brace_label(dat, BL),
     # Clip Coordinate system. Necessary, so the brace can be drawn outside of the plot
     ggplot2::coord_cartesian(
       clip = "off",
@@ -74,16 +84,16 @@ dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
 
 ## Utils
 
-draw_braces <- function(brace_coords){
+draw_braces <- function(dat){
 
   ggbrace::geom_brace(
-    data = unique(brace_coords[, c("grouping_var","year", "brace_y")]),
+    data = unique(dat[, c("grouping_var","year", "brace_y")]),
     mapping = ggplot2::aes(
       x = .data$year,
       y = .data$brace_y,
       group = .data$grouping_var
     ),
-      #mid = ifelse(coordinates$year_start == min(brace_coords$year_start) & any(brace_coords$overlap == TRUE), 0.25, 0.5),
+      #mid = ifelse(coordinates$year_start == min(dat$year_start) & any(dat$overlap == TRUE), 0.25, 0.5),
    #   inherit.data = F,
       rotate = 180,
       linewidth = 0.8,
@@ -92,18 +102,14 @@ draw_braces <- function(brace_coords){
 
 }
 
-draw_brace_label <- function(brace_coords) {
+draw_brace_label <- function(dat) {
 
   ggtext::geom_richtext(
-    data = brace_coords,
+    data = dat,
     mapping = ggplot2::aes(
       x = .data$label_pos_x,
       y = .data$label_pos_y,
-      label = paste0(
-        .data$label_est,
-        .data$label_sig,
-        " (", round(.data$label_se, 1), ")"
-      )
+      label = .data$brace_label
     ),
     size = 3,
     label.padding = grid::unit(rep(0, 4), "pt"),

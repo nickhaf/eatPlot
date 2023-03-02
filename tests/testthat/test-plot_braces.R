@@ -196,9 +196,14 @@ test_that("double brace is drawn", {
   })
 
 test_that("brace label is drawn", {
-  test_brace_double <- data.frame(grouping_var = rep(0, 4),
-                                  overlap = c(FALSE, TRUE, FALSE, TRUE),
-                                  year = c(2020, 2020, 2011, 2015),
-                                  brace_y = c(360, 324, 324, 306)
+  test_label <- data.frame(grouping_var = rep(0, 2),
+                                  overlap = c(FALSE, TRUE),
+                                  label_pos_x = c(1, 2),
+                                  label_pos_y = c(1, 1),
+                                  brace_label = c("label_1<sup>a</sup>", "label_2")
   )
+
+  ggplot2::ggplot() +
+    draw_brace_label(test_label)
+
 })

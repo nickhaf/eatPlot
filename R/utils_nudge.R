@@ -2,7 +2,7 @@
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords) {
 
-dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end")]
+dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end", "brace_label")]
 dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 
 
@@ -45,12 +45,12 @@ if(any(dat$overlap == TRUE)){
 ## Long oder wide format argument
   dat_long <- reshape(
     dat,
-    idvar = c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x"),
+    idvar = c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "brace_label"),
     varying = c("upper_y", "year_end", "lower_y", "year_start"),
     v.names = c("year", "value"),
     direction = "long")
 
-  dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value")])
+  dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label")])
   dat <- rename_column(dat, old = "value", new = "brace_y")
 
   return(dat)
