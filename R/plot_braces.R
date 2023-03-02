@@ -1,7 +1,6 @@
 #' Plot braces below plot.
 #'
 #' @param dat Prepared Trend data.
-#' @param BL Bundesland, for which the labels should be drawn.
 #' @inheritParams plot_lineplot
 #' @inheritParams plot_single_lineplot
 #'
@@ -11,21 +10,12 @@
 #' @examples ##
 plot_braces <- function(dat,
                         y_range,
-                        BL,
                         label_est,
                         label_se,
                         label_sig_high,
                         label_sig_bold) {
 
-  # rename label columns to the arguments.
-  # Also make this function possible, if no labels are provided. For this, paste together the labels in the data preperation for this function.
   # Put calc_dat in plot_braces already.
-
-  label_est = ""
-  label_se = ""
-  label_sig_high = ""
-  label_sig_bold = ""
-
 
 missing_cols <- check_colnames(c("label_est" = label_est,
                                  "label_se" = label_se,
@@ -70,7 +60,7 @@ dat <- calc_brace_coords(dat, coords)
   ## Bei calc_coord: neue Spalte ob brace indented sein soll oder nicht
   c(
     draw_braces(dat),
-    draw_brace_label(dat, BL),
+    draw_brace_label(dat),
     # Clip Coordinate system. Necessary, so the brace can be drawn outside of the plot
     ggplot2::coord_cartesian(
       clip = "off",

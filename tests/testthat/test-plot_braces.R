@@ -16,7 +16,6 @@ test_that("y limits are set correctly", {
   test_p <- ggplot2::ggplot() +
     plot_braces(df,
                 y_range = c(400, 503),
-                BL = "Berlin",
                 label_est = "est",
                 label_se = "se",
                 label_sig_high = "sig_1",
@@ -72,7 +71,6 @@ test_that("braces are plotted correctly", {
     ggplot2::ggplot() +
       plot_braces(df,
                   y_range = c(400, 503),
-        BL = "Berlin",
         label_est = "est",
         label_se = "se",
         label_sig_high = "sig_1",
@@ -100,7 +98,6 @@ test_that("significances are displayed correctly in the labels", {
   plot_brace_build <- ggplot2::ggplot_build(ggplot2::ggplot() +
     plot_braces(df,
                 y_range = c(400, 503),
-      BL = "Berlin",
       label_est = "est",
       label_se = "se",
       label_sig_high = "sig_2",
@@ -121,7 +118,6 @@ test_that("Example brace plot is still the same", {
   vdiffr::expect_doppelganger("Brace plot trend_books", ggplot2::ggplot() +
     plot_braces(plot_data[["plot_braces"]],
                 y_range = c(397, 552),
-                BL = "Berlin",
                 label_est = "est_trend_no_comp",
                 label_se = "se_trend_no_comp",
                 label_sig_high = "sig_trend_whole",
@@ -147,7 +143,6 @@ test_that("Braces are plotted next to each other", {
   p_braces <- ggplot2::ggplot() +
     plot_braces(df,
                 y_range = c(400, 503),
-      BL = "Berlin",
       label_est = "est",
       label_se = "se",
       label_sig_high = "sig_2",
@@ -175,23 +170,12 @@ expect_doppelgaenger("simple brace",
 })
 
 test_that("double brace is drawn", {
-  test_brace_double <- data.frame(grouping_var = rep(0, 4),
+  test_brace_double <- data.frame(grouping_var = c(0, 1, 0, 1),
                                  overlap = c(FALSE, TRUE, FALSE, TRUE),
                                  year = c(2020, 2020, 2011, 2015),
                                  brace_y = c(360, 324, 324, 306)
                                  )
-  ggplot2::ggplot() +
-    ggbrace::geom_brace(
-      data = unique(test_brace_double[, c("year", "brace_y", "overlap")]),
-      mapping = ggplot2::aes(
-        group = overlap,
-        x = year,
-        y = brace_y
-      ),
-      rotate = 180,
-      linewidth = 0.8,
-      npoints = 200
-    )
+expect_doppelgaenger("double brace", ggplot2::ggplot() + draw_braces(test_brace_double))
 
   })
 
