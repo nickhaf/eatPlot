@@ -159,3 +159,46 @@ test_that("Braces are plotted next to each other", {
     p_braces
   })
 })
+
+
+test_that("brace is drawn", {
+  test_brace <- data.frame(grouping_var = c(1, 1),
+                           overlap = c(FALSE, FALSE),
+                           brace_y = c(302.4, 324),
+                           year = c(2015, 2023)
+)
+
+expect_doppelgaenger("simple brace",
+                     ggplot2::ggplot() + draw_braces(test_brace)
+)
+
+})
+
+test_that("double brace is drawn", {
+  test_brace_double <- data.frame(grouping_var = rep(0, 4),
+                                 overlap = c(FALSE, TRUE, FALSE, TRUE),
+                                 year = c(2020, 2020, 2011, 2015),
+                                 brace_y = c(360, 324, 324, 306)
+                                 )
+  ggplot2::ggplot() +
+    ggbrace::geom_brace(
+      data = unique(test_brace_double[, c("year", "brace_y", "overlap")]),
+      mapping = ggplot2::aes(
+        group = overlap,
+        x = year,
+        y = brace_y
+      ),
+      rotate = 180,
+      linewidth = 0.8,
+      npoints = 200
+    )
+
+  })
+
+test_that("brace label is drawn", {
+  test_brace_double <- data.frame(grouping_var = rep(0, 4),
+                                  overlap = c(FALSE, TRUE, FALSE, TRUE),
+                                  year = c(2020, 2020, 2011, 2015),
+                                  brace_y = c(360, 324, 324, 306)
+  )
+})

@@ -62,7 +62,7 @@
 <text x='506.32' y='417.58' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='26.92px' lengthAdjust='spacingAndGlyphs'>2017.5</text>
 <text x='669.10' y='417.58' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='26.92px' lengthAdjust='spacingAndGlyphs'>2020.0</text>
 <text x='376.10' y='429.72' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='239.73px' lengthAdjust='spacingAndGlyphs'>c(coordinates$year_start, coordinates$year_end)</text>
-<text transform='translate(29.17,226.35) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='289.89px' lengthAdjust='spacingAndGlyphs'>c(coordinates$brace_upper_y, coordinates$brace_lower_y)</text>
+<text transform='translate(29.17,226.35) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='289.89px' lengthAdjust='spacingAndGlyphs'>c(coordinates$upper_y, coordinates$lower_y)</text>
 <text x='53.81' y='37.88' style='font-size: 13.20px; font-family: sans;' textLength='59.44px' lengthAdjust='spacingAndGlyphs'>Brace plot</text>
 </g>
 </svg>
