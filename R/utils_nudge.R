@@ -27,7 +27,9 @@ if(any(dat$overlap == TRUE)){
                              calc_pos_label_x(dat$year_start, dat$year_end, 0.5)
   )
 
-  # dat$mid <-  ifelse(dat$year_start == min(brace_coords$year_start) & any(brace_coords$overlap == TRUE), 0.25, 0.5)
+  # indent the first brace
+  dat$mid <-  ifelse(dat$year_start == min(dat$year_start), 0.25, 0.5)
+
 }else{
   dat$upper_y <- coords[1]
 
@@ -39,6 +41,7 @@ if(any(dat$overlap == TRUE)){
   )
 
   dat$label_pos_x <- calc_pos_label_x(dat$year_start, dat$year_end, 0.5)
+  dat$mid <- rep(0.5, nrow(dat))
 
 }
 
