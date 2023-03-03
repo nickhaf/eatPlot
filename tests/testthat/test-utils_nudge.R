@@ -4,7 +4,8 @@ test_that("calc_brace_coords works for long format", {
     year_start = c(2011, 2011, 2012, 2012),
     year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 0, 1)),
-    brace_label = rep("a", 4)
+    brace_label = rep("a", 4),
+    trend = c("2011", "2011", "2012", "2012")
   )
 
   coords <- c(360, 530)
@@ -21,7 +22,8 @@ test_that("calc_brace_coords works for wide format", {
     year_start = c(2011, 2011, 2012, 2012),
     year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 0, 1)),
-    brace_label = rep("a", 4)
+    brace_label = rep("a", 4),
+    trend = c("20112012", "20112012", "20122013", "20122013")
   )
 
   coords <- c(360, 530)

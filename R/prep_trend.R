@@ -166,9 +166,21 @@ prep_trend <- function(dat,
     plot_dat[["plot_bar"]] <- list_building_blocks[["point_no_comp_data"]]
   }
 
+  ## Trends anhängen
+  plot_dat <- get_trend(plot_dat)
+
 
   # plot_points
-  plot_dat[["plot_points"]] <- list_building_blocks[["point_no_comp_data"]]
+  ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
+
+  dat_long <- reshape(plot_dat[["plot_lines"]][, c("depVar", "grouping_var", "year_start", "year_end", "trend", "group_var", "state_var")],
+          direction = "long",
+          varying = c("year_start", "year_end"),
+          sep = "_"
+  )
+
+
+  plot_dat[["plot_points"]] <- merge(dat_long, list_building_blocks[["point_no_comp_data"]], by = c("grouping_var", "group_var", "state_var", "year"), all.x = TRUE)
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
 
@@ -187,6 +199,16 @@ filter_years <- function(dat, year_list) {
     which(dat$year_start == x[1] & dat$year_end == x[2])
   }))
   return(year_rows)
+}
+
+get_trend <- function(plot_list){
+ res <- lapply(plot_list, function(x){
+    if(all(c("year_start", "year_end") %in% colnames(x))){
+      x$trend <- paste0(x$year_start, x$year_end)
+      return(x)
+    }else{return(x)}
+  })
+ return(res)
 }
 
 # dat <- trend_books

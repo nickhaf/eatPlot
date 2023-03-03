@@ -3,7 +3,7 @@
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
 
   output_format <- match.arg(output_format)
-  dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end", "brace_label")]
+  dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 
 
@@ -46,8 +46,6 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
 
 if(output_format == "long"){
   ## Long oder wide format argument
-
-  dat$trend <- paste0(dat$year_start, dat$year_end)
 
   dat_long <- reshape(
     dat,
