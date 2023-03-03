@@ -37,15 +37,18 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
     )
   )
 
-  vdiffr::expect_doppelganger("single lineplot", ggplot2::ggplot() +
-    plot_single_lineplot(test_plot,
-      y_range = c(180, 240),
-      line_sig = "sig_trend",
-      label_est = "est_label",
-      label_se = "se_label",
-      label_sig_high = "sig_label_1",
-      label_sig_bold = "sig_label_2"
-    ))
+  vdiffr::expect_doppelganger(
+    "single lineplot",
+    ggplot2::ggplot() +
+      plot_single_lineplot(test_plot,
+        y_range = c(180, 240),
+        line_sig = "sig_trend",
+        label_est = "est_label",
+        label_se = "se_label",
+        label_sig_high = "sig_label_1",
+        label_sig_bold = "sig_label_2"
+      )
+  )
 })
 
 
@@ -88,15 +91,18 @@ test_that("single_lineplot with two groups is plotted correctly", {
     )
   )
 
-  vdiffr::expect_doppelganger("single grouped lineplot", ggplot2::ggplot() +
-    plot_single_lineplot(test_plot_2,
-      y_range = c(180, 240),
-      line_sig = "sig_trend",
-      label_est = "est_label",
-      label_se = "se_label",
-      label_sig_high = "sig_label_1",
-      label_sig_bold = "sig_label_2"
-    ))
+  vdiffr::expect_doppelganger(
+    "single grouped lineplot",
+    ggplot2::ggplot() +
+      plot_single_lineplot(test_plot_2,
+        y_range = c(180, 240),
+        line_sig = "sig_trend",
+        label_est = "est_label",
+        label_se = "se_label",
+        label_sig_high = "sig_label_1",
+        label_sig_bold = "sig_label_2"
+      )
+  )
 })
 
 
@@ -177,14 +183,17 @@ test_that("split plots are plotted correctly", {
     )
   )
 
-  vdiffr::expect_doppelganger("split grouped lineplot", plot_split_lineplot(
-    left_plot_data = test_plot_l,
-    right_plot_data = test_plot_r,
-    y_range = c(180, 240),
-    line_sig = "sig_trend",
-    label_est = "est_label",
-    label_se = "se_label",
-    label_sig_high = "sig_label_1",
-    label_sig_bold = "sig_label_2"
-  ))
+  vdiffr::expect_doppelganger(
+    "split grouped lineplot",
+    plot_split_lineplot(
+      left_plot_data = test_plot_l,
+      right_plot_data = test_plot_r,
+      y_range = c(180, 240),
+      line_sig = "sig_trend",
+      label_est = "est_label",
+      label_se = "se_label",
+      label_sig_high = "sig_label_1",
+      label_sig_bold = "sig_label_2"
+    )
+  )
 })

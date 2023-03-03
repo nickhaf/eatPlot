@@ -157,7 +157,7 @@ test_that("Braces are plotted next to each other", {
 
 
 test_that("brace is drawn", {
-  test_brace <- data.frame(grouping_var = c(1, 1),
+  test_brace <- data.frame(time = c(1, 1),
                            overlap = c(FALSE, FALSE),
                            brace_y = c(302.4, 324),
                            year = c(2015, 2023)
@@ -170,7 +170,7 @@ expect_doppelgaenger("simple brace",
 })
 
 test_that("double brace is drawn", {
-  test_brace_double <- data.frame(grouping_var = c(0, 1, 0, 1),
+  test_brace_double <- data.frame(time = c(0, 1, 0, 1),
                                  overlap = c(FALSE, TRUE, FALSE, TRUE),
                                  year = c(2020, 2020, 2011, 2015),
                                  brace_y = c(360, 324, 324, 306)

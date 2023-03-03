@@ -30,16 +30,16 @@ dat[, i] <- NA
 # can this be evaled/parsed ...?
 dat <- rename_column(dat, label_est, "label_est")
 dat <- rename_column(dat, label_se, "label_se")
-dat <- rename_column(dat, label_sig_high, "label_sigh_high")
+dat <- rename_column(dat, label_sig_high, "label_sig_high")
 dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
 
 
 
 # Construct brace labels --------------------------------------------------
-    dat$label_est <- ifelse(dat[, "label_sig_bold"] == TRUE,
-                                     paste0("**", round(dat[, "label_est"], 0), "**"),
-                                     round(dat[, label_est], 0))
-    dat$label_sig <- ifelse(dat[, "label_sig_high"] == TRUE, "<sup>a</sup>", "")
+    dat$label_est <- ifelse(dat$label_sig_bold == TRUE,
+                                     paste0("**", round(dat$label_est, 0), "**"),
+                                     round(dat$label_est, 0))
+    dat$label_sig <- ifelse(dat$label_sig_high == TRUE, "<sup>a</sup>", "")
     dat$label_se <- ifelse(is.na(dat$label_se),
                        paste0(" (", round(dat$label_se, 1), ")")
                        , "")
@@ -77,11 +77,11 @@ dat <- calc_brace_coords(dat, coords)
 draw_braces <- function(dat){
 
   ggbrace::geom_brace(
-    data = unique(dat[, c("grouping_var","year", "brace_y")]),
+    data = unique(dat[, c("time","year", "brace_y")]),
     mapping = ggplot2::aes(
       x = .data$year,
       y = .data$brace_y,
-      group = .data$grouping_var
+      group = .data$time
     ),
       #mid = ifelse(coordinates$year_start == min(dat$year_start) & any(dat$overlap == TRUE), 0.25, 0.5),
    #   inherit.data = F,

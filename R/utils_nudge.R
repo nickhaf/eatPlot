@@ -50,7 +50,7 @@ if(any(dat$overlap == TRUE)){
     v.names = c("year", "value"),
     direction = "long")
 
-  dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label")])
+  dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "time")])
   dat <- rename_column(dat, old = "value", new = "brace_y")
 
   return(dat)
