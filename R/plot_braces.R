@@ -77,11 +77,11 @@ dat <- calc_brace_coords(dat, coords)
 draw_braces <- function(dat){
 
   ggbrace::geom_brace(
-    data = unique(dat[, c("time","year", "brace_y")]),
+    data = unique(dat[, c("trend","year", "brace_y")]),
     mapping = ggplot2::aes(
       x = .data$year,
       y = .data$brace_y,
-      group = .data$time
+      group = .data$trend
     ),
       #mid = ifelse(coordinates$year_start == min(dat$year_start) & any(dat$overlap == TRUE), 0.25, 0.5),
    #   inherit.data = F,

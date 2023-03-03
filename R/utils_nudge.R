@@ -43,14 +43,17 @@ if(any(dat$overlap == TRUE)){
 }
 
 ## Long oder wide format argument
-  dat_long <- reshape(
-    dat,
-    idvar = c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "brace_label"),
-    varying = c("upper_y", "year_end", "lower_y", "year_start"),
-    v.names = c("year", "value"),
-    direction = "long")
 
-  dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "time")])
+dat$trend <- paste0(dat$year_start, dat$year_end)
+
+dat_long <- reshape(
+  dat,
+  idvar = c("grouping_var", "trend"),
+  varying = c("upper_y", "year_end", "lower_y", "year_start"),
+  v.names = c("year", "value"),
+  direction = "long")
+
+  dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "trend")])
   dat <- rename_column(dat, old = "value", new = "brace_y")
 
   return(dat)

@@ -156,8 +156,39 @@ test_that("Braces are plotted next to each other", {
 })
 
 
+
+test_that("Overlapping braces are looking good", {
+  df <- data.frame(
+    state_var = rep("Berlin", 4),
+    year_start = c(2011, 2011, 2013, 2013),
+    year_end = c(2015, 2015, 2023, 2023),
+    grouping_var = factor(c(0, 1, 0, 1)),
+    est = c(1:4),
+    se = c(1:4),
+    sig_1 = c(TRUE, FALSE, FALSE, TRUE),
+    sig_2 = c(FALSE, TRUE, FALSE, TRUE),
+    est_point_start = 400:403,
+    est_point_end = 500:503
+  )
+
+  p_braces <- ggplot2::ggplot() +
+    plot_braces(df,
+                y_range = c(400, 503),
+                label_est = "est",
+                label_se = "se",
+                label_sig_high = "sig_2",
+                label_sig_bold = "sig_1"
+    ) +
+    ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
+
+  vdiffr::expect_doppelganger("Braces are plotted next to each other", {
+    p_braces
+  })
+})
+
+
 test_that("brace is drawn", {
-  test_brace <- data.frame(time = c(1, 1),
+  test_brace <- data.frame(trend = c(1, 1),
                            overlap = c(FALSE, FALSE),
                            brace_y = c(302.4, 324),
                            year = c(2015, 2023)
@@ -170,7 +201,7 @@ expect_doppelgaenger("simple brace",
 })
 
 test_that("double brace is drawn", {
-  test_brace_double <- data.frame(time = c(0, 1, 0, 1),
+  test_brace_double <- data.frame(trend = c(0, 1, 0, 1),
                                  overlap = c(FALSE, TRUE, FALSE, TRUE),
                                  year = c(2020, 2020, 2011, 2015),
                                  brace_y = c(360, 324, 324, 306)
