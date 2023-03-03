@@ -9,64 +9,74 @@
 #'
 #' @examples ##
 plot_braces <- function(dat,
+                        split_plot = FALSE,
                         y_range,
                         label_est,
                         label_se,
                         label_sig_high,
                         label_sig_bold) {
-
   # Put calc_dat in plot_braces already.
 
-missing_cols <- check_colnames(c("label_est" = label_est,
-                                 "label_se" = label_se,
-                                 "label_sig_high" = label_sig_high,
-                                 "label_sig_bold" = label_sig_bold),
-                               colnames(dat))
+  col_vec <-  c(
+    "label_est" = label_est,
+    "label_se" = label_se,
+    "label_sig_high" = label_sig_high,
+    "label_sig_bold" = label_sig_bold
+  )
+  missing_cols <- check_colnames(
+    x = col_vec,
+    colnames(dat)
+  )
 
-for(i in missing_cols){
-dat[, i] <- NA
-}
+  for (i in missing_cols) {
+    dat[, i] <- NA
+  }
 
-# can this be evaled/parsed ...?
-dat <- rename_column(dat, label_est, "label_est")
-dat <- rename_column(dat, label_se, "label_se")
-dat <- rename_column(dat, label_sig_high, "label_sig_high")
-dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
-
-
-
-# Construct brace labels --------------------------------------------------
-    dat$label_est <- ifelse(dat$label_sig_bold == TRUE,
-                                     paste0("**", round(dat$label_est, 0), "**"),
-                                     round(dat$label_est, 0))
-    dat$label_sig <- ifelse(dat$label_sig_high == TRUE, "<sup>a</sup>", "")
-    dat$label_se <- ifelse(!is.na(dat$label_se),
-                       paste0(" (", round(dat$label_se, 1), ")")
-                       , "")
-
-    dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
+  # can this be evaled/parsed ...?
+  dat <- rename_column(dat, label_est, "label_est")
+  dat <- rename_column(dat, label_se, "label_se")
+  dat <- rename_column(dat, label_sig_high, "label_sig_high")
+  dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
 
 
-dat$brace_label <- paste0(
-      dat$label_est,
-      dat$label_sig,
-      dat$label_se
-    )
 
-coords <- calc_coords(y_range)
-dat <- calc_brace_coords(dat, coords)
+  # Construct brace labels --------------------------------------------------
+  dat$label_est <- ifelse(dat$label_sig_bold == TRUE,
+    paste0("**", round(dat$label_est, 0), "**"),
+    round(dat$label_est, 0)
+  )
+  dat$label_sig <- ifelse(dat$label_sig_high == TRUE, "<sup>a</sup>", "")
+  dat$label_se <- ifelse(!is.na(dat$label_se),
+    paste0(" (", round(dat$label_se, 1), ")"),
+    ""
+  )
 
+  dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
+
+
+  dat$brace_label <- paste0(
+    dat$label_est,
+    dat$label_sig,
+    dat$label_se
+  )
+
+  coords <- calc_coords(y_range)
+  if (split_plot == TRUE) {
+    dat <- calc_brace_coords(dat, coords, output_format = "long")
+  } else {
+    dat <- calc_brace_coords(dat, coords)
+  }
 
   ## Bei calc_coord: neue Spalte ob brace indented sein soll oder nicht
   c(
-    draw_braces(dat),
+    draw_braces(dat, split_plot),
     draw_brace_label(dat),
     # Clip Coordinate system. Necessary, so the brace can be drawn outside of the plot
     ggplot2::coord_cartesian(
       clip = "off",
-      ylim = coords #,
-      #expand = FALSE
-      )
+      ylim = coords # ,
+      # expand = FALSE
+    )
   )
 }
 
@@ -74,25 +84,38 @@ dat <- calc_brace_coords(dat, coords)
 
 ## Utils
 
-draw_braces <- function(dat){
-
-  ggbrace::geom_brace(
-    data = unique(dat[, c("trend","year", "brace_y")]),
-    mapping = ggplot2::aes(
-      x = .data$year,
-      y = .data$brace_y,
-      group = .data$trend
-    ),
-     mid = unique(dat$mid), #Problem: mid kann nicht datenabhängig angegeben werden. Eventuell kann es also nur gesetzt werden, wenn die brace einzeln gezeichnet wird. Das würde bedeuten, dass es doch zwei Versionen der braces geben muss, split und nicht split
+draw_braces <- function(dat, split_plot) {
+  if (split_plot == TRUE) {
+   res <-  ggbrace::geom_brace(
+      data = unique(dat[, c("trend", "year", "brace_y")]),
+      mapping = ggplot2::aes(
+        x = .data$year,
+        y = .data$brace_y,
+        group = .data$trend
+      ),
       rotate = 180,
       linewidth = 0.8,
       npoints = 200
     )
-
+  } else {
+  res <- lapply(unique(dat$year_start), function(x) {
+      dat_year <- unique(dat[dat$year_start == x, c("year_start", "year_end", "upper_y", "lower_y", "mid")])
+      ggbrace::geom_brace(
+        mapping = ggplot2::aes(
+          x = c(dat_year$year_start, dat_year$year_end),
+          y = c(dat_year$upper_y, dat_year$lower_y),
+          ),
+        mid = unique(dat_year$mid),
+        rotate = 180,
+        linewidth = 0.8,
+        npoints = 200
+      )
+    })
+  }
+  return(res)
 }
 
 draw_brace_label <- function(dat) {
-
   ggtext::geom_richtext(
     data = dat,
     mapping = ggplot2::aes(

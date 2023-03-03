@@ -11,7 +11,7 @@
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
-#'
+#' @param split_plot Logical, indicating wheter the different trends should be split or not.
 #' @return [ggplot2] object.
 #' @export
 #'
@@ -26,7 +26,8 @@ plot_lineplot <- function(plot_data,
                           label_est = "est_trend_no_comp",
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
-                          label_sig_bold = "sig_trend_no_comp") {
+                          label_sig_bold = "sig_trend_no_comp",
+                          split_plot = FALSE) {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()

@@ -18,8 +18,8 @@ plot_points <- function(data_plot_points, point_values, point_sig) {
         x = .data$year,
         y = .data[[point_values]],
         colour = .data$grouping_var,
-        # group = .data[[grouping_var]],
-        shape = .data[[point_sig]]
+        shape = .data[[point_sig]],
+        group = trend
       ),
       size = 2.3
     ),
@@ -29,7 +29,8 @@ plot_points <- function(data_plot_points, point_values, point_sig) {
         x = .data$year,
         y = .data[[point_values]],
         colour = .data$grouping_var,
-        label = round(.data[[point_values]], 0)
+        label = round(.data[[point_values]], 0),
+        group = trend
       ),
       nudge_y = nudge_y_vec,
       size = 3

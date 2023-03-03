@@ -17,7 +17,8 @@ plot_lines <- function(data_plot_lines, line_values, line_sig){
         y = .data[[line_values[1]]],
         yend = .data[[line_values[2]]],
         colour = .data$grouping_var,
-        linetype = .data[[line_sig]]
+        linetype = .data[[line_sig]],
+        group = .data$trend
       )
   )
 }
