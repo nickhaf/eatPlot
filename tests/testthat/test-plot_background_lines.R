@@ -4,7 +4,8 @@ test_that("backgroundlines is still the same", {
     year_start = c(2011, 2013),
     year_end = c(2013, 2016),
     est_point_start = c(10:11),
-    est_point_end = c(11:12)
+    est_point_end = c(11:12),
+    trend = c("20112013", "20132016")
   )
   vdiffr::expect_doppelganger("Plotting backgroundlines", ggplot2::ggplot() +
     plot_background_lines(

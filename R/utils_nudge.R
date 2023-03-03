@@ -47,7 +47,7 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
 if(output_format == "long"){
   ## Long oder wide format argument
 
-  dat_long <- reshape(
+  dat_long <- stats::reshape(
     dat,
     idvar = c("grouping_var", "trend"),
     varying = c("upper_y", "year_end", "lower_y", "year_start"),

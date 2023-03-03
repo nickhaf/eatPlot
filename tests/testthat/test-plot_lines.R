@@ -6,7 +6,8 @@ test_that("lineplot is still the same", {
     sig_trend_comp_within = c(TRUE, FALSE, TRUE, FALSE),
     est_point_start = c(10:13),
     est_point_end = c(14:17),
-    grouping_var = c(0, 1, 0, 1)
+    grouping_var = c(0, 1, 0, 1),
+    trend = c("20112013", "20112013", "20162020", "20162020")
   )
   vdiffr::expect_doppelganger("Plotting lines", ggplot2::ggplot() +
     plot_lines(df_lines,

@@ -10,7 +10,8 @@ test_that("y limits are set correctly", {
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
-    est_point_end = 500:503
+    est_point_end = 500:503,
+    trend = c("20112020", "20112020", "2152020", "20152020")
   )
 
   test_p <- ggplot2::ggplot() +
@@ -39,7 +40,8 @@ test_that("x-position of brace label is calculated correctly", {
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
-    est_point_end = 500:503
+    est_point_end = 500:503,
+    trend = c("20112020", "20112020", "2152020", "20152020")
   )
 
   expect_equal(calc_pos_label_x(year_start = 0, year_end = 10, brace_indent_pos = 0.25), 2.5)
@@ -111,7 +113,8 @@ test_that("braces are plotted correctly", {
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
-    est_point_end = 500:503
+    est_point_end = 500:503,
+    trend = c("20112020", "20112020", "20152020", "20152020")
   )
 
   vdiffr::expect_doppelganger(
@@ -140,7 +143,8 @@ test_that("significances are displayed correctly in the labels", {
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
-    est_point_end = 500:503
+    est_point_end = 500:503,
+    trend = c("20112020", "20112020", "20152020", "20152020")
   )
 
   plot_brace_build <- ggplot2::ggplot_build(ggplot2::ggplot() +
@@ -178,7 +182,7 @@ test_that("Example brace plot is still the same", {
 })
 
 
-test_that("Braces are plotted next to each other", {
+test_that("Adjacent braces", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
@@ -189,17 +193,19 @@ test_that("Braces are plotted next to each other", {
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
-    est_point_end = 500:503
+    est_point_end = 500:503,
+    trend = c("20112015", "20112015", "20152023", "20152023")
   )
 
-  vdiffr::expect_doppelganger("Braces are plotted next to each other",
+  vdiffr::expect_doppelganger(
+    "Adjacent braces",
     ggplot2::ggplot() +
       plot_braces(df,
-                  y_range = c(400, 503),
-                  label_est = "est",
-                  label_se = "se",
-                  label_sig_high = "sig_2",
-                  label_sig_bold = "sig_1"
+        y_range = c(400, 503),
+        label_est = "est",
+        label_se = "se",
+        label_sig_high = "sig_2",
+        label_sig_bold = "sig_1"
       ) +
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
   )
@@ -218,7 +224,8 @@ test_that("Overlapping braces are looking good", {
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
-    est_point_end = 500:503
+    est_point_end = 500:503,
+    trend = c("20112015", "20112015", "20152023", "20152023")
   )
 
   p_braces <- ggplot2::ggplot() +
@@ -231,7 +238,8 @@ test_that("Overlapping braces are looking good", {
     ) +
     ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
 
-  vdiffr::expect_doppelganger("Braces are plotted next to each other",
+  vdiffr::expect_doppelganger(
+    "Overlapping braces",
     p_braces
   )
 })
@@ -247,22 +255,23 @@ test_that("Braces can be facet wrapped", {
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
-    est_point_end = 500:503
+    est_point_end = 500:503,
+    trend = c("20112015", "20112015", "20152023", "20152023")
   )
 
 
-  vdiffr::expect_doppelganger("Braces can be facet wrapped",
-                              ggplot2::ggplot() +
-                                plot_braces(df,
-                                            split_plot = TRUE,
-                                            y_range = c(400, 503),
-                                            label_est = "est",
-                                            label_se = "se",
-                                            label_sig_high = "sig_2",
-                                            label_sig_bold = "sig_1"
-                                ) +
-                                ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")) +
-                                ggplot2::facet_wrap(~trend, scales = "free_x")
-
+  vdiffr::expect_doppelganger(
+    "Facetted braces",
+    ggplot2::ggplot() +
+      plot_braces(df,
+        split_plot = TRUE,
+        y_range = c(400, 503),
+        label_est = "est",
+        label_se = "se",
+        label_sig_high = "sig_2",
+        label_sig_bold = "sig_1"
+      ) +
+      ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")) +
+      ggplot2::facet_wrap(~trend, scales = "free_x")
   )
 })

@@ -15,7 +15,8 @@ plot_lineplot(
   label_est = "est_trend_no_comp",
   label_se = "se_trend_no_comp",
   label_sig_high = "sig_trend_comp_whole",
-  label_sig_bold = "sig_trend_no_comp"
+  label_sig_bold = "sig_trend_no_comp",
+  split_plot = FALSE
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ plot_lineplot(
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
+
+\item{split_plot}{Logical, indicating wheter the different trends should be split or not.}
 }
 \value{
 \link{ggplot2} object.

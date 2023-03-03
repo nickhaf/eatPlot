@@ -173,7 +173,7 @@ prep_trend <- function(dat,
   # plot_points
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
-  dat_long <- reshape(plot_dat[["plot_lines"]][, c("depVar", "grouping_var", "year_start", "year_end", "trend", "group_var", "state_var")],
+  dat_long <- stats::reshape(plot_dat[["plot_lines"]][, c("depVar", "grouping_var", "year_start", "year_end", "trend", "group_var", "state_var")],
           direction = "long",
           varying = c("year_start", "year_end"),
           sep = "_"

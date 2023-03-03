@@ -7,6 +7,7 @@
 plot_single_lineplot(
   plot_data,
   y_range = NULL,
+  split_plot,
   point_values = "est_point",
   point_sig = "sig_point",
   line_values = c("est_point_start", "est_point_end"),
@@ -21,6 +22,8 @@ plot_single_lineplot(
 \item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
+
+\item{split_plot}{Logical, indicating wheter the different trends should be split or not.}
 
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 
