@@ -27,28 +27,28 @@
 # #               right_plot_data = plot_dat_2021,
 # #               line_sig = "sig_trend_no_comp")
 #
-
-y_range = c(180, 240)
-plot_data <- test_plot_r
-
-ggplot2::ggplot() +
-  settings_lineplot(plot_data[["plot_lines"]]) +
-  plot_points(plot_data[["plot_points"]],
-              point_values = "est_point",
-              point_sig = "sig_point"
-  ) +
-  plot_lines(plot_data[["plot_lines"]],
-             line_values = c("est_point_start", "est_point_end"),
-             line_sig = "sig_trend"
-  ) +
-  # ggbrace::geom_brace(data = brace_coords, ggplot2::aes(x = year, y = brace_y)) +
-  plot_braces(plot_data[["plot_braces"]],
-              y_range = y_range,
-              label_est = "est_label",
-              label_sig_high = "sig_label_1",
-              label_sig_bold = "sig_label_2"
-  ) +
-  ggplot2::facet_wrap(~grouping_var)
-
-
-
+#
+# y_range = c(180, 240)
+# plot_data <- test_plot_r
+#
+# ggplot2::ggplot() +
+#   settings_lineplot(plot_data[["plot_lines"]]) +
+#   plot_points(plot_data[["plot_points"]],
+#               point_values = "est_point",
+#               point_sig = "sig_point"
+#   ) +
+#   plot_lines(plot_data[["plot_lines"]],
+#              line_values = c("est_point_start", "est_point_end"),
+#              line_sig = "sig_trend"
+#   ) +
+#   # ggbrace::geom_brace(data = brace_coords, ggplot2::aes(x = year, y = brace_y)) +
+#   plot_braces(plot_data[["plot_braces"]],
+#               y_range = y_range,
+#               label_est = "est_label",
+#               label_sig_high = "sig_label_1",
+#               label_sig_bold = "sig_label_2"
+#   ) +
+#   ggplot2::facet_wrap(~grouping_var)
+#
+#
+#

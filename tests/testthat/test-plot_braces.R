@@ -194,7 +194,7 @@ test_that("brace is drawn", {
                            year = c(2015, 2023)
 )
 
-expect_doppelgaenger("simple brace",
+vdiffr::expect_doppelganger("simple brace",
                      ggplot2::ggplot() + draw_braces(test_brace)
 )
 
@@ -204,11 +204,12 @@ test_that("double brace is drawn", {
   test_brace_double <- data.frame(trend = c(0, 1, 0, 1),
                                  overlap = c(FALSE, TRUE, FALSE, TRUE),
                                  year = c(2020, 2020, 2011, 2015),
-                                 brace_y = c(360, 324, 324, 306)
+                                 brace_y = c(360, 324, 324, 306),
+                                 mid = c(0.25, 0.5, 0.25, 0.5)
                                  )
-expect_doppelgaenger("double brace", ggplot2::ggplot() + draw_braces(test_brace_double))
+vdiffr::expect_doppelganger("double brace", ggplot2::ggplot() + draw_braces(test_brace_double))
 
-  })
+})
 
 test_that("brace label is drawn", {
   test_label <- data.frame(grouping_var = rep(0, 2),
@@ -218,7 +219,9 @@ test_that("brace label is drawn", {
                                   brace_label = c("label_1<sup>a</sup>", "label_2")
   )
 
-  ggplot2::ggplot() +
-    draw_brace_label(test_label)
 
+  vdiffr::expect_doppelganger("brace label",
+                       ggplot2::ggplot() +
+    draw_brace_label(test_label)
+)
 })
