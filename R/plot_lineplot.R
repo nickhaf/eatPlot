@@ -28,31 +28,33 @@ plot_lineplot <- function(plot_data,
                           label_sig_high = "sig_trend_comp_whole",
                           label_sig_bold = "sig_trend_no_comp",
                           split_plot = FALSE) {
+
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   position <- 1
 
+  ## Assemble the plots, one for every state:
   for (i in states) {
     plot_data_states <- get_states(plot_data, state = i)
 
+    p1 <- ggplot2::ggplot() +
+      plot_single_lineplot(
+        plot_data = plot_data_states,
+        y_range = range_est,
+        split_plot = split_plot,
+        point_values = point_values,
+        point_sig = point_sig,
+        line_values = line_values,
+        line_sig = line_sig,
+        label_est = label_est,
+        label_se = label_se,
+        label_sig_high = label_sig_high,
+        label_sig_bold = label_sig_bold
+      )
 
-      p1 <- ggplot2::ggplot() +
-        plot_single_lineplot(
-          plot_data = plot_data_states,
-          y_range = range_est,
-          split_plot = split_plot,
-          point_values = point_values,
-          point_sig = point_sig,
-          line_values = line_values,
-          line_sig = line_sig,
-          label_est = label_est,
-          label_se = label_se,
-          label_sig_high = label_sig_high,
-          label_sig_bold = label_sig_bold
-        )
-
+    ## Only the left plots get a y axis:
     if ((position - 1) %% 4 == 0) {
       p1 <- p1 +
         ggplot2::theme(
@@ -62,6 +64,7 @@ plot_lineplot <- function(plot_data,
         )
     }
 
+    ## The wholeGroup plot gets a box drawn around it.
     if (i == "wholeGroup") {
       p1 <- p1 +
         ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
@@ -74,17 +77,18 @@ plot_lineplot <- function(plot_data,
   n <- length(plot_list)
   nCol <- floor(sqrt(n))
 
-  #plot_margin <- ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.07, "npc"))
+  ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = nCol) &
     ggplot2::theme(
       plot.margin = ggplot2::unit(c(0.01, 0.01, 0.03, 0), "npc")
     )
-  }
+}
 
+
+# Utils -------------------------------------------------------------------
 get_states <- function(plot_data, state) {
   for (i in c("plot_points", "plot_lines", "plot_braces")) {
     plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var == state, ]
   }
-
   return(plot_data)
 }

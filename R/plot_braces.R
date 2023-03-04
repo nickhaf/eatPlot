@@ -15,9 +15,7 @@ plot_braces <- function(dat,
                         label_se,
                         label_sig_high,
                         label_sig_bold) {
-  # Put calc_dat in plot_braces already.
-
-  col_vec <-  c(
+  col_vec <- c(
     "label_est" = label_est,
     "label_se" = label_se,
     "label_sig_high" = label_sig_high,
@@ -32,15 +30,13 @@ plot_braces <- function(dat,
     dat[, i] <- NA
   }
 
-  # can this be evaled/parsed ...?
-  dat <- rename_column(dat, label_est, "label_est")
-  dat <- rename_column(dat, label_se, "label_se")
-  dat <- rename_column(dat, label_sig_high, "label_sig_high")
-  dat <- rename_column(dat, label_sig_bold, "label_sig_bold")
-
-
+  col_names <- c("label_est", "label_se", "label_sig_high", "label_sig_bold")
+  for (i in col_names) {
+    dat[i] <- dat[, eval(parse(text = i))]
+  }
 
   # Construct brace labels --------------------------------------------------
+  ## Significances can be shown with bold font or a raised a.
   dat$label_est <- ifelse(dat$label_sig_bold == TRUE,
     paste0("**", round(dat$label_est, 0), "**"),
     round(dat$label_est, 0)
@@ -53,13 +49,13 @@ plot_braces <- function(dat,
 
   dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
 
-
   dat$brace_label <- paste0(
     dat$label_est,
     dat$label_sig,
     dat$label_se
   )
 
+  # Calculate brace coordinates ---------------------------------------------
   coords <- calc_coords(y_range)
   if (split_plot == TRUE) {
     dat <- calc_brace_coords(dat, coords, output_format = "long")
@@ -67,26 +63,23 @@ plot_braces <- function(dat,
     dat <- calc_brace_coords(dat, coords)
   }
 
-  ## Bei calc_coord: neue Spalte ob brace indented sein soll oder nicht
   c(
     draw_braces(dat, split_plot),
     draw_brace_label(dat),
-    # Clip Coordinate system. Necessary, so the brace can be drawn outside of the plot
     ggplot2::coord_cartesian(
-      clip = "off",
-      ylim = coords # ,
-      # expand = FALSE
+      clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
+      ylim = coords
     )
   )
 }
 
 
 
-## Utils
 
+# Utils -------------------------------------------------------------------
 draw_braces <- function(dat, split_plot) {
   if (split_plot == TRUE) {
-   res <-  ggbrace::geom_brace(
+    res <- ggbrace::geom_brace(
       data = unique(dat[, c("trend", "year", "brace_y")]),
       mapping = ggplot2::aes(
         x = .data$year,
@@ -98,13 +91,13 @@ draw_braces <- function(dat, split_plot) {
       npoints = 200
     )
   } else {
-  res <- lapply(unique(dat$year_start), function(x) {
+    res <- lapply(unique(dat$year_start), function(x) {
       dat_year <- unique(dat[dat$year_start == x, c("year_start", "year_end", "upper_y", "lower_y", "mid")])
       ggbrace::geom_brace(
         mapping = ggplot2::aes(
           x = c(dat_year$year_start, dat_year$year_end),
           y = c(dat_year$upper_y, dat_year$lower_y),
-          ),
+        ),
         mid = unique(dat_year$mid),
         rotate = 180,
         linewidth = 0.8,
@@ -128,8 +121,4 @@ draw_brace_label <- function(dat) {
     fill = NA,
     label.color = NA
   )
-}
-
-calc_pos_label_x <- function(year_start, year_end, brace_indent_pos) {
-  year_start + (year_end - year_start) * brace_indent_pos
 }

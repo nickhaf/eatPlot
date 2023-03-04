@@ -18,28 +18,35 @@ plot_single_lineplot <- function(plot_data,
                                  label_se = "se_trend_no_comp",
                                  label_sig_high = "sig_trend_comp_whole",
                                  label_sig_bold = "sig_trend_no_comp") {
+  # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
     settings_lineplot(plot_data[["plot_lines"]]),
-    plot_braces(plot_data[["plot_braces"]],
-                split_plot = split_plot,
+    plot_braces(
+      plot_data[["plot_braces"]],
+      split_plot = split_plot,
       y_range = y_range,
       label_est = label_est,
       label_se = label_se,
       label_sig_high = label_sig_high,
       label_sig_bold = label_sig_bold
     ),
-    plot_background_lines(plot_data[["plot_background_lines"]],
+    plot_background_lines(
+      data_plot_background_lines = plot_data[["plot_background_lines"]],
       line_values = line_values
     ),
-    plot_points(plot_data[["plot_points"]],
+    plot_points(
+      data_plot_points = plot_data[["plot_points"]],
       point_values = point_values,
       point_sig = point_sig
     ),
-    plot_lines(plot_data[["plot_lines"]],
+    plot_lines(
+      data_plot_lines = plot_data[["plot_lines"]],
       line_values = line_values,
       line_sig = line_sig
     ),
-   if(split_plot == TRUE){ggplot2::facet_wrap(~trend, scales = "free_x")},
+    if (split_plot == TRUE) {
+      ggplot2::facet_wrap(~trend, scales = "free_x")
+    },
     ggplot2::labs(title = paste0(unique(plot_data[["plot_braces"]]$state_var), "\n", " ")),
     ggplot2::scale_y_continuous(breaks = seq(from = round(y_range[1] - 10, -1), to = round(y_range[2], -1), by = 20))
   )

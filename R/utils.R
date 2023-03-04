@@ -127,9 +127,9 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 }
 
 ## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
-split_years <- function(data){
+split_years <- function(dat){
 
-  years <- regmatches(data$year, gregexpr("[[:digit:]]+", data$year))
+  years <- regmatches(dat$year, gregexpr("[[:digit:]]+", dat$year))
 
   # extract the years and add them to the long data frame
   year_cols <- data.frame()
@@ -138,10 +138,11 @@ split_years <- function(data){
     year_cols <- rbind(year_cols, as.numeric(years[[i]]))
   }
   colnames(year_cols) <- c("year_start", "year_end")
-  data <- cbind(data, year_cols)
-  data <- rename_column(data, "year", "trend_years")
+  dat <- cbind(dat, year_cols)
+  dat$trend <- paste0(dat$year_start, dat$year_end)
+  dat <- rename_column(dat, "year", "trend_years")
 
-  return(data)
+  return(dat)
 }
 
 

@@ -1,7 +1,6 @@
 
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
-
   output_format <- match.arg(output_format)
   dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
@@ -44,25 +43,27 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
     dat$mid <- rep(0.5, nrow(dat))
   }
 
-if(output_format == "long"){
-  ## Long oder wide format argument
+  if (output_format == "long") {
+    ## Long oder wide format argument
 
-  dat_long <- stats::reshape(
-    dat,
-    idvar = c("grouping_var", "trend"),
-    varying = c("upper_y", "year_end", "lower_y", "year_start"),
-    v.names = c("year", "value"),
-    direction = "long"
-  )
+    dat_long <- stats::reshape(
+      dat,
+      idvar = c("grouping_var", "trend"),
+      varying = c("upper_y", "year_end", "lower_y", "year_start"),
+      v.names = c("year", "value"),
+      direction = "long"
+    )
 
-  dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "trend")])
-  dat <- rename_column(dat, old = "value", new = "brace_y")
-}
+    dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "trend")])
+    dat <- rename_column(dat, old = "value", new = "brace_y")
+  }
 
   return(dat)
 }
 
-
+calc_pos_label_x <- function(year_start, year_end, brace_indent_pos) {
+  year_start + (year_end - year_start) * brace_indent_pos
+}
 
 # Plot_points -------------------------------------------------------------
 calc_y_nudge <- function(vec, n_groups) {

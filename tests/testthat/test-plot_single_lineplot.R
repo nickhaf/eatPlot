@@ -158,6 +158,7 @@ test_that("split lineplot with no groups is plotted correctly", {
       trend = c(12, 12, 23, 23)
     )
   )
+
   vdiffr::expect_doppelganger(
     "splitlineplot",
     ggplot2::ggplot() +
@@ -171,4 +172,83 @@ test_that("split lineplot with no groups is plotted correctly", {
                            label_sig_bold = "sig_label_2"
       )
   )
+})
+
+
+
+test_that("Combination of the different plot function works (for debugging)", {
+  test_plot <- list(
+    plot_points = data.frame(
+      state_var = rep("a", 3),
+      grouping_var = factor(c("group1", "group1", "group1", "group2", "group2", "group2"), levels = c("group1", "group2")),
+      year = rep(c(1, 2, 3), 2),
+      est_point = c(200, 210, 220, 205, 215, 225),
+      sig_point = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
+      trend = c(12, 12, 23, 12, 12, 23)
+    ),
+    plot_lines = data.frame(
+      state_var = rep("a", 4),
+      grouping_var = factor(c("group1", "group2", "group1", "group2"), levels = c("group1", "group2")),
+      year_start = c(1, 1, 2, 2),
+      year_end = c(2, 2, 3, 3),
+      est_point_start = c(200, 205, 210, 215),
+      est_point_end = c(210, 215, 220, 225),
+      sig_trend = c(TRUE, FALSE, FALSE, TRUE),
+      trend = c(12, 12, 23, 23)
+    ),
+    plot_background_lines = data.frame(
+      state_var = rep("", 2),
+      grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
+      year_start = c(1, 2),
+      year_end = c(2, 3),
+      est_point_start = c(190, 225),
+      est_point_end = c(225, 230),
+      sig_trend = c(TRUE, FALSE),
+      trend = c(12, 23)
+    ),
+    plot_braces = data.frame(
+      state_var = rep("a", 4),
+      grouping_var = factor(c("group1", "group2", "group1", "group2"), levels = c("group1", "group2")),
+      year_start = c(1, 1, 2, 2),
+      year_end = c(2, 2, 3, 3),
+      est_label = c(10, 20, 30, 40),
+      se_label = c(1, 2, 3, 4),
+      sig_label_1 = c(TRUE, FALSE, FALSE, TRUE),
+      sig_label_2 = c(FALSE, TRUE, FALSE, TRUE),
+      trend = c(12, 12, 23, 23)
+    )
+  )
+  y_range <- c(200, 225)
+
+  vdiffr::expect_doppelganger("Manual lineplot",
+ggplot2::ggplot() +
+  settings_lineplot(test_plot[["plot_lines"]]) +
+plot_braces(
+  test_plot[["plot_braces"]],
+  split_plot = FALSE,
+  y_range = c(200, 225),
+  label_est = "est_label" ,
+  label_se = "se_label",
+  label_sig_high = "sig_label_2",
+  label_sig_bold = "sig_label_2"
+) +
+plot_background_lines(
+  data_plot_background_lines = test_plot[["plot_background_lines"]],
+  line_values = c("est_point_start", "est_point_end")
+) +
+plot_points(
+  data_plot_points = test_plot[["plot_points"]],
+  point_values = "est_point",
+  point_sig = "sig_point"
+) +
+plot_lines(
+  data_plot_lines = test_plot[["plot_lines"]],
+  line_values = c("est_point_start", "est_point_end"),
+  line_sig = "sig_trend"
+) +
+ggplot2::labs(title = paste0(unique(test_plot[["plot_braces"]]$state_var), "\n", " ")) +
+ggplot2::scale_y_continuous(breaks = seq(from = round(y_range[1] - 10, -1), to = round(y_range[2], -1), by = 20))
+)
+
+
 })
