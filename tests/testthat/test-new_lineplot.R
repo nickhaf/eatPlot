@@ -17,5 +17,7 @@
 #
 # plot_lineplot(plot_data = plot_dat_test,
 #               split_plot = TRUE,
-#               line_sig = "sig_trend_no_comp")
+#               line_sig = "sig_trend_no_comp",
+#               label_sig_high = "sig_trend_no_comp"
+#               )
 #
