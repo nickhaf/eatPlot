@@ -136,7 +136,7 @@ test_that("columns are checked correctly", {
   b = ""
 
 
-  expect_equal(check_colnames(c("a" = a, "b" = b), c("col_1", "b")), "b")
+  expect_equal(check_missing_colnames(c("a" = a, "b" = b), c("col_1", "b")), "b")
 
 })
 

@@ -21,7 +21,7 @@ plot_braces <- function(dat,
     "label_sig_high" = label_sig_high,
     "label_sig_bold" = label_sig_bold
   )
-  missing_cols <- check_colnames(
+  missing_cols <- check_missing_colnames(
     x = col_vec,
     colnames(dat)
   )
