@@ -77,7 +77,6 @@ theme_line <- function(){
       panel.grid.minor.x = ggplot2::element_blank(),
       legend.position = "none",
       axis.title.x = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_text(colour = "blue"),
       axis.text.y = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_blank(),
       strip.text.x = ggplot2::element_blank(),
