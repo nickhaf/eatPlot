@@ -44,7 +44,22 @@ theme_table <- function() {
     )
 }
 
-
+theme_y_axis <-  function() {
+  ggplot2::theme_classic() %+replace%
+    ggplot2::theme(
+      strip.background = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      axis.line = ggplot2::element_blank(),
+      axis.title = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_blank(),
+      plot.margin = ggplot2::unit(c(0, -0.1, 0, 0), "cm"),
+      plot.caption = ggplot2::element_text(hjust = 0),
+      legend.position = "bottom"
+    )
+}
 
 #' Theme for lineplot.
 #'
@@ -65,6 +80,7 @@ theme_line <- function(){
       axis.text.y = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_blank(),
       strip.text.x = ggplot2::element_blank(),
+      panel.spacing.x = ggplot2::unit(0.05, "npc"),
       plot.title = ggplot2::element_text(size = 10, hjust = 0.5),
       plot.margin = ggplot2::unit(c(0, 0, 0.30, 0), units="npc")#,
       #plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")
@@ -73,19 +89,4 @@ theme_line <- function(){
 
 
 
-theme_y_axis <-  function() {
-  ggplot2::theme_classic() %+replace%
-    ggplot2::theme(
-      strip.background = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.border = ggplot2::element_blank(),
-      axis.line = ggplot2::element_blank(),
-      axis.title = ggplot2::element_blank(),
-      axis.text.y = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_blank(),
-      axis.ticks = ggplot2::element_blank(),
-      plot.margin = ggplot2::unit(c(0, -0.1, 0, 0), "cm"),
-      plot.caption = ggplot2::element_text(hjust = 0),
-      legend.position = "bottom"
-    )
-}
+
