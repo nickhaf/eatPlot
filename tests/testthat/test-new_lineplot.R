@@ -21,7 +21,7 @@
 #               label_sig_high = "sig_trend_no_comp"
 #               )
 #
-# save_plot(p_line, filename = "../split_lineplot.pdf")
+# save_plot(p_line, filename = "../split_lineplot.pdf", height = 20)
 #
-
-
+#
+#
