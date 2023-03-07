@@ -17,7 +17,7 @@ plot_braces(
 \arguments{
 \item{dat}{Prepared Trend data.}
 
-\item{split_plot}{Logical, indicating wheter the different trends should be split or not.}
+\item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 

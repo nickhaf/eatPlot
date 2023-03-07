@@ -23,7 +23,7 @@ plot_single_lineplot(
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
-\item{split_plot}{Logical, indicating wheter the different trends should be split or not.}
+\item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 

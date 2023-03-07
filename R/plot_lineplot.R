@@ -1,8 +1,6 @@
 #' Title
 #'
 #' @param plot_data Input is a list prepared by [prep_trend()].`
-#' @param left_plot_data Input data prepared by [prep_trend()] for the left part of a split lineplot. Only has to be specified if you want to plot split lineplots, and therefore defaults to `NULL`.
-#' @param right_plot_data Input data prepared by [prep_trend()] for the right part of a split lineplot. Only has to be specified if you want to plot split lineplots, and therefore defaults to `NULL`.
 #' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_point`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_point"`.
 #' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_point_start", "est_point_end")`.
@@ -11,14 +9,12 @@
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
-#' @param split_plot Logical, indicating wheter the different trends should be split or not.
+#' @param split_plot Logical, indicating whether the different trends should be split or not.
 #' @return [ggplot2] object.
 #' @export
 #'
 #' @examples # tbd
 plot_lineplot <- function(plot_data,
-                          left_plot_data = NULL,
-                          right_plot_data = NULL,
                           point_values = "est_point",
                           point_sig = "sig_point",
                           line_values = c("est_point_start", "est_point_end"),
@@ -37,11 +33,11 @@ plot_lineplot <- function(plot_data,
 
   ## Assemble the plots, one for every state:
   for (i in states) {
-    plot_data_states <- get_states(plot_data, state = i)
+    plot_data_state <- get_state(plot_data, state = i)
 
-    p1 <- ggplot2::ggplot() +
+    p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
-        plot_data = plot_data_states,
+        plot_data = plot_data_state,
         y_range = range_est,
         split_plot = split_plot,
         point_values = point_values,
@@ -56,7 +52,7 @@ plot_lineplot <- function(plot_data,
 
     ## Only the left plots get a y axis:
     if ((position - 1) %% 4 == 0) {
-      p1 <- p1 +
+      p_state <- p_state +
         ggplot2::theme(
           axis.text.y = ggplot2::element_text(),
           axis.line.y = ggplot2::element_line(),
@@ -66,11 +62,11 @@ plot_lineplot <- function(plot_data,
 
     ## The wholeGroup plot gets a box drawn around it.
     if (i == "wholeGroup") {
-      p1 <- p1 +
+      p_state <- p_state +
         ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
     }
 
-    plot_list[[i]] <- p1
+    plot_list[[i]] <- p_state
     position <- position + 1
   }
 
@@ -86,7 +82,7 @@ plot_lineplot <- function(plot_data,
 
 
 # Utils -------------------------------------------------------------------
-get_states <- function(plot_data, state) {
+get_state <- function(plot_data, state) {
   for (i in c("plot_points", "plot_lines", "plot_braces")) {
     plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var == state, ]
   }

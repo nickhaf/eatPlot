@@ -32,7 +32,7 @@ plot_braces <- function(dat,
 
   col_names <- c("label_est", "label_se", "label_sig_high", "label_sig_bold")
   for (i in col_names) {
-    dat[i] <- dat[, eval(parse(text = i))]
+    dat[, i] <- dat[, eval(parse(text = i))]
   }
 
   # Construct brace labels --------------------------------------------------
