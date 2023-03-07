@@ -127,9 +127,9 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 }
 
 ## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
-split_years <- function(data){
+split_years <- function(dat){
 
-  years <- regmatches(data$year, gregexpr("[[:digit:]]+", data$year))
+  years <- regmatches(dat$year, gregexpr("[[:digit:]]+", dat$year))
 
   # extract the years and add them to the long data frame
   year_cols <- data.frame()
@@ -138,10 +138,11 @@ split_years <- function(data){
     year_cols <- rbind(year_cols, as.numeric(years[[i]]))
   }
   colnames(year_cols) <- c("year_start", "year_end")
-  data <- cbind(data, year_cols)
-  data <- remove_columns(data, "year")
+  dat <- cbind(dat, year_cols)
+  dat$trend <- paste0(dat$year_start, dat$year_end)
+  dat <- rename_column(dat, "year", "trend_years")
 
-  return(data)
+  return(dat)
 }
 
 
@@ -209,12 +210,24 @@ get_comparisons <- function(dat, group_col, states, sub_groups){
 }
 
 
+# Overlap occurs, when one start point lies between a start and end point, or an end point lies between a start and an end point
 
 calc_overlap <- function(year_start, year_end){
 
   years <- c()
   for( i in 1:length(year_start)){
+
     years[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
   }
 return(years)
 }
+
+
+
+## Function for checking which arguments are in the colnames, and returning those which are not
+check_missing_colnames <- function(x, colnames_vec){
+  names(x[!x %in% colnames_vec])
+}
+
+
+

@@ -15,8 +15,6 @@ grouping_colours <- function(...){
   ), ... )
 }
 
-
-
 #' Wrapper around [ggplot2::scale_colour_manual()] with two predefined shapes.
 #'
 #' @details Turns points int rectangles if the according p-value is significant.

@@ -14,7 +14,8 @@ plot_background_lines <- function(data_plot_background_lines, line_values) {
       x = .data$year_start,
       xend = .data$year_end,
       y = .data[[line_values[1]]],
-      yend = .data[[line_values[2]]]
+      yend = .data[[line_values[2]]],
+      group = .data$trend
     ),
     linewidth = 1.6,
     color = grDevices::rgb(147, 205, 221,

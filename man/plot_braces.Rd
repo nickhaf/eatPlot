@@ -5,8 +5,9 @@
 \title{Plot braces below plot.}
 \usage{
 plot_braces(
-  data_plot_braces,
-  BL,
+  dat,
+  split_plot = FALSE,
+  y_range,
   label_est,
   label_se,
   label_sig_high,
@@ -14,9 +15,11 @@ plot_braces(
 )
 }
 \arguments{
-\item{data_plot_braces}{Prepared Trend data.}
+\item{dat}{Prepared Trend data.}
 
-\item{BL}{Bundesland, for which the labels should be drawn.}
+\item{split_plot}{Logical, indicating whether the different trends should be split or not.}
+
+\item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
 \item{label_est}{Character string of the column name containing the brace labels.}
 

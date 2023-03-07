@@ -1,29 +1,43 @@
-test_that("calc_brace_coords works", {
+test_that("calc_brace_coords works for long format", {
   df <- data.frame(
-    TR_BUNDESLAND = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2015, 2015),
-    year_end = c(2020, 2020, 2020, 2020),
+    state_var = rep("Berlin", 4),
+    year_start = c(2011, 2011, 2012, 2012),
+    year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 0, 1)),
-    est_trend_within = c(1:4),
-    se_trend_within = c(1:4),
-    sig_trend_comp_within = c(TRUE, FALSE, FALSE, TRUE),
-    sig_trend_whole = c(FALSE, TRUE, FALSE, TRUE),
-    est_point_start = 400:403,
-    est_point_end = 500:503
+    brace_label = rep("a", 4),
+    trend = c("2011", "2011", "2012", "2012")
+  )
+
+  coords <- c(360, 530)
+
+  test_braces <- calc_brace_coords(df, coords, output_format = "long")
+
+  expect_equal(test_braces$brace_y, c(360, 360, 360, 360, 324, 324, 324, 324))
+  expect_equal(test_braces$label_pos_y, rep(c(302.4, 324.0), 4))
+})
+
+test_that("calc_brace_coords works for wide format", {
+  df <- data.frame(
+    state_var = rep("Berlin", 4),
+    year_start = c(2011, 2011, 2012, 2012),
+    year_end = c(2012, 2012, 2013, 2013),
+    grouping_var = factor(c(0, 1, 0, 1)),
+    brace_label = rep("a", 4),
+    trend = c("20112012", "20112012", "20122013", "20122013")
   )
 
   coords <- c(360, 530)
 
   test_braces <- calc_brace_coords(df, coords)
 
-  expect_equal(test_braces$brace_upper_y, c(360, 360, 324, 324))
-  expect_equal(test_braces$brace_lower_y, c(324, 324, 306, 306))
-  expect_equal(test_braces$label_pos_y, c(277.2, 298.8, 277.2, 298.8))
+  expect_equal(test_braces$lower_y, rep(324, 4))
+  expect_equal(test_braces$year_start, c(2011, 2011, 2012, 2012))
 })
 
 
 
+
 test_that("Point nudge is calculated correctly", {
-  expect_equal(calc_y_nudge(c(1,2,3), n_groups = 2), c(-0.5, 0.5))
+  expect_equal(calc_y_nudge(c(1, 2, 3), n_groups = 2), c(-0.5, 0.5))
   expect_equal(calc_y_nudge(c(1:100), n_groups = 4), c(-24.75, 24.75, 24.75, 24.75))
 })

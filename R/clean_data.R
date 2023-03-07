@@ -49,6 +49,7 @@ clean_data <- function(dat,
   dat <- dat[, !colnames(dat) %in% c("modus", "modus", "parameter", "kb")]
 
   # Fill up NAs
+  dat$state_var[dat$state_var == ""] <- "wholeGroup"
   dat <- fill_up_na(dat, info_to = "state_var", filling_groups = states)
   dat <- fill_up_na(dat, info_to = "grouping_var", filling_groups = sub_groups)
 

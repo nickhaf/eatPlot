@@ -118,6 +118,10 @@ expect_equal(calc_overlap(year_start = c(1, 1, 2, 2), year_end = c(3, 3, 4, 4)),
 
 expect_equal(calc_overlap(year_start = c(1, 1, 2, 2), year_end = c(2, 2, 3, 4)),
                c(FALSE, FALSE, FALSE, FALSE))
+
+# expect_equal(calc_overlap(year_start = c(2011, 2011, 2011, 2011),
+#                           year_end = c(2016, 2016, 2021, 2021)),
+#              c(TRUE, TRUE, TRUE, TRUE))
 })
 
 
@@ -125,3 +129,15 @@ test_that("columns are removed correctly", {
   df_cols <- data.frame("col_1" = 1, "col_2" = 2)
   expect_equal(colnames(remove_columns(df_cols, "col_2")), "col_1")
 })
+
+test_that("columns are checked correctly", {
+
+  a = "col_1"
+  b = ""
+
+
+  expect_equal(check_missing_colnames(c("a" = a, "b" = b), c("col_1", "b")), "b")
+
+})
+
+
