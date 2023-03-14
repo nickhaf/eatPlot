@@ -12,7 +12,7 @@
 #'
 #' @examples #tbd
 save_plot <- function(p, filename, width = 16, height = 25.2, format = "PDF", scaling = 1) {
-  pdf(file = filename, width = width * scaling, height = height * scaling)
+  grDevices::pdf(file = filename, width = width * scaling, height = height * scaling)
   plot(p)
-  dev.off()
+  grDevices::dev.off()
 }

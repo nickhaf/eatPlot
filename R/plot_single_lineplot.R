@@ -44,10 +44,13 @@ plot_single_lineplot <- function(plot_data,
       line_values = line_values,
       line_sig = line_sig
     ),
+    plot_axis(plot_data[["plot_points"]], y_range = y_range),
     if (split_plot == TRUE) {
       ggplot2::facet_wrap(~trend, scales = "free_x")
     },
     ggplot2::labs(title = paste0(unique(plot_data[["plot_braces"]]$state_var), "\n", " ")),
-    ggplot2::scale_y_continuous(breaks = seq(from = round(y_range[1] - 10, -1), to = round(y_range[2], -1), by = 20))
+    ggplot2::scale_y_continuous(breaks = seq(from = round(y_range[1] - 10, -1), to = round(y_range[2], -1), by = 20),
+                                expand = c(0, 0)
+                               )
   )
 }
