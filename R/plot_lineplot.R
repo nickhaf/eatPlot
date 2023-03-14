@@ -51,6 +51,7 @@ plot_lineplot <- function(plot_data,
       )
 
     ## Only the left plots get a y axis:
+    ## Problem: Need a manual y-axis.
     if ((position - 1) %% 4 == 0) {
       p_state <- p_state +
         ggplot2::theme(
@@ -61,10 +62,10 @@ plot_lineplot <- function(plot_data,
     }
 
     ## The wholeGroup plot gets a box drawn around it.
-    if (i == "wholeGroup") {
-      p_state <- p_state +
-        ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
-    }
+    # if (i == "wholeGroup") {
+    #   p_state <- p_state +
+    #     ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
+    # }
 
     plot_list[[i]] <- p_state
     position <- position + 1
@@ -76,7 +77,7 @@ plot_lineplot <- function(plot_data,
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = nCol) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(0.025, 0.025, 0.025, 0.025), "npc")
+      plot.margin = ggplot2::unit(c(0.025, 0.015, 0.025, 0.015), "npc")
     )
 }
 
