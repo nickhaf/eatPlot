@@ -40,8 +40,3 @@ res_list <- list(
 
 return(res_list)
     }
-
-## Problem: Split lineplot, facet_wrap scheint nicht damit klar zu kommen. Vielleicht den data_plot_points data-frame nutzen, da müsste die trend gruppierung drin sein.
-## Zur Not die Jahreszahlen der trend-gruppen rausziehen und dann annotaten
-
-## Oder: unique points nehmen, das sollte eigentlich auch passen, also doch Datengestützt (wahrscheinlich besser?)
