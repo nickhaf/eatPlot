@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples #tbd
-plot_axis <- function(data_plot_points, y_range){
+plot_x_axis <- function(data_plot_points, y_range){
   coords <- calc_coords(y_range)
   y_max <- coords[2]
 

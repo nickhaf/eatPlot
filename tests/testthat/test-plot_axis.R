@@ -12,6 +12,6 @@ test_that("x axis can be built on plot", {
       ggplot2::aes(x = year, y = est_points)
     ) +
       ggplot2::geom_point() +
-      plot_axis(test_df, y_range = c(3, 4))
+      plot_x_axis(test_df, y_range = c(3, 4))
   )
 })

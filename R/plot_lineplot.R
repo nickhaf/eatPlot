@@ -31,6 +31,15 @@ plot_lineplot <- function(plot_data,
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   position <- 1
 
+  ## Build dataframe for plotting manual y-axis:
+
+  df_y <- data.frame(trend = "20112016",
+                     x = min(plot_data[["plot_points"]]$year),
+                     xend = min(plot_data[["plot_points"]]$year),
+                     y = round(range_est[1] - 10, -1),
+                     yend = round(range_est[2], -1)
+  )
+
   ## Assemble the plots, one for every state:
   for (i in states) {
     plot_data_state <- get_state(plot_data, state = i)
@@ -56,9 +65,25 @@ plot_lineplot <- function(plot_data,
       p_state <- p_state +
         ggplot2::theme(
           axis.text.y = ggplot2::element_text(),
-          axis.line.y = ggplot2::element_line(),
           axis.ticks.y = ggplot2::element_line()
-        )
+        ) +
+        ggplot2::geom_segment(
+          data = df_y,
+          ggplot2::aes(
+          x = .data$x,
+          xend = .data$xend,
+                     y = .data$y,
+                     yend = .data$yend
+          )
+          )
+      # ggplot2::annotate(
+      #   x = min(plot_data[["plot_points"]]$year),
+      #          xend = min(plot_data[["plot_points"]]$year),
+      #          y = round(range_est[1] - 10, -1),
+      #          yend = round(range_est[2], -1),
+      #          lwd = 0.75,
+      #          geom = "segment")
+
     }
 
     ## The wholeGroup plot gets a box drawn around it.

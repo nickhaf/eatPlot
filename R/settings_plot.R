@@ -11,7 +11,7 @@ settings_lineplot <- function(data_trend_point){
     theme_line(),
     ggplot2::scale_x_continuous(position = "top",
                                 breaks = unique(c(data_trend_point$year_start, data_trend_point$year_end)),
-                                expand = c(0.25, 0)
+                                expand = c(0, 0)
     ),
     sig_linetypes(),
     sig_pointshapes(),

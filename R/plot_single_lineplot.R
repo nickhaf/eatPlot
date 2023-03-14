@@ -44,7 +44,7 @@ plot_single_lineplot <- function(plot_data,
       line_values = line_values,
       line_sig = line_sig
     ),
-    plot_axis(plot_data[["plot_points"]], y_range = y_range),
+    plot_x_axis(plot_data[["plot_points"]], y_range = y_range),
     if (split_plot == TRUE) {
       ggplot2::facet_wrap(~trend, scales = "free_x")
     },
