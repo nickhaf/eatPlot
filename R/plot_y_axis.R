@@ -11,10 +11,6 @@ plot_y_axis <- function(plot_data) {
 
 
   list(
-    ggplot2::theme(
-      axis.text.y = ggplot2::element_text(),
-      axis.ticks.y = ggplot2::element_line()
-    ),
     ggplot2::geom_segment(
       data = df_y,
       ggplot2::aes(
@@ -33,6 +29,12 @@ plot_y_axis <- function(plot_data) {
         by = 20
       ),
       limits = c(calc_coords(range_est)[1], calc_coords(range_est)[2])
+    ),
+    ggplot2::theme(
+      axis.text.y = ggplot2::element_text(),
+      axis.ticks.y = ggplot2::element_line(),
+      axis.text.x = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_blank()
     )
 
 

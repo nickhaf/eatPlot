@@ -62,21 +62,17 @@ plot_lineplot <- function(plot_data,
     position <- position + 1
     }
 
-## Append:
-
+## Achtung: y-Achse aligned noch nicht mit dem restlichen Plot!!!
 if(y_axis == TRUE){
 
   y_axis_plot <- ggplot2::ggplot() +
     plot_y_axis(plot_data)
-
-n_cols <- n_cols + 1
 
 log_y_axis <- sapply(1:length(states), function(x) {
   (x-1) %% n_cols == 0
 })
 
 positions_y_axis <- c(1:length(states))[log_y_axis]
-positions_y_axis <- positions_y_axis + 0:(length(positions_y_axis)-1)
 
 for(i in positions_y_axis){
   plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
