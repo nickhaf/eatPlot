@@ -23,55 +23,19 @@ plot_lineplot <- function(plot_data,
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
                           label_sig_bold = "sig_trend_no_comp",
-                          split_plot = FALSE) {
+                          split_plot = FALSE,
+                          y_axis = FALSE) {
 
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
+  n_cols <- ceiling(length(states)/4)
   position <- 1
 
-  ## Build dataframe for plotting manual y-axis:
+  for (i in states) {
 
-  df_y <- data.frame(trend = "20112016",
-                     x = min(plot_data[["plot_points"]]$year),
-                     y = round(range_est[1] - 10, -1),
-                     yend = round(range_est[2], -1),
-                     xmax = max(plot_data[["plot_points"]]$year)
-  )
-
-
-  y_axis <- ggplot2::ggplot() +
-    plot_y_axis(df_y) +
-    ggplot2::scale_x_continuous(limits = c(min(plot_data[["plot_points"]]$year), min(plot_data[["plot_points"]]$year) + 1), expand = c(0,0)) +
-    theme_line() +
-    ggplot2::theme(
-      axis.text.y = ggplot2::element_text(),
-      axis.ticks.y = ggplot2::element_line(),
-     axis.line.x = ggplot2::element_blank(),
-     axis.text.x = ggplot2::element_blank()
-    ) +
-    ggplot2::scale_y_continuous(
-      breaks = seq(
-        from = round(min(plot_dat[["plot_points"]]$est_point, na.rm = TRUE) - 10, -1),
-        to = round(max(plot_dat[["plot_points"]]$est_point, na.rm = TRUE), -1),
-        by = 20
-      )
-    )
-
-  ## Assemble the plots, one for every state:
-  n_rows <- ceiling(length(states)/5)
-  n_cols <- 5
-  n_tiles <- n_rows * n_cols
-
-state_position <- 1
-
-  for (i in 1:n_tiles) {
-    if ((i - 1) %% 5 == 0) {
-      plot_list[[i]] <- y_axis
-    }else{
-    state <- states[state_position]
-    plot_data_state <- get_state(plot_data, state = state)
+    plot_data_state <- get_state(plot_data, state = i)
     p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
         plot_data = plot_data_state,
@@ -88,12 +52,6 @@ state_position <- 1
       ) +
       set_plot_coords(plot_dat)
 
-    ## Only the left plots get a y axis:
-    #if ((position - 1) %% 4 == 0) {
-      # p_state <- p_state +
-      #  plot_y_axis(df_y)
-      #}
-
     ## The wholeGroup plot gets a box drawn around it.
     # if (i == "wholeGroup") {
     #   p_state <- p_state +
@@ -101,14 +59,35 @@ state_position <- 1
     # }
 
     plot_list[[i]] <- p_state
-    state_position <- state_position + 1
-
+    position <- position + 1
     }
 
-  }
+## Append:
+
+if(y_axis == TRUE){
+
+  y_axis_plot <- ggplot2::ggplot() +
+    plot_y_axis(plot_data)
+
+n_cols <- n_cols + 1
+
+log_y_axis <- sapply(1:length(states), function(x) {
+  (x-1) %% n_cols == 0
+})
+
+positions_y_axis <- c(1:length(states))[log_y_axis]
+positions_y_axis <- positions_y_axis + 0:(length(positions_y_axis)-1)
+
+for(i in positions_y_axis){
+  plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
+}
+widths_setting <- c(0.02, rep(1-0.02/(n_cols -1), times = n_cols - 1))
+}else{
+  widths_setting <- 1/n_cols
+}
 
   ## Build the finished plot:
-  patchwork::wrap_plots(plot_list, ncol = n_cols, widths = c(0.02, rep(1-0.02/(n_cols -1), times = n_cols - 1))) &
+  patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &
     ggplot2::theme(
       plot.margin = ggplot2::unit(c(0.025, 0.015, 0.025, 0.015), "npc")
     )
