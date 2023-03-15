@@ -20,7 +20,7 @@ plot_single_lineplot <- function(plot_data,
                                  label_sig_bold = "sig_trend_no_comp") {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
-    settings_lineplot(plot_data[["plot_lines"]]),
+    settings_lineplot(),
     plot_braces(
       plot_data[["plot_braces"]],
       split_plot = split_plot,
@@ -48,9 +48,7 @@ plot_single_lineplot <- function(plot_data,
     if (split_plot == TRUE) {
       ggplot2::facet_wrap(~trend, scales = "free_x")
     },
-    ggplot2::labs(title = paste0(unique(plot_data[["plot_braces"]]$state_var), "\n", " ")),
-    ggplot2::scale_y_continuous(breaks = seq(from = round(y_range[1] - 10, -1), to = round(y_range[2], -1), by = 20),
-                                expand = c(0, 0)
-                               )
+    ggplot2::labs(title = paste0(unique(plot_data[["plot_braces"]]$state_var), "\n", " "))
+
   )
 }

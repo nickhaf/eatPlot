@@ -1,18 +1,13 @@
 #' Set theme, colours, pointshapes and linetypes for lineplot.
 #'
-#' @param data_trend_point Data in Long format
 #'
 #' @return ggplot2 plot settings
 #' @export
 #'
 #' @examples #tbd
-settings_lineplot <- function(data_trend_point){
+settings_lineplot <- function(){
   list(
     theme_line(),
-    ggplot2::scale_x_continuous(position = "top",
-                                breaks = unique(c(data_trend_point$year_start, data_trend_point$year_end)),
-                                expand = c(0, 0)
-    ),
     sig_linetypes(),
     sig_pointshapes(),
     grouping_colours()

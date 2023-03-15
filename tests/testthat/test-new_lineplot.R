@@ -15,10 +15,11 @@ plot_dat_test <- prep_trend(dat = uneq_groups,
                        x_braces = list(c(2011, 2016), c(2016, 2021))
                        )
 
+
 p_line <- plot_lineplot(plot_data = plot_dat_test,
               split_plot = TRUE,
               line_sig = "sig_trend_no_comp",
               label_sig_high = "sig_trend_no_comp"
               )
-#
+
 # save_plot(p_line, filename = "../split_lineplot.pdf", height = 20)
