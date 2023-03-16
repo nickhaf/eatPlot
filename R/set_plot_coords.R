@@ -1,3 +1,11 @@
+#' Set the x- and y-coordinates for a plot.
+#'
+#' @inheritParams plot_lineplot
+#'
+#' @return [ggplot2] object.
+#' @export
+#'
+#' @examples # tbd
 set_plot_coords <- function(plot_dat) {
   min_year <- min(plot_dat[["plot_points"]]$year, na.rm = TRUE)
   max_year <- max(plot_dat[["plot_points"]]$year, na.rm = TRUE)
@@ -13,6 +21,7 @@ set_plot_coords <- function(plot_dat) {
 }
 
 
+# Utils -------------------------------------------------------------------
 set_y_coords <- function(plot_dat){
   ggplot2::scale_y_continuous(
     breaks = seq(

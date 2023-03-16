@@ -9,6 +9,9 @@
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
+#' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to `FALSE`.
+#' @param n_cols Numeric, which indicates the number of columns the final plot should have. Defaults to `4`.
+#'
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
 #' @return [ggplot2] object.
 #' @export
@@ -24,17 +27,15 @@ plot_lineplot <- function(plot_data,
                           label_sig_high = "sig_trend_comp_whole",
                           label_sig_bold = "sig_trend_no_comp",
                           split_plot = FALSE,
-                          y_axis = FALSE) {
-
+                          y_axis = FALSE,
+                          n_cols = 4) {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
-  n_cols <- 4
   position <- 1
 
   for (i in states) {
-
     plot_data_state <- get_state(plot_data, state = i)
     p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
@@ -60,30 +61,25 @@ plot_lineplot <- function(plot_data,
 
     plot_list[[i]] <- p_state
     position <- position + 1
+  }
+
+
+  # Add y axis --------------------------------------------------------------
+  if (y_axis == TRUE) {
+    y_axis_plot <- ggplot2::ggplot() +
+      plot_y_axis(plot_data)
+
+    positions_y_axis <- calc_y_positions(states, n_cols)
+
+    for (i in positions_y_axis) {
+      plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
     }
 
-## Achtung: y-Achse aligned noch nicht mit dem restlichen Plot!!!
-if(y_axis == TRUE){
-  n_rows <- ceiling(length(states)/n_cols)
-  n_cols <- n_cols + 1 # One column added for the y_axis.
-  n_tiles <- n_rows * n_cols
-
-  y_axis_plot <- ggplot2::ggplot() +
-    plot_y_axis(plot_data)
-
-log_y_axis <- sapply(1:n_tiles, function(x) {
-  (x-1) %% n_cols == 0
-})
-
-positions_y_axis <- c(1:n_tiles)[log_y_axis]
-
-for(i in positions_y_axis){
-  plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
-}
-widths_setting <- c(0.02, rep(1-0.02/(n_cols -1), times = n_cols - 1))
-}else{
-  widths_setting <- 1/n_cols
-}
+    widths_setting <- c(0.02, rep(1 - 0.02 / n_cols, times = n_cols))
+    n_cols <- n_cols + 1
+  } else {
+    widths_setting <- 1 / n_cols
+  }
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &

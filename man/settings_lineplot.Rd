@@ -4,10 +4,7 @@
 \alias{settings_lineplot}
 \title{Set theme, colours, pointshapes and linetypes for lineplot.}
 \usage{
-settings_lineplot(data_trend_point)
-}
-\arguments{
-\item{data_trend_point}{Data in Long format}
+settings_lineplot()
 }
 \value{
 ggplot2 plot settings
