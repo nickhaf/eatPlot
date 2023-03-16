@@ -10,7 +10,6 @@
 #' @examples # tbd
 plot_points <- function(data_plot_points, y_range, point_values, point_sig) {
   data_plot_points <- data_plot_points[!is.na(data_plot_points[, point_values]), ]
-
   data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range)
 
   list(

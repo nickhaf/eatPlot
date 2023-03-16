@@ -70,28 +70,29 @@ calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.1) {
   range_est <- diff(y_range)
   nudge_val <- range_est * nudge_param
 
-
-nudge_neg <-  by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$trend), function(year_df){
+  # The smallest value in each year is nudged lower, the bigger ones are nudged higher. For facetted plots, the trend has to be taken into account as well.
+  nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$trend), function(year_df) {
     res_frame <- data.frame(
       nudge_y = ifelse(
         year_df$est_point == min(year_df$est_point) & length(year_df$est_point) > 1,
-           nudge_val * -1,
-           nudge_val
-        ),
+        nudge_val * -1,
+        nudge_val
+      ),
       trend = year_df$trend,
       year = year_df$year,
       grouping_var = year_df$grouping_var
     )
-    ## If duplicated estimate values exist, one is set to positive and one to negative.
+    ## If duplicated estimate values exist:
     dup_nudge <- duplicated(year_df$est_point == min(year_df$est_point))
     res_frame[dup_nudge, "nudge_y"] <- res_frame[dup_nudge, "nudge_y"] * -1
     return(res_frame)
- })
+  })
 
-res_frame <- data.frame(do.call("rbind", nudge_neg))
+  res_frame <- data.frame(do.call("rbind", nudge_neg))
 
-out <- merge(plot_points_dat, res_frame,
-             by = c("trend", "year", "grouping_var"),
-             all.x = TRUE, all.y = FALSE)
+  out <- merge(plot_points_dat, res_frame,
+    by = c("trend", "year", "grouping_var"),
+    all.x = TRUE, all.y = FALSE
+  )
   return(out)
 }
