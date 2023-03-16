@@ -30,7 +30,7 @@ plot_lineplot <- function(plot_data,
 
   plot_list <- list()
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
-  n_cols <- ceiling(length(states)/4)
+  n_cols <- 4
   position <- 1
 
   for (i in states) {
@@ -64,15 +64,18 @@ plot_lineplot <- function(plot_data,
 
 ## Achtung: y-Achse aligned noch nicht mit dem restlichen Plot!!!
 if(y_axis == TRUE){
+  n_rows <- ceiling(length(states)/n_cols)
+  n_cols <- n_cols + 1 # One column added for the y_axis.
+  n_tiles <- n_rows * n_cols
 
   y_axis_plot <- ggplot2::ggplot() +
     plot_y_axis(plot_data)
 
-log_y_axis <- sapply(1:length(states), function(x) {
+log_y_axis <- sapply(1:n_tiles, function(x) {
   (x-1) %% n_cols == 0
 })
 
-positions_y_axis <- c(1:length(states))[log_y_axis]
+positions_y_axis <- c(1:n_tiles)[log_y_axis]
 
 for(i in positions_y_axis){
   plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
