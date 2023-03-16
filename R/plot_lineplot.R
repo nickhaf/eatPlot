@@ -51,7 +51,7 @@ plot_lineplot <- function(plot_data,
         label_sig_high = label_sig_high,
         label_sig_bold = label_sig_bold
       ) +
-      set_plot_coords(plot_dat)
+      set_plot_coords(plot_data)
 
     ## The wholeGroup plot gets a box drawn around it.
     # if (i == "wholeGroup") {

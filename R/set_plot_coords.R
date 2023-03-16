@@ -6,15 +6,15 @@
 #' @export
 #'
 #' @examples # tbd
-set_plot_coords <- function(plot_dat) {
-  min_year <- min(plot_dat[["plot_points"]]$year, na.rm = TRUE)
-  max_year <- max(plot_dat[["plot_points"]]$year, na.rm = TRUE)
+set_plot_coords <- function(plot_data) {
+  min_year <- min(plot_data[["plot_points"]]$year, na.rm = TRUE)
+  max_year <- max(plot_data[["plot_points"]]$year, na.rm = TRUE)
 
   list(
-    set_y_coords(plot_dat),
+    set_y_coords(plot_data),
     ggplot2::scale_x_continuous(
       position = "top",
-      breaks = unique(plot_dat[["plot_points"]]$year),
+      breaks = unique(plot_data[["plot_points"]]$year),
       expand = c(0.1, 0)
     )
   )
@@ -22,11 +22,11 @@ set_plot_coords <- function(plot_dat) {
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat){
+set_y_coords <- function(plot_data){
   ggplot2::scale_y_continuous(
     breaks = seq(
-      from = round(min(plot_dat[["plot_points"]]$est_point, na.rm = TRUE) - 10, -1),
-      to = round(max(plot_dat[["plot_points"]]$est_point, na.rm = TRUE), -1),
+      from = round(min(plot_data[["plot_points"]]$est_point, na.rm = TRUE) - 10, -1),
+      to = round(max(plot_data[["plot_points"]]$est_point, na.rm = TRUE), -1),
       by = 20
     ),
     expand = c(0, 0)

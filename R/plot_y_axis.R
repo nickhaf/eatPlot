@@ -6,16 +6,16 @@
 #' @export
 #'
 #' @examples #tbd
-plot_y_axis <- function(plot_dat) {
-  range_est <- range(plot_dat[["plot_points"]]$est_point, na.rm = TRUE)
+plot_y_axis <- function(plot_data) {
+  range_est <- range(plot_data[["plot_points"]]$est_point, na.rm = TRUE)
   coords <- calc_coords(range_est)
 
   df_y <- data.frame(
     trend = "20112016",
-    x = min(plot_dat[["plot_points"]]$year),
+    x = min(plot_data[["plot_points"]]$year),
     y = round(range_est[1] - 10, -1),
     yend = round(range_est[2], -1),
-    xmax = max(plot_dat[["plot_points"]]$year)
+    xmax = max(plot_data[["plot_points"]]$year)
   )
 
   list(
@@ -28,11 +28,11 @@ plot_y_axis <- function(plot_dat) {
         yend = .data$yend
       )
     ),
-    ggplot2::scale_x_continuous(limits = c(min(plot_dat[["plot_points"]]$year),
-                                           min(plot_dat[["plot_points"]]$year) + 1),
+    ggplot2::scale_x_continuous(limits = c(min(plot_data[["plot_points"]]$year),
+                                           min(plot_data[["plot_points"]]$year) + 1),
                                 expand = c(0, 0)
                                 ),
-    set_y_coords(plot_dat),
+    set_y_coords(plot_data),
     ## Use same coordinate system as the braces, so the plots can be aligned.
     set_cartesian_coords(coords),
   theme_y_axis()
