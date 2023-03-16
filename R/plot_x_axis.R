@@ -16,7 +16,7 @@ plot_x_axis <- function(data_plot_points, y_range){
 
 
   dat_coords$x_labels <- as.character(dat_coords$year)
-  dat_coords$y_coords <- y_max - y_max * 0.0075
+  dat_coords$y_coords <- y_max - y_max * 0.01
 
 
 res_list <- list(

@@ -36,6 +36,7 @@ plot_single_lineplot <- function(plot_data,
     ),
     plot_points(
       data_plot_points = plot_data[["plot_points"]],
+      y_range = y_range,
       point_values = point_values,
       point_sig = point_sig
     ),

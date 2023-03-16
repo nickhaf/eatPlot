@@ -38,6 +38,10 @@ test_that("calc_brace_coords works for wide format", {
 
 
 test_that("Point nudge is calculated correctly", {
-  expect_equal(calc_y_nudge(c(1, 2, 3), n_groups = 2), c(-0.5, 0.5))
-  expect_equal(calc_y_nudge(c(1:100), n_groups = 4), c(-24.75, 24.75, 24.75, 24.75))
+    df <- data.frame(year = c(2011, 2011, 2012, 2012, 2012, 2012, 2030, 2030),
+                     est_point = c(1, 2, 2, 1, 1, 2, 1, 1),
+                     trend = c(1, 1, 1, 1, 2, 2, 2, 2)
+    )
+
+  expect_equal(calc_y_nudge(df), c(-0.25, 0.25, 0.25, -0.25, -0.25, 0.25, -0.25, 0.25))
 })

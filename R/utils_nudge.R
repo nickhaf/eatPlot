@@ -66,10 +66,32 @@ calc_pos_label_x <- function(year_start, year_end, brace_indent_pos) {
 }
 
 # Plot_points -------------------------------------------------------------
-calc_y_nudge <- function(vec, n_groups) {
-  range_est <- range(vec, na.rm = TRUE)
-  nudge_y_val <- (range_est[2] - range_est[1]) * 0.25
-  nudge_y_vec <- rep(nudge_y_val, n_groups)
-  nudge_y_vec[1] <- nudge_y_vec[1] * -1
-  return(nudge_y_vec)
+calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.1) {
+  range_est <- diff(y_range)
+  plot_points_dat$y_nudge <- range_est * nudge_param
+
+
+nudge_neg <-  by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$trend), function(year_df){
+    res_frame <- data.frame(
+      nudge_y = ifelse(
+        year_df$est_point == min(year_df$est_point) & length(year_df$est_point) > 1,
+           year_df$y_nudge * -1,
+           year_df$y_nudge
+        ),
+      trend = year_df$trend,
+      year = year_df$year,
+      grouping_var = year_df$grouping_var
+    )
+    ## If duplicated estimate values exist, one is set to positive and one to negative.
+    dup_nudge <- duplicated(year_df$est_point == min(year_df$est_point))
+    res_frame[dup_nudge, "nudge_y"] <- res_frame[dup_nudge, "nudge_y"] * -1
+    return(res_frame)
+ })
+
+res_frame <- data.frame(do.call("rbind", nudge_neg))
+
+out <- merge(plot_points_dat, res_frame,
+             by = c("trend", "year", "grouping_var"),
+             all.x = TRUE, all.y = FALSE)
+  return(out)
 }
