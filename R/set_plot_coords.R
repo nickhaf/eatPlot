@@ -15,7 +15,7 @@ set_plot_coords <- function(plot_dat) {
     ggplot2::scale_x_continuous(
       position = "top",
       breaks = unique(plot_dat[["plot_points"]]$year),
-      expand = c(0, 0)
+      expand = c(0.1, 0)
     )
   )
 }
