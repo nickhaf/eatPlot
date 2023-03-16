@@ -166,20 +166,6 @@ calc_plot_borders <- function(x, accuracy = 10) {
 }
 
 
-## Calc coordinate system borders.
-calc_coords <- function(range_vec) {
-  range_est <- diff(range_vec)
-  coords <- c(
-    plyr::round_any(range_vec[1] - range_vec[1] * 0.1,
-                    accuracy = 10, f = floor) - range_est * 0.1,
-    plyr::round_any(range_vec[2] + range_vec[2] * 0.04,
-                    accuracy = 10, f = ceiling) + range_est * 0.1
-  )
-  return(coords)
-}
-
-
-
 
 insert_first_number <- function(char_string, insertion){
     string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))[[1]]

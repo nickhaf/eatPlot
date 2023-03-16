@@ -1,6 +1,6 @@
 test_that("Colours are set correctly", {
   df_points <- data.frame(
-    grouping_var = factor(rep(c("0", "1"), 4)),
+    grouping_var = factor(rep(c("FALSE", "TRUE"), 4)),
     year = c(2011, 2011, 2012, 2012, 2024, 2024, 2030, 2030),
     est_point = 100:107,
     p = seq(0.02, 0.09, by = 0.01),
@@ -14,14 +14,15 @@ test_that("Colours are set correctly", {
                          sig_trend_comp_within = c(TRUE, FALSE, TRUE, FALSE),
                          est_point_start = c(10:13),
                          est_point_end = c(14:17),
-                         grouping_var = factor(c(0, 1, 0, 1)),
+                         grouping_var = c("FALSE", "TRUE", "FALSE", "TRUE"),
                          trend = c("2011")
   )
 
 p_points <- ggplot2::ggplot() +
     plot_points(df_points,
                 point_values = "est_point",
-                point_sig = "sig_point") +
+                point_sig = "sig_point",
+                y_range = c(100, 107)) +
     grouping_colours()
 test_colour_points <- ggplot2::ggplot_build(p_points)
 

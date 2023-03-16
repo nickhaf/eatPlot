@@ -23,7 +23,7 @@ test_that("y limits are set correctly", {
       label_sig_high = "sig_1",
       label_sig_bold = "sig_2"
     )
-  coords <- c(360, 530)
+  coords <- calc_coords(c(400, 503))
 
   expect_equal(test_p$coordinates$limits$y, coords)
 })

@@ -68,15 +68,15 @@ calc_pos_label_x <- function(year_start, year_end, brace_indent_pos) {
 # Plot_points -------------------------------------------------------------
 calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.1) {
   range_est <- diff(y_range)
-  plot_points_dat$y_nudge <- range_est * nudge_param
+  nudge_val <- range_est * nudge_param
 
 
 nudge_neg <-  by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$trend), function(year_df){
     res_frame <- data.frame(
       nudge_y = ifelse(
         year_df$est_point == min(year_df$est_point) & length(year_df$est_point) > 1,
-           year_df$y_nudge * -1,
-           year_df$y_nudge
+           nudge_val * -1,
+           nudge_val
         ),
       trend = year_df$trend,
       year = year_df$year,

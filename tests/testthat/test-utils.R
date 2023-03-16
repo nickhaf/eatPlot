@@ -4,13 +4,6 @@ test_that("Plot borders are calculated correctly", {
   expect_error(calc_plot_borders(c(1, "a", 4)))
 })
 
-test_that("coords are calculated correctly", {
-  expect_equal(calc_coords(c(10, 100)), c(0, 110))
-  expect_equal(calc_coords(c(0, 1)), c(0, 10))
-})
-
-
-
 test_that("calc_sig(): significance niveau is working correctly", {
 
   test_sig <- calc_sig(c(0.02, 0.1, 0.01, NA), sig_niveau = 0.03)

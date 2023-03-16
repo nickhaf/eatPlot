@@ -21,6 +21,19 @@ set_plot_coords <- function(plot_data) {
 }
 
 
+## Calc coordinate system borders.
+calc_coords <- function(range_vec) {
+  range_est <- diff(range_vec)
+  coords <- c(
+    plyr::round_any(range_vec[1] - range_vec[1] * 0.1,
+                    accuracy = 10, f = floor) - range_est * 0.1,
+    plyr::round_any(range_vec[2] + range_vec[2] * 0.04,
+                    accuracy = 10, f = ceiling) + range_est * 0.1
+  )
+  return(coords)
+}
+
+
 # Utils -------------------------------------------------------------------
 set_y_coords <- function(plot_data){
   ggplot2::scale_y_continuous(

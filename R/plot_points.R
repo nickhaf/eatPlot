@@ -2,6 +2,7 @@
 #'
 #' @param data_plot_points Data frame with the point estimates for every year. Prepared by ...
 #' @inheritParams plot_lineplot
+#' @inheritParams plot_single_lineplot
 #'
 #' @return ggplot2 object
 #' @export
