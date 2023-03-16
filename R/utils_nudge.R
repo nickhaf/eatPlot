@@ -5,22 +5,27 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
   dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 
+  brace_label_y <- 0.14
 
   if (any(dat$overlap == TRUE)) {
     # Upper and lower brace ---------------------------------------------------
 
+    # Upper brace coordinates:
     dat$upper_y <- ifelse(dat$year_start == min(dat$year_start),
       coords[1],
       coords[1] - coords[1] * 0.10
     )
+
+    # Lower brace coordinates:
     dat$lower_y <- ifelse(dat$year_start == min(dat$year_start),
       coords[1] - coords[1] * 0.10,
       coords[1] - coords[1] * 0.15
     )
 
+    # Label
     dat$label_pos_y <- ifelse(dat$grouping_var == levels(dat$grouping_var)[1],
-      coords[1] - coords[1] * 0.22, # Position lower brace label
-      coords[1] - coords[1] * 0.19 # Position upper brace label
+      coords[1] - coords[1] * (brace_label_y + 0.12), # Position lower brace label
+      coords[1] - coords[1] * (brace_label_y + 0.07) # Position upper brace label
     )
     dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
       calc_pos_label_x(dat$year_start, dat$year_end, 0.25),
@@ -35,8 +40,8 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
     dat$lower_y <- coords[1] - coords[1] * 0.1
 
     dat$label_pos_y <- ifelse(dat$grouping_var == levels(dat$grouping_var)[1],
-      coords[1] - coords[1] * 0.16, # Position lower brace label
-      coords[1] - coords[1] * 0.12 # Position upper brace label
+      coords[1] - coords[1] * (brace_label_y + 0.05), # Position lower brace label
+      coords[1] - coords[1] * brace_label_y # Position upper brace label
     )
 
     dat$label_pos_x <- calc_pos_label_x(dat$year_start, dat$year_end, 0.5)
