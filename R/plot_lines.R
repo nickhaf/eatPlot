@@ -20,7 +20,7 @@ plot_lines <- function(data_plot_lines, line_values, line_sig){
         linetype = .data[[line_sig]],
         group = .data$trend
       ),
-      size = 1.25
+      linewidth = 1.25
 
   )
 }
