@@ -66,10 +66,7 @@ plot_braces <- function(dat,
   c(
     draw_braces(dat, split_plot),
     draw_brace_label(dat),
-    ggplot2::coord_cartesian(
-      clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
-      ylim = coords
-    )
+    set_cartesian_coords(coords)
   )
 }
 

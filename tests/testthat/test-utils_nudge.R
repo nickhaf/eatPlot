@@ -13,7 +13,7 @@ test_that("calc_brace_coords works for long format", {
   test_braces <- calc_brace_coords(df, coords, output_format = "long")
 
   expect_equal(test_braces$brace_y, c(360, 360, 360, 360, 324, 324, 324, 324))
-  expect_equal(test_braces$label_pos_y, rep(c(302.4, 324.0), 4))
+  expect_equal(test_braces$label_pos_y, rep(c(302.4, 316.8), 4))
 })
 
 test_that("calc_brace_coords works for wide format", {

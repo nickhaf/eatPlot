@@ -44,21 +44,20 @@ theme_table <- function() {
     )
 }
 
+#' Theme for a y-axis plot.
+#'
+#' @return [ggplot2] theme, that can be used for a plotted y-axis.
+#' @export
+#'
+#' @examples #tbd
 theme_y_axis <-  function() {
-  ggplot2::theme_classic() %+replace%
-    ggplot2::theme(
-      strip.background = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.border = ggplot2::element_blank(),
-      axis.line = ggplot2::element_blank(),
-      axis.title = ggplot2::element_blank(),
-      axis.text.y = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_blank(),
-      axis.ticks = ggplot2::element_blank(),
-      plot.margin = ggplot2::unit(c(0, -0.1, 0, 0), "cm"),
-      plot.caption = ggplot2::element_text(hjust = 0),
-      legend.position = "bottom"
-    )
+  theme_line() %+replace%
+  ggplot2::theme(
+    axis.text.y = ggplot2::element_text(),
+    axis.ticks.y = ggplot2::element_line(),
+    axis.text.x = ggplot2::element_blank(),
+    axis.line.x = ggplot2::element_blank()
+  )
 }
 
 #' Theme for lineplot.
@@ -80,10 +79,9 @@ theme_line <- function(){
       axis.text.y = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_blank(),
       strip.text.x = ggplot2::element_blank(),
-      panel.spacing.x = ggplot2::unit(0.05, "npc"),
-      plot.title = ggplot2::element_text(size = 10, hjust = 0.5),
-      plot.margin = ggplot2::unit(c(0, 0, 0.30, 0), units="npc")#,
-      #plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")
+      panel.spacing = ggplot2::unit(0.02, "npc"),
+      plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units="npc"),
+      plot.title = ggplot2::element_text(size = 10, hjust = 0.5)
     )
 }
 

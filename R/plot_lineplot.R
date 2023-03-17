@@ -9,6 +9,9 @@
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
+#' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to `FALSE`.
+#' @param n_cols Numeric, which indicates the number of columns the final plot should have. Defaults to `4`.
+#'
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
 #' @return [ggplot2] object.
 #' @export
@@ -23,18 +26,17 @@ plot_lineplot <- function(plot_data,
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
                           label_sig_bold = "sig_trend_no_comp",
-                          split_plot = FALSE) {
-
+                          split_plot = FALSE,
+                          y_axis = FALSE,
+                          n_cols = 4) {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   position <- 1
 
-  ## Assemble the plots, one for every state:
   for (i in states) {
     plot_data_state <- get_state(plot_data, state = i)
-
     p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
         plot_data = plot_data_state,
@@ -48,35 +50,41 @@ plot_lineplot <- function(plot_data,
         label_se = label_se,
         label_sig_high = label_sig_high,
         label_sig_bold = label_sig_bold
-      )
-
-    ## Only the left plots get a y axis:
-    if ((position - 1) %% 4 == 0) {
-      p_state <- p_state +
-        ggplot2::theme(
-          axis.text.y = ggplot2::element_text(),
-          axis.line.y = ggplot2::element_line(),
-          axis.ticks.y = ggplot2::element_line()
-        )
-    }
+      ) +
+      set_plot_coords(plot_data)
 
     ## The wholeGroup plot gets a box drawn around it.
-    if (i == "wholeGroup") {
-      p_state <- p_state +
-        ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
-    }
+    # if (i == "wholeGroup") {
+    #   p_state <- p_state +
+    #     ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
+    # }
 
     plot_list[[i]] <- p_state
     position <- position + 1
   }
 
-  n <- length(plot_list)
-  nCol <- floor(sqrt(n))
+
+  # Add y axis --------------------------------------------------------------
+  if (y_axis == TRUE) {
+    y_axis_plot <- ggplot2::ggplot() +
+      plot_y_axis(plot_data)
+
+    positions_y_axis <- calc_y_positions(states, n_cols)
+
+    for (i in positions_y_axis) {
+      plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
+    }
+
+    widths_setting <- c(0.02, rep(1 - 0.02 / n_cols, times = n_cols))
+    n_cols <- n_cols + 1
+  } else {
+    widths_setting <- 1 / n_cols
+  }
 
   ## Build the finished plot:
-  patchwork::wrap_plots(plot_list, ncol = nCol) &
+  patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(0.01, 0.01, 0.03, 0), "npc")
+      plot.margin = ggplot2::unit(c(0.025, 0.015, 0.025, 0.015), "npc")
     )
 }
 

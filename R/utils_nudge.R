@@ -19,8 +19,8 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
     )
 
     dat$label_pos_y <- ifelse(dat$grouping_var == levels(dat$grouping_var)[1],
-      coords[1] - coords[1] * 0.23, # Position upper brace label
-      coords[1] - coords[1] * 0.17 # Position lower brace label
+      coords[1] - coords[1] * 0.22, # Position lower brace label
+      coords[1] - coords[1] * 0.19 # Position upper brace label
     )
     dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
       calc_pos_label_x(dat$year_start, dat$year_end, 0.25),
@@ -35,8 +35,8 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
     dat$lower_y <- coords[1] - coords[1] * 0.1
 
     dat$label_pos_y <- ifelse(dat$grouping_var == levels(dat$grouping_var)[1],
-      coords[1] - coords[1] * 0.16, # Position upper brace label
-      coords[1] - coords[1] * 0.10 # Position lower brace label
+      coords[1] - coords[1] * 0.16, # Position lower brace label
+      coords[1] - coords[1] * 0.12 # Position upper brace label
     )
 
     dat$label_pos_x <- calc_pos_label_x(dat$year_start, dat$year_end, 0.5)
