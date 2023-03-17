@@ -44,8 +44,9 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
   vdiffr::expect_doppelganger(
     "single lineplot",
     ggplot2::ggplot() +
-      plot_single_lineplot(test_plot,
-                           split_plot = FALSE,
+      plot_single_lineplot(
+        test_plot,
+        split_plot = FALSE,
         y_range = c(180, 240),
         line_sig = "sig_trend",
         label_est = "est_label",
@@ -104,7 +105,7 @@ test_that("single_lineplot with two groups is plotted correctly", {
     "single grouped lineplot",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_2,
-                           split_plot = FALSE,
+        split_plot = FALSE,
         y_range = c(180, 240),
         line_sig = "sig_trend",
         label_est = "est_label",
@@ -116,7 +117,6 @@ test_that("single_lineplot with two groups is plotted correctly", {
 })
 
 test_that("split lineplot with no groups is plotted correctly", {
-
   test_plot_split <- list(
     plot_points = data.frame(
       state_var = rep("a", 3),
@@ -161,15 +161,15 @@ test_that("split lineplot with no groups is plotted correctly", {
 
   vdiffr::expect_doppelganger(
     "splitlineplot",
-      ggplot2::ggplot() +
+    ggplot2::ggplot() +
       plot_single_lineplot(test_plot_split,
-                           split = TRUE,
-                           y_range = c(180, 230),
-                           line_sig = "sig_trend",
-                           label_est = "est_label",
-                           label_se = "se_label",
-                           label_sig_high = "sig_label_1",
-                           label_sig_bold = "sig_label_2"
+        split = TRUE,
+        y_range = c(180, 230),
+        line_sig = "sig_trend",
+        label_est = "est_label",
+        label_se = "se_label",
+        label_sig_high = "sig_label_1",
+        label_sig_bold = "sig_label_2"
       )
   )
 })

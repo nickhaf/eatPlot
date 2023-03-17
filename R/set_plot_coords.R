@@ -13,22 +13,26 @@ set_plot_coords <- function(plot_data) {
   list(
     set_y_coords(plot_data),
     ggplot2::scale_x_continuous(
-      position = "top",
+      #position = "top",
       breaks = unique(plot_data[["plot_points"]]$year),
-      expand = c(0.15, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
+      expand = c(0.25, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
   )
 }
 
 
 ## Calc coordinate system borders.
-calc_coords <- function(range_vec) {
+calc_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
   range_est <- diff(range_vec)
   coords <- c(
-    plyr::round_any(range_vec[1] - range_vec[1] * 0.1,
-                    accuracy = 10, f = floor) - range_est * 0.1,
-    plyr::round_any(range_vec[2] + range_vec[2] * 0.04,
-                    accuracy = 10, f = ceiling) + range_est * 0.1
+    ## Lower y limit
+    plyr::round_any(range_vec[1] - (range_vec[1] * nudge_param_lower),
+                    accuracy = 10,
+                    f = floor) - range_est * nudge_param_lower,
+    ## upper y limit
+    plyr::round_any(range_vec[2] + (range_vec[2] * nudge_param_upper),
+                    accuracy = 10,
+                    f = ceiling) + range_est * nudge_param_upper
   )
   return(coords)
 }

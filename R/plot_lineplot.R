@@ -84,15 +84,19 @@ plot_lineplot <- function(plot_data,
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(0.027, 0.01, 0.027, 0.01), "npc")
+      plot.margin = ggplot2::unit(c(0.03, 0.01, 0.03, 0.01), "npc") #t, r, b, l
     )
 }
 
 
 # Utils -------------------------------------------------------------------
-get_state <- function(plot_data, state) {
+get_state <- function(plot_data, state, remove = FALSE) {
   for (i in c("plot_points", "plot_lines", "plot_braces")) {
+    if(remove == FALSE){
     plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var == state, ]
+    }else{
+      plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var != state, ]
+    }
   }
   return(plot_data)
 }

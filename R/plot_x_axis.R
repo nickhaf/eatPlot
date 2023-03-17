@@ -14,16 +14,16 @@ plot_x_axis <- function(data_plot_points, y_range){
 
   dat_coords <- data_plot_points[, c("year", "trend")]
 
-
+  # dat_coords$x <- dat_coords$year - range(years) * 0.2
   dat_coords$x_labels <- as.character(dat_coords$year)
-  dat_coords$y_coords <- y_max - y_max * 0.0175 ## Increase, so the x-axis labels is printed lower.
+  dat_coords$y_coords <- y_max - y_max * 0.02 ## Increase, so the x-axis labels is printed lower.
 
 
 res_list <- list(
   ggplot2::annotate(geom = "rect",
            xmin = -Inf,
            xmax =  Inf,
-           ymin = y_max - y_max * 0.03, # Increase, so the x-axis background reaches lower.
+           ymin = y_max - y_max * 0.04, # Increase, so the x-axis background reaches lower.
            ymax = y_max,
            fill = "lightblue"),
   ggplot2::geom_text(dat_coords,
@@ -31,7 +31,7 @@ res_list <- list(
                                             y = .data$y_coords,
                                             label = .data$x_labels,
                                             group = .data$trend),
-                     size = 3),
+                     size = 2),
                      ggplot2::theme(axis.line= ggplot2::element_blank(),
                                     axis.text.x=ggplot2::element_blank(),
                                     axis.ticks.x = ggplot2::element_blank()
