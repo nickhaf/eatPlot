@@ -4,16 +4,23 @@
 \alias{save_plot}
 \title{Title}
 \usage{
-save_plot(p, filename, width = 16, height = 25.2, format = "PDF", scaling = 1)
+save_plot(
+  p,
+  filename,
+  width = 160,
+  height = 226.2,
+  format = "PDF",
+  scaling = 1
+)
 }
 \arguments{
 \item{p}{Plot that should be saved.}
 
 \item{filename}{Filepath and -name for the new plot file.}
 
-\item{width}{Width of the new plot file. Defaults to \code{16}.}
+\item{width}{Width of the new plot file in mm. Defaults to \code{160}.}
 
-\item{height}{Height of the new plot file. Defaults to \code{25.2}}
+\item{height}{Height of the new plot file in mm. Defaults to \code{226.2}}
 
 \item{format}{Format of the new plot file. Currently, only PDF is needed.}
 

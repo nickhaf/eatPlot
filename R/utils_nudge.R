@@ -5,7 +5,9 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
   dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 
-  brace_label_y <- 0.14
+  ## Starting point for the highest brace label
+  brace_label_y <- 0.15
+  gap_brace_label_y <- 0.07
 
   if (any(dat$overlap == TRUE)) {
     # Upper and lower brace ---------------------------------------------------
@@ -23,9 +25,9 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
     )
 
     # Label
-    dat$label_pos_y <- ifelse(dat$grouping_var == levels(dat$grouping_var)[1],
-      coords[1] - coords[1] * (brace_label_y + 0.12), # Position lower brace label
-      coords[1] - coords[1] * (brace_label_y + 0.07) # Position upper brace label
+    dat$label_pos_y <- ifelse(dat$grouping_var != levels(dat$grouping_var)[1],
+      coords[1] - coords[1] * (brace_label_y + 2 * gap_brace_label_y), # Position lower brace label
+      coords[1] - coords[1] * (brace_label_y + gap_brace_label_y) # Position upper brace label
     )
     dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
       calc_pos_label_x(dat$year_start, dat$year_end, 0.25),
@@ -39,8 +41,8 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
 
     dat$lower_y <- coords[1] - coords[1] * 0.1
 
-    dat$label_pos_y <- ifelse(dat$grouping_var == levels(dat$grouping_var)[1],
-      coords[1] - coords[1] * (brace_label_y + 0.05), # Position lower brace label
+    dat$label_pos_y <- ifelse(dat$grouping_var != levels(dat$grouping_var)[1],
+      coords[1] - coords[1] * (brace_label_y + gap_brace_label_y), # Position lower brace label
       coords[1] - coords[1] * brace_label_y # Position upper brace label
     )
 
@@ -71,7 +73,7 @@ calc_pos_label_x <- function(year_start, year_end, brace_indent_pos) {
 }
 
 # Plot_points -------------------------------------------------------------
-calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.1) {
+calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.18) { # nudge parameter increases distance between label and point
   range_est <- diff(y_range)
   nudge_val <- range_est * nudge_param
 

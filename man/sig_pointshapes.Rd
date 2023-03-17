@@ -16,7 +16,7 @@ ggplot2
 Wrapper around \code{\link[ggplot2:scale_manual]{ggplot2::scale_colour_manual()}} with two predefined shapes.
 }
 \details{
-Turns points int rectangles if the according p-value is significant.
+Turns points int triangles if the according p-value is significant.
 }
 \examples{
 #tbd

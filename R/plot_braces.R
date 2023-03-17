@@ -84,7 +84,7 @@ draw_braces <- function(dat, split_plot) {
         group = .data$trend
       ),
       rotate = 180,
-      linewidth = 0.8,
+      linewidth = 0.7,
       npoints = 200
     )
   } else {
@@ -113,7 +113,7 @@ draw_brace_label <- function(dat) {
       y = .data$label_pos_y,
       label = .data$brace_label
     ),
-    size = 3,
+    size = 2,
     label.padding = grid::unit(rep(0, 4), "pt"),
     fill = NA,
     label.color = NA

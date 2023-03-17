@@ -13,7 +13,7 @@ test_that("calc_brace_coords works for long format", {
   test_braces <- calc_brace_coords(df, coords, output_format = "long")
 
   expect_equal(test_braces$brace_y, c(360, 360, 360, 360, 324, 324, 324, 324))
-  expect_equal(test_braces$label_pos_y, rep(c(291.6, 309.6), 4))
+  expect_equal(test_braces$label_pos_y, rep(c(306, 280.8), 4))
 })
 
 test_that("calc_brace_coords works for wide format", {
@@ -44,5 +44,5 @@ test_that("Point nudge is calculated correctly", {
                      grouping_var = c(1, 0, 1, 0, 1, 0, 1, 0)
     )
 
-  expect_equal(calc_y_nudge(df, y_range = c(1, 2))$nudge_y, c(0.1, -0.1, -0.1, 0.1, 0.1, -0.1, 0.1, -0.1))
+  expect_equal(calc_y_nudge(df, y_range = c(1, 2))$nudge_y, c(0.18, -0.18, -0.18, 0.18, 0.18, -0.18, 0.18, -0.18))
 })

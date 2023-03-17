@@ -22,7 +22,7 @@ plot_points <- function(data_plot_points, y_range, point_values, point_sig) {
         shape = .data[[point_sig]],
         group = .data$trend
       ),
-      size = 2.6
+      size = 1.7
     ),
     ggplot2::geom_text(
       data = data_plot_points_nudge,
@@ -34,7 +34,7 @@ plot_points <- function(data_plot_points, y_range, point_values, point_sig) {
         group = .data$trend
       ),
       nudge_y = data_plot_points_nudge$nudge_y,
-      size = 3
+      size = 2
     )
   )
 }

@@ -10,14 +10,14 @@
 grouping_colours <- function(...){
   ggplot2::scale_colour_manual(
     values = c(
-    "FALSE" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-    "TRUE" = "black"
+    "TRUE" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
+    "FALSE" = "black"
   ), ... )
 }
 
 #' Wrapper around [ggplot2::scale_colour_manual()] with two predefined shapes.
 #'
-#' @details Turns points int rectangles if the according p-value is significant.
+#' @details Turns points int triangles if the according p-value is significant.
 #' @param ... Arguments for [ggplot2::scale_colour_manual()].
 #'
 #' @return ggplot2

@@ -36,6 +36,6 @@ test_colour_points <- ggplot2::ggplot_build(p_points)
 
 
 
-expect_equal(test_colour_points$data[[1]]$colour, rep(c("#A6A6A6", "black"), 4))
+expect_equal(test_colour_points$data[[1]]$colour, rep(c("black","#A6A6A6"), 4))
 
 })

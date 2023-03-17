@@ -15,6 +15,11 @@
 #                        x_braces = list(c(2011, 2016), c(2016, 2021))
 #                        )
 #
+# plot_dat_test <- get_state(plot_dat_test, state = "wholeGroup", remove = TRUE)
+# ## Testweise einige PUnkte auf n.s. setzen
+# plot_dat_test$plot_points$sig_point[1:10] <- FALSE
+# plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+#
 #
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
 #               split_plot = TRUE,
@@ -22,4 +27,4 @@
 #               label_sig_high = "sig_trend_no_comp"
 #               )
 #
-# save_plot(p_line, filename = "../split_lineplot.pdf", height = 20)
+# save_plot(p_line, filename = "../split_lineplot.pdf")
