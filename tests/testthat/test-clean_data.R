@@ -32,10 +32,11 @@ test_that("relevant rows are selected", {
   )
 
   df_cleaned <- clean_data(df_raw,
-                           states = c("a", "b"),
-                           sub_groups = "a",
-                           competence = "a",
-                           grouping_var = "my_grouping")
+    states = c("a", "b"),
+    sub_groups = "a",
+    competence = "a",
+    grouping_var = "my_grouping"
+  )
 
   expect_true(nrow(df_cleaned) == 1)
 })
@@ -88,22 +89,30 @@ test_that("NoGroup and wholeGroup are filled up correctly", {
 
 
 test_that("grouping levels are build correctly", {
-
-  expect_warning(recode_to_factor(c("a", NA, "z"),
-                                  grouping_var = "my_grouping"),
-                 "Your grouping variable 'my_grouping' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary."
-                 )
-  expect_equal(suppressWarnings({recode_to_factor(c("a", NA, "z"), grouping_var = "")}), factor(c("a", "noGroup", "z"), levels = c("a", "z", "noGroup")))
-  expect_equal(recode_to_factor(factor(c("a", "z", NA),
-                                       levels = c("z", "a")),
-                                grouping_var = ""
-                                ),
-               factor(c("a", "z", "noGroup"),
-                      levels = c("z", "a", "noGroup"))
-               )
-  expect_equal(recode_to_factor(c(NA, NA), grouping_var = ""),
-               factor(c("noGroup", "noGroup"), levels = "noGroup"))
-
+  expect_warning(
+    recode_to_factor(c("a", NA, "z"),
+      grouping_var = "my_grouping"
+    ),
+    "Your grouping variable 'my_grouping' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary."
+  )
+  expect_equal(suppressWarnings({
+    recode_to_factor(c("a", NA, "z"), grouping_var = "")
+  }), factor(c("a", "noGroup", "z"), levels = c("a", "z", "noGroup")))
+  expect_equal(
+    recode_to_factor(
+      factor(c("a", "z", NA),
+        levels = c("z", "a")
+      ),
+      grouping_var = ""
+    ),
+    factor(c("a", "z", "noGroup"),
+      levels = c("z", "a", "noGroup")
+    )
+  )
+  expect_equal(
+    recode_to_factor(c(NA, NA), grouping_var = ""),
+    factor(c("noGroup", "noGroup"), levels = "noGroup")
+  )
 })
 
 test_that("grouping_var is build if it is not part of the data", {
@@ -113,14 +122,15 @@ test_that("grouping_var is build if it is not part of the data", {
     kb = rep("a", 4)
   )
 
-  expect_equal(clean_data(df_raw,
-             states = "a",
-             group_var = "group_var",
-             state_var = "state_var",
-             sub_groups = "xy",
-             competence = "a",
-             grouping_var = "")[, "grouping_var"],
-             factor(c("xy", "xy", "noGroup", "noGroup"), levels = c("xy", "noGroup"))
-)
-
+  expect_equal(
+    clean_data(df_raw,
+      states = "a",
+      group_var = "group_var",
+      state_var = "state_var",
+      sub_groups = "xy",
+      competence = "a",
+      grouping_var = ""
+    )[, "grouping_var"],
+    factor(c("xy", "xy", "noGroup", "noGroup"), levels = c("xy", "noGroup"))
+  )
 })

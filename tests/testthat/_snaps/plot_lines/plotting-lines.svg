@@ -27,10 +27,10 @@
 </defs>
 <g clip-path='url(#cpMzIuNzl8NTkxLjA0fDIyLjc4fDU0NS4xMQ==)'>
 <rect x='32.79' y='22.78' width='558.24' height='522.33' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='58.17' y1='521.37' x2='170.95' y2='250.03' style='stroke-width: 1.07; stroke: #132B43; stroke-dasharray: 2.85,2.85; stroke-linecap: butt;' />
-<line x1='58.17' y1='453.54' x2='170.95' y2='182.20' style='stroke-width: 1.07; stroke: #56B1F7; stroke-linecap: butt;' />
-<line x1='340.11' y1='385.70' x2='565.66' y2='114.36' style='stroke-width: 1.07; stroke: #132B43; stroke-dasharray: 2.85,2.85; stroke-linecap: butt;' />
-<line x1='340.11' y1='317.87' x2='565.66' y2='46.53' style='stroke-width: 1.07; stroke: #56B1F7; stroke-linecap: butt;' />
+<line x1='58.17' y1='521.37' x2='170.95' y2='250.03' style='stroke-width: 2.67; stroke: #132B43; stroke-dasharray: 7.11,7.11; stroke-linecap: butt;' />
+<line x1='58.17' y1='453.54' x2='170.95' y2='182.20' style='stroke-width: 2.67; stroke: #56B1F7; stroke-linecap: butt;' />
+<line x1='340.11' y1='385.70' x2='565.66' y2='114.36' style='stroke-width: 2.67; stroke: #132B43; stroke-dasharray: 7.11,7.11; stroke-linecap: butt;' />
+<line x1='340.11' y1='317.87' x2='565.66' y2='46.53' style='stroke-width: 2.67; stroke: #56B1F7; stroke-linecap: butt;' />
 <rect x='32.79' y='22.78' width='558.24' height='522.33' style='stroke-width: 1.07; stroke: #333333;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -55,9 +55,9 @@
 <rect x='602.00' y='202.66' width='112.52' height='49.89' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='602.00' y='211.37' style='font-size: 11.00px; font-family: sans;' textLength='112.52px' lengthAdjust='spacingAndGlyphs'>sig_trend_comp_within</text>
 <rect x='602.00' y='217.99' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='603.73' y1='226.63' x2='617.55' y2='226.63' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<line x1='603.73' y1='226.63' x2='617.55' y2='226.63' style='stroke-width: 2.67; stroke-linecap: butt;' />
 <rect x='602.00' y='235.27' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='603.73' y1='243.91' x2='617.55' y2='243.91' style='stroke-width: 1.07; stroke-dasharray: 2.85,2.85; stroke-linecap: butt;' />
+<line x1='603.73' y1='243.91' x2='617.55' y2='243.91' style='stroke-width: 2.67; stroke-dasharray: 7.11,7.11; stroke-linecap: butt;' />
 <text x='624.76' y='229.66' style='font-size: 8.80px; font-family: sans;' textLength='27.88px' lengthAdjust='spacingAndGlyphs'>FALSE</text>
 <text x='624.76' y='246.94' style='font-size: 8.80px; font-family: sans;' textLength='23.96px' lengthAdjust='spacingAndGlyphs'>TRUE</text>
 <rect x='602.00' y='263.51' width='64.22' height='101.73' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />

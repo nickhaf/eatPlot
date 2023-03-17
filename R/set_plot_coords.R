@@ -15,9 +15,22 @@ set_plot_coords <- function(plot_data) {
     ggplot2::scale_x_continuous(
       position = "top",
       breaks = unique(plot_data[["plot_points"]]$year),
-      expand = c(0.1, 0)
+      expand = c(0.15, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
   )
+}
+
+
+## Calc coordinate system borders.
+calc_coords <- function(range_vec) {
+  range_est <- diff(range_vec)
+  coords <- c(
+    plyr::round_any(range_vec[1] - range_vec[1] * 0.1,
+                    accuracy = 10, f = floor) - range_est * 0.1,
+    plyr::round_any(range_vec[2] + range_vec[2] * 0.04,
+                    accuracy = 10, f = ceiling) + range_est * 0.1
+  )
+  return(coords)
 }
 
 

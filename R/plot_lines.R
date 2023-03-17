@@ -19,6 +19,8 @@ plot_lines <- function(data_plot_lines, line_values, line_sig){
         colour = .data$grouping_var,
         linetype = .data[[line_sig]],
         group = .data$trend
-      )
+      ),
+      linewidth = 1.25
+
   )
 }

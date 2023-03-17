@@ -4,10 +4,12 @@
 \alias{plot_points}
 \title{Plot Points.}
 \usage{
-plot_points(data_plot_points, point_values, point_sig)
+plot_points(data_plot_points, y_range, point_values, point_sig)
 }
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
+
+\item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 

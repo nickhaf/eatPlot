@@ -10,8 +10,8 @@
 grouping_colours <- function(...){
   ggplot2::scale_colour_manual(
     values = c(
-    "0" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-    "1" = "black"
+    "FALSE" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
+    "TRUE" = "black"
   ), ... )
 }
 
@@ -26,8 +26,8 @@ grouping_colours <- function(...){
 #' @examples #tbd
 sig_pointshapes <- function(...){
   ggplot2::scale_shape_manual(values = c(
-    `TRUE` = 17,
-    `FALSE` = 16
+    "TRUE" = 17,
+    "FALSE" = 16
   ) , ...)
 }
 
@@ -43,8 +43,8 @@ sig_pointshapes <- function(...){
 #' @examples #tbd
 sig_linetypes <- function(...){
   ggplot2::scale_linetype_manual(values = c(
-    `TRUE` = "solid",
-    `FALSE` = "dashed"
+    "TRUE" = "solid",
+    "FALSE" = "dashed"
   ))
 }
 

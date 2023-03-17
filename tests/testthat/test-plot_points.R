@@ -10,7 +10,10 @@ test_that("simple pointplot", {
 
   vdiffr::expect_doppelganger("Simple pointplot",
                               ggplot2::ggplot() +
-    plot_points(df, point_values = "est_point", point_sig = "sig_point")
+    plot_points(df,
+                point_values = "est_point",
+                point_sig = "sig_point",
+                y_range = c(100, 107))
   )
 })
 
@@ -26,7 +29,10 @@ test_that("Pointplot can be facetted", {
 
   vdiffr::expect_doppelganger("Facetted Points",
                               ggplot2::ggplot() +
-                                plot_points(df, point_values = "est_point", point_sig = "sig_point") +
+                                plot_points(df,
+                                            point_values = "est_point",
+                                            point_sig = "sig_point",
+                                            y_range = c(100, 107)) +
                                 ggplot2::facet_wrap(~ trend, scales = "free_x")
   )
 
