@@ -24,6 +24,7 @@ plot_points <- function(data_plot_points, y_range, point_values, point_sig) {
       ),
       size = 1.7
     ),
+    ## Hier genau den gleichen Nudge wie für die x-Achse
     ggplot2::geom_text(
       data = data_plot_points_nudge,
       ggplot2::aes(

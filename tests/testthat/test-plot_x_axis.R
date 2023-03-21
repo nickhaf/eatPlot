@@ -24,13 +24,13 @@ test_that("x axis can be built on facetted plot", {
   )
 
   vdiffr::expect_doppelganger(
-    "Own x axis is plotted",
+    "Facetted x axis is plotted",
     ggplot2::ggplot(
       data = test_df,
       ggplot2::aes(x = year, y = est_points)
     ) +
       ggplot2::geom_point() +
-      plot_x_axis(test_df, y_range = c(3, 4)) +
+      plot_x_axis(test_df, y_range = c(3, 4), split_plot = TRUE) +
       ggplot2::facet_wrap(~trend, scales = "free_x")
   )
 })

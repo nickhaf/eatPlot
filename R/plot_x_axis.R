@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples #tbd
-plot_x_axis <- function(data_plot_points, y_range, nudge_x = 0.05){
+plot_x_axis <- function(data_plot_points, y_range, split_plot = FALSE, nudge_x = 0.05){
   coords <- calc_coords(y_range)
   y_max <- coords[2]
 
@@ -22,7 +22,7 @@ plot_x_axis <- function(data_plot_points, y_range, nudge_x = 0.05){
 # calc x-axis  ------------------------------------------------------------
 ## x-axis labels should be centered a bit more. So the larger year in the smaller trend and the smaller year in the larger Trend need to go into the center more:
 
-  if(length(unique(dat_coords$trend)) > 1){
+  if(split_plot == TRUE){
   range_years <- diff(range(dat_coords$year))
   min_max_trend <- get_min_max(dat_coords)
 
