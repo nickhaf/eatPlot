@@ -217,4 +217,18 @@ check_missing_colnames <- function(x, colnames_vec){
 }
 
 
+get_min_max <- function(dat){
+  min_max_trend <- by(dat, dat$trend, function(x){
+    data.frame(
+      trend = unique(x$trend),
+      minimum = min(x$year),
+      maximum = max(x$year)
+    )
+  })
+
+  min_max_dat <- do.call(rbind, min_max_trend)
+
+  return(min_max_dat)
+}
+
 
