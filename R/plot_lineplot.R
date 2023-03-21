@@ -84,7 +84,7 @@ plot_lineplot <- function(plot_data,
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(0.03, 0.01, 0.03, 0.01), "npc") #t, r, b, l
+      plot.margin = ggplot2::unit(c(0.034, 0.01, 0.034, 0.01), "npc") #t, r, b, l
     )
 }
 
