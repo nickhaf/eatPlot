@@ -46,7 +46,6 @@ res_list <- list(
                                     axis.ticks.x = ggplot2::element_blank()
                                     )
                      )
-
 return(res_list)
 }
 
