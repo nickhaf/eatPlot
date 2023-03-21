@@ -11,7 +11,8 @@ plot_braces(
   label_est,
   label_se,
   label_sig_high,
-  label_sig_bold
+  label_sig_bold,
+  nudge_x_axis = 0
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ plot_braces(
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
+
+\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
 }
 \value{
 ggplot2 object.

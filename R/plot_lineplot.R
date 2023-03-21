@@ -13,6 +13,7 @@
 #' @param n_cols Numeric, which indicates the number of columns the final plot should have. Defaults to `4`.
 #'
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
+#' @param nudge_x_axis Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to `0.4`.
 #' @return [ggplot2] object.
 #' @export
 #'
