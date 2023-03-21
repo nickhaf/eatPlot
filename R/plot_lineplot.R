@@ -28,7 +28,8 @@ plot_lineplot <- function(plot_data,
                           label_sig_bold = "sig_trend_no_comp",
                           split_plot = FALSE,
                           y_axis = FALSE,
-                          n_cols = 4) {
+                          n_cols = 4,
+                          nudge_x_axis = 0.4) {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
@@ -49,7 +50,8 @@ plot_lineplot <- function(plot_data,
         label_est = label_est,
         label_se = label_se,
         label_sig_high = label_sig_high,
-        label_sig_bold = label_sig_bold
+        label_sig_bold = label_sig_bold,
+        nudge_x_axis = nudge_x_axis
       ) +
       set_plot_coords(plot_data)
 

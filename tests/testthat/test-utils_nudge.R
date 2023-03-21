@@ -12,8 +12,8 @@ test_that("calc_brace_coords works for long format", {
 
   test_braces <- calc_brace_coords(df, coords, output_format = "long")
 
-  expect_equal(test_braces$brace_y, c(360, 360, 360, 360, 324, 324, 324, 324))
-  expect_equal(test_braces$label_pos_y, rep(c(306, 280.8), 4))
+  expect_equal(test_braces$brace_y, c(360, 360, 360, 360, 343, 343, 343, 343))
+  expect_equal(test_braces$label_pos_y, rep(c(334.5, 320.9), 4))
 })
 
 test_that("calc_brace_coords works for wide format", {
@@ -30,7 +30,7 @@ test_that("calc_brace_coords works for wide format", {
 
   test_braces <- calc_brace_coords(df, coords)
 
-  expect_equal(test_braces$lower_y, rep(324, 4))
+  expect_equal(test_braces$lower_y, rep(343, 4))
   expect_equal(test_braces$year_start, c(2011, 2011, 2012, 2012))
 })
 

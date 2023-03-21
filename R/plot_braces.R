@@ -14,7 +14,8 @@ plot_braces <- function(dat,
                         label_est,
                         label_se,
                         label_sig_high,
-                        label_sig_bold) {
+                        label_sig_bold,
+                        nudge_x_axis = 0) {
   col_vec <- c(
     "label_est" = label_est,
     "label_se" = label_se,
@@ -58,9 +59,9 @@ plot_braces <- function(dat,
   # Calculate brace coordinates ---------------------------------------------
   coords <- calc_coords(y_range)
   if (split_plot == TRUE) {
-    dat <- calc_brace_coords(dat, coords, output_format = "long")
+    dat <- calc_brace_coords(dat, coords, output_format = "long", nudge_x_axis = nudge_x_axis)
   } else {
-    dat <- calc_brace_coords(dat, coords)
+    dat <- calc_brace_coords(dat, coords, nudge_x_axis = nudge_x_axis)
   }
 
   c(
