@@ -43,7 +43,7 @@ plot_braces <- function(dat,
   )
   dat$label_sig <- ifelse(dat$label_sig_high == TRUE, "<sup>a</sup>", "")
   dat$label_se <- ifelse(!is.na(dat$label_se),
-    paste0(" (", format(round(dat$label_se, 1)), ")"),
+    paste0(" (", format(round(dat$label_se, 1), trim = TRUE), ")"),
     ""
   )
 
