@@ -13,7 +13,7 @@ plot_points <- function(data_plot_points, y_range, point_values, point_sig, spli
   data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range)
 
   if(split_plot == TRUE){
-  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = nudge_x)
+  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = nudge_x - 0.03)
 }else{
   data_plot_points_nudge$x_coords <- data_plot_points_nudge$year
 }
