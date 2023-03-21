@@ -17,7 +17,8 @@ plot_single_lineplot <- function(plot_data,
                                  label_est = "est_trend_no_comp",
                                  label_se = "se_trend_no_comp",
                                  label_sig_high = "sig_trend_comp_whole",
-                                 label_sig_bold = "sig_trend_no_comp") {
+                                 label_sig_bold = "sig_trend_no_comp",
+                                 nudge_x_axis = 0) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
     settings_lineplot(),
@@ -28,7 +29,8 @@ plot_single_lineplot <- function(plot_data,
       label_est = label_est,
       label_se = label_se,
       label_sig_high = label_sig_high,
-      label_sig_bold = label_sig_bold
+      label_sig_bold = label_sig_bold,
+      nudge_x_axis = nudge_x_axis
     ),
     plot_background_lines(
       data_plot_background_lines = plot_data[["plot_background_lines"]],

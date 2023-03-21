@@ -13,6 +13,7 @@
 #' @param n_cols Numeric, which indicates the number of columns the final plot should have. Defaults to `4`.
 #'
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
+#' @param nudge_x_axis Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to `0.4`.
 #' @return [ggplot2] object.
 #' @export
 #'
@@ -28,7 +29,8 @@ plot_lineplot <- function(plot_data,
                           label_sig_bold = "sig_trend_no_comp",
                           split_plot = FALSE,
                           y_axis = FALSE,
-                          n_cols = 4) {
+                          n_cols = 4,
+                          nudge_x_axis = 0.4) {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
@@ -49,7 +51,8 @@ plot_lineplot <- function(plot_data,
         label_est = label_est,
         label_se = label_se,
         label_sig_high = label_sig_high,
-        label_sig_bold = label_sig_bold
+        label_sig_bold = label_sig_bold,
+        nudge_x_axis = nudge_x_axis
       ) +
       set_plot_coords(plot_data)
 
@@ -84,7 +87,7 @@ plot_lineplot <- function(plot_data,
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(0.03, 0.01, 0.03, 0.01), "npc") #t, r, b, l
+      plot.margin = ggplot2::unit(c(0.034, 0.01, 0.034, 0.01), "npc") #t, r, b, l
     )
 }
 

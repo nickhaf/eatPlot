@@ -15,7 +15,8 @@ plot_single_lineplot(
   label_est = "est_trend_no_comp",
   label_se = "se_trend_no_comp",
   label_sig_high = "sig_trend_comp_whole",
-  label_sig_bold = "sig_trend_no_comp"
+  label_sig_bold = "sig_trend_no_comp",
+  nudge_x_axis = 0
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ plot_single_lineplot(
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
+
+\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
 }
 \value{
 ggplot2 Object.

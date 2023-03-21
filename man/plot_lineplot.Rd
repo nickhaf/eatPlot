@@ -16,7 +16,8 @@ plot_lineplot(
   label_sig_bold = "sig_trend_no_comp",
   split_plot = FALSE,
   y_axis = FALSE,
-  n_cols = 4
+  n_cols = 4,
+  nudge_x_axis = 0.4
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ plot_lineplot(
 \item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to \code{FALSE}.}
 
 \item{n_cols}{Numeric, which indicates the number of columns the final plot should have. Defaults to \code{4}.}
+
+\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
 }
 \value{
 \link{ggplot2} object.

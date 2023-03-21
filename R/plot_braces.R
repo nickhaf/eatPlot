@@ -14,7 +14,8 @@ plot_braces <- function(dat,
                         label_est,
                         label_se,
                         label_sig_high,
-                        label_sig_bold) {
+                        label_sig_bold,
+                        nudge_x_axis = 0) {
   col_vec <- c(
     "label_est" = label_est,
     "label_se" = label_se,
@@ -43,7 +44,7 @@ plot_braces <- function(dat,
   )
   dat$label_sig <- ifelse(dat$label_sig_high == TRUE, "<sup>a</sup>", "")
   dat$label_se <- ifelse(!is.na(dat$label_se),
-    paste0(" (", round(dat$label_se, 1), ")"),
+    paste0(" (", format(round(dat$label_se, 1), trim = TRUE), ")"),
     ""
   )
 
@@ -58,9 +59,9 @@ plot_braces <- function(dat,
   # Calculate brace coordinates ---------------------------------------------
   coords <- calc_coords(y_range)
   if (split_plot == TRUE) {
-    dat <- calc_brace_coords(dat, coords, output_format = "long")
+    dat <- calc_brace_coords(dat, coords, output_format = "long", nudge_x_axis = nudge_x_axis)
   } else {
-    dat <- calc_brace_coords(dat, coords)
+    dat <- calc_brace_coords(dat, coords, nudge_x_axis = nudge_x_axis)
   }
 
   c(
@@ -84,7 +85,7 @@ draw_braces <- function(dat, split_plot) {
         group = .data$trend
       ),
       rotate = 180,
-      linewidth = 0.7,
+      linewidth = 0.5,
       npoints = 200
     )
   } else {
@@ -97,7 +98,7 @@ draw_braces <- function(dat, split_plot) {
         ),
         mid = unique(dat_year$mid),
         rotate = 180,
-        linewidth = 0.8,
+        linewidth = 0.5,
         npoints = 200
       )
     })
@@ -116,6 +117,7 @@ draw_brace_label <- function(dat) {
     size = 2,
     label.padding = grid::unit(rep(0, 4), "pt"),
     fill = NA,
-    label.color = NA
+    label.color = NA,
+    hjust = 1
   )
 }
