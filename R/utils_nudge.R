@@ -69,7 +69,8 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long")) {
 }
 
 calc_pos_label_x <- function(year_start, year_end, brace_indent_pos) {
-  year_start + (year_end - year_start) * brace_indent_pos
+  range_est <- year_end - year_start
+  year_start + range_est * brace_indent_pos + range_est * 0.4
 }
 
 # Plot_points -------------------------------------------------------------

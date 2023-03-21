@@ -27,4 +27,4 @@ p_line <- plot_lineplot(plot_data = plot_dat_test,
               label_sig_high = "sig_trend_no_comp"
               )
 
-# save_plot(p_line, filename = "../split_lineplot.pdf")
+save_plot(p_line, filename = "../split_lineplot.pdf")
