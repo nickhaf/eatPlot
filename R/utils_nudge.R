@@ -82,6 +82,26 @@ calc_pos_label_x <- function(year_start, year_end, brace_indent_pos, nudge_x_axi
 }
 
 # Plot_points -------------------------------------------------------------
+calc_x_nudge <- function(dat, nudge_x = 0.05){
+
+  range_years <- diff(range(dat$year))
+  min_max_trend <- get_min_max(dat)
+
+  dat <- merge(dat, min_max_trend,
+                      by = "trend",
+                      all.x = TRUE,
+                      all.y = FALSE)
+
+  dat$x_coords <- ifelse(dat$year == dat$minimum,
+                                yes = dat$year + range_years * nudge_x,
+                                no = ifelse(dat$year == dat$maximum,
+                                            yes = dat$year - range_years * nudge_x,
+                                            no = dat$year)
+  )
+  return(dat)
+}
+
+
 calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.18) { # nudge parameter increases distance between label and point
   range_est <- diff(y_range)
   nudge_val <- range_est * nudge_param
