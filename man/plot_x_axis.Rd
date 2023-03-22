@@ -4,12 +4,16 @@
 \alias{plot_x_axis}
 \title{Plot the x-Axis.}
 \usage{
-plot_x_axis(data_plot_points, y_range)
+plot_x_axis(data_plot_points, y_range, split_plot = FALSE, nudge_x = 0.05)
 }
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
+
+\item{split_plot}{Logical, indicating whether the different trends should be split or not.}
+
+\item{nudge_x}{Numeric indicating how much the labels should be nudged to the center of the plot. Defaults to \code{0.05}.}
 }
 \value{
 A blue stripe on top of ggplot2 plot which can be used as x-axis.

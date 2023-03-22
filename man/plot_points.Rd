@@ -4,7 +4,14 @@
 \alias{plot_points}
 \title{Plot Points.}
 \usage{
-plot_points(data_plot_points, y_range, point_values, point_sig)
+plot_points(
+  data_plot_points,
+  y_range,
+  point_values,
+  point_sig,
+  split_plot = FALSE,
+  nudge_x_axis = 0.05
+)
 }
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
@@ -14,6 +21,10 @@ plot_points(data_plot_points, y_range, point_values, point_sig)
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 
 \item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_point"}.}
+
+\item{split_plot}{Logical, indicating whether the different trends should be split or not.}
+
+\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
 }
 \value{
 ggplot2 object
