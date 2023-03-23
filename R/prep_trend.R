@@ -36,17 +36,17 @@ prep_trend <- function(dat,
 
   dat <- as.data.frame(dat)
 
-
 # Column checks -----------------------------------------------------------
-sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
+# sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
 
-
-  states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
   } else {
     sub_groups <- NULL
   }
+
+  states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
+
 
   dat <- clean_data(
     dat = dat,

@@ -37,7 +37,7 @@ prep_trend(
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 
-\item{plot_mean}{Logical value indicating whether the mean of both subgroups should be plotted as well.}
+\item{plot_mean}{Logical value indicating whether the mean of the subgroups should be plotted as well.}
 
 \item{parameter}{Character string of the parameter value that should be reported. Defaults to \code{"mean"}.}
 }
