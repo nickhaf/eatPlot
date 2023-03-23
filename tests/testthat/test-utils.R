@@ -133,4 +133,7 @@ test_that("columns are checked correctly", {
 
 })
 
-
+test_that("columns are checked correctly", {
+          expect_no_error(check_column(dat = data.frame("a" = 1, "b" = 1), column = "a"))
+  expect_error(check_column(dat = data.frame("a" = 1, "b" = 1), column = "c"), "Variable 'c' not found in data.", fixed = TRUE)
+})
