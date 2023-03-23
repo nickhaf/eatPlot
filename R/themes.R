@@ -84,7 +84,7 @@ theme_line <- function(){
       strip.text.x = ggplot2::element_blank(),
       panel.spacing = ggplot2::unit(0.03, "npc"),
       plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units="npc"),
-      plot.title = ggplot2::element_text(size = 7, hjust = 0.5, vjust = 1.5)
+      plot.title = ggplot2::element_text(size = 7, hjust = 0.5, vjust = 2.5)
     )
 }
 

@@ -66,6 +66,8 @@ clean_data <- function(dat,
       )
   ), "state_var"] <- "wholeGroup"
 
+  dat$state_var <- gsub("ue", "ü", dat$state_var)
+
   return(dat)
 }
 

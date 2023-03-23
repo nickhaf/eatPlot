@@ -30,7 +30,7 @@ plot_lineplot <- function(plot_data,
                           split_plot = FALSE,
                           y_axis = FALSE,
                           n_cols = 4,
-                          nudge_x_axis = 0.4) {
+                          nudge_x_axis = 0.33) {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
