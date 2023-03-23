@@ -75,8 +75,17 @@ plot_table_bar(p_table, p_bar)
 Or, if you want a lineplot:
 
 ``` r
-plot_2 <- plot_lineplot(lineplot_data, nudge_x_axis = 0.15)
-save_plot(plot_2, filename = "../lineplot.pdf")
+p_line <- plot_lineplot(lineplot_data, nudge_x_axis = 0.15)
+p_line
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+The plots are optimally adjusted for A4-pages, and can be saved as pdf
+as follows:
+
+``` r
+save_plot(p_line, filename = "../lineplot.pdf")
 #> png 
 #>   2
 ```
