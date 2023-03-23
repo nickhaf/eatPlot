@@ -11,7 +11,7 @@
 #' @param x_years  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param x_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
-#' @param plot_mean Logical value indicating whether the mean of both subgroups should be plotted as well.
+#' @param plot_mean Logical value indicating whether the mean of the subgroups should be plotted as well.
 #' @param parameter Character string of the parameter value that should be reported. Defaults to `"mean"`.
 #'
 #' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
@@ -33,13 +33,20 @@ prep_trend <- function(dat,
                        sig_niveau = 0.05,
                        plot_mean = FALSE,
                        parameter = "mean") {
+
   dat <- as.data.frame(dat)
-  states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
+
+# Column checks -----------------------------------------------------------
+# sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
+
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
   } else {
     sub_groups <- NULL
   }
+
+  states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
+
 
   dat <- clean_data(
     dat = dat,
