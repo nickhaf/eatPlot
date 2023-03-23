@@ -52,6 +52,11 @@ lineplot_data <- prep_trend(dat = trend_books,
                             competence = "GL", 
                             sig_niveau = 0.05)
 ```
+You can also remove specific states, if you don't want to plot them:
+```{r}
+lineplot_data <- get_state(lineplot_data, state = "wholeGroup", remove = TRUE)
+```
+
 
 ### Plotting
 The prepared data can then fed into one of the plotting functions. For example, if you want to plot a barplot with an ajacent table, first plot both plots indidually, and then merge them together:
@@ -59,13 +64,13 @@ The prepared data can then fed into one of the plotting functions. For example, 
 p_table <- plot_table(barplot_data[["plot_table"]])
 p_bar <- plot_bar(barplot_data)
 
-
 plot_table_bar(p_table, p_bar)
 ```
 
 Or, if you want a lineplot:
 ```{r}
-plot_lineplot(lineplot_data)
+plot_2 <- plot_lineplot(lineplot_data, nudge_x_axis = 0.15)
+save_plot(plot_2, filename = "../lineplot.pdf")
 ```
 
 

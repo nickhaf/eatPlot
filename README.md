@@ -51,6 +51,12 @@ lineplot_data <- prep_trend(dat = trend_books,
                             sig_niveau = 0.05)
 ```
 
+You can also remove specific states, if you don’t want to plot them:
+
+``` r
+lineplot_data <- get_state(lineplot_data, state = "wholeGroup", remove = TRUE)
+```
+
 ### Plotting
 
 The prepared data can then fed into one of the plotting functions. For
@@ -61,36 +67,16 @@ both plots indidually, and then merge them together:
 p_table <- plot_table(barplot_data[["plot_table"]])
 p_bar <- plot_bar(barplot_data)
 
-
 plot_table_bar(p_table, p_bar)
-```
-
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
-
-Or, if you want a lineplot:
-
-``` r
-plot_lineplot(lineplot_data)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
-    #> TableGrob (5 x 4) "arrange": 17 grobs
-    #>                               z     cells    name           grob
-    #> grobs.wholeGroup              1 (1-1,1-1) arrange gtable[layout]
-    #> grobs.Baden-Wuerttemberg      2 (1-1,2-2) arrange gtable[layout]
-    #> grobs.Bayern                  3 (1-1,3-3) arrange gtable[layout]
-    #> grobs.Berlin                  4 (1-1,4-4) arrange gtable[layout]
-    #> grobs.Brandenburg             5 (2-2,1-1) arrange gtable[layout]
-    #> grobs.Bremen                  6 (2-2,2-2) arrange gtable[layout]
-    #> grobs.Hamburg                 7 (2-2,3-3) arrange gtable[layout]
-    #> grobs.Hessen                  8 (2-2,4-4) arrange gtable[layout]
-    #> grobs.Mecklenburg-Vorpommern  9 (3-3,1-1) arrange gtable[layout]
-    #> grobs.Niedersachsen          10 (3-3,2-2) arrange gtable[layout]
-    #> grobs.Nordrhein-Westfalen    11 (3-3,3-3) arrange gtable[layout]
-    #> grobs.Rheinland-Pfalz        12 (3-3,4-4) arrange gtable[layout]
-    #> grobs.Saarland               13 (4-4,1-1) arrange gtable[layout]
-    #> grobs.Sachsen                14 (4-4,2-2) arrange gtable[layout]
-    #> grobs.Sachsen-Anhalt         15 (4-4,3-3) arrange gtable[layout]
-    #> grobs.Schleswig-Holstein     16 (4-4,4-4) arrange gtable[layout]
-    #> grobs.Thueringen             17 (5-5,1-1) arrange gtable[layout]
+Or, if you want a lineplot:
+
+``` r
+plot_2 <- plot_lineplot(lineplot_data, nudge_x_axis = 0.15)
+save_plot(plot_2, filename = "../lineplot.pdf")
+#> png 
+#>   2
+```

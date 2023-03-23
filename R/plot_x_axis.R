@@ -12,7 +12,6 @@ plot_x_axis <- function(data_plot_points, y_range, split_plot = FALSE, nudge_x =
   coords <- calc_coords(y_range)
   y_max <- coords[2]
 
-
   dat_coords <- data_plot_points[, c("year", "trend")]
 
   dat_coords$x_labels <- as.character(dat_coords$year)

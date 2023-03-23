@@ -6,6 +6,7 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 
   range_coords <- diff(range(coords))
+  range_years <- diff(range(c(dat$year_start, dat$year_end), na.rm = TRUE))
   ## Starting point for the highest brace label
   start_label <- 0.05
   gap_label <- 0.08
@@ -35,9 +36,10 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
       upper_label_y - range_coords * gap_label, # Position lower brace label
       upper_label_y # Position upper brace label
     )
+    ## range_years reingeben: das variiert sonst wenn es überlappt. Und dann aber nur fürs nudgen nehmen.
     dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
-      calc_pos_label_x(dat$year_start, dat$year_end, 0.25, nudge_x_axis = nudge_x_axis),
-      calc_pos_label_x(dat$year_start, dat$year_end, 0.5, nudge_x_axis = nudge_x_axis)
+      calc_pos_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.25, nudge_x_axis = nudge_x_axis),
+      calc_pos_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_x_axis = nudge_x_axis)
     )
 
     # indent the first brace
@@ -54,7 +56,7 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
       upper_label_y # Position upper brace label
     )
 
-    dat$label_pos_x <- calc_pos_label_x(dat$year_start, dat$year_end, 0.5, nudge_x_axis = nudge_x_axis)
+    dat$label_pos_x <- calc_pos_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_x_axis = nudge_x_axis)
     dat$mid <- rep(0.5, nrow(dat))
   }
 
@@ -76,9 +78,9 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
   return(dat)
 }
 
-calc_pos_label_x <- function(year_start, year_end, brace_indent_pos, nudge_x_axis = 0) {
+calc_pos_label_x <- function(year_start, year_end, range_total, brace_indent_pos, nudge_x_axis = 0) {
   range_est <- year_end - year_start
-  year_start + range_est * brace_indent_pos + range_est * nudge_x_axis
+  year_start + range_est * brace_indent_pos + (range_total * nudge_x_axis)
 }
 
 # Plot_points -------------------------------------------------------------

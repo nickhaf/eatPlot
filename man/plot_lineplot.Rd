@@ -17,7 +17,7 @@ plot_lineplot(
   split_plot = FALSE,
   y_axis = FALSE,
   n_cols = 4,
-  nudge_x_axis = 0.33
+  nudge_x_axis = 0.155
 )
 }
 \arguments{

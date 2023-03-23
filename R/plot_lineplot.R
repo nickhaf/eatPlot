@@ -30,7 +30,7 @@ plot_lineplot <- function(plot_data,
                           split_plot = FALSE,
                           y_axis = FALSE,
                           n_cols = 4,
-                          nudge_x_axis = 0.33) {
+                          nudge_x_axis = 0.155) {
   states <- unique(plot_data[[1]]$state_var)
 
   plot_list <- list()
@@ -91,15 +91,3 @@ plot_lineplot <- function(plot_data,
     )
 }
 
-
-# Utils -------------------------------------------------------------------
-get_state <- function(plot_data, state, remove = FALSE) {
-  for (i in c("plot_points", "plot_lines", "plot_braces")) {
-    if(remove == FALSE){
-    plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var == state, ]
-    }else{
-      plot_data[[i]] <- plot_data[[i]][plot_data[[i]]$state_var != state, ]
-    }
-  }
-  return(plot_data)
-}
