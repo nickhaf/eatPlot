@@ -43,12 +43,13 @@ test_that("x-position of brace label is calculated correctly", {
     est_point_end = 500:503,
     trend = c("20112020", "20112020", "2152020", "20152020")
   )
+range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
 
-  expect_equal(calc_pos_label_x(year_start = 0, year_end = 10, brace_indent_pos = 0.25), 2.5)
+  expect_equal(calc_pos_label_x(year_start = 0, year_end = 10, range_total = range_years, brace_indent_pos = 0.25), 2.5)
   expect_equal(
     ifelse(df$year_start == min(df$year_start),
-      calc_pos_label_x(df$year_start, df$year_end, 0.25),
-      calc_pos_label_x(df$year_start, df$year_end, 0.5)
+      calc_pos_label_x(df$year_start, df$year_end, range_years, 0.25),
+      calc_pos_label_x(df$year_start, df$year_end, range_years, 0.5)
     ),
     c(2013.25, 2013.25, 2017.5, 2017.5)
   )
