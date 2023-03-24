@@ -12,3 +12,8 @@ test_that("correct line years are extracted", {
  expect_true(all(prepped_list_consecutive[["plot_lines"]]$trend_years == "2011vs2021"))
 
  })
+
+
+
+
+
