@@ -84,10 +84,11 @@ plot_lineplot <- function(plot_data,
     widths_setting <- 1 / n_cols
   }
 
+  nudge_top_bottom <- 0.02 + 0.006 * (length(levels(plot_data[["plot_braces"]]$grouping_var))-1) #more brace labels need more space
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(0.034, 0.01, 0.034, 0.01), "npc") #t, r, b, l
+      plot.margin = ggplot2::unit(c(nudge_top_bottom, 0.01, nudge_top_bottom, 0.01), "npc") #t, r, b, l
     )
 }
 
