@@ -8,7 +8,7 @@
 #' * The group `wholeGroup` currently contains `NAs` in the columns `dat[ , state_var]` and `dat$grouping_var`. These are subbed with `wholeGroup` or `noGroup` respectively.
 #' * The column `dat[ , state_var]` is filled up by extracting the first state found in `dat$groups` for the respective row.
 #' @inheritParams prep_trend
-#' @param states Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).
+#' @param all_states Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).
 #' @param sub_groups Character vector of the different sub_groups.
 #'
 #' @return `clean_data()` returns a `data.frame` with renamend columns and filled in `NAs`.
@@ -21,22 +21,36 @@ clean_data <- function(dat,
                        sub_groups = NULL,
                        competence = NULL,
                        parameter = "mean") {
-
   sapply(c("parameter", "competence_var", "state_var", "grouping_var", "group_var"), check_column, dat = dat)
 
   # Fill up NAs
   dat$state_var[dat$state_var == ""] <- "wholeGroup"
-  dat <- fill_up_na(dat, info_to = "state_var", filling_groups = all_states)
-  dat <- fill_up_na(dat, info_to = "grouping_var", filling_groups = sub_groups)
+  if (!is.null(all_states)) {
+    dat <- fill_up_na(dat,
+      info_to = "state_var",
+      filling_groups = all_states
+    )
+  }
+  if (!is.null(sub_groups)) {
+    dat <- fill_up_na(dat,
+      info_to = "grouping_var",
+      filling_groups = sub_groups
+    )
+  }
 
   # Select relevant rows
   dat <- dat[dat$parameter == parameter, ]
-  if(!is.null(competence))  dat <- dat[dat$competence_var == competence, ]
-  if(!is.null(states))  dat <- dat[dat$state_var %in% states, ]
+  if (!is.null(competence)) {
+    dat <- dat[dat$competence_var == competence, ]
+  }
+  if (!is.null(states)) {
+    dat <- dat[dat$state_var %in% states, ]
+  }
 
   dat <- dat[, !colnames(dat) %in% c("modus", "parameter")]
 
   dat$grouping_var <- recode_to_factor(dat$grouping_var)
+
   dat[is.na(dat$state_var) & (
     grepl("wholeGroup", dat$group_var) |
       grepl(
@@ -56,20 +70,20 @@ clean_data <- function(dat,
 
 # Utils
 fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
-  if(is.factor(dat[, info_to])){
+  if (is.factor(dat[, info_to])) {
     new_levels <- filling_groups[!(filling_groups %in% levels(dat[, info_to]))]
-    levels(dat[, info_to]) <- c(levels(dat[,info_to]), new_levels)
+    levels(dat[, info_to]) <- c(levels(dat[, info_to]), new_levels)
   }
   dat[is.na(dat[, info_to]), info_to] <- write_group(dat[is.na(dat[, info_to]), info_from], groups = filling_groups)
 
   return(dat)
 }
 
-recode_to_factor <- function(vec){
+recode_to_factor <- function(vec) {
+  vec <- as.factor(vec)
   levels(vec) <- c(levels(vec), "noGroup")
   vec[is.na(vec)] <- "noGroup"
   vec <- droplevels(vec)
-return(vec)
+
+  return(vec)
 }
-
-

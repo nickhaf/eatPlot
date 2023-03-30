@@ -5,6 +5,7 @@
 #' @param dat Input data.frame stemming from `eatRep`.
 #' @param competence Character string containing the competence that should be plotted.
 #' @param grouping_var Character string containing the column name in `dat` that should be used to distinguish between subgroups.
+#' @param states Character vector of the states that should be plotted.
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
 #' @param competence_var Character string containing the column name in `dat` that contains the different competences. Defaults to `"kb"`.
@@ -63,11 +64,15 @@ dat <- standardise_columns(dat,
 # Show a warning, if a grouping_var was provided, but not as factor.
 if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
-  vec <- as.factor(vec)
+  dat$grouping_var <- as.factor(dat$grouping_var)
 }
 
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
-  if(!is.null(grouping_var)) sub_groups <- unique(dat$sub_groups)[!is.na(unique(dat$sub_groups))]
+  if(!is.null(grouping_var)){
+    sub_groups <- unique(dat$grouping_var)[!is.na(unique(dat$grouping_var))]
+  }else{
+    sub_groups <- NULL
+  }
 
   dat <- clean_data(
     dat = dat,
@@ -127,8 +132,9 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
     trend_data = trend_data_merged,
     point_data = list_building_blocks[["point_no_comp_data"]]
   )
-  trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
-
+  if(any(!is.na(trend_data_final$grouping_var))){
+    trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
+}
   # Prepare the wholeGroup data.frame ---------------------------------------
   trend_data_wholeGroup <- merge_trend_point(
     list_building_blocks[["wholeGroup_trend"]],
@@ -154,7 +160,7 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   }
   plot_dat[["plot_lines"]] <- trend_data_final[filter_years(trend_data_final, lineplot_years), ]
 
-  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
+  if (!is.null(grouping_var) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
   }
   #################

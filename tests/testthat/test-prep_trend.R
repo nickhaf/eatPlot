@@ -14,9 +14,6 @@ test_that("correct line years are extracted", {
  })
 
 
-
-
-
 test_that("grouping levels are build correctly", {
   expect_equal(
     recode_to_factor(

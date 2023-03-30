@@ -6,6 +6,7 @@
 \usage{
 plot_lineplot(
   plot_data,
+  seperate_plot_var = "state_var",
   point_values = "est_point",
   point_sig = "sig_point",
   line_values = c("est_point_start", "est_point_end"),
@@ -22,6 +23,8 @@ plot_lineplot(
 }
 \arguments{
 \item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
+
+\item{seperate_plot_var}{Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to \code{state_var}.}
 
 \item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
 

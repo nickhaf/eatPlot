@@ -18,9 +18,9 @@
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
 #               split_plot = TRUE,
 #               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_trend_no_comp"
+#               label_sig_high = "sig_point_end"
 #               )
-#
+
 # save_plot(p_line, filename = "../split_lineplot.pdf")
 #
 #
@@ -39,7 +39,7 @@
 #                        x_braces = list(c(2011, 2016), c(2016, 2021))
 #                        )
 #
-# plot_dat_test <- get_state(plot_dat_test, state = "wholeGroup", remove = TRUE)
+# plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
 # ## Testweise einige PUnkte auf n.s. setzen
 # plot_dat_test$plot_points$sig_point[1:10] <- FALSE
 # plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
@@ -48,9 +48,9 @@
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
 #               split_plot = TRUE,
 #               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_trend_no_comp"
+#               label_sig_high = "sig_point_end"
 #               )
-#
+
 # save_plot(p_line, filename = "../split_lineplot_2.pdf")
 #
 #
@@ -74,7 +74,7 @@
 #                        x_braces = list(c(2011, 2021), c(2016, 2021))
 #                        )
 #
-# plot_dat_3 <- get_state(plot_dat_3, state = "wholeGroup", remove = TRUE)
+# plot_dat_3 <- filter_rows(plot_dat_3, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
 # ## Testweise einige PUnkte auf n.s. setzen
 # plot_dat_3$plot_points$sig_point[1:10] <- FALSE
 # plot_dat_3$plot_points <- plot_dat_3$plot_points[!(plot_dat_3$plot_points$trend == "20112016" & plot_dat_3$plot_points$grouping_var == "TRUE"), ]
@@ -82,49 +82,16 @@
 # p_line <- plot_lineplot(plot_data = plot_dat_3,
 #               split_plot = FALSE,
 #               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_trend_no_comp"
+#               label_sig_high = "sig_point_end"
 #               )
-#
+
 # save_plot(p_line, filename = "../split_lineplot_3.pdf")
-
-
-# # whole Group --------------------------------------------------------------
-#
-# uneq_groups <- read.csv2("p:/Methoden/99_Arbeitsordner/eatRep_problem/eatRep_output_3mzp_unequalGroups.csv", sep = ";")
-# uneq_groups$mh <- as.factor(uneq_groups$mh)
-#
-#
-# ## Geht nicht, weil irgendwo nach wholeGroup gefiltert wird: Weniger spezifisch machen, eher "tiles" oder so benenenen statt states:
-# plot_dat_test <- prep_trend(dat = uneq_groups,
-#                        competence = "Berlin",
-#                        competence_var = "TR_BUNDESLAND",
-#                        state_var = "kb",
-#                        grouping_var = "mh",
-#                        x_years = list(c(2011, 2016), c(2016, 2021)),
-#                        x_braces = list(c(2011, 2016), c(2016, 2021))
-#                        )
-#
-#
-# plot_dat_test <- get_state(plot_dat_test, state = "wholeGroup", remove = TRUE)
-# ## Testweise einige PUnkte auf n.s. setzen
-# plot_dat_test$plot_points$sig_point[1:10] <- FALSE
-# plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
-#
-#
-# p_line <- plot_lineplot(plot_data = plot_dat_test,
-#               split_plot = TRUE,
-#               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_trend_no_comp"
-#               )
-#
-# save_plot(p_line, filename = "../split_lineplot_4.pdf")
-#
 
 
 
 
 # competence_var as tiles -------------------------------------------------
-
+#
 # uneq_groups <- read.csv2("p:/Methoden/99_Arbeitsordner/eatRep_problem/eatRep_output_3mzp_unequalGroups.csv", sep = ";")
 # uneq_groups$mh <- as.factor(uneq_groups$mh)
 # uneq_groups <- uneq_groups[uneq_groups$mh != "TRUE" | is.na(uneq_groups$mh), ]
@@ -142,8 +109,7 @@
 #   seperate_plot_var = "competence_var",
 #               split_plot = TRUE,
 #               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_trend_no_comp",
-#   settings_pdf = NULL
+#               label_sig_high = "sig_point_end"
 #               )
 #
 # save_plot(p_line, filename = "../split_lineplot_kb.pdf")

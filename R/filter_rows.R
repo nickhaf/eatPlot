@@ -1,6 +1,7 @@
 #' Extract or remove rows from prepared data.
 #'
 #' @param plot_data List of data.frames, output of [prep_trend].
+#' @param column_name Column that the subsetter will be searched in.
 #' @param subsetter Character string of the state you want to extract or remove.
 #' @param remove Logical. If true, the state defined in `state` will be removed. Defaults to `FALSE`.
 #'

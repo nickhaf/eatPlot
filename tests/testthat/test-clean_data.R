@@ -11,7 +11,7 @@ test_that("relevant rows are selected", {
   )
 
   df_cleaned <- clean_data(df_raw,
-    states = c("a", "b"),
+    all_states = c("a", "b"),
     sub_groups = "a",
     competence = "a"
   )
@@ -36,7 +36,8 @@ test_that("NoGroup and wholeGroup are filled up correctly", {
     parameter = rep("mean", 4)
   )
 
-  df_cleaned <- clean_data(df_raw,
+  df_cleaned <- clean_data(
+    df_raw,
     all_states = "a",
     sub_groups = "xy",
     competence = "a"

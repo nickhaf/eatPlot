@@ -2,14 +2,16 @@
 % Please edit documentation in R/filter_rows.R
 \name{filter_rows}
 \alias{filter_rows}
-\title{Extract or remove states from prepared data.}
+\title{Extract or remove rows from prepared data.}
 \usage{
-filter_rows(plot_data, state, remove = FALSE)
+filter_rows(plot_data, column_name, subsetter, remove = FALSE)
 }
 \arguments{
 \item{plot_data}{List of data.frames, output of \link{prep_trend}.}
 
-\item{state}{Character string of the state you want to extract or remove.}
+\item{column_name}{Column that the subsetter will be searched in.}
+
+\item{subsetter}{Character string of the state you want to extract or remove.}
 
 \item{remove}{Logical. If true, the state defined in \code{state} will be removed. Defaults to \code{FALSE}.}
 }
@@ -17,7 +19,7 @@ filter_rows(plot_data, state, remove = FALSE)
 List of data.frames.
 }
 \description{
-Extract or remove states from prepared data.
+Extract or remove rows from prepared data.
 }
 \examples{
 #tbd

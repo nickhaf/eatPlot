@@ -200,7 +200,9 @@ test_that("Adjacent braces", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112015", "20112015", "20152023", "20152023")
+    trend = c("20112015", "20112015", "20152023", "20152023"),
+    competence_var = "a"
+
   )
 
   vdiffr::expect_doppelganger(
@@ -231,7 +233,8 @@ test_that("Overlapping braces are looking good", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112015", "20112015", "20152023", "20152023")
+    trend = c("20112015", "20112015", "20152023", "20152023"),
+    competence_var = "a"
   )
 
   p_braces <- ggplot2::ggplot() +
@@ -262,7 +265,8 @@ test_that("Braces can be facet wrapped", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112015", "20112015", "20152023", "20152023")
+    trend = c("20112015", "20112015", "20152023", "20152023"),
+    competence_var = "a"
   )
 
 

@@ -46,7 +46,7 @@ prep_no_trend <- function(dat,
   }
 
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
-  if(!is.null(grouping_var)) sub_groups <- unique(dat$sub_groups)[!is.na(unique(dat$sub_groups))]
+  if(!is.null(grouping_var)) sub_groups <- unique(dat$grouping_var)[!is.na(unique(dat$grouping_var))]
 
   dat <- clean_data(
     dat = dat,

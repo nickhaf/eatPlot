@@ -8,10 +8,10 @@ plot_braces(
   dat,
   split_plot = FALSE,
   y_range,
-  label_est,
-  label_se,
-  label_sig_high,
-  label_sig_bold,
+  label_est = NULL,
+  label_se = NULL,
+  label_sig_high = NULL,
+  label_sig_bold = NULL,
   nudge_x_axis = 0
 )
 }

@@ -24,7 +24,6 @@ build_column <- function(dat, old, new) {
   check_column(dat, old)
   if (is.null(old)) {
     dat[, new] <- NA
-
     return(dat)
   } else {
     colnames(dat)[colnames(dat) == old] <- new
