@@ -54,7 +54,7 @@ lineplot_data <- prep_trend(dat = trend_books,
 ```
 You can also remove specific states, if you don't want to plot them:
 ```{r}
-lineplot_data <- get_state(lineplot_data, state = "wholeGroup", remove = TRUE)
+lineplot_data <- filter_rows(lineplot_data, state = "wholeGroup", remove = TRUE)
 ```
 
 

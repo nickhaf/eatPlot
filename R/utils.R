@@ -22,10 +22,6 @@ filter_strings <- function(identifier, paste_vec, val_vec) {
 
 build_column <- function(dat, old, new) {
   check_column(dat, old)
-  if(new %in% colnames(dat)){
-    stop(paste0("You wanted to rename the column ", old, "to ", new, ". However, column", new, "already exists in dat."))
-  }
-
   if (is.null(old)) {
     dat[, new] <- NA
 
@@ -189,13 +185,13 @@ insert_first_number <- function(char_string, insertion) {
 
 
 ## Split all groups containing "vs" to get the respective comparisons
-get_comparisons <- function(dat, group_col, states, sub_groups) {
-  comparisons_log <- grepl("\\.vs\\.", dat[[group_col]])
+get_comparisons <- function(dat, states, sub_groups) {
+  comparisons_log <- grepl("\\.vs\\.", dat$group_var)
 
-  dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, group_col], split = "\\.vs\\."), function(x) {
+  dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.vs\\."), function(x) {
     x[[1]]
   })
-  dat[comparisons_log, "compare_2"] <- sapply(strsplit(dat[comparisons_log, group_col], split = "\\.vs\\."), function(x) {
+  dat[comparisons_log, "compare_2"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.vs\\."), function(x) {
     x[[2]]
   })
 
@@ -206,7 +202,6 @@ get_comparisons <- function(dat, group_col, states, sub_groups) {
     }
     dat[, i] <- gsub("__|___", "_", dat[, i])
   }
-
 
   return(dat)
 }

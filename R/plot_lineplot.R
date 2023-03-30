@@ -19,6 +19,7 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(plot_data,
+                          seperate_plot_var = "state_var",
                           point_values = "est_point",
                           point_sig = "sig_point",
                           line_values = c("est_point_start", "est_point_end"),
@@ -32,16 +33,21 @@ plot_lineplot <- function(plot_data,
                           n_cols = 4,
                           nudge_x_axis = 0.155) {
   states <- unique(plot_data[[1]]$state_var)
+  tiles <- unique(plot_data[[1]][, seperate_plot_var])
 
   plot_list <- list()
   range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   position <- 1
 
-  for (i in states) {
-    plot_data_state <- get_state(plot_data, state = i)
+  for (i in tiles) {
+    plot_data_tile <- filter_rows(plot_data, column_name = seperate_plot_var, subsetter = i)
+    if(seperate_plot_var == "competence_var"){
+      plot_data_tile[["plot_background_lines"]] <- plot_data_tile[["plot_background_lines"]][plot_data_tile[["plot_background_lines"]]$competence_var == i, ]
+    }
+
     p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
-        plot_data = plot_data_state,
+        plot_data = plot_data_tile,
         y_range = range_est,
         split_plot = split_plot,
         point_values = point_values,
@@ -54,6 +60,7 @@ plot_lineplot <- function(plot_data,
         label_sig_bold = label_sig_bold,
         nudge_x_axis = nudge_x_axis
       ) +
+    ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
       set_plot_coords(plot_data)
 
     ## The wholeGroup plot gets a box drawn around it.

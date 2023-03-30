@@ -34,7 +34,7 @@ clean_data <- function(dat,
   if(!is.null(competence))  dat <- dat[dat$competence_var == competence, ]
   if(!is.null(states))  dat <- dat[dat$state_var %in% states, ]
 
-  dat <- dat[, !colnames(dat) %in% c("modus", "parameter", "kb")]
+  dat <- dat[, !colnames(dat) %in% c("modus", "parameter")]
 
   dat$grouping_var <- recode_to_factor(dat$grouping_var)
   dat[is.na(dat$state_var) & (
