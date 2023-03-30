@@ -24,20 +24,35 @@
 #' @examples # tbd
 prep_trend <- function(dat,
                        competence,
-                       grouping_var = "",
-                       state_var = "TR_BUNDESLAND",
                        competence_var = "kb",
+                       state_var = "TR_BUNDESLAND",
                        group_var = "group",
+                       grouping_var = NULL,
                        x_years = NULL,
                        x_braces = NULL,
                        sig_niveau = 0.05,
                        plot_mean = FALSE,
                        parameter = "mean") {
 
-  dat <- as.data.frame(dat)
 
-# Column checks -----------------------------------------------------------
-# sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
+# Checks ------------------------------------------------------------------
+
+## Check arguments
+stopifnot(is.data.frame(dat))
+stopifnot(is.character(competence))
+stopifnot(is.character(grouping_var) | is.null(grouping_var))
+stopifnot(is.character(state_var))
+stopifnot(is.character(competence_var))
+stopifnot(is.character(group_var))
+stopifnot(is.numeric(x_years) | is.null(x_years))
+stopifnot(is.numeric(x_braces) | is.null(x_braces))
+stopifnot(is.numeric(sig_niveau))
+stopifnot(is.logical(plot_mean))
+stopifnot(is.character(parameter))
+
+## Check columns
+## Stop, außer es entspricht dem Default
+sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
 
   if (grouping_var != "") {
     sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
@@ -197,6 +212,15 @@ prep_trend <- function(dat,
 }
 
 # Utils -------------------------------------------------------------------
+
+validate_prep_trend <- function(dat){
+
+
+}
+
+
+
+
 # Return rows with respective start and end years.
 filter_years <- function(dat, year_list) {
   # Filter the respective rows
@@ -205,3 +229,4 @@ filter_years <- function(dat, year_list) {
   }))
   return(year_rows)
 }
+

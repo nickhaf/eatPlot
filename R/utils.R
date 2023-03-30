@@ -232,9 +232,11 @@ get_min_max <- function(dat){
 }
 
 check_column <- function(dat, column){
+  if(!is.null(column)){
   if(!(column %in% colnames(dat))){
     stop(paste0("Variable '", column, "' not found in data."))
-    }
+  }
+  }
 }
 
 
