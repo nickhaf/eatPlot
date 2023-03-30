@@ -41,8 +41,8 @@ test_that("correct states are extracted", {
     )
   )
 
-expect_equal(get_state(test_plot_2, state = "a")$plot_points$state_var, c("a", "a"))
-expect_equal(get_state(test_plot_2, state = "a")$plot_lines$state_var, c("a", "a"))
+expect_equal(filter_rows(test_plot_2, column_name = "state_var", subsetter = "a")$plot_points$state_var, c("a", "a"))
+expect_equal(filter_rows(test_plot_2, column_name = "state_var", subsetter = "a")$plot_lines$state_var, c("a", "a"))
 
 })
 

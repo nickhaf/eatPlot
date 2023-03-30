@@ -5,6 +5,7 @@
 #' @param dat Input data.frame stemming from `eatRep`.
 #' @param competence Character string containing the competence that should be plotted.
 #' @param grouping_var Character string containing the column name in `dat` that should be used to distinguish between subgroups.
+#' @param states Character vector of the states that should be plotted.
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
 #' @param competence_var Character string containing the column name in `dat` that contains the different competences. Defaults to `"kb"`.
@@ -23,47 +24,68 @@
 #'
 #' @examples # tbd
 prep_trend <- function(dat,
-                       competence,
-                       grouping_var = "",
-                       state_var = "TR_BUNDESLAND",
                        competence_var = "kb",
+                       competence = NULL,
+                       states = NULL,
+                       state_var = "TR_BUNDESLAND",
                        group_var = "group",
+                       grouping_var = NULL,
                        x_years = NULL,
                        x_braces = NULL,
                        sig_niveau = 0.05,
                        plot_mean = FALSE,
                        parameter = "mean") {
 
-  dat <- as.data.frame(dat)
 
-# Column checks -----------------------------------------------------------
-# sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
+# Checks ------------------------------------------------------------------
 
-  if (grouping_var != "") {
-    sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
-  } else {
+## Check arguments
+stopifnot(is.data.frame(dat))
+stopifnot(is.character(competence) | is.null(competence))
+stopifnot(is.character(grouping_var) | is.null(grouping_var))
+stopifnot(is.character(states) | is.null(states))
+stopifnot(is.character(state_var))
+stopifnot(is.character(competence_var))
+stopifnot(is.character(group_var))
+stopifnot(all(sapply(x_years, is.numeric)) | is.null(x_years))
+stopifnot(all(sapply(x_braces, is.numeric)) | is.null(x_braces))
+stopifnot(is.numeric(sig_niveau))
+stopifnot(is.logical(plot_mean))
+stopifnot(is.character(parameter))
+
+sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
+
+dat <- standardise_columns(dat,
+                           competence_var,
+                           grouping_var,
+                           state_var,
+                           group_var)
+
+# Show a warning, if a grouping_var was provided, but not as factor.
+if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
+  warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
+  dat$grouping_var <- as.factor(dat$grouping_var)
+}
+
+  all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
+  if(!is.null(grouping_var)){
+    sub_groups <- unique(dat$grouping_var)[!is.na(unique(dat$grouping_var))]
+  }else{
     sub_groups <- NULL
   }
-
-  states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
-
 
   dat <- clean_data(
     dat = dat,
     states = states,
+    all_states = all_states,
     sub_groups = sub_groups,
     competence = competence,
-    grouping_var = grouping_var,
-    group_var = group_var,
-    state_var = state_var,
-    competence_var = competence_var,
     parameter = parameter
   )
 
   if (any(!is.na(dat$comparison))) {
     dat <- get_comparisons(dat,
-      group_col = "group_var",
-      states = states[states != "wholeGroup"],
+      states = all_states[all_states != "wholeGroup"],
       sub_groups = sub_groups
     )
   }
@@ -71,7 +93,7 @@ prep_trend <- function(dat,
   list_building_blocks <- prep_data_blocks(
     data_clean = dat,
     sig_niveau = sig_niveau,
-    states,
+    all_states,
     sub_groups
   )
 
@@ -110,8 +132,9 @@ prep_trend <- function(dat,
     trend_data = trend_data_merged,
     point_data = list_building_blocks[["point_no_comp_data"]]
   )
-  trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
-
+  if(any(!is.na(trend_data_final$grouping_var))){
+    trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
+}
   # Prepare the wholeGroup data.frame ---------------------------------------
   trend_data_wholeGroup <- merge_trend_point(
     list_building_blocks[["wholeGroup_trend"]],
@@ -137,7 +160,7 @@ prep_trend <- function(dat,
   }
   plot_dat[["plot_lines"]] <- trend_data_final[filter_years(trend_data_final, lineplot_years), ]
 
-  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
+  if (!is.null(grouping_var) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
   }
   #################
@@ -154,7 +177,8 @@ prep_trend <- function(dat,
   }
 
   plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, braceplot_years), ]
-  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
+
+  if (!is.null(grouping_var) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
   }
 
@@ -170,7 +194,7 @@ prep_trend <- function(dat,
     plot_dat[["plot_bar"]] <- merge(
       list_building_blocks[["point_no_comp_data"]],
       list_building_blocks[["point_comp_data"]],
-      by = c("state_var", "year", "grouping_var", "depVar"),
+      by = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
       suffixes = c("_no_comp", "_comp"),
       all = TRUE
     )
@@ -183,13 +207,24 @@ prep_trend <- function(dat,
   #################
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
-  dat_long <- stats::reshape(plot_dat[["plot_lines"]][, c("depVar", "grouping_var", "year_start", "year_end", "trend", "group_var", "state_var")],
+  dat_long <- stats::reshape(plot_dat[["plot_lines"]][,
+                                                      c("depVar",
+                                                        "grouping_var",
+                                                        "year_start",
+                                                        "year_end",
+                                                        "trend",
+                                                        "group_var",
+                                                        "state_var",
+                                                        "competence_var")],
     direction = "long",
     varying = c("year_start", "year_end"),
     sep = "_"
   )
 
-  plot_dat[["plot_points"]] <- merge(dat_long, list_building_blocks[["point_no_comp_data"]], by = c("grouping_var", "group_var", "state_var", "year"), all.x = TRUE)
+  plot_dat[["plot_points"]] <- merge(dat_long,
+                                     list_building_blocks[["point_no_comp_data"]],
+                                     by = c("grouping_var", "group_var", "state_var", "year", "competence_var"),
+                                     all.x = TRUE)
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
 
@@ -204,4 +239,20 @@ filter_years <- function(dat, year_list) {
     which(dat$year_start == x[1] & dat$year_end == x[2])
   }))
   return(year_rows)
+}
+
+
+
+standardise_columns <- function(dat, competence_var, grouping_var, state_var, group_var){
+
+  dat <- build_column(dat = dat, old = competence_var, new = "competence_var")
+  dat <- build_column(dat = dat, old = grouping_var, new = "grouping_var")
+  dat <- build_column(dat = dat, old = state_var, new = "state_var")
+  dat <- build_column(dat = dat, old = group_var, new = "group_var")
+
+  colnames(dat) <- gsub("\\.", "_", colnames(dat))
+  colnames(dat) <- gsub("sig_", "p_", colnames(dat))
+  colnames(dat) <- gsub("^sig$", "p", colnames(dat))
+
+  return(dat)
 }

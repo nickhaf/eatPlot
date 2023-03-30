@@ -5,7 +5,8 @@ test_that("calc_brace_coords works for long format", {
     year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 0, 1)),
     brace_label = rep("a", 4),
-    trend = c("2011", "2011", "2012", "2012")
+    trend = c("2011", "2011", "2012", "2012"),
+    competence_var = "a"
   )
 
   coords <- c(360, 530)
@@ -23,7 +24,8 @@ test_that("calc_brace_coords works for wide format", {
     year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 0, 1)),
     brace_label = rep("a", 4),
-    trend = c("20112012", "20112012", "20122013", "20122013")
+    trend = c("20112012", "20112012", "20122013", "20122013"),
+    competence_var = "a"
   )
 
   coords <- c(360, 530)
@@ -61,3 +63,4 @@ test_that("Point nudge is calculated correctly", {
 
   expect_equal(calc_y_nudge(df, y_range = c(1, 2))$nudge_y, c(0.18, -0.18, -0.18, 0.18, 0.18, -0.18, 0.18, -0.18))
 })
+

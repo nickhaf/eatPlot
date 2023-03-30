@@ -11,7 +11,8 @@ test_that("y limits are set correctly", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112020", "20112020", "2152020", "20152020")
+    trend = c("20112020", "20112020", "2152020", "20152020"),
+    competence_var = "a"
   )
 
   test_p <- ggplot2::ggplot() +
@@ -41,7 +42,8 @@ test_that("x-position of brace label is calculated correctly", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112020", "20112020", "2152020", "20152020")
+    trend = c("20112020", "20112020", "2152020", "20152020"),
+    competence_var = "a"
   )
 range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
 
@@ -64,7 +66,8 @@ test_that("single brace is drawn", {
     lower_y = 250,
     year_start = c(2015),
     year_end = c(2016),
-    mid = 0.25
+    mid = 0.25,
+    competence_var = "a"
   )
 
   vdiffr::expect_doppelganger(
@@ -115,7 +118,8 @@ test_that("braces are plotted correctly", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112020", "20112020", "20152020", "20152020")
+    trend = c("20112020", "20112020", "20152020", "20152020"),
+    competence_var = "a"
   )
 
   vdiffr::expect_doppelganger(
@@ -145,7 +149,8 @@ test_that("significances are displayed correctly in the labels", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112020", "20112020", "20152020", "20152020")
+    trend = c("20112020", "20112020", "20152020", "20152020"),
+    competence_var = "a"
   )
 
   plot_brace_build <- ggplot2::ggplot_build(ggplot2::ggplot() +
@@ -171,7 +176,7 @@ test_that("Example brace plot is still the same", {
   vdiffr::expect_doppelganger(
     "Brace plot trend_books",
     ggplot2::ggplot() +
-      plot_braces(plot_data[["plot_braces"]][plot_data[["plot_braces"]]$state_var == "Berlin", ],
+      plot_braces(plot_data[["plot_braces"]][plot_data[["plot_braces"]]$state_var == "Berlin" & !is.na(plot_data[["plot_braces"]]$state_var), ],
         y_range = c(397, 552),
         label_est = "est_trend_no_comp",
         label_se = "se_trend_no_comp",
@@ -195,7 +200,9 @@ test_that("Adjacent braces", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112015", "20112015", "20152023", "20152023")
+    trend = c("20112015", "20112015", "20152023", "20152023"),
+    competence_var = "a"
+
   )
 
   vdiffr::expect_doppelganger(
@@ -226,7 +233,8 @@ test_that("Overlapping braces are looking good", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112015", "20112015", "20152023", "20152023")
+    trend = c("20112015", "20112015", "20152023", "20152023"),
+    competence_var = "a"
   )
 
   p_braces <- ggplot2::ggplot() +
@@ -257,7 +265,8 @@ test_that("Braces can be facet wrapped", {
     sig_2 = c(FALSE, TRUE, FALSE, TRUE),
     est_point_start = 400:403,
     est_point_end = 500:503,
-    trend = c("20112015", "20112015", "20152023", "20152023")
+    trend = c("20112015", "20112015", "20152023", "20152023"),
+    competence_var = "a"
   )
 
 

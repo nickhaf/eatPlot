@@ -12,7 +12,9 @@ prep_no_trend(
   group_var = "group",
   state_var = "TR_BUNDESLAND",
   competence_var = "kb",
-  sig_niveau = 0.05
+  states = NULL,
+  sig_niveau = 0.05,
+  parameter = "mean"
 )
 }
 \arguments{
@@ -30,7 +32,11 @@ prep_no_trend(
 
 \item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
 
+\item{states}{Character vector of the states that should be plotted.}
+
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
+
+\item{parameter}{Character string of the parameter value that should be reported. Defaults to \code{"mean"}.}
 }
 \value{
 Returns a data.frame which can be used as input for plot_bar.

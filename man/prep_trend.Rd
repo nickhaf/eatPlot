@@ -6,11 +6,12 @@
 \usage{
 prep_trend(
   dat,
-  competence,
-  grouping_var = "",
-  state_var = "TR_BUNDESLAND",
   competence_var = "kb",
+  competence = NULL,
+  states = NULL,
+  state_var = "TR_BUNDESLAND",
   group_var = "group",
+  grouping_var = NULL,
   x_years = NULL,
   x_braces = NULL,
   sig_niveau = 0.05,
@@ -21,15 +22,17 @@ prep_trend(
 \arguments{
 \item{dat}{Input data.frame stemming from \code{eatRep}.}
 
+\item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
+
 \item{competence}{Character string containing the competence that should be plotted.}
 
-\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
+\item{states}{Character vector of the states that should be plotted.}
 
 \item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
 
-\item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
-
 \item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
+
+\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
 
 \item{x_years}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
 

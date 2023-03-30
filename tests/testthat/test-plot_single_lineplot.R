@@ -6,7 +6,8 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       year = c(1, 2, 3),
       est_point = c(200, 210, 220),
       sig_point = c(TRUE, FALSE, TRUE),
-      trend = c(12, 12, 23)
+      trend = c(12, 12, 23),
+      competence_var = "a"
     ),
     plot_lines = data.frame(
       state_var = rep("a", 2),
@@ -16,7 +17,8 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       est_point_start = c(200, 210),
       est_point_end = c(210, 220),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23)
+      trend = c(12, 23),
+      competence_var = "a"
     ),
     plot_background_lines = data.frame(
       state_var = rep("", 2),
@@ -26,7 +28,8 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       est_point_start = c(190, 225),
       est_point_end = c(225, 230),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23)
+      trend = c(12, 23),
+      competence_var = "a"
     ),
     plot_braces = data.frame(
       state_var = rep("a", 2),
@@ -37,7 +40,8 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       se_label = c(1, 4),
       sig_label_1 = c(TRUE, FALSE),
       sig_label_2 = c(FALSE, TRUE),
-      trend = c(12, 23)
+      trend = c(12, 23),
+      competence_var = "a"
     )
   )
 
@@ -66,7 +70,8 @@ test_that("single_lineplot with two groups is plotted correctly", {
       year = rep(c(1, 2, 3), 2),
       est_point = c(200, 210, 220, 205, 215, 225),
       sig_point = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
-      trend = c(12, 12, 23, 12, 12, 23)
+      trend = c(12, 12, 23, 12, 12, 23),
+      competence_var = "a"
     ),
     plot_lines = data.frame(
       state_var = rep("a", 4),
@@ -76,7 +81,8 @@ test_that("single_lineplot with two groups is plotted correctly", {
       est_point_start = c(200, 205, 210, 215),
       est_point_end = c(210, 215, 220, 225),
       sig_trend = c(TRUE, FALSE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23)
+      trend = c(12, 12, 23, 23),
+      competence_var = "a"
     ),
     plot_background_lines = data.frame(
       state_var = rep("", 2),
@@ -86,7 +92,8 @@ test_that("single_lineplot with two groups is plotted correctly", {
       est_point_start = c(190, 225),
       est_point_end = c(225, 230),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23)
+      trend = c(12, 23),
+      competence_var = "a"
     ),
     plot_braces = data.frame(
       state_var = rep("a", 4),
@@ -97,7 +104,8 @@ test_that("single_lineplot with two groups is plotted correctly", {
       se_label = c(1, 2, 3, 4),
       sig_label_1 = c(TRUE, FALSE, FALSE, TRUE),
       sig_label_2 = c(FALSE, TRUE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23)
+      trend = c(12, 12, 23, 23),
+      competence_var = "a"
     )
   )
 
@@ -124,7 +132,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       year = rep(c(1, 2, 3), 2),
       est_point = c(200, 210, 220, 205, 215, 225),
       sig_point = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
-      trend = c(12, 12, 23, 12, 12, 23)
+      trend = c(12, 12, 23, 12, 12, 23),
+      competence_var = "a"
     ),
     plot_lines = data.frame(
       state_var = rep("a", 4),
@@ -134,7 +143,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       est_point_start = c(200, 205, 210, 215),
       est_point_end = c(210, 215, 220, 225),
       sig_trend = c(TRUE, FALSE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23)
+      trend = c(12, 12, 23, 23),
+      competence_var = "a"
     ),
     plot_background_lines = data.frame(
       state_var = rep("", 2),
@@ -144,7 +154,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       est_point_start = c(190, 225),
       est_point_end = c(225, 230),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23)
+      trend = c(12, 23),
+      competence_var = "a"
     ),
     plot_braces = data.frame(
       state_var = rep("a", 4),
@@ -155,7 +166,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       se_label = c(1, 2, 3, 4),
       sig_label_1 = c(TRUE, FALSE, FALSE, TRUE),
       sig_label_2 = c(FALSE, TRUE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23)
+      trend = c(12, 12, 23, 23),
+      competence_var = "a"
     )
   )
 

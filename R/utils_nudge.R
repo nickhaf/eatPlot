@@ -2,7 +2,8 @@
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nudge_x_axis = 0) {
   output_format <- match.arg(output_format)
-  dat <- dat[, c("grouping_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
+  sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend"), check_columns, dat = dat)
+  dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 
   range_coords <- diff(range(coords))
@@ -68,14 +69,14 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
 
     dat_long <- stats::reshape(
       dat,
-      idvar = c("grouping_var", "trend"),
+      idvar = c("grouping_var", "trend", "competence_var"),
       varying = c("upper_y", "year_end", "lower_y", "year_start"),
       v.names = c("year", "value"),
       direction = "long"
     )
 
     dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "trend")])
-    dat <- rename_column(dat, old = "value", new = "brace_y")
+    dat <- build_column(dat, old = "value", new = "brace_y")
   }
 
   return(dat)

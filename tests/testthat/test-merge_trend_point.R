@@ -8,7 +8,8 @@ test_that("merging with grouping_var", {
       sig_trend = rep(TRUE, 8),
       est_trend = rep(11, 8),
       se_trend = rep(2, 8),
-      depVar = c("a", "a")
+      depVar = c("a", "a"),
+      competence_var = "b"
     )
 
     point_data_1  <-  data.frame(
@@ -16,7 +17,8 @@ test_that("merging with grouping_var", {
       grouping_var = rep(c(0, 0, 1, 1), 3),
       year = c(rep(2011, 4), rep(2013, 4), rep(2015, 4)),
       est_point = 10:21,
-      depVar = c("a", "a")
+      depVar = c("a", "a"),
+      competence_var = "b"
     )
 
   test_prep_df <- merge_trend_point(trend_data_1, point_data_1)

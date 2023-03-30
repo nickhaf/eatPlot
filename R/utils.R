@@ -1,55 +1,59 @@
 calc_sig <- function(p_vec, sig_niveau) {
+  res <- ifelse(is.na(p_vec), FALSE, # NA
+    ifelse(p_vec < sig_niveau & !is.na(p_vec), TRUE, FALSE)
+  )
 
-    res <- ifelse(is.na(p_vec), FALSE, #NA
-                                 ifelse(p_vec < sig_niveau & !is.na(p_vec), TRUE, FALSE))
-
-    return(res)
-}
-
-
-filter_strings <- function(identifier, paste_vec, val_vec){
-
-
-  if(any(duplicated(val_vec))){
-    stop("Duplicated groups. For example, there might be two groups of the same type within the same Bundesland.")
-  }else{
-  res <- sapply(identifier, function(x){
-      grep(paste0(x, paste_vec ), val_vec)
-  },
-  USE.NAMES = FALSE)
-  }
   return(res)
 }
 
 
-rename_column <- function(data, old, new){
-  colnames(data)[colnames(data) == old] <- new
-  return(data)
+filter_strings <- function(identifier, paste_vec, val_vec) {
+  if (any(duplicated(val_vec))) {
+    stop("Duplicated groups. For example, there might be two groups of the same type within the same Bundesland.")
+  } else {
+    res <- sapply(identifier, function(x) {
+      grep(paste0(x, paste_vec), val_vec)
+    },
+    USE.NAMES = FALSE
+    )
+  }
+  return(res)
 }
 
-remove_columns <- function(dat, cols){
-dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
-return(dat)
+build_column <- function(dat, old, new) {
+  check_column(dat, old)
+  if (is.null(old)) {
+    dat[, new] <- NA
+    return(dat)
+  } else {
+    colnames(dat)[colnames(dat) == old] <- new
+    return(dat)
+  }
+}
+
+remove_columns <- function(dat, cols) {
+  dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
+  return(dat)
 }
 
 
 
 ## Find the years that can be plotted as trend. Returns all unique consecutive year combinations.
-consecutive_numbers <- function(vec){
-
+consecutive_numbers <- function(vec) {
   vec_ordered <- vec[order(vec)]
   res <- list()
-i <- 1
-  while(i < length(vec_ordered)){
+  i <- 1
+  while (i < length(vec_ordered)) {
     res_numbers <- c(vec_ordered[i], vec_ordered[i + 1])
-    if(res_numbers[[1]] != res_numbers[[2]]){
-    res[[i]] <- res_numbers
-    i <- i + 1}else{
+    if (res_numbers[[1]] != res_numbers[[2]]) {
+      res[[i]] <- res_numbers
+      i <- i + 1
+    } else {
       i <- i + 1
     }
   }
 
-res <- unique(Filter(Negate(is.null), res))
+  res <- unique(Filter(Negate(is.null), res))
   return(res)
 }
 
@@ -57,20 +61,28 @@ res <- unique(Filter(Negate(is.null), res))
 
 # extractor for specific types of rows ------------------------------------
 
-get_group <- function(val_vec, groups, starts_with = "", ends_with = "", log_res = TRUE){
-  if(log_res == TRUE){
-  grepl(paste0(
-    paste0(starts_with, groups, ends_with), collapse = "|"),
-        val_vec)
-  }else{
-    grep(paste0(
-      paste0(starts_with, groups, ends_with), collapse = "|"),
+get_group <- function(val_vec, groups, starts_with = "", ends_with = "", log_res = TRUE) {
+  if (log_res == TRUE) {
+    grepl(
+      paste0(
+        paste0(starts_with, groups, ends_with),
+        collapse = "|"
+      ),
+      val_vec
+    )
+  } else {
+    grep(
+      paste0(
+        paste0(starts_with, groups, ends_with),
+        collapse = "|"
+      ),
       val_vec,
-      value = TRUE)
+      value = TRUE
+    )
+  }
 }
-    }
 
-get_wholeGroup <- function(val_vec){
+get_wholeGroup <- function(val_vec) {
   grepl("wholeGroup", val_vec)
 }
 
@@ -80,7 +92,7 @@ write_group <- function(val_vec, groups) {
   val_vec <- gsub("_", "\\.", val_vec)
   group_vec <- strsplit(val_vec, split = "\\.")
 
-unlist(
+res_vec <- unlist(
     lapply(group_vec, function(x) {
       log_vec <- x %in% groups
       if (all(log_vec == FALSE)) {
@@ -88,20 +100,19 @@ unlist(
       } else {
         res <- x[log_vec][1]
       }
-        return(res)
-
+      return(res)
     })
   )
 
+return(res_vec)
 }
 
 
 # Helper functions for reshaping to long format ---------------------------
-prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = ""){
-
-  if(!is.null(remove_pattern)){
-  cols_removed <- grep(remove_pattern, colnames(data), invert = TRUE, value = TRUE)
-  data <- data[, cols_removed]
+prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "") {
+  if (!is.null(remove_pattern)) {
+    cols_removed <- grep(remove_pattern, colnames(data), invert = TRUE, value = TRUE)
+    data <- data[, cols_removed]
   }
 
   col_pos <- grep(include_pattern, colnames(data))
@@ -115,32 +126,31 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
-  for(i in new_colnames){
-  data_long <- rename_column(data_long, old = i, new = paste0(i, suffix))
+  for (i in new_colnames) {
+    data_long <- build_column(data_long, old = i, new = paste0(i, suffix))
   }
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
-  data_long <- rename_column(data_long, old = paste0("time", suffix), new = "year")
+  data_long <- build_column(data_long, old = paste0("time", suffix), new = "year")
 
   return(data_long)
 }
 
 ## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
-split_years <- function(dat){
-
+split_years <- function(dat) {
   years <- regmatches(dat$year, gregexpr("[[:digit:]]+", dat$year))
 
   # extract the years and add them to the long data frame
   year_cols <- data.frame()
 
-  for(i in 1:length(years)){
+  for (i in 1:length(years)) {
     year_cols <- rbind(year_cols, as.numeric(years[[i]]))
   }
   colnames(year_cols) <- c("year_start", "year_end")
   dat <- cbind(dat, year_cols)
   dat$trend <- paste0(dat$year_start, dat$year_end)
-  dat <- rename_column(dat, "year", "trend_years")
+  dat <- build_column(dat, "year", "trend_years")
 
   return(dat)
 }
@@ -167,58 +177,57 @@ calc_plot_borders <- function(x, accuracy = 10) {
 
 
 
-insert_first_number <- function(char_string, insertion){
-    string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))[[1]]
-    res <- sub(string_number, paste0(insertion, string_number), char_string)
-    return(res)
-  }
+insert_first_number <- function(char_string, insertion) {
+  string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))[[1]]
+  res <- sub(string_number, paste0(insertion, string_number), char_string)
+  return(res)
+}
 
 
 
 ## Split all groups containing "vs" to get the respective comparisons
-get_comparisons <- function(dat, group_col, states, sub_groups){
+get_comparisons <- function(dat, states, sub_groups) {
+  comparisons_log <- grepl("\\.vs\\.", dat$group_var)
 
-  comparisons_log <- grepl("\\.vs\\.", dat[[group_col]])
+  dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.vs\\."), function(x) {
+    x[[1]]
+  })
+  dat[comparisons_log, "compare_2"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.vs\\."), function(x) {
+    x[[2]]
+  })
 
-  dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[1]]})
-  dat[comparisons_log, "compare_2"] <- sapply(strsplit(dat[comparisons_log, group_col], split = "\\.vs\\."), function(x){x[[2]]})
-
-  for(i in c("compare_1", "compare_2")){
-  dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
-  if(!is.null(sub_groups)){
-  dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
+  for (i in c("compare_1", "compare_2")) {
+    dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
+    if (!is.null(sub_groups)) {
+      dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
+    }
+    dat[, i] <- gsub("__|___", "_", dat[, i])
   }
-  dat[, i] <- gsub("__|___", "_", dat[, i])
-}
-
 
   return(dat)
-
 }
 
 
 # Overlap occurs, when one start point lies between a start and end point, or an end point lies between a start and an end point
 
-calc_overlap <- function(year_start, year_end){
-
+calc_overlap <- function(year_start, year_end) {
   years <- c()
-  for( i in 1:length(year_start)){
-
+  for (i in 1:length(year_start)) {
     years[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
   }
-return(years)
+  return(years)
 }
 
 
 
 ## Function for checking which arguments are in the colnames, and returning those which are not
-check_missing_colnames <- function(x, colnames_vec){
+check_missing_colnames <- function(x, colnames_vec) {
   names(x[!x %in% colnames_vec])
 }
 
 
-get_min_max <- function(dat){
-  min_max_trend <- by(dat, dat$trend, function(x){
+get_min_max <- function(dat) {
+  min_max_trend <- by(dat, dat$trend, function(x) {
     data.frame(
       trend = unique(x$trend),
       minimum = min(x$year),
@@ -231,10 +240,10 @@ get_min_max <- function(dat){
   return(min_max_dat)
 }
 
-check_column <- function(dat, column){
-  if(!(column %in% colnames(dat))){
-    stop(paste0("Variable '", column, "' not found in data."))
+check_column <- function(dat, column) {
+  if (!is.null(column)) {
+    if (!(column %in% colnames(dat))) {
+      stop(paste0("Variable '", column, "' not found in data."))
     }
+  }
 }
-
-

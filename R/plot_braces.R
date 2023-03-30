@@ -11,30 +11,19 @@
 plot_braces <- function(dat,
                         split_plot = FALSE,
                         y_range,
-                        label_est,
-                        label_se,
-                        label_sig_high,
-                        label_sig_bold,
+                        label_est = NULL,
+                        label_se = NULL,
+                        label_sig_high = NULL,
+                        label_sig_bold = NULL,
                         nudge_x_axis = 0) {
-  col_vec <- c(
-    "label_est" = label_est,
-    "label_se" = label_se,
-    "label_sig_high" = label_sig_high,
-    "label_sig_bold" = label_sig_bold
-  )
-  missing_cols <- check_missing_colnames(
-    x = col_vec,
-    colnames(dat)
-  )
 
-  for (i in missing_cols) {
-    dat[, i] <- NA
-  }
 
-  col_names <- c("label_est", "label_se", "label_sig_high", "label_sig_bold")
-  for (i in col_names) {
-    dat[, i] <- dat[, eval(parse(text = i))]
-  }
+dat <- build_column(dat, old = label_est, new = "label_est")
+dat <- build_column(dat, old = label_se, new = "label_se")
+dat <- build_column(dat, old = label_sig_high, new = "label_sig_high")
+dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
+
+
 
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.

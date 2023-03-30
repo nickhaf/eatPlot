@@ -6,32 +6,23 @@
 \usage{
 clean_data(
   dat,
-  states,
-  sub_groups,
-  competence,
-  grouping_var = "",
-  group_var = "group",
-  state_var = "TR_BUNDESLAND",
-  competence_var = "kb",
+  all_states,
+  states = NULL,
+  sub_groups = NULL,
+  competence = NULL,
   parameter = "mean"
 )
 }
 \arguments{
 \item{dat}{Input data.frame stemming from \code{eatRep}.}
 
-\item{states}{Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).}
+\item{all_states}{Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).}
+
+\item{states}{Character vector of the states that should be plotted.}
 
 \item{sub_groups}{Character vector of the different sub_groups.}
 
 \item{competence}{Character string containing the competence that should be plotted.}
-
-\item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
-
-\item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
-
-\item{state_var}{Character string containing the column name in \code{dat} that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to \code{"TR_BUNDESLAND"}.}
-
-\item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
 
 \item{parameter}{Character string of the parameter value that should be reported. Defaults to \code{"mean"}.}
 }
