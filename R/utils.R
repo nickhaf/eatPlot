@@ -130,12 +130,12 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
   for (i in new_colnames) {
-    data_long <- rename_column(data_long, old = i, new = paste0(i, suffix))
+    data_long <- build_column(data_long, old = i, new = paste0(i, suffix))
   }
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
-  data_long <- rename_column(data_long, old = paste0("time", suffix), new = "year")
+  data_long <- build_column(data_long, old = paste0("time", suffix), new = "year")
 
   return(data_long)
 }
@@ -153,7 +153,7 @@ split_years <- function(dat) {
   colnames(year_cols) <- c("year_start", "year_end")
   dat <- cbind(dat, year_cols)
   dat$trend <- paste0(dat$year_start, dat$year_end)
-  dat <- rename_column(dat, "year", "trend_years")
+  dat <- build_column(dat, "year", "trend_years")
 
   return(dat)
 }

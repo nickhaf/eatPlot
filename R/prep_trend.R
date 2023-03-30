@@ -23,8 +23,9 @@
 #'
 #' @examples # tbd
 prep_trend <- function(dat,
-                       competence,
                        competence_var = "kb",
+                       competence = NULL,
+                       states = NULL,
                        state_var = "TR_BUNDESLAND",
                        group_var = "group",
                        grouping_var = NULL,
@@ -41,35 +42,37 @@ prep_trend <- function(dat,
 stopifnot(is.data.frame(dat))
 stopifnot(is.character(competence))
 stopifnot(is.character(grouping_var) | is.null(grouping_var))
+stopifnot(is.character(states) | is.null(states))
 stopifnot(is.character(state_var))
 stopifnot(is.character(competence_var))
 stopifnot(is.character(group_var))
-stopifnot(is.numeric(x_years) | is.null(x_years))
-stopifnot(is.numeric(x_braces) | is.null(x_braces))
+stopifnot(all(sapply(x_years, is.numeric)) | is.null(x_years))
+stopifnot(all(sapply(x_braces, is.numeric)) | is.null(x_braces))
 stopifnot(is.numeric(sig_niveau))
 stopifnot(is.logical(plot_mean))
 stopifnot(is.character(parameter))
 
-## Check columns
 sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
 
-## rename columns
-dat <- build_column(data = dat, old = competence_var, new = "competence_var")
-dat <- build_column(data = dat, old = grouping_var, new = "grouping_var")
-dat <- build_column(data = dat, old = state_var, new = "state_var")
-dat <- build_column(data = dat, old = group_var, new = "group_var")
+dat <- standardise_columns(dat,
+                           competence_var,
+                           grouping_var,
+                           state_var,
+                           group_var)
 
+# Show a warning, if a grouping_var was provided, but not as factor.
+if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
+  warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
+  vec <- as.factor(vec)
+}
 
-## Hier schon eine S3-class draus machen, die einfach nur die richtigen Columns enthält?
-## Constructor mit build_column, evtl. auch die clean-data sachen.
-## die anderen Funktionen können dann davon ausgehen, dass es sich um diese Klasse handelt.
-
-
-  states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
+  all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
+  if(!is.null(grouping_var)) sub_groups <- unique(dat$sub_groups)[!is.na(unique(dat$sub_groups))]
 
   dat <- clean_data(
     dat = dat,
     states = states,
+    all_states = all_states,
     sub_groups = sub_groups,
     competence = competence,
     parameter = parameter
@@ -212,15 +215,6 @@ dat <- build_column(data = dat, old = group_var, new = "group_var")
 }
 
 # Utils -------------------------------------------------------------------
-
-validate_prep_trend <- function(dat){
-
-
-}
-
-
-
-
 # Return rows with respective start and end years.
 filter_years <- function(dat, year_list) {
   # Filter the respective rows
@@ -230,3 +224,18 @@ filter_years <- function(dat, year_list) {
   return(year_rows)
 }
 
+
+
+standardise_columns <- function(dat, competence_var, grouping_var, state_var, group_var){
+
+  dat <- build_column(dat = dat, old = competence_var, new = "competence_var")
+  dat <- build_column(dat = dat, old = grouping_var, new = "grouping_var")
+  dat <- build_column(dat = dat, old = state_var, new = "state_var")
+  dat <- build_column(dat = dat, old = group_var, new = "group_var")
+
+  colnames(dat) <- gsub("\\.", "_", colnames(dat))
+  colnames(dat) <- gsub("sig_", "p_", colnames(dat))
+  colnames(dat) <- gsub("^sig$", "p", colnames(dat))
+
+  return(dat)
+}

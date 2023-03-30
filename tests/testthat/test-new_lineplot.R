@@ -1,13 +1,13 @@
-# uneq_groups <- read.csv2("p:/Methoden/99_Arbeitsordner/eatRep_problem/eatRep_output_3mzp_unequalGroups.csv", sep = ";")
-# uneq_groups$mh <- as.factor(uneq_groups$mh)
-# uneq_groups <- uneq_groups[uneq_groups$mh != "TRUE" | is.na(uneq_groups$mh), ]
-#
-# plot_dat_test <- prep_trend(dat = uneq_groups,
-#                        competence = "GL",
-#                        grouping_var = "mh",
-#                        x_years = list(c(2011, 2016), c(2016, 2021)),
-#                        x_braces = list(c(2011, 2016), c(2016, 2021))
-#                        )
+uneq_groups <- read.csv2("p:/Methoden/99_Arbeitsordner/eatRep_problem/eatRep_output_3mzp_unequalGroups.csv", sep = ";")
+uneq_groups$mh <- as.factor(uneq_groups$mh)
+uneq_groups <- uneq_groups[uneq_groups$mh != "TRUE" | is.na(uneq_groups$mh), ]
+
+plot_dat_test <- prep_trend(dat = uneq_groups,
+                       competence = "GL",
+                       grouping_var = "mh",
+                       x_years = list(c(2011, 2016), c(2016, 2021)),
+                       x_braces = list(c(2011, 2016), c(2016, 2021))
+                       )
 #
 # plot_dat_test <- get_state(plot_dat_test, state = "wholeGroup", remove = TRUE)
 # ## Testweise einige PUnkte auf n.s. setzen

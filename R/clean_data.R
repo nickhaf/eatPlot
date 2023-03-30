@@ -16,28 +16,27 @@
 #'
 #' @examples # tbd
 clean_data <- function(dat,
-                       states,
-                       sub_groups,
-                       competence,
+                       all_states,
+                       states = NULL,
+                       sub_groups = NULL,
+                       competence = NULL,
                        parameter = "mean") {
 
-
-  # Select relevant rows
-  if ("parameter" %in% colnames(dat)) {
-    dat <- dat[dat$parameter == parameter, ]
-  }
-  dat <- dat[dat[, competence_var] == competence, ]
-
-  colnames(dat) <- standardise_column_names(colnames(dat))
-
-  dat <- dat[, !colnames(dat) %in% c("modus", "parameter", "kb")]
+  sapply(c("parameter", "competence_var", "state_var", "grouping_var", "group_var"), check_column, dat = dat)
 
   # Fill up NAs
   dat$state_var[dat$state_var == ""] <- "wholeGroup"
-  dat <- fill_up_na(dat, info_to = "state_var", filling_groups = states)
+  dat <- fill_up_na(dat, info_to = "state_var", filling_groups = all_states)
   dat <- fill_up_na(dat, info_to = "grouping_var", filling_groups = sub_groups)
 
-  dat$grouping_var <- recode_to_factor(dat$grouping_var, grouping_var = grouping_var)
+  # Select relevant rows
+  dat <- dat[dat$parameter == parameter, ]
+  if(!is.null(competence))  dat <- dat[dat$competence_var == competence, ]
+  if(!is.null(states))  dat <- dat[dat$state_var %in% states, ]
+
+  dat <- dat[, !colnames(dat) %in% c("modus", "parameter", "kb")]
+
+  dat$grouping_var <- recode_to_factor(dat$grouping_var)
   dat[is.na(dat$state_var) & (
     grepl("wholeGroup", dat$group_var) |
       grepl(
@@ -66,13 +65,7 @@ fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
   return(dat)
 }
 
-recode_to_factor <- function(vec, grouping_var){
-  # Show a warning, if a grouping_var was provided, but not as factor.
-  if(!is.factor(vec) & grouping_var != ""){
-    warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
-    vec <- as.factor(vec)
-  }
-  vec <- as.factor(vec)
+recode_to_factor <- function(vec){
   levels(vec) <- c(levels(vec), "noGroup")
   vec[is.na(vec)] <- "noGroup"
   vec <- droplevels(vec)
@@ -80,10 +73,3 @@ return(vec)
 }
 
 
-standardise_column_names <- function(column_names){
-  column_names <- gsub("\\.", "_", column_names)
-  column_names <- gsub("sig_", "p_", column_names)
-  column_names <- gsub("^sig$", "p", column_names)
-
-  return(column_names)
-}
