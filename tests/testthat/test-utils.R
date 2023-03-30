@@ -91,9 +91,11 @@ test_that("comparison splits works", {
 })
 
 test_that("column renaming works", {
-  df_col <- data.frame(col1 = 1)
+  expect_equal(colnames(build_column(data.frame(col1 = 1), "col1", "col_1")), "col_1")
+  expect_error(build_column(data.frame(col1 = 1), "col2", "col1"))
+  expect_error(build_column(data.frame(col1 = 1), NULL, "col1"), data.frame(col1 = NA))
+  expect_equal(build_column(data.frame(col1 = 1), NULL, "col2"), data.frame(col1 = 1, col2 = NA))
 
-  expect_equal(colnames(rename_column(df_col, "col1", "col_1")), "col_1")
 })
 
 

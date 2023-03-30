@@ -19,15 +19,8 @@ clean_data <- function(dat,
                        states,
                        sub_groups,
                        competence,
-                       grouping_var = "",
-                       group_var = "group",
-                       state_var = "TR_BUNDESLAND",
-                       competence_var = "kb",
                        parameter = "mean") {
 
-  if(!(group_var %in% colnames(dat))){stop(paste0("group_var: '", group_var, "' not found in dat."))}
-  if(!(state_var %in% colnames(dat))){stop(paste0("state_var: '", state_var, "' not found in dat."))}
-  if(!(competence_var %in% colnames(dat))){stop(paste0("competence_var: '", competence_var, "' not found in dat."))}
 
   # Select relevant rows
   if ("parameter" %in% colnames(dat)) {
@@ -35,18 +28,9 @@ clean_data <- function(dat,
   }
   dat <- dat[dat[, competence_var] == competence, ]
 
-  # Rename columns
-  if (grouping_var == "") {
-    dat$grouping_var <- rep(NA, nrow(dat))
-  } else {
-    dat <- rename_column(data = dat, old = grouping_var, new = "grouping_var")
-  }
-  dat <- rename_column(data = dat, old = state_var, new = "state_var")
-  dat <- rename_column(data = dat, old = group_var, new = "group_var")
-  colnames(dat) <- gsub("\\.", "_", colnames(dat))
-  colnames(dat) <- gsub("sig_", "p_", colnames(dat))
-  colnames(dat) <- gsub("^sig$", "p", colnames(dat))
-  dat <- dat[, !colnames(dat) %in% c("modus", "modus", "parameter", "kb")]
+  colnames(dat) <- standardise_column_names(colnames(dat))
+
+  dat <- dat[, !colnames(dat) %in% c("modus", "parameter", "kb")]
 
   # Fill up NAs
   dat$state_var[dat$state_var == ""] <- "wholeGroup"
@@ -93,4 +77,13 @@ recode_to_factor <- function(vec, grouping_var){
   vec[is.na(vec)] <- "noGroup"
   vec <- droplevels(vec)
 return(vec)
-  }
+}
+
+
+standardise_column_names <- function(column_names){
+  column_names <- gsub("\\.", "_", column_names)
+  column_names <- gsub("sig_", "p_", column_names)
+  column_names <- gsub("^sig$", "p", column_names)
+
+  return(column_names)
+}

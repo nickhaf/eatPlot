@@ -51,27 +51,27 @@ stopifnot(is.logical(plot_mean))
 stopifnot(is.character(parameter))
 
 ## Check columns
-## Stop, außer es entspricht dem Default
 sapply(c(grouping_var, state_var, competence_var, group_var), check_column, dat = dat)
 
-  if (grouping_var != "") {
-    sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
-  } else {
-    sub_groups <- NULL
-  }
+## rename columns
+dat <- build_column(data = dat, old = competence_var, new = "competence_var")
+dat <- build_column(data = dat, old = grouping_var, new = "grouping_var")
+dat <- build_column(data = dat, old = state_var, new = "state_var")
+dat <- build_column(data = dat, old = group_var, new = "group_var")
+
+
+## Hier schon eine S3-class draus machen, die einfach nur die richtigen Columns enthält?
+## Constructor mit build_column, evtl. auch die clean-data sachen.
+## die anderen Funktionen können dann davon ausgehen, dass es sich um diese Klasse handelt.
+
 
   states <- unique(dat[, state_var])[!is.na(unique(dat[, state_var]))]
-
 
   dat <- clean_data(
     dat = dat,
     states = states,
     sub_groups = sub_groups,
     competence = competence,
-    grouping_var = grouping_var,
-    group_var = group_var,
-    state_var = state_var,
-    competence_var = competence_var,
     parameter = parameter
   )
 
