@@ -125,26 +125,26 @@
 
 # competence_var as tiles -------------------------------------------------
 
-uneq_groups <- read.csv2("p:/Methoden/99_Arbeitsordner/eatRep_problem/eatRep_output_3mzp_unequalGroups.csv", sep = ";")
-uneq_groups$mh <- as.factor(uneq_groups$mh)
-uneq_groups <- uneq_groups[uneq_groups$mh != "TRUE" | is.na(uneq_groups$mh), ]
-
-plot_dat_test <- prep_trend(dat = uneq_groups,
-                       grouping_var = "mh",
-                       states = "wholeGroup",
-                       x_years = list(c(2011, 2016), c(2016, 2021)),
-                       x_braces = list(c(2011, 2016), c(2016, 2021))
-                       )
-
-
-p_line <- plot_lineplot(
-  plot_data = plot_dat_test,
-  seperate_plot_var = "competence_var",
-              split_plot = TRUE,
-              line_sig = "sig_trend_no_comp",
-              label_sig_high = "sig_trend_no_comp",
-  settings_pdf = NULL
-              )
-
-save_plot(p_line, filename = "../split_lineplot_kb.pdf")
+# uneq_groups <- read.csv2("p:/Methoden/99_Arbeitsordner/eatRep_problem/eatRep_output_3mzp_unequalGroups.csv", sep = ";")
+# uneq_groups$mh <- as.factor(uneq_groups$mh)
+# uneq_groups <- uneq_groups[uneq_groups$mh != "TRUE" | is.na(uneq_groups$mh), ]
+#
+# plot_dat_test <- prep_trend(dat = uneq_groups,
+#                        grouping_var = "mh",
+#                        states = "wholeGroup",
+#                        x_years = list(c(2011, 2016), c(2016, 2021)),
+#                        x_braces = list(c(2011, 2016), c(2016, 2021))
+#                        )
+#
+#
+# p_line <- plot_lineplot(
+#   plot_data = plot_dat_test,
+#   seperate_plot_var = "competence_var",
+#               split_plot = TRUE,
+#               line_sig = "sig_trend_no_comp",
+#               label_sig_high = "sig_trend_no_comp",
+#   settings_pdf = NULL
+#               )
+#
+# save_plot(p_line, filename = "../split_lineplot_kb.pdf")
 

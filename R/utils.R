@@ -93,7 +93,7 @@ write_group <- function(val_vec, groups) {
   val_vec <- gsub("_", "\\.", val_vec)
   group_vec <- strsplit(val_vec, split = "\\.")
 
-  unlist(
+res_vec <- unlist(
     lapply(group_vec, function(x) {
       log_vec <- x %in% groups
       if (all(log_vec == FALSE)) {
@@ -104,6 +104,8 @@ write_group <- function(val_vec, groups) {
       return(res)
     })
   )
+
+return(res_vec)
 }
 
 

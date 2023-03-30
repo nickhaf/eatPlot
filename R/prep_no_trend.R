@@ -14,23 +14,48 @@ prep_no_trend <- function(dat,
                           group_var = "group",
                           state_var = "TR_BUNDESLAND",
                           competence_var = "kb",
-                          sig_niveau = 0.05){
+                          states = NULL,
+                          sig_niveau = 0.05,
+                          parameter = "mean"){
 
-  states <- unique(dat[ , state_var])[!is.na(unique(dat[ , state_var]))]
-  if(grouping_var != ""){
-    sub_groups <- unique(dat[, grouping_var][!is.na(dat[, grouping_var])])
-  }else{
-    sub_groups <- NULL
+  # Checks ------------------------------------------------------------------
+
+  ## Check arguments
+  stopifnot(is.data.frame(dat))
+  stopifnot(is.character(competence) | is.null(competence))
+  stopifnot(is.character(grouping_var) | is.null(grouping_var))
+  stopifnot(is.character(state_var))
+  stopifnot(is.character(competence_var))
+  stopifnot(is.numeric(sig_niveau))
+  stopifnot(is.character(group_var))
+  stopifnot(is.character(states) | is.null(states))
+
+
+  sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
+
+  dat <- standardise_columns(dat,
+                             competence_var,
+                             grouping_var,
+                             state_var,
+                             group_var)
+
+  # Show a warning, if a grouping_var was provided, but not as factor.
+  if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
+    warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
+    vec <- as.factor(vec)
   }
 
-  dat <- clean_data(dat,
-                    states = states,
-                    sub_groups = sub_groups,
-                    competence = competence,
-                    grouping_var = grouping_var,
-                    group_var = group_var,
-                    state_var = state_var,
-                    competence_var = competence_var)
+  all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
+  if(!is.null(grouping_var)) sub_groups <- unique(dat$sub_groups)[!is.na(unique(dat$sub_groups))]
+
+  dat <- clean_data(
+    dat = dat,
+    states = states,
+    all_states = all_states,
+    sub_groups = sub_groups,
+    competence = competence,
+    parameter = parameter
+  )
 
   dat$sig <- calc_sig(dat[, grep("^p_|^p$", colnames(dat))], sig_niveau = sig_niveau)
   dat <- calc_fill(dat, col_1 = "grouping_var", col_2 = "sig")

@@ -2,6 +2,7 @@
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nudge_x_axis = 0) {
   output_format <- match.arg(output_format)
+  sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend"), check_columns, dat = dat)
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 

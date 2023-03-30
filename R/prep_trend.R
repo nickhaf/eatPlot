@@ -80,7 +80,7 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
 
   if (any(!is.na(dat$comparison))) {
     dat <- get_comparisons(dat,
-      states = states[states != "wholeGroup"],
+      states = all_states[all_states != "wholeGroup"],
       sub_groups = sub_groups
     )
   }
@@ -88,7 +88,7 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   list_building_blocks <- prep_data_blocks(
     data_clean = dat,
     sig_niveau = sig_niveau,
-    states,
+    all_states,
     sub_groups
   )
 
@@ -171,7 +171,8 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   }
 
   plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, braceplot_years), ]
-  if (grouping_var != "" & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
+
+  if (!is.null(grouping_var) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
   }
 

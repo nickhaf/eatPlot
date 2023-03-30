@@ -83,19 +83,17 @@ test_that("number insertion works", {
 })
 
 test_that("comparison splits works", {
-  df_comp <- data.frame(comp = c("a.vs.b", "b.vs.c"))
+  df_comp <- data.frame(group_var = c("a.vs.b", "b.vs.c"))
 
-  expect_equal(get_comparisons(df_comp, group_col = "comp", states = "a", sub_groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
-  expect_equal(get_comparisons(df_comp, group_col = "comp", states = "b", sub_groups = c("a"))$compare_2, c("BL", "c"))
-  expect_equal(get_comparisons(df_comp, group_col = "comp", states = "a", sub_groups = NULL)$compare_2, c("b", "c"))
+  expect_equal(get_comparisons(df_comp, states = "a", sub_groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
+  expect_equal(get_comparisons(df_comp, states = "b", sub_groups = c("a"))$compare_2, c("BL", "c"))
+  expect_equal(get_comparisons(df_comp, states = "a", sub_groups = NULL)$compare_2, c("b", "c"))
 })
 
 test_that("column renaming works", {
   expect_equal(colnames(build_column(data.frame(col1 = 1), "col1", "col_1")), "col_1")
   expect_error(build_column(data.frame(col1 = 1), "col2", "col1"))
-  expect_error(build_column(data.frame(col1 = 1), NULL, "col1"), data.frame(col1 = NA))
   expect_equal(build_column(data.frame(col1 = 1), NULL, "col2"), data.frame(col1 = 1, col2 = NA))
-
 })
 
 
@@ -125,7 +123,6 @@ test_that("columns are checked correctly", {
   a <- "col_1"
   b <- ""
 
-
   expect_equal(check_missing_colnames(c("a" = a, "b" = b), c("col_1", "b")), "b")
 })
 
@@ -134,3 +131,4 @@ test_that("columns are checked correctly", {
   expect_no_error(check_column(dat = data.frame("a" = 2, "b" = 1), column = NULL))
   expect_error(check_column(dat = data.frame("a" = 1, "b" = 1), column = "c"), "Variable 'c' not found in data.", fixed = TRUE)
 })
+
