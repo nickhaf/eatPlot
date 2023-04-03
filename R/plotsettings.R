@@ -35,6 +35,7 @@ check_plotsettings <- function(settings_list) {
 #' @export
 #'
 #' @examples
+#' plotsettings(n_cols = 2, nudge_x_axis = 0.1)
 plotsettings <- function(n_cols = NULL, nudge_x_axis = NULL, default = new_plotsettings()) {
   check_plotsettings(default)
 

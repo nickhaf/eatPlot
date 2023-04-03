@@ -12,7 +12,7 @@ test_that("checking the object works", {
 
 
 test_that("constructer provides the correct defaults", {
-  expect_equal(new_plotsettings(), list("n_cols" = 0, "nudge_x_axis" = 0))
+  expect_equal(new_plotsettings(), list("n_cols" = 1, "nudge_x_axis" = 0))
 })
 
 

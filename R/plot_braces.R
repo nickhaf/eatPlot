@@ -3,6 +3,7 @@
 #' @param dat Prepared Trend data.
 #' @inheritParams plot_lineplot
 #' @inheritParams plot_single_lineplot
+#' @inheritParams plotsettings
 #'
 #' @return ggplot2 object.
 #' @export
