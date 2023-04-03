@@ -18,9 +18,10 @@
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
 #               split_plot = TRUE,
 #               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_point_end"
+#               label_sig_high = "sig_point_end",
+#               plot_settings = lineplot_chpt_4
 #               )
-
+#
 # save_plot(p_line, filename = "../split_lineplot.pdf")
 #
 #

@@ -11,10 +11,8 @@
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
 #' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to `FALSE`.
-#' @param n_cols Numeric, which indicates the number of columns the final plot should have. Defaults to `4`.
-#'
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
-#' @param nudge_x_axis Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to `0.4`.
+#' @param plot_settings Named list constructed with `plot_settings()`. Defaults to a list with all settings set to `0`.
 #' @return [ggplot2] object.
 #' @export
 #'
@@ -31,8 +29,8 @@ plot_lineplot <- function(plot_data,
                           label_sig_bold = "sig_trend_no_comp",
                           split_plot = FALSE,
                           y_axis = FALSE,
-                          n_cols = 4,
-                          nudge_x_axis = 0.155) {
+                          plot_settings = new_plotsettings()
+                          ) {
   states <- unique(plot_data[[1]]$state_var)
   tiles <- unique(plot_data[[1]][, seperate_plot_var])
 
@@ -59,7 +57,7 @@ plot_lineplot <- function(plot_data,
         label_se = label_se,
         label_sig_high = label_sig_high,
         label_sig_bold = label_sig_bold,
-        nudge_x_axis = nudge_x_axis
+        nudge_x_axis = plot_settings$nudge_x_axis
       ) +
     ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
       set_plot_coords(plot_data)
@@ -80,21 +78,21 @@ plot_lineplot <- function(plot_data,
     y_axis_plot <- ggplot2::ggplot() +
       plot_y_axis(plot_data)
 
-    positions_y_axis <- calc_y_positions(states, n_cols)
+    positions_y_axis <- calc_y_positions(states, plot_settings$n_cols)
 
     for (i in positions_y_axis) {
       plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
     }
 
-    widths_setting <- c(0.02, rep(1 - 0.02 / n_cols, times = n_cols))
-    n_cols <- n_cols + 1
+    widths_setting <- c(0.02, rep(1 - 0.02 / plot_settings$n_cols, times = plot_settings$n_cols))
+    n_cols <- plot_settings$n_cols + 1
   } else {
-    widths_setting <- 1 / n_cols
+    widths_setting <- 1 / plot_settings$n_cols
   }
 
   nudge_top_bottom <- 0.02 + 0.006 * (length(levels(plot_data[["plot_braces"]]$grouping_var))-1) #more brace labels need more space
   ## Build the finished plot:
-  patchwork::wrap_plots(plot_list, ncol = n_cols, widths = widths_setting) &
+  patchwork::wrap_plots(plot_list, ncol = plot_settings$n_cols, widths = widths_setting) &
     ggplot2::theme(
       plot.margin = ggplot2::unit(c(nudge_top_bottom, 0.01, nudge_top_bottom, 0.01), "npc") #t, r, b, l
     )
