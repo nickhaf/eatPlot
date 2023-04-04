@@ -29,7 +29,7 @@ plot_lineplot <- function(plot_data,
                           label_sig_bold = "sig_trend_no_comp",
                           split_plot = FALSE,
                           y_axis = FALSE,
-                          plot_settings = new_plotsettings()
+                          plot_settings = NULL
                           ) {
   states <- unique(plot_data[[1]]$state_var)
   tiles <- unique(plot_data[[1]][, seperate_plot_var])

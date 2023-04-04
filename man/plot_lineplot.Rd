@@ -17,7 +17,7 @@ plot_lineplot(
   label_sig_bold = "sig_trend_no_comp",
   split_plot = FALSE,
   y_axis = FALSE,
-  plot_settings = new_plotsettings()
+  plot_settings = NULL
 )
 }
 \arguments{

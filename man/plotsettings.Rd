@@ -4,14 +4,14 @@
 \alias{plotsettings}
 \title{Set parameters for the lineplots.}
 \usage{
-plotsettings(n_cols = NULL, nudge_x_axis = NULL, default = new_plotsettings())
+plotsettings(n_cols = NULL, nudge_x_axis = NULL, default_list = NULL)
 }
 \arguments{
 \item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have. Defaults to \code{4}.}
 
 \item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
 
-\item{default}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
+\item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }
 \value{
 A named list with settings for the lineplots.
