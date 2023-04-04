@@ -10,6 +10,12 @@ test_that("checking the object works", {
   expect_no_error(check_plotsettings(settings_list = list("n_cols" = 2, "nudge_x_axis" = 0.1)))
 })
 
+test_that("defaults are correct", {
+  expect_equal(
+    plotsettings(),
+    list("n_cols" = 1, "nudge_x_axis" = 0)
+  )
+})
 
 test_that("defaults can be overwritten", {
   expect_equal(

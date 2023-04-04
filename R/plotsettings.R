@@ -27,21 +27,25 @@ check_plotsettings <- function(settings_list) {
 #' plotsettings(n_cols = 2, nudge_x_axis = 0.1)
 plotsettings <- function(n_cols = NULL, nudge_x_axis = NULL, default_list = NULL) {
 
-  if(is.null(default_list)){
-    default_list <- list(
-      "n_cols" = n_cols,
-      "nudge_x_axis" = nudge_x_axis
+  ## Build a list with sensible defaults if no default is provided
+  if (is.null(default_list)) {
+    plot_settings <- list(
+      "n_cols" = 1,
+      "nudge_x_axis" = 0
     )
+  } else {
+    plot_settings <- default_list
   }
 
-  check_plotsettings(default_list)
-
-  plot_settings <- default_list
-
-  if (!is.null(n_cols)) plot_settings$n_cols <- n_cols
-  if (!is.null(nudge_x_axis)) plot_settings$nudge_x_axis <- nudge_x_axis
-
   check_plotsettings(plot_settings)
+
+  ## Update the default list with all values that are != NULL
+  for (i in names(plot_settings)) {
+    value <- get(i)
+    if (!is.null(value)) {
+      plot_settings[[i]] <- value
+    }
+  }
 
   return(plot_settings)
 }
