@@ -10,7 +10,6 @@
 #' @examples # tbd
 plot_single_lineplot <- function(plot_data,
                                  y_range = NULL,
-                                 split_plot,
                                  point_values = "est_point",
                                  point_sig = "sig_point",
                                  line_values = c("est_point_start", "est_point_end"),
@@ -19,20 +18,18 @@ plot_single_lineplot <- function(plot_data,
                                  label_se = "se_trend_no_comp",
                                  label_sig_high = "sig_trend_comp_whole",
                                  label_sig_bold = "sig_trend_no_comp",
-                                 nudge_x_axis = 0,
                                  plot_settings = plotsettings()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
     settings_lineplot(),
     plot_braces(
       plot_data[["plot_braces"]],
-      split_plot = split_plot,
       y_range = y_range,
       label_est = label_est,
       label_se = label_se,
       label_sig_high = label_sig_high,
       label_sig_bold = label_sig_bold,
-      nudge_x_axis = nudge_x_axis
+      plot_settings = plot_settings
     ),
     plot_background_lines(
       data_plot_background_lines = plot_data[["plot_background_lines"]],
@@ -41,19 +38,22 @@ plot_single_lineplot <- function(plot_data,
     plot_lines(
       data_plot_lines = plot_data[["plot_lines"]],
       line_values = line_values,
-      line_sig = line_sig
+      line_sig = line_sig,
+      plot_settings = plot_settings
     ),
     plot_points(
       data_plot_points = plot_data[["plot_points"]],
       y_range = y_range,
       point_values = point_values,
       point_sig = point_sig,
-      split_plot = split_plot
+      plot_settings = plot_settings
     ),
-    plot_x_axis(plot_data[["plot_points"]], y_range = y_range, split_plot = split_plot),
-    if (split_plot == TRUE) {
+    plot_x_axis(plot_data[["plot_points"]],
+      y_range = y_range,
+      plot_settings = plot_settings
+    ),
+    if (plot_settings$split_plot == TRUE) {
       ggplot2::facet_wrap(~trend, scales = "free_x")
     }
-
   )
 }

@@ -1,6 +1,50 @@
-# plot_data <- prep_trend(dat = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", x_braces = list(c(2011, 2016), c(2016, 2021)))
-#
-# p1 <- plot_lineplot(plot_data)
+test_that("settings do something", {
+  plot_dat_test <- prep_trend(
+    dat = trend_books,
+    competence = "GL",
+    grouping_var = "KBuecher_imp3",
+    x_years = list(c(2011, 2016), c(2016, 2021)),
+    x_braces = list(c(2011, 2016), c(2016, 2021))
+  )
+
+  plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  ## Testweise einige PUnkte auf n.s. setzen
+  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+
+
+  p_line <- plot_lineplot(
+    plot_data = plot_dat_test,
+    line_sig = "sig_trend_no_comp",
+    label_sig_high = "sig_point_end",
+    plot_settings = plotsettings(
+      axis_x_background_colour = "red",
+      axis_x_background_width = 0.08,
+      axis_x_label_centralize = 0.15,
+      axis_x_label_nudge_y = 0.05,
+      axis_x_label_size = 2.4,
+      brace_label_gap_y = 0.15,
+      brace_label_nudge_x = 0.3,
+      brace_label_nudge_y = 0.08,
+      brace_label_size = 3,
+      brace_line_width = 0.8,
+      brace_span_y = 0.16,
+      line_width = 1,
+      margin_bottom = 0.05,
+      margin_left = 0.03,
+      margin_right = 0.001,
+      margin_top = 0.005,
+      n_cols = 6,
+      point_label_size = 1,
+      point_size = 1,
+      split_plot = TRUE,
+      y_axis = TRUE
+    )
+  )
+
+  vdiffr::expect_doppelganger("lineplot random settings", p_line)
+})
+
 
 test_that("correct states are extracted", {
   test_plot_2 <- list(
@@ -41,8 +85,122 @@ test_that("correct states are extracted", {
     )
   )
 
-expect_equal(filter_rows(test_plot_2, column_name = "state_var", subsetter = "a")$plot_points$state_var, c("a", "a"))
-expect_equal(filter_rows(test_plot_2, column_name = "state_var", subsetter = "a")$plot_lines$state_var, c("a", "a"))
-
+  expect_equal(filter_rows(test_plot_2, column_name = "state_var", subsetter = "a")$plot_points$state_var, c("a", "a"))
+  expect_equal(filter_rows(test_plot_2, column_name = "state_var", subsetter = "a")$plot_lines$state_var, c("a", "a"))
 })
 
+
+test_that("lineplot chpt_4 with one group is still the same", {
+  trend_books_changed <- trend_books[trend_books$KBuecher_imp3 != "0" | is.na(trend_books$KBuecher_imp3), ]
+
+  plot_dat_test <- prep_trend(
+    dat = trend_books_changed,
+    competence = "GL",
+    grouping_var = "KBuecher_imp3",
+    x_years = list(c(2011, 2016), c(2016, 2021)),
+    x_braces = list(c(2011, 2016), c(2016, 2021))
+  )
+
+  plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  ## Testweise einige PUnkte auf n.s. setzen
+  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+
+
+  p_line <- plot_lineplot(
+    plot_data = plot_dat_test,
+    line_sig = "sig_trend_no_comp",
+    label_sig_high = "sig_point_end",
+    plot_settings = plotsettings(default_list = lineplot_chpt_4)
+  )
+  vdiffr::expect_doppelganger("lineplot_chpt_4_1group", p_line)
+  # save_plot(p_line, filename = "../split_lineplot_trend_books.pdf")
+})
+
+
+
+test_that("lineplot chpt_4 with two groups is still the same", {
+  plot_dat_test <- prep_trend(
+    dat = trend_books,
+    competence = "GL",
+    grouping_var = "KBuecher_imp3",
+    x_years = list(c(2011, 2016), c(2016, 2021)),
+    x_braces = list(c(2011, 2016), c(2016, 2021))
+  )
+
+  plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  ## Testweise einige PUnkte auf n.s. setzen
+  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+
+
+  p_line <- plot_lineplot(
+    plot_data = plot_dat_test,
+    line_sig = "sig_trend_no_comp",
+    label_sig_high = "sig_point_end",
+    plot_settings = plotsettings(default_list = lineplot_chpt_4)
+  )
+
+  vdiffr::expect_doppelganger("lineplot_chpt_4_2groups", p_line)
+  # save_plot(p_line, filename = "../split_lineplot_2_books.pdf")
+})
+
+test_that("lineplot chpt. 4 with 3 groups is still the same", {
+  trend_books_2 <- trend_books[trend_books$KBuecher_imp3 == "0" & !is.na(trend_books$KBuecher_imp3) & trend_books$parameter == "mean", ]
+  trend_books_2$KBuecher_imp3 <- rep("Drei", nrow(trend_books_2))
+  trend_books_2[, 9:ncol(trend_books_2)] <- trend_books_2[, 9:ncol(trend_books_2)] + 15
+
+  books_3 <- rbind(trend_books, trend_books_2)
+  books_3KBuecher_imp3 <- as.factor(books_3$KBuecher_imp3)
+
+  plot_dat_3 <- prep_trend(
+    dat = books_3,
+    competence = "GL",
+    grouping_var = "KBuecher_imp3",
+    x_years = list(c(2011, 2016), c(2016, 2021)),
+    x_braces = list(c(2011, 2016), c(2016, 2021))
+  )
+
+  plot_dat_3 <- filter_rows(plot_dat_3, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  ## Testweise einige PUnkte auf n.s. setzen
+  plot_dat_3$plot_points$sig_point[1:10] <- FALSE
+  plot_dat_3$plot_points <- plot_dat_3$plot_points[!(plot_dat_3$plot_points$trend == "20112016" & plot_dat_3$plot_points$grouping_var == "TRUE"), ]
+
+  p_line <- plot_lineplot(
+    plot_data = plot_dat_3,
+    line_sig = "sig_trend_no_comp",
+    label_sig_high = "sig_point_end",
+    plot_settings = plotsettings(
+      split_plot = TRUE,
+      default_list = lineplot_chpt_4
+    )
+  )
+
+  vdiffr::expect_doppelganger("lineplot_chpt_4_3groups", p_line)
+
+  #  save_plot(p_line, filename = "../split_lineplot_3_books.pdf")
+})
+
+
+test_that("competence_vars can be used as tiles", {
+  plot_dat_test <- prep_trend(
+    dat = trend_books,
+    grouping_var = "KBuecher_imp3",
+    states = "wholeGroup",
+    x_years = list(c(2011, 2016), c(2016, 2021)),
+    x_braces = list(c(2011, 2016), c(2016, 2021))
+  )
+
+
+  p_line <- plot_lineplot(
+    plot_data = plot_dat_test,
+    seperate_plot_var = "competence_var",
+    line_sig = "sig_trend_no_comp",
+    label_sig_high = "sig_point_end",
+    plot_settings = plotsettings(default_list = lineplot_chpt_4)
+  )
+
+  vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles", p_line)
+
+  # save_plot(p_line, filename = "../split_lineplot_kb_books.pdf")
+})

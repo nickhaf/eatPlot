@@ -25,8 +25,7 @@ plot_lineplot <- function(plot_data,
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
                           label_sig_bold = "sig_trend_no_comp",
-                          plot_settings = plotsettings()
-                          ) {
+                          plot_settings = plotsettings()) {
   states <- unique(plot_data[[1]]$state_var)
   tiles <- unique(plot_data[[1]][, seperate_plot_var])
 
@@ -36,7 +35,7 @@ plot_lineplot <- function(plot_data,
 
   for (i in tiles) {
     plot_data_tile <- filter_rows(plot_data, column_name = seperate_plot_var, subsetter = i)
-    if(seperate_plot_var == "competence_var"){
+    if (seperate_plot_var == "competence_var") {
       plot_data_tile[["plot_background_lines"]] <- plot_data_tile[["plot_background_lines"]][plot_data_tile[["plot_background_lines"]]$competence_var == i, ]
     }
 
@@ -44,7 +43,6 @@ plot_lineplot <- function(plot_data,
       plot_single_lineplot(
         plot_data = plot_data_tile,
         y_range = range_est,
-        split_plot = plot_settings$split_plot,
         point_values = point_values,
         point_sig = point_sig,
         line_values = line_values,
@@ -53,9 +51,9 @@ plot_lineplot <- function(plot_data,
         label_se = label_se,
         label_sig_high = label_sig_high,
         label_sig_bold = label_sig_bold,
-        nudge_x_axis = plot_settings$nudge_x_axis
+        plot_settings = plot_settings
       ) +
-    ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
+      ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
       set_plot_coords(plot_data)
 
     ## The wholeGroup plot gets a box drawn around it.
@@ -81,16 +79,24 @@ plot_lineplot <- function(plot_data,
     }
 
     widths_setting <- c(0.02, rep(1 - 0.02 / plot_settings$n_cols, times = plot_settings$n_cols))
-    n_cols <- plot_settings$n_cols + 1
+    plot_settings$n_cols <- plot_settings$n_cols + 1
   } else {
     widths_setting <- 1 / plot_settings$n_cols
   }
 
-  nudge_top_bottom <- 0.02 + 0.006 * (length(levels(plot_data[["plot_braces"]]$grouping_var))-1) #more brace labels need more space
+  margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_data[["plot_braces"]]$grouping_var)) - 1) # more brace labels need more space
+
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = plot_settings$n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(nudge_top_bottom, 0.01, nudge_top_bottom, 0.01), "npc") #t, r, b, l
+      plot.margin = ggplot2::unit(
+        c(
+          plot_settings$margin_top,
+          plot_settings$margin_right,
+          margin_bottom,
+          plot_settings$margin_left
+        ),
+        "npc"
+      ) # t, r, b, l
     )
 }
-

@@ -24,7 +24,7 @@ clean_data <- function(dat,
   sapply(c("parameter", "competence_var", "state_var", "grouping_var", "group_var"), check_column, dat = dat)
 
   # Fill up NAs
-  dat$state_var[dat$state_var == ""] <- "wholeGroup"
+  # dat$state_var[is.na(dat$state_var)] <- "wholeGroup"
   if (!is.null(all_states)) {
     dat <- fill_up_na(dat,
       info_to = "state_var",
@@ -43,9 +43,6 @@ clean_data <- function(dat,
   if (!is.null(competence)) {
     dat <- dat[dat$competence_var == competence, ]
   }
-  if (!is.null(states)) {
-    dat <- dat[dat$state_var %in% states, ]
-  }
 
   dat <- dat[, !colnames(dat) %in% c("modus", "parameter")]
 
@@ -62,6 +59,10 @@ clean_data <- function(dat,
         dat$group_var
       )
   ), "state_var"] <- "wholeGroup"
+
+  if (!is.null(states)) {
+    dat <- dat[dat$state_var %in% states, ]
+  }
 
   dat$state_var <- gsub("ue", "\u00fc", dat$state_var)
 

@@ -5,21 +5,66 @@
 \title{Set parameters for the lineplots.}
 \usage{
 plotsettings(
+  axis_x_background_colour = NULL,
+  axis_x_background_width = NULL,
+  axis_x_label_centralize = NULL,
+  axis_x_label_nudge_y = NULL,
+  axis_x_label_size = NULL,
+  brace_label_gap_y = NULL,
+  brace_label_nudge_x = NULL,
+  brace_label_size = NULL,
+  brace_label_nudge_y = NULL,
+  brace_line_width = NULL,
+  brace_span_y = NULL,
+  line_width = NULL,
+  margin_bottom = NULL,
+  margin_left = NULL,
+  margin_right = NULL,
+  margin_top = NULL,
   n_cols = NULL,
-  nudge_x_axis = NULL,
+  point_label_size = NULL,
+  point_size = NULL,
   split_plot = NULL,
   y_axis = NULL,
   default_list = NULL
 )
 }
 \arguments{
-\item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have. Defaults to \code{4}.}
+\item{axis_x_background_colour}{Colour value of the x-axis background.}
 
-\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
+\item{axis_x_background_width}{Numeric. The background space will be increased, if this parameter is increased.}
+
+\item{axis_x_label_centralize}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot.}
+
+\item{axis_x_label_nudge_y}{Numeric for shifting the x-axis labels vertically. Increase to lower the x-axis labels.}
+
+\item{axis_x_label_size}{Numeric for the font size of the x-axis labels.}
+
+\item{brace_label_gap_y}{Numeric for the size of the vertical gap between brace labels.}
+
+\item{brace_label_nudge_x}{Numeric. The brace labels will be shifted along the x-axis by this amount.}
+
+\item{brace_label_size}{Numeric fontsize of the bracelabels.}
+
+\item{brace_label_nudge_y}{Numeric. The brace labels will be shifted along the y-axis by this amount. Increase to let the labels start further below.}
+
+\item{brace_line_width}{Numeric for the thickness of the brace.}
+
+\item{brace_span_y}{Numeric for the width of the brace on the y-axis.}
+
+\item{line_width}{Numeric for the thicknes of the plotted lines.}
+
+\item{margin_bottom, margin_left, margin_right, margin_top}{Numeric for the area around the plot. See \code{\link[ggplot2:theme]{ggplot2::theme()}}.}
+
+\item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have.}
+
+\item{point_label_size}{Numeric for the fontsize of the pointlabels.}
+
+\item{point_size}{Numeric for the size of plotted points.}
 
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 
-\item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to \code{FALSE}.}
+\item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }
@@ -30,5 +75,5 @@ A named list with settings for the lineplots.
 Set parameters for the lineplots.
 }
 \examples{
-plotsettings(n_cols = 2, nudge_x_axis = 0.1)
+plotsettings(n_cols = 2, axis_x_label_centralize = 0.1)
 }

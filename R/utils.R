@@ -1,3 +1,13 @@
+is_colour <- function(x) {
+  vapply(x, function(X) {
+    tryCatch(is.matrix(grDevices::col2rgb(X)),
+             error = function(e) FALSE)
+  },
+  USE.NAMES = FALSE,
+  FUN.VALUE = logical(1))
+}
+
+
 calc_sig <- function(p_vec, sig_niveau) {
   res <- ifelse(is.na(p_vec), FALSE, # NA
     ifelse(p_vec < sig_niveau & !is.na(p_vec), TRUE, FALSE)

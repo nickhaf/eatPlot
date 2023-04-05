@@ -48,7 +48,7 @@
 <polyline points='683.53,555.19 683.53,22.78 ' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
 <circle cx='63.78' cy='530.99' r='1.95' style='stroke-width: 0.71; fill: #000000;' />
 <circle cx='683.53' cy='462.82' r='1.95' style='stroke-width: 0.71; fill: #000000;' />
-<rect x='32.79' y='46.98' width='681.73' height='27.54' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
+<rect x='32.79' y='46.98' width='681.73' height='27.54' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
 <text x='63.78' y='62.71' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2000</text>
 <text x='683.53' y='62.71' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2005</text>
 </g>
