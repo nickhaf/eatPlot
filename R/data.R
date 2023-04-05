@@ -36,6 +36,8 @@
 #' \describe{
 #'   \item{n_cols}{Four columns of smaller plots are used for the final lineplot.}
 #'   \item{nudge_x_axis}{The x-axis labels are nudged into the center by 0.155 npc's.}
+#'   \item{split_plot}{}
+#'   \item{y_axis}{}
 #'   ...
 #' }
 "lineplot_chpt_4"

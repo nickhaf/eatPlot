@@ -4,12 +4,22 @@
 \alias{plotsettings}
 \title{Set parameters for the lineplots.}
 \usage{
-plotsettings(n_cols = NULL, nudge_x_axis = NULL, default_list = NULL)
+plotsettings(
+  n_cols = NULL,
+  nudge_x_axis = NULL,
+  split_plot = NULL,
+  y_axis = NULL,
+  default_list = NULL
+)
 }
 \arguments{
 \item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have. Defaults to \code{4}.}
 
 \item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
+
+\item{split_plot}{Logical, indicating whether the different trends should be split or not.}
+
+\item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to \code{FALSE}.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }
