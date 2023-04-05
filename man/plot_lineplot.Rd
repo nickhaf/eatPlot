@@ -15,10 +15,7 @@ plot_lineplot(
   label_se = "se_trend_no_comp",
   label_sig_high = "sig_trend_comp_whole",
   label_sig_bold = "sig_trend_no_comp",
-  split_plot = FALSE,
-  y_axis = FALSE,
-  n_cols = 4,
-  nudge_x_axis = 0.155
+  plot_settings = plotsettings()
 )
 }
 \arguments{
@@ -42,13 +39,7 @@ plot_lineplot(
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
 
-\item{split_plot}{Logical, indicating whether the different trends should be split or not.}
-
-\item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to \code{FALSE}.}
-
-\item{n_cols}{Numeric, which indicates the number of columns the final plot should have. Defaults to \code{4}.}
-
-\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
+\item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}
 }
 \value{
 \link{ggplot2} object.

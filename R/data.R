@@ -27,3 +27,17 @@
 "trend_books"
 
 
+#' BT22 default plot settings.
+#'
+#' Default plot settings for lineplots in the BT_22 for chapter 4.
+#'
+#' @format ## `lineplot_chpt_4`
+#' A list with two elements.
+#' \describe{
+#'   \item{n_cols}{Four columns of smaller plots are used for the final lineplot.}
+#'   \item{nudge_x_axis}{The x-axis labels are nudged into the center by 0.155 npc's.}
+#'   \item{split_plot}{}
+#'   \item{y_axis}{}
+#'   ...
+#' }
+"lineplot_chpt_4"
