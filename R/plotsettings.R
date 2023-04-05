@@ -2,31 +2,41 @@
 check_plotsettings <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 5
+      length(settings_list) == 9
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      names(settings_list) %in% c("n_cols",
-                                  "nudge_brace_labels_x",
-                                  "nudge_x_axis",
-                                  "split_plot",
-                                  "y_axis")
+      names(settings_list) %in% c(
+        "margin_bottom",
+        "margin_left",
+        "margin_right",
+        "margin_top",
+        "n_cols",
+        "nudge_brace_labels_x",
+        "nudge_x_axis",
+        "split_plot",
+        "y_axis"
+      )
   )
 
+
+  stopifnot(is.numeric(settings_list$margin_bottom))
+  stopifnot(is.numeric(settings_list$margin_left))
+  stopifnot(is.numeric(settings_list$margin_right))
+  stopifnot(is.numeric(settings_list$margin_top))
   stopifnot(is.numeric(settings_list$n_cols) & settings_list$n_cols %% 1 == 0) # check for whole number
   stopifnot(is.numeric(settings_list$nudge_brace_labels_x))
   stopifnot(is.numeric(settings_list$nudge_x_axis))
   stopifnot(is.logical(settings_list$split_plot))
   stopifnot(is.logical(settings_list$y_axis))
-
-
 }
 
 
 #' Set parameters for the lineplots.
 #'
+#' @param margin_bottom,margin_left,margin_right,margin_top Numeric for the area around the plot. See [ggplot2::theme()].
 #' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have.
-#' @param nudeg_brace_labels_x Numeric. The brace labels will be shifted along the x-axis by this amount.
+#' @param nudge_brace_labels_x Numeric. The brace labels will be shifted along the x-axis by this amount.
 #' @param nudge_x_axis Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot.
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
 #' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not.
@@ -38,18 +48,23 @@ check_plotsettings <- function(settings_list) {
 #' @examples
 #' plotsettings(n_cols = 2, nudge_x_axis = 0.1)
 plotsettings <- function(...,
-                         margin_bottom,
-                         margin_top,
+                         margin_bottom = NULL,
+                         margin_left = NULL,
+                         margin_right = NULL,
+                         margin_top = NULL,
                          n_cols = NULL,
                          nudge_brace_labels_x = NULL,
                          nudge_x_axis = NULL,
                          split_plot = NULL,
                          y_axis = NULL,
                          default_list = NULL) {
-
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
+      "margin_bottom" = 0,
+      "margin_left" = 0,
+      "margin_right" = 0,
+      "margin_top" = 0,
       "n_cols" = 1,
       "nudge_brace_labels_x" = 0,
       "nudge_x_axis" = 0,

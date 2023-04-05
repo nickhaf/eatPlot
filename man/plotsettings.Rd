@@ -5,7 +5,11 @@
 \title{Set parameters for the lineplots.}
 \usage{
 plotsettings(
+  ...,
+  margin_bottom = NULL,
+  margin_top = NULL,
   n_cols = NULL,
+  nudge_brace_labels_x = NULL,
   nudge_x_axis = NULL,
   split_plot = NULL,
   y_axis = NULL,
@@ -13,13 +17,17 @@ plotsettings(
 )
 }
 \arguments{
-\item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have. Defaults to \code{4}.}
+\item{margin_bottom, margin_top}{Numeric for the area under or above the plot. See \code{\link[ggplot2:theme]{ggplot2::theme()}}.}
 
-\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
+\item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have.}
+
+\item{nudge_brace_labels_x}{Numeric. The brace labels will be shifted along the x-axis by this amount.}
+
+\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot.}
 
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 
-\item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to \code{FALSE}.}
+\item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }

@@ -90,7 +90,7 @@ plot_lineplot <- function(plot_data,
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = plot_settings$n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(plot_settings$margin_top, 0.01, margin_bottom, 0.01), "npc") #t, r, b, l
+      plot.margin = ggplot2::unit(c(plot_settings$margin_top, plot_settings$margin_right, margin_bottom, plot_settings$margin_left), "npc") #t, r, b, l
     )
 }
 

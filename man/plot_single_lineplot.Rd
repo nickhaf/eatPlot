@@ -16,7 +16,6 @@ plot_single_lineplot(
   label_se = "se_trend_no_comp",
   label_sig_high = "sig_trend_comp_whole",
   label_sig_bold = "sig_trend_no_comp",
-  nudge_x_axis = 0,
   plot_settings = plotsettings()
 )
 }
@@ -42,8 +41,6 @@ plot_single_lineplot(
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
-
-\item{nudge_x_axis}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to \code{0.4}.}
 
 \item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}
 }
