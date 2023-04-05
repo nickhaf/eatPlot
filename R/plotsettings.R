@@ -71,7 +71,7 @@ check_plotsettings <- function(settings_list) {
 #' @param line_width Numeric for the thicknes of the plotted lines.
 #' @param margin_bottom,margin_left,margin_right,margin_top Numeric for the area around the plot. See [ggplot2::theme()].
 #' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have.
-#' @param piont_label_size Numeric for the fontsize of the pointlabels.
+#' @param point_label_size Numeric for the fontsize of the pointlabels.
 #' @param point_size Numeric for the size of plotted points.
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
 #' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not.
@@ -82,8 +82,7 @@ check_plotsettings <- function(settings_list) {
 #'
 #' @examples
 #' plotsettings(n_cols = 2, axis_x_label_centralize = 0.1)
-plotsettings <- function(...,
-                         axis_x_background_colour = NULL,
+plotsettings <- function(axis_x_background_colour = NULL,
                          axis_x_background_width = NULL,
                          axis_x_label_centralize = NULL,
                          axis_x_label_nudge_y = NULL,

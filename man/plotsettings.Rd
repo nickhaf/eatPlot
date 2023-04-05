@@ -5,7 +5,6 @@
 \title{Set parameters for the lineplots.}
 \usage{
 plotsettings(
-  ...,
   axis_x_background_colour = NULL,
   axis_x_background_width = NULL,
   axis_x_label_centralize = NULL,
@@ -59,6 +58,8 @@ plotsettings(
 
 \item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have.}
 
+\item{point_label_size}{Numeric for the fontsize of the pointlabels.}
+
 \item{point_size}{Numeric for the size of plotted points.}
 
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
@@ -66,8 +67,6 @@ plotsettings(
 \item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
-
-\item{piont_label_size}{Numeric for the fontsize of the pointlabels.}
 }
 \value{
 A named list with settings for the lineplots.
