@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples #tbd
-plot_lines <- function(data_plot_lines, line_values, line_sig){
+plot_lines <- function(data_plot_lines, line_values, line_sig, plot_settings = plotsettings()){
     ggplot2::geom_segment(
       data = data_plot_lines,
       ggplot2::aes(
@@ -20,7 +20,7 @@ plot_lines <- function(data_plot_lines, line_values, line_sig){
         linetype = .data[[line_sig]],
         group = .data$trend
       ),
-      linewidth = 0.7
+      linewidth = plot_settings$line_width
 
   )
 }

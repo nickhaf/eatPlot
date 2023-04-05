@@ -102,7 +102,7 @@ test_that("brace label is drawn", {
   vdiffr::expect_doppelganger(
     "brace label",
     ggplot2::ggplot() +
-      draw_brace_label(test_label)
+      draw_brace_label(test_label, plot_settings = plotsettings())
   )
 })
 

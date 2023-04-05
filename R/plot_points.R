@@ -19,7 +19,7 @@ plot_points <- function(data_plot_points,
   data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range)
 
   if(plot_settings$split_plot == TRUE){
-  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = plot_settings$nudge_x_axis - 0.03)
+  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = plot_settings$axis_x_label_centralize - 0.03)
 }else{
   data_plot_points_nudge$x_coords <- data_plot_points_nudge$year
 }
@@ -34,7 +34,7 @@ plot_points <- function(data_plot_points,
         shape = .data[[point_sig]],
         group = .data$trend
       ),
-      size = 1.7
+      size = plot_settings$point_size
     ),
     ## Hier genau den gleichen Nudge wie für die x-Achse
     ggplot2::geom_text(
@@ -47,7 +47,7 @@ plot_points <- function(data_plot_points,
         group = .data$trend
       ),
       nudge_y = data_plot_points_nudge$nudge_y,
-      size = 2
+      size = plot_settings$point_label_size
     )
   )
 }

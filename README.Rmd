@@ -69,7 +69,7 @@ plot_table_bar(p_table, p_bar)
 
 Or, if you want a lineplot:
 ```{r}
-p_line <- plot_lineplot(lineplot_data, nudge_x_axis = 0.15)
+p_line <- plot_lineplot(lineplot_data, axis_x_label_centralize = 0.15)
 p_line
 ```
 

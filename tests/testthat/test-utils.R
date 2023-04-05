@@ -1,3 +1,9 @@
+test_that("colour checks are working", {
+
+  expect_equal(is_colour(c("lightblue", grDevices::rgb(147, 205, 221, maxColorValue = 255), "no_colour")), c(TRUE, TRUE, FALSE))
+
+})
+
 test_that("Plot borders are calculated correctly", {
   expect_equal(calc_plot_borders(c(-114, 12, 140, -211)), c(-220, 220))
   expect_equal(calc_plot_borders(c(22, -15, -17), accuracy = 5), c(-25, 25))

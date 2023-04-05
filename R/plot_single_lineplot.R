@@ -10,7 +10,6 @@
 #' @examples # tbd
 plot_single_lineplot <- function(plot_data,
                                  y_range = NULL,
-                                 split_plot,
                                  point_values = "est_point",
                                  point_sig = "sig_point",
                                  line_values = c("est_point_start", "est_point_end"),
@@ -30,7 +29,8 @@ plot_single_lineplot <- function(plot_data,
       label_se = label_se,
       label_sig_high = label_sig_high,
       label_sig_bold = label_sig_bold,
-      plot_settings = plot_settings),
+      plot_settings = plot_settings
+    ),
     plot_background_lines(
       data_plot_background_lines = plot_data[["plot_background_lines"]],
       line_values = line_values
@@ -38,7 +38,8 @@ plot_single_lineplot <- function(plot_data,
     plot_lines(
       data_plot_lines = plot_data[["plot_lines"]],
       line_values = line_values,
-      line_sig = line_sig
+      line_sig = line_sig,
+      plot_settings = plot_settings
     ),
     plot_points(
       data_plot_points = plot_data[["plot_points"]],
@@ -48,11 +49,11 @@ plot_single_lineplot <- function(plot_data,
       plot_settings = plot_settings
     ),
     plot_x_axis(plot_data[["plot_points"]],
-                y_range = y_range,
-                plot_settings = plot_settings),
+      y_range = y_range,
+      plot_settings = plot_settings
+    ),
     if (plot_settings$split_plot == TRUE) {
       ggplot2::facet_wrap(~trend, scales = "free_x")
     }
-
   )
 }

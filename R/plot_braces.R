@@ -16,14 +16,10 @@ plot_braces <- function(dat,
                         label_sig_high = NULL,
                         label_sig_bold = NULL,
                         plot_settings = plotsettings()) {
-
-
-dat <- build_column(dat, old = label_est, new = "label_est")
-dat <- build_column(dat, old = label_se, new = "label_se")
-dat <- build_column(dat, old = label_sig_high, new = "label_sig_high")
-dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
-
-
+  dat <- build_column(dat, old = label_est, new = "label_est")
+  dat <- build_column(dat, old = label_se, new = "label_se")
+  dat <- build_column(dat, old = label_sig_high, new = "label_sig_high")
+  dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
 
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.
@@ -48,19 +44,17 @@ dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
   # Calculate brace coordinates ---------------------------------------------
   coords <- calc_coords(y_range)
   if (plot_settings$split_plot == TRUE) {
-    dat <- calc_brace_coords(dat, coords, output_format = "long", nudge_brace_labels_x = plot_settings$nudge_brace_labels_x)
+    dat <- calc_brace_coords(dat, coords, output_format = "long", plot_settings = plot_settings)
   } else {
-    dat <- calc_brace_coords(dat, coords, nudge_brace_labels_x = plot_settings$nudge_brace_labels_x)
+    dat <- calc_brace_coords(dat, coords, plot_settings = plot_settings)
   }
 
   c(
     draw_braces(dat, plot_settings),
-    draw_brace_label(dat),
+    draw_brace_label(dat, plot_settings),
     set_cartesian_coords(coords)
   )
 }
-
-
 
 
 # Utils -------------------------------------------------------------------
@@ -74,7 +68,7 @@ draw_braces <- function(dat, plot_settings = plotsettings()) {
         group = .data$trend
       ),
       rotate = 180,
-      linewidth = 0.5,
+      linewidth = plot_settings$brace_line_width,
       npoints = 200
     )
   } else {
@@ -87,7 +81,7 @@ draw_braces <- function(dat, plot_settings = plotsettings()) {
         ),
         mid = unique(dat_year$mid),
         rotate = 180,
-        linewidth = 0.5,
+        linewidth = plot_settings$brace_line_width,
         npoints = 200
       )
     })
@@ -95,7 +89,7 @@ draw_braces <- function(dat, plot_settings = plotsettings()) {
   return(res)
 }
 
-draw_brace_label <- function(dat) {
+draw_brace_label <- function(dat, plot_settings = plot_settings()) {
   ggtext::geom_richtext(
     data = dat,
     mapping = ggplot2::aes(
@@ -103,7 +97,7 @@ draw_brace_label <- function(dat) {
       y = .data$label_pos_y,
       label = .data$brace_label
     ),
-    size = 2,
+    size = plot_settings$brace_label_size,
     label.padding = grid::unit(rep(0, 4), "pt"),
     fill = NA,
     label.color = NA,

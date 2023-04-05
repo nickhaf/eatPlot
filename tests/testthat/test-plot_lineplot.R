@@ -1,6 +1,50 @@
-# plot_data <- prep_trend(dat = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", x_braces = list(c(2011, 2016), c(2016, 2021)))
-#
-# p1 <- plot_lineplot(plot_data)
+test_that("settings do something", {
+  plot_dat_test <- prep_trend(
+    dat = trend_books,
+    competence = "GL",
+    grouping_var = "KBuecher_imp3",
+    x_years = list(c(2011, 2016), c(2016, 2021)),
+    x_braces = list(c(2011, 2016), c(2016, 2021))
+  )
+
+  plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  ## Testweise einige PUnkte auf n.s. setzen
+  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+
+
+  p_line <- plot_lineplot(
+    plot_data = plot_dat_test,
+    line_sig = "sig_trend_no_comp",
+    label_sig_high = "sig_point_end",
+    plot_settings = plotsettings(
+      axis_x_background_colour = "red",
+      axis_x_background_width = 0.08,
+      axis_x_label_centralize = 0.15,
+      axis_x_label_nudge_y = 0.05,
+      axis_x_label_size = 2.4,
+      brace_label_gap_y = 0.15,
+      brace_label_nudge_x = 0.3,
+      brace_label_nudge_y = 0.08,
+      brace_label_size = 3,
+      brace_line_width = 0.8,
+      brace_span_y = 0.16,
+      line_width = 1,
+      margin_bottom = 0.05,
+      margin_left = 0.03,
+      margin_right = 0.001,
+      margin_top = 0.005,
+      n_cols = 6,
+      point_label_size = 1,
+      point_size = 1,
+      split_plot = TRUE,
+      y_axis = TRUE
+    )
+  )
+
+  vdiffr::expect_doppelganger("lineplot random settings", p_line)
+})
+
 
 test_that("correct states are extracted", {
   test_plot_2 <- list(

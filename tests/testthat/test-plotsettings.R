@@ -1,5 +1,5 @@
 # default_list <-  list("n_cols" = 1,
-#                       "nudge_x_axis" = 0,
+#                       "axis_x_label_centralize" = 0,
 #                       "split_plot" = FALSE,
 #                       "y_axis" = FALSE)
 #
@@ -27,16 +27,16 @@
 #
 # test_that("defaults can be overwritten", {
 #   expect_equal(
-#     plotsettings(n_cols = 10, nudge_x_axis = 0.3),
-#     list("n_cols" = 10, "nudge_x_axis" = 0.3, "split_plot" = FALSE, "y_axis" = FALSE)
+#     plotsettings(n_cols = 10, axis_x_label_centralize = 0.3),
+#     list("n_cols" = 10, "axis_x_label_centralize" = 0.3, "split_plot" = FALSE, "y_axis" = FALSE)
 #   )
 #
 #   old_default <- list("n_cols" = 2,
-#                       "nudge_x_axis" = 0.1,
+#                       "axis_x_label_centralize" = 0.1,
 #                       "split_plot" = FALSE,
 #                       "y_axis" = TRUE)
 #   expect_equal(
 #     plotsettings(n_cols = 5, default = old_default),
-#     list("n_cols" = 5, "nudge_x_axis" = 0.1, "split_plot" = FALSE, "y_axis" = TRUE)
+#     list("n_cols" = 5, "axis_x_label_centralize" = 0.1, "split_plot" = FALSE, "y_axis" = TRUE)
 #   )
 # })

@@ -1,6 +1,6 @@
 
 # Plot_braces -------------------------------------------------------------
-calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nudge_brace_labels_x = 0) {
+calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings()) {
   output_format <- match.arg(output_format)
   sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend"), check_columns, dat = dat)
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
@@ -9,15 +9,13 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
   range_coords <- diff(range(coords))
   range_years <- diff(range(c(dat$year_start, dat$year_end), na.rm = TRUE))
   ## Starting point for the highest brace label
-  start_label <- 0.05
-  gap_label <- 0.08
-  brace_width <- 0.1
+  start_label <- plot_settings$brace_label_nudge_y
 
   if (any(dat$overlap == TRUE)) {
     # Upper and lower brace ---------------------------------------------------
 
-    lower_brace_y_a <- calc_pos(coords[1], range_coords, brace_width)
-    lower_brace_y_b <- lower_brace_y_a - range_coords * brace_width
+    lower_brace_y_a <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
+    lower_brace_y_b <- lower_brace_y_a - range_coords * plot_settings$brace_span_y
     upper_label_y <- lower_brace_y_b - range_coords * start_label
 
     # Upper brace coordinates:
@@ -33,35 +31,44 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
     )
 
     # Label
-    dat$label_pos_y <- calc_brace_label_y(dat, upper_label_y, range_coords, gap_label)
+    dat$label_pos_y <- calc_brace_label_y(dat, upper_label_y, range_coords, gap_label = plot_settings$brace_label_gap_y)
 
-    #dat$label_pos_y <- ifelse(dat$grouping_var != levels(dat$grouping_var)[1],
-    #  upper_label_y - range_coords * gap_label, # Position lower brace label
-    #  upper_label_y # Position upper brace label
-    #)
-        dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
-      calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.25, nudge_brace_labels_x = nudge_brace_labels_x),
-      calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_brace_labels_x = nudge_brace_labels_x)
+    dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
+      calc_brace_label_x(dat$year_start,
+        dat$year_end,
+        range_total = range_years,
+        brace_indent_pos = 0.25,
+        brace_label_nudge_x = plot_settings$brace_label_nudge_x
+      ),
+      calc_brace_label_x(dat$year_start,
+        dat$year_end,
+        range_total = range_years,
+        brace_indent_pos = 0.5,
+        brace_label_nudge_x = plot_settings$brace_label_nudge_x
+      )
     )
 
     # indent the first brace
     dat$mid <- ifelse(dat$year_start == min(dat$year_start), 0.25, 0.5)
   } else {
-    lower_brace_y <- calc_pos(coords[1], range_coords, brace_width)
+    lower_brace_y <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
     upper_label_y <- lower_brace_y - range_coords * start_label
 
     dat$upper_y <- coords[1]
     dat$lower_y <- lower_brace_y
 
-    #dat$label_pos_y <- ifelse(dat$grouping_var != levels(dat$grouping_var)[1],
-    #  upper_label_y - range_coords * gap_label, # Position lower brace label
-    #  upper_label_y # Position upper brace label
-    #)
-
-    dat$label_pos_x <- calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_brace_labels_x = nudge_brace_labels_x)
-    dat$label_pos_y <- calc_brace_label_y(dat, upper_label_y, range_coords, gap_label)
+    dat$label_pos_x <- calc_brace_label_x(dat$year_start,
+      dat$year_end,
+      range_total = range_years,
+      brace_indent_pos = 0.5,
+      brace_label_nudge_x = plot_settings$brace_label_nudge_x
+    )
+    dat$label_pos_y <- calc_brace_label_y(dat,
+      upper_label_y,
+      range_coords,
+      gap_label = plot_settings$brace_label_gap_y
+    )
     dat$mid <- rep(0.5, nrow(dat))
-
   }
 
   if (output_format == "long") {
@@ -82,27 +89,32 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
   return(dat)
 }
 
-calc_brace_label_x <- function(year_start, year_end, range_total, brace_indent_pos, nudge_brace_labels_x = 0) {
+calc_brace_label_x <- function(year_start,
+                               year_end,
+                               range_total,
+                               brace_indent_pos,
+                               brace_label_nudge_x = 0) {
   range_est <- year_end - year_start
-  year_start + range_est * brace_indent_pos + (range_total * nudge_brace_labels_x)
+  year_start + range_est * brace_indent_pos + (range_total * brace_label_nudge_x)
 }
 
 # Plot_points -------------------------------------------------------------
-calc_x_nudge <- function(dat, nudge_x = 0.05){
-
+calc_x_nudge <- function(dat, nudge_x = 0.05) {
   range_years <- diff(range(dat$year))
   min_max_trend <- get_min_max(dat)
 
   dat <- merge(dat, min_max_trend,
-                      by = "trend",
-                      all.x = TRUE,
-                      all.y = FALSE)
+    by = "trend",
+    all.x = TRUE,
+    all.y = FALSE
+  )
 
   dat$x_coords <- ifelse(dat$year == dat$minimum,
-                                yes = dat$year + range_years * nudge_x,
-                                no = ifelse(dat$year == dat$maximum,
-                                            yes = dat$year - range_years * nudge_x,
-                                            no = dat$year)
+    yes = dat$year + range_years * nudge_x,
+    no = ifelse(dat$year == dat$maximum,
+      yes = dat$year - range_years * nudge_x,
+      no = dat$year
+    )
   )
   return(dat)
 }
@@ -139,16 +151,15 @@ calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.18) { # nudge
   return(out)
 }
 
-calc_pos <- function(coords_min, range_coords, width){
+calc_pos <- function(coords_min, range_coords, width) {
   coords_min - (range_coords * width)
 }
 
 
 
 
-calc_brace_label_y <- function(dat, upper_label_y, range_coords, gap_label){
-
-  for(i in 1:length(levels(dat$grouping_var))){
+calc_brace_label_y <- function(dat, upper_label_y, range_coords, gap_label) {
+  for (i in 1:length(levels(dat$grouping_var))) {
     lvl <- levels(dat$grouping_var)[i]
     dat_lvl <- dat[dat$grouping_var == lvl, ]
     dat[dat$grouping_var == lvl, "label_pos_y"] <- upper_label_y - (range_coords * gap_label * (i - 1))
