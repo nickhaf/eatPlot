@@ -13,13 +13,13 @@ plot_points <- function(data_plot_points,
                         y_range,
                         point_values,
                         point_sig,
-                        split_plot = FALSE,
-                        nudge_x_axis = 0.05) {
+                        plot_settings = plotsettings()
+                        ) {
   data_plot_points <- data_plot_points[!is.na(data_plot_points[, point_values]), ]
   data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range)
 
-  if(split_plot == TRUE){
-  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = nudge_x_axis - 0.03)
+  if(plot_settings$split_plot == TRUE){
+  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = plot_settings$nudge_x_axis - 0.03)
 }else{
   data_plot_points_nudge$x_coords <- data_plot_points_nudge$year
 }

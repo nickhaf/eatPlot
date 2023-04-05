@@ -2,13 +2,12 @@
 #'
 #' @inheritParams plot_points
 #' @inheritParams plot_single_lineplot
-#' @param nudge_x Numeric indicating how much the labels should be nudged to the center of the plot. Defaults to `0.05`.
 #'
 #' @return A blue stripe on top of ggplot2 plot which can be used as x-axis.
 #' @export
 #'
 #' @examples #tbd
-plot_x_axis <- function(data_plot_points, y_range, split_plot = FALSE, nudge_x = 0.05){
+plot_x_axis <- function(data_plot_points, y_range, plot_settings = plotsettings()){
   coords <- calc_coords(y_range)
   y_max <- coords[2]
 
@@ -21,7 +20,7 @@ plot_x_axis <- function(data_plot_points, y_range, split_plot = FALSE, nudge_x =
 # calc x-axis  ------------------------------------------------------------
 ## x-axis labels should be centered a bit more. So the larger year in the smaller trend and the smaller year in the larger Trend need to go into the center more:
 
-  if(split_plot == TRUE){
+  if(plot_settings$split_plot == TRUE){
   dat_coords <- calc_x_nudge(dat_coords)
   }else{
   dat_coords$x_coords <- dat_coords$year

@@ -10,13 +10,12 @@
 #'
 #' @examples ##
 plot_braces <- function(dat,
-                        split_plot = FALSE,
                         y_range,
                         label_est = NULL,
                         label_se = NULL,
                         label_sig_high = NULL,
                         label_sig_bold = NULL,
-                        nudge_x_axis = 0) {
+                        plot_settings = plotsettings()) {
 
 
 dat <- build_column(dat, old = label_est, new = "label_est")
@@ -48,14 +47,14 @@ dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
 
   # Calculate brace coordinates ---------------------------------------------
   coords <- calc_coords(y_range)
-  if (split_plot == TRUE) {
-    dat <- calc_brace_coords(dat, coords, output_format = "long", nudge_x_axis = nudge_x_axis)
+  if (plot_settings$split_plot == TRUE) {
+    dat <- calc_brace_coords(dat, coords, output_format = "long", nudge_brace_labels_x = plot_settings$nudge_brace_labels_x)
   } else {
-    dat <- calc_brace_coords(dat, coords, nudge_x_axis = nudge_x_axis)
+    dat <- calc_brace_coords(dat, coords, nudge_brace_labels_x = plot_settings$nudge_brace_labels_x)
   }
 
   c(
-    draw_braces(dat, split_plot),
+    draw_braces(dat, plot_settings),
     draw_brace_label(dat),
     set_cartesian_coords(coords)
   )
@@ -65,8 +64,8 @@ dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
 
 
 # Utils -------------------------------------------------------------------
-draw_braces <- function(dat, split_plot) {
-  if (split_plot == TRUE) {
+draw_braces <- function(dat, plot_settings = plotsettings()) {
+  if (plot_settings$split_plot == TRUE) {
     res <- ggbrace::geom_brace(
       data = unique(dat[, c("trend", "year", "brace_y")]),
       mapping = ggplot2::aes(

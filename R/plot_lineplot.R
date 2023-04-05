@@ -44,7 +44,6 @@ plot_lineplot <- function(plot_data,
       plot_single_lineplot(
         plot_data = plot_data_tile,
         y_range = range_est,
-        split_plot = plot_settings$split_plot,
         point_values = point_values,
         point_sig = point_sig,
         line_values = line_values,
@@ -53,7 +52,7 @@ plot_lineplot <- function(plot_data,
         label_se = label_se,
         label_sig_high = label_sig_high,
         label_sig_bold = label_sig_bold,
-        nudge_x_axis = plot_settings$nudge_x_axis
+        plot_settings = plot_settings
       ) +
     ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
       set_plot_coords(plot_data)
@@ -86,11 +85,12 @@ plot_lineplot <- function(plot_data,
     widths_setting <- 1 / plot_settings$n_cols
   }
 
-  nudge_top_bottom <- 0.02 + 0.006 * (length(levels(plot_data[["plot_braces"]]$grouping_var))-1) #more brace labels need more space
+  margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_data[["plot_braces"]]$grouping_var))-1) # more brace labels need more space
+
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = plot_settings$n_cols, widths = widths_setting) &
     ggplot2::theme(
-      plot.margin = ggplot2::unit(c(nudge_top_bottom, 0.01, nudge_top_bottom, 0.01), "npc") #t, r, b, l
+      plot.margin = ggplot2::unit(c(plot_settings$margin_top, 0.01, margin_bottom, 0.01), "npc") #t, r, b, l
     )
 }
 

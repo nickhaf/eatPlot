@@ -30,7 +30,7 @@ test_that("x axis can be built on facetted plot", {
       ggplot2::aes(x = year, y = est_points)
     ) +
       ggplot2::geom_point() +
-      plot_x_axis(test_df, y_range = c(3, 4), split_plot = TRUE) +
+      plot_x_axis(test_df, y_range = c(3, 4), plot_settings = plotsettings(split_plot = TRUE)) +
       ggplot2::facet_wrap(~trend, scales = "free_x")
   )
 })

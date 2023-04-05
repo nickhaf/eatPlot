@@ -1,6 +1,6 @@
 
 # Plot_braces -------------------------------------------------------------
-calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nudge_x_axis = 0) {
+calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nudge_brace_labels_x = 0) {
   output_format <- match.arg(output_format)
   sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend"), check_columns, dat = dat)
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
@@ -40,8 +40,8 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
     #  upper_label_y # Position upper brace label
     #)
         dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
-      calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.25, nudge_x_axis = nudge_x_axis),
-      calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_x_axis = nudge_x_axis)
+      calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.25, nudge_brace_labels_x = nudge_brace_labels_x),
+      calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_brace_labels_x = nudge_brace_labels_x)
     )
 
     # indent the first brace
@@ -58,7 +58,7 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
     #  upper_label_y # Position upper brace label
     #)
 
-    dat$label_pos_x <- calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_x_axis = nudge_x_axis)
+    dat$label_pos_x <- calc_brace_label_x(dat$year_start, dat$year_end, range_total = range_years, brace_indent_pos = 0.5, nudge_brace_labels_x = nudge_brace_labels_x)
     dat$label_pos_y <- calc_brace_label_y(dat, upper_label_y, range_coords, gap_label)
     dat$mid <- rep(0.5, nrow(dat))
 
@@ -82,9 +82,9 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), nu
   return(dat)
 }
 
-calc_brace_label_x <- function(year_start, year_end, range_total, brace_indent_pos, nudge_x_axis = 0) {
+calc_brace_label_x <- function(year_start, year_end, range_total, brace_indent_pos, nudge_brace_labels_x = 0) {
   range_est <- year_end - year_start
-  year_start + range_est * brace_indent_pos + (range_total * nudge_x_axis)
+  year_start + range_est * brace_indent_pos + (range_total * nudge_brace_labels_x)
 }
 
 # Plot_points -------------------------------------------------------------

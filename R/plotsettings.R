@@ -2,14 +2,19 @@
 check_plotsettings <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 4
+      length(settings_list) == 5
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      names(settings_list) %in% c("n_cols", "nudge_x_axis", "split_plot", "y_axis")
+      names(settings_list) %in% c("n_cols",
+                                  "nudge_brace_labels_x",
+                                  "nudge_x_axis",
+                                  "split_plot",
+                                  "y_axis")
   )
 
   stopifnot(is.numeric(settings_list$n_cols) & settings_list$n_cols %% 1 == 0) # check for whole number
+  stopifnot(is.numeric(settings_list$nudge_brace_labels_x))
   stopifnot(is.numeric(settings_list$nudge_x_axis))
   stopifnot(is.logical(settings_list$split_plot))
   stopifnot(is.logical(settings_list$y_axis))
@@ -20,10 +25,11 @@ check_plotsettings <- function(settings_list) {
 
 #' Set parameters for the lineplots.
 #'
-#' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have. Defaults to `4`.
-#' @param nudge_x_axis Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot. Defaults to `0.4`.
+#' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have.
+#' @param nudeg_brace_labels_x Numeric. The brace labels will be shifted along the x-axis by this amount.
+#' @param nudge_x_axis Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot.
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
-#' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not. Defaults to `FALSE`.
+#' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
 #' @return A named list with settings for the lineplots.
@@ -31,7 +37,11 @@ check_plotsettings <- function(settings_list) {
 #'
 #' @examples
 #' plotsettings(n_cols = 2, nudge_x_axis = 0.1)
-plotsettings <- function(n_cols = NULL,
+plotsettings <- function(...,
+                         margin_bottom,
+                         margin_top,
+                         n_cols = NULL,
+                         nudge_brace_labels_x = NULL,
                          nudge_x_axis = NULL,
                          split_plot = NULL,
                          y_axis = NULL,
@@ -41,6 +51,7 @@ plotsettings <- function(n_cols = NULL,
   if (is.null(default_list)) {
     plot_settings <- list(
       "n_cols" = 1,
+      "nudge_brace_labels_x" = 0,
       "nudge_x_axis" = 0,
       "split_plot" = FALSE,
       "y_axis" = FALSE
