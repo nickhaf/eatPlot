@@ -1,7 +1,7 @@
 #' Set theme, colours, pointshapes and linetypes for lineplot.
 #'
 #'
-#' @inheritParams plotsettings
+#' @inheritParams plot_lineplot
 #' @return ggplot2 plot settings
 #' @export
 #'

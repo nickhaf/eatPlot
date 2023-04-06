@@ -6,6 +6,9 @@
 \usage{
 theme_line(plot_settings = plotsettings())
 }
+\arguments{
+\item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}
+}
 \value{
 ggplot2 theme
 }

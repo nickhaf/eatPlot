@@ -62,7 +62,7 @@ theme_y_axis <-  function() {
 
 #' Theme for lineplot.
 #'
-#' @inheritParams plotsettings
+#' @inheritParams plot_lineplot
 #' @return ggplot2 theme
 #' @export
 #'
