@@ -2,7 +2,7 @@
 check_plotsettings <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 22
+      length(settings_list) == 23
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -24,6 +24,7 @@ check_plotsettings <- function(settings_list) {
         "margin_right",
         "margin_top",
         "n_cols",
+        "point_label_nudge",
         "point_label_size",
         "point_size",
         "split_plot",
@@ -49,6 +50,7 @@ check_plotsettings <- function(settings_list) {
   stopifnot(is.numeric(settings_list$margin_right))
   stopifnot(is.numeric(settings_list$margin_top))
   stopifnot(is.numeric(settings_list$n_cols) & settings_list$n_cols %% 1 == 0) # check for whole number
+  stopifnot(is.logical(settings_list$point_label_nudge))
   stopifnot(is.numeric(settings_list$point_label_size))
   stopifnot(is.numeric(settings_list$point_size))
   stopifnot(is.logical(settings_list$split_plot))
@@ -73,6 +75,7 @@ check_plotsettings <- function(settings_list) {
 #' @param line_width Numeric for the thicknes of the plotted lines.
 #' @param margin_bottom,margin_left,margin_right,margin_top Numeric for the area around the plot. See [ggplot2::theme()].
 #' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have.
+#' @param point_label_nudge Logical. If `TRUE`, the point labels will be nudged automatically by [ggrepel::geom_text_repel] to try and avoid them overlapping with lines and/or points. Might not work optimally.
 #' @param point_label_size Numeric for the fontsize of the pointlabels.
 #' @param point_size Numeric for the size of plotted points.
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
@@ -102,6 +105,7 @@ plotsettings <- function(axis_x_background_colour = NULL,
                          margin_right = NULL,
                          margin_top = NULL,
                          n_cols = NULL,
+                         point_label_nudge = NULL,
                          point_label_size = NULL,
                          point_size = NULL,
                          split_plot = NULL,
@@ -128,6 +132,7 @@ plotsettings <- function(axis_x_background_colour = NULL,
       "margin_right" = 0,
       "margin_top" = 0,
       "n_cols" = 1,
+      "point_label_nudge" = FALSE,
       "point_label_size" = 2,
       "point_size" = 1,
       "split_plot" = FALSE,

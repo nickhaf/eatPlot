@@ -22,6 +22,7 @@ plotsettings(
   margin_right = NULL,
   margin_top = NULL,
   n_cols = NULL,
+  geom_text_repel = NULL,
   point_label_size = NULL,
   point_size = NULL,
   split_plot = NULL,
@@ -70,6 +71,8 @@ plotsettings(
 \item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
+
+\item{point_label_nudge}{Logical. If \code{TRUE}, the point labels will be nudged automatically by \link[ggrepel:geom_text_repel]{ggrepel::geom_text_repel} to try and avoid them overlapping with lines and/or points. Might not work optimally.}
 }
 \value{
 A named list with settings for the lineplots.

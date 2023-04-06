@@ -18,6 +18,7 @@ lineplot_chpt_4 <- plotsettings(
   margin_right = 0.01,
   margin_top = 0.02,
   n_cols = 4,
+  point_label_nudge = FALSE,
   point_label_size = 2,
   point_size = 1.7,
   split_plot = TRUE,

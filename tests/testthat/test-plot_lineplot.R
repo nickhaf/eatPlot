@@ -35,6 +35,7 @@ test_that("settings do something", {
       margin_right = 0.001,
       margin_top = 0.005,
       n_cols = 6,
+      point_label_nudge = TRUE,
       point_label_size = 1,
       point_size = 1,
       split_plot = TRUE,
@@ -262,7 +263,7 @@ test_that("competence_vars with 3 groups", {
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles_3groups", p_line)
 
-  # save_plot(p_line, filename = "../split_lineplot_kb_books_3groups.pdf", height = 226.2 / 2 + 10)
+  save_plot(p_line, filename = "../split_lineplot_kb_books_3groups_v02.pdf", height = 226.2 / 2 + 10)
 })
 
 
