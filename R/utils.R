@@ -36,7 +36,9 @@ build_column <- function(dat, old, new) {
     dat[, new] <- NA
     return(dat)
   } else {
-    colnames(dat)[colnames(dat) == old] <- new
+    #colnames(dat)[colnames(dat) == old] <- new
+    dat[, new] <- dat[ , old]
+
     return(dat)
   }
 }

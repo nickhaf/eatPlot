@@ -1,6 +1,6 @@
 test_that("Colours are set correctly", {
   df_points <- data.frame(
-    grouping_var = factor(rep(c("FALSE", "TRUE"), 4)),
+    grouping_var = factor(rep(c("0", "1"), 4)),
     year = c(2011, 2011, 2012, 2012, 2024, 2024, 2030, 2030),
     est_point = 100:107,
     p = seq(0.02, 0.09, by = 0.01),
