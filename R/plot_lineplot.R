@@ -55,7 +55,7 @@ plot_lineplot <- function(plot_data,
         plot_settings = plot_settings
       ) +
       ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
-      set_plot_coords(plot_data)
+      set_plot_coords(plot_data, plot_settings = plot_settings)
 
     ## The wholeGroup plot gets a box drawn around it.
     # if (i == "wholeGroup") {

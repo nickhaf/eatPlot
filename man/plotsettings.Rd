@@ -6,7 +6,8 @@
 \usage{
 plotsettings(
   axis_x_background_colour = NULL,
-  axis_x_background_width = NULL,
+  axis_x_background_width_x = NULL,
+  axis_x_background_width_y = NULL,
   axis_x_label_centralize = NULL,
   axis_x_label_nudge_y = NULL,
   axis_x_label_size = NULL,
@@ -22,7 +23,11 @@ plotsettings(
   margin_right = NULL,
   margin_top = NULL,
   n_cols = NULL,
+  point_label_nudge = NULL,
   point_label_size = NULL,
+  point_label_nudge_direction = NULL,
+  point_label_nudge_x = NULL,
+  point_label_nudge_y = NULL,
   point_size = NULL,
   split_plot = NULL,
   split_plot_gap_width = NULL,
@@ -33,7 +38,7 @@ plotsettings(
 \arguments{
 \item{axis_x_background_colour}{Colour value of the x-axis background.}
 
-\item{axis_x_background_width}{Numeric. The background space will be increased, if this parameter is increased.}
+\item{axis_x_background_width_x, axis_x_background_width_y}{Numeric. The background space will be increased in x- or y-direction, if this parameter is increased.}
 
 \item{axis_x_label_centralize}{Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot.}
 
@@ -59,13 +64,19 @@ plotsettings(
 
 \item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have.}
 
+\item{point_label_nudge}{Logical. If \code{TRUE}, the point labels will be nudged automatically by \link[ggrepel:geom_text_repel]{ggrepel::geom_text_repel} to try and avoid them overlapping with lines and/or points. Might interfere with other point-label settings, so use at your own risk. Alternatively, you could try to use \code{point_label_nudge_direction} to get some controll over the point labels.}
+
 \item{point_label_size}{Numeric for the fontsize of the pointlabels.}
+
+\item{point_label_nudge_direction}{Named list with contents of either "+" or "-". The names have to be the factorlevels of the grouping_var. For "+" the point lables will be printed above the point, for "-" below. If \code{NULL} is provided, the labels will be printed below the points for the lowest group, and above the points for all others.}
+
+\item{point_label_nudge_x, point_label_nudge_y}{Numeric for the amount the pointlabel is nudged in x- or y-direction.}
 
 \item{point_size}{Numeric for the size of plotted points.}
 
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 
-\item{split_plot_gap_width}{Numeric wor the width of the gap in a split plot in npc.}
+\item{split_plot_gap_width}{Numeric for the width of the gap in a split plot in npc.}
 
 \item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
 

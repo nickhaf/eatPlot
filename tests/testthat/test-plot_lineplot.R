@@ -19,7 +19,7 @@ test_that("settings do something", {
     label_sig_high = "sig_point_end",
     plot_settings = plotsettings(
       axis_x_background_colour = "red",
-      axis_x_background_width = 0.08,
+      axis_x_background_width_y = 0.08,
       axis_x_label_centralize = 0.15,
       axis_x_label_nudge_y = 0.05,
       axis_x_label_size = 2.4,
@@ -35,6 +35,9 @@ test_that("settings do something", {
       margin_right = 0.001,
       margin_top = 0.005,
       n_cols = 6,
+      point_label_nudge = FALSE,
+      point_label_nudge_direction = list("0" = "+", "1" = "-"),
+      point_label_nudge_y = 0.1,
       point_label_size = 1,
       point_size = 1,
       split_plot = TRUE,
@@ -45,7 +48,6 @@ test_that("settings do something", {
 
   vdiffr::expect_doppelganger("lineplot random settings", p_line)
 })
-
 
 test_that("correct states are extracted", {
   test_plot_2 <- list(
@@ -90,7 +92,6 @@ test_that("correct states are extracted", {
   expect_equal(filter_rows(test_plot_2, column_name = "state_var", subsetter = "a")$plot_lines$state_var, c("a", "a"))
 })
 
-
 test_that("lineplot chpt_4 with one group is still the same", {
   trend_books_changed <- trend_books[trend_books$KBuecher_imp3 != "0" | is.na(trend_books$KBuecher_imp3), ]
 
@@ -115,10 +116,8 @@ test_that("lineplot chpt_4 with one group is still the same", {
     plot_settings = plotsettings(default_list = lineplot_chpt_4)
   )
   vdiffr::expect_doppelganger("lineplot_chpt_4_1group", p_line)
-  # save_plot(p_line, filename = "../split_lineplot_trend_books.pdf")
+  #save_plot(p_line, filename = "../split_lineplot_trend_books-v02.pdf")
 })
-
-
 
 test_that("lineplot chpt_4 with two groups is still the same", {
   plot_dat_test <- prep_trend(
@@ -172,7 +171,6 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
     plot_settings = plotsettings(
-      split_plot = TRUE,
       default_list = lineplot_chpt_4
     )
   )
@@ -181,7 +179,6 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
 
   #  save_plot(p_line, filename = "../split_lineplot_3_books.pdf")
 })
-
 
 test_that("competence_vars can be used as tiles", {
   trend_books_2 <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
@@ -206,20 +203,16 @@ test_that("competence_vars can be used as tiles", {
     seperate_plot_var = "competence_var",
     line_sig = "sig_trend_no_comp",
     label_sig_high = NULL,
-    plot_settings = plotsettings(
-      brace_label_nudge_x = 0.11,
-      n_cols = 3,
-      margin_bottom = 0.075,
-      default_list = lineplot_chpt_4
+      plot_settings = plotsettings(
+        default_list = lineplot_chpt_4_germany
+      )
     )
-  )
+
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles", p_line)
 
-  save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
+  #save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
 })
-
-
 
 test_that("competence_vars with 3 groups", {
   trend_books_2 <- trend_books[trend_books$KBuecher_imp3 == "0" & !is.na(trend_books$KBuecher_imp3) & trend_books$parameter == "mean", ]
@@ -246,28 +239,21 @@ test_that("competence_vars with 3 groups", {
     x_braces = list(c(2011, 2016), c(2016, 2021))
   )
 
-
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
     seperate_plot_var = "competence_var",
     line_sig = "sig_trend_no_comp",
     label_sig_high = NULL,
     plot_settings = plotsettings(
-      brace_label_nudge_x = 0.11,
-      n_cols = 3,
-      margin_bottom = 0.085,
-      default_list = lineplot_chpt_4
+      point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
+      default_list = lineplot_chpt_4_germany
     )
   )
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles_3groups", p_line)
 
-  # save_plot(p_line, filename = "../split_lineplot_kb_books_3groups.pdf", height = 226.2 / 2 + 10)
+  #save_plot(p_line, filename = "../split_lineplot_kb_books_3groups_v02.pdf", height = 226.2 / 2 + 10)
 })
-
-
-
-
 
 test_that("adjusted means", {
   plot_dat_test <- prep_trend(
@@ -292,5 +278,5 @@ test_that("adjusted means", {
   )
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_2groups_adjusted", p_line)
-  # save_plot(p_line, filename = "../split_lineplot_2_books_adjusted.pdf")
+  #save_plot(p_line, filename = "../split_lineplot_2_books_adjusted.pdf")
 })

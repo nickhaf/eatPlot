@@ -21,6 +21,7 @@ Imports:
     ggbrace,
     ggpattern,
     ggplot2,
+    ggrepel,
     ggstats,
     ggtext,
     patchwork,

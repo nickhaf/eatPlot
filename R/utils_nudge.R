@@ -99,7 +99,7 @@ calc_brace_label_x <- function(year_start,
 }
 
 # Plot_points -------------------------------------------------------------
-calc_x_nudge <- function(dat, nudge_x = 0.05) {
+calc_x_nudge <- function(dat, nudge_x) {
   range_years <- diff(range(dat$year))
   min_max_trend <- get_min_max(dat)
 
@@ -120,11 +120,29 @@ calc_x_nudge <- function(dat, nudge_x = 0.05) {
 }
 
 
-calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.18) { # nudge parameter increases distance between label and point
+calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings()) {
   range_est <- diff(y_range)
-  nudge_val <- range_est * nudge_param
+  nudge_val <- range_est * plot_settings$point_label_nudge_y
 
   # The smallest value in each year is nudged lower, the bigger ones are nudged higher. For facetted plots, the trend has to be taken into account as well.
+
+  ## Wenn in plot_settings ein named vector angegeben wurde mit "+" oder "-", dann das nutzen, sonst versuchen selber zu berechnen:
+
+  if(!is.null(plot_settings$point_label_nudge_direction)){
+
+    ## Checks
+    stopifnot(all(names(plot_settings$point_label_nudge_direction) %in% levels(plot_points_dat$grouping_var)))
+
+
+    res_frame_1 <- data.frame(
+      trend = plot_points_dat$trend,
+      year = plot_points_dat$year,
+      grouping_var = plot_points_dat$grouping_var
+    )
+
+    res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
+
+}else{
   nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$trend), function(year_df) {
     res_frame <- data.frame(
       nudge_y = ifelse(
@@ -143,6 +161,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, nudge_param = 0.18) { # nudge
   })
 
   res_frame <- data.frame(do.call("rbind", nudge_neg))
+}
 
   out <- merge(plot_points_dat, res_frame,
     by = c("trend", "year", "grouping_var"),
@@ -165,4 +184,12 @@ calc_brace_label_y <- function(dat, upper_label_y, range_coords, gap_label) {
     dat[dat$grouping_var == lvl, "label_pos_y"] <- upper_label_y - (range_coords * gap_label * (i - 1))
   }
   return(dat$label_pos_y)
+}
+
+
+nudge_by_level <- function(df, plot_settings, nudge_val){
+  for(i in levels(df$grouping_var)){
+    df[df$grouping_var == i, "nudge_y"] <- nudge_val * as.numeric(paste0(plot_settings$point_label_nudge_direction[[i]], "1"))
+  }
+  return(df)
 }
