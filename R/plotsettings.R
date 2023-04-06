@@ -63,7 +63,7 @@ check_plotsettings <- function(settings_list) {
 #' @param axis_x_label_nudge_y Numeric for shifting the x-axis labels vertically. Increase to lower the x-axis labels.
 #' @param axis_x_label_size Numeric for the font size of the x-axis labels.
 #' @param brace_label_gap_y Numeric for the size of the vertical gap between brace labels.
-#' @param brace_label_nudge_x Numeric. The brace labels will be shifted along the x-axis by this amount.
+#' @param brace_label_nudge_x Numeric. The brace labels will be shifted along the x-axis by this amount. Increase to shift the labels further to the right.
 #' @param brace_label_nudge_y Numeric. The brace labels will be shifted along the y-axis by this amount. Increase to let the labels start further below.
 #' @param brace_label_size Numeric fontsize of the bracelabels.
 #' @param brace_line_width Numeric for the thickness of the brace.
