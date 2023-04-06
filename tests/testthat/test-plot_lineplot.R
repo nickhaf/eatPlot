@@ -203,17 +203,15 @@ test_that("competence_vars can be used as tiles", {
     seperate_plot_var = "competence_var",
     line_sig = "sig_trend_no_comp",
     label_sig_high = NULL,
-    plot_settings = plotsettings(
-      brace_label_nudge_x = 0.11,
-      n_cols = 3,
-      margin_bottom = 0.075,
-      default_list = lineplot_chpt_4
+      plot_settings = plotsettings(
+        default_list = lineplot_chpt_4_germany
+      )
     )
-  )
+
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles", p_line)
 
-  save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
+  #save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
 })
 
 test_that("competence_vars with 3 groups", {
@@ -247,15 +245,8 @@ test_that("competence_vars with 3 groups", {
     line_sig = "sig_trend_no_comp",
     label_sig_high = NULL,
     plot_settings = plotsettings(
-      axis_x_background_width_x = 0.075,
-      brace_label_nudge_x = 0.11,
-      n_cols = 3,
-      margin_bottom = 0.085,
-      point_label_nudge = FALSE,
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
-      point_label_nudge_x = 0.02,
-      split_plot_gap_width = 0.02,
-      default_list = lineplot_chpt_4
+      default_list = lineplot_chpt_4_germany
     )
   )
 
