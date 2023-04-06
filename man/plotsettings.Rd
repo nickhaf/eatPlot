@@ -25,6 +25,7 @@ plotsettings(
   point_label_size = NULL,
   point_size = NULL,
   split_plot = NULL,
+  split_plot_gap_width = NULL,
   y_axis = NULL,
   default_list = NULL
 )
@@ -63,6 +64,8 @@ plotsettings(
 \item{point_size}{Numeric for the size of plotted points.}
 
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
+
+\item{split_plot_gap_width}{Numeric wor the width of the gap in a split plot in npc.}
 
 \item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
 

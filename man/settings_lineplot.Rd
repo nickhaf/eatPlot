@@ -4,7 +4,7 @@
 \alias{settings_lineplot}
 \title{Set theme, colours, pointshapes and linetypes for lineplot.}
 \usage{
-settings_lineplot()
+settings_lineplot(plot_settings = plotsettings())
 }
 \value{
 ggplot2 plot settings

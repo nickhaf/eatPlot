@@ -4,7 +4,7 @@
 \alias{theme_line}
 \title{Theme for lineplot.}
 \usage{
-theme_line()
+theme_line(plot_settings = plotsettings())
 }
 \value{
 ggplot2 theme

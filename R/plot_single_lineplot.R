@@ -21,7 +21,7 @@ plot_single_lineplot <- function(plot_data,
                                  plot_settings = plotsettings()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
-    settings_lineplot(),
+    settings_lineplot(plot_settings),
     plot_braces(
       plot_data[["plot_braces"]],
       y_range = y_range,
