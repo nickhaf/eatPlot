@@ -185,6 +185,7 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
 test_that("competence_vars can be used as tiles", {
 
   trend_books_2 <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
+  trend_books_2$KBuecher_imp3 <- factor(trend_books_2$KBuecher_imp3, levels = c("1", "0", "0.vs.1"))
 
    plot_dat_test <- prep_trend(
     dat = trend_books_2,
@@ -200,7 +201,7 @@ test_that("competence_vars can be used as tiles", {
     seperate_plot_var = "competence_var",
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
-    plot_settings = plotsettings(brace_label_nudge_x = 0.1,
+    plot_settings = plotsettings(brace_label_nudge_x = 0.11,
       n_cols = 3,
                                  margin_bottom = 0.075,
                                  default_list = lineplot_chpt_4)
@@ -208,5 +209,5 @@ test_that("competence_vars can be used as tiles", {
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles", p_line)
 
-  save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
+  #save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
 })

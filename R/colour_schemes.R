@@ -10,8 +10,8 @@
 grouping_colours <- function(...){
   ggplot2::scale_colour_manual(
     values = c(
-    "TRUE" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-    "FALSE" = "black"
+    "1" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
+    "0" = "black"
   ), ... )
 }
 

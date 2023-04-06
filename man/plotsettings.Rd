@@ -42,7 +42,7 @@ plotsettings(
 
 \item{brace_label_gap_y}{Numeric for the size of the vertical gap between brace labels.}
 
-\item{brace_label_nudge_x}{Numeric. The brace labels will be shifted along the x-axis by this amount.}
+\item{brace_label_nudge_x}{Numeric. The brace labels will be shifted along the x-axis by this amount. Increase to shift the labels further to the right.}
 
 \item{brace_label_size}{Numeric fontsize of the bracelabels.}
 
