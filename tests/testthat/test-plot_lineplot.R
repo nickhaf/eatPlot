@@ -35,7 +35,7 @@ test_that("settings do something", {
       margin_right = 0.001,
       margin_top = 0.005,
       n_cols = 6,
-      point_label_nudge = TRUE,
+      point_label_nudge = FALSE,
       point_label_nudge_direction = list("0" = "+", "1" = "-"),
       point_label_nudge_y = 0.1,
       point_label_size = 1,
