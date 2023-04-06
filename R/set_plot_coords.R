@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples # tbd
-set_plot_coords <- function(plot_data) {
+set_plot_coords <- function(plot_data, plot_settings = plotsettings()) {
   min_year <- min(plot_data[["plot_points"]]$year, na.rm = TRUE)
   max_year <- max(plot_data[["plot_points"]]$year, na.rm = TRUE)
 
@@ -15,7 +15,7 @@ set_plot_coords <- function(plot_data) {
     ggplot2::scale_x_continuous(
       #position = "top",
       breaks = unique(plot_data[["plot_points"]]$year),
-      expand = c(0.1, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
+      expand = c(plot_settings$axis_x_background_width_x, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
   )
 }

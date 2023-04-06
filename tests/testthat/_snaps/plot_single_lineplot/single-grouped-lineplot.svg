@@ -42,12 +42,12 @@
 <polygon points='361.37,217.95 363.28,221.26 359.46,221.26 ' style='stroke-width: 0.71; stroke: none; fill: #7F7F7F;' />
 <polygon points='687.40,201.99 689.31,205.31 685.48,205.31 ' style='stroke-width: 0.71; stroke: none; fill: #7F7F7F;' />
 <circle cx='687.40' cy='188.25' r='1.42' style='stroke-width: 0.71; stroke: none; fill: #7F7F7F;' />
-<text x='35.34' y='304.45' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>200</text>
-<text x='35.34' y='219.56' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>205</text>
-<text x='361.37' y='272.54' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>210</text>
-<text x='361.37' y='187.65' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>215</text>
-<text x='687.40' y='240.63' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>220</text>
-<text x='687.40' y='155.74' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>225</text>
+<text x='35.34' y='269.98' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>200</text>
+<text x='35.34' y='254.03' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>205</text>
+<text x='361.37' y='238.07' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>210</text>
+<text x='361.37' y='222.12' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>215</text>
+<text x='687.40' y='206.16' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>220</text>
+<text x='687.40' y='190.21' text-anchor='middle' style='font-size: 5.69px; fill: #7F7F7F; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>225</text>
 <rect x='2.74' y='25.50' width='717.26' height='35.23' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
 <text x='35.34' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>1</text>
 <text x='361.37' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>2</text>

@@ -16,12 +16,12 @@ plot_points <- function(data_plot_points,
                         plot_settings = plotsettings()
                         ) {
   data_plot_points <- data_plot_points[!is.na(data_plot_points[, point_values]), ]
-  data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range)
+  data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range, plot_settings = plot_settings)
 
   if(plot_settings$split_plot == TRUE){
-  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = plot_settings$axis_x_label_centralize - 0.03)
+  data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = plot_settings$point_label_nudge_x)
 }else{
-  data_plot_points_nudge$x_coords <- data_plot_points_nudge$year
+  data_plot_points_nudge$x_coords <- data_plot_points_nudge$year + diff(range(data_plot_points$year)) * plot_settings$point_label_nudge_x
 }
 
   list(
