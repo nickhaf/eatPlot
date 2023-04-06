@@ -21,6 +21,10 @@ plot_braces <- function(dat,
   dat <- build_column(dat, old = label_sig_high, new = "label_sig_high")
   dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
 
+  for(i in c("label_sig_high", "label_sig_bold")){
+    dat[is.na(dat[, i]), i] <- FALSE
+  }
+
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.
   dat$label_est <- ifelse(dat$label_sig_bold == TRUE,

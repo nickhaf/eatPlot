@@ -1,13 +1,14 @@
 #' Set theme, colours, pointshapes and linetypes for lineplot.
 #'
 #'
+#' @inheritParams plot_lineplot
 #' @return ggplot2 plot settings
 #' @export
 #'
 #' @examples #tbd
-settings_lineplot <- function(){
+settings_lineplot <- function(plot_settings = plotsettings()){
   list(
-    theme_line(),
+    theme_line(plot_settings),
     sig_linetypes(),
     sig_pointshapes(),
     grouping_colours()

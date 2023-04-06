@@ -2,7 +2,7 @@
 check_plotsettings <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 21
+      length(settings_list) == 22
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -27,6 +27,7 @@ check_plotsettings <- function(settings_list) {
         "point_label_size",
         "point_size",
         "split_plot",
+        "split_plot_gap_width",
         "y_axis"
       )
   )
@@ -51,6 +52,7 @@ check_plotsettings <- function(settings_list) {
   stopifnot(is.numeric(settings_list$point_label_size))
   stopifnot(is.numeric(settings_list$point_size))
   stopifnot(is.logical(settings_list$split_plot))
+  stopifnot(is.numeric(settings_list$split_plot_gap_width))
   stopifnot(is.logical(settings_list$y_axis))
 }
 
@@ -63,7 +65,7 @@ check_plotsettings <- function(settings_list) {
 #' @param axis_x_label_nudge_y Numeric for shifting the x-axis labels vertically. Increase to lower the x-axis labels.
 #' @param axis_x_label_size Numeric for the font size of the x-axis labels.
 #' @param brace_label_gap_y Numeric for the size of the vertical gap between brace labels.
-#' @param brace_label_nudge_x Numeric. The brace labels will be shifted along the x-axis by this amount.
+#' @param brace_label_nudge_x Numeric. The brace labels will be shifted along the x-axis by this amount. Increase to shift the labels further to the right.
 #' @param brace_label_nudge_y Numeric. The brace labels will be shifted along the y-axis by this amount. Increase to let the labels start further below.
 #' @param brace_label_size Numeric fontsize of the bracelabels.
 #' @param brace_line_width Numeric for the thickness of the brace.
@@ -74,6 +76,7 @@ check_plotsettings <- function(settings_list) {
 #' @param point_label_size Numeric for the fontsize of the pointlabels.
 #' @param point_size Numeric for the size of plotted points.
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
+#' @param split_plot_gap_width Numeric wor the width of the gap in a split plot in npc.
 #' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
@@ -102,6 +105,7 @@ plotsettings <- function(axis_x_background_colour = NULL,
                          point_label_size = NULL,
                          point_size = NULL,
                          split_plot = NULL,
+                         split_plot_gap_width = NULL,
                          y_axis = NULL,
                          default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
@@ -127,6 +131,7 @@ plotsettings <- function(axis_x_background_colour = NULL,
       "point_label_size" = 2,
       "point_size" = 1,
       "split_plot" = FALSE,
+      "split_plot_gap_width" = 0,
       "y_axis" = FALSE
     )
   } else {

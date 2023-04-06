@@ -62,11 +62,12 @@ theme_y_axis <-  function() {
 
 #' Theme for lineplot.
 #'
+#' @inheritParams plot_lineplot
 #' @return ggplot2 theme
 #' @export
 #'
 #' @examples #tbd
-theme_line <- function(){
+theme_line <- function(plot_settings = plotsettings()){
 
   ggplot2::theme_minimal() %+replace%
     ggplot2::theme(
@@ -82,7 +83,7 @@ theme_line <- function(){
       axis.text.y = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_blank(),
       strip.text.x = ggplot2::element_blank(),
-      panel.spacing = ggplot2::unit(0.03, "npc"),
+      panel.spacing = ggplot2::unit(plot_settings$split_plot_gap_width, "npc"), # Gap in split plot
       plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units="npc"),
       plot.title = ggplot2::element_text(size = 7, hjust = 0.5, vjust = 2.5)
     )

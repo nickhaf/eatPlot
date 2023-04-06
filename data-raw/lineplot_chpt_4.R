@@ -21,6 +21,7 @@ lineplot_chpt_4 <- plotsettings(
   point_label_size = 2,
   point_size = 1.7,
   split_plot = TRUE,
+  split_plot_gap_width = 0.03,
   y_axis = FALSE
 )
 
