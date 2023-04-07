@@ -2,7 +2,7 @@
 check_plotsettings <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 27
+      length(settings_list) == 28
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -19,6 +19,7 @@ check_plotsettings <- function(settings_list) {
         "brace_label_size",
         "brace_line_width",
         "brace_span_y",
+        "grouping_colours",
         "line_width",
         "margin_bottom",
         "margin_left",
@@ -49,6 +50,7 @@ check_plotsettings <- function(settings_list) {
   stopifnot(is.numeric(settings_list$brace_label_size))
   stopifnot(is.numeric(settings_list$brace_line_width))
   stopifnot(is.numeric(settings_list$brace_span_y))
+  stopifnot(is_colour(settings_list$grouping_colours) | is.null(settings_list$grouping_colours))
   stopifnot(is.numeric(settings_list$line_width))
   stopifnot(is.numeric(settings_list$margin_bottom))
   stopifnot(is.numeric(settings_list$margin_left))
@@ -80,6 +82,7 @@ check_plotsettings <- function(settings_list) {
 #' @param brace_label_size Numeric fontsize of the bracelabels.
 #' @param brace_line_width Numeric for the thickness of the brace.
 #' @param brace_span_y Numeric for the width of the brace on the y-axis.
+#' @param grouping_colours Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.
 #' @param line_width Numeric for the thicknes of the plotted lines.
 #' @param margin_bottom,margin_left,margin_right,margin_top Numeric for the area around the plot. See [ggplot2::theme()].
 #' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have.
@@ -110,6 +113,7 @@ plotsettings <- function(axis_x_background_colour = NULL,
                          brace_label_nudge_y = NULL,
                          brace_line_width = NULL,
                          brace_span_y = NULL,
+                         grouping_colours = NULL,
                          line_width = NULL,
                          margin_bottom = NULL,
                          margin_left = NULL,
@@ -141,6 +145,7 @@ plotsettings <- function(axis_x_background_colour = NULL,
       "brace_label_size" = 2,
       "brace_line_width" = 0.5,
       "brace_span_y" = 0.1,
+      "grouping_colours" = NULL,
       "line_width" = 1,
       "margin_bottom" = 0,
       "margin_left" = 0,

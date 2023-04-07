@@ -11,7 +11,11 @@ settings_lineplot <- function(plot_settings = plotsettings()){
     theme_line(plot_settings),
     sig_linetypes(),
     sig_pointshapes(),
-    grouping_colours()
+    if( !is.null(plot_settings$grouping_colours)){
+    ggplot2::scale_colour_manual(
+      values = plot_settings$grouping_colours
+  )
+    }
   )
 }
 

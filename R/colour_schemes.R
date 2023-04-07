@@ -1,20 +1,3 @@
-
-#' Wrapper around [ggplot2::scale_colour_manual()] with two predefined colours.
-#'
-#' @details Cases belonging to a group are plotted black, cases not belonging to this group are plotted blue.
-#' @param ... Arguments for [ggplot2::scale_colour_manual()].
-#' @return ggplot2
-#' @export
-#'
-#' @examples #tbd
-grouping_colours <- function(...){
-  ggplot2::scale_colour_manual(
-    values = c(
-    "1" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-    "0" = "black"
-  ), ... )
-}
-
 #' Wrapper around [ggplot2::scale_colour_manual()] with two predefined shapes.
 #'
 #' @details Turns points int triangles if the according p-value is significant.

@@ -13,6 +13,9 @@ lineplot_chpt_4 <- plotsettings(
   brace_label_size = 2,
   brace_line_width = 0.5,
   brace_span_y = 0.1,
+  grouping_colours = c(
+    "1" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
+    "0" = "black"),
   line_width = 0.7,
   margin_bottom = 0.02,
   margin_left = 0.01,

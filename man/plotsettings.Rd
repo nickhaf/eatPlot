@@ -17,6 +17,7 @@ plotsettings(
   brace_label_nudge_y = NULL,
   brace_line_width = NULL,
   brace_span_y = NULL,
+  grouping_colours = NULL,
   line_width = NULL,
   margin_bottom = NULL,
   margin_left = NULL,
@@ -57,6 +58,8 @@ plotsettings(
 \item{brace_line_width}{Numeric for the thickness of the brace.}
 
 \item{brace_span_y}{Numeric for the width of the brace on the y-axis.}
+
+\item{grouping_colours}{Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.}
 
 \item{line_width}{Numeric for the thicknes of the plotted lines.}
 

@@ -29,6 +29,7 @@ test_that("settings do something", {
       brace_label_size = 3,
       brace_line_width = 0.8,
       brace_span_y = 0.16,
+      grouping_colours = c("2" = "blue", "1" = "green"),
       line_width = 1,
       margin_bottom = 0.05,
       margin_left = 0.03,
