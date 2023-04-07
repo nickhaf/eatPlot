@@ -184,6 +184,5 @@ plotsettings <- function(axis_x_background_colour = NULL,
       plot_settings[[i]] <- value
     }
   }
-
   return(plot_settings)
 }

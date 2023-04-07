@@ -1,4 +1,4 @@
-#' Set theme, colours, pointshapes and linetypes for lineplot.
+#' Set the colours, pointshapes and linetypes for lineplot.
 #'
 #'
 #' @inheritParams plot_lineplot
@@ -6,14 +6,6 @@
 #' @export
 #'
 #' @examples #tbd
-settings_lineplot <- function(plot_settings = plotsettings()){
-  list(
-    theme_line(plot_settings)
-
-  )
-}
-
-
 set_scales <- function(plot_settings = plotsettings()){
   list(
   if( !is.null(plot_settings$line_type)){
