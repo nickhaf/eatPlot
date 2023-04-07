@@ -18,6 +18,7 @@ plotsettings(
   brace_line_width = NULL,
   brace_span_y = NULL,
   grouping_colours = NULL,
+  line_type = NULL,
   line_width = NULL,
   margin_bottom = NULL,
   margin_left = NULL,
@@ -25,6 +26,7 @@ plotsettings(
   margin_top = NULL,
   n_cols = NULL,
   point_label_nudge = NULL,
+  point_shapes = NULL,
   point_label_size = NULL,
   point_label_nudge_direction = NULL,
   point_label_nudge_x = NULL,
@@ -61,6 +63,8 @@ plotsettings(
 
 \item{grouping_colours}{Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.}
 
+\item{line_type}{Named vector containing the linetypes for the plots. The names must be either \code{"TRUE"} or \code{"FALSE"}, as the linetpyes represent significances. See \link[ggplot2:scale_linetype]{ggplot2::scale_linetype}.}
+
 \item{line_width}{Numeric for the thicknes of the plotted lines.}
 
 \item{margin_bottom, margin_left, margin_right, margin_top}{Numeric for the area around the plot. See \code{\link[ggplot2:theme]{ggplot2::theme()}}.}
@@ -68,6 +72,8 @@ plotsettings(
 \item{n_cols}{Numeric, indicating how many columns of smaller plots the final lineplot should have.}
 
 \item{point_label_nudge}{Logical. If \code{TRUE}, the point labels will be nudged automatically by \link[ggrepel:geom_text_repel]{ggrepel::geom_text_repel} to try and avoid them overlapping with lines and/or points. Might interfere with other point-label settings, so use at your own risk. Alternatively, you could try to use \code{point_label_nudge_direction} to get some controll over the point labels.}
+
+\item{point_shapes}{Named numeric vector for the shape of the points. The vectornames must be either \code{"TRUE"} or \code{"FALSE"}, as the point-shapes refer to significances. See \link[ggplot2:scale_shape]{ggplot2::scale_shape}.}
 
 \item{point_label_size}{Numeric for the fontsize of the pointlabels.}
 

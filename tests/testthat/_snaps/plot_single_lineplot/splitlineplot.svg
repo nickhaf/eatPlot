@@ -30,8 +30,8 @@
 <text x='167.19' y='499.84' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='6.33px' lengthAdjust='spacingAndGlyphs'>20</text>
 <text x='175.10' y='499.84' style='font-size: 5.69px; font-family: sans;' textLength='6.95px' lengthAdjust='spacingAndGlyphs'>(2)</text>
 <line x1='19.04' y1='290.69' x2='345.07' y2='166.94' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
-<line x1='19.04' y1='255.34' x2='345.07' y2='219.98' style='stroke-width: 2.13; stroke: #F8766D; stroke-linecap: butt;' />
-<line x1='19.04' y1='237.66' x2='345.07' y2='202.30' style='stroke-width: 2.13; stroke: #00BFC4; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />
+<line x1='19.04' y1='255.34' x2='345.07' y2='219.98' style='stroke-width: 2.13; stroke: #F8766D; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
+<line x1='19.04' y1='237.66' x2='345.07' y2='202.30' style='stroke-width: 2.13; stroke: #00BFC4; stroke-linecap: butt;' />
 <polygon points='19.04,253.12 20.96,256.44 17.13,256.44 ' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
 <circle cx='19.04' cy='237.66' r='1.42' style='stroke-width: 0.71; stroke: none; fill: #00BFC4;' />
 <circle cx='345.07' cy='219.98' r='1.42' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
@@ -57,8 +57,8 @@
 <text x='514.80' y='498.67' style='font-size: 4.55px; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
 <text x='518.91' y='500.24' style='font-size: 5.69px; font-family: sans;' textLength='6.95px' lengthAdjust='spacingAndGlyphs'>(4)</text>
 <line x1='377.67' y1='166.94' x2='674.06' y2='149.26' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
-<line x1='377.67' y1='219.98' x2='674.06' y2='184.62' style='stroke-width: 2.13; stroke: #F8766D; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />
-<line x1='377.67' y1='202.30' x2='674.06' y2='166.94' style='stroke-width: 2.13; stroke: #00BFC4; stroke-linecap: butt;' />
+<line x1='377.67' y1='219.98' x2='674.06' y2='184.62' style='stroke-width: 2.13; stroke: #F8766D; stroke-linecap: butt;' />
+<line x1='377.67' y1='202.30' x2='674.06' y2='166.94' style='stroke-width: 2.13; stroke: #00BFC4; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
 <polygon points='674.06,182.41 675.97,185.72 672.15,185.72 ' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
 <circle cx='674.06' cy='166.94' r='1.42' style='stroke-width: 0.71; stroke: none; fill: #00BFC4;' />
 <text x='685.92' y='186.57' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>220</text>

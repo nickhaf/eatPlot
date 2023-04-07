@@ -15,7 +15,12 @@ lineplot_chpt_4 <- plotsettings(
   brace_span_y = 0.1,
   grouping_colours = c(
     "1" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-    "0" = "black"),
+    "0" = "black"
+  ),
+  line_type = c(
+    "TRUE" = "solid",
+    "FALSE" = "dashed"
+  ),
   line_width = 0.7,
   margin_bottom = 0.02,
   margin_left = 0.01,
@@ -27,6 +32,10 @@ lineplot_chpt_4 <- plotsettings(
   point_label_nudge_x = 0.02,
   point_label_nudge_y = 0.18,
   point_label_size = 2,
+  point_shapes = c(
+    "TRUE" = 17,
+    "FALSE" = 16
+  ),
   point_size = 1.7,
   split_plot = TRUE,
   split_plot_gap_width = 0.03,
