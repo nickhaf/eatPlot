@@ -1,4 +1,4 @@
-#' Set theme, colours, pointshapes and linetypes for lineplot.
+#' Set the colours, pointshapes and linetypes for lineplot.
 #'
 #'
 #' @inheritParams plot_lineplot
@@ -6,34 +6,17 @@
 #' @export
 #'
 #' @examples #tbd
-settings_lineplot <- function(plot_settings = plotsettings()){
+set_scales <- function(plot_settings = plotsettings()){
   list(
-    theme_line(plot_settings),
-    sig_linetypes(),
-    sig_pointshapes(),
-    grouping_colours()
+  if( !is.null(plot_settings$line_type)){
+    ggplot2::scale_linetype_manual(values = plot_settings$line_type)
+  },
+  if( !is.null(plot_settings$point_shapes)){
+    ggplot2::scale_shape_manual(values = plot_settings$point_shapes)
+  },
+  if( !is.null(plot_settings$grouping_colours)){
+    ggplot2::scale_colour_manual(
+      values = plot_settings$grouping_colours)
+  }
   )
 }
-
-
-# settings_coord_line <- function(){
-#   list(
-#     ggplot2::coord_cartesian(ylim = c(100, ggplot2::layer_scales(p1)$y$get_limits()[2] + 20), clip = "off")
-#     )
-#   )
-#
-# }
-#
-#
-# settings_title_line <- function(title){
-#   ggplot2::annotation_custom(
-#     grob = grid::rectGrob(gp = grid::gpar(fill = grDevices::rgb(128, 196, 214,
-#                                                                 maxColorValue = 255),
-#                                           alpha = .4,
-#                                           col = 0)),
-#     xmin = -Inf, xmax = Inf,
-#     ymin = ggplot2::layer_scales(p1)$y$get_limits()[2],
-#     ymax = 140),
-#   ggplot2::labs(title = paste0(title, "\n", " "))
-# }
-
