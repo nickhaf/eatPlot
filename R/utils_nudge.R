@@ -83,6 +83,7 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     )
 
     dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "trend")])
+    dat$brace_y <- dat$value
     dat <- build_column(dat, old = "value", new = "brace_y")
   }
 
