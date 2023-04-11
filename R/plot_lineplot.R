@@ -10,6 +10,7 @@
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
+#' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background.
 #' @param plot_settings Named list constructed with `plot_settings()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plot_settings()` for an overview.
 #' @return [ggplot2] object.
 #' @export
@@ -25,13 +26,19 @@ plot_lineplot <- function(plot_data,
                           label_se = "se_trend_no_comp",
                           label_sig_high = "sig_trend_comp_whole",
                           label_sig_bold = "sig_trend_no_comp",
+                          background_lines = TRUE,
                           plot_settings = plotsettings()) {
+
 
   states <- unique(plot_data[[1]]$state_var)
   tiles <- unique(plot_data[[1]][, seperate_plot_var])
 
   plot_list <- list()
-  range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
+  if(!is.null(point_values)){
+  range_est <- range(plot_data[["plot_points"]][,point_values], na.rm = TRUE)
+  }else{
+    stop("Please provide point-values.")
+  }
   position <- 1
 
   for (i in tiles) {
@@ -52,6 +59,7 @@ plot_lineplot <- function(plot_data,
         label_se = label_se,
         label_sig_high = label_sig_high,
         label_sig_bold = label_sig_bold,
+        background_lines = background_lines,
         plot_settings = plot_settings
       ) +
       ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +

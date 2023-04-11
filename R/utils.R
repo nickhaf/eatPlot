@@ -261,3 +261,20 @@ check_column <- function(dat, column) {
 }
 
 
+fill_null <- function(dat, column_name, filling){
+    dat[[column_name]] <- rep(filling, nrow(dat))
+    return(dat)
+}
+
+
+
+build_column_2 <- function(df, column_name, filling = NA){
+
+  if(!is.null(column_name)){
+    df[[deparse(substitute(column_name))]] <- df[[column_name]]
+  }else{
+    df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
+  }
+return(df)
+  }
+

@@ -16,10 +16,11 @@ plot_braces <- function(dat,
                         label_sig_high = NULL,
                         label_sig_bold = NULL,
                         plot_settings = plotsettings()) {
-  dat <- build_column(dat, old = label_est, new = "label_est")
-  dat <- build_column(dat, old = label_se, new = "label_se")
-  dat <- build_column(dat, old = label_sig_high, new = "label_sig_high")
-  dat <- build_column(dat, old = label_sig_bold, new = "label_sig_bold")
+
+  dat <- build_column_2(dat, column_name = label_est, filling = "")
+  dat <- build_column_2(dat, column_name = label_se, filling = "")
+  dat <- build_column_2(dat, column_name = label_sig_high, filling = "")
+  dat <- build_column_2(dat, column_name = label_sig_bold, filling = "")
 
   for(i in c("label_sig_high", "label_sig_bold")){
     dat[is.na(dat[, i]), i] <- FALSE

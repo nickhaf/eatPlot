@@ -17,6 +17,7 @@ test_that("settings do something", {
     plot_data = plot_dat_test,
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
+    background_lines = FALSE,
     plot_settings = plotsettings(
       axis_x_background_colour = "red",
       axis_x_background_width_y = 0.08,
@@ -275,8 +276,10 @@ test_that("adjusted means", {
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
+    point_sig = NULL,
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
+    background_lines = FALSE,
     plot_settings = plotsettings(default_list = lineplot_chpt_4)
   )
 
