@@ -6,8 +6,8 @@
 \usage{
 plot_lines(
   data_plot_lines,
-  line_values,
-  line_sig,
+  line_values = line_values,
+  line_sig = line_sig,
   plot_settings = plotsettings()
 )
 }
