@@ -55,11 +55,16 @@ stopifnot(is.character(parameter))
 
 sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
-dat <- standardise_columns(dat,
-                           competence_var,
-                           grouping_var,
-                           state_var,
-                           group_var)
+
+dat <- build_column_2(dat, competence_var)
+dat <- build_column_2(dat, grouping_var)
+dat <- build_column_2(dat, state_var)
+dat <- build_column_2(dat, group_var)
+
+colnames(dat) <- gsub("\\.", "_", colnames(dat))
+colnames(dat) <- gsub("sig_", "p_", colnames(dat))
+colnames(dat) <- gsub("^sig$", "p", colnames(dat))
+
 
 # Show a warning, if a grouping_var was provided, but not as factor.
 if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
@@ -241,20 +246,4 @@ filter_years <- function(dat, year_list) {
     which(dat$year_start == x[1] & dat$year_end == x[2])
   }))
   return(year_rows)
-}
-
-
-
-standardise_columns <- function(dat, competence_var, grouping_var, state_var, group_var){
-
-  dat <- build_column(dat = dat, old = competence_var, new = "competence_var")
-  dat <- build_column(dat = dat, old = grouping_var, new = "grouping_var")
-  dat <- build_column(dat = dat, old = state_var, new = "state_var")
-  dat <- build_column(dat = dat, old = group_var, new = "group_var")
-
-  colnames(dat) <- gsub("\\.", "_", colnames(dat))
-  colnames(dat) <- gsub("sig_", "p_", colnames(dat))
-  colnames(dat) <- gsub("^sig$", "p", colnames(dat))
-
-  return(dat)
 }

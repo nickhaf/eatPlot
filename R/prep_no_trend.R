@@ -33,11 +33,17 @@ prep_no_trend <- function(dat,
 
   sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
-  dat <- standardise_columns(dat,
-                             competence_var,
-                             grouping_var,
-                             state_var,
-                             group_var)
+
+  dat <- build_column_2(dat, competence_var)
+  dat <- build_column_2(dat, grouping_var)
+  dat <- build_column_2(dat, state_var)
+  dat <- build_column_2(dat, group_var)
+
+  colnames(dat) <- gsub("\\.", "_", colnames(dat))
+  colnames(dat) <- gsub("sig_", "p_", colnames(dat))
+  colnames(dat) <- gsub("^sig$", "p", colnames(dat))
+
+
 
   # Show a warning, if a grouping_var was provided, but not as factor.
   if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){

@@ -17,6 +17,7 @@ test_that("settings do something", {
     plot_data = plot_dat_test,
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
+    background_lines = FALSE,
     plot_settings = plotsettings(
       axis_x_background_colour = "red",
       axis_x_background_width_y = 0.08,
@@ -119,7 +120,7 @@ test_that("lineplot chpt_4 with one group is still the same", {
     plot_settings = plotsettings(default_list = lineplot_chpt_4)
   )
   vdiffr::expect_doppelganger("lineplot_chpt_4_1group", p_line)
-  #save_plot(p_line, filename = "../split_lineplot_trend_books-v02.pdf")
+  # save_plot(p_line, filename = "../split_lineplot_trend_books-v02.pdf")
 })
 
 test_that("lineplot chpt_4 with two groups is still the same", {
@@ -206,15 +207,15 @@ test_that("competence_vars can be used as tiles", {
     seperate_plot_var = "competence_var",
     line_sig = "sig_trend_no_comp",
     label_sig_high = NULL,
-      plot_settings = plotsettings(
-        default_list = lineplot_chpt_4_germany
-      )
+    plot_settings = plotsettings(
+      default_list = lineplot_chpt_4_germany
     )
+  )
 
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles", p_line)
 
-  #save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
+  # save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
 })
 
 test_that("competence_vars with 3 groups", {
@@ -255,10 +256,10 @@ test_that("competence_vars with 3 groups", {
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles_3groups", p_line)
 
-  #save_plot(p_line, filename = "../split_lineplot_kb_books_3groups_v02.pdf", height = 226.2 / 2 + 10)
+  # save_plot(p_line, filename = "../split_lineplot_kb_books_3groups_v02.pdf", height = 226.2 / 2 + 10)
 })
 
-test_that("adjusted means", {
+test_that("adjusted means states", {
   plot_dat_test <- prep_trend(
     dat = trend_books,
     competence = "GL",
@@ -275,11 +276,46 @@ test_that("adjusted means", {
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
+    point_sig = NULL,
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
-    plot_settings = plotsettings(default_list = lineplot_chpt_4)
+    background_lines = FALSE,
+    plot_settings = plotsettings(margin_bottom = 0.03, default_list = lineplot_chpt_4)
   )
 
-  vdiffr::expect_doppelganger("lineplot_chpt_4_2groups_adjusted", p_line)
-  #save_plot(p_line, filename = "../split_lineplot_2_books_adjusted.pdf")
+  vdiffr::expect_doppelganger("lineplot_chpt_4_adj_means", p_line)
+
+
+  # save_plot(p_line, filename = "../adjusted_means_states.pdf")
+})
+
+test_that("adjusted means for whole group", {
+  trend_books_2 <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
+  trend_books_2$KBuecher_imp3 <- factor(trend_books_2$KBuecher_imp3, levels = c("1", "0", "0.vs.1"))
+  trend_books_2$kb <- gsub("DHW", "Deutsch Lesen", trend_books_2$kb)
+  trend_books_2$kb <- gsub("GL", "Deutsch Zuhören", trend_books_2$kb)
+  trend_books_2$kb <- gsub("GM", "Deutsch Orthographie", trend_books_2$kb)
+  trend_books_2$kb <- gsub("hoeren", "Englisch Leseverstehen", trend_books_2$kb)
+  trend_books_2$kb <- gsub("lesen", "Englisch Hörverstehen", trend_books_2$kb)
+
+  plot_dat_test_kb <- prep_trend(
+    dat = trend_books_2,
+    states = "wholeGroup",
+    grouping_var = "KBuecher_imp3",
+    x_years = list(c(2016, 2021)),
+    x_braces = list(c(2016, 2021))
+  )
+
+  p_line_deutschland <- plot_lineplot(
+    plot_data = plot_dat_test_kb,
+    seperate_plot_var = "competence_var",
+    point_sig = NULL,
+    line_sig = "sig_trend_no_comp",
+    label_sig_high = "sig_point_end",
+    background_lines = FALSE,
+    plot_settings = plotsettings(default_list = lineplot_chpt_4_germany)
+  )
+
+  vdiffr::expect_doppelganger("lineplot_chpt_4_adjusted_ger", p_line_deutschland)
+  # save_plot(p_line_deutschland, filename = "../adjusted_means_ger.pdf", height = 226.2 / 2 + 10)
 })

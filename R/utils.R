@@ -30,18 +30,7 @@ filter_strings <- function(identifier, paste_vec, val_vec) {
   return(res)
 }
 
-build_column <- function(dat, old, new) {
-  check_column(dat, old)
-  if (is.null(old)) {
-    dat[, new] <- NA
-    return(dat)
-  } else {
-    #colnames(dat)[colnames(dat) == old] <- new
-    dat[, new] <- dat[ , old]
 
-    return(dat)
-  }
-}
 
 remove_columns <- function(dat, cols) {
   dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
@@ -260,4 +249,36 @@ check_column <- function(dat, column) {
   }
 }
 
+
+fill_null <- function(dat, column_name, filling){
+    dat[[column_name]] <- rep(filling, nrow(dat))
+    return(dat)
+}
+
+
+## Add a new column that is derived from an old one. Takes characters as input.
+build_column <- function(dat, old, new) {
+  check_column(dat, old)
+  if (is.null(old)) {
+    dat[, new] <- NA
+    return(dat)
+  } else {
+    #colnames(dat)[colnames(dat) == old] <- new
+    dat[, new] <- dat[ , old]
+
+    return(dat)
+  }
+}
+
+
+## Add a new column that is derived from an old one. Takes an object as input.
+build_column_2 <- function(df, column_name, filling = NA){
+
+  if(!is.null(column_name)){
+    df[[deparse(substitute(column_name))]] <- df[[column_name]]
+  }else{
+    df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
+  }
+return(df)
+  }
 

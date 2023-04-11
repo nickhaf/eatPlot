@@ -10,12 +10,16 @@
 #'
 #' @examples # tbd
 plot_points <- function(data_plot_points,
+                        point_values = "est_point",
+                        point_sig = "sig_point",
                         y_range,
-                        point_values,
-                        point_sig,
                         plot_settings = plotsettings()
                         ) {
-  data_plot_points <- data_plot_points[!is.na(data_plot_points[, point_values]), ]
+
+  data_plot_points <- build_column_2(data_plot_points, column_name = point_values, filling = NA)
+  data_plot_points <- build_column_2(data_plot_points, column_name = point_sig, filling = FALSE)
+
+  data_plot_points <- data_plot_points[!is.na(data_plot_points$point_values), ]
   data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range, plot_settings = plot_settings)
 
   if(plot_settings$split_plot == TRUE){
@@ -29,9 +33,9 @@ plot_points <- function(data_plot_points,
       data = data_plot_points_nudge,
       ggplot2::aes(
         x = .data$year,
-        y = .data[[point_values]],
+        y = .data$point_values,
         colour = .data$grouping_var,
-        shape = .data[[point_sig]],
+        shape = .data$point_sig,
         group = .data$trend
       ),
       size = plot_settings$point_size
@@ -42,9 +46,9 @@ plot_points <- function(data_plot_points,
       data = data_plot_points_nudge,
       ggplot2::aes(
         x = .data$x_coords,
-        y = .data[[point_values]],
+        y = .data$point_values,
         colour = .data$grouping_var,
-        label = round(.data[[point_values]], 0),
+        label = round(.data$point_values, 0),
         group = .data$trend
       ),
       nudge_y = data_plot_points_nudge$nudge_y,
@@ -57,9 +61,9 @@ plot_points <- function(data_plot_points,
         data = data_plot_points_nudge,
         ggplot2::aes(
           x = .data$x_coords,
-          y = .data[[point_values]],
+          y = .data$point_values,
           colour = .data$grouping_var,
-          label = round(.data[[point_values]], 0),
+          label = round(.data$point_values, 0),
           group = .data$trend
         ),
         nudge_y = data_plot_points_nudge$nudge_y,
