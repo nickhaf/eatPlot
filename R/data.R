@@ -56,3 +56,16 @@
 #'   ...
 #' }
 "lineplot_chpt_4_germany"
+
+
+#' BT22 default plot settings.
+#'
+#' Default plot settings for barplots.
+#'
+#' @format ## `barplot_MinSta`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"barplot_MinSta"

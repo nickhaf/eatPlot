@@ -9,7 +9,7 @@ plot_points(
   point_values = "est_point",
   point_sig = "sig_point",
   y_range,
-  plot_settings = plotsettings()
+  plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ plot_points(
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
-\item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}
+\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
 \value{
 ggplot2 object

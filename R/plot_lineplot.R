@@ -11,7 +11,7 @@
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
 #' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background.
-#' @param plot_settings Named list constructed with `plot_settings()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plot_settings()` for an overview.
+#' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
 #' @export
 #'
@@ -27,8 +27,9 @@ plot_lineplot <- function(plot_data,
                           label_sig_high = "sig_trend_comp_whole",
                           label_sig_bold = "sig_trend_no_comp",
                           background_lines = TRUE,
-                          plot_settings = plotsettings()) {
+                          plot_settings = plotsettings_lineplot()) {
 
+check_plotsettings_lineplot(plot_settings)
 
   states <- unique(plot_data[[1]]$state_var)
   tiles <- unique(plot_data[[1]][, seperate_plot_var])

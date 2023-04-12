@@ -1,5 +1,5 @@
 # Checking
-check_plotsettings <- function(settings_list) {
+check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
       length(settings_list) == 30
@@ -105,8 +105,8 @@ check_plotsettings <- function(settings_list) {
 #' @export
 #'
 #' @examples
-#' plotsettings(n_cols = 2, axis_x_label_centralize = 0.1)
-plotsettings <- function(axis_x_background_colour = NULL,
+#' plotsettings_lineplot(n_cols = 2, axis_x_label_centralize = 0.1)
+plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                          axis_x_background_width_x = NULL,
                          axis_x_background_width_y = NULL,
                          axis_x_label_centralize = NULL,
@@ -175,7 +175,7 @@ plotsettings <- function(axis_x_background_colour = NULL,
     plot_settings <- default_list
   }
 
-  check_plotsettings(plot_settings)
+  check_plotsettings_lineplot(plot_settings)
 
   ## Update the default list with all values that are != NULL
   for (i in names(plot_settings)) {

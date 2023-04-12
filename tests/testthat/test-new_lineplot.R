@@ -77,7 +77,7 @@
 # p_line <- plot_lineplot(plot_data = plot_dat_3,
 #               line_sig = "sig_trend_no_comp",
 #               label_sig_high = "sig_point_end",
-#               plot_settings = plotsettings(split_plot = TRUE, default_list = lineplot_chpt_4)
+#               plot_settings = plotsettings_lineplot(split_plot = TRUE, default_list = lineplot_chpt_4)
 #               )
 
 # save_plot(p_line, filename = "../split_lineplot_3.pdf")

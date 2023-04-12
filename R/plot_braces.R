@@ -3,7 +3,7 @@
 #' @param dat Prepared Trend data.
 #' @inheritParams plot_lineplot
 #' @inheritParams plot_single_lineplot
-#' @inheritParams plotsettings
+#' @inheritParams plotsettings_lineplot
 #'
 #' @return ggplot2 object.
 #' @export
@@ -15,7 +15,7 @@ plot_braces <- function(dat,
                         label_se = NULL,
                         label_sig_high = NULL,
                         label_sig_bold = NULL,
-                        plot_settings = plotsettings()) {
+                        plot_settings = plotsettings_lineplot()) {
 
   dat <- build_column_2(dat, column_name = label_est, filling = "")
   dat <- build_column_2(dat, column_name = label_se, filling = "")
@@ -63,7 +63,7 @@ plot_braces <- function(dat,
 
 
 # Utils -------------------------------------------------------------------
-draw_braces <- function(dat, plot_settings = plotsettings()) {
+draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
   if (plot_settings$split_plot == TRUE) {
     res <- ggbrace::geom_brace(
       data = unique(dat[, c("trend", "year", "brace_y")]),

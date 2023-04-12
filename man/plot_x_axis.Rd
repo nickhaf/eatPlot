@@ -4,14 +4,14 @@
 \alias{plot_x_axis}
 \title{Plot the x-Axis.}
 \usage{
-plot_x_axis(data_plot_points, y_range, plot_settings = plotsettings())
+plot_x_axis(data_plot_points, y_range, plot_settings = plotsettings_lineplot())
 }
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
-\item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}
+\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
 \value{
 A blue stripe on top of ggplot2 plot which can be used as x-axis.

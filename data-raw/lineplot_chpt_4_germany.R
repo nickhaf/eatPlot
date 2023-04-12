@@ -1,5 +1,5 @@
 
-lineplot_chpt_4_germany <- plotsettings(
+lineplot_chpt_4_germany <- plotsettings_lineplot(
   axis_x_background_width_x = 0.075,
   brace_label_nudge_x = 0.11,
   n_cols = 3,

@@ -3,7 +3,7 @@
 #' @param data_plot_points Data frame with the point estimates for every year. Prepared by ...
 #' @inheritParams plot_lineplot
 #' @inheritParams plot_single_lineplot
-#' @inheritParams plotsettings
+#' @inheritParams plotsettings_lineplot
 #'
 #' @return ggplot2 object
 #' @export
@@ -13,7 +13,7 @@ plot_points <- function(data_plot_points,
                         point_values = "est_point",
                         point_sig = "sig_point",
                         y_range,
-                        plot_settings = plotsettings()
+                        plot_settings = plotsettings_lineplot()
                         ) {
 
   data_plot_points <- build_column_2(data_plot_points, column_name = point_values, filling = NA)

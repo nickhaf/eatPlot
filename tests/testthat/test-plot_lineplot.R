@@ -18,7 +18,7 @@ test_that("settings do something", {
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
     background_lines = FALSE,
-    plot_settings = plotsettings(
+    plot_settings = plotsettings_lineplot(
       axis_x_background_colour = "red",
       axis_x_background_width_y = 0.08,
       axis_x_label_centralize = 0.15,
@@ -117,7 +117,7 @@ test_that("lineplot chpt_4 with one group is still the same", {
     plot_data = plot_dat_test,
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
-    plot_settings = plotsettings(default_list = lineplot_chpt_4)
+    plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
   vdiffr::expect_doppelganger("lineplot_chpt_4_1group", p_line)
   # save_plot(p_line, filename = "../split_lineplot_trend_books-v02.pdf")
@@ -142,7 +142,7 @@ test_that("lineplot chpt_4 with two groups is still the same", {
     plot_data = plot_dat_test,
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
-    plot_settings = plotsettings(default_list = lineplot_chpt_4)
+    plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_2groups", p_line)
@@ -174,7 +174,7 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
     plot_data = plot_dat_3,
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
-    plot_settings = plotsettings(
+    plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4
     )
   )
@@ -207,7 +207,7 @@ test_that("competence_vars can be used as tiles", {
     seperate_plot_var = "competence_var",
     line_sig = "sig_trend_no_comp",
     label_sig_high = NULL,
-    plot_settings = plotsettings(
+    plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4_germany
     )
   )
@@ -248,7 +248,7 @@ test_that("competence_vars with 3 groups", {
     seperate_plot_var = "competence_var",
     line_sig = "sig_trend_no_comp",
     label_sig_high = NULL,
-    plot_settings = plotsettings(
+    plot_settings = plotsettings_lineplot(
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
       default_list = lineplot_chpt_4_germany
     )
@@ -280,7 +280,7 @@ test_that("adjusted means states", {
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
     background_lines = FALSE,
-    plot_settings = plotsettings(margin_bottom = 0.03, default_list = lineplot_chpt_4)
+    plot_settings = plotsettings_lineplot(margin_bottom = 0.03, default_list = lineplot_chpt_4)
   )
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_adj_means", p_line)
@@ -313,7 +313,7 @@ test_that("adjusted means for whole group", {
     line_sig = "sig_trend_no_comp",
     label_sig_high = "sig_point_end",
     background_lines = FALSE,
-    plot_settings = plotsettings(default_list = lineplot_chpt_4_germany)
+    plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4_germany)
   )
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_adjusted_ger", p_line_deutschland)
