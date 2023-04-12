@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples # tbd
-set_plot_coords <- function(plot_data, plot_settings = plotsettings()) {
+set_plot_coords <- function(plot_data, plot_settings = plotsettings_lineplot()) {
   min_year <- min(plot_data[["plot_points"]]$year, na.rm = TRUE)
   max_year <- max(plot_data[["plot_points"]]$year, na.rm = TRUE)
 

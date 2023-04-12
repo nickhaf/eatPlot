@@ -4,7 +4,7 @@
 \alias{theme_line}
 \title{Theme for lineplot.}
 \usage{
-theme_line(plot_settings = plotsettings())
+theme_line(plot_settings = plotsettings_lineplot())
 }
 \arguments{
 \item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}

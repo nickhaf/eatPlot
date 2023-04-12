@@ -16,7 +16,7 @@ plot_single_lineplot(
   label_sig_high = "sig_trend_comp_whole",
   label_sig_bold = "sig_trend_no_comp",
   background_lines = TRUE,
-  plot_settings = plotsettings()
+  plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{

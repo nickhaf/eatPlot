@@ -1,7 +1,7 @@
 #' Plot a single lineplot. Multiple of this lineplots are combined as tiles to the output of [plot_lineplot()].
 #'
 #' @inheritParams plot_lineplot
-#' @inheritParams plotsettings
+#' @inheritParams plotsettings_lineplot
 #' @param y_range Numeric vector with two elements, indicating the min and max for the y axis.
 #'
 #' @return ggplot2 Object.
@@ -19,7 +19,7 @@ plot_single_lineplot <- function(plot_data,
                                  label_sig_high = "sig_trend_comp_whole",
                                  label_sig_bold = "sig_trend_no_comp",
                                  background_lines = TRUE,
-                                 plot_settings = plotsettings()) {
+                                 plot_settings = plotsettings_lineplot()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
 theme_line(plot_settings),

@@ -16,7 +16,10 @@
 # data_bar_l <- data_bar[data_bar$depVar == "minVerfehlt" & data_bar$year == "2021", ]
 # data_bar_r <- data_bar[data_bar$depVar == "regErreicht" & data_bar$year == "2021", ]
 #
+#
 # ## How to deal with the sig erreicht? Muss ja ein beidseitiger test sein, da muuss die Signifikanz anders berechnet werden
+# data_bar_l$est_no_comp <- data_bar_l$est_no_comp *100
+# plot_bar(data_bar_l, x_value = "est_no_comp", grouping = "sig_point_comp_whole", bar_fill = )
 #
 # plot_l <- ggplot2::ggplot(
 #   data = data_bar_l,

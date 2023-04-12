@@ -4,7 +4,7 @@
 \alias{plot_x_axis}
 \title{Plot the x-Axis.}
 \usage{
-plot_x_axis(data_plot_points, y_range, plot_settings = plotsettings())
+plot_x_axis(data_plot_points, y_range, plot_settings = plotsettings_lineplot())
 }
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}

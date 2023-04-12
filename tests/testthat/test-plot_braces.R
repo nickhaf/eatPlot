@@ -22,7 +22,7 @@ test_that("y limits are set correctly", {
       label_se = "se",
       label_sig_high = "sig_1",
       label_sig_bold = "sig_2",
-      plot_settings = plotsettings(split_plot = TRUE)
+      plot_settings = plotsettings_lineplot(split_plot = TRUE)
     )
   coords <- calc_coords(c(400, 503))
 
@@ -73,7 +73,7 @@ test_that("single brace is drawn", {
   vdiffr::expect_doppelganger(
     "single brace",
     ggplot2::ggplot() +
-      draw_braces(test_brace, plot_settings = plotsettings(split_plot = FALSE))
+      draw_braces(test_brace, plot_settings = plotsettings_lineplot(split_plot = FALSE))
   )
 })
 
@@ -86,7 +86,7 @@ test_that("double brace is drawn", {
     mid = c(0.25, 0.5)
   )
   vdiffr::expect_doppelganger("double brace", ggplot2::ggplot() +
-    draw_braces(test_brace_double, plot_settings = plotsettings(split_plot = FALSE)))
+    draw_braces(test_brace_double, plot_settings = plotsettings_lineplot(split_plot = FALSE)))
 })
 
 test_that("brace label is drawn", {
@@ -102,7 +102,7 @@ test_that("brace label is drawn", {
   vdiffr::expect_doppelganger(
     "brace label",
     ggplot2::ggplot() +
-      draw_brace_label(test_label, plot_settings = plotsettings())
+      draw_brace_label(test_label, plot_settings = plotsettings_lineplot())
   )
 })
 
@@ -279,7 +279,7 @@ test_that("Braces can be facet wrapped", {
         label_se = "se",
         label_sig_high = "sig_2",
         label_sig_bold = "sig_1",
-        plot_settings = plotsettings(split_plot = TRUE)
+        plot_settings = plotsettings_lineplot(split_plot = TRUE)
       ) +
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")) +
       ggplot2::facet_wrap(~trend, scales = "free_x")

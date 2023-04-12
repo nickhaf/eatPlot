@@ -67,7 +67,7 @@ theme_y_axis <-  function() {
 #' @export
 #'
 #' @examples #tbd
-theme_line <- function(plot_settings = plotsettings()){
+theme_line <- function(plot_settings = plotsettings_lineplot()){
 
   ggplot2::theme_minimal() %+replace%
     ggplot2::theme(

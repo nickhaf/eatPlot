@@ -8,7 +8,7 @@ plot_lines(
   data_plot_lines,
   line_values = c("est_point_start", "est_point_end"),
   line_sig = "sig_trend_comp_within",
-  plot_settings = plotsettings()
+  plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{

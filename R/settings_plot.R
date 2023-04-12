@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples #tbd
-set_scales <- function(plot_settings = plotsettings()){
+set_scales <- function(plot_settings = plotsettings_lineplot()){
   list(
   if( !is.null(plot_settings$line_type)){
     ggplot2::scale_linetype_manual(values = plot_settings$line_type)

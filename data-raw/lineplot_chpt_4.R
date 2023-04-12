@@ -1,6 +1,6 @@
 ## code to prepare `lineplot_chpt_4` dataset goes here
 
-lineplot_chpt_4 <- plotsettings(
+lineplot_chpt_4 <- plotsettings_lineplot(
   axis_x_background_colour = "lightblue",
   axis_x_background_width_x = 0.1,
   axis_x_background_width_y = 0.04,

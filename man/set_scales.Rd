@@ -4,7 +4,7 @@
 \alias{set_scales}
 \title{Set the colours, pointshapes and linetypes for lineplot.}
 \usage{
-set_scales(plot_settings = plotsettings())
+set_scales(plot_settings = plotsettings_lineplot())
 }
 \arguments{
 \item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}

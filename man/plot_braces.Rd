@@ -11,7 +11,7 @@ plot_braces(
   label_se = NULL,
   label_sig_high = NULL,
   label_sig_bold = NULL,
-  plot_settings = plotsettings()
+  plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{

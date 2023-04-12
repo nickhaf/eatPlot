@@ -63,7 +63,7 @@ test_that("Point nudge is calculated correctly", {
 
   expect_equal(calc_y_nudge(df,
                             y_range = c(1, 2),
-                            plot_settings = plotsettings(point_label_nudge_y = 0.18)
+                            plot_settings = plotsettings_lineplot(point_label_nudge_y = 0.18)
                             )$nudge_y, c(0.18, -0.18, -0.18, 0.18, 0.18, -0.18, 0.18, -0.18)
                )
 })
@@ -71,7 +71,7 @@ test_that("Point nudge is calculated correctly", {
 
 test_that("", {
   df <- data.frame(grouping_var = as.factor(c("a", "b", "c")))
-expect_equal(nudge_by_level(df, plot_settings = plotsettings(point_label_nudge_direction = list("a" = "-",
+expect_equal(nudge_by_level(df, plot_settings = plotsettings_lineplot(point_label_nudge_direction = list("a" = "-",
                                                                                    "b" = "-",
                                                                                    "c" = "+")),
                             nudge_val = 0.1

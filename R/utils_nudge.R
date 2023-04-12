@@ -1,6 +1,6 @@
 
 # Plot_braces -------------------------------------------------------------
-calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings()) {
+calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
   output_format <- match.arg(output_format)
   sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend"), check_columns, dat = dat)
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
@@ -121,7 +121,7 @@ calc_x_nudge <- function(dat, nudge_x) {
 }
 
 
-calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings()) {
+calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_lineplot()) {
   range_est <- diff(y_range)
   nudge_val <- range_est * plot_settings$point_label_nudge_y
 

@@ -9,7 +9,7 @@ plot_points(
   point_values = "est_point",
   point_sig = "sig_point",
   y_range,
-  plot_settings = plotsettings()
+  plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{

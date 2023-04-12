@@ -4,7 +4,7 @@
 \alias{set_plot_coords}
 \title{Set the x- and y-coordinates for a plot.}
 \usage{
-set_plot_coords(plot_data, plot_settings = plotsettings())
+set_plot_coords(plot_data, plot_settings = plotsettings_lineplot())
 }
 \arguments{
 \item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
