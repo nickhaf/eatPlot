@@ -36,6 +36,13 @@ plot_bar <- function(no_trend_list,
     data_plot_bar <- no_trend_list
   }
 
+
+# Check columns -----------------------------------------------------------
+  data_plot_bar <- build_column_2(data_plot_bar, column_name = grouping, filling = NA)
+  data_plot_bar <- build_column_2(data_plot_bar, column_name = bar_fill, filling = NA)
+  data_plot_bar <- build_column_2(data_plot_bar, column_name = bar_pattern_fill, filling = NA)
+
+
   plot_borders <- calc_plot_borders(data_plot_bar[[x_value]])
   scale_breaks <- seq(plot_borders[1], plot_borders[2], by = 10)
 
@@ -55,8 +62,8 @@ plot_bar <- function(no_trend_list,
       )
     ) +
     ggstats::geom_stripped_rows(
-      odd = plot_settings$background_stripes_colour[1], #grDevices::rgb(219, 238, 244, maxColorValue = 255),
-      even = plot_settings$background_stripes_colour[2]) + #"#00000000") +
+      odd = plot_settings$background_stripes_colour[1],
+      even = plot_settings$background_stripes_colour[2]) +
     ggplot2::geom_vline(
       xintercept = scale_breaks,
       linetype = "dashed", colour = "darkgrey"
