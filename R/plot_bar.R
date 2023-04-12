@@ -11,6 +11,7 @@
 #' @param bar_fill_setting Named vector with the bar filling colours. Names of the vector must be found in the column specified in `bar_fill`. Defaults to ...
 #' @param bar_pattern_fill_setting Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to ...
 #' @param bar_frame_setting Named vector with the pattern types. Names of the vector must be found in the column specified in `bar_frame`. Defaults to ...
+#' @param plot_settings Named list constructed with `plotsettings_barplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_barplot()` for an overview.
 #'
 #' @return Returns a [ggplot2] barplot.
 #' @export
@@ -26,7 +27,8 @@ plot_bar <- function(no_trend_list,
                      bar_pattern_setting = sig_pattern,
                      bar_pattern_fill = "grouping_var",
                      bar_pattern_fill_setting = adj_pattern_fill,
-                     bar_frame_setting = sig_frame) {
+                     bar_frame_setting = sig_frame,
+                     plot_settings = plotsettings_barplot()) {
 
   if (inherits(no_trend_list, "list")) {
     data_plot_bar <- no_trend_list[["plot_bar"]]
@@ -53,8 +55,8 @@ plot_bar <- function(no_trend_list,
       )
     ) +
     ggstats::geom_stripped_rows(
-      odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
-      even = "#00000000") +
+      odd = plot_settings$background_stripes_colour[1], #grDevices::rgb(219, 238, 244, maxColorValue = 255),
+      even = plot_settings$background_stripes_colour[2]) + #"#00000000") +
     ggplot2::geom_vline(
       xintercept = scale_breaks,
       linetype = "dashed", colour = "darkgrey"

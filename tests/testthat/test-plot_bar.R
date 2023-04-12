@@ -22,7 +22,10 @@ test_that("Barplot is still the same", {
                                        bar_pattern_fill_setting = c(
                                          "a" = "yellow",
                                          "b" = "orange"
-                                       ))
+                                       ),
+                                       plot_settings = plotsettings_barplot(background_stripes_colour = c("red", "blue"),
+                                                                            default_list = barplot_MinSta)
+                                       )
   )
 })
 
