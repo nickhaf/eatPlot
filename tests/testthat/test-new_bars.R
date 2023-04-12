@@ -1,30 +1,29 @@
+# #
+# # # Umsetzung der neuen Plots -----------------------------------------------
+# # # df_min <- data.frame(land = factor(c("Berlin", "Bremen", "Hessen")),
+# # #                      min_nicht = c(19, 14, 15),
+# # #                                  reg_erreicht = c(60, 50, 45),
+# # #                                  sig_reg_erreicht = c("over", "same", "under")
+# # #                                  )
+# #
+# min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/BT2021_Abb3.9.xlsx", sheet = "Daten BT21")
 #
-# # Umsetzung der neuen Plots -----------------------------------------------
-# # df_min <- data.frame(land = factor(c("Berlin", "Bremen", "Hessen")),
-# #                      min_nicht = c(19, 14, 15),
-# #                                  reg_erreicht = c(60, 50, 45),
-# #                                  sig_reg_erreicht = c("over", "same", "under")
-# #                                  )
-#
-#
-# min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/Abb3.9_Balken_2021_Lesen.xlsx", sheet = "Daten BT21")
-#
-# View(min_stand)
 #
 # data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
+#
+#
 # data_bar <- data_plot_new[["plot_bar"]]
 # data_bar_l <- data_bar[data_bar$depVar == "minVerfehlt" & data_bar$year == "2021", ]
 # data_bar_r <- data_bar[data_bar$depVar == "regErreicht" & data_bar$year == "2021", ]
 #
 # ## How to deal with the sig erreicht? Muss ja ein beidseitiger test sein, da muuss die Signifikanz anders berechnet werden
 #
-#
 # plot_l <- ggplot2::ggplot(
 #   data = data_bar_l,
 #   mapping = ggplot2::aes(
 #     x = est_point_no_comp * 100,
 #     y = state_var,
-#     linetype = sig_point_comp
+#     linetype = sig_point_comp_whole
 #   )) +
 #   ggstats::geom_stripped_rows(
 #     odd = "lightgrey",
@@ -47,7 +46,7 @@
 #   mapping = ggplot2::aes(
 #     x = est_point_no_comp * 100,
 #     y = state_var,
-#     linetype = sig_point_comp
+#     linetype = sig_point_comp_whole
 #   )) +
 #   ggstats::geom_stripped_rows(
 #     odd = "lightgrey",
@@ -67,9 +66,9 @@
 #
 # p_merged <- plot_table_bar(plot_l, plot_r)
 #
-#
-# # Tabelle -----------------------------------------------------------------
-#
+# #
+# # # Tabelle -----------------------------------------------------------------
+# #
 # data_t <- data_bar_l
 # data_t$x_label <- rep("Land", nrow(data_t))
 # y_value <- "state_var"
@@ -87,15 +86,15 @@
 #     # As margin is not perfectly eliminated
 #     axis.ticks.length.y = ggplot2::unit(0, "pt")
 #   )
-#
-#
-#
-#
-# # Plot 2 -----------------------------------------------------------------
-#
-# # Idee um nur das erste Bundesland  zu plotten: Alle außer dem ersten in den Daten durch "" ersetzten
-#
-#
+
+
+
+
+# Plot 2 -----------------------------------------------------------------
+
+# Idee um nur das erste Bundesland  zu plotten: Alle außer dem ersten in den Daten durch "" ersetzten
+
+
 # data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
 #
 # data_plot_new[["plot_bar"]]$x_label <- as.factor(data_plot_new[["plot_bar"]]$year)
@@ -112,7 +111,7 @@
 #     odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
 #     even = "#00000000") +
 #   #plot_column(unique(dat_p$keyword_no_comp)) +
-#   build_columns(data_plot_table = dat_p) +
+#   build_columns(data_plot_table = dat_p, x_axis = "grouping_var") +
 #   theme_table()
 #
 #
@@ -189,9 +188,9 @@
 #
 #
 # ## Stripes:
-# ggplot(data_p_2, aes(x = est_trend_no_comp,
+# ggplot2::ggplot(data_p_2, ggplot2::aes(x = est_trend_no_comp,
 #                      y = keyword_no_comp)) +
-#   geom_rect(aes(ymin = keyword_no_comp,
+#   ggplot2::geom_rect(ggplot2::aes(ymin = keyword_no_comp,
 #                 ymax = dplyr::lead(keyword_no_comp),
 #                 xmin = -0.5,
 #                 xmax = Inf,

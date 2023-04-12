@@ -39,6 +39,8 @@ prep_trend <- function(dat,
 
 # Checks ------------------------------------------------------------------
 
+  dat <- as.data.frame(dat)
+
 ## Check arguments
 stopifnot(is.data.frame(dat))
 stopifnot(is.character(competence) | is.null(competence))
@@ -197,10 +199,14 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   ##############
   ## plot_bar ##
   ##############
-  if (nrow(comp_state) != 0) {
+
+  comp_wholeGroup_point <- list_building_blocks[["point_comp_data"]][list_building_blocks[["point_comp_data"]]$compare_2 == "wholeGroup", ]
+  comp_state_point <- list_building_blocks[["point_comp_data"]][list_building_blocks[["point_comp_data"]]$compare_2 == "BL" | list_building_blocks[["point_comp_data"]]$compare_1 == "_groupingVar", ]
+
+  if (nrow(comp_state_point) != 0) {
     plot_dat[["plot_bar"]] <- merge(
       list_building_blocks[["point_no_comp_data"]],
-      list_building_blocks[["point_comp_data"]],
+      comp_state_point,
       by = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
       suffixes = c("_no_comp", "_comp"),
       all = TRUE
@@ -209,18 +215,34 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
     plot_dat[["plot_bar"]] <- list_building_blocks[["point_no_comp_data"]]
   }
 
+  if (nrow(comp_wholeGroup) != 0) {
+    plot_dat[["plot_bar"]] <- merge(
+      plot_dat[["plot_bar"]],
+      comp_wholeGroup_point,
+      by = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
+      suffixes = c("_no_comp", "_comp_whole"),
+      all = TRUE
+    )
+  } else {
+    plot_dat[["plot_bar"]] <- list_building_blocks[["point_no_comp_data"]]
+  }
+
+
+  ## Wo wird die wholeGroup comparison rangehangen? Muss hier auch noch ran.
+
   #################
   ## plot_points ##
   #################
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
+  ## "trend-Spalte fehlt
   dat_long <- stats::reshape(plot_dat[["plot_lines"]][,
                                                       c("depVar",
                                                         "grouping_var",
                                                         "year_start",
                                                         "year_end",
                                                         "trend",
-                                                        "group_var",
+ #                                                       "group_var",
                                                         "state_var",
                                                         "competence_var")],
     direction = "long",
@@ -230,7 +252,7 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
 
   plot_dat[["plot_points"]] <- merge(dat_long,
                                      list_building_blocks[["point_no_comp_data"]],
-                                     by = c("grouping_var", "group_var", "state_var", "year", "competence_var"),
+                                     by = c("grouping_var", "state_var", "year", "competence_var"),
                                      all.x = TRUE)
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
