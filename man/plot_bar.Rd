@@ -9,7 +9,7 @@ plot_bar(
   x_value = "est_wholeGroup",
   y_value = "state_var",
   grouping = "sig_wholeGroup",
-  grouping_type = "pattern",
+  bar_sig_type = "pattern",
   bar_fill = "fill_wholeGroup",
   bar_fill_setting = adj_fill,
   bar_pattern_setting = sig_pattern,
@@ -27,7 +27,7 @@ plot_bar(
 
 \item{grouping}{Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to \code{sig_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.}
 
-\item{grouping_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".}
+\item{bar_sig_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".}
 
 \item{bar_fill}{Character string of the column containing the grouping for the filling of the bar. Defaults to \code{fill_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.}
 

@@ -3,8 +3,8 @@
 #' @param no_trend_list Input is a list prepared by [prep_no_trend()]. You can also use the according data.frame named `plot_bar` from this list.
 #' @param x_value Character string of the column name containing the estimates that should be plotted on the x-axis. Defaults to `"est_wholeGroup"`, which are the estimates for the comparison of a state against the wholeGroup (Germany).
 #' @param y_value Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to `"state_var"`, so the states (Bundesländer) are depicted on the y-axis.
-#' @param grouping Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to `sig_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.
-#' @param grouping_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".
+#' @param bar_sig Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to `sig_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.
+#' @param bar_sig_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".
 #' @param bar_fill Character string of the column containing the grouping for the filling of the bar. Defaults to `fill_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.
 #' @param bar_pattern_fill Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to `fill_wholeGroup`, so the groups found in "data$grouping_var" are represented in the colours of the bar pattern.
 #' @param bar_pattern_setting Named vector with the pattern types. Names of the vector must be found in the column specified in `grouping`. Defaults to ...
@@ -20,8 +20,8 @@
 plot_bar <- function(no_trend_list,
                      x_value = "est_wholeGroup",
                      y_value = "state_var",
-                     grouping = "sig_wholeGroup",
-                     grouping_type = "pattern",
+                     bar_sig = "sig_wholeGroup",
+                     bar_sig_type = "pattern",
                      bar_fill = "fill_wholeGroup",
                      bar_fill_setting = adj_fill,
                      bar_pattern_setting = sig_pattern,
@@ -38,7 +38,7 @@ plot_bar <- function(no_trend_list,
 
 
 # Check columns -----------------------------------------------------------
-  data_plot_bar <- build_column_2(data_plot_bar, column_name = grouping, filling = NA)
+  data_plot_bar <- build_column_2(data_plot_bar, column_name = bar_sig, filling = NA)
   data_plot_bar <- build_column_2(data_plot_bar, column_name = bar_fill, filling = NA)
   data_plot_bar <- build_column_2(data_plot_bar, column_name = bar_pattern_fill, filling = NA)
 
@@ -57,8 +57,8 @@ plot_bar <- function(no_trend_list,
         # TODO: linetype and pattern aes only works when specified here
         #   - when specified on geom, the first bar colors in the test plot
         #     for frame is exchanged!
-        linetype = .data[[grouping]],
-        pattern = .data[[grouping]]
+        linetype = .data$bar_sig,
+        pattern = .data$bar_sig
       )
     ) +
     ggstats::geom_stripped_rows(
@@ -75,7 +75,7 @@ plot_bar <- function(no_trend_list,
     ggplot2::scale_x_continuous(breaks = scale_breaks) +
     ggplot2::scale_fill_manual(values = bar_fill_setting)
 
-  if (grouping_type == "pattern") {
+  if (bar_sig_type == "pattern") {
     base_plot +
       ## This chunk only works together with the ggpattern::scale-specifications.
       ggpattern::geom_col_pattern(
@@ -95,7 +95,7 @@ plot_bar <- function(no_trend_list,
       ggpattern::scale_pattern_fill_manual(values = bar_pattern_fill_setting) +
       theme_table_bar() +
       NULL
-  } else if (grouping_type == "frame") {
+  } else if (bar_sig_type == "frame") {
     base_plot +
       ggplot2::geom_col(
         # TODO: deleting it above produces unexpected result

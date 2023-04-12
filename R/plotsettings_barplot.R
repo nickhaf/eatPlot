@@ -31,7 +31,7 @@ plotsettings_barplot <- function(background_stripes_colour = NULL,
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
-    "background_stripes_colour" = NULL
+    "background_stripes_colour" = c("white", "white")
     )
   } else {
     plot_settings <- default_list
