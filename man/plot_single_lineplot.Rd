@@ -28,7 +28,7 @@ plot_single_lineplot(
 
 \item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_point"}.}
 
-\item{line_values}{Character vector with two elements. Column names in \code{plot_data[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_point_start", "est_point_end")}.}
+\item{line_values}{Character vector with two elements. Column names in \code{plot_data[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_point_start", "est_point_end")}. If set to \code{NULL}, no lines will be plotted.}
 
 \item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_trend_comp_within"}.}
 
