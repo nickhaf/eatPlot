@@ -13,13 +13,13 @@ merge_trend_data <- function(trend_data_1,
                              trend_data_2,
                              suffixes,
                              ...) {
-  trend_data_1 <- trend_data_1[, !(colnames(trend_data_1) %in% c("modus", "comparison", "parameter"))]
-  trend_data_2 <- trend_data_2[, !(colnames(trend_data_2) %in% c("modus", "comparison", "parameter"))]
+  trend_data_1 <- trend_data_1[, !(colnames(trend_data_1) %in% c("modus", "comparison", "parameter", "group_var"))]
+  trend_data_2 <- trend_data_2[, !(colnames(trend_data_2) %in% c("modus", "comparison", "parameter", "group_var"))]
 
 data_merged <- merge(
     trend_data_1,
     trend_data_2,
-    by = c("state_var", "grouping_var", "year_start", "year_end", "depVar", "competence_var"),
+    by = c("state_var", "grouping_var", "year_start", "year_end", "depVar", "competence_var", "trend"),
     sort = FALSE,
     suffixes = suffixes,
     ...

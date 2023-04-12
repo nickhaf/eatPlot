@@ -17,3 +17,14 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(eatPlot)
 ```
+
+`eatPlot` takes output dataframes from `eatRep` and facilitates the construction of different plots for the data. Main goal is the plotting of BT22 graphs, but in general the package can be used for other purposes as well. 
+The packages aim is it to make the plotting as easy but flexible as possible, so let's dive right in!
+
+# Basic workflow
+## Data preperation
+The first step is the data preperation. This is handeled by the function `prep_trend()` 
+
+
+
+# Different plot types
