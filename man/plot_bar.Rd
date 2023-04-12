@@ -8,6 +8,7 @@ plot_bar(
   no_trend_list,
   x_value = "est_wholeGroup",
   y_value = "state_var",
+  bar_label = "est_wholeGroup",
   bar_sig = "sig_wholeGroup",
   bar_fill = "fill_wholeGroup",
   bar_pattern_fill = "grouping_var",
@@ -20,6 +21,8 @@ plot_bar(
 \item{x_value}{Character string of the column name containing the estimates that should be plotted on the x-axis. Defaults to \code{"est_wholeGroup"}, which are the estimates for the comparison of a state against the wholeGroup (Germany).}
 
 \item{y_value}{Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to \code{"state_var"}, so the states (Bundesländer) are depicted on the y-axis.}
+
+\item{bar_label}{Character string of the column that should be used as label at the bar end. Defaults to \code{est_wholeGroup}. If \code{NULL}, no label will be plotted.}
 
 \item{bar_sig}{Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to \code{sig_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.}
 

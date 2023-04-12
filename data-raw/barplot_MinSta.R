@@ -8,8 +8,8 @@ barplot_MinSta <- plotsettings_barplot(
     "ohneAdj_FALSE" = "white",
     "mitAdj_FALSE" = "white"
   ),
-  bar_frame_linetype = c("FALSE" = "dashed",
-                         "TRUE" = "solid"),
+  bar_frame_linetype = c("TRUE" = "dashed",
+                         "FALSE" = "solid"),
   bar_pattern_fill_colour = c(
     "ohneAdj" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
     "mitAdj" = grDevices::rgb(33, 89, 104, maxColorValue = 255)

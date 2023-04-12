@@ -3,6 +3,7 @@
 #' @param no_trend_list Input is a list prepared by [prep_no_trend()]. You can also use the according data.frame named `plot_bar` from this list.
 #' @param x_value Character string of the column name containing the estimates that should be plotted on the x-axis. Defaults to `"est_wholeGroup"`, which are the estimates for the comparison of a state against the wholeGroup (Germany).
 #' @param y_value Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to `"state_var"`, so the states (Bundesländer) are depicted on the y-axis.
+#' @param bar_label Character string of the column that should be used as label at the bar end. Defaults to `est_wholeGroup`. If `NULL`, no label will be plotted.
 #' @param bar_sig Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to `sig_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.
 #' @param bar_fill Character string of the column containing the grouping for the filling of the bar. Defaults to `fill_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.
 #' @param bar_pattern_fill Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to `grouping_var`, so the groups found in `data$grouping_var` are represented in the colours of the bar pattern.
@@ -15,6 +16,7 @@
 plot_bar <- function(no_trend_list,
                      x_value = "est_wholeGroup",
                      y_value = "state_var",
+                     bar_label = "est_wholeGroup",
                      bar_sig = "sig_wholeGroup",
                      bar_fill = "fill_wholeGroup",
                      bar_pattern_fill = "grouping_var",
@@ -74,7 +76,10 @@ plot_bar <- function(no_trend_list,
       colour = "darkgrey"
     ) +
     ggplot2::scale_x_continuous(breaks = scale_breaks) +
-    ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour)
+    ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
+    if(!is.null(bar_label)){
+      ggplot2::geom_text(ggplot2::aes(label = .data[[bar_label]]), hjust = -0.2)
+    }
 
   if (plot_settings$bar_sig_type == "pattern") {
     base_plot +
@@ -84,7 +89,7 @@ plot_bar <- function(no_trend_list,
                                linetype = NULL),
         position = ggplot2::position_dodge(width = 0.8),
         color = "black",
-        linewidth = 0.6,
+        linewidth = 0.9,
         pattern_colour = "white",
         pattern_angle = -45,
         pattern_density = 0.4, # Streifenbreite
@@ -103,7 +108,7 @@ plot_bar <- function(no_trend_list,
         # mapping = ggplot2::aes(linetype = .data[[bar_pattern]]),
         position = ggplot2::position_dodge(width = 0.8),
         color = "black",
-        linewidth = 0.6,
+        linewidth = 0.9,
         width = 0.4
       ) +
       ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +

@@ -31,7 +31,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #'
 #' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, if `NULL`.
 #' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background.
-#' @param bar_fill_colour Named vector with the bar filling colours. Names of the vector must be found in the column specified in `bar_fill`.#
+#' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a named vector with the names of the groups specified in `bar_fill`.
 #' @param bar_frame_linetype Named vector with the bar frame linetypes.
 #' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.

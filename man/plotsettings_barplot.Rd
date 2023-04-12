@@ -20,7 +20,7 @@ plotsettings_barplot(
 
 \item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background.}
 
-\item{bar_fill_colour}{Named vector with the bar filling colours. Names of the vector must be found in the column specified in \code{bar_fill}.#}
+\item{bar_fill_colour}{Colour of the bar filling. Can be either one colour for all bars, or a named vector with the names of the groups specified in \code{bar_fill}.}
 
 \item{bar_frame_linetype}{Named vector with the bar frame linetypes.}
 
