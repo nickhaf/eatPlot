@@ -33,8 +33,19 @@ plot_bar <- function(no_trend_list,
   data_plot_bar <- build_column_2(data_plot_bar, column_name = bar_pattern_fill, filling = NA)
 
 
+  if(is.null(plot_settings$axis_x_lims)){
   plot_borders <- calc_plot_borders(data_plot_bar[[x_value]])
-  scale_breaks <- seq(plot_borders[1], plot_borders[2], by = 10)
+  ## Plots with only positive values can start at 0.
+  if(all(data_plot_bar[[x_value]][!is.na(data_plot_bar[[x_value]])] >= 0)){
+    plot_borders[1] <- 0
+  }
+  }else{
+    plot_borders <- plot_settings$axis_x_lims
+  }
+
+  scale_breaks <- unique(c(seq(0, plot_borders[1], by = -10),
+                    seq(0, plot_borders[2], by = 10))
+  )
 
   base_plot <-
     ggplot2::ggplot(
@@ -42,7 +53,7 @@ plot_bar <- function(no_trend_list,
       mapping = ggplot2::aes(
         x = .data[[x_value]],
         y = .data[[y_value]],
-        fill = .data[[bar_fill]],
+        fill = .data$bar_fill,
         # TODO: maybe find another interface for this argument?
         # TODO: linetype and pattern aes only works when specified here
         #   - when specified on geom, the first bar colors in the test plot
@@ -69,7 +80,7 @@ plot_bar <- function(no_trend_list,
     base_plot +
       ## This chunk only works together with the ggpattern::scale-specifications.
       ggpattern::geom_col_pattern(
-        mapping = ggplot2::aes(pattern_fill = .data[[bar_pattern_fill]],
+        mapping = ggplot2::aes(pattern_fill = .data$bar_pattern_fill,
                                linetype = NULL),
         position = ggplot2::position_dodge(width = 0.8),
         color = "black",

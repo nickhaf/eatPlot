@@ -1,94 +1,102 @@
-# #
-# # # Umsetzung der neuen Plots -----------------------------------------------
-# # # df_min <- data.frame(land = factor(c("Berlin", "Bremen", "Hessen")),
-# # #                      min_nicht = c(19, 14, 15),
-# # #                                  reg_erreicht = c(60, 50, 45),
-# # #                                  sig_reg_erreicht = c("over", "same", "under")
-# # #                                  )
-# #
-# min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/BT2021_Abb3.9.xlsx", sheet = "Daten BT21")
+
+# Umsetzung der neuen Plots -----------------------------------------------
+# df_min <- data.frame(land = factor(c("Berlin", "Bremen", "Hessen")),
+#                      min_nicht = c(19, 14, 15),
+#                                  reg_erreicht = c(60, 50, 45),
+#                                  sig_reg_erreicht = c("over", "same", "under")
+#                                  )
+
+min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/BT2021_Abb3.9.xlsx", sheet = "Daten BT21")
+
+
+data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
+
+
+data_bar <- data_plot_new[["plot_bar"]]
+data_bar_l <- data_bar[data_bar$depVar == "minVerfehlt" & data_bar$year == "2021", ]
+data_bar_r <- data_bar[data_bar$depVar == "regErreicht" & data_bar$year == "2021", ]
+
+
+## How to deal with the sig erreicht? Muss ja ein beidseitiger test sein, da muuss die Signifikanz anders berechnet werden
+data_bar_l$est_no_comp <- data_bar_l$est_no_comp *100
+plot_bar(data_bar_l,
+         x_value = "est_no_comp",
+         y_value = "state_var",
+         bar_sig = "sig_point_comp_whole",
+         bar_fill = NULL,
+         bar_pattern_fill = "grouping_var",
+         plot_settings = plotsettings_barplot(bar_sig_type = "frame",
+                                              default_list = barplot_MinSta)
+         )
+
+plot_l <- ggplot2::ggplot(
+  data = data_bar_l,
+  mapping = ggplot2::aes(
+    x = est_point_no_comp * 100,
+    y = state_var,
+    linetype = sig_point_comp_whole
+  )) +
+  ggstats::geom_stripped_rows(
+    odd = "lightgrey",
+    even = "#00000000") +
+  ggplot2::geom_col(
+    position = ggplot2::position_dodge(width = 0.8),
+    fill = grDevices::rgb(49, 133, 156, maxColorValue = 255),
+    color = "black",
+    linewidth = 0.9,
+    width = 0.4
+  ) +
+  ggplot2::geom_vline(xintercept = 0, color = "darkgrey") +
+  ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
+  ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
+  theme_table_bar() +
+  ggplot2::ggtitle("Mindeststandard verfehlt (%)")
+
+plot_r <- ggplot2::ggplot(
+  data = data_bar_r,
+  mapping = ggplot2::aes(
+    x = est_point_no_comp * 100,
+    y = state_var,
+    linetype = sig_point_comp_whole
+  )) +
+  ggstats::geom_stripped_rows(
+    odd = "lightgrey",
+    even = "#00000000") +
+  ggplot2::geom_col(
+    position = ggplot2::position_dodge(width = 0.8),
+    fill = grDevices::rgb(75, 172, 198, maxColorValue = 255),
+    color = "black",
+    linewidth = 0.9,
+    width = 0.4
+  ) +
+  ggplot2::geom_vline(xintercept = 0, color = "darkgrey") +
+  ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
+  ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
+  theme_table_bar() +
+  ggplot2::ggtitle("Regelstandard erreicht (%)")
+
+p_merged <- plot_table_bar(plot_l, plot_r)
+
 #
+# # Tabelle -----------------------------------------------------------------
 #
-# data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
-#
-#
-# data_bar <- data_plot_new[["plot_bar"]]
-# data_bar_l <- data_bar[data_bar$depVar == "minVerfehlt" & data_bar$year == "2021", ]
-# data_bar_r <- data_bar[data_bar$depVar == "regErreicht" & data_bar$year == "2021", ]
-#
-#
-# ## How to deal with the sig erreicht? Muss ja ein beidseitiger test sein, da muuss die Signifikanz anders berechnet werden
-# data_bar_l$est_no_comp <- data_bar_l$est_no_comp *100
-# plot_bar(data_bar_l, x_value = "est_no_comp", grouping = "sig_point_comp_whole", bar_fill = )
-#
-# plot_l <- ggplot2::ggplot(
-#   data = data_bar_l,
-#   mapping = ggplot2::aes(
-#     x = est_point_no_comp * 100,
-#     y = state_var,
-#     linetype = sig_point_comp_whole
-#   )) +
-#   ggstats::geom_stripped_rows(
-#     odd = "lightgrey",
-#     even = "#00000000") +
-#   ggplot2::geom_col(
-#     position = ggplot2::position_dodge(width = 0.8),
-#     fill = grDevices::rgb(49, 133, 156, maxColorValue = 255),
-#     color = "black",
-#     linewidth = 0.9,
-#     width = 0.4
-#   ) +
-#   ggplot2::geom_vline(xintercept = 0, color = "darkgrey") +
-#   ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
-#   ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
-#   theme_table_bar() +
-#   ggplot2::ggtitle("Mindeststandard verfehlt (%)")
-#
-# plot_r <- ggplot2::ggplot(
-#   data = data_bar_r,
-#   mapping = ggplot2::aes(
-#     x = est_point_no_comp * 100,
-#     y = state_var,
-#     linetype = sig_point_comp_whole
-#   )) +
-#   ggstats::geom_stripped_rows(
-#     odd = "lightgrey",
-#     even = "#00000000") +
-#   ggplot2::geom_col(
-#     position = ggplot2::position_dodge(width = 0.8),
-#     fill = grDevices::rgb(75, 172, 198, maxColorValue = 255),
-#     color = "black",
-#     linewidth = 0.9,
-#     width = 0.4
-#   ) +
-#   ggplot2::geom_vline(xintercept = 0, color = "darkgrey") +
-#   ggplot2::scale_linetype_manual(values = c(`FALSE` = "solid", `TRUE` = "dashed")) +
-#   ggplot2::geom_text(ggplot2::aes(label = est_point_no_comp * 100), hjust = -0.2) +
-#   theme_table_bar() +
-#   ggplot2::ggtitle("Regelstandard erreicht (%)")
-#
-# p_merged <- plot_table_bar(plot_l, plot_r)
-#
-# #
-# # # Tabelle -----------------------------------------------------------------
-# #
-# data_t <- data_bar_l
-# data_t$x_label <- rep("Land", nrow(data_t))
-# y_value <- "state_var"
-#
-# y_axis_plot <- ggplot2::ggplot() +
-#   plot_column(vec = unique(data_bar_l$state_var)) +
-#   theme_y_axis()
-#
-# patchwork::wrap_plots(y_axis_plot,
-#                       plot_l,
-#                       plot_r,
-#                       widths = c(0.3, 1, 1.5)) &
-#   ggplot2::theme(
-#     plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"),
-#     # As margin is not perfectly eliminated
-#     axis.ticks.length.y = ggplot2::unit(0, "pt")
-#   )
+data_t <- data_bar_l
+data_t$x_label <- rep("Land", nrow(data_t))
+y_value <- "state_var"
+
+y_axis_plot <- ggplot2::ggplot() +
+  plot_column(vec = unique(data_bar_l$state_var)) +
+  theme_y_axis()
+
+patchwork::wrap_plots(y_axis_plot,
+                      plot_l,
+                      plot_r,
+                      widths = c(0.3, 1, 1.5)) &
+  ggplot2::theme(
+    plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"),
+    # As margin is not perfectly eliminated
+    axis.ticks.length.y = ggplot2::unit(0, "pt")
+  )
 
 
 

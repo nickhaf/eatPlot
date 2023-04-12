@@ -5,6 +5,7 @@
 \title{Set parameters for the barplots.}
 \usage{
 plotsettings_barplot(
+  axis_x_lims = NULL,
   background_stripes_colour = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
@@ -15,6 +16,8 @@ plotsettings_barplot(
 )
 }
 \arguments{
+\item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, if \code{NULL}.}
+
 \item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background.}
 
 \item{bar_fill_colour}{Named vector with the bar filling colours. Names of the vector must be found in the column specified in \code{bar_fill}.#}

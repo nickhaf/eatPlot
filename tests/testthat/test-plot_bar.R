@@ -16,6 +16,7 @@ test_that("Barplot is still the same", {
       bar_fill = "bar_fill",
       bar_pattern_fill = "bar_pattern_fill",
       plot_settings = plotsettings_barplot(
+        axis_x_lims = c(-35, 20),
         background_stripes_colour = c("red", "blue"),
         bar_fill_colour = c(
           "a" = "red",

@@ -2,32 +2,34 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 6
+      length(settings_list) == 7
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
       names(settings_list) %in% c(
-"background_stripes_colour",
-"bar_fill_colour",
-"bar_frame_linetype",
-"bar_pattern_fill_colour",
-"bar_pattern_type",
-"bar_sig_type"
+        "axis_x_lims",
+        "background_stripes_colour",
+        "bar_fill_colour",
+        "bar_frame_linetype",
+        "bar_pattern_fill_colour",
+        "bar_pattern_type",
+        "bar_sig_type"
       )
   )
 
+  stopifnot(is.numeric(settings_list$axis_x_lims) & length(is.numeric(settings_list$axis_x_lims)) == 2 | is.null(settings_list$axis_x_lims))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
   stopifnot(is.character(settings_list$bar_frame_linetype))
   stopifnot(all(is_colour(settings_list$bar_pattern_fill_colour)))
   stopifnot(is.character(settings_list$bar_pattern_type))
   stopifnot(settings_list$bar_sig_type %in% c("pattern", "frame"))
-
 }
 
 
 #' Set parameters for the barplots.
 #'
+#' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, if `NULL`.
 #' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background.
 #' @param bar_fill_colour Named vector with the bar filling colours. Names of the vector must be found in the column specified in `bar_fill`.#
 #' @param bar_frame_linetype Named vector with the bar frame linetypes.
@@ -42,7 +44,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @examples
 #' plotsettings_barplot()
 #'
-plotsettings_barplot <- function(background_stripes_colour = NULL,
+plotsettings_barplot <- function(axis_x_lims = NULL,
+                                 background_stripes_colour = NULL,
                                  bar_fill_colour = NULL,
                                  bar_frame_linetype = NULL,
                                  bar_pattern_fill_colour = NULL,
@@ -52,12 +55,13 @@ plotsettings_barplot <- function(background_stripes_colour = NULL,
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
-    "background_stripes_colour" = c("white", "white"),
-    "bar_fill_colour" = rep("white", 4),
-    "bar_frame_linetype" = "solid",
-    "bar_pattern_fill_colour" = c("white", "white"),
-    "bar_pattern_type" = "none",
-    "bar_sig_type" = "frame"
+      "axis_x_lims" = NULL,
+      "background_stripes_colour" = c("white", "white"),
+      "bar_fill_colour" = rep("white", 4),
+      "bar_frame_linetype" = "solid",
+      "bar_pattern_fill_colour" = c("white", "white"),
+      "bar_pattern_type" = "none",
+      "bar_sig_type" = "frame"
     )
   } else {
     plot_settings <- default_list

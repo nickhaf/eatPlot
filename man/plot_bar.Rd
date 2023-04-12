@@ -25,7 +25,7 @@ plot_bar(
 
 \item{bar_fill}{Character string of the column containing the grouping for the filling of the bar. Defaults to \code{fill_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.}
 
-\item{bar_pattern_fill}{Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to \code{fill_wholeGroup}, so the groups found in "data$grouping_var" are represented in the colours of the bar pattern.}
+\item{bar_pattern_fill}{Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to \code{grouping_var}, so the groups found in \code{data$grouping_var} are represented in the colours of the bar pattern.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_barplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_barplot()} for an overview.}
 }
