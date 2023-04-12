@@ -9,7 +9,7 @@ set_plot_coords(plot_data, plot_settings = plotsettings_lineplot())
 \arguments{
 \item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
 
-\item{plot_settings}{Named list constructed with \code{plot_settings()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plot_settings()} for an overview.}
+\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
 \value{
 \link{ggplot2} object.

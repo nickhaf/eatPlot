@@ -4,7 +4,7 @@ test_that("Barplot is still the same", {
     y = rep("a", 4),
     bar_pattern = c(TRUE, TRUE, FALSE, FALSE),
     bar_fill = c("a", "b", "c", "d"),
-    bar_pattern_fill = c("a", "a", "b", "b")
+    bar_pattern_fill = c("a", "b", "a", "b")
   )
 
 
@@ -15,18 +15,18 @@ test_that("Barplot is still the same", {
       bar_sig = "bar_pattern",
       bar_fill = "bar_fill",
       bar_pattern_fill = "bar_pattern_fill",
-      bar_fill_setting = c(
-        "a" = "red",
-        "b" = "blue",
-        "c" = "green",
-        "d" = "grey"
-      ),
-      bar_pattern_fill_setting = c(
-        "a" = "yellow",
-        "b" = "orange"
-      ),
       plot_settings = plotsettings_barplot(
         background_stripes_colour = c("red", "blue"),
+        bar_fill_colour = c(
+          "a" = "red",
+          "b" = "blue",
+          "c" = "green",
+          "d" = "yellow"
+        ),
+        bar_pattern_fill_colour = c(
+          "a" = "red",
+          "b" = "white"
+        ),
         default_list = barplot_MinSta
       )
     )
@@ -46,7 +46,9 @@ test_that("Example barplot is still the same", {
     "Bar plot for trend_books",
     plot_bar(
       plot_data[["plot_bar"]],
-      plot_settings = plotsettings_barplot(background_stripes_colour = c("grey", "white"))
+      plot_settings = plotsettings_barplot(background_stripes_colour = c("grey", "white"),
+                                           bar_sig_type = "pattern",
+                                           default_list = barplot_MinSta)
     )
   )
 })
@@ -62,8 +64,9 @@ test_that("Example barplot can be plotted with different frames", {
 
   vdiffr::expect_doppelganger("Bar plot with frames for trend_books",
     plot_bar(plot_data[["plot_bar"]],
-      bar_sig_type = "frame",
-    plot_settings = plotsettings_barplot(background_stripes_colour = c("grey", "white"))
+    plot_settings = plotsettings_barplot(background_stripes_colour = c("grey", "white"),
+                                         bar_sig_type = "frame",
+                                         default_list = barplot_MinSta)
     )
   )
 })

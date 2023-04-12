@@ -8,14 +8,10 @@ plot_bar(
   no_trend_list,
   x_value = "est_wholeGroup",
   y_value = "state_var",
-  grouping = "sig_wholeGroup",
-  bar_sig_type = "pattern",
+  bar_sig = "sig_wholeGroup",
   bar_fill = "fill_wholeGroup",
-  bar_fill_setting = adj_fill,
-  bar_pattern_setting = sig_pattern,
   bar_pattern_fill = "grouping_var",
-  bar_pattern_fill_setting = adj_pattern_fill,
-  bar_frame_setting = sig_frame
+  plot_settings = plotsettings_barplot()
 )
 }
 \arguments{
@@ -25,21 +21,13 @@ plot_bar(
 
 \item{y_value}{Character string of the column name containing the labels that should be plotted on the y-axis. Defaults to \code{"state_var"}, so the states (Bundesländer) are depicted on the y-axis.}
 
-\item{grouping}{Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to \code{sig_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.}
-
-\item{bar_sig_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame"). Defaults to "pattern".}
+\item{bar_sig}{Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to \code{sig_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.}
 
 \item{bar_fill}{Character string of the column containing the grouping for the filling of the bar. Defaults to \code{fill_wholeGroup}, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.}
 
-\item{bar_fill_setting}{Named vector with the bar filling colours. Names of the vector must be found in the column specified in \code{bar_fill}. Defaults to ...}
-
-\item{bar_pattern_setting}{Named vector with the pattern types. Names of the vector must be found in the column specified in \code{grouping}. Defaults to ...}
-
 \item{bar_pattern_fill}{Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to \code{fill_wholeGroup}, so the groups found in "data$grouping_var" are represented in the colours of the bar pattern.}
 
-\item{bar_pattern_fill_setting}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to ...}
-
-\item{bar_frame_setting}{Named vector with the pattern types. Names of the vector must be found in the column specified in \code{bar_frame}. Defaults to ...}
+\item{plot_settings}{Named list constructed with \code{plotsettings_barplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_barplot()} for an overview.}
 }
 \value{
 Returns a \link{ggplot2} barplot.
