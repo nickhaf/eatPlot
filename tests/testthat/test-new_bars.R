@@ -1,11 +1,11 @@
-#
-# # Umsetzung der neuen Plots -----------------------------------------------
-# # df_min <- data.frame(land = factor(c("Berlin", "Bremen", "Hessen")),
-# #                      min_nicht = c(19, 14, 15),
-# #                                  reg_erreicht = c(60, 50, 45),
-# #                                  sig_reg_erreicht = c("over", "same", "under")
-# #                                  )
-#
+# #
+# # # Umsetzung der neuen Plots -----------------------------------------------
+# # # df_min <- data.frame(land = factor(c("Berlin", "Bremen", "Hessen")),
+# # #                      min_nicht = c(19, 14, 15),
+# # #                                  reg_erreicht = c(60, 50, 45),
+# # #                                  sig_reg_erreicht = c("over", "same", "under")
+# # #                                  )
+# #
 # min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/BT2021_Abb3.9.xlsx", sheet = "Daten BT21")
 #
 #
@@ -38,6 +38,9 @@
 #          )
 #
 # data_bar_r$est_no_comp <- data_bar_r$est_no_comp *100
+# data_bar_r[nrow(data_bar_r)+1,] <- NA
+# data_bar_r[nrow(data_bar_r), "state_var"] <- "Land"
+# data_bar_r$state_var <- factor(data_bar_r$state_var, levels = c(unique(data_bar$state_var[data_bar_r$state_var != "Land"]), "Land"))
 #
 # plot_r <- plot_bar(data_bar_r,
 #          x_value = "est_no_comp",
@@ -51,12 +54,16 @@
 #            bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
 #            bar_sig_type = "frame",
 #            default_list = barplot_MinSta)
-# )
-#
-#
-# p_merged <- plot_table_bar(plot_l, plot_r)
-#
-#
+# )# +
+  # ggplot2::annotate("text", x = 35, y = "Land", label = "Mindeststandard") +
+  # ggplot2::annotate("segment", x = 35, xend = 45, y = "Land", yend = "Land") +
+  # ggplot2::annotate("rect", ymin = "Land", ymax = Inf, xmin = -Inf, xmax = Inf, colour = "red")
+  #
+  #
+
+p_merged <- plot_table_bar(plot_l, plot_r)
+
+
 # # Tabelle -----------------------------------------------------------------
 # data_t <- data_bar_l
 # data_t$x_label <- rep("Land", nrow(data_t))
