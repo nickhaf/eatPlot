@@ -256,7 +256,7 @@ test_that("competence_vars with 3 groups", {
 
   vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles_3groups", p_line)
 
-  # save_plot(p_line, filename = "../split_lineplot_kb_books_3groups_v02.pdf", height = 226.2 / 2 + 10)
+  #save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 1.5) #2 + 10)
 })
 
 test_that("adjusted means states", {
