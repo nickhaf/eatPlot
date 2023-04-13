@@ -10,7 +10,8 @@ plot_column(
   ...,
   fontsize = 3,
   alignment = "left",
-  nudge_x = -0.55
+  nudge_x = -0.55,
+  plot_settings = plotsettings_barplot()
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ plot_column(
 \item{alignment}{Character string for the alignmen of the column text. Possible are \verb{"left", "center", "right"}. Defaults to \code{"left"}.}
 
 \item{nudge_x}{Numeric for nudging the column text on the x-axis. Defaults to \code{-0.55}.}
+
+\item{plot_settings}{tbd}
 }
 \value{
 ggplot2 object

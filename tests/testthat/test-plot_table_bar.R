@@ -4,7 +4,7 @@ test_that("Table-barplot (trend_books) is still the same", {
                              competence = "GL",
                              grouping_var = "adjust",
                              sig_niveau = 0.05)
-  p1 <- plot_table(plot_data[["plot_table"]])
+  p1 <- plot_table(plot_data[["plot_table"]], plot_settings = plotsettings_barplot(default_list = barplot_MinSta))
   p2 <- plot_bar(plot_data[["plot_bar"]],
                  bar_label = NULL,
                  plot_settings = plotsettings_barplot(bar_sig_type = "pattern", default_list = barplot_MinSta))
@@ -18,7 +18,7 @@ test_that("Table-barplot (trend_books) is still the same with frames", {
                              competence = "GL",
                              grouping_var = "adjust",
                              sig_niveau = 0.05)
-  p1 <- plot_table(plot_data[["plot_table"]])
+  p1 <- plot_table(plot_data[["plot_table"]], plot_settings = plotsettings_barplot(default_list = barplot_MinSta))
   p2 <- plot_bar(plot_data[["plot_bar"]],
                  bar_label = NULL,
                  plot_settings = plotsettings_barplot(bar_sig_type = "frame",

@@ -13,5 +13,5 @@ theme_y_axis()
 Theme for a y-axis plot.
 }
 \examples{
-#tbd
+# tbd
 }

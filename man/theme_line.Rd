@@ -16,5 +16,5 @@ ggplot2 theme
 Theme for lineplot.
 }
 \examples{
-#tbd
+# tbd
 }

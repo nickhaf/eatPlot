@@ -9,7 +9,6 @@ test_that("Axis are labeled correctly", {
     build_columns(df, x_axis = "group_var"))
 
   expect_equal(p1$layout$panel_params[[1]]$x$get_labels(), c("y_label", "Adjusted"))
-
 })
 
 
@@ -21,17 +20,23 @@ test_that("Table plot is still the same", {
     y_value = c("12", "20", "14", "15")
   )
 
-  vdiffr::expect_doppelganger("Table plot", plot_table(df, x_axis = "x_label", y_value = "y_value"))
+  vdiffr::expect_doppelganger("Table plot", plot_table(df,
+    x_axis = "x_label",
+    y_value = "y_value",
+    plot_settings = plotsettings_barplot(default_list = barplot_MinSta)
+  ))
 })
 
 test_that("example plot is still the same", {
+  plot_data <- prep_no_trend(
+    dat = adjusted_means,
+    grouping_var = "adjust",
+    columns = "adjust",
+    competence = "GL",
+    sig_niveau = 0.05
+  )
 
-  plot_data <- prep_no_trend(dat = adjusted_means,
-                             grouping_var = "adjust",
-                             columns = "adjust",
-                             competence = "GL",
-                             sig_niveau = 0.05)
-
-  vdiffr::expect_doppelganger("Table plot trend_books", plot_table(plot_data[["plot_table"]]))
-
+  vdiffr::expect_doppelganger("Table plot trend_books", plot_table(plot_data[["plot_table"]],
+    plot_settings = plotsettings_barplot(default_list = barplot_MinSta)
+  ))
 })

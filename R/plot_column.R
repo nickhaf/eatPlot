@@ -5,6 +5,7 @@
 #' @param title Character string of the column title that will be ploted. Defaults to `"y_value"`
 #' @param fontsize Numeric for the fontsize of the text in the column. Defaults to `"3"`.
 #' @param alignment Character string for the alignmen of the column text. Possible are `"left", "center", "right"`. Defaults to `"left"`.
+#' @param plot_settings tbd
 #' @param nudge_x Numeric for nudging the column text on the x-axis. Defaults to `-0.55`.
 #' @param ... Arguments for [ggplot2::geom_text()].
 #'
@@ -17,26 +18,28 @@ plot_column <- function(vec,
                         ...,
                         fontsize = 3,
                         alignment = "left",
-                        nudge_x = -0.55) {
+                        nudge_x = -0.55,
+                        plot_settings = plotsettings_barplot()) {
   dat <- as.data.frame(vec)
   dat$x_label <- rep(title, nrow(dat))
 
-  column_settings <- c(
+  ggplot2::ggplot(data = dat,
+                  ggplot2::aes(
+                    x = .data$x_label,
+                    y = .data$vec,
+                    label = .data$vec
+                  )) +
+    ggstats::geom_stripped_rows(
+      odd = plot_settings$background_stripes_colour[1],
+      even = plot_settings$background_stripes_colour[2]
+      ) +
     ggplot2::geom_text(
-      data = dat,
-      ggplot2::aes(
-        x = .data$x_label,
-        y = .data$vec,
-        label = .data$vec
-      ),
-      inherit.aes = FALSE,
       size = fontsize,
       hjust = alignment,
       nudge_x = nudge_x,
       ...
-    ),
-    ggplot2::scale_x_discrete(position = "top", name = NULL)
+    ) +
+    ggplot2::scale_x_discrete(position = "top", name = NULL) +
+    theme_table_col()
 
-  )
-  return(column_settings)
 }

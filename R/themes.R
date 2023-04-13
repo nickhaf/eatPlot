@@ -49,15 +49,15 @@ theme_table <- function() {
 #' @return [ggplot2] theme, that can be used for a plotted y-axis.
 #' @export
 #'
-#' @examples #tbd
-theme_y_axis <-  function() {
+#' @examples # tbd
+theme_y_axis <- function() {
   theme_line() %+replace%
-  ggplot2::theme(
-    axis.text.y = ggplot2::element_text(),
-    axis.ticks.y = ggplot2::element_line(),
-    axis.text.x = ggplot2::element_blank(),
-    axis.line.x = ggplot2::element_blank()
-  )
+    ggplot2::theme(
+      axis.text.y = ggplot2::element_text(),
+      axis.ticks.y = ggplot2::element_line(),
+      axis.text.x = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_blank()
+    )
 }
 
 #' Theme for a table column.
@@ -65,14 +65,16 @@ theme_y_axis <-  function() {
 #' @return [ggplot2] theme, that can be used for a plotted table column.
 #' @export
 #'
-#' @examples #tbd
-theme_table_col <-  function() {
+#' @examples # tbd
+theme_table_col <- function() {
   theme_line() %+replace%
     ggplot2::theme(
       axis.line = ggplot2::element_blank(),
-      axis.text = ggplot2::element_blank(),
+      #axis.text.x = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
       axis.ticks = ggplot2::element_blank(),
-      axis.title = ggplot2::element_blank()
+      axis.title.x = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank()
     )
 }
 
@@ -83,9 +85,8 @@ theme_table_col <-  function() {
 #' @return ggplot2 theme
 #' @export
 #'
-#' @examples #tbd
-theme_line <- function(plot_settings = plotsettings_lineplot()){
-
+#' @examples # tbd
+theme_line <- function(plot_settings = plotsettings_lineplot()) {
   ggplot2::theme_minimal() %+replace%
     ggplot2::theme(
       panel.grid.major.y = ggplot2::element_blank(),
@@ -101,11 +102,7 @@ theme_line <- function(plot_settings = plotsettings_lineplot()){
       axis.title.y = ggplot2::element_blank(),
       strip.text.x = ggplot2::element_blank(),
       panel.spacing = ggplot2::unit(plot_settings$split_plot_gap_width, "npc"), # Gap in split plot
-      plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units="npc"),
+      plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units = "npc"),
       plot.title = ggplot2::element_text(size = 7, hjust = 0.5, vjust = 2.5)
     )
 }
-
-
-
-
