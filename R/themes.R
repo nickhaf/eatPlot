@@ -60,6 +60,23 @@ theme_y_axis <-  function() {
   )
 }
 
+#' Theme for a table column.
+#'
+#' @return [ggplot2] theme, that can be used for a plotted table column.
+#' @export
+#'
+#' @examples #tbd
+theme_table_col <-  function() {
+  theme_line() %+replace%
+    ggplot2::theme(
+      axis.line = ggplot2::element_blank(),
+      axis.text = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_blank(),
+      axis.title = ggplot2::element_blank()
+    )
+}
+
+
 #' Theme for lineplot.
 #'
 #' @inheritParams plot_lineplot

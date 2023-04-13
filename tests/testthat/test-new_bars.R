@@ -38,9 +38,9 @@
 #          )
 #
 # data_bar_r$est_no_comp <- data_bar_r$est_no_comp *100
-# data_bar_r[nrow(data_bar_r)+1,] <- NA
-# data_bar_r[nrow(data_bar_r), "state_var"] <- "Land"
-# data_bar_r$state_var <- factor(data_bar_r$state_var, levels = c(unique(data_bar$state_var[data_bar_r$state_var != "Land"]), "Land"))
+# #data_bar_r[nrow(data_bar_r)+1,] <- NA
+# #data_bar_r[nrow(data_bar_r), "state_var"] <- "Land"
+# #data_bar_r$state_var <- factor(data_bar_r$state_var, levels = c(unique(data_bar$state_var[data_bar_r$state_var != "Land"]), "Land"))
 #
 # plot_r <- plot_bar(data_bar_r,
 #          x_value = "est_no_comp",
@@ -54,24 +54,25 @@
 #            bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
 #            bar_sig_type = "frame",
 #            default_list = barplot_MinSta)
-# ) +
-#   ggplot2::annotate("tile", x = 35, y = "Land", width = 10, fill = "lightblue") +
-# ggplot2::annotate("text", x = 35, y = "Land", label = "Mindeststandard") +
-# ggplot2::annotate("segment", x = 35, xend = 45, y = "Land", yend = "Land") +
+# ) #+
+#  # ggplot2::annotate("tile", x = 35, y = "Land", width = 10, fill = "lightblue") +
+# #ggplot2::annotate("text", x = 35, y = "Land", label = "Mindeststandard") +
+# #ggplot2::annotate("segment", x = 35, xend = 45, y = "Land", yend = "Land") +
 # #ggplot2::annotate("rect", ymin = "Land", ymax = Inf, xmin = -Inf, xmax = Inf, colour = "red")
 # NULL
 #
 # p_merged <- plot_table_bar(plot_l, plot_r)
 #
-
-# # Tabelle -----------------------------------------------------------------
-# data_t <- data_bar_l
-# data_t$x_label <- rep("Land", nrow(data_t))
-# y_value <- "state_var"
 #
+# # # Tabelle -----------------------------------------------------------------
+# plot_settings <- barplot_MinSta
 # y_axis_plot <- ggplot2::ggplot() +
+#   ## hier noch stripes irgendwo
 #   plot_column(vec = unique(data_bar_l$state_var)) +
-#   theme_y_axis()
+#   ggstats::geom_stripped_rows(
+#     odd = plot_settings$background_stripes_colour[1],
+#     even = plot_settings$background_stripes_colour[2]) +
+#   theme_table_col()
 #
 # patchwork::wrap_plots(y_axis_plot,
 #                       plot_l,
