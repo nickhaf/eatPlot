@@ -236,13 +236,13 @@
 # ## Evtl. mein geom_annotate für Hintergrund bei allen drei Reihen
 #
 #
-# patchwork::wrap_plots(p1, p2) &
+# save_patch <- patchwork::wrap_plots(p1, p2) &
 #   ggplot2::theme(
 #     plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"),
 #     # As margin is not perfectly eliminated
-#     axis.ticks.length.y = ggplot2::unit(0, "pt")
+#     axis.ticks.length.y = ggplot2::unit(0, "pt"),
+#     plot.title = element_text()
 #   )
-#
 #
 # # ## Stripes:
 # # # ggplot2::ggplot(data_p_2, ggplot2::aes(x = est_trend_no_comp,
