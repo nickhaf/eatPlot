@@ -8,7 +8,8 @@ plot_table(
   no_trend_list,
   x_axis = "grouping_var",
   y_axis = "state_var",
-  y_value = "est_point"
+  y_value = "est_point",
+  plot_settings = plotsettings_barplot()
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ plot_table(
 \item{y_axis}{Character string of the column name containing the y-axis labels. Defaults to \code{"state_var"}.}
 
 \item{y_value}{Character string of the column name containing values that should be written in the table columns. Defaults to \code{"est_point"}, which are the ability estimates in the states.}
+
+\item{plot_settings}{tbd}
 }
 \value{
 ggplot2 table.
