@@ -37,8 +37,8 @@
 <text x='64.01' y='160.55' style='font-size: 5.69px; font-family: sans;' textLength='11.70px' lengthAdjust='spacingAndGlyphs'>(7.9)</text>
 <line x1='23.58' y1='105.94' x2='87.94' y2='114.54' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='23.58' y1='83.29' x2='87.94' y2='91.99' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-linecap: butt;' />
-<circle cx='23.58' cy='83.29' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<circle cx='87.94' cy='91.99' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='23.58,79.92 26.50,84.98 20.66,84.98 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='87.94,88.61 90.86,93.67 85.02,93.67 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='26.15' y='77.79' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>545</text>
 <text x='85.37' y='86.49' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>528</text>
 <rect x='17.14' y='46.61' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
@@ -53,14 +53,14 @@
 <text x='146.03' y='160.55' style='font-size: 5.69px; font-family: sans;' textLength='11.70px' lengthAdjust='spacingAndGlyphs'>(8.9)</text>
 <line x1='105.60' y1='114.54' x2='169.96' y2='124.93' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='105.60' y1='91.99' x2='169.96' y2='99.44' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-dasharray: 7.97,7.97; stroke-linecap: butt;' />
-<circle cx='105.60' cy='91.99' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<circle cx='169.96' cy='99.44' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='105.60,88.61 108.52,93.67 102.68,93.67 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='169.96,96.06 172.88,101.12 167.04,101.12 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='108.17' y='86.49' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>528</text>
 <text x='167.39' y='93.94' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>513</text>
 <rect x='99.16' y='46.61' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='112.03' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='163.53' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='96.77' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='63.03px' lengthAdjust='spacingAndGlyphs'>Baden-Württemberg</text>
+<text x='96.77' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-29</text>
 </g>
 <defs>
   <clipPath id='cpMTgzLjYwfDM2MC4wMHwyOC44MnwxNjEuODc='>
@@ -80,7 +80,7 @@
 <line x1='199.98' y1='105.94' x2='264.34' y2='114.54' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='199.98' y1='82.58' x2='264.34' y2='90.18' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-linecap: butt;' />
 <circle cx='199.98' cy='82.58' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<circle cx='264.34' cy='90.18' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='264.34,86.81 267.26,91.87 261.42,91.87 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='202.55' y='77.08' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>547</text>
 <text x='261.77' y='84.68' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>531</text>
 <rect x='193.54' y='46.61' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
@@ -96,13 +96,13 @@
 <line x1='282.00' y1='114.54' x2='346.36' y2='124.93' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='282.00' y1='90.18' x2='346.36' y2='93.13' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-dasharray: 7.97,7.97; stroke-linecap: butt;' />
 <circle cx='282.00' cy='90.18' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<circle cx='346.36' cy='93.13' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='346.36,89.76 349.28,94.81 343.44,94.81 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='284.57' y='84.68' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>531</text>
 <text x='343.79' y='87.63' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>526</text>
 <rect x='275.56' y='46.61' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='288.43' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='339.93' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='273.17' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='22.18px' lengthAdjust='spacingAndGlyphs'>Bayern</text>
+<text x='273.17' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-28</text>
 </g>
 <defs>
   <clipPath id='cpMzYwLjAwfDUzNi40MHwyOC44MnwxNjEuODc='>
@@ -121,7 +121,7 @@
 <text x='416.81' y='160.55' style='font-size: 5.69px; font-family: sans;' textLength='11.70px' lengthAdjust='spacingAndGlyphs'>(7.3)</text>
 <line x1='376.38' y1='105.94' x2='440.74' y2='114.54' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='376.38' y1='110.30' x2='440.74' y2='107.69' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-dasharray: 7.97,7.97; stroke-linecap: butt;' />
-<circle cx='376.38' cy='110.30' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='376.38,106.93 379.30,111.99 373.46,111.99 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <polygon points='440.74,104.31 443.66,109.37 437.82,109.37 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='378.95' y='104.80' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>491</text>
 <text x='438.17' y='102.19' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>497</text>
@@ -137,14 +137,14 @@
 <text x='498.83' y='160.55' style='font-size: 5.69px; font-family: sans;' textLength='11.70px' lengthAdjust='spacingAndGlyphs'>(6.7)</text>
 <line x1='458.40' y1='114.54' x2='522.76' y2='124.93' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='458.40' y1='107.69' x2='522.76' y2='116.07' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-linecap: butt;' />
-<circle cx='458.40' cy='107.69' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<polygon points='458.40,104.31 461.32,109.37 455.48,109.37 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <polygon points='522.76,112.70 525.68,117.75 519.84,117.75 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='460.97' y='102.19' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>497</text>
 <text x='520.19' y='110.57' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>480</text>
 <rect x='451.96' y='46.61' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='464.83' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='516.33' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='449.57' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='17.90px' lengthAdjust='spacingAndGlyphs'>Berlin</text>
+<text x='449.57' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-72</text>
 </g>
 <defs>
   <clipPath id='cpNTM2LjQwfDcxMi44MHwyOC44MnwxNjEuODc='>
@@ -186,7 +186,7 @@
 <rect x='628.36' y='46.61' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='641.23' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='692.73' y='54.78' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='625.97' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='40.48px' lengthAdjust='spacingAndGlyphs'>Brandenburg</text>
+<text x='625.97' y='42.98' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-43</text>
 </g>
 <defs>
   <clipPath id='cpNy4yMHwxODMuNjB8MTYxLjg3fDI5NC45Mg=='>
@@ -228,7 +228,7 @@
 <rect x='99.16' y='179.66' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='112.03' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='163.53' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='96.77' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='24.52px' lengthAdjust='spacingAndGlyphs'>Bremen</text>
+<text x='96.77' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-45</text>
 </g>
 <defs>
   <clipPath id='cpMTgzLjYwfDM2MC4wMHwxNjEuODd8Mjk0Ljky'>
@@ -270,7 +270,7 @@
 <rect x='275.56' y='179.66' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='288.43' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='339.93' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='273.17' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='28.80px' lengthAdjust='spacingAndGlyphs'>Hamburg</text>
+<text x='273.17' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-34</text>
 </g>
 <defs>
   <clipPath id='cpMzYwLjAwfDUzNi40MHwxNjEuODd8Mjk0Ljky'>
@@ -312,7 +312,7 @@
 <rect x='451.96' y='179.66' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='464.83' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='516.33' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='449.57' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='23.74px' lengthAdjust='spacingAndGlyphs'>Hessen</text>
+<text x='449.57' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-48</text>
 </g>
 <defs>
   <clipPath id='cpNTM2LjQwfDcxMi44MHwxNjEuODd8Mjk0Ljky'>
@@ -331,8 +331,8 @@
 <text x='593.21' y='293.60' style='font-size: 5.69px; font-family: sans;' textLength='11.70px' lengthAdjust='spacingAndGlyphs'>(9.9)</text>
 <line x1='552.78' y1='238.99' x2='617.14' y2='247.59' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='552.78' y1='224.15' x2='617.14' y2='235.78' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-linecap: butt;' />
-<polygon points='552.78,220.78 555.70,225.84 549.86,225.84 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<polygon points='617.14,232.41 620.06,237.47 614.22,237.47 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='552.78' cy='224.15' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='617.14' cy='235.78' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='555.35' y='218.65' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>530</text>
 <text x='614.57' y='230.28' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>506</text>
 <rect x='546.34' y='179.66' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
@@ -347,14 +347,14 @@
 <text x='672.07' y='293.60' style='font-size: 5.69px; font-family: sans;' textLength='14.87px' lengthAdjust='spacingAndGlyphs'>(20.0)</text>
 <line x1='634.80' y1='247.59' x2='699.16' y2='257.98' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='634.80' y1='235.78' x2='699.16' y2='247.52' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-dasharray: 7.97,7.97; stroke-linecap: butt;' />
-<polygon points='634.80,232.41 637.72,237.47 631.88,237.47 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<polygon points='699.16,244.15 702.08,249.21 696.24,249.21 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='634.80' cy='235.78' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='699.16' cy='247.52' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='637.37' y='230.28' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>506</text>
 <text x='696.59' y='242.02' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>483</text>
 <rect x='628.36' y='179.66' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='641.23' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='692.73' y='187.83' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='625.97' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='82.88px' lengthAdjust='spacingAndGlyphs'>Mecklenburg-Vorpommern</text>
+<text x='625.97' y='176.03' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-17</text>
 </g>
 <defs>
   <clipPath id='cpNy4yMHwxODMuNjB8Mjk0LjkyfDQyNy45Nw=='>
@@ -373,8 +373,8 @@
 <text x='64.01' y='426.65' style='font-size: 5.69px; font-family: sans;' textLength='11.70px' lengthAdjust='spacingAndGlyphs'>(7.1)</text>
 <line x1='23.58' y1='372.04' x2='87.94' y2='380.64' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='23.58' y1='360.92' x2='87.94' y2='370.19' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-linecap: butt;' />
-<polygon points='23.58,357.55 26.50,362.61 20.66,362.61 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<polygon points='87.94,366.81 90.86,371.87 85.02,371.87 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='23.58' cy='360.92' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='87.94' cy='370.19' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='26.15' y='355.42' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>522</text>
 <text x='85.37' y='364.69' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>504</text>
 <rect x='17.14' y='312.71' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
@@ -389,14 +389,14 @@
 <text x='146.03' y='426.65' style='font-size: 5.69px; font-family: sans;' textLength='11.70px' lengthAdjust='spacingAndGlyphs'>(7.4)</text>
 <line x1='105.60' y1='380.64' x2='169.96' y2='391.03' style='stroke-width: 2.13; stroke: #93CDDD; stroke-linecap: butt;' />
 <line x1='105.60' y1='370.19' x2='169.96' y2='372.90' style='stroke-width: 1.49; stroke: #A6A6A6; stroke-dasharray: 7.97,7.97; stroke-linecap: butt;' />
-<polygon points='105.60,366.81 108.52,371.87 102.68,371.87 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
-<polygon points='169.96,369.53 172.88,374.59 167.04,374.59 ' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='105.60' cy='370.19' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
+<circle cx='169.96' cy='372.90' r='2.17' style='stroke-width: 0.71; stroke: none; fill: #A6A6A6;' />
 <text x='108.17' y='364.69' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>504</text>
 <text x='167.39' y='367.40' text-anchor='middle' style='font-size: 5.69px; fill: #A6A6A6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>498</text>
 <rect x='99.16' y='312.71' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='112.03' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='163.53' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='96.77' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='46.70px' lengthAdjust='spacingAndGlyphs'>Niedersachsen</text>
+<text x='96.77' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-21</text>
 </g>
 <defs>
   <clipPath id='cpMTgzLjYwfDM2MC4wMHwyOTQuOTJ8NDI3Ljk3'>
@@ -438,7 +438,7 @@
 <rect x='275.56' y='312.71' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='288.43' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='339.93' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='273.17' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='64.20px' lengthAdjust='spacingAndGlyphs'>Nordrhein-Westfalen</text>
+<text x='273.17' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-93</text>
 </g>
 <defs>
   <clipPath id='cpMzYwLjAwfDUzNi40MHwyOTQuOTJ8NDI3Ljk3'>
@@ -480,7 +480,7 @@
 <rect x='451.96' y='312.71' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='464.83' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='516.33' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='449.57' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='49.42px' lengthAdjust='spacingAndGlyphs'>Rheinland-Pfalz</text>
+<text x='449.57' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-40</text>
 </g>
 <defs>
   <clipPath id='cpNTM2LjQwfDcxMi44MHwyOTQuOTJ8NDI3Ljk3'>
@@ -522,7 +522,7 @@
 <rect x='628.36' y='312.71' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='641.23' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='692.73' y='320.88' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='625.97' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='28.02px' lengthAdjust='spacingAndGlyphs'>Saarland</text>
+<text x='625.97' y='309.08' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-36</text>
 </g>
 <defs>
   <clipPath id='cpNy4yMHwxODMuNjB8NDI3Ljk3fDU2MS4wMg=='>
@@ -564,7 +564,7 @@
 <rect x='99.16' y='445.76' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='112.03' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='163.53' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='96.77' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='49.43px' lengthAdjust='spacingAndGlyphs'>Sachsen-Anhalt</text>
+<text x='96.77' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-88</text>
 </g>
 <defs>
   <clipPath id='cpMTgzLjYwfDM2MC4wMHw0MjcuOTd8NTYxLjAy'>
@@ -606,7 +606,7 @@
 <rect x='275.56' y='445.76' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='288.43' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='339.93' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='273.17' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='27.25px' lengthAdjust='spacingAndGlyphs'>Sachsen</text>
+<text x='273.17' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-70</text>
 </g>
 <defs>
   <clipPath id='cpMzYwLjAwfDUzNi40MHw0MjcuOTd8NTYxLjAy'>
@@ -648,7 +648,7 @@
 <rect x='451.96' y='445.76' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='464.83' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='516.33' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='449.57' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='59.14px' lengthAdjust='spacingAndGlyphs'>Schleswig-Holstein</text>
+<text x='449.57' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-31</text>
 </g>
 <defs>
   <clipPath id='cpNTM2LjQwfDcxMi44MHw0MjcuOTd8NTYxLjAy'>
@@ -690,7 +690,7 @@
 <rect x='628.36' y='445.76' width='77.24' height='12.41' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #ADD8E6;' />
 <text x='641.23' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='692.73' y='453.93' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='625.97' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='31.52px' lengthAdjust='spacingAndGlyphs'>Thüringen</text>
+<text x='625.97' y='442.13' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='25.69px' lengthAdjust='spacingAndGlyphs'>Land-77</text>
 <text x='14.40' y='20.60' style='font-size: 13.20px; font-family: sans;' textLength='137.25px' lengthAdjust='spacingAndGlyphs'>lineplot_chpt_4_1group</text>
 </g>
 </svg>

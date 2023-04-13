@@ -57,8 +57,6 @@ range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
   )
 })
 
-
-
 test_that("single brace is drawn", {
   test_brace <- data.frame(
     overlap = FALSE,
@@ -176,7 +174,7 @@ test_that("Example brace plot is still the same", {
   vdiffr::expect_doppelganger(
     "Brace plot trend_books",
     ggplot2::ggplot() +
-      plot_braces(plot_data[["plot_braces"]][plot_data[["plot_braces"]]$state_var == "Berlin" & !is.na(plot_data[["plot_braces"]]$state_var), ],
+      plot_braces(plot_data[["plot_braces"]][plot_data[["plot_braces"]]$state_var == "Land-45" & !is.na(plot_data[["plot_braces"]]$state_var), ],
         y_range = c(397, 552),
         label_est = "est_trend_no_comp",
         label_se = "se_trend_no_comp",

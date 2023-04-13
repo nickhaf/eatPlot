@@ -90,6 +90,11 @@ get_wholeGroup <- function(val_vec) {
 
 # Extract group membership from group column. Splits String by "." and extracts the first value that is found in the group_vector
 write_group <- function(val_vec, groups) {
+  ## Umwandeln aller "_" in groups in "-"
+  if(any(grepl("_", groups))){
+    stop("Your state variables contains '_', please use '-' instead.")
+  }
+
   val_vec <- gsub("_", "\\.", val_vec)
   group_vec <- strsplit(val_vec, split = "\\.")
 
