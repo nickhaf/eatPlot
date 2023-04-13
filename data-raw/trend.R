@@ -5,8 +5,6 @@ trend_books$KBuecher_imp3 <- factor(trend_books$KBuecher_imp3, levels = c("1", "
 
 set.seed(23)
 rand_num <- sample(1:100, 16)
-# trend_books[, c("group", "TR_BUNDESLAND")] <-
-
 unique_states <- unique(trend_books$TR_BUNDESLAND)[!is.na(unique(trend_books$TR_BUNDESLAND))]
 
 for (i in c("group", "TR_BUNDESLAND")) {

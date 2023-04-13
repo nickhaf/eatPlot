@@ -6,6 +6,17 @@ for(i in c("est", "se")){
 adjusted_means[ , i] <- as.numeric(adjusted_means[, i])
 }
 
+set.seed(23)
+rand_num <- sample(1:100, 16)
+unique_states <- unique(adjusted_means$TR_BUNDESLAND)[!is.na(unique(adjusted_means$TR_BUNDESLAND))]
+
+for (i in c("group", "TR_BUNDESLAND")) {
+  for (j in length(unique_states):1) { #this way, so Sachsen-Anhalt is gsubed first
+    state <- unique_states[j]
+    adjusted_means[, i] <- gsub(state, paste0("Land-", rand_num[j]), adjusted_means[, i])
+  }
+}
+
 adjusted_means$adjust <- factor(adjusted_means$adjust)
 
 usethis::use_data(adjusted_means, overwrite = TRUE)
