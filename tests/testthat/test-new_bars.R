@@ -54,15 +54,15 @@
 #            bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
 #            bar_sig_type = "frame",
 #            default_list = barplot_MinSta)
-# )# +
-  # ggplot2::annotate("text", x = 35, y = "Land", label = "Mindeststandard") +
-  # ggplot2::annotate("segment", x = 35, xend = 45, y = "Land", yend = "Land") +
-  # ggplot2::annotate("rect", ymin = "Land", ymax = Inf, xmin = -Inf, xmax = Inf, colour = "red")
-  #
-  #
-
-p_merged <- plot_table_bar(plot_l, plot_r)
-
+# ) +
+#   ggplot2::annotate("tile", x = 35, y = "Land", width = 10, fill = "lightblue") +
+# ggplot2::annotate("text", x = 35, y = "Land", label = "Mindeststandard") +
+# ggplot2::annotate("segment", x = 35, xend = 45, y = "Land", yend = "Land") +
+# #ggplot2::annotate("rect", ymin = "Land", ymax = Inf, xmin = -Inf, xmax = Inf, colour = "red")
+# NULL
+#
+# p_merged <- plot_table_bar(plot_l, plot_r)
+#
 
 # # Tabelle -----------------------------------------------------------------
 # data_t <- data_bar_l
