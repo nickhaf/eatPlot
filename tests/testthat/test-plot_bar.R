@@ -16,7 +16,7 @@ test_that("Barplot is still the same", {
       bar_fill = "bar_fill",
       bar_label = NULL,
       bar_pattern_fill = "bar_pattern_fill",
-      plot_settings = plotsettings_barplot(
+      plot_settings = plotsettings_tablebarplot(
         axis_x_lims = c(-35, 20),
         background_stripes_colour = c("red", "blue"),
         bar_fill_colour = c(
@@ -49,7 +49,7 @@ test_that("Example barplot is still the same", {
     plot_bar(
       plot_data[["plot_bar"]],
       bar_label = NULL,
-      plot_settings = plotsettings_barplot(background_stripes_colour = c("grey", "white"),
+      plot_settings = plotsettings_tablebarplot(background_stripes_colour = c("grey", "white"),
                                            bar_sig_type = "pattern",
                                            default_list = barplot_MinSta)
     )
@@ -68,7 +68,7 @@ test_that("Example barplot can be plotted with different frames", {
   vdiffr::expect_doppelganger("Bar plot with frames for trend_books",
     plot_bar(plot_data[["plot_bar"]],
              bar_label = NULL,
-    plot_settings = plotsettings_barplot(background_stripes_colour = c("grey", "white"),
+    plot_settings = plotsettings_tablebarplot(background_stripes_colour = c("grey", "white"),
                                          bar_sig_type = "frame",
                                          default_list = barplot_MinSta)
     )

@@ -38,7 +38,7 @@ theme_table <- function() {
       axis.text.y = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_text(size = 10, hjust = 0.5, color = "black", face = "bold"),
       axis.ticks = ggplot2::element_blank(),
-      plot.margin = ggplot2::unit(c(0, -0.1, 0, 0), "cm"),
+      # plot.margin = ggplot2::unit(c(0, -0.1, 0, 0), "cm"),
       plot.caption = ggplot2::element_text(hjust = 0),
       legend.position = "bottom"
     )

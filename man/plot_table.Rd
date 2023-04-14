@@ -9,7 +9,7 @@ plot_table(
   x_axis = "grouping_var",
   y_axis = "state_var",
   y_value = "est_point",
-  plot_settings = plotsettings_barplot()
+  plot_settings = plotsettings_tablebarplot()
 )
 }
 \arguments{

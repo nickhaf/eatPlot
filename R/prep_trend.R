@@ -200,8 +200,11 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   ## plot_bar ##
   ##############
 
+
   comp_wholeGroup_point <- list_building_blocks[["point_comp_data"]][list_building_blocks[["point_comp_data"]]$compare_2 == "wholeGroup", ]
   comp_state_point <- list_building_blocks[["point_comp_data"]][list_building_blocks[["point_comp_data"]]$compare_2 == "BL" | list_building_blocks[["point_comp_data"]]$compare_1 == "_groupingVar", ]
+
+
 
   if (nrow(comp_state_point) != 0) {
     plot_dat[["plot_bar"]] <- merge(
