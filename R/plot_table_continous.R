@@ -77,10 +77,10 @@ res_plot <- res_plot +
     ggpattern::geom_rect_pattern(
       data = dat,
       ggplot2::aes(
-        xmin = x_min,
-        xmax = x_max,
-        ymin = y_axis - 0.4,
-        ymax = y_axis + 0.4,
+        xmin = .data$x_min,
+        xmax = .data$x_max,
+        ymin = .data$y_axis - 0.4,
+        ymax = .data$y_axis + 0.4,
         #colour = .data$bar_fill,
         fill = .data$bar_fill,
         pattern = .data$bar_sig,
@@ -190,12 +190,12 @@ build_background_stripes <- function(dat,
     ggplot2::geom_tile(
       data = dat,
       ggplot2::aes(
-        x = x_min,
-        y = y_axis,
+        x = .data$x_min,
+        y = .data$y_axis,
         width = Inf,
         height = 1,
-        colour = background_colour,
-        fill = background_colour
+        colour = .data$background_colour,
+        fill = .data$background_colour
       )
    )
   )
