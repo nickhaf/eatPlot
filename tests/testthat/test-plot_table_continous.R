@@ -13,6 +13,7 @@ test_that("continous barplot looks the same", {
   p_bar <- plot_tablebar(dat = test_data,
                          bar_label = NULL,
                          bar_sig = "bar_sig",
+                         bar_header = "a barplot",
                          bar_fill = "bar_fill",
                          bar_pattern_fill = "bar_pattern_fill",
                          columns_headers = c("est_1", "est_2"),

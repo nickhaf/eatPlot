@@ -4,14 +4,15 @@ plot_tablebar <- function(dat,
                           bar_label = NULL,
                           bar_sig = NULL,
                           bar_fill = NULL,
+                          bar_header = NULL,
                           bar_pattern_fill = NULL,
                           column_bar = NULL,
+                          columns_headers = NULL,
                           columns_table = NULL,
                           columns_table_sig_bold = NULL,
                           columns_table_sig_high = NULL,
                           columns_table_se = NULL,
                           plot_settings = plotsettings_tablebarplot()) {
-
   ## Hier checken ob die Längen der Argumente richtig sind, wenn nicht, dann ergänzen
   # Check columns -----------------------------------------------------------
   dat <- build_column_2(dat, column_name = bar_sig, filling = "FALSE")
@@ -31,24 +32,41 @@ plot_tablebar <- function(dat,
     )
   }
 
-  dat <- rbind(dat, rep(NA, ncol(dat)))
-  dat[nrow(dat), "y_axis"] <- max(dat$y_axis, na.rm = TRUE) + 1
-
-
   ## Das sollte 0 werden wenn keine bars geplotted werden sollen
   plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$x_max), plot_settings)
-  scale_breaks <- unique(c(seq(0, plot_borders[1], by = -10),
-                           seq(0, plot_borders[2], by = 10)))
+  scale_breaks <- unique(c(
+    seq(0, plot_borders[1], by = -10),
+    seq(0, plot_borders[2], by = 10)
+  ))
 
   dat$background_colour <- rev(plot_settings$background_stripes_colour)
 
 
- res_plot <-  ggplot2::ggplot(
+  #
+  #   dat_cols <- stats::reshape(dat,
+  #                              varying = list(columns_table),
+  #                              v.name = "value",
+  #                              timevar = "column",
+  #                              idvar = "y_axis",
+  #                              direction = "long",
+  #                              sep = "_")
+
+  x_axis_min <- plot_borders[1]
+  x_axis_range <- diff(range(plot_borders))
+
+  x_axis <- vapply(1:length(columns_table), function(i) {
+    x_axis_min - i - (i * x_axis_range * plot_settings$columns_width[i])
+  },
+  FUN.VALUE = numeric(1)
+  )
+
+
+  res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
       x = .data$x_min,
-      y = .data$y_axis#,
-      #linetype = .data$bar_sig
+      y = .data$y_axis # ,
+      # linetype = .data$bar_sig
     )
   ) +
     build_background_stripes(dat, plot_settings = plot_settings) +
@@ -57,7 +75,6 @@ plot_tablebar <- function(dat,
       values = dat$background_colour
     ) +
     ggplot2::scale_colour_manual(values = dat$background_colour) +
-    ggplot2::scale_y_continuous(expand = c(0, 0)) +
     ggplot2::geom_vline(
       xintercept = scale_breaks,
       linetype = "dashed", colour = "darkgrey"
@@ -65,85 +82,87 @@ plot_tablebar <- function(dat,
     ggplot2::geom_vline(
       xintercept = 0,
       colour = "darkgrey"
-    )  +
+    ) +
     ggplot2::scale_x_continuous(breaks = scale_breaks) +
-    theme_table()     +
-    if(!is.null(bar_label)){
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .05))) +
+    ggplot2::geom_rect(
+      ggplot2::aes(
+        xmin = -Inf, xmax = Inf,
+        ymin = max(.data$y_axis) + 0.5, ymax = Inf
+      ),
+      colour = "lightblue",
+      fill = "lightblue"
+    ) +
+    theme_table() +
+    if (!is.null(bar_label)) {
       ggplot2::geom_text(ggplot2::aes(label = .data[[bar_label]]), hjust = -0.2)
     }
 
 
- if (!is.null(column_bar)) {
-   if (plot_settings$bar_sig_type == "pattern") {
-
-res_plot <- res_plot +
-    ggnewscale::new_scale_fill() +
-    ggpattern::geom_rect_pattern(
-      data = dat,
-      ggplot2::aes(
-        xmin = .data$x_min,
-        xmax = .data$x_max,
-        ymin = .data$y_axis - 0.4,
-        ymax = .data$y_axis + 0.4,
-        #colour = .data$bar_fill,
-        fill = .data$bar_fill,
-        pattern = .data$bar_sig,
-        pattern_colour = .data$bar_pattern_fill,
-        pattern_fill = .data$bar_pattern_fill
-      ),
-      colour = NA,
-      pattern_colour = "white",
-      pattern_angle = -45,
-      pattern_density = 0.4, # Streifenbreite
-      pattern_spacing = 0.01, # Abstand
-      pattern_key_scale_factor = 0.6
-    ) +
-    ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
-    ggpattern::scale_pattern_fill_manual(values = plot_settings$bar_pattern_fill_colour) +
-    ggplot2::scale_fill_manual(values = plot_settings$bar_fill) +
-    theme_table_bar() +
-    NULL
-}
-} else if (plot_settings$bar_sig_type == "frame") {
-  res_plot <- res_plot +
-    ggnewscale::new_scale_fill() +
-    ggplot2::geom_rect(
-      data = dat,
-      ggplot2::aes(
-        xmin = x_min,
-        xmax = x_max,
-        ymin = y_axis - 0.4,
-        ymax = y_axis + 0.4,
-        fill = .data$bar_fill,
-        linetype = .data$bar_sig,
-        ),
-      colour = "black",
-      linewidth = 0.9
-    ) +
-        ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
+  if (!is.null(column_bar)) {
+    if (plot_settings$bar_sig_type == "pattern") {
+      res_plot <- res_plot +
+        ggnewscale::new_scale_fill() +
+        ggpattern::geom_rect_pattern(
+          data = dat,
+          ggplot2::aes(
+            xmin = .data$x_min,
+            xmax = .data$x_max,
+            ymin = .data$y_axis - 0.4,
+            ymax = .data$y_axis + 0.4,
+            # colour = .data$bar_fill,
+            fill = .data$bar_fill,
+            pattern = .data$bar_sig,
+            pattern_colour = .data$bar_pattern_fill,
+            pattern_fill = .data$bar_pattern_fill
+          ),
+          colour = NA,
+          pattern_colour = "white",
+          pattern_angle = -45,
+          pattern_density = 0.4, # Streifenbreite
+          pattern_spacing = 0.01, # Abstand
+          pattern_key_scale_factor = 0.6
+        ) +
+        ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
+        ggpattern::scale_pattern_fill_manual(values = plot_settings$bar_pattern_fill_colour) +
+        ggplot2::scale_fill_manual(values = plot_settings$bar_fill) +
+        ggplot2::annotate("text", x = 0, y = max(dat$y_axis) + 0.5, label = bar_header) +
         theme_table_bar() +
         NULL
-    } else {
-      message("`sig_type` must be either \"frame\" or \"pattern\"")
     }
+  } else if (plot_settings$bar_sig_type == "frame") {
+    res_plot <- res_plot +
+      ggnewscale::new_scale_fill() +
+      ggplot2::geom_rect(
+        data = dat,
+        ggplot2::aes(
+          xmin = x_min,
+          xmax = x_max,
+          ymin = y_axis - 0.4,
+          ymax = y_axis + 0.4,
+          fill = .data$bar_fill,
+          linetype = .data$bar_sig,
+        ),
+        colour = "black",
+        linewidth = 0.9
+      ) +
+      ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
+      theme_table_bar() +
+      NULL
+  } else {
+    message("`sig_type` must be either \"frame\" or \"pattern\"")
+  }
 
   if (any(!is.null(columns_table))) {
     res_plot <- res_plot +
       build_columns_3(dat,
-                      cols = rev(new_colnames),
-                      plot_borders = plot_borders,
-                      plot_settings = plot_settings) +
-      # column headers:
-      ggplot2::geom_rect(
-        ggplot2::aes(
-          xmin = -Inf, xmax = Inf,
-          ymin = 4.5, ymax = Inf
-        ),
-        colour = "lightblue",
-        fill = "lightblue"
+        cols = rev(new_colnames),
+        columns_headers = columns_headers,
+        x_axis = x_axis,
+        plot_settings = plot_settings
       ) +
-      ggplot2::annotate("text", x = 0, y = 4.8, label = "Header") +
-      ggplot2::annotate("text", x = -3.5, y = 4.8, label = "Colspanner") +
+     # ggplot2::annotate("text", x = 0, y = 4.8, label = "Header") +
+    #  ggplot2::annotate("text", x = -3.5, y = 4.8, label = "Colspanner") +
       ggplot2::annotate("segment", x = -4.5, xend = -2.5, y = 4.7, yend = 4.7) +
       NULL
   }
@@ -155,23 +174,18 @@ res_plot <- res_plot +
 
 build_columns_3 <- function(df,
                             cols,
-                            plot_borders = 0,
+                            columns_headers,
+                            x_axis,
                             plot_settings = plotsettings_tablebarplot()) {
-
-  x_axis_min <- plot_borders[1]
-  x_axis_range <- diff(range(plot_borders))
-#   df$x_axis <- x_axis_min - df$y_axis - (i * x_axis_range * plot_settings$column_width[df$y_axis])
-
-
   c(
     lapply(1:length(cols), function(i) {
+      x_axis_i <- x_axis[i]
       column_name <- cols[i]
-      x_axis <- x_axis_min - i - (i * x_axis_range * plot_settings$columns_width[i])
 
-      ggtext::geom_richtext(
+    c(ggtext::geom_richtext(
         data = df,
         ggplot2::aes(
-          x = x_axis,
+          x = x_axis_i,
           y = .data$y_axis,
           label = .data[[column_name]]
         ),
@@ -180,14 +194,15 @@ build_columns_3 <- function(df,
         fill = NA,
         label.color = NA,
         hjust = 1
-      )
+      ),
+      ggplot2::annotate("text", x = x_axis_i, y = max(df$y_axis) + 0.5, label = columns_headers[i])
+    )
     })
   )
 }
 
 build_background_stripes <- function(dat,
                                      plot_settings = plotsettings_tablebarplot()) {
-
   stripes <- c(
     ggplot2::geom_tile(
       data = dat,
@@ -199,20 +214,19 @@ build_background_stripes <- function(dat,
         colour = .data$background_colour,
         fill = .data$background_colour
       )
-   )
+    )
   )
   return(stripes)
 }
 
-set_axis_limits <- function(dat, x_value, plot_settings){
-
-  if(is.null(plot_settings$axis_x_lims)){
+set_axis_limits <- function(dat, x_value, plot_settings) {
+  if (is.null(plot_settings$axis_x_lims)) {
     plot_borders <- calc_plot_borders(x_value)
     ## Plots with only positive values can start at 0.
-    if(all(x_value[!is.na(x_value)] >= 0)){
+    if (all(x_value[!is.na(x_value)] >= 0)) {
       plot_borders[1] <- 0
     }
-  }else{
+  } else {
     plot_borders <- plot_settings$axis_x_lims
   }
   return(plot_borders)
