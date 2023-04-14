@@ -17,34 +17,16 @@ plot_braces <- function(dat,
                         label_sig_bold = NULL,
                         plot_settings = plotsettings_lineplot()) {
 
-  dat <- build_column_2(dat, column_name = label_est, filling = "")
-  dat <- build_column_2(dat, column_name = label_se, filling = "")
-  dat <- build_column_2(dat, column_name = label_sig_high, filling = "")
-  dat <- build_column_2(dat, column_name = label_sig_bold, filling = "")
-
-  for(i in c("label_sig_high", "label_sig_bold")){
-    dat[is.na(dat[, i]), i] <- FALSE
-  }
-
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.
-  dat$label_est <- ifelse(dat$label_sig_bold == TRUE,
-    paste0("**", round(dat$label_est, 0), "**"),
-    round(dat$label_est, 0)
-  )
-  dat$label_sig <- ifelse(dat$label_sig_high == TRUE, "<sup>a</sup>", "")
-  dat$label_se <- ifelse(!is.na(dat$label_se),
-    paste0(" (", format(round(dat$label_se, 1), trim = TRUE), ")"),
-    ""
-  )
+dat$brace_label <- construct_label(dat,
+                       label_est = label_est,
+                       label_se = label_se,
+                       label_sig_high = label_sig_high,
+                       label_sig_bold = label_sig_bold,
+                       round_est = 0,
+                       round_se = 1)
 
-  dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
-
-  dat$brace_label <- paste0(
-    dat$label_est,
-    dat$label_sig,
-    dat$label_se
-  )
 
   # Calculate brace coordinates ---------------------------------------------
   coords <- calc_coords(y_range)

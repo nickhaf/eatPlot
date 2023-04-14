@@ -2,6 +2,7 @@
 
 export(build_columns)
 export(clean_data)
+export(construct_label)
 export(filter_rows)
 export(merge_trend_data)
 export(merge_trend_point)

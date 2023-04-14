@@ -5,6 +5,12 @@ plot_tablebar <- function(dat,
                            columns_table = NULL,
                            columns_table_sig_bold = NULL){
 
+
+for(i in columns_table){
+  dat[, i] <- construct_label()
+}
+
+
 res_plot <- ggplot2::ggplot(
     data = dat,
   )
