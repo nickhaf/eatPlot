@@ -31,6 +31,10 @@ plot_tablebar <- function(dat,
     )
   }
 
+  dat <- rbind(dat, rep(NA, ncol(dat)))
+  dat[nrow(dat), "y_axis"] <- max(dat$y_axis, na.rm = TRUE) + 1
+
+
   ## Das sollte 0 werden wenn keine bars geplotted werden sollen
   plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$x_max), plot_settings)
   scale_breaks <- unique(c(seq(0, plot_borders[1], by = -10),
@@ -141,7 +145,6 @@ res_plot <- res_plot +
       ggplot2::annotate("text", x = 0, y = 4.8, label = "Header") +
       ggplot2::annotate("text", x = -3.5, y = 4.8, label = "Colspanner") +
       ggplot2::annotate("segment", x = -4.5, xend = -2.5, y = 4.7, yend = 4.7) +
-      #ggplot2::scale_x_continuous(breaks = c(-2, 0, 2), expand = c(0, 0)) +
       NULL
   }
 
@@ -155,7 +158,7 @@ build_columns_3 <- function(df,
                             plot_borders = 0,
                             plot_settings = plotsettings_tablebarplot()) {
 
-  x_axis_min <- min(c(df$x_min, df$x_max))
+  x_axis_min <- plot_borders[1]
   x_axis_range <- diff(range(plot_borders))
 #   df$x_axis <- x_axis_min - df$y_axis - (i * x_axis_range * plot_settings$column_width[df$y_axis])
 
@@ -184,7 +187,6 @@ build_columns_3 <- function(df,
 
 build_background_stripes <- function(dat,
                                      plot_settings = plotsettings_tablebarplot()) {
-
 
   stripes <- c(
     ggplot2::geom_tile(

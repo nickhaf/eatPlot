@@ -15,6 +15,7 @@ test_that("continous barplot looks the same", {
                          bar_sig = "bar_sig",
                          bar_fill = "bar_fill",
                          bar_pattern_fill = "bar_pattern_fill",
+                         columns_headers = c("est_1", "est_2"),
                 columns_table = list("est_1", "se_1" ),
                 columns_table_sig_bold = list(NULL, "bar_sig"),
                 columns_table_sig_high = list("bar_sig", "bar_sig"),
