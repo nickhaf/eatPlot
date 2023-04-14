@@ -21,6 +21,7 @@ Depends:
 LazyData: true
 Imports: 
     ggbrace,
+    ggnewscale,
     ggpattern,
     ggplot2,
     ggrepel,
