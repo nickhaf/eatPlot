@@ -1,6 +1,6 @@
 
 
-plot_table_bar <- function(dat,
+plot_tablebar <- function(dat,
                            column_bar = NULL,
                            columns_table = NULL,
                            columns_table_sig_bold = NULL){
