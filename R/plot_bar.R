@@ -7,7 +7,7 @@
 #' @param bar_sig Character string of the column containing the grouping for the pattern or the frame of the bar. Defaults to `sig_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison are represented in the pattern or the frame of the bars.
 #' @param bar_fill Character string of the column containing the grouping for the filling of the bar. Defaults to `fill_wholeGroup`, so the significances of the state vs. wholeGroup (Germany) comparison, as well as the groups found in "data$grouping_var" are represented in the filling colours of the bars.
 #' @param bar_pattern_fill Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to `grouping_var`, so the groups found in `data$grouping_var` are represented in the colours of the bar pattern.
-#' @param plot_settings Named list constructed with `plotsettings_barplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_barplot()` for an overview.
+#' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
 #'
 #' @return Returns a [ggplot2] barplot.
 #' @export
@@ -20,7 +20,7 @@ plot_bar <- function(no_trend_list,
                      bar_sig = "sig_wholeGroup",
                      bar_fill = "fill_wholeGroup",
                      bar_pattern_fill = "grouping_var",
-                     plot_settings = plotsettings_barplot()) {
+                     plot_settings = plotsettings_tablebarplot()) {
 
   if (inherits(no_trend_list, "list")) {
     data_plot_bar <- no_trend_list[["plot_bar"]]

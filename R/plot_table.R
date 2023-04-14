@@ -17,7 +17,7 @@ plot_table <- function(no_trend_list,
                        x_axis = "grouping_var",
                        y_axis = "state_var",
                        y_value = "est_point",
-                       plot_settings = plotsettings_barplot()) {
+                       plot_settings = plotsettings_tablebarplot()) {
 
   if(inherits(no_trend_list, "list")){
     data_plot_table <- no_trend_list[["plot_bar"]]

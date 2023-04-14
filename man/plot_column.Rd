@@ -11,7 +11,7 @@ plot_column(
   fontsize = 3,
   alignment = "left",
   nudge_x = -0.55,
-  plot_settings = plotsettings_barplot()
+  plot_settings = plotsettings_tablebarplot()
 )
 }
 \arguments{

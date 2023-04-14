@@ -12,7 +12,7 @@ plot_bar(
   bar_sig = "sig_wholeGroup",
   bar_fill = "fill_wholeGroup",
   bar_pattern_fill = "grouping_var",
-  plot_settings = plotsettings_barplot()
+  plot_settings = plotsettings_tablebarplot()
 )
 }
 \arguments{
@@ -30,7 +30,7 @@ plot_bar(
 
 \item{bar_pattern_fill}{Character string of the column containing the grouping for the filling of the pattern on the bar. Defaults to \code{grouping_var}, so the groups found in \code{data$grouping_var} are represented in the colours of the bar pattern.}
 
-\item{plot_settings}{Named list constructed with \code{plotsettings_barplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_barplot()} for an overview.}
+\item{plot_settings}{Named list constructed with \code{plotsettings_tablebarplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_tablebarplot()} for an overview.}
 }
 \value{
 Returns a \link{ggplot2} barplot.

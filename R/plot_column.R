@@ -19,7 +19,7 @@ plot_column <- function(vec,
                         fontsize = 3,
                         alignment = "left",
                         nudge_x = -0.55,
-                        plot_settings = plotsettings_barplot()) {
+                        plot_settings = plotsettings_tablebarplot()) {
   dat <- as.data.frame(vec)
   dat$x_label <- rep(title, nrow(dat))
 

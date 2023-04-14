@@ -23,7 +23,7 @@ test_that("Table plot is still the same", {
   vdiffr::expect_doppelganger("Table plot", plot_table(df,
     x_axis = "x_label",
     y_value = "y_value",
-    plot_settings = plotsettings_barplot(default_list = barplot_MinSta)
+    plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta)
   ))
 })
 
@@ -37,6 +37,6 @@ test_that("example plot is still the same", {
   )
 
   vdiffr::expect_doppelganger("Table plot trend_books", plot_table(plot_data[["plot_table"]],
-    plot_settings = plotsettings_barplot(default_list = barplot_MinSta)
+    plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta)
   ))
 })

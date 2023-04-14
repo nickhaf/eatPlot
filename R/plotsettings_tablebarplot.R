@@ -42,9 +42,9 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @export
 #'
 #' @examples
-#' plotsettings_barplot()
+#' plotsettings_tablebarplot()
 #'
-plotsettings_barplot <- function(axis_x_lims = NULL,
+plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                  background_stripes_colour = NULL,
                                  bar_fill_colour = NULL,
                                  bar_frame_linetype = NULL,
