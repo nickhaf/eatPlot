@@ -48,6 +48,12 @@ plot_tablebar(
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_tablebarplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_tablebarplot()} for an overview.}
 }
+\value{
+\link{ggplot2} object.
+}
 \description{
 Plot a table and/or a barchart.
+}
+\examples{
+#tbd
 }

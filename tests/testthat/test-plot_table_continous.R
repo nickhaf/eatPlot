@@ -138,19 +138,3 @@ test_that("Example barplot long format is plotted correctly", {
 
 })
 
-
-test_that("final long plot is plotted correctly", {
-
-  min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/BT2021_Abb3.9.xlsx", sheet = "Daten BT21")
-
-  dat_bar <- prep_trend(min_stand,
-                        competence = "lesen",
-                        parameter = "1")[["plot_bar"]]
-
-  dat_bar$est_no_comp <- dat_bar$est_no_comp *100
-  dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
-
-## Aufbereitung verbessern, damit das leichter geht.
-
-
-})
