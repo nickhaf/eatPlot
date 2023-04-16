@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 8
+      length(settings_list) == 10
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -14,6 +14,8 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_pattern_fill_colour",
         "bar_pattern_type",
         "bar_sig_type",
+        "bar_width",
+        "headers_nudge_y",
         "columns_width"
       )
   )
@@ -25,6 +27,8 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(all(is_colour(settings_list$bar_pattern_fill_colour)))
   stopifnot(is.character(settings_list$bar_pattern_type))
   stopifnot(settings_list$bar_sig_type %in% c("pattern", "frame"))
+  stopifnot(is.numeric(settings_list$bar_width))
+  stopifnot(is.numeric(settings_list$headers_nudge_y))
   stopifnot(is.numeric(settings_list$columns_width) | is.null(settings_list$columns_width))
 }
 
@@ -38,6 +42,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
 #' @param bar_sig_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").
+#' @param bar_width Numeric between `0` and `1` specifying the width of the bar.
+#' @param headers_nudge_y Numeric between `-1` and `1` to nudge the column_headers in y dircetion.
 #' @param columns_width Numeric vector with the length equal to the number of ploted table columns. Adjusts the column width.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
@@ -54,18 +60,22 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       bar_pattern_fill_colour = NULL,
                                       bar_pattern_type = NULL,
                                       bar_sig_type = NULL,
+                                      bar_width = NULL,
+                                      headers_nudge_y = NULL,
                                       columns_width = NULL,
                                       default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
       "axis_x_lims" = NULL,
-      "background_stripes_colour" = c("white", "white"),
-      "bar_fill_colour" = rep("white", 4),
+      "background_stripes_colour" = "white",
+      "bar_fill_colour" = "white",
       "bar_frame_linetype" = "solid",
-      "bar_pattern_fill_colour" = c("white", "white"),
+      "bar_pattern_fill_colour" = "white",
       "bar_pattern_type" = "none",
       "bar_sig_type" = "frame",
+      "bar_width" = 0.4,
+      "headers_nudge_y" = 0,
       "columns_width" = NULL
     )
   } else {

@@ -19,7 +19,9 @@ barplot_MinSta <- plotsettings_tablebarplot(
     "FALSE" = "stripe"
   ),
   bar_sig_type = "pattern",
-  columns_width = NULL
+  bar_width = 0.4,
+  columns_width = NULL,
+  headers_nudge_y = 1
 )
 
 
