@@ -20,10 +20,23 @@ plot_tablebar <- function(dat,
   dat <- build_column_2(dat, column_name = bar_pattern_fill, filling = NA)
 
 
+  ## check if column names can be found in data
+sapply(unlist(c(bar_label,
+                bar_sig,
+                bar_fill,
+                bar_pattern_fill,
+                column_bar,
+                columns_table,
+                columns_table_sig_bold,
+                columns_table_sig_high,
+                columns_table_se)), function(col){
+  check_column(dat, col)
+})
+
   new_colnames <- paste0("col_", 1:length(columns_table))
 
   for (i in seq_along(columns_table)) {
-    dat[, new_colnames[i]] <- construct_label(
+    dat[[new_colnames[i]]] <- construct_label(
       dat,
       label_est = columns_table[[i]],
       label_se = columns_table_se[[i]],
