@@ -15,6 +15,7 @@
 #' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
 #' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets behind the column values.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
+#' @param y_axis Character string of the columnname used as y-axis.
 #'
 #' @return [ggplot2] object.
 #' @export

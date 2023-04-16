@@ -46,6 +46,8 @@ plot_tablebar(
 
 \item{columns_table_se}{List of character strings of the columns that contain standard errors, which will be plotted in brackets behind the column values.}
 
+\item{y_axis}{Character string of the columnname used as y-axis.}
+
 \item{plot_settings}{Named list constructed with \code{plotsettings_tablebarplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_tablebarplot()} for an overview.}
 }
 \value{
