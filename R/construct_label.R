@@ -22,9 +22,11 @@ construct_label <- function(dat,
   dat <- build_column_2(dat, column_name = label_sig_bold, filling = FALSE)
 
 
+if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){
   for (i in c("label_sig_high", "label_sig_bold")) {
     dat[is.na(dat[, i]), i] <- FALSE
   }
+}
 
   if (is.numeric(dat$label_est)) {
     dat$label_est <- format(round(dat$label_est, round_est), trim = TRUE)

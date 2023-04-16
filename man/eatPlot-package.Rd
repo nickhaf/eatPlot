@@ -8,6 +8,13 @@
 \description{
 Functions for plotting eatModel output.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://nickhaf.github.io/eatPlot/}
+}
+
+}
 \author{
 \strong{Maintainer}: Nicklas Hafiz \email{hafiznij@hu-berlin.de} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
 

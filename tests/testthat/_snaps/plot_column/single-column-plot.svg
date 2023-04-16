@@ -26,7 +26,7 @@
 </defs>
 <g clip-path='url(#cpMi43NHw3MjAuMDB8OS4wMXw0MzIuMDA=)'>
 <rect x='2.74' y='220.51' width='717.26' height='192.27' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
-<rect x='2.74' y='28.24' width='717.26' height='192.27' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
+<rect x='2.74' y='28.24' width='717.26' height='192.27' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter;' />
 <text x='32.63' y='319.58' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>a</text>
 <text x='32.63' y='127.31' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>b</text>
 </g>

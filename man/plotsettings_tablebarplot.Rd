@@ -12,6 +12,8 @@ plotsettings_tablebarplot(
   bar_pattern_fill_colour = NULL,
   bar_pattern_type = NULL,
   bar_sig_type = NULL,
+  bar_width = NULL,
+  headers_nudge_y = NULL,
   columns_width = NULL,
   default_list = NULL
 )
@@ -30,6 +32,10 @@ plotsettings_tablebarplot(
 \item{bar_pattern_type}{Named vector with the pattern types for the barpattern.}
 
 \item{bar_sig_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").}
+
+\item{bar_width}{Numeric between \code{0} and \code{1} specifying the width of the bar.}
+
+\item{headers_nudge_y}{Numeric between \code{-1} and \code{1} to nudge the column_headers in y dircetion.}
 
 \item{columns_width}{Numeric vector with the length equal to the number of ploted table columns. Adjusts the column width.}
 

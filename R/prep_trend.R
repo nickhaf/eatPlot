@@ -38,6 +38,7 @@ prep_trend <- function(dat,
 
 
 # Checks ------------------------------------------------------------------
+## Hier alle Spalten bilden, die später gebraucht werden.
 
   dat <- as.data.frame(dat)
 

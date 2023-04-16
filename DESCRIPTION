@@ -32,3 +32,4 @@ Imports:
     rlang
 Remotes: NicolasH2/ggbrace
 VignetteBuilder: knitr
+URL: https://nickhaf.github.io/eatPlot/
