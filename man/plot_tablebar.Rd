@@ -11,7 +11,6 @@ plot_tablebar(
   bar_sig = NULL,
   bar_fill = NULL,
   bar_header = NULL,
-  bar_pattern_fill = NULL,
   columns_headers = NULL,
   columns_table = NULL,
   columns_table_sig_bold = NULL,
@@ -34,8 +33,6 @@ plot_tablebar(
 
 \item{bar_header}{Character string for the header of the bars.}
 
-\item{bar_pattern_fill}{Character string for the column that groups the filling colours of the bar patterns into different groups.}
-
 \item{columns_headers}{Character vector containing the column columns_headers.}
 
 \item{columns_table}{List of character strings of the columns that should be plotted as table columns in the plot.}
@@ -49,6 +46,8 @@ plot_tablebar(
 \item{y_axis}{Character string of the columnname used as y-axis.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_tablebarplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_tablebarplot()} for an overview.}
+
+\item{bar_pattern_fill}{Character string for the column that groups the filling colours of the bar patterns into different groups.}
 }
 \value{
 \link{ggplot2} object.

@@ -27,7 +27,6 @@ plot_tablebar <- function(dat,
                           bar_sig = NULL,
                           bar_fill = NULL,
                           bar_header = NULL,
-                          bar_pattern_fill = NULL,
                           columns_headers = NULL,
                           columns_table = NULL,
                           columns_table_sig_bold = NULL,
@@ -44,7 +43,6 @@ plot_tablebar <- function(dat,
 
   dat <- build_column_2(dat, column_name = bar_sig, filling = "FALSE")
   dat <- build_column_2(dat, column_name = bar_fill, filling = "FALSE")
-  dat <- build_column_2(dat, column_name = bar_pattern_fill, filling = NA)
   dat <- build_column_2(dat, column_name = bar_est, filling = NA)
   dat <- build_column_2(dat, column_name = y_axis, filling = NA)
 
@@ -62,7 +60,6 @@ plot_tablebar <- function(dat,
     bar_label,
     bar_sig,
     bar_fill,
-    bar_pattern_fill,
     bar_est,
     columns_table,
     columns_table_sig_bold,
@@ -86,13 +83,16 @@ plot_tablebar <- function(dat,
   }
 
 
-
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
   dat$y_axis <- as.factor(dat$y_axis)
   dat <- dat[order(dat$y_axis), ]
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
+  dat$bar_fill_2 <- ifelse(dat$bar_sig == TRUE,
+                         paste0(dat$bar_fill, dat$bar_sig),
+                         "pattern"
+                         )
 
   ## Das sollte 0 werden wenn keine bars geplotted werden sollen
   plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
@@ -158,21 +158,18 @@ plot_tablebar <- function(dat,
             xmax = .data$bar_est,
             ymin = .data$y_axis - plot_settings$bar_width / 2,
             ymax = .data$y_axis + plot_settings$bar_width / 2,
-            # colour = .data$bar_fill,
+            colour = .data$bar_fill,
             fill = .data$bar_fill,
-            pattern = .data$bar_sig,
-            pattern_colour = .data$bar_pattern_fill,
-            pattern_fill = .data$bar_pattern_fill
-          ),
-          colour = NA,
-          pattern_colour = "white",
+            pattern = .data$bar_sig),
+          pattern_colour = NA,
+          pattern_fill = plot_settings$bar_pattern_fill_colour,
           pattern_angle = -45,
-          pattern_density = 0.4, # Streifenbreite
+          pattern_density = 0.5, # Streifenbreite
           pattern_spacing = 0.01, # Abstand
           pattern_key_scale_factor = 0.6
         ) +
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
-        ggpattern::scale_pattern_fill_manual(values = plot_settings$bar_pattern_fill_colour) +
+        ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::annotate("text",
                           x = mean(range(scale_breaks)),

@@ -4,7 +4,7 @@
 \name{eatPlot-package}
 \alias{eatPlot}
 \alias{eatPlot-package}
-\title{eatPlot: Plot eatModel output}
+\title{eatPlot: Plot eatRep output}
 \description{
 Functions for plotting eatModel output.
 }
