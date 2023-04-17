@@ -90,7 +90,9 @@ plot_tablebar <- function(dat,
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
   dat$y_axis <- as.factor(dat$y_axis)
+  dat <- dat[order(dat$y_axis), ]
   dat$y_axis <- rev(as.integer(dat$y_axis))
+  dat$background_colour <- plot_settings$background_stripes_colour
 
   ## Das sollte 0 werden wenn keine bars geplotted werden sollen
   plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
@@ -98,20 +100,6 @@ plot_tablebar <- function(dat,
     seq(0, plot_borders[1], by = -10),
     seq(0, plot_borders[2], by = 10)
   ))
-
-
-  dat <- dat[order(dat$y_axis), ]
-  dat$background_colour <- rev(plot_settings$background_stripes_colour)
-
-
-  #
-  #   dat_cols <- stats::reshape(dat,
-  #                              varying = list(columns_table),
-  #                              v.name = "value",
-  #                              timevar = "column",
-  #                              idvar = "y_axis",
-  #                              direction = "long",
-  #                              sep = "_")
 
   x_axis_min <- plot_borders[1]
   x_axis_range <- diff(range(plot_borders))
@@ -186,7 +174,10 @@ plot_tablebar <- function(dat,
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggpattern::scale_pattern_fill_manual(values = plot_settings$bar_pattern_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::annotate("text", x = diff(range(plot_borders)) / 2, y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y, label = bar_header) +
+        ggplot2::annotate("text",
+                          x = mean(range(scale_breaks)),
+                          y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
+                          label = bar_header) +
         theme_table_bar() +
         NULL
     } else if (plot_settings$bar_sig_type == "frame") {

@@ -26,6 +26,20 @@
 #' @source <"Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/01_Rechnungen/KAS/Abb65Buecher_mitTrend.csv">
 "trend_books"
 
+#' BT21 minimum standards.
+#'
+#' BT21 data set that contains data for the mindest-standards.
+#'
+#' @format ## `min_stand`
+#' A data frame with ... rows and ... columns:
+#' \describe{
+#'   \item{kb}{Competence}
+#'   ...
+#' }
+#' @source <"Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/BT2021_Abb3.9.xlsx">
+"min_stand"
+
+
 
 #' BT22 default plot settings.
 #'
