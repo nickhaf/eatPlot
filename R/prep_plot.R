@@ -59,10 +59,10 @@ stopifnot(is.character(parameter))
 sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
 
-dat <- build_column_2(dat, competence_var)
-dat <- build_column_2(dat, grouping_var)
-dat <- build_column_2(dat, state_var)
-dat <- build_column_2(dat, group_var)
+dat <- fill_column(dat, competence_var)
+dat <- fill_column(dat, grouping_var)
+dat <- fill_column(dat, state_var)
+dat <- fill_column(dat, group_var)
 
 colnames(dat) <- gsub("\\.", "_", colnames(dat))
 colnames(dat) <- gsub("sig_", "p_", colnames(dat))

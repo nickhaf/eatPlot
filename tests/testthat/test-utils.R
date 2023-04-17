@@ -145,12 +145,12 @@ test_that("columns are checked correctly", {
 test_that("NULL-cols are filled", {
   df <- data.frame(col1 = c(2,3))
   plot_points <- "col1"
-  res_df <- build_column_2(df = df, column_name = plot_points, filling = NA)
+  res_df <- fill_column(df = df, column_name = plot_points, filling = NA)
   expect_equal(res_df$plot_points, c(2,3))
 
 
   df <- data.frame(col1 = c(2,3))
   plot_points <- NULL
-  res_df_null <- build_column_2(df = df, column_name = plot_points, filling = NA)
+  res_df_null <- fill_column(df = df, column_name = plot_points, filling = NA)
   expect_equal(res_df_null$plot_points, c(NA, NA))
   })

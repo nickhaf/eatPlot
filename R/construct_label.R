@@ -16,10 +16,10 @@ construct_label <- function(dat,
                             label_sig_high = NULL,
                             round_est = 0,
                             round_se = 1) {
-  dat <- build_column_2(dat, column_name = label_est, filling = "")
-  dat <- build_column_2(dat, column_name = label_se, filling = NA)
-  dat <- build_column_2(dat, column_name = label_sig_high, filling = FALSE)
-  dat <- build_column_2(dat, column_name = label_sig_bold, filling = FALSE)
+  dat <- fill_column(dat, column_name = label_est, filling = "")
+  dat <- fill_column(dat, column_name = label_se, filling = NA)
+  dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
+  dat <- fill_column(dat, column_name = label_sig_bold, filling = FALSE)
 
 
 if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){

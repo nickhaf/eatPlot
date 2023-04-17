@@ -12,6 +12,7 @@ plot_tablebar(
   bar_fill = NULL,
   bar_header = NULL,
   columns_headers = NULL,
+  column_spanners = NULL,
   columns_table = NULL,
   columns_table_sig_bold = NULL,
   columns_table_sig_high = NULL,
@@ -35,6 +36,8 @@ plot_tablebar(
 
 \item{columns_headers}{Character vector containing the column columns_headers.}
 
+\item{column_spanners}{Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.}
+
 \item{columns_table}{List of character strings of the columns that should be plotted as table columns in the plot.}
 
 \item{columns_table_sig_bold}{List of character strings of the columns that contain the significances for plotting significant values as bold.}
@@ -54,5 +57,5 @@ plot_tablebar(
 Plot a table and/or a barchart.
 }
 \examples{
-#tbd
+# tbd
 }

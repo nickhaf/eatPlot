@@ -9,6 +9,7 @@
 #' @param bar_header Character string for the header of the bars.
 #' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
 #' @param columns_headers Character vector containing the column columns_headers.
+#' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
 #' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
@@ -19,7 +20,7 @@
 #' @return [ggplot2] object.
 #' @export
 #'
-#' @examples #tbd
+#' @examples # tbd
 plot_tablebar <- function(dat,
                           bar_est = NULL,
                           bar_label = NULL,
@@ -27,23 +28,25 @@ plot_tablebar <- function(dat,
                           bar_fill = NULL,
                           bar_header = NULL,
                           columns_headers = NULL,
+                          column_spanners = NULL, # c("name" = c(1,2))
                           columns_table = NULL,
                           columns_table_sig_bold = NULL,
                           columns_table_sig_high = NULL,
                           columns_table_se = NULL,
                           y_axis = NULL,
                           plot_settings = plotsettings_tablebarplot()) {
-
   ## Namen der Einstellungslisten checken: Taucht so in der entsprechenden Spalte auf? Kann man auch über die Reihenfolge gehen? eventl. in der scale_manual mit breaks arbeiten (oder so ähnlich) und dann nur Warnung ausgeben.
 
   # Check columns -----------------------------------------------------------
 
-  if(is.null(y_axis)){stop("Please provide a y-axis.")}
+  if (is.null(y_axis)) {
+    stop("Please provide a y-axis.")
+  }
 
-  dat <- build_column_2(dat, column_name = bar_sig, filling = "FALSE")
-  dat <- build_column_2(dat, column_name = bar_fill, filling = "FALSE")
-  dat <- build_column_2(dat, column_name = bar_est, filling = NA)
-  dat <- build_column_2(dat, column_name = y_axis, filling = NA)
+  dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
+  dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
+  dat <- fill_column(dat, column_name = bar_est, filling = NA)
+  dat <- fill_column(dat, column_name = y_axis, filling = NA)
 
 
   ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
@@ -89,9 +92,9 @@ plot_tablebar <- function(dat,
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
   dat$bar_fill_2 <- ifelse(dat$bar_sig == TRUE,
-                         paste0(dat$bar_fill, dat$bar_sig),
-                         "pattern"
-                         )
+    paste0(dat$bar_fill, dat$bar_sig),
+    "pattern"
+  )
 
   ## Das sollte 0 werden wenn keine bars geplotted werden sollen
   plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
@@ -100,15 +103,9 @@ plot_tablebar <- function(dat,
     seq(0, plot_borders[2], by = 10)
   ))
 
-  x_axis_min <- plot_borders[1]
+  column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
+
   x_axis_range <- diff(range(plot_borders))
-
-  x_axis <- vapply(1:length(columns_table), function(i) {
-    x_axis_min - i - (i * x_axis_range * rev(plot_settings$columns_width)[i])
-  },
-  FUN.VALUE = numeric(1)
-  )
-
 
   res_plot <- ggplot2::ggplot(
     data = dat,
@@ -159,7 +156,8 @@ plot_tablebar <- function(dat,
             ymax = .data$y_axis + plot_settings$bar_width / 2,
             colour = .data$bar_fill,
             fill = .data$bar_fill,
-            pattern = .data$bar_sig),
+            pattern = .data$bar_sig
+          ),
           pattern_colour = NA,
           pattern_fill = plot_settings$bar_pattern_fill_colour,
           pattern_angle = -45,
@@ -171,9 +169,10 @@ plot_tablebar <- function(dat,
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::annotate("text",
-                          x = mean(range(scale_breaks)),
-                          y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
-                          label = bar_header) +
+          x = mean(range(scale_breaks)),
+          y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
+          label = bar_header
+        ) +
         theme_table_bar() +
         NULL
     } else if (plot_settings$bar_sig_type == "frame") {
@@ -190,7 +189,8 @@ plot_tablebar <- function(dat,
             linetype = .data$bar_sig,
           ),
           colour = "black",
-          linewidth = 0.9) +
+          linewidth = 0.9
+        ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::annotate("text", x = diff(range(plot_borders)) / 2, y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y, label = bar_header) +
@@ -205,14 +205,46 @@ plot_tablebar <- function(dat,
     res_plot <- res_plot +
       build_columns_3(dat,
         cols = rev(new_colnames),
+        column_x_coords = column_x_coords,
         columns_headers = rev(columns_headers),
-        x_axis = x_axis,
         plot_settings = plot_settings
       ) +
-      # ggplot2::annotate("text", x = 0, y = 4.8, label = "Header") +
-      #  ggplot2::annotate("text", x = -3.5, y = 4.8, label = "Colspanner") +
-      # ggplot2::annotate("segment", x = -4.5, xend = -2.5, y = 4.7, yend = 4.7) +
-      NULL
+      if (!is.null(column_spanners)) {
+
+        unlist(lapply(seq_along(column_spanners), function(spanner) {
+
+          i <- column_spanners[[spanner]]
+
+          if (length(i) == 1) {
+            i <- rep(i, 2)
+          }
+
+          min_col <- i[1]
+          max_col <- i[2]
+
+          column_x_coords_rev <- column_x_coords[order(rev(rownames(column_x_coords))), ]
+          header_x <- mean(
+            c(
+              max(
+                column_x_coords_rev[c(min_col, max_col), "right"], na.rm = TRUE), min(column_x_coords_rev[c(min_col, max_col), "left"], na.rm = TRUE)), na.rm = TRUE)
+
+
+         annotations <- c(ggplot2::annotate("segment",
+            x = column_x_coords_rev[min_col, "left"] + 0.005 * x_axis_range,
+            xend = column_x_coords_rev[max_col, "right"] - 0.005 * x_axis_range,
+            y = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y,
+            yend = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y
+          ),
+          ggplot2::annotate("text",
+                            x = header_x,
+                            y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y,
+                            label = names(column_spanners)[spanner], hjust = 0.5)
+        )
+
+        return(annotations)
+        }))
+      }
+    NULL
   }
 
   return(res_plot)
@@ -222,12 +254,12 @@ plot_tablebar <- function(dat,
 
 build_columns_3 <- function(df,
                             cols,
+                            column_x_coords,
                             columns_headers,
-                            x_axis,
                             plot_settings = plotsettings_tablebarplot()) {
   c(
     lapply(1:length(cols), function(i) {
-      x_axis_i <- x_axis[i]
+      x_axis_i <- column_x_coords$middle[i]
       column_name <- cols[i]
 
       c(
@@ -242,9 +274,14 @@ build_columns_3 <- function(df,
           label.padding = grid::unit(rep(0, 4), "pt"),
           fill = NA,
           label.color = NA,
-          hjust = 0
+          hjust = 0.5
         ),
-        ggplot2::annotate("text", x = x_axis_i, y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y, label = columns_headers[i], hjust = 0)
+        ggplot2::annotate("text",
+          x = x_axis_i,
+          y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y,
+          label = columns_headers[i],
+          hjust = 0.5
+        )
       )
     })
   )
@@ -281,13 +318,47 @@ set_axis_limits <- function(dat, x_value, plot_settings) {
   return(plot_borders)
 }
 
-check_length <- function(obj, leng){
-  if(is.null(obj)){
+check_length <- function(obj, leng) {
+  if (is.null(obj)) {
     return(NULL)
-  }else if(length(obj) != leng){
-    warning(paste0("The length of " , deparse(substitute(obj)), " should be equal to the amount of columns you are plotting.", call. = FALSE))
-    obj <- c(obj, lapply(1:(leng - length(obj)), function(x){NULL}))
-  }else{
+  } else if (length(obj) != leng) {
+    warning(paste0("The length of ", deparse(substitute(obj)), " should be equal to the amount of columns you are plotting.", call. = FALSE))
+    obj <- c(obj, lapply(1:(leng - length(obj)), function(x) {
+      NULL
+    }))
+  } else {
     return(obj)
   }
+}
+
+
+calc_column_coords <- function(plot_borders, columns_table, plot_settings) {
+  x_axis_min <- plot_borders[1]
+  x_axis_range <- diff(range(plot_borders))
+
+  col_left_x_border <- rep(NA, length(columns_table))
+  col_right_x_border <- rep(NA, length(columns_table))
+  col_x_middle <- rep(NA, length(columns_table))
+
+  col_width_rev <- rev(plot_settings$columns_width)
+
+  col_right_x_border[1] <- x_axis_min
+  col_x_middle[1] <- col_right_x_border[1] - (x_axis_range * col_width_rev[1] /2)
+  col_left_x_border[1] <- col_x_middle[1] - (x_axis_range * col_width_rev[1] / 2)
+
+
+  for (i in 2:length(columns_table)) {
+    col_width <- col_width_rev[i] / 2
+
+    col_right_x_border[i] <- col_left_x_border[i - 1]
+    col_x_middle[i] <- col_right_x_border[i] - (x_axis_range * col_width)
+    col_left_x_border[i] <- col_x_middle[i] - (x_axis_range * col_width)
+  }
+
+  return(data.frame(
+    column = columns_table,
+    "right" = col_right_x_border,
+    "middle" = col_x_middle,
+    "left" = col_left_x_border
+  ))
 }

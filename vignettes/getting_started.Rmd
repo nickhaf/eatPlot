@@ -1,0 +1,39 @@
+---
+title: "Getting Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lineplots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(eatPlot)
+```
+
+`eatPlot` takes output dataframes from `eatRep` and facilitates the construction of different plots for the data. Main goal is the plotting of BT22 graphs, but in general the package can be used for other purposes as well. 
+The packages aim is it to make the plotting as easy but flexible as possible, so let's dive right in!
+
+# Basic workflow
+## Data preperation
+The first step is the data preperation. This is handeled by the function `prep_plot()`:
+```{r}
+dat_plot <- prep_plot(trend_books, 
+                      grouping_var = "KBuecher_imp3" 
+                      )
+```
+
+Here we choose the dataframe `trend_books` (which is an example included in the package), and define the column `KBuecher_imp3` as grouping variable. A lot of the function arguments are predefined with sensible defaults. If they don't fit your data, use `?prep_plot` to find out more about the specific settings. 
+The result is a large list consisting of different data.frames, each data.frame containing the prepared data for a different plot type. Normally, you don't have to look at this list, but in some cases you might want to edit the data by hand to fit your purpose.
+
+This concludes the basic data preperation workflow. Consult `vignette("data_preperation")` or `prep_plot()` for further information. 
+
+
+# Different plot types
