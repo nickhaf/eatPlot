@@ -1,5 +1,5 @@
 Package: eatPlot
-Title: Plot eatModel output
+Title: Plot eatRep output
 Version: 0.0.0.9000
 Authors@R: 
     person("Nicklas", "Hafiz", , "hafiznij@hu-berlin.de", role = c("aut", "cre"),

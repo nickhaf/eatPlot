@@ -1,5 +1,5 @@
 test_that("settings do something", {
-  plot_dat_test <- prep_trend(
+  plot_dat_test <- prep_plot(
     dat = trend_books,
     competence = "GL",
     grouping_var = "KBuecher_imp3",
@@ -99,7 +99,7 @@ test_that("correct states are extracted", {
 test_that("lineplot chpt_4 with one group is still the same", {
   trend_books_changed <- trend_books[trend_books$KBuecher_imp3 != "0" | is.na(trend_books$KBuecher_imp3), ]
 
-  plot_dat_test <- prep_trend(
+  plot_dat_test <- prep_plot(
     dat = trend_books_changed,
     competence = "GL",
     grouping_var = "KBuecher_imp3",
@@ -124,7 +124,7 @@ test_that("lineplot chpt_4 with one group is still the same", {
 })
 
 test_that("lineplot chpt_4 with two groups is still the same", {
-  plot_dat_test <- prep_trend(
+  plot_dat_test <- prep_plot(
     dat = trend_books,
     competence = "GL",
     grouping_var = "KBuecher_imp3",
@@ -157,7 +157,7 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
   books_3 <- rbind(trend_books, trend_books_2)
   books_3$KBuecher_imp3 <- as.factor(books_3$KBuecher_imp3)
 
-  plot_dat_3 <- prep_trend(
+  plot_dat_3 <- prep_plot(
     dat = books_3,
     competence = "GL",
     grouping_var = "KBuecher_imp3",
@@ -193,7 +193,7 @@ test_that("competence_vars can be used as tiles", {
   trend_books_2$kb <- gsub("hoeren", "Englisch Leseverstehen", trend_books_2$kb)
   trend_books_2$kb <- gsub("lesen", "Englisch Hörverstehen", trend_books_2$kb)
 
-  plot_dat_test <- prep_trend(
+  plot_dat_test <- prep_plot(
     dat = trend_books_2,
     grouping_var = "KBuecher_imp3",
     states = "wholeGroup",
@@ -235,7 +235,7 @@ test_that("competence_vars with 3 groups", {
 
 
 
-  plot_dat_test <- prep_trend(
+  plot_dat_test <- prep_plot(
     dat = books_3,
     grouping_var = "KBuecher_imp3",
     states = "wholeGroup",
@@ -260,7 +260,7 @@ test_that("competence_vars with 3 groups", {
 })
 
 test_that("adjusted means states", {
-  plot_dat_test <- prep_trend(
+  plot_dat_test <- prep_plot(
     dat = trend_books,
     competence = "GL",
     grouping_var = "KBuecher_imp3",
@@ -298,7 +298,7 @@ test_that("adjusted means for whole group", {
   trend_books_2$kb <- gsub("hoeren", "Englisch Leseverstehen", trend_books_2$kb)
   trend_books_2$kb <- gsub("lesen", "Englisch Hörverstehen", trend_books_2$kb)
 
-  plot_dat_test_kb <- prep_trend(
+  plot_dat_test_kb <- prep_plot(
     dat = trend_books_2,
     states = "wholeGroup",
     grouping_var = "KBuecher_imp3",

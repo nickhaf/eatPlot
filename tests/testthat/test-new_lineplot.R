@@ -2,7 +2,7 @@
 # uneq_groups$mh <- as.factor(uneq_groups$mh)
 # uneq_groups <- uneq_groups[uneq_groups$mh != "TRUE" | is.na(uneq_groups$mh), ]
 #
-# plot_dat_test <- prep_trend(dat = uneq_groups,
+# plot_dat_test <- prep_plot(dat = uneq_groups,
 #                             competence = "GL",
 #                             grouping_var = "mh",
 #                             x_years = list(c(2011, 2016), c(2016, 2021)),
@@ -27,7 +27,7 @@
 # uneq_groups <- read.csv2("p:/Methoden/99_Arbeitsordner/eatRep_problem/eatRep_output_3mzp_unequalGroups.csv", sep = ";")
 # uneq_groups$mh <- as.factor(uneq_groups$mh)
 #
-# plot_dat_test <- prep_trend(dat = uneq_groups,
+# plot_dat_test <- prep_plot(dat = uneq_groups,
 #                        competence = "GL",
 #                        grouping_var = "mh",
 #                        x_years = list(c(2011, 2016), c(2016, 2021)),
@@ -62,7 +62,7 @@
 # uneq_3 <- rbind(uneq_groups, uneq_groups_2)
 # uneq_3$mh <- as.factor(uneq_3$mh)
 #
-# plot_dat_3 <- prep_trend(dat = uneq_3,
+# plot_dat_3 <- prep_plot(dat = uneq_3,
 #                        competence = "GL",
 #                        grouping_var = "mh",
 #                        x_years = list(c(2011, 2016), c(2016, 2021)),
@@ -91,7 +91,7 @@
 # uneq_groups$mh <- as.factor(uneq_groups$mh)
 # uneq_groups <- uneq_groups[uneq_groups$mh != "TRUE" | is.na(uneq_groups$mh), ]
 #
-# plot_dat_test <- prep_trend(dat = uneq_groups,
+# plot_dat_test <- prep_plot(dat = uneq_groups,
 #                        grouping_var = "mh",
 #                        states = "wholeGroup",
 #                        x_years = list(c(2011, 2016), c(2016, 2021)),

@@ -12,9 +12,9 @@ plot_lines <- function(data_plot_lines, line_values = c("est_point_start", "est_
 
   est_y <- line_values[1]
   est_y_end <- line_values[2]
-  data_plot_lines <- build_column_2(data_plot_lines, column_name = line_sig, filling = FALSE)
-  data_plot_lines <- build_column_2(data_plot_lines, column_name = est_y, filling = NA)
-  data_plot_lines <- build_column_2(data_plot_lines, column_name = est_y_end, filling = NA)
+  data_plot_lines <- fill_column(data_plot_lines, column_name = line_sig, filling = FALSE)
+  data_plot_lines <- fill_column(data_plot_lines, column_name = est_y, filling = NA)
+  data_plot_lines <- fill_column(data_plot_lines, column_name = est_y_end, filling = NA)
 
     ggplot2::geom_segment(
       data = data_plot_lines,

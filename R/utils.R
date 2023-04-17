@@ -277,7 +277,7 @@ build_column <- function(dat, old, new) {
 
 
 ## Add a new column that is derived from an old one. Takes an object as input.
-build_column_2 <- function(df, column_name, filling = NA){
+fill_column <- function(df, column_name, filling = NA){
 
   if(!is.null(column_name)){
     df[[deparse(substitute(column_name))]] <- df[[column_name]]

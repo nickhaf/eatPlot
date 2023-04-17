@@ -15,7 +15,7 @@
 #' @param plot_mean Logical value indicating whether the mean of the subgroups should be plotted as well.
 #' @param parameter Character string of the parameter value that should be reported. Defaults to `"mean"`.
 #'
-#' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
+#' @returns `prep_plot()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
 #' * `plot_points` for plotting with [plot_points()]
 #' * `plot_lines` for plotting with [plot_lines()]
 #' * `plot_braces` for plotting with [plot_braces()]
@@ -23,7 +23,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_trend <- function(dat,
+prep_plot <- function(dat,
                        competence_var = "kb",
                        competence = NULL,
                        states = NULL,
@@ -59,10 +59,10 @@ stopifnot(is.character(parameter))
 sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
 
-dat <- build_column_2(dat, competence_var)
-dat <- build_column_2(dat, grouping_var)
-dat <- build_column_2(dat, state_var)
-dat <- build_column_2(dat, group_var)
+dat <- fill_column(dat, competence_var)
+dat <- fill_column(dat, grouping_var)
+dat <- fill_column(dat, state_var)
+dat <- fill_column(dat, group_var)
 
 colnames(dat) <- gsub("\\.", "_", colnames(dat))
 colnames(dat) <- gsub("sig_", "p_", colnames(dat))
@@ -201,38 +201,7 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   ## plot_bar ##
   ##############
 
-
-  comp_wholeGroup_point <- list_building_blocks[["point_comp_data"]][list_building_blocks[["point_comp_data"]]$compare_2 == "wholeGroup", ]
-  comp_state_point <- list_building_blocks[["point_comp_data"]][list_building_blocks[["point_comp_data"]]$compare_2 == "BL" | list_building_blocks[["point_comp_data"]]$compare_1 == "_groupingVar", ]
-
-
-
-  if (nrow(comp_state_point) != 0) {
-    plot_dat[["plot_bar"]] <- merge(
-      list_building_blocks[["point_no_comp_data"]],
-      comp_state_point,
-      by = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
-      suffixes = c("_no_comp", "_comp"),
-      all = TRUE
-    )
-  } else {
-    plot_dat[["plot_bar"]] <- list_building_blocks[["point_no_comp_data"]]
-  }
-
-  if (nrow(comp_wholeGroup) != 0) {
-    plot_dat[["plot_bar"]] <- merge(
-      plot_dat[["plot_bar"]],
-      comp_wholeGroup_point,
-      by = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
-      suffixes = c("_no_comp", "_comp_whole"),
-      all = TRUE
-    )
-  } else {
-    plot_dat[["plot_bar"]] <- list_building_blocks[["point_no_comp_data"]]
-  }
-
-
-  ## Wo wird die wholeGroup comparison rangehangen? Muss hier auch noch ran.
+  plot_dat[["plot_tablebar"]] <- plot_dat[["plot_lines"]]
 
   #################
   ## plot_points ##

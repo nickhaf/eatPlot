@@ -11,8 +11,8 @@ plot_tablebar(
   bar_sig = NULL,
   bar_fill = NULL,
   bar_header = NULL,
-  bar_pattern_fill = NULL,
   columns_headers = NULL,
+  column_spanners = NULL,
   columns_table = NULL,
   columns_table_sig_bold = NULL,
   columns_table_sig_high = NULL,
@@ -22,7 +22,7 @@ plot_tablebar(
 )
 }
 \arguments{
-\item{dat}{Data prepared with \code{\link[=prep_trend]{prep_trend()}}.}
+\item{dat}{Data prepared with \code{\link[=prep_plot]{prep_plot()}}.}
 
 \item{bar_est}{Character string for the column that contains the values for the bar chart. If \code{NULL}, no bar chart will be plotted.}
 
@@ -34,9 +34,9 @@ plot_tablebar(
 
 \item{bar_header}{Character string for the header of the bars.}
 
-\item{bar_pattern_fill}{Character string for the column that groups the filling colours of the bar patterns into different groups.}
-
 \item{columns_headers}{Character vector containing the column columns_headers.}
+
+\item{column_spanners}{Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.}
 
 \item{columns_table}{List of character strings of the columns that should be plotted as table columns in the plot.}
 
@@ -57,5 +57,5 @@ plot_tablebar(
 Plot a table and/or a barchart.
 }
 \examples{
-#tbd
+# tbd
 }

@@ -20,7 +20,7 @@ plot_lineplot(
 )
 }
 \arguments{
-\item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
+\item{plot_data}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 
 \item{seperate_plot_var}{Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to \code{state_var}.}
 

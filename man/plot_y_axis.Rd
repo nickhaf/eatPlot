@@ -7,7 +7,7 @@
 plot_y_axis(plot_data)
 }
 \arguments{
-\item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
+\item{plot_data}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 }
 \value{
 \link{ggplot2} plot that can be used as a y-axis.

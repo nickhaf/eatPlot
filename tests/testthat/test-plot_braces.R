@@ -165,7 +165,7 @@ test_that("significances are displayed correctly in the labels", {
 })
 
 test_that("Example brace plot is still the same", {
-  plot_data <- prep_trend(
+  plot_data <- prep_plot(
     dat = trend_books,
     grouping_var = "KBuecher_imp3",
     competence = "GL"
