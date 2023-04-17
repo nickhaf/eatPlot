@@ -46,8 +46,6 @@ plot_tablebar(
 \item{y_axis}{Character string of the columnname used as y-axis.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_tablebarplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_tablebarplot()} for an overview.}
-
-\item{bar_pattern_fill}{Character string for the column that groups the filling colours of the bar patterns into different groups.}
 }
 \value{
 \link{ggplot2} object.

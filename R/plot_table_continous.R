@@ -7,7 +7,6 @@
 #' @param bar_sig Character string for the column that should be used for marking the bars as significant.
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.
 #' @param bar_header Character string for the header of the bars.
-#' @param bar_pattern_fill Character string for the column that groups the filling colours of the bar patterns into different groups.
 #' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
 #' @param columns_headers Character vector containing the column columns_headers.
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
