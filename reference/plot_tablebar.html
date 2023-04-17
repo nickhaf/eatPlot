@@ -24,7 +24,8 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/lineplots.html">lineplots</a>
+    <a class="dropdown-item" href="../articles/data_preperation.html">Data Preperation</a>
+    <a class="dropdown-item" href="../articles/getting_started.html">Getting Started</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -55,8 +56,8 @@
 <span>  bar_sig <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_header <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bar_pattern_fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_headers <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_spanners <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table_sig_bold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table_sig_high <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -69,7 +70,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>dat</dt>
-<dd><p>Data prepared with <code><a href="prep_trend.html">prep_trend()</a></code>.</p></dd>
+<dd><p>Data prepared with <code><a href="prep_plot.html">prep_plot()</a></code>.</p></dd>
 
 
 <dt>bar_est</dt>
@@ -92,12 +93,12 @@
 <dd><p>Character string for the header of the bars.</p></dd>
 
 
-<dt>bar_pattern_fill</dt>
-<dd><p>Character string for the column that groups the filling colours of the bar patterns into different groups.</p></dd>
-
-
 <dt>columns_headers</dt>
 <dd><p>Character vector containing the column columns_headers.</p></dd>
+
+
+<dt>column_spanners</dt>
+<dd><p>Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.</p></dd>
 
 
 <dt>columns_table</dt>
@@ -133,7 +134,7 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#tbd</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># tbd</span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

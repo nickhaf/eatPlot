@@ -2,8 +2,9 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  lineplots: lineplots.html
-last_built: 2023-04-16T15:02Z
+  data_preperation: data_preperation.html
+  getting_started: getting_started.html
+last_built: 2023-04-17T17:20Z
 urls:
   reference: https://nickhaf.github.io/eatPlot/reference
   article: https://nickhaf.github.io/eatPlot/articles
