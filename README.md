@@ -34,7 +34,7 @@ package.
 <!-- ``` -->
 <!-- or: -->
 <!-- ```{r} -->
-<!-- lineplot_data <- prep_trend(dat = trend_books,  -->
+<!-- lineplot_data <- prep_plot(dat = trend_books,  -->
 <!--                             grouping_var = "KBuecher_imp3",  -->
 <!--                             competence = "GL",  -->
 <!--                             sig_niveau = 0.05) -->

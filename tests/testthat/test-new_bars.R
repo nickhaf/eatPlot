@@ -9,7 +9,7 @@
 # # min_stand <- readxl::read_xlsx("Q:/BT2022/BT/60_Bericht/_Probegrafiken/2023-01-26 Vorlagen Balken und Linien/BT2021_Abb3.9.xlsx", sheet = "Daten BT21")
 # #
 # # #
-# # # data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
+# # # data_plot_new <- prep_plot(min_stand, competence = "lesen", parameter = "1")
 # # #
 # # #
 # # # data_bar <- data_plot_new[["plot_bar"]]
@@ -95,7 +95,7 @@
 # # Idee um nur das erste Bundesland  zu plotten: Alle außer dem ersten in den Daten durch "" ersetzten
 # # Bei zu vielen Gruppenkonstelationen neue Variable bilden.
 #
-# data_plot_new <- prep_trend(min_stand, competence = "lesen", parameter = "1")
+# data_plot_new <- prep_plot(min_stand, competence = "lesen", parameter = "1")
 #
 # data_plot_new[["plot_bar"]]$x_label <- as.factor(data_plot_new[["plot_bar"]]$year)
 # dat_p_2 <- data_plot_new[["plot_bar"]]

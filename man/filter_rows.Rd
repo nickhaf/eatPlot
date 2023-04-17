@@ -7,7 +7,7 @@
 filter_rows(plot_data, column_name, subsetter, remove = FALSE)
 }
 \arguments{
-\item{plot_data}{List of data.frames, output of \link{prep_trend}.}
+\item{plot_data}{List of data.frames, output of \link{prep_plot}.}
 
 \item{column_name}{Column that the subsetter will be searched in.}
 

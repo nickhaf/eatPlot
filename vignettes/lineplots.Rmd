@@ -23,7 +23,7 @@ The packages aim is it to make the plotting as easy but flexible as possible, so
 
 # Basic workflow
 ## Data preperation
-The first step is the data preperation. This is handeled by the function `prep_trend()`.
+The first step is the data preperation. This is handeled by the function `prep_plot()`.
 
 
 

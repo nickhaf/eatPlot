@@ -2,7 +2,7 @@
 
 #' Plot a table and/or a barchart.
 #'
-#' @param dat Data prepared with [prep_trend()].
+#' @param dat Data prepared with [prep_plot()].
 #' @param bar_label Character string for the column that should be used for bar labels on top of the bars. If `NULL`, no labels are printed. Defaults to `NULL`.
 #' @param bar_sig Character string for the column that should be used for marking the bars as significant.
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.

@@ -15,7 +15,7 @@
 #' @param plot_mean Logical value indicating whether the mean of the subgroups should be plotted as well.
 #' @param parameter Character string of the parameter value that should be reported. Defaults to `"mean"`.
 #'
-#' @returns `prep_trend()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
+#' @returns `prep_plot()` returns a list containing four data.frames prepared for plotting with different [eatPlot] functions. This includes the data.frames:
 #' * `plot_points` for plotting with [plot_points()]
 #' * `plot_lines` for plotting with [plot_lines()]
 #' * `plot_braces` for plotting with [plot_braces()]
@@ -23,7 +23,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_trend <- function(dat,
+prep_plot <- function(dat,
                        competence_var = "kb",
                        competence = NULL,
                        states = NULL,

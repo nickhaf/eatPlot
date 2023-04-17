@@ -20,7 +20,7 @@ plot_single_lineplot(
 )
 }
 \arguments{
-\item{plot_data}{Input is a list prepared by \code{\link[=prep_trend]{prep_trend()}}.`}
+\item{plot_data}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 

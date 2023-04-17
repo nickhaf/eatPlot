@@ -1,6 +1,6 @@
 #' Prepare distinct building blocks, from which the data.frames for the plot-functions can be build by combining them.
 #'
-#' @inheritParams prep_trend
+#' @inheritParams prep_plot
 #' @param data_clean Input data.frame, that has already been cleaned with [clean_data()].
 #' @param states Character vector of the different states (Bundesländer) found in the data.
 #' @param sub_groups Character vector of the different groups found in `grouping_var`.

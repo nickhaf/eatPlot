@@ -48,7 +48,7 @@ test_that("continous barplot looks the same", {
 
 test_that("Example barplot is plotted correctly", {
 
-dat_bar <- prep_trend(min_stand,
+dat_bar <- prep_plot(min_stand,
                             competence = "lesen",
                             parameter = "1")[["plot_lines"]]
 
@@ -89,7 +89,7 @@ vdiffr::expect_doppelganger("MinStandard", p_bar)
 
 test_that("Example barplot long format is plotted correctly", {
 
-  dat_bar <- prep_trend(min_stand,
+  dat_bar <- prep_plot(min_stand,
                         competence = "lesen",
                         parameter = "1")[["plot_tablebar"]]
 

@@ -5,10 +5,10 @@ test_that("groups are extracted correctly", {
 })
 
 test_that("correct line years are extracted", {
- prepped_list_consecutive <- prep_trend(trend_books, competence = "GL")
+ prepped_list_consecutive <- prep_plot(trend_books, competence = "GL")
  expect_true(!("2011vs2021" %in% prepped_list_consecutive[["plot_lines"]]$trend_years))
 
- prepped_list_consecutive <- prep_trend(trend_books, competence = "GL", x_years = list(c(2011, 2021)))
+ prepped_list_consecutive <- prep_plot(trend_books, competence = "GL", x_years = list(c(2011, 2021)))
  expect_true(all(prepped_list_consecutive[["plot_lines"]]$trend_years == "2011vs2021"))
 
  })

@@ -21,7 +21,7 @@ plot_tablebar(
 )
 }
 \arguments{
-\item{dat}{Data prepared with \code{\link[=prep_trend]{prep_trend()}}.}
+\item{dat}{Data prepared with \code{\link[=prep_plot]{prep_plot()}}.}
 
 \item{bar_est}{Character string for the column that contains the values for the bar chart. If \code{NULL}, no bar chart will be plotted.}
 
