@@ -287,3 +287,13 @@ fill_column <- function(df, column_name, filling = NA){
 return(df)
   }
 
+
+check_columns <-  function(dat, column){
+  if(column %in% colnames(dat)){
+    return(column)
+  }else{
+    warning(paste0("The column '", column, "' was not found in data and will not be considered for the plot."))
+    return(NULL)
+  }
+}
+
