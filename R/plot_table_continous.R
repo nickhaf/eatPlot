@@ -103,7 +103,6 @@ plot_tablebar <- function(dat,
     seq(0, plot_borders[2], by = 10)
   ))
 
-  column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
   x_axis_range <- diff(range(plot_borders))
 
@@ -169,7 +168,7 @@ plot_tablebar <- function(dat,
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::annotate("text",
-          x = mean(range(scale_breaks)),
+          x = mean(plot_borders, na.rm = TRUE),
           y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
           label = bar_header
         ) +
@@ -194,7 +193,7 @@ plot_tablebar <- function(dat,
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::annotate("text",
-          x = diff(range(plot_borders)) / 2,
+          x = mean(plot_borders, na.rm = TRUE),
           y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
           label = bar_header
         ) +
@@ -206,6 +205,7 @@ plot_tablebar <- function(dat,
   }
 
   if (any(!is.null(columns_table))) {
+    column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
     res_plot <- res_plot +
       build_columns_3(dat,
         cols = rev(new_colnames),
@@ -264,7 +264,7 @@ build_columns_3 <- function(df,
                             columns_headers,
                             plot_settings = plotsettings_tablebarplot()) {
 
-  column_x_coords <- subset(column_x_coords, column != "bar")
+  column_x_coords <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
   c(
     lapply(1:length(cols), function(i) {
       x_axis_i <- column_x_coords$middle[i]
@@ -354,7 +354,7 @@ calc_column_coords <- function(plot_borders, columns_table, plot_settings) {
   col_x_middle[1] <- col_right_x_border[1] - (x_axis_range * col_width_rev[1] / 2)
   col_left_x_border[1] <- col_x_middle[1] - (x_axis_range * col_width_rev[1] / 2)
 
-
+if(length(columns_table) > 1){
   for (i in 2:length(columns_table)) {
     col_width <- col_width_rev[i] / 2
 
@@ -380,5 +380,14 @@ calc_column_coords <- function(plot_borders, columns_table, plot_settings) {
     coordinate_frame
   )
 
+}else{
+  coordinate_frame <- data.frame(
+    "column" = rev(unlist(columns_table)),
+    "left" = col_left_x_border,
+    "middle" = col_x_middle,
+    "right" = col_right_x_border
+  )
+}
   return(coordinate_frame)
+
 }

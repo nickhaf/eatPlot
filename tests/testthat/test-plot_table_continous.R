@@ -66,39 +66,44 @@ test_that("continous barplot looks the same", {
 
 
 test_that("Example barplot is plotted correctly", {
+
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
     parameter = "1"
   )[["plot_lines"]]
 
 
-  dat_bar$est_point_start <- dat_bar$est_point_start * 100
+  dat_bar$est_point_end <- dat_bar$est_point_end * 100
   dat_bar <- subset(dat_bar, depVar == "minVerfehlt")
   dat_bar <- subset(dat_bar, year_end == 2021)
   dat_bar <- subset(dat_bar, year_start == 2016)
   dat_bar$sig_point_end[1:10] <- "FALSE"
+  dat_bar$sig_minstand <- ifelse(dat_bar$sig_point_end == "TRUE" & dat_bar$est_trend_comp < 0,
+                                 "below",
+                                 ifelse(dat_bar$sig_point_end == "TRUE" & dat_bar$est_trend_comp > 0,
+                                        "above",
+                                        "no_sig")
+                                 )
 
   p_bar <- plot_tablebar(
     dat = dat_bar,
-    bar_label = NULL,
-    bar_sig = "sig_point_end",
-    bar_header = "a barplot",
-    bar_fill = "grouping_var",
-    columns_headers = list("state_var", "est_1", "est_2"),
-    columns_table = list("state_var", "est_point_start", "est_point_end"),
-    columns_table_sig_bold = list(NULL, "sig_point_start", "sig_point_end"),
-    columns_table_sig_high = list(NULL, "sig_point_start", "sig_point_end"),
-    bar_est = "est_point_start",
+    bar_label = "est_point_end",
+    bar_sig = "sig_minstand",
+    bar_header = "Mindeststandard nicht erreicht (MSA)",
+    columns_headers = list("Land"),
+    columns_table = list("state_var"),
+    bar_est = "est_point_end",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 35),
       background_stripes_colour = c(rep(c("white", "lightgrey"), 8), "darkgrey"),
-      bar_fill_colour = c("darkblue"),
-      bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
+      bar_fill_colour = c("lightblue"),
+      bar_frame_linetype = c("above" = "solid", "below" = "dashed", "no_sig" = "blank"),
       bar_pattern_fill_colour = c("yellow"),
-      bar_pattern_type = c("TRUE" = "stripe", "FALSE" = "none"),
       bar_sig_type = "frame",
-      columns_width = c(0.15, 0.05, 0.05)
+      columns_width = c(0.13),
+      headers_nudge_y = -0.001,
+      default_list = barplot_MinSta
     )
   )
 
