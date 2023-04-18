@@ -135,18 +135,7 @@ test_that("Example barplot long format is plotted correctly", {
     columns_table_sig_high = list(NULL, NULL, "sig_point_start", "sig_point_end"),
     bar_est = "est_trend_no_comp",
     y_axis = "y_axis_new",
-    plot_settings = plotsettings_tablebarplot(
-      # axis_x_lims = c(0, 35),
-      background_stripes_colour = c(rep(c("white", "white", "white", "lightgrey", "lightgrey", "lightgrey"), 8), rep("darkgrey", 3)),
-      bar_fill_colour = c("darkblue", "lightblue", "lightgreen"),
-      bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
-      bar_pattern_fill_colour = "white",
-      bar_pattern_type = c("TRUE" = "stripe", "FALSE" = "none"),
-      bar_sig_type = "pattern",
-      bar_width = 0.7,
-      headers_nudge_y = 1,
-      columns_width = c(0.1, 0.15, 0.1, 0.1)
-    )
+    plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta)
   )
 
 
