@@ -6,10 +6,11 @@ test_that("column x coords are calced correctly", {
       plot_settings = plotsettings_tablebarplot(columns_width = c(0.1, 0.1, 0.1))
     ),
     data.frame(
-      column = c("col_1", "col_2", "col_3"),
-      right = c(-10, -12, -14),
-      middle = c(-11, -13, -15),
-      left = c(-12, -14, -16)
+      column = c("bar", "col_3", "col_2", "col_1"),
+      left = c(-10, -12, -14, -16),
+      middle = c(0, -11, -13, -15),
+      right = c(10, -10, -12, -14)
+
     )
   )
 })
@@ -123,11 +124,12 @@ test_that("Example barplot long format is plotted correctly", {
     dat = dat_bar,
     bar_label = NULL,
     bar_sig = "sig_trend_no_comp",
-    bar_header = "a barplot",
+    bar_header = "a barplot", # Zu column headers dazu
     bar_fill = "depVar",
     columns_headers = list("Land", " ", "%", "%"),
-    column_spanners = list("2009" = 3,
-                           "2015" = 4),
+    column_spanners = list("Land" = c(1,2),
+      "2009" = 3,
+                           "bar" = c(4,5)),
     columns_table = list("state_var", "depVar", "est_point_start", "est_point_end"),
     columns_table_sig_bold = list(NULL, NULL, "sig_point_start", "sig_point_end"),
     columns_table_sig_high = list(NULL, NULL, "sig_point_start", "sig_point_end"),
