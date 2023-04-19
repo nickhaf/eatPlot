@@ -4,6 +4,7 @@
 #'
 #' @param dat Data prepared with [prep_plot()].
 #' @param bar_label Character string for the column that should be used for bar labels on top of the bars. If `NULL`, no labels are printed. Defaults to `NULL`.
+#' @param bar_label_sig Character string for the column that should be used for marking the bar labels as significant.
 #' @param bar_sig Character string for the column that should be used for marking the bars as significant.
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.
 #' @param bar_header Character string for the header of the bars.
@@ -24,6 +25,7 @@
 plot_tablebar <- function(dat,
                           bar_est = NULL,
                           bar_label = NULL,
+                          bar_label_sig = NULL,
                           bar_sig = NULL,
                           bar_fill = NULL,
                           bar_header = NULL,
@@ -47,6 +49,7 @@ plot_tablebar <- function(dat,
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
   dat <- fill_column(dat, column_name = y_axis, filling = NA)
+
 
 
   ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
@@ -84,6 +87,18 @@ plot_tablebar <- function(dat,
     )
   }
 
+  if(!is.null(bar_label)){
+
+
+   dat$bar_label_text <- construct_label(
+     dat,
+     label_est = bar_label,
+     label_se = NULL,
+     label_sig_bold = bar_label_sig,
+     label_sig_high = NULL,
+     round_est = 1
+   )
+  }
 
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
@@ -103,7 +118,7 @@ plot_tablebar <- function(dat,
       seq(0, plot_borders[2], by = 10)
     ))
   } else {
-    plot_bordres <- c(0, 0)
+    plot_borders <- c(0, 0)
   }
 
   x_axis_range <- diff(range(plot_borders))
@@ -124,27 +139,42 @@ plot_tablebar <- function(dat,
       breaks = dat$background_colour,
       values = dat$background_colour
     ) +
-    ggplot2::geom_vline(
-      xintercept = scale_breaks,
-      linetype = "dashed", colour = "darkgrey"
-    ) +
-    ggplot2::geom_vline(
-      xintercept = 0,
+    # ggplot2::geom_vline(
+    #   xintercept = scale_breaks,
+    #   linetype = "dashed", colour = "darkgrey"
+    # ) +
+    ggplot2::annotate(
+      "segment",
+      x = 0,
+      xend = 0,
+      y = 0.5,
+      yend = Inf,
       colour = "darkgrey"
     ) +
-    ggplot2::scale_x_continuous(breaks = scale_breaks) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .05))) +
+    ggplot2::scale_x_continuous(breaks = scale_breaks,
+                                limits = c(NA, max(column_x_coords$right)),
+                                expand = c(0, 0)) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, plot_settings$axis_x_background_width_x))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
         ymin = max(.data$y_axis) + 0.5, ymax = Inf
       ),
-      colour = "lightblue",
+      colour = NA,
       fill = "lightblue"
     ) +
+    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     theme_table() +
+    # capped axis line
+    ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1) +
     if (!is.null(bar_label)) {
-      ggplot2::geom_text(ggplot2::aes(label = .data[[bar_label]]), hjust = -0.2)
+      ggtext::geom_richtext(ggplot2::aes(x = .data[[bar_label]],
+                                      label = .data$bar_label_text),
+                            label.padding = grid::unit(rep(0, 4), "pt"),
+                            fill = NA,
+                            label.color = NA,
+                         hjust = plot_settings$bar_label_nudge_x,
+                         size = plot_settings$bar_label_size)
     }
 
 
@@ -176,9 +206,9 @@ plot_tablebar <- function(dat,
         ggplot2::annotate("text",
           x = mean(plot_borders, na.rm = TRUE),
           y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = bar_header
+          label = bar_header,
+          size = plot_settings$font_size
         ) +
-        theme_table_bar() +
         NULL
     } else if (plot_settings$bar_sig_type == "frame") {
       res_plot <- res_plot +
@@ -194,16 +224,16 @@ plot_tablebar <- function(dat,
             linetype = .data$bar_sig,
           ),
           colour = "black",
-          linewidth = 0.9
+          linewidth = plot_settings$bar_line_size
         ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::annotate("text",
           x = mean(plot_borders, na.rm = TRUE),
           y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = bar_header
+          label = bar_header,
+          size = plot_settings$font_size
         ) +
-        theme_table_bar() +
         NULL
     } else {
       message("`sig_type` must be either \"frame\" or \"pattern\"")
@@ -248,7 +278,8 @@ plot_tablebar <- function(dat,
             ggplot2::annotate("text",
               x = header_x,
               y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y,
-              label = names(column_spanners)[spanner], hjust = 0.5
+              label = names(column_spanners)[spanner], hjust = 0.5,
+              size = plot_settings$font_size
             )
           )
 
@@ -282,17 +313,19 @@ build_columns_3 <- function(df,
             y = .data$y_axis,
             label = .data[[column_name]]
           ),
-          # size = plot_settings$brace_label_size,
+          size = plot_settings$font_size,
           label.padding = grid::unit(rep(0, 4), "pt"),
           fill = NA,
           label.color = NA,
-          hjust = 0.5
+          hjust = plot_settings$columns_alignment,
+          nudge_x = plot_settings$columns_nudge_x
         ),
         ggplot2::annotate("text",
-          x = x_axis_i,
+          x = x_axis_i + plot_settings$headers_nudge_x,
           y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y,
           label = columns_headers[i],
-          hjust = 0.5
+          hjust = plot_settings$headers_alignment,
+          size = plot_settings$font_size
         )
       )
     })

@@ -9,8 +9,8 @@
 combine_plots <- function(plot_list){
 
   coordinates <- vapply(plot_list, function(plot){
-    diff(ggplot2::layer_scales(plot)$x$range$range)
-  }, FUN.VALUE = numeric(1)
+    diff(ggplot2::layer_scales(plot)$x$get_limits())
+    }, FUN.VALUE = numeric(1)
   )
 
   sum_coords <- sum(coordinates)
