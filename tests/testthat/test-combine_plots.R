@@ -34,7 +34,12 @@ p_bar_1 <- plot_tablebar(
   bar_est = "est_point_end",
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(
-    columns_width = 0.4,
+    axis_x_lims = c(0, 35),
+    columns_alignment = 0,
+    columns_nudge_x = 0,
+    columns_width = 0.5,
+    headers_alignment = 0,
+    headers_nudge_x = 0,
     default_list = barplot_MinSta
   )
 )
@@ -54,7 +59,7 @@ p_bar_1 <- plot_tablebar(
     bar_est = "est_point_end",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
-      axis_x_lims = c(0, 70),
+      axis_x_lims = c(0, 75),
       default_list = barplot_MinSta
     )
   )
@@ -74,14 +79,18 @@ p_bar_1 <- plot_tablebar(
     bar_est = "est_point_end",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
-      axis_x_lims = c(0, 15),
+      axis_x_lims = c(0, 30),
       default_list = barplot_MinSta
     )
   )
 
+minsta_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
 
 # combine plots -----------------------------------------------------------
-vdiffr::expect_doppelganger("Mindeststandards", combine_plots(list(p_bar_1, p_bar_2, p_bar_3)))
+vdiffr::expect_doppelganger("Mindeststandards", minsta_plot)
+
+
+save_plot(minsta_plot, filename = "../minsta_plot.pdf", height = 226.2 / 3)
 
 
 })

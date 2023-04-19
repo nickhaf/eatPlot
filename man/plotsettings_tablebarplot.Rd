@@ -9,12 +9,17 @@ plotsettings_tablebarplot(
   background_stripes_colour = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
+  bar_label_nudge_x = NULL,
   bar_pattern_fill_colour = NULL,
   bar_pattern_type = NULL,
   bar_sig_type = NULL,
   bar_width = NULL,
-  headers_nudge_y = NULL,
+  columns_alignment = NULL,
+  columns_nudge_x = NULL,
   columns_width = NULL,
+  headers_alignment = NULL,
+  headers_nudge_x = NULL,
+  headers_nudge_y = NULL,
   default_list = NULL
 )
 }
@@ -27,6 +32,8 @@ plotsettings_tablebarplot(
 
 \item{bar_frame_linetype}{Named vector with the bar frame linetypes.}
 
+\item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
+
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}.}
 
 \item{bar_pattern_type}{Named vector with the pattern types for the barpattern.}
@@ -35,9 +42,17 @@ plotsettings_tablebarplot(
 
 \item{bar_width}{Numeric between \code{0} and \code{1} specifying the width of the bar.}
 
-\item{headers_nudge_y}{Numeric between \code{-1} and \code{1} to nudge the column_headers in y dircetion.}
+\item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned).}
+
+\item{columns_nudge_x}{Numeric to nudge the header in x direction.}
 
 \item{columns_width}{Numeric vector with the length equal to the number of ploted table columns. Adjusts the column width.}
+
+\item{headers_alignment}{Numeric vector with one element for each column, determining the text adjustement of the headers. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned).}
+
+\item{headers_nudge_x}{Numeric to nudge the column_headers in x direction.}
+
+\item{headers_nudge_y}{Numeric to nudge the column_headers in y direction.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }
