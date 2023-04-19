@@ -81,7 +81,7 @@ p_bar_1 <- plot_tablebar(
 
 
 # combine plots -----------------------------------------------------------
-combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
+vdiffr::expect_doppelganger("Mindeststandards", combine_plots(list(p_bar_1, p_bar_2, p_bar_3)))
 
 
 })

@@ -1,3 +1,11 @@
+#' Combine different ggplots
+#'
+#' @param plot_list List of the plots that should be combined.
+#'
+#' @return Patchwork plot.
+#' @export
+#'
+#' @examples #tbd
 combine_plots <- function(plot_list){
 
   coordinates <- vapply(plot_list, function(plot){

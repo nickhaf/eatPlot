@@ -74,7 +74,7 @@
 
 #' BT22 default plot settings.
 #'
-#' Default plot settings for barplots.
+#' Default plot settings for Mindest Standards trend.
 #'
 #' @format ## `barplot_MinSta_trend`
 #' A list with two elements.
@@ -83,3 +83,17 @@
 #'   ...
 #' }
 "barplot_MinSta_trend"
+
+
+
+#' BT22 default plot settings.
+#'
+#' Default plot settings for Mindest Standard.
+#'
+#' @format ## `barplot_MinSta`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"barplot_MinSta"
