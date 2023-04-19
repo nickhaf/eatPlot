@@ -15,18 +15,19 @@ usethis::use_data(barplot_MinSta_trend, overwrite = TRUE)
 
 
 barplot_MinSta <- plotsettings_tablebarplot(
+  axis_x_background_width_x = 0.05,
   axis_x_lims = c(0, 35),
-  background_stripes_colour = c(rep(c("white", "lightgrey"), 8), "darkgrey"),
+  background_stripes_colour = c(rep(c("white", "gray94"), 8), "gray87"),
   bar_fill_colour = c("lightblue"),
-  bar_frame_linetype = c("above" = "solid", "below" = "dashed", "no_sig" = "blank"),
+  bar_frame_linetype = c("above" = "solid", "below" = "longdash", "no_sig" = "blank"),
   bar_label_nudge_x = -0.2,
-  bar_label_size = 1.5,
-  bar_line_size = 0.4,
+  bar_label_size = 1.75,
+  bar_line_size = 0.35,
   bar_pattern_fill_colour = c("yellow"),
   bar_sig_type = "frame",
   bar_width = 0.4,
   columns_width = c(0.13),
-  headers_nudge_y = -0.001,
+  headers_nudge_y = 0.3,
   font_size = 2,
   default_list = barplot_MinSta_trend
 )

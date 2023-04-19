@@ -141,6 +141,7 @@ test_that("Example barplot is plotted correctly", {
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
     bar_label = "est_point_end",
+    bar_label_sig = "sig_point_end",
     bar_sig = "sig_minstand",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),

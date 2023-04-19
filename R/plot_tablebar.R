@@ -4,6 +4,7 @@
 #'
 #' @param dat Data prepared with [prep_plot()].
 #' @param bar_label Character string for the column that should be used for bar labels on top of the bars. If `NULL`, no labels are printed. Defaults to `NULL`.
+#' @param bar_label_sig Character string for the column that should be used for marking the bar labels as significant.
 #' @param bar_sig Character string for the column that should be used for marking the bars as significant.
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.
 #' @param bar_header Character string for the header of the bars.
@@ -24,6 +25,7 @@
 plot_tablebar <- function(dat,
                           bar_est = NULL,
                           bar_label = NULL,
+                          bar_label_sig = NULL,
                           bar_sig = NULL,
                           bar_fill = NULL,
                           bar_header = NULL,
@@ -47,6 +49,7 @@ plot_tablebar <- function(dat,
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
   dat <- fill_column(dat, column_name = y_axis, filling = NA)
+
 
 
   ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
@@ -84,6 +87,18 @@ plot_tablebar <- function(dat,
     )
   }
 
+  if(!is.null(bar_label)){
+
+
+   dat$bar_label_text <- construct_label(
+     dat,
+     label_est = bar_label,
+     label_se = NULL,
+     label_sig_bold = bar_label_sig,
+     label_sig_high = NULL,
+     round_est = 1
+   )
+  }
 
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
@@ -128,14 +143,18 @@ plot_tablebar <- function(dat,
     #   xintercept = scale_breaks,
     #   linetype = "dashed", colour = "darkgrey"
     # ) +
-    ggplot2::geom_vline(
-      xintercept = 0,
+    ggplot2::annotate(
+      "segment",
+      x = 0,
+      xend = 0,
+      y = 0.5,
+      yend = Inf,
       colour = "darkgrey"
     ) +
     ggplot2::scale_x_continuous(breaks = scale_breaks,
                                 limits = c(NA, max(column_x_coords$right)),
                                 expand = c(0, 0)) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .025))) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, plot_settings$axis_x_background_width_x))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
@@ -144,13 +163,16 @@ plot_tablebar <- function(dat,
       colour = NA,
       fill = "lightblue"
     ) +
-    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5) +
+    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     theme_table(plot_settings = plot_settings) +
     # capped axis line
-    ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.5, yend = 0.5) +
+    ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1) +
     if (!is.null(bar_label)) {
-      ggplot2::geom_text(ggplot2::aes(x = .data[[bar_label]],
-                                      label = .data[[bar_label]]) ,
+      ggtext::geom_richtext(ggplot2::aes(x = .data[[bar_label]],
+                                      label = .data$bar_label_text),
+                            label.padding = grid::unit(rep(0, 4), "pt"),
+                            fill = NA,
+                            label.color = NA,
                          hjust = plot_settings$bar_label_nudge_x,
                          size = plot_settings$bar_label_size)
     }
