@@ -25,7 +25,13 @@
     <loc>https://nickhaf.github.io/eatPlot/reference/barplot_MinSta.html</loc>
   </url>
   <url>
+    <loc>https://nickhaf.github.io/eatPlot/reference/barplot_MinSta_trend.html</loc>
+  </url>
+  <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/clean_data.html</loc>
+  </url>
+  <url>
+    <loc>https://nickhaf.github.io/eatPlot/reference/combine_plots.html</loc>
   </url>
   <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/construct_label.html</loc>
