@@ -164,7 +164,7 @@ plot_tablebar <- function(dat,
       fill = "lightblue"
     ) +
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
-    theme_table(plot_settings = plot_settings) +
+    theme_table() +
     # capped axis line
     ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1) +
     if (!is.null(bar_label)) {
