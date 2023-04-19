@@ -76,10 +76,10 @@
 #'
 #' Default plot settings for barplots.
 #'
-#' @format ## `barplot_MinSta`
+#' @format ## `barplot_MinSta_trend`
 #' A list with two elements.
 #' \describe{
 #'   \item{background_stripes_colour}{Colour of the background stripes.}
 #'   ...
 #' }
-"barplot_MinSta"
+"barplot_MinSta_trend"

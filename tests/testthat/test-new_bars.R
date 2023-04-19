@@ -36,7 +36,7 @@
 # # #            background_stripes_colour = c("lightgrey", "#00000000"),
 # # #            bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
 # # #            bar_sig_type = "frame",
-# # #                                               default_list = barplot_MinSta)
+# # #                                               default_list = barplot_MinSta_trend)
 # # #          ) +
 # # #   ggplot2::facet_grid(. ~ tempvar) +
 # # #   ggplot2::theme(strip.background.x = ggplot2::element_rect(fill = "lightblue", colour = "lightblue"))
@@ -58,7 +58,7 @@
 # # #            background_stripes_colour = c("lightgrey", "#00000000"),
 # # #            bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
 # # #            bar_sig_type = "frame",
-# # #            default_list = barplot_MinSta)
+# # #            default_list = barplot_MinSta_trend)
 # # #            ) +
 # # #   ggplot2::facet_grid(. ~ tempvar) +
 # # #   ggplot2::theme(strip.background.x = ggplot2::element_rect(fill = "lightblue", colour = "lightblue"))
@@ -74,7 +74,7 @@
 # # # #
 # # # # # # Tabelle -----------------------------------------------------------------
 # # #
-# # # y_axis_plot <- plot_column(vec = unique(data_bar_l$state_var), plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta)) +
+# # # y_axis_plot <- plot_column(vec = unique(data_bar_l$state_var), plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta_trend)) +
 # # #   theme_table_col()
 # # #
 # # # patchwork::wrap_plots(y_axis_plot,
@@ -169,7 +169,7 @@
 #          bar_sig = "sig_trend_comp", ##Wurde das umgestellt? Oder wird das extra dafür erstellt?
 #          bar_fill = "sig_trend_comp",
 #          bar_label = NULL,
-#          plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta))
+#          plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta_trend))
 #
 # plot_borders <- calc_plot_borders(data_p_2$est_trend_no_comp)
 # scale_breaks <- seq(plot_borders[1], plot_borders[2], by = 10)
@@ -228,7 +228,7 @@
 #                bar_pattern_fill = "depVar",
 #                plot_settings = plotsettings_tablebarplot(bar_pattern_fill_colour = stand_pattern_fill,
 #                                                     bar_fill_colour = stand_fill,
-#                                                     default_list = barplot_MinSta)) #+
+#                                                     default_list = barplot_MinSta_trend)) #+
 #   # ggstats::geom_stripped_rows(
 #   #   odd = "darkgrey",
 #   #   even = "#00000000")

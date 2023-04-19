@@ -96,15 +96,21 @@ plot_tablebar <- function(dat,
     "pattern"
   )
 
-  ## Das sollte 0 werden wenn keine bars geplotted werden sollen
-  plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
-  scale_breaks <- unique(c(
-    seq(0, plot_borders[1], by = -10),
-    seq(0, plot_borders[2], by = 10)
-  ))
-
+  if (!is.null(bar_est)) {
+    plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
+    scale_breaks <- unique(c(
+      seq(0, plot_borders[1], by = -10),
+      seq(0, plot_borders[2], by = 10)
+    ))
+  } else {
+    plot_bordres <- c(0, 0)
+  }
 
   x_axis_range <- diff(range(plot_borders))
+
+  column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
+
+
 
   res_plot <- ggplot2::ggplot(
     data = dat,
@@ -205,7 +211,6 @@ plot_tablebar <- function(dat,
   }
 
   if (any(!is.null(columns_table))) {
-    column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
     res_plot <- res_plot +
       build_columns_3(dat,
         cols = rev(new_colnames),
@@ -263,7 +268,6 @@ build_columns_3 <- function(df,
                             column_x_coords,
                             columns_headers,
                             plot_settings = plotsettings_tablebarplot()) {
-
   column_x_coords <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
   c(
     lapply(1:length(cols), function(i) {
@@ -340,35 +344,53 @@ check_length <- function(obj, leng) {
 }
 
 
-calc_column_coords <- function(plot_borders, columns_table, plot_settings) {
+calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings) {
+  ## Verschiedene Fälle: bar + Table, nur Bar oder nur Table
   x_axis_min <- plot_borders[1]
   x_axis_range <- diff(range(plot_borders))
 
-  col_left_x_border <- rep(NA, length(columns_table))
-  col_right_x_border <- rep(NA, length(columns_table))
-  col_x_middle <- rep(NA, length(columns_table))
-
-  col_width_rev <- rev(plot_settings$columns_width)
-
-  col_right_x_border[1] <- x_axis_min
-  col_x_middle[1] <- col_right_x_border[1] - (x_axis_range * col_width_rev[1] / 2)
-  col_left_x_border[1] <- col_x_middle[1] - (x_axis_range * col_width_rev[1] / 2)
-
-if(length(columns_table) > 1){
-  for (i in 2:length(columns_table)) {
-    col_width <- col_width_rev[i] / 2
-
-    col_right_x_border[i] <- col_left_x_border[i - 1]
-    col_x_middle[i] <- col_right_x_border[i] - (x_axis_range * col_width)
-    col_left_x_border[i] <- col_x_middle[i] - (x_axis_range * col_width)
+  if (x_axis_range == 0) {
+    x_axis_range <- 1
   }
 
-  coordinate_frame <- data.frame(
-    "column" = rev(unlist(columns_table)),
-    "left" = col_left_x_border,
-    "middle" = col_x_middle,
-    "right" = col_right_x_border
-  )
+  col_left_x_border <- NA
+  col_right_x_border <- NA
+  col_x_middle <- NA
+
+  if (!is.null(columns_table)) {
+    col_width_rev <- rev(plot_settings$columns_width)
+
+    col_right_x_border[1] <- x_axis_min
+    col_x_middle[1] <- col_right_x_border[1] - (x_axis_range * col_width_rev[1] / 2)
+    col_left_x_border[1] <- col_x_middle[1] - (x_axis_range * col_width_rev[1] / 2)
+
+
+    if (length(columns_table) > 1) {
+      for (i in 2:length(columns_table)) {
+        col_width <- col_width_rev[i] / 2
+
+        col_right_x_border[i] <- col_left_x_border[i - 1]
+        col_x_middle[i] <- col_right_x_border[i] - (x_axis_range * col_width)
+        col_left_x_border[i] <- col_x_middle[i] - (x_axis_range * col_width)
+      }
+
+      coordinate_frame <- data.frame(
+        "column" = rev(unlist(columns_table)),
+        "left" = col_left_x_border,
+        "middle" = col_x_middle,
+        "right" = col_right_x_border
+      )
+    } else {
+      coordinate_frame <- data.frame(
+        "column" = rev(unlist(columns_table)),
+        "left" = col_left_x_border,
+        "middle" = col_x_middle,
+        "right" = col_right_x_border
+      )
+    }
+  } else {
+    coordinate_frame <- data.frame()
+  }
 
   coordinate_frame <- rbind(
     data.frame(
@@ -380,14 +402,6 @@ if(length(columns_table) > 1){
     coordinate_frame
   )
 
-}else{
-  coordinate_frame <- data.frame(
-    "column" = rev(unlist(columns_table)),
-    "left" = col_left_x_border,
-    "middle" = col_x_middle,
-    "right" = col_right_x_border
-  )
-}
-  return(coordinate_frame)
 
+  return(coordinate_frame)
 }

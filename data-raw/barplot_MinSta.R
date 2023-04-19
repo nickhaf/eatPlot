@@ -1,5 +1,5 @@
-## code to prepare `barplot_MinSta` dataset goes here
-barplot_MinSta <- plotsettings_tablebarplot(
+## code to prepare `barplot_MinSta_trend` dataset goes here
+barplot_MinSta_trend <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", "white", "white", "lightgrey", "lightgrey", "lightgrey"), 8), rep("darkgrey", 3)),
   bar_fill_colour = c("darkblue", "lightblue", "lightgreen"),
   bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
@@ -9,6 +9,22 @@ barplot_MinSta <- plotsettings_tablebarplot(
   bar_width = 0.7,
   headers_nudge_y = 1,
   columns_width = c(0.1, 0.15, 0.1, 0.1)
+)
+
+usethis::use_data(barplot_MinSta_trend, overwrite = TRUE)
+
+
+barplot_MinSta <- plotsettings_tablebarplot(
+  axis_x_lims = c(0, 35),
+  background_stripes_colour = c(rep(c("white", "lightgrey"), 8), "darkgrey"),
+  bar_fill_colour = c("lightblue"),
+  bar_frame_linetype = c("above" = "solid", "below" = "dashed", "no_sig" = "blank"),
+  bar_pattern_fill_colour = c("yellow"),
+  bar_sig_type = "frame",
+  bar_width = 0.4,
+  columns_width = c(0.13),
+  headers_nudge_y = -0.001,
+  default_list = barplot_MinSta_trend
 )
 
 usethis::use_data(barplot_MinSta, overwrite = TRUE)

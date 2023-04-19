@@ -20,7 +20,7 @@ check_plotsettings_barplot <- function(settings_list) {
       )
   )
 
-  stopifnot(is.numeric(settings_list$axis_x_lims) & length(is.numeric(settings_list$axis_x_lims)) == 2 | is.null(settings_list$axis_x_lims))
+  stopifnot(is.numeric(settings_list$axis_x_lims) & length(settings_list$axis_x_lims) == 2 | is.null(settings_list$axis_x_lims))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
   stopifnot(is.character(settings_list$bar_frame_linetype))
