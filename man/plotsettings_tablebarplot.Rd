@@ -5,11 +5,14 @@
 \title{Set parameters for the barplots.}
 \usage{
 plotsettings_tablebarplot(
+  axis_x_background_width_x = NULL,
   axis_x_lims = NULL,
   background_stripes_colour = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
   bar_label_nudge_x = NULL,
+  bar_label_size = NULL,
+  bar_line_size = NULL,
   bar_pattern_fill_colour = NULL,
   bar_pattern_type = NULL,
   bar_sig_type = NULL,
@@ -20,10 +23,13 @@ plotsettings_tablebarplot(
   headers_alignment = NULL,
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
+  font_size = NULL,
   default_list = NULL
 )
 }
 \arguments{
+\item{axis_x_background_width_x}{Numeric for the width of the x_axis - title background.}
+
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, if \code{NULL}.}
 
 \item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background.}
@@ -33,6 +39,10 @@ plotsettings_tablebarplot(
 \item{bar_frame_linetype}{Named vector with the bar frame linetypes.}
 
 \item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
+
+\item{bar_label_size}{Numeric for the font size of the bar labels.}
+
+\item{bar_line_size}{Numeric for the line-size around the bar.}
 
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}.}
 
@@ -44,7 +54,7 @@ plotsettings_tablebarplot(
 
 \item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned).}
 
-\item{columns_nudge_x}{Numeric to nudge the header in x direction.}
+\item{columns_nudge_x}{Numeric to nudge the column text in x direction.}
 
 \item{columns_width}{Numeric vector with the length equal to the number of ploted table columns. Adjusts the column width.}
 
@@ -53,6 +63,8 @@ plotsettings_tablebarplot(
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction.}
 
 \item{headers_nudge_y}{Numeric to nudge the column_headers in y direction.}
+
+\item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }

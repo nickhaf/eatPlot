@@ -8,6 +8,7 @@ plot_tablebar(
   dat,
   bar_est = NULL,
   bar_label = NULL,
+  bar_label_sig = NULL,
   bar_sig = NULL,
   bar_fill = NULL,
   bar_header = NULL,
@@ -27,6 +28,8 @@ plot_tablebar(
 \item{bar_est}{Character string for the column that contains the values for the bar chart. If \code{NULL}, no bar chart will be plotted.}
 
 \item{bar_label}{Character string for the column that should be used for bar labels on top of the bars. If \code{NULL}, no labels are printed. Defaults to \code{NULL}.}
+
+\item{bar_label_sig}{Character string for the column that should be used for marking the bar labels as significant.}
 
 \item{bar_sig}{Character string for the column that should be used for marking the bars as significant.}
 

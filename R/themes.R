@@ -4,7 +4,7 @@
 #' @export
 #'
 #' @examples # tbd
-theme_table <- function(plot_settings = plotsettings_tablebarplot()) {
+theme_table <- function() {
   ggplot2::theme_classic() %+replace%
     ggplot2::theme(
       strip.background = ggplot2::element_blank(),
