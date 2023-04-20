@@ -45,7 +45,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$columns_alignment))
   stopifnot(is.numeric(settings_list$columns_nudge_x))
   stopifnot(is.numeric(settings_list$columns_width) | is.null(settings_list$columns_width))
-  stopifnot(is.numeric(settings_list$headers_alignment))
+  stopifnot(is.numeric(settings_list$headers_alignment) | is.null(settings_list$headers_alignment))
   stopifnot(is.numeric(settings_list$headers_nudge_x))
   stopifnot(is.numeric(settings_list$headers_nudge_y))
   stopifnot(is.numeric(settings_list$font_size))
@@ -120,8 +120,8 @@ plotsettings_tablebarplot <- function(
       "bar_width" = 0.4,
       "columns_alignment" = 0.5,
       "columns_nudge_x" = 0,
-      "columns_width" = 0.5,
-      "headers_alignment" = 0.5,
+      "columns_width" = NULL,
+      "headers_alignment" = NULL,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
       "font_size" = 3

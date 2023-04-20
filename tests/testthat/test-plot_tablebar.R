@@ -3,44 +3,30 @@ test_that("column x coords are calced correctly", {
     calc_column_coords(
       plot_borders = c(-10, 10),
       columns_table = c("col_1", "col_2", "col_3"),
-      plot_settings = plotsettings_tablebarplot(columns_width = c(0.1, 0.1, 0.1))
+      plot_settings = plotsettings_tablebarplot(columns_width = c(0.3, 0.1, 0.2, 0.4))
     ),
     data.frame(
       column = c("bar", "col_3", "col_2", "col_1"),
-      left = c(-10, -12, -14, -16),
-      middle = c(0, -11, -13, -15),
-      right = c(10, -10, -12, -14)
+      left = c(-10, -20, -25, -40),
+      middle = c(0.0, -15.0, -22.5, -32.5),
+      right = c(10, -10, -20, -25)
 
     )
   )
 
-
-expect_equal(
-  calc_column_coords(
-    plot_borders = c(-10, 10),
-    columns_table = c("col_1"),
-    plot_settings = plotsettings_tablebarplot(columns_width = c(0.1))),
-    data.frame(
-      column = c("bar", "col_1"),
-      left = c(-10, -12),
-      middle = c(0, -11),
-      right = c(10, -10)
-
-    )
-  )
 
 ## Only Columns
 expect_equal(
   calc_column_coords(
     plot_borders = c(0, 0),
     columns_table = c("col_1", "col_2", "col_3"),
-    plot_settings = plotsettings_tablebarplot(columns_width = c(0.1, 0.1, 0.1))
+    plot_settings = plotsettings_tablebarplot(columns_width = c(0.3, 0.3, 0.4))
   ),
   data.frame(
-    column = c("bar", "col_3", "col_2", "col_1"),
-    left = c(0, -0.1, -0.2, -0.3),
-    middle = c(0, -0.05, -0.15, -0.25),
-    right = c(0, 0.0, -0.1, -0.2)
+    column = c("col_3", "col_2", "col_1"),
+    left = c(0.6, 0.3, 0),
+    middle = c(0.8, 0.45, 0.15),
+    right = c(1.0, 0.6, 0.3)
 
   )
 )
@@ -50,7 +36,7 @@ expect_equal(
 calc_column_coords(
   plot_borders = c(-10, 10),
   columns_table = NULL,
-  plot_settings = plotsettings_tablebarplot()
+  plot_settings = plotsettings_tablebarplot(columns_width = c(1)                                        )
   ),
 data.frame(
   column = c("bar"),
@@ -59,9 +45,6 @@ data.frame(
   right = c(10)
 )
 )
-
-
-
 })
 
 
@@ -104,9 +87,9 @@ test_that("continous barplot looks the same", {
       bar_pattern_fill_colour = "white",
       bar_pattern_type = c("stripe", "none"),
       bar_sig_type = "pattern",
-      columns_width = c(0.15, 0.15)
+      columns_width = c(0.3, 0.2, 0.5)
     )
-  )[[1]]
+  )
 
   # wenn nicht benannt, dann benennen der Farbsettings
   vdiffr::expect_doppelganger("Minimal tablebar", p_bar)
@@ -148,13 +131,10 @@ test_that("Example barplot is plotted correctly", {
     bar_est = "est_point_end",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
-      columns_width = 0.4,
+      columns_width = c(0.2, 0.8),
       default_list = barplot_MinSta
     )
   )
-
-
-
 
   vdiffr::expect_doppelganger("MinStandard", p_bar_1)
 })
@@ -173,20 +153,38 @@ test_that("Example barplot long format is plotted correctly", {
   dat_bar$est_trend_no_comp <- dat_bar$est_trend_no_comp * 100
   dat_bar$sig_point_start[1:10] <- "FALSE"
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
+  dat_bar$se_trend_no_comp <- dat_bar$se_trend_no_comp * 100
+  dat_bar$se_trend_no_comp <- construct_label(dat_bar, label_se = "se_trend_no_comp")
 
   p_bar <- plot_tablebar(
     dat = dat_bar,
     bar_label = NULL,
     bar_sig = "sig_trend_no_comp",
-    bar_header = "a barplot", # Zu column headers dazu
+    bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("Land", " ", "%", "%"),
-    column_spanners = list("Land" = c(1,2),
-      "2009" = 3,
-                           "bar" = c(4,5)),
-    columns_table = list("state_var", "depVar", "est_point_start", "est_point_end"),
-    columns_table_sig_bold = list(NULL, NULL, "sig_point_start", "sig_point_end"),
-    columns_table_sig_high = list(NULL, NULL, "sig_point_start", "sig_point_end"),
+    columns_headers = list("Land", " ", "%", "%", "%", "(SE)"),
+    column_spanners = list("2011" = 3,
+                           "2016" = 4,
+                           "Differenz 2016 - 2011" = c(5,6)
+                           ),
+    columns_table = list("state_var",
+                         "depVar",
+                         "est_point_start",
+                         "est_point_end",
+                         "est_trend_no_comp",
+                         "se_trend_no_comp"),
+    columns_table_sig_bold = list(NULL,
+                                  NULL,
+                                  NULL,
+                                  NULL,
+                                  "sig_trend_no_comp",
+                                  NULL),
+    columns_table_sig_high = list(NULL,
+                                  NULL,
+                                  NULL,
+                                  NULL,
+                                  "sig_trend_comp",
+                                  NULL),
     bar_est = "est_trend_no_comp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta_trend)

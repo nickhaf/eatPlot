@@ -60,23 +60,49 @@ plot_tablebar <- function(dat,
   # column_width = 0 if not needed
 
 
+  if(!is.null(plot_settings$columns_table) & is.null(plot_settings$columns_width)){
+    stop("Please provide column widths for your table columns.")
+  }
+
+
   columns_headers <- check_length(columns_headers, length(columns_table))
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
-  ## Umgang mit Default settings:
-  # 2 Fälle:
-  # Alles angegeben -> nichts weiter tun
-  # Zu wenig angegeben -> auffüllen. Wenn columns_table == NULL sollte es nicht gebraucht werden
-
-  for(i in c("columns_alignment", "columns_width", "columns_nudge_x", "headers_alignment", "headers_nudge_x")){
-  plot_settings[[i]] <- unlist(check_length(plot_settings[[i]], length(columns_table), fill = plot_settings[[i]][1]))
+  if(is.null(plot_settings$headers_alignment)){
+    plot_settings$headers_alignment <- plot_settings$columns_alignment
   }
 
-  if(!is.null(plot_settings$columns_table) & is.null(plot_settings$columns_width)){
-    stop("Please provide column widths for your table columns.")
-  }
+  plot_settings$columns_alignment <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1]))
+  plot_settings$columns_nudge_x <- unlist(check_length( plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1]))
+  plot_settings$headers_alignment <- unlist(check_length( plot_settings$headers_alignment, length(columns_table), fill = plot_settings$headers_alignment[1]))
+  plot_settings$headers_nudge_x <- unlist(check_length( plot_settings$headers_nudge_x, length(columns_table), fill = plot_settings$headers_nudge_x[1]))
+
+
+  ## Check Column widths
+  ## Warnmeldung wenn eine col_width zu wenig: please provide one for the bar es well.
+  ## Wenn nichts angegeben: zu gleichen Teilen ausrechnen
+if(!is.null(bar_est)){
+ columns_total <- append(columns_table, NA)
+}else{
+   columns_total <- columns_table
+ }
+
+if(is.null(plot_settings$columns_width)){
+  plot_settings$columns_width <- rep(1 / length(columns_total), length(columns_total))
+}
+
+if(length(plot_settings$columns_width) != length(columns_total)){
+stop("Please provide either NULL or as many elements for plot_settings$columns_width as you have columns you want to plot. If you want to plot a bar, it also needs a width specification.")
+}
+
+if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 1.2){
+  stop("Your plot_settings$columns_width have to amount to approximatly 1.")
+}
+
+
+
 
   ## check if column names can be found in data
   sapply(unlist(c(
@@ -140,6 +166,13 @@ plot_tablebar <- function(dat,
 
   x_axis_range <- diff(range(plot_borders))
 
+
+
+  ## Umgang mit Tabellen ohne Plot?
+  ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
+
+
+
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
 
@@ -153,6 +186,10 @@ plot_tablebar <- function(dat,
   ) +
     build_background_stripes(dat, plot_settings = plot_settings) +
     ggplot2::scale_fill_manual(
+      breaks = dat$background_colour,
+      values = dat$background_colour
+    ) +
+    ggplot2::scale_colour_manual(
       breaks = dat$background_colour,
       values = dat$background_colour
     ) +
@@ -171,7 +208,7 @@ plot_tablebar <- function(dat,
     ggplot2::scale_x_continuous(breaks = scale_breaks,
                                 limits = c(NA, max(column_x_coords$right)),
                                 expand = c(0, 0)) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, plot_settings$axis_x_background_width_x))) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$axis_x_background_width_x))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
@@ -199,6 +236,7 @@ plot_tablebar <- function(dat,
     if (plot_settings$bar_sig_type == "pattern") {
       res_plot <- res_plot +
         ggnewscale::new_scale_fill() +
+        ggnewscale::new_scale_colour() +
         ggpattern::geom_rect_pattern(
           data = dat,
           ggplot2::aes(
@@ -220,12 +258,15 @@ plot_tablebar <- function(dat,
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::annotate("text",
-          x = mean(plot_borders, na.rm = TRUE),
-          y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = bar_header,
-          size = plot_settings$font_size
-        ) +
+        ggtext::geom_richtext(data = data.frame(),
+                              ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
+                                            y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y ),
+                              label = bar_header,
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA
+                              ) +
         NULL
     } else if (plot_settings$bar_sig_type == "frame") {
       res_plot <- res_plot +
@@ -245,11 +286,14 @@ plot_tablebar <- function(dat,
         ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::annotate("text",
-          x = mean(plot_borders, na.rm = TRUE),
-          y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = bar_header,
-          size = plot_settings$font_size
+        ggtext::geom_richtext(data = data.frame(),
+          ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
+                                           y = max(dat$y_axis, na.rm = TRUE) + 1 + plot_settings$headers_nudge_y ,
+                                           label = bar_header),
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA
         ) +
         NULL
     } else {
@@ -287,17 +331,22 @@ plot_tablebar <- function(dat,
 
           annotations <- c(
             ggplot2::annotate("segment",
-              x = column_x_coords_rev[min_col, "left"] + 0.005 * x_axis_range,
-              xend = column_x_coords_rev[max_col, "right"] - 0.005 * x_axis_range,
+              x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
+              xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
               y = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y,
               yend = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y
             ),
-            ggplot2::annotate("text",
-              x = header_x,
-              y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y,
-              label = names(column_spanners)[spanner], hjust = 0.5,
-              size = plot_settings$font_size
+            ggtext::geom_richtext(data = data.frame(),
+                                  ggplot2::aes(x = header_x,
+                                               y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y),
+                                  label = names(column_spanners)[spanner],
+                                  size = plot_settings$font_size,
+                                  label.padding = grid::unit(rep(0, 4), "pt"),
+                                  fill = NA,
+                                  label.color = NA,
+                                  hjust = 0.5
             )
+
           )
 
           return(annotations)
@@ -319,7 +368,14 @@ build_columns_3 <- function(df,
   column_x_coords <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
   c(
     lapply(1:length(cols), function(i) {
+      if(rev(plot_settings$columns_alignment)[i] == 0.5){
       x_axis_i <- column_x_coords$middle[i]
+      }else if(rev(plot_settings$columns_alignment)[i] == 0){
+        x_axis_i <- column_x_coords$left[i]
+      }else{
+        x_axis_i <- column_x_coords$right[i]
+      }
+
       column_name <- cols[i]
 
       c(
@@ -334,16 +390,19 @@ build_columns_3 <- function(df,
           label.padding = grid::unit(rep(0, 4), "pt"),
           fill = NA,
           label.color = NA,
-          hjust = plot_settings$columns_alignment[i],
-          nudge_x = plot_settings$columns_nudge_x[i]
+          hjust = rev(plot_settings$columns_alignment)[i],
+          nudge_x = rev(plot_settings$columns_nudge_x)[i]
         ),
-        ggplot2::annotate("text",
-          x = x_axis_i + plot_settings$headers_nudge_x[i],
-          y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = columns_headers[[i]],
-          hjust = plot_settings$headers_alignment[i],
-          size = plot_settings$font_size
-        )
+        ggtext::geom_richtext(data = data.frame(),
+                              ggplot2::aes(x =  x_axis_i + rev(plot_settings$headers_nudge_x)[i],
+                                           y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y),
+                              label = columns_headers[[i]],
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA,
+                              hjust = rev(plot_settings$headers_alignment)[i]
+      )
       )
     })
   )
@@ -359,9 +418,9 @@ build_background_stripes <- function(dat,
         y = .data$y_axis,
         width = Inf,
         height = 1,
-        fill = .data$background_colour
-      ),
-      colour = NA
+        fill = .data$background_colour,
+        colour = .data$background_colour,
+      )
     )
   )
   return(stripes)
@@ -384,7 +443,7 @@ check_length <- function(obj, leng, fill = NULL) {
   if (is.null(obj)) {
     return(NULL)
   } else if (length(obj) != leng & length(obj) > 1) {
-    stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1.", call. = FALSE))
+    stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1."), call. = FALSE)
   } else if(length(obj) == 1 & leng > 1){
     obj <- c(obj, lapply(1:(leng - length(obj)), function(x) {
       fill
@@ -398,63 +457,38 @@ check_length <- function(obj, leng, fill = NULL) {
 
 
 calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings) {
-  ## Verschiedene Fälle: bar + Table, nur Bar oder nur Table
-  x_axis_min <- plot_borders[1]
+
   x_axis_range <- diff(range(plot_borders))
 
   if (x_axis_range == 0) {
-    x_axis_range <- 1
+    total_range <- 1
+    x_max <- 1
+  }else{
+  total_range <- x_axis_range / rev(plot_settings$columns_width)[1] ## Last element has to be the bar width
+  x_max <- max(plot_borders, na.rm = TRUE)
   }
 
-  col_left_x_border <- NA
-  col_right_x_border <- NA
-  col_x_middle <- NA
-
-  if (!is.null(columns_table)) {
-    col_width_rev <- rev(plot_settings$columns_width)
-
-    col_right_x_border[1] <- x_axis_min
-    col_x_middle[1] <- col_right_x_border[1] - (x_axis_range * col_width_rev[1] / 2)
-    col_left_x_border[1] <- col_x_middle[1] - (x_axis_range * col_width_rev[1] / 2)
-
-
-    if (length(columns_table) > 1) {
-      for (i in 2:length(columns_table)) {
-        col_width <- col_width_rev[i] / 2
-
-        col_right_x_border[i] <- col_left_x_border[i - 1]
-        col_x_middle[i] <- col_right_x_border[i] - (x_axis_range * col_width)
-        col_left_x_border[i] <- col_x_middle[i] - (x_axis_range * col_width)
-      }
-
-      coordinate_frame <- data.frame(
-        "column" = rev(unlist(columns_table)),
-        "left" = col_left_x_border,
-        "middle" = col_x_middle,
-        "right" = col_right_x_border
-      )
-    } else {
-      coordinate_frame <- data.frame(
-        "column" = rev(unlist(columns_table)),
-        "left" = col_left_x_border,
-        "middle" = col_x_middle,
-        "right" = col_right_x_border
-      )
-    }
-  } else {
-    coordinate_frame <- data.frame()
+  cuts <- x_max
+  for(i in seq_along(plot_settings$columns_width)){
+    cuts[i + 1] <- cuts[i] - total_range * rev(plot_settings$columns_width)[i]
   }
 
-  coordinate_frame <- rbind(
-    data.frame(
-      "column" = "bar",
-      "left" = min(plot_borders, na.rm = TRUE),
-      "middle" = mean(plot_borders, na.rm = TRUE),
-      "right" = max(plot_borders, na.rm = TRUE)
-    ),
-    coordinate_frame
+if(x_axis_range != 0){ # because then there is a baplot
+  col_coords <- data.frame(
+    "column" = c("bar", unlist(rev(columns_table))),
+    "left" = cuts[2:length(cuts)],
+    "right" = cuts[1:length(cuts) - 1]
   )
+}else{
+  col_coords <- data.frame(
+    "column" = unlist(rev(columns_table)),
+    "left" = cuts[2:length(cuts)],
+    "right" = cuts[1:length(cuts) - 1]
+  )
+}
 
+  col_coords$middle <- rowMeans(col_coords[, c("left", "right")], na.rm = TRUE)
+  col_coords <- col_coords[, order(names(col_coords))]
 
-  return(coordinate_frame)
+  return(col_coords)
 }
