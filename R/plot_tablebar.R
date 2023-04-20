@@ -70,10 +70,21 @@ plot_tablebar <- function(dat,
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
   plot_settings$columns_alignment <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1]))
-  plot_settings$columns_width <- unlist(check_length( plot_settings$columns_width, length(columns_table), fill = plot_settings$columns_width[1]))
   plot_settings$columns_nudge_x <- unlist(check_length( plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1]))
   plot_settings$headers_alignment <- unlist(check_length( plot_settings$headers_alignment, length(columns_table), fill = plot_settings$headers_alignment[1]))
   plot_settings$headers_nudge_x <- unlist(check_length( plot_settings$headers_nudge_x, length(columns_table), fill = plot_settings$headers_nudge_x[1]))
+
+
+  ## Check Column widths
+  ## Warnmeldung wenn eine col_width zu wenig: please provide one for the bar es well.
+  ## Wenn nichts angegeben: zu gleichen Teilen ausrechnen
+
+
+
+
+  plot_settings$columns_width <- unlist(check_length( plot_settings$columns_width,
+                                                      if(!is.null(bar_est)){length(columns_table) + 1}else{length(columns_table)}, ## needed for column width calculation
+                                                      fill = plot_settings$columns_width[1]))
 
 
   ## check if column names can be found in data
@@ -422,69 +433,38 @@ check_length <- function(obj, leng, fill = NULL) {
 
 
 calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings) {
-    ## Verschiedene Fälle: bar + Table, nur Bar oder nur Table
 
-  ## Wenn kein Bar, dann range auf 1 festlegen.
-  # total_range <- x_axis_range / rev(plot_settings$columns_width)[1]
-  # 10 - total_range * 0.6
-  # -10 - total_range * 0.4
-
-  x_axis_min <- plot_borders[1]
   x_axis_range <- diff(range(plot_borders))
 
   if (x_axis_range == 0) {
-    x_axis_range <- 1
+    total_range <- 1
+    x_max <- 1
+  }else{
+  total_range <- x_axis_range / rev(plot_settings$columns_width)[1] ## Last element has to be the bar width
+  x_max <- max(plot_borders, na.rm = TRUE)
   }
 
-  col_left_x_border <- NA
-  col_right_x_border <- NA
-  col_x_middle <- NA
-
-  if (!is.null(columns_table)) {
-    col_width_rev <- rev(plot_settings$columns_width)
-
-    col_right_x_border[1] <- x_axis_min
-    col_x_middle[1] <- col_right_x_border[1] - (x_axis_range * col_width_rev[1] / 2)
-    col_left_x_border[1] <- col_x_middle[1] - (x_axis_range * col_width_rev[1] / 2)
-
-
-    if (length(columns_table) > 1) {
-      for (i in 2:length(columns_table)) {
-        col_width <- col_width_rev[i] / 2
-
-        col_right_x_border[i] <- col_left_x_border[i - 1]
-        col_x_middle[i] <- col_right_x_border[i] - (x_axis_range * col_width)
-        col_left_x_border[i] <- col_x_middle[i] - (x_axis_range * col_width)
-      }
-
-      coordinate_frame <- data.frame(
-        "column" = rev(unlist(columns_table)),
-        "left" = col_left_x_border,
-        "middle" = col_x_middle,
-        "right" = col_right_x_border
-      )
-    } else {
-      coordinate_frame <- data.frame(
-        "column" = rev(unlist(columns_table)),
-        "left" = col_left_x_border,
-        "middle" = col_x_middle,
-        "right" = col_right_x_border
-      )
-    }
-  } else {
-    coordinate_frame <- data.frame()
+  cuts <- x_max
+  for(i in seq_along(plot_settings$columns_width)){
+    cuts[i + 1] <- cuts[i] - total_range * rev(plot_settings$columns_width)[i]
   }
 
-  coordinate_frame <- rbind(
-    data.frame(
-      "column" = "bar",
-      "left" = min(plot_borders, na.rm = TRUE),
-      "middle" = mean(plot_borders, na.rm = TRUE),
-      "right" = max(plot_borders, na.rm = TRUE)
-    ),
-    coordinate_frame
+if(x_axis_range != 0){ # because then there is a baplot
+  col_coords <- data.frame(
+    "column" = c("bar", unlist(rev(columns_table))),
+    "left" = cuts[2:length(cuts)],
+    "right" = cuts[1:length(cuts) - 1]
   )
+}else{
+  col_coords <- data.frame(
+    "column" = unlist(rev(columns_table)),
+    "left" = cuts[2:length(cuts)],
+    "right" = cuts[1:length(cuts) - 1]
+  )
+}
 
+  col_coords$middle <- rowMeans(col_coords[, c("left", "right")], na.rm = TRUE)
+  col_coords <- col_coords[, order(names(col_coords))]
 
-  return(coordinate_frame)
+  return(col_coords)
 }
