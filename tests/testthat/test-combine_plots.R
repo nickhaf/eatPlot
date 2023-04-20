@@ -36,7 +36,7 @@ p_bar_1 <- plot_tablebar(
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(0, 39),
     bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
-    columns_alignment = 0,
+    columns_alignment = 0.5,
     columns_width = 0.7,
     headers_alignment = 0,
     default_list = barplot_MinSta
@@ -124,7 +124,7 @@ test_that("Example barplot long format is plotted correctly", {
     bar_sig = "sig_trend_no_comp",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("Land", " ", "%", "%", "%", "(SE)"),
+    columns_headers = list("Land", " ", "%", "%", "%", "*(SE)*"),
     column_spanners = list("**2011**" = 3,
                            "**2016**" = 4,
                            "**Differenz 2016 - 2011**" = c(5,7)
@@ -162,10 +162,10 @@ test_that("Example barplot long format is plotted correctly", {
     bar_sig = "sig_trend_no_comp",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("%", "%", "%", "(SE)"),
-    column_spanners = list("2016" = 1,
-                           "2021" = 2,
-                           "Differenz 2021 - 2016" = c(3,5)
+    columns_headers = list("%", "%", "%", "*(SE)*"),
+    column_spanners = list("**2016**" = 1,
+                           "**2021**" = 2,
+                           "**Differenz 2021 - 2016**" = c(3,5)
     ),
     columns_table = list("est_point_start",
                          "est_point_end",
@@ -187,6 +187,11 @@ test_that("Example barplot long format is plotted correctly", {
   )
 
 
-  vdiffr::expect_doppelganger("MinStandard_long", p_bar)
+  c_plot <- combine_plots(list(p_bar_1, p_bar_2))
+
+  vdiffr::expect_doppelganger("MinStand_trend", c_plot)
+
+  save_plot(c_plot, filename = "../Kap3_2022_MSA_trend.pdf")
+
 })
 

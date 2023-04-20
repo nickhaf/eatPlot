@@ -218,12 +218,14 @@ plot_tablebar <- function(dat,
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::annotate("richtext",
-          x = mean(plot_borders, na.rm = TRUE),
-          y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = bar_header,
-          size = plot_settings$font_size
-        ) +
+        ggtext::geom_richtext(ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
+                                            y = max(.data$y_axis) + 1 + plot_settings$headers_nudge_y ),
+                              label = bar_header,
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA
+                              ) +
         NULL
     } else if (plot_settings$bar_sig_type == "frame") {
       res_plot <- res_plot +
@@ -243,11 +245,14 @@ plot_tablebar <- function(dat,
         ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::annotate("richtext",
-          x = mean(plot_borders, na.rm = TRUE),
-          y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = bar_header,
-          size = plot_settings$font_size
+
+        ggtext::geom_richtext(ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
+                                           y = max(.data$y_axis) + 1 + plot_settings$headers_nudge_y ),
+                              label = bar_header,
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA
         ) +
         NULL
     } else {
@@ -290,12 +295,16 @@ plot_tablebar <- function(dat,
               y = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y,
               yend = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y
             ),
-            ggplot2::annotate("richtext",
-              x = header_x,
-              y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y,
-              label = names(column_spanners)[spanner], hjust = 0.5,
-              size = plot_settings$font_size
+            ggtext::geom_richtext(ggplot2::aes(x = header_x,
+                                               y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y),
+                                  label = names(column_spanners)[spanner],
+                                  size = plot_settings$font_size,
+                                  label.padding = grid::unit(rep(0, 4), "pt"),
+                                  fill = NA,
+                                  label.color = NA,
+                                  hjust = 0.5
             )
+
           )
 
           return(annotations)
@@ -335,13 +344,15 @@ build_columns_3 <- function(df,
           hjust = plot_settings$columns_alignment[i],
           nudge_x = plot_settings$columns_nudge_x[i]
         ),
-        ggplot2::annotate("richtext",
-          x = x_axis_i + plot_settings$headers_nudge_x[i],
-          y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = columns_headers[[i]],
-          hjust = plot_settings$headers_alignment[i],
-          size = plot_settings$font_size
-        )
+        ggtext::geom_richtext(ggplot2::aes(x =  x_axis_i + plot_settings$headers_nudge_x[i],
+                                           y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y),
+                              label = columns_headers[[i]],
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA,
+                              hjust = plot_settings$headers_alignment[i]
+      )
       )
     })
   )
