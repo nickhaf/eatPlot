@@ -64,6 +64,7 @@ plot_tablebar <- function(dat,
     stop("Please provide column widths for your table columns.")
   }
 
+
   columns_headers <- check_length(columns_headers, length(columns_table))
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
@@ -78,13 +79,25 @@ plot_tablebar <- function(dat,
   ## Check Column widths
   ## Warnmeldung wenn eine col_width zu wenig: please provide one for the bar es well.
   ## Wenn nichts angegeben: zu gleichen Teilen ausrechnen
+if(!is.null(bar_est)){
+ columns_total <- append(columns_table, NA)
+}else{
+   columns_total <- columns_table
+ }
+
+if(is.null(plot_settings$columns_width)){
+  plot_settings$columns_width <- rep(1 / length(columns_total), length(columns_total))
+}
+
+if(length(plot_settings$columns_width) != length(columns_total)){
+stop("Please provide either NULL or as many elements for plot_settings$columns_width as you have columns you want to plot. If you want to plot a bar, it also needs a width specification.")
+}
+
+if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 1.2){
+  stop("Your plot_settings$columns_width have to amount to approximatly 1.")
+}
 
 
-
-
-  plot_settings$columns_width <- unlist(check_length( plot_settings$columns_width,
-                                                      if(!is.null(bar_est)){length(columns_table) + 1}else{length(columns_table)}, ## needed for column width calculation
-                                                      fill = plot_settings$columns_width[1]))
 
 
   ## check if column names can be found in data
@@ -351,7 +364,14 @@ build_columns_3 <- function(df,
   column_x_coords <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
   c(
     lapply(1:length(cols), function(i) {
+      if(rev(plot_settings$columns_alignment)[i] == 0.5){
       x_axis_i <- column_x_coords$middle[i]
+      }else if(rev(plot_settings$columns_alignment)[i] == 0){
+        x_axis_i <- column_x_coords$left[i]
+      }else{
+        x_axis_i <- column_x_coords$right[i]
+      }
+
       column_name <- cols[i]
 
       c(

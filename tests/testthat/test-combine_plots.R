@@ -37,7 +37,7 @@ p_bar_1 <- plot_tablebar(
     axis_x_lims = c(0, 39),
     bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
     columns_alignment = 0,
-    columns_width = 0.7,
+    columns_width = c(0.3, 0.7),
     headers_alignment = 0,
     default_list = barplot_MinSta
   )
@@ -57,6 +57,9 @@ p_bar_1 <- plot_tablebar(
     bar_est = "est_point_end",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
+      columns_alignment = 0,
+      headers_alignment = 0,
+      columns_width = NULL,
       axis_x_lims = c(0, 75),
       bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
       default_list = barplot_MinSta
@@ -92,9 +95,6 @@ vdiffr::expect_doppelganger("Mindeststandards", minsta_plot)
 
 
 })
-
-
-
 
 
 
@@ -151,11 +151,9 @@ test_that("Example barplot long format is plotted correctly", {
                                   NULL),
     bar_est = "est_trend_no_comp",
     y_axis = "y_axis_new",
-    plot_settings = plotsettings_tablebarplot(columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
-                                              columns_width = c(1, 2, 0.25, 0.25, 0.25, 0.25),
-                                              columns_nudge_x = c(0, -15, 0, 0, 0, 0),
-                                              headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
-                                              default_list = barplot_MinSta_trend)
+    plot_settings = plotsettings_tablebarplot(
+      columns_width = c(0.15, 0.4, 0.05, 0.05, 0.05, 0.05, 0.25),
+      default_list = barplot_MinSta_trend)
   )
 
 
@@ -189,7 +187,10 @@ test_that("Example barplot long format is plotted correctly", {
                                   NULL),
     bar_est = "est_trend_no_comp",
     y_axis = "y_axis_new",
-    plot_settings = plotsettings_tablebarplot(columns_width = c(0.1, 0.1, 0.1, 0.1),
+    plot_settings = plotsettings_tablebarplot(
+      columns_alignment = c(0.5, 0.5, 0.5, 0.5),
+      columns_width = c(0.1, 0.1, 0.1, 0.1, 0.6),
+      headers_alignment = c(0.5, 0.5, 0.5, 0.5),
                                               default_list = barplot_MinSta_trend)
   )
 

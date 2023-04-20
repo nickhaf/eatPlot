@@ -134,7 +134,7 @@ test_that("Example barplot is plotted correctly", {
     bar_est = "est_point_end",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
-      columns_width = 0.4,
+      columns_width = c(0.2, 0.8),
       default_list = barplot_MinSta
     )
   )

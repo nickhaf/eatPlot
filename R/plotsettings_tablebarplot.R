@@ -120,7 +120,7 @@ plotsettings_tablebarplot <- function(
       "bar_width" = 0.4,
       "columns_alignment" = 0.5,
       "columns_nudge_x" = 0,
-      "columns_width" = 0.5,
+      "columns_width" = NULL,
       "headers_alignment" = 0.5,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
