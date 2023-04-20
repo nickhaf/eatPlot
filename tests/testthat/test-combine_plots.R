@@ -198,9 +198,9 @@ test_that("Example barplot long format is plotted correctly", {
 
   c_plot <- combine_plots(list(p_bar_1, p_bar_2))
 
-# vdiffr::expect_doppelganger("MinStand_trend", c_plot)
+ vdiffr::expect_doppelganger("MinStand_trend", c_plot)
 
-  save_plot(c_plot, filename = "../Kap3_2022_MSA_trend.pdf")
+  #save_plot(c_plot, filename = "../Kap3_2022_MSA_trend.pdf")
 
 })
 

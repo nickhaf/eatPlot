@@ -36,7 +36,7 @@ expect_equal(
 calc_column_coords(
   plot_borders = c(-10, 10),
   columns_table = NULL,
-  plot_settings = plotsettings_tablebarplot()
+  plot_settings = plotsettings_tablebarplot(columns_width = c(1)                                        )
   ),
 data.frame(
   column = c("bar"),
@@ -45,9 +45,6 @@ data.frame(
   right = c(10)
 )
 )
-
-
-
 })
 
 
@@ -138,9 +135,6 @@ test_that("Example barplot is plotted correctly", {
       default_list = barplot_MinSta
     )
   )
-
-
-
 
   vdiffr::expect_doppelganger("MinStandard", p_bar_1)
 })
