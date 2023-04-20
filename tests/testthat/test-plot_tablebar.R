@@ -67,12 +67,11 @@ data.frame(
 
 test_that("column length is checked correctly", {
   column_set <- list("a", "b")
-  expect_no_warning(check_length(column_set, leng = 2))
+  expect_equal(check_length(column_set, leng = 2), list("a", "b"))
 
-  expect_warning(check_length(column_set, 3))
-  expect_equal(suppressWarnings({
-    check_length(column_set, 3)
-  }), list("a", "b", NULL))
+  expect_error(check_length(column_set, 3))
+  expect_equal(check_length("a", 3, fill = "a")
+  , list("a", "a", "a"))
 })
 
 test_that("continous barplot looks the same", {

@@ -41,6 +41,10 @@ plot_tablebar <- function(dat,
 
   # Check columns -----------------------------------------------------------
 
+  ## Checken ob Liste oder Dataframe
+
+
+
   if (is.null(y_axis)) {
     stop("Please provide a y-axis.")
   }
@@ -53,12 +57,26 @@ plot_tablebar <- function(dat,
 
 
   ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
+  # column_width = 0 if not needed
+
 
   columns_headers <- check_length(columns_headers, length(columns_table))
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
+  ## Umgang mit Default settings:
+  # 2 Fälle:
+  # Alles angegeben -> nichts weiter tun
+  # Zu wenig angegeben -> auffüllen. Wenn columns_table == NULL sollte es nicht gebraucht werden
+
+  for(i in c("columns_alignment", "columns_width", "columns_nudge_x", "headers_alignment", "headers_nudge_x")){
+  plot_settings[[i]] <- unlist(check_length(plot_settings[[i]], length(columns_table), fill = plot_settings[[i]][1]))
+  }
+
+  if(!is.null(plot_settings$columns_table) & is.null(plot_settings$columns_width)){
+    stop("Please provide column widths for your table columns.")
+  }
 
   ## check if column names can be found in data
   sapply(unlist(c(
@@ -88,8 +106,6 @@ plot_tablebar <- function(dat,
   }
 
   if(!is.null(bar_label)){
-
-
    dat$bar_label_text <- construct_label(
      dat,
      label_est = bar_label,
@@ -119,6 +135,7 @@ plot_tablebar <- function(dat,
     ))
   } else {
     plot_borders <- c(0, 0)
+    scale_breaks <- NULL
   }
 
   x_axis_range <- diff(range(plot_borders))
@@ -317,14 +334,14 @@ build_columns_3 <- function(df,
           label.padding = grid::unit(rep(0, 4), "pt"),
           fill = NA,
           label.color = NA,
-          hjust = plot_settings$columns_alignment,
-          nudge_x = plot_settings$columns_nudge_x
+          hjust = plot_settings$columns_alignment[i],
+          nudge_x = plot_settings$columns_nudge_x[i]
         ),
         ggplot2::annotate("text",
-          x = x_axis_i + plot_settings$headers_nudge_x,
+          x = x_axis_i + plot_settings$headers_nudge_x[i],
           y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y,
-          label = columns_headers[i],
-          hjust = plot_settings$headers_alignment,
+          label = columns_headers[[i]],
+          hjust = plot_settings$headers_alignment[i],
           size = plot_settings$font_size
         )
       )
@@ -363,15 +380,18 @@ set_axis_limits <- function(dat, x_value, plot_settings) {
   return(plot_borders)
 }
 
-check_length <- function(obj, leng) {
+check_length <- function(obj, leng, fill = NULL) {
   if (is.null(obj)) {
     return(NULL)
-  } else if (length(obj) != leng) {
-    warning(paste0("The length of ", deparse(substitute(obj)), " should be equal to the amount of columns you are plotting.", call. = FALSE))
+  } else if (length(obj) != leng & length(obj) > 1) {
+    stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1.", call. = FALSE))
+  } else if(length(obj) == 1 & leng > 1){
     obj <- c(obj, lapply(1:(leng - length(obj)), function(x) {
-      NULL
-    }))
-  } else {
+      fill
+    })
+    )
+    return(obj)
+  } else{
     return(obj)
   }
 }

@@ -7,7 +7,7 @@ barplot_MinSta_trend <- plotsettings_tablebarplot(
   bar_pattern_type = c("TRUE" = "stripe", "FALSE" = "none"),
   bar_sig_type = "pattern",
   bar_width = 0.7,
-  headers_nudge_y = 1,
+  headers_nudge_y = 0.3,
   columns_width = c(0.1, 0.15, 0.1, 0.1)
 )
 
@@ -27,7 +27,6 @@ barplot_MinSta <- plotsettings_tablebarplot(
   bar_sig_type = "frame",
   bar_width = 0.4,
   columns_width = c(0.13),
-  headers_nudge_y = 0.3,
   font_size = 2,
   default_list = barplot_MinSta_trend
 )
