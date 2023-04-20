@@ -92,7 +92,7 @@ test_that("continous barplot looks the same", {
   )
 
   # wenn nicht benannt, dann benennen der Farbsettings
-  vdiffr::expect_doppelganger("Minimal tablebar", p_bar)
+  vdiffr::expect_doppelganger("Minimal_tablebar", p_bar)
 })
 
 
