@@ -152,7 +152,8 @@ test_that("Example barplot long format is plotted correctly", {
     bar_est = "est_trend_no_comp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
-      columns_width = c(0.15, 0.4, 0.05, 0.05, 0.05, 0.05, 0.25),
+      columns_alignment = c(0, 0, 1, 1, 1, 1),
+      columns_width = c(0.15, 0.5, 0.05, 0.05, 0.05, 0.05, 0.2),
       default_list = barplot_MinSta_trend)
   )
 
@@ -190,7 +191,6 @@ test_that("Example barplot long format is plotted correctly", {
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(0.5, 0.5, 0.5, 0.5),
       columns_width = c(0.1, 0.1, 0.1, 0.1, 0.6),
-      headers_alignment = c(0.5, 0.5, 0.5, 0.5),
                                               default_list = barplot_MinSta_trend)
   )
 

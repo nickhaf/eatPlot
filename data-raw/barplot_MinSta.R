@@ -11,10 +11,7 @@ barplot_MinSta_trend <- plotsettings_tablebarplot(
   bar_sig_type = "pattern",
   bar_width = 0.7,
   headers_nudge_y = 0.3,
-  font_size = 2,
-  columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
-  columns_width = c(0.15, 0.15, 0.1, 0.1, 0.1, 0.1, 0.3),
-  headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
+  font_size = 2
 )
 
 usethis::use_data(barplot_MinSta_trend, overwrite = TRUE)
@@ -31,9 +28,6 @@ barplot_MinSta <- plotsettings_tablebarplot(
   bar_pattern_fill_colour = c("yellow"),
   bar_sig_type = "frame",
   bar_width = 0.4,
-  columns_alignment = 0,
-  columns_width = 1,
-  headers_alignment = 0,
   font_size = 2,
   default_list = barplot_MinSta_trend
 )

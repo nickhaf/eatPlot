@@ -70,6 +70,10 @@ plot_tablebar <- function(dat,
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
+  if(is.null(plot_settings$headers_alignment)){
+    plot_settings$headers_alignment <- plot_settings$columns_alignment
+  }
+
   plot_settings$columns_alignment <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1]))
   plot_settings$columns_nudge_x <- unlist(check_length( plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1]))
   plot_settings$headers_alignment <- unlist(check_length( plot_settings$headers_alignment, length(columns_table), fill = plot_settings$headers_alignment[1]))
@@ -327,8 +331,8 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
 
           annotations <- c(
             ggplot2::annotate("segment",
-              x = column_x_coords_rev[min_col, "left"] + 0.005 * x_axis_range,
-              xend = column_x_coords_rev[max_col, "right"] - 0.005 * x_axis_range,
+              x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
+              xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
               y = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y,
               yend = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y
             ),
