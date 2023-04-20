@@ -60,23 +60,21 @@ plot_tablebar <- function(dat,
   # column_width = 0 if not needed
 
 
+  if(!is.null(plot_settings$columns_table) & is.null(plot_settings$columns_width)){
+    stop("Please provide column widths for your table columns.")
+  }
+
   columns_headers <- check_length(columns_headers, length(columns_table))
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
-  ## Umgang mit Default settings:
-  # 2 Fälle:
-  # Alles angegeben -> nichts weiter tun
-  # Zu wenig angegeben -> auffüllen. Wenn columns_table == NULL sollte es nicht gebraucht werden
+  plot_settings$columns_alignment <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1]))
+  plot_settings$columns_width <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_width[1]))
+  plot_settings$columns_nudge_x <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_nudge_x[1]))
+  plot_settings$headers_alignment <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$headers_alignment[1]))
+  plot_settings$headers_nudge_x <- unlist(check_length( plot_settings$columns_alignment, length(columns_table), fill = plot_settings$headers_nudge_x[1]))
 
-  for(i in c("columns_alignment", "columns_width", "columns_nudge_x", "headers_alignment", "headers_nudge_x")){
-  plot_settings[[i]] <- unlist(check_length(plot_settings[[i]], length(columns_table), fill = plot_settings[[i]][1]))
-  }
-
-  if(!is.null(plot_settings$columns_table) & is.null(plot_settings$columns_width)){
-    stop("Please provide column widths for your table columns.")
-  }
 
   ## check if column names can be found in data
   sapply(unlist(c(
@@ -220,7 +218,7 @@ plot_tablebar <- function(dat,
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::annotate("text",
+        ggplot2::annotate("richtext",
           x = mean(plot_borders, na.rm = TRUE),
           y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
           label = bar_header,
@@ -245,7 +243,7 @@ plot_tablebar <- function(dat,
         ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::annotate("text",
+        ggplot2::annotate("richtext",
           x = mean(plot_borders, na.rm = TRUE),
           y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y,
           label = bar_header,
@@ -292,7 +290,7 @@ plot_tablebar <- function(dat,
               y = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y,
               yend = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y
             ),
-            ggplot2::annotate("text",
+            ggplot2::annotate("richtext",
               x = header_x,
               y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y,
               label = names(column_spanners)[spanner], hjust = 0.5,
@@ -337,7 +335,7 @@ build_columns_3 <- function(df,
           hjust = plot_settings$columns_alignment[i],
           nudge_x = plot_settings$columns_nudge_x[i]
         ),
-        ggplot2::annotate("text",
+        ggplot2::annotate("richtext",
           x = x_axis_i + plot_settings$headers_nudge_x[i],
           y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y,
           label = columns_headers[[i]],
@@ -384,7 +382,7 @@ check_length <- function(obj, leng, fill = NULL) {
   if (is.null(obj)) {
     return(NULL)
   } else if (length(obj) != leng & length(obj) > 1) {
-    stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1.", call. = FALSE))
+    stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1."), call. = FALSE)
   } else if(length(obj) == 1 & leng > 1){
     obj <- c(obj, lapply(1:(leng - length(obj)), function(x) {
       fill

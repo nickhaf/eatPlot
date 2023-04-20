@@ -173,20 +173,38 @@ test_that("Example barplot long format is plotted correctly", {
   dat_bar$est_trend_no_comp <- dat_bar$est_trend_no_comp * 100
   dat_bar$sig_point_start[1:10] <- "FALSE"
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
+  dat_bar$se_trend_no_comp <- dat_bar$se_trend_no_comp * 100
+  dat_bar$se_trend_no_comp <- construct_label(dat_bar, label_se = "se_trend_no_comp")
 
   p_bar <- plot_tablebar(
     dat = dat_bar,
     bar_label = NULL,
     bar_sig = "sig_trend_no_comp",
-    bar_header = "a barplot", # Zu column headers dazu
+    bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("Land", " ", "%", "%"),
-    column_spanners = list("Land" = c(1,2),
-      "2009" = 3,
-                           "bar" = c(4,5)),
-    columns_table = list("state_var", "depVar", "est_point_start", "est_point_end"),
-    columns_table_sig_bold = list(NULL, NULL, "sig_point_start", "sig_point_end"),
-    columns_table_sig_high = list(NULL, NULL, "sig_point_start", "sig_point_end"),
+    columns_headers = list("Land", " ", "%", "%", "%", "(SE)"),
+    column_spanners = list("2011" = 3,
+                           "2016" = 4,
+                           "Differenz 2016 - 2011" = c(5,6)
+                           ),
+    columns_table = list("state_var",
+                         "depVar",
+                         "est_point_start",
+                         "est_point_end",
+                         "est_trend_no_comp",
+                         "se_trend_no_comp"),
+    columns_table_sig_bold = list(NULL,
+                                  NULL,
+                                  NULL,
+                                  NULL,
+                                  "sig_trend_no_comp",
+                                  NULL),
+    columns_table_sig_high = list(NULL,
+                                  NULL,
+                                  NULL,
+                                  NULL,
+                                  "sig_trend_comp",
+                                  NULL),
     bar_est = "est_trend_no_comp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta_trend)

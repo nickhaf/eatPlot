@@ -1,7 +1,9 @@
 ## code to prepare `barplot_MinSta_trend` dataset goes here
 barplot_MinSta_trend <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", "white", "white", "lightgrey", "lightgrey", "lightgrey"), 8), rep("darkgrey", 3)),
-  bar_fill_colour = c("darkblue", "lightblue", "lightgreen"),
+  bar_fill_colour = c(grDevices::rgb(33, 89, 104, maxColorValue = 255),
+                      grDevices::rgb(49, 133, 156, maxColorValue = 255),
+                      grDevices::rgb(75, 172, 198, maxColorValue = 255)),
   bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
   bar_pattern_fill_colour = "white",
   bar_pattern_type = c("TRUE" = "stripe", "FALSE" = "none"),
