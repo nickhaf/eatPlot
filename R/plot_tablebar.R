@@ -138,6 +138,13 @@ plot_tablebar <- function(dat,
 
   x_axis_range <- diff(range(plot_borders))
 
+
+
+  ## Umgang mit Tabellen ohne Plot?
+  ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
+
+
+
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
 
@@ -415,7 +422,13 @@ check_length <- function(obj, leng, fill = NULL) {
 
 
 calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings) {
-  ## Verschiedene Fälle: bar + Table, nur Bar oder nur Table
+    ## Verschiedene Fälle: bar + Table, nur Bar oder nur Table
+
+  ## Wenn kein Bar, dann range auf 1 festlegen.
+  # total_range <- x_axis_range / rev(plot_settings$columns_width)[1]
+  # 10 - total_range * 0.6
+  # -10 - total_range * 0.4
+
   x_axis_min <- plot_borders[1]
   x_axis_range <- diff(range(plot_borders))
 
