@@ -55,32 +55,47 @@ check_plotsettings_barplot <- function(settings_list) {
 
 #' Set parameters for the barplots.
 #'
-#' @param axis_x_background_width_x Numeric for the width of the x_axis - title background.
-#' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, if `NULL`.
-#' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background.
-#' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a named vector with the names of the groups specified in `bar_fill`.
-#' @param bar_frame_linetype Named vector with the bar frame linetypes.
+#' @param axis_x_background_width_x Numeric for the width of the x_axis - title background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to `0`.
+#' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, `NULL` (default).
+#' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background. Defaults to `NULL`.
+#' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in `bar_fill`. If no names are provided for the vector, the order of the factor levels of `bar_fill` will be used for determining the colour assignment.
+#' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebar()`. Defaults to `solid`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_size Numeric for the line-size around the bar.
-#' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`.
+#' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to `white`.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
 #' @param bar_sig_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").
-#' @param bar_width Numeric between `0` and `1` specifying the width of the bar.
-#' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned).
-#' @param columns_nudge_x Numeric to nudge the column text in x direction.
-#' @param columns_width Numeric vector with the length equal to the number of ploted table columns. Adjusts the column width.
-#' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned).
-#' @param headers_nudge_x Numeric to nudge the column_headers in x direction.
-#' @param headers_nudge_y Numeric to nudge the column_headers in y direction.
-#' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns.
+#' @param bar_width Numeric between `0` and `1` specifying the width of the bar. Defaults to `0.4`.
+#' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `0.5`.
+#' @param columns_nudge_x Numeric to nudge the column text in x direction. Defaults to `0`.
+#' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
+#' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
+#' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
+#' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
+#' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
-#' @return A named list with settings for the barplots.
+#' @return A named list with settings for a table/barplot.
 #' @export
 #'
 #' @examples
+#' ## Calling the function without any arguments will result in the default settings-list.
 #' plotsettings_tablebarplot()
+#'
+#' ## Arguments will overvrite the respective list element:
+#' plot_settings <- plotsettings_tablebarplot(fontsize = 2.5)
+#' plot_settings$fontsize
+#'
+#' ## Colours can be defined like so:
+#' plotsettings_tablebarplot(bar_fill_colour = c("blue", grDevices::rgb(10, 13, 82, maxColorValue = 255)))
+#'
+#' ## Or, to get better control over the colour assignment
+#' ## we can also directly name the colours with the different groups
+#' ## defined in the bar_sig-argument of plot_tablebar()
+#' ## (as these groups are used to distinguish between different bar colours):
+#' plotsettings_tablebarplot(bar_fill_colour = c(fill_group_1 = "blue", fill_group_2 = grDevices::rgb(10, 13, 82, maxColorValue = 255)))
+#'
 #'
 plotsettings_tablebarplot <- function(
                                       axis_x_background_width_x = NULL,

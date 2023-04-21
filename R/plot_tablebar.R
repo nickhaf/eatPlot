@@ -9,7 +9,7 @@
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.
 #' @param bar_header Character string for the header of the bars.
 #' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
-#' @param columns_headers Character vector containing the column columns_headers.
+#' @param columns_headers Character vector containing the headers of the ploted table columns.
 #' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.

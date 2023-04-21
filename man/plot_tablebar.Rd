@@ -37,7 +37,7 @@ plot_tablebar(
 
 \item{bar_header}{Character string for the header of the bars.}
 
-\item{columns_headers}{Character vector containing the column columns_headers.}
+\item{columns_headers}{Character vector containing the headers of the ploted table columns.}
 
 \item{column_spanners}{Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.}
 
