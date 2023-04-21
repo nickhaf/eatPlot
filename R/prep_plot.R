@@ -138,7 +138,7 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
   trend_data_final <- merge_trend_point(
     trend_data = trend_data_merged,
-    point_data = list_building_blocks[["point_no_comp_data"]]
+    point_data = list_building_blocks[["noTrend_noComp"]]
   )
   if(any(!is.na(trend_data_final$grouping_var))){
     trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
@@ -222,7 +222,7 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
   )
 
   plot_dat[["plot_points"]] <- merge(dat_long,
-                                     list_building_blocks[["point_no_comp_data"]],
+                                     list_building_blocks[["noTrend_noComp"]],
                                      by = c("grouping_var", "state_var", "year", "competence_var"),
                                      all.x = TRUE)
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]

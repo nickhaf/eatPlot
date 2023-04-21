@@ -37,7 +37,7 @@ test_that("competence and grouping_var is optional", {
     states = unique(df_general$state_var),
     sig_niveau = 0.05
   )
-  expect_equal(test_general[["point_no_comp_data"]]$grouping_var, rep("noGroup", 2))
+  expect_equal(test_general[["noTrend_noComp"]]$grouping_var, rep("noGroup", 2))
   expect_equal(nrow(test_general[["trend_comp_data"]]), 0)
 })
 
@@ -100,8 +100,8 @@ test_that("list ist build correctly without grouping_var", {
     sig_niveau = 0.05
   )
 
-  expect_equal(test_general[["point_no_comp_data"]]$year, c(1, 1, 2, 2))
-  expect_equal(test_general[["point_no_comp_data"]]$est_point, c(1, 2, 1, 2))
+  expect_equal(test_general[["noTrend_noComp"]]$year, c(1, 1, 2, 2))
+  expect_equal(test_general[["noTrend_noComp"]]$est_point, c(1, 2, 1, 2))
   expect_equal(test_general[["trend_comp_data"]]$year_start, c(1, 1, 2, 2))
   expect_equal(test_general[["trend_comp_data"]]$year_end, c(2, 2, 3, 3))
   expect_equal(test_general[["trend_comp_data"]]$est_trend, c(3, 4, 3, 4))
@@ -136,8 +136,8 @@ test_that("list ist build correctly with grouping_var", {
     sig_niveau = 0.05
   )
 
-  expect_equal(test_general[["point_no_comp_data"]]$year, c(1, 1, 2, 2))
-  expect_equal(test_general[["point_no_comp_data"]]$est_point, c(1, 2, 1, 2))
+  expect_equal(test_general[["noTrend_noComp"]]$year, c(1, 1, 2, 2))
+  expect_equal(test_general[["noTrend_noComp"]]$est_point, c(1, 2, 1, 2))
   expect_equal(test_general[["trend_comp_data"]]$year_start, c(1, 1, 2, 2))
   expect_equal(test_general[["trend_comp_data"]]$year_end, c(2, 2, 3, 3))
   expect_equal(test_general[["trend_comp_data"]]$est_trend, c(3, 4, 3, 4))
