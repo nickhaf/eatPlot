@@ -79,17 +79,26 @@ Set parameters for the barplots.
 plotsettings_tablebarplot()
 
 ## Arguments will overvrite the respective list element:
-plot_settings <- plotsettings_tablebarplot(fontsize = 2.5)
-plot_settings$fontsize
+plot_settings <- plotsettings_tablebarplot(font_size = 2.5)
+plot_settings$font_size
 
 ## Colours can be defined like so:
-plotsettings_tablebarplot(bar_fill_colour = c("blue", grDevices::rgb(10, 13, 82, maxColorValue = 255)))
+plotsettings_tablebarplot(
+  bar_fill_colour = c("blue",
+                      grDevices::rgb(10, 13, 82, maxColorValue = 255)
+                      )
+)
 
 ## Or, to get better control over the colour assignment
 ## we can also directly name the colours with the different groups
 ## defined in the bar_sig-argument of plot_tablebar()
 ## (as these groups are used to distinguish between different bar colours):
-plotsettings_tablebarplot(bar_fill_colour = c(fill_group_1 = "blue", fill_group_2 = grDevices::rgb(10, 13, 82, maxColorValue = 255)))
+plotsettings_tablebarplot(
+ bar_fill_colour = c(fill_group_1 = "blue",
+                     fill_group_2 = grDevices::rgb(
+                       10, 13, 82, maxColorValue = 255)
+                     )
+)
 
 
 }
