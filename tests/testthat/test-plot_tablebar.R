@@ -74,7 +74,6 @@ test_that("continous barplot looks the same", {
     bar_sig = "bar_sig",
     bar_header = "a barplot",
     bar_fill = "bar_fill",
-    # bar_pattern_fill = "bar_pattern_fill",
     columns_headers = c("est_1", "est_2"),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
@@ -83,11 +82,13 @@ test_that("continous barplot looks the same", {
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       background_stripes_colour = c("white", "lightgrey", "white", "darkgrey"),
-      bar_fill_colour = c("red", "blue", "green", "yellow"),
+      bar_fill_colour = c("red", "blue", "yellow", "green"),
       bar_pattern_fill_colour = "white",
       bar_pattern_type = c("stripe", "none"),
       bar_sig_type = "pattern",
-      columns_width = c(0.3, 0.2, 0.5)
+      columns_width = c(0.3, 0.2, 0.5),
+      pattern_width = 0.5,
+      pattern_spacing = 0.1
     )
   )
 
