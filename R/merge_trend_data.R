@@ -19,10 +19,13 @@ merge_trend_data <- function(trend_data_1,
 data_merged <- merge(
     trend_data_1,
     trend_data_2,
-    by = c("state_var", "grouping_var", "year_start", "year_end", "depVar", "competence_var", "trend"),
+    by = c("state_var", "grouping_var", "year_start", "year_end", "depVar", "competence_var", "years_trend"),
     sort = FALSE,
     suffixes = suffixes,
     ...
   )
+
+colnames(data_merged) <- gsub("_trend_trend", "_trend", colnames(data_merged))
+
   return(data_merged)
 }

@@ -107,7 +107,7 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
 
   # Prepare the trend-data.frame --------------------------------------------
-  # Data with comparison:
+  # Data with comparison, either comparing with the whole group, or within the state
   comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
   comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
 
@@ -115,7 +115,7 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
     comp_within_whole <- merge_trend_data(
       trend_data_1 = comp_state,
       trend_data_2 = comp_wholeGroup,
-      suffixes = c("_comp_within", "_comp_whole"),
+      suffixes = c("_trend_within", "_trend_whole"),
       all.x = TRUE
     )
   } else {

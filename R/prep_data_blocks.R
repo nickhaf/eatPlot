@@ -67,7 +67,7 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   }
   filtered_list <- prep_trend_long(dat = data_wholeGroup,
                                    filtered_list,
-                                   "wholeGroup_trend",
+                                   "Trend_noComp_wholeGroup",
                                    remove_cols = exclude_cols)
 
 # Add significances -------------------------------------------------------
