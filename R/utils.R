@@ -297,3 +297,10 @@ check_columns <-  function(dat, column){
   }
 }
 
+check_factor <- function(dat, column, variable_type){
+  if (!is.factor(dat[, column]) & !is.null(column)) {
+    warning("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.", .call = FALSE)
+    dat[, column]<- as.factor(dat[, column])
+  }
+  return(dat)
+}

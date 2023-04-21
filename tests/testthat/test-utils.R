@@ -154,3 +154,12 @@ test_that("NULL-cols are filled", {
   res_df_null <- fill_column(df = df, column_name = plot_points, filling = NA)
   expect_equal(res_df_null$plot_points, c(NA, NA))
   })
+
+test_that("factor check works", {
+  expect_warning(check_factor(data.frame(factor_col = c("a", "b")),
+                 "factor_col",
+                 "factor_col")
+  )
+
+
+})

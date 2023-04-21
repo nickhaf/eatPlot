@@ -70,12 +70,7 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
 
 # Show a warning, if a grouping_var was provided, but not as factor.
-if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
-  warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
-  dat$grouping_var <- as.factor(dat$grouping_var)
-}else{
-  message("Please check that the factor levels of you grouping_var are in the correct order. The first level will be the top brace-label, the last level the bottom brace_label.")
-}
+dat <- check_factor(dat, grouping_var, "grouping_var")
 
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
   if(!is.null(grouping_var)){
