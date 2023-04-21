@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 19
+      length(settings_list) == 21
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -25,7 +25,9 @@ check_plotsettings_barplot <- function(settings_list) {
         "headers_alignment",
         "headers_nudge_x",
         "headers_nudge_y",
-        "font_size"
+        "font_size",
+        "pattern_spacing",
+        "pattern_width"
 
       )
   )
@@ -49,6 +51,8 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$headers_nudge_x))
   stopifnot(is.numeric(settings_list$headers_nudge_y))
   stopifnot(is.numeric(settings_list$font_size))
+  stopifnot(is.numeric(settings_list$pattern_spacing))
+  stopifnot(is.numeric(settings_list$pattern_width))
 
 }
 
@@ -74,6 +78,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
+#' @param pattern_spacing Numeric for the gap between patterns.
+#' @param pattern_width Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the `pattern_width` parameter will increase the thickness of the white stripes.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
 #' @return A named list with settings for a table/barplot.
@@ -126,6 +132,8 @@ plotsettings_tablebarplot <- function(
                                       headers_nudge_x = NULL,
                                       headers_nudge_y = NULL,
                                       font_size = NULL,
+                                      pattern_spacing = NULL,
+                                      pattern_width = NULL,
                                       default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
@@ -148,6 +156,8 @@ plotsettings_tablebarplot <- function(
       "headers_alignment" = NULL,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
+      "pattern_spacing" = 0.1,
+      "pattern_width" = 0.5,
       "font_size" = 3
     )
   } else {

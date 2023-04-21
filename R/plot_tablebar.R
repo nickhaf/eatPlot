@@ -15,6 +15,7 @@
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
 #' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
 #' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets behind the column values.
+#' @param columns_round List of numerics, for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
 #' @param y_axis Character string of the columnname used as y-axis.
 #'
@@ -30,6 +31,7 @@ plot_tablebar <- function(dat,
                           bar_fill = NULL,
                           bar_header = NULL,
                           columns_headers = NULL,
+                          columns_round = 0,
                           column_spanners = NULL, # c("name" = c(1,2))
                           columns_table = NULL,
                           columns_table_sig_bold = NULL,
@@ -66,6 +68,7 @@ plot_tablebar <- function(dat,
 
 
   columns_headers <- check_length(columns_headers, length(columns_table))
+  columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
   columns_table_se <- check_length(columns_table_se, length(columns_table))
@@ -127,7 +130,8 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
       label_est = columns_table[[i]],
       label_se = columns_table_se[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
-      label_sig_high = columns_table_sig_high[[i]]
+      label_sig_high = columns_table_sig_high[[i]],
+      round_est = columns_round[[i]]
     )
   }
 
@@ -207,7 +211,7 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
     ) +
     ggplot2::scale_x_continuous(breaks = scale_breaks,
                                 limits = c(NA, max(column_x_coords$right)),
-                                expand = c(0, 0)) +
+                                expand = ggplot2::expansion(mult = c(0, 0.025))) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$axis_x_background_width_x))) +
     ggplot2::geom_rect(
       ggplot2::aes(
@@ -248,16 +252,17 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
             fill = .data$bar_fill,
             pattern = .data$bar_sig
           ),
+          linewidth = 0.2,
           pattern_colour = NA,
           pattern_fill = plot_settings$bar_pattern_fill_colour,
           pattern_angle = -45,
-          pattern_density = 0.5, # Streifenbreite
-          pattern_spacing = 0.01, # Abstand
-          pattern_key_scale_factor = 0.6
+          pattern_density = plot_settings$pattern_width,
+          pattern_spacing = plot_settings$pattern_spacing,
+         pattern_key_scale_factor = 0.6 #legend adjustment
         ) +
-        ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
-        ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
+      ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
+      ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
+       ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggtext::geom_richtext(data = data.frame(),
                               ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
                                             y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y ),
@@ -333,12 +338,13 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
             ggplot2::annotate("segment",
               x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
               xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
-              y = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y,
-              yend = max(dat$y_axis) + 2 + plot_settings$headers_nudge_y
+              y = max(dat$y_axis) + 1.75 + plot_settings$headers_nudge_y,
+              yend = max(dat$y_axis) + 1.75 + plot_settings$headers_nudge_y,
+              linewidth = 0.15
             ),
             ggtext::geom_richtext(data = data.frame(),
                                   ggplot2::aes(x = header_x,
-                                               y = max(dat$y_axis) + 3 + plot_settings$headers_nudge_y),
+                                               y = max(dat$y_axis) + 2.25 + plot_settings$headers_nudge_y),
                                   label = names(column_spanners)[spanner],
                                   size = plot_settings$font_size,
                                   label.padding = grid::unit(rep(0, 4), "pt"),
@@ -368,13 +374,25 @@ build_columns_3 <- function(df,
   column_x_coords <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
   c(
     lapply(1:length(cols), function(i) {
-      if(rev(plot_settings$columns_alignment)[i] == 0.5){
+
+      ## Left alignment should start at the left side of the column. Right alignment is mainly needed for aligning the number, they can stay in the middle:
+      if(rev(plot_settings$columns_alignment)[i] == 0){
+           x_axis_i <- column_x_coords$left[i]
+      }else if(rev(plot_settings$columns_alignment)[i] == 0.5){
       x_axis_i <- column_x_coords$middle[i]
-      }else if(rev(plot_settings$columns_alignment)[i] == 0){
-        x_axis_i <- column_x_coords$left[i]
       }else{
-        x_axis_i <- column_x_coords$right[i]
+         x_axis_i <- column_x_coords$right[i]
       }
+
+      if(rev(plot_settings$headers_alignment)[i] == 0){
+        x_axis_i_header <- column_x_coords$left[i]
+      }else if(rev(plot_settings$headers_alignment)[i] == 0.5){
+        x_axis_i_header <- column_x_coords$middle[i]
+      }else{
+        x_axis_i_header <- column_x_coords$right[i]
+      }
+
+
 
       column_name <- cols[i]
 
@@ -394,14 +412,15 @@ build_columns_3 <- function(df,
           nudge_x = rev(plot_settings$columns_nudge_x)[i]
         ),
         ggtext::geom_richtext(data = data.frame(),
-                              ggplot2::aes(x =  x_axis_i + rev(plot_settings$headers_nudge_x)[i],
+                              ggplot2::aes(x =  x_axis_i_header,
                                            y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y),
                               label = columns_headers[[i]],
                               size = plot_settings$font_size,
                               label.padding = grid::unit(rep(0, 4), "pt"),
                               fill = NA,
                               label.color = NA,
-                              hjust = rev(plot_settings$headers_alignment)[i]
+                              hjust = rev(plot_settings$headers_alignment)[i],
+                              nudge_x =  rev(plot_settings$headers_nudge_x)[i]
       )
       )
     })
