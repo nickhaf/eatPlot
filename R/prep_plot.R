@@ -108,8 +108,8 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison:
-  comp_wholeGroup <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "wholeGroup", ]
-  comp_state <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "BL" | list_building_blocks[["trend_comp_data"]]$compare_1 == "_groupingVar", ]
+  comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
+  comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
 
   if (nrow(comp_state) != 0) {
     comp_within_whole <- merge_trend_data(
