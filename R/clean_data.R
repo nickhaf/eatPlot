@@ -48,8 +48,6 @@ clean_data <- function(dat,
 
   dat$grouping_var <- recode_to_factor(dat$grouping_var)
 
-
-  ## Hier die Auswahl richtig? wholeGroup sollte nur das sein, was in comp_1 wholheGroup hat oder? Die Land vs. wholeGroup sachen brauchen das Land.
   dat[is.na(dat$state_var) & (
     grepl("wholeGroup", dat$group_var) |
       grepl(

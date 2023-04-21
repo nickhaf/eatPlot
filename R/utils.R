@@ -116,25 +116,37 @@ return(res_vec)
 
 # Helper functions for reshaping to long format ---------------------------
 prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "") {
+
+  ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
-    cols_removed <- grep(remove_pattern, colnames(data), invert = TRUE, value = TRUE)
+    cols_removed <- grep(remove_pattern,
+                         colnames(data),
+                         invert = TRUE,
+                         value = TRUE)
     data <- data[, cols_removed]
   }
 
-  col_pos <- grep(include_pattern, colnames(data))
+  col_pos <- grep(include_pattern,
+                  colnames(data)
+                  )
   colnames(data)[col_pos] <- gsub("\\.|_", "", colnames(data)[col_pos])
 
-  ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
-  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], function(x) insert_first_number(x, insertion = "\\."))
+  ## before the first number of the year columns, insert ".". Needed by reshape() for automatically building the new columns.
+  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], insert_first_number, "\\.")
 
-  data_long <- stats::reshape(data, direction = "long", varying = colnames(data)[col_pos])
+  data_long <- stats::reshape(data,
+                              direction = "long",
+                              varying = colnames(data)[col_pos]
+                              )
   data_long$id <- NULL
 
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
-  for (i in new_colnames) {
-    data_long <- build_column(data_long, old = i, new = paste0(i, suffix))
-  }
+
+  data_long <- rename_columns(data_long,
+                             old_names = new_colnames,
+                             new_names = paste0(new_colnames, suffix)
+                             )
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
@@ -276,6 +288,8 @@ build_column <- function(dat, old, new) {
 }
 
 
+
+
 ## Add a new column that is derived from an old one. Takes an object as input.
 fill_column <- function(df, column_name, filling = NA){
 
@@ -299,8 +313,15 @@ check_columns <-  function(dat, column){
 
 check_factor <- function(dat, column, variable_type){
   if (!is.factor(dat[, column]) & !is.null(column)) {
-    warning("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.", .call = FALSE)
+    message("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.")
     dat[, column]<- as.factor(dat[, column])
   }
+  return(dat)
+}
+
+rename_columns <- function(dat, old_names, new_names){
+
+  colnames(dat)[colnames(dat) %in% old_names] <- new_names
+
   return(dat)
 }

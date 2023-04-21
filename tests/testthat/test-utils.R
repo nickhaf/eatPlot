@@ -75,7 +75,7 @@ test_that("reshaping to long format works", {
                               remove_pattern = "p\\.|trend",
                               suffix = "_test")
 
-  expect_equal(colnames(df_long_test_2), c( "time", "est", "time_test", "est_test", "year"   ))
+  expect_equal(colnames(df_long_test_2), c("time_test", "est_test", "year"   ))
 })
 
 
@@ -155,11 +155,12 @@ test_that("NULL-cols are filled", {
   expect_equal(res_df_null$plot_points, c(NA, NA))
   })
 
-test_that("factor check works", {
-  expect_warning(check_factor(data.frame(factor_col = c("a", "b")),
-                 "factor_col",
-                 "factor_col")
-  )
 
-
+test_that("Columns are renamed correctly", {
+  expect_equal(rename_columns(data.frame("a" = 1, "b" = 1),
+                              old_names = c("a", "b"),
+                              new_names = c("c", "d")
+  ),
+  data.frame("c" = 1, "d" = 1)
+               )
 })

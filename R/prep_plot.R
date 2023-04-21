@@ -58,19 +58,22 @@ stopifnot(is.character(parameter))
 
 sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
+# Show a message, if a grouping_var was provided, but not as factor.
+dat <- check_factor(dat, grouping_var, "grouping_var")
 
 dat <- fill_column(dat, competence_var)
 dat <- fill_column(dat, grouping_var)
 dat <- fill_column(dat, state_var)
 dat <- fill_column(dat, group_var)
 
+## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
+dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_var, state_var, group_var))]
+
 colnames(dat) <- gsub("\\.", "_", colnames(dat))
 colnames(dat) <- gsub("sig_", "p_", colnames(dat))
 colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
 
-# Show a warning, if a grouping_var was provided, but not as factor.
-dat <- check_factor(dat, grouping_var, "grouping_var")
 
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
   if(!is.null(grouping_var)){
