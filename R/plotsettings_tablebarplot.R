@@ -84,7 +84,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' plotsettings_tablebarplot()
 #'
 #' ## Arguments will overvrite the respective list element:
-#' plot_settings <- plotsettings_tablebarplot(fontsize = 2.5)
+#' plot_settings <- plotsettings_tablebarplot(font_size = 2.5)
 #' plot_settings$fontsize
 #'
 #' ## Colours can be defined like so:
