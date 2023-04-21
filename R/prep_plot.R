@@ -126,12 +126,12 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
   if (nrow(comp_within_whole) != 0) {
     trend_data_merged <- merge_trend_data(
       trend_data_1 = comp_within_whole,
-      trend_data_2 = list_building_blocks[["trend_no_comp_data"]],
+      trend_data_2 = list_building_blocks[[Trend_noComp]],
       suffixes = c("_comp", "_no_comp"),
       all = TRUE
     )
   } else {
-    trend_data_merged <- list_building_blocks[["trend_no_comp_data"]]
+    trend_data_merged <- list_building_blocks[[Trend_noComp]]
   }
   colnames(trend_data_merged) <- gsub("_trend$", "_trend_no_comp", colnames(trend_data_merged))
 

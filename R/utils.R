@@ -148,9 +148,11 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
                              new_names = paste0(new_colnames, suffix)
                              )
 
+  data_long <- rename_columns(data_long, old = paste0("time", suffix), new = "year")
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
-  data_long <- rename_columns(data_long, old_names = paste0("time", suffix), new = "years_trend")
+
+
 
   return(data_long)
 }

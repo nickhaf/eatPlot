@@ -47,15 +47,19 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   ## Data.frame containing all trend rows which do not make a trend comparison
   data_trend_no_comp <- data_clean[is.na(data_clean$comparison), ]
   data_trend_no_comp <- remove_columns(data_trend_no_comp, c("compare_1", "compare_2"))
-  filtered_list <- prep_trend_long(data_trend_no_comp, filtered_list, "trend_no_comp_data", remove_cols = exclude_cols)
+  filtered_list <- prep_trend_long(data_trend_no_comp,
+                                   filtered_list,
+                                   "Trend_noComp",
+                                   remove_cols = exclude_cols)
 
 
   # Prepare WholeGroup ------------------------------------------------------
-  ## Might be necessary to deal with the wholeGrou a bit differently, so it is include in two extra data frames
+  ## Might be necessary to deal with the wholeGroup a bit differently, so it is include in two extra data frames
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
+  data_wholeGroup <- remove_columns(data_wholeGroup, c("compare_1", "compare_2"))
 
   if (nrow(data_wholeGroup) != 0) {
-    filtered_list[["wholeGroup_point"]] <- prep_long(data_wholeGroup,
+    filtered_list[["noTrend_noComp_wholeGroup"]] <- prep_long(data_wholeGroup,
       include_pattern = c("est_|^p_|se_|es_"),
       remove_pattern = "trend",
       suffix = "_point"
@@ -116,7 +120,9 @@ prep_trend_long <- function(dat, filtered_list, dat_name, remove_cols) {
       include_pattern = "est_trend|p_trend|se_trend|es_trend",
       remove_pattern = paste0(paste0("^", remove_cols, "$"), collapse = "|")
     )
+    dat <- rename_columns(dat, old_names = "year", new = "years_trend")
     filtered_list[[dat_name]] <- split_years(dat, year_col = "years_trend")
+
   } else {
     filtered_list[dat_name] <- list(data.frame())
   }
