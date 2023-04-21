@@ -59,6 +59,7 @@
 <span>  bar_fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_header <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_headers <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  columns_round <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  column_spanners <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table_sig_bold <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -101,6 +102,10 @@
 
 <dt>columns_headers</dt>
 <dd><p>Character vector containing the headers of the ploted table columns.</p></dd>
+
+
+<dt>columns_round</dt>
+<dd><p>List of numerics, for rounding the column values. Insert <code>NULL</code> or <code>0</code> for no rounding/character columns.</p></dd>
 
 
 <dt>column_spanners</dt>
