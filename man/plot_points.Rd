@@ -6,7 +6,7 @@
 \usage{
 plot_points(
   data_plot_points,
-  point_values = est_noTrend_noComp,
+  point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_noComp",
   y_range,
   plot_settings = plotsettings_lineplot()

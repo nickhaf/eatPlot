@@ -15,7 +15,6 @@ plot_points <- function(data_plot_points,
                         y_range,
                         plot_settings = plotsettings_lineplot()
                         ) {
-
   data_plot_points <- fill_column(  data_plot_points, column_name = point_values, filling = NA)
   data_plot_points <- fill_column(  data_plot_points, column_name = point_sig, filling = FALSE)
 

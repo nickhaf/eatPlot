@@ -7,7 +7,7 @@
 plot_single_lineplot(
   plot_data,
   y_range = NULL,
-  point_values = est_noTrend_noComp,
+  point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_noComp",
   line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
   line_sig = "sig_Trend_CompWithin",

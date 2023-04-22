@@ -105,15 +105,16 @@ test_that("Example barplot is plotted correctly", {
   )[["plot_lines"]]
 
 
-  dat_bar$point_values_end <- dat_bar$point_values_end * 100
+  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
   dat_bar <- subset(dat_bar, year_end == 2021)
   dat_bar <- subset(dat_bar, year_start == 2016)
 
-  dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_noComp == "TRUE" & dat_bar$est_trend_comp < 0,
-                                   "below",
-                                   ifelse(dat_bar$sig_noTrendEnd_noComp == "TRUE" & dat_bar$est_trend_comp > 0,
-                                          "above",
-                                          "no_sig")
+  dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole < 0,
+                                 "below",
+                                 ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole > 0,
+                                        "above",
+                                        "no_sig"
+                                 )
   )
 
 # Plot 1 ------------------------------------------------------------------

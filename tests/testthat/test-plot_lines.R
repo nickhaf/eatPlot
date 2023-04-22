@@ -33,6 +33,6 @@ test_that("lines can be facetted", {
                line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                line_sig = "sig_trend"
     ) +
-    ggplot2::facet_wrap(~ trend, scales = "free_x")
+    ggplot2::facet_wrap(~years_Trend, scales = "free_x")
 )
 })

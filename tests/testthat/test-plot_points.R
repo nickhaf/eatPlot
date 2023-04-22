@@ -5,14 +5,14 @@ test_that("simple pointplot", {
                    est_point = 100:107,
                    p = seq(0.02, 0.09, by = 0.01),
                    sig_noTrend_noComp = c(TRUE, TRUE, TRUE, rep(FALSE, 5) ),
-                   trend = c(1, 1, 1, 1, 2, 2, 2, 2)
+                   years_Trend = c(1, 1, 1, 1, 2, 2, 2, 2)
                  )
 
   vdiffr::expect_doppelganger("Simple pointplot",
                               ggplot2::ggplot() +
     plot_points(df,
-                point_values = est_noTrend_noComp,
                 point_sig = "sig_noTrend_noComp",
+                point_values = "est_point",
                 y_range = c(100, 107))
   )
 })
@@ -24,7 +24,7 @@ test_that("Pointplot can be facetted", {
                    est_point = 100:107,
                    p = seq(0.02, 0.09, by = 0.01),
                    sig_noTrend_noComp = c(TRUE, TRUE, TRUE, rep(FALSE, 5) ),
-                   trend = c(1, 1, 1, 1, 2, 2, 2, 2)
+                   years_Trend = c(1, 1, 1, 1, 2, 2, 2, 2)
   )
 
   vdiffr::expect_doppelganger("Facetted Points",
@@ -33,14 +33,7 @@ test_that("Pointplot can be facetted", {
                                             point_values = est_noTrend_noComp,
                                             point_sig = "sig_noTrend_noComp",
                                             y_range = c(100, 107)) +
-                                ggplot2::facet_wrap(~ trend, scales = "free_x")
+                                ggplot2::facet_wrap(~years_Trend, scales = "free_x")
   )
 
 })
-
-
-# plot_data <- prep_plot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL", sig_niveau = 0.05)
-# ggplot2::ggplot() +
-#   plot_points(plot_data[["plot_points"]][plot_data[["plot_points"]]$TR_BUNDESLAND == "Berlin", ])
-#
-
