@@ -16,7 +16,7 @@
 #
 #
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
-#                         line_sig = "sig_trend_no_comp",
+#                         line_sig = "sig_Trend_noComp",
 #                         label_sig_high = "sig_point_end",
 #                         plot_settings = lineplot_chpt_4
 # )
@@ -42,7 +42,7 @@
 #
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
 #               split_plot = TRUE,
-#               line_sig = "sig_trend_no_comp",
+#               line_sig = "sig_Trend_noComp",
 #               label_sig_high = "sig_point_end"
 #               )
 
@@ -75,7 +75,7 @@
 # plot_dat_3$plot_points <- plot_dat_3$plot_points[!(plot_dat_3$plot_points$trend == "20112016" & plot_dat_3$plot_points$grouping_var == "TRUE"), ]
 #
 # p_line <- plot_lineplot(plot_data = plot_dat_3,
-#               line_sig = "sig_trend_no_comp",
+#               line_sig = "sig_Trend_noComp",
 #               label_sig_high = "sig_point_end",
 #               plot_settings = plotsettings_lineplot(split_plot = TRUE, default_list = lineplot_chpt_4)
 #               )
@@ -103,7 +103,7 @@
 #   plot_data = plot_dat_test,
 #   seperate_plot_var = "competence_var",
 #               split_plot = TRUE,
-#               line_sig = "sig_trend_no_comp",
+#               line_sig = "sig_Trend_noComp",
 #               label_sig_high = "sig_point_end"
 #               )
 #

@@ -176,10 +176,10 @@ test_that("Example brace plot is still the same", {
     ggplot2::ggplot() +
       plot_braces(plot_data[["plot_braces"]][plot_data[["plot_braces"]]$state_var == "Land-45" & !is.na(plot_data[["plot_braces"]]$state_var), ],
         y_range = c(397, 552),
-        label_est = "est_trend_no_comp",
-        label_se = "se_trend_no_comp",
-        label_sig_high = "sig_trend_comp_whole",
-        label_sig_bold = "sig_trend_no_comp"
+        label_est = "est_Trend_noComp",
+        label_se = "se_Trend_noComp",
+        label_sig_high = "sig_Trend_CompWhole",
+        label_sig_bold = "sig_Trend_noComp"
       ) +
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
   )

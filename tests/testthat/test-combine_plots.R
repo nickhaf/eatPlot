@@ -1,4 +1,3 @@
-
 test_that("example mindeststandard short version", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
@@ -93,8 +92,6 @@ test_that("example mindeststandard short version", {
   # save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
 })
 
-
-
 test_that("Example barplot long format is plotted correctly", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
@@ -102,16 +99,16 @@ test_that("Example barplot long format is plotted correctly", {
   )[["plot_tablebar"]]
 
 
-  dat_bar$est_noTrend_start <- dat_bar$est_noTrend_start * 100
-  dat_bar$est_noTrend_end <- dat_bar$est_noTrend_end * 100
-  dat_bar$est_trend_no_comp <- dat_bar$est_trend_no_comp * 100
-  dat_bar$sig_noTrend_start[1:10] <- "FALSE"
+  dat_bar$est_noTrendstart_noComp <- dat_bar$est_noTrendstart_noComp * 100
+  dat_bar$est_noTrendend_noComp <- dat_bar$est_noTrendend_noComp * 100
+  dat_bar$est_Trend_noComp <- dat_bar$est_Trend_noComp * 100
+  dat_bar$sig_noTrendstart_noComp[1:10] <- "FALSE"
   dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht", dat_bar$depVar)
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
-  dat_bar$se_trend_no_comp <- dat_bar$se_trend_no_comp * 100
-  dat_bar$se_trend_no_comp <- construct_label(dat_bar, label_se = "se_trend_no_comp")
+  dat_bar$se_Trend_noComp <- dat_bar$se_Trend_noComp * 100
+  dat_bar$se_Trend_noComp <- construct_label(dat_bar, label_se = "se_Trend_noComp")
   dat_bar$y_axis_new <- as.factor(dat_bar$y_axis_new)
   dat_bar <- dat_bar[order(dat_bar$y_axis_new), ]
   dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
@@ -126,7 +123,7 @@ test_that("Example barplot long format is plotted correctly", {
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
     bar_label = NULL,
-    bar_sig = "sig_trend_no_comp",
+    bar_sig = "sig_Trend_noComp",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
     columns_headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
@@ -138,10 +135,10 @@ test_that("Example barplot long format is plotted correctly", {
     columns_table = list(
       "state_var",
       "depVar",
-      "est_noTrend_start",
-      "est_noTrend_end",
-      "est_trend_no_comp",
-      "se_trend_no_comp"
+      "est_noTrendstart_noComp",
+      "est_noTrendend_noComp",
+      "est_Trend_noComp",
+      "se_Trend_noComp"
     ),
     columns_round = list(NULL, NULL, 1, 1, 1, NULL),
     columns_table_sig_bold = list(
@@ -149,7 +146,7 @@ test_that("Example barplot long format is plotted correctly", {
       NULL,
       NULL,
       NULL,
-      "sig_trend_no_comp",
+      "sig_Trend_noComp",
       NULL
     ),
     columns_table_sig_high = list(
@@ -157,10 +154,10 @@ test_that("Example barplot long format is plotted correctly", {
       NULL,
       NULL,
       NULL,
-      "sig_trend_comp",
+      "sig_Trend_CompWhole",
       NULL
     ),
-    bar_est = "est_trend_no_comp",
+    bar_est = "est_Trend_noComp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(0, 0, 1, 1, 1, 1),
@@ -178,7 +175,7 @@ test_that("Example barplot long format is plotted correctly", {
   p_bar_2 <- plot_tablebar(
     dat = dat_bar_2,
     bar_label = NULL,
-    bar_sig = "sig_trend_no_comp",
+    bar_sig = "sig_Trend_noComp",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
     columns_headers = list("%", "%", "%", "*(SE)*"),
@@ -189,24 +186,24 @@ test_that("Example barplot long format is plotted correctly", {
     ),
     columns_round = list(1, 1, 1, NULL),
     columns_table = list(
-      "est_noTrend_start",
-      "est_noTrend_end",
-      "est_trend_no_comp",
-      "se_trend_no_comp"
+      "est_noTrendstart_noComp",
+      "est_noTrendend_noComp",
+      "est_Trend_noComp",
+      "se_Trend_noComp"
     ),
     columns_table_sig_bold = list(
       NULL,
       NULL,
-      "sig_trend_no_comp",
+      "sig_Trend_noComp",
       NULL
     ),
     columns_table_sig_high = list(
       NULL,
       NULL,
-      "sig_trend_comp",
+      "sig_Trend_CompWhole",
       NULL
     ),
-    bar_est = "est_trend_no_comp",
+    bar_est = "est_Trend_noComp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(1, 1, 1, 1),

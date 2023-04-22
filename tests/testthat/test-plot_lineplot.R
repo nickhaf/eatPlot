@@ -117,7 +117,7 @@ test_that("lineplot chpt_4 with one group is still the same", {
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_point_end",
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
@@ -142,7 +142,7 @@ test_that("lineplot chpt_4 with two groups is still the same", {
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_point_end",
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
@@ -174,7 +174,7 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_3,
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_point_end",
     plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4
@@ -207,7 +207,7 @@ test_that("competence_vars can be used as tiles", {
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
     seperate_plot_var = "competence_var",
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = NULL,
     plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4_germany
@@ -248,7 +248,7 @@ test_that("competence_vars with 3 groups", {
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
     seperate_plot_var = "competence_var",
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = NULL,
     plot_settings = plotsettings_lineplot(
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
@@ -279,7 +279,7 @@ test_that("adjusted means states", {
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
     point_sig = NULL,
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_point_end",
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(margin_bottom = 0.03, default_list = lineplot_chpt_4)
@@ -312,7 +312,7 @@ test_that("adjusted means for whole group", {
     plot_data = plot_dat_test_kb,
     seperate_plot_var = "competence_var",
     point_sig = NULL,
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_point_end",
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4_germany)
