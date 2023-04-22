@@ -2,8 +2,8 @@
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
   output_format <- match.arg(output_format)
-  sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend"), check_columns, dat = dat)
-  dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "trend")]
+  sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "years_Trend"), check_columns, dat = dat)
+  dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "years_Trend")]
   dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
 
   range_coords <- diff(range(coords))
@@ -76,13 +76,13 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
 
     dat_long <- stats::reshape(
       dat,
-      idvar = c("grouping_var", "trend", "competence_var"),
+      idvar = c("grouping_var", "years_Trend", "competence_var"),
       varying = c("upper_y", "year_end", "lower_y", "year_start"),
       v.names = c("year", "value"),
       direction = "long"
     )
 
-    dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "trend")])
+    dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "years_Trend")])
     dat$brace_y <- dat$value
     dat <- build_column(dat, old = "value", new = "brace_y")
   }
@@ -105,7 +105,7 @@ calc_x_nudge <- function(dat, nudge_x) {
   min_max_trend <- get_min_max(dat)
 
   dat <- merge(dat, min_max_trend,
-    by = "trend",
+    by = "years_Trend",
     all.x = TRUE,
     all.y = FALSE
   )
@@ -136,7 +136,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
 
 
     res_frame_1 <- data.frame(
-      trend = plot_points_dat$trend,
+      years_Trend = plot_points_dat$years_Trend,
       year = plot_points_dat$year,
       grouping_var = plot_points_dat$grouping_var
     )
@@ -144,14 +144,14 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
     res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
 
 }else{
-  nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$trend), function(year_df) {
+  nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$years_Trend), function(year_df) {
     res_frame <- data.frame(
       nudge_y = ifelse(
         year_df$est_point == min(year_df$est_point) & length(year_df$est_point) > 1,
         nudge_val * -1,
         nudge_val
       ),
-      trend = year_df$trend,
+      years_Trend = year_df$years_Trend,
       year = year_df$year,
       grouping_var = year_df$grouping_var
     )
@@ -165,7 +165,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
 }
 
   out <- merge(plot_points_dat, res_frame,
-    by = c("trend", "year", "grouping_var"),
+    by = c("years_Trend", "year", "grouping_var"),
     all.x = TRUE, all.y = FALSE
   )
   return(out)

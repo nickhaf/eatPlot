@@ -48,11 +48,11 @@ dat$brace_label <- construct_label(dat,
 draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
   if (plot_settings$split_plot == TRUE) {
     res <- ggbrace::geom_brace(
-      data = unique(dat[, c("trend", "year", "brace_y")]),
+      data = unique(dat[, c("years_Trend", "year", "brace_y")]),
       mapping = ggplot2::aes(
         x = .data$year,
         y = .data$brace_y,
-        group = .data$trend
+        group = .data$years_Trend
       ),
       rotate = 180,
       linewidth = plot_settings$brace_line_width,

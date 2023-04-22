@@ -25,7 +25,7 @@ plot_lines <- function(data_plot_lines, line_values = c("est_point_start", "est_
         yend = .data$est_y_end,
         colour = .data$grouping_var,
         linetype = .data$line_sig,
-        group = .data$trend
+        group = .data$years_Trend
       ),
       linewidth = plot_settings$line_width
 

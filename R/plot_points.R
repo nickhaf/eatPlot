@@ -36,7 +36,7 @@ plot_points <- function(data_plot_points,
         y = .data$point_values,
         colour = .data$grouping_var,
         shape = .data$point_sig,
-        group = .data$trend
+        group = .data$years_Trend
       ),
       size = plot_settings$point_size
     ),
@@ -49,7 +49,7 @@ plot_points <- function(data_plot_points,
         y = .data$point_values,
         colour = .data$grouping_var,
         label = round(.data$point_values, 0),
-        group = .data$trend
+        group = .data$years_Trend
       ),
       nudge_y = data_plot_points_nudge$nudge_y,
       min.segment.length = 100,
@@ -64,7 +64,7 @@ plot_points <- function(data_plot_points,
           y = .data$point_values,
           colour = .data$grouping_var,
           label = round(.data$point_values, 0),
-          group = .data$trend
+          group = .data$years_Trend
         ),
         nudge_y = data_plot_points_nudge$nudge_y,
         size = plot_settings$point_label_size
