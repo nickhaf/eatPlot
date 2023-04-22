@@ -7,7 +7,7 @@ test_that("lineplot is still the same", {
     est_noTrendStart_noComp = c(10:13),
     est_noTrendEnd_noComp = c(14:17),
     grouping_var = c(0, 1, 0, 1),
-    trend = c("20112013", "20112013", "20162020", "20162020")
+    years_Trend = c("20112013", "20112013", "20162020", "20162020")
   )
   vdiffr::expect_doppelganger("Plotting lines", ggplot2::ggplot() +
     plot_lines(df_lines,
@@ -23,7 +23,7 @@ test_that("lines can be facetted", {
     year_end = c(2, 3),
     est_noTrendStart_noComp = c(10, 15),
     est_noTrendEnd_noComp = c(15, 20),
-    trend = c(12, 23),
+    years_Trend = c(12, 23),
     sig_trend = c(TRUE, FALSE)
   )
 

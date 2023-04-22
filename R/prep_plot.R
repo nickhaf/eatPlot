@@ -201,7 +201,7 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
     trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
 }
   # Prepare the wholeGroup data.frame ---------------------------------------
-  trend_data_wholeGroup <- merge_trend_point(
+     trend_data_wholeGroup <- merge_trend_point(
     list_building_blocks[["Trend_noComp_wholeGroup"]],
     list_building_blocks[["noTrend_noComp_wholeGroup"]]
   )

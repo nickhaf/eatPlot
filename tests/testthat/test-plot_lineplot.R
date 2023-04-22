@@ -118,6 +118,8 @@ test_that("lineplot chpt_4 with one group is still the same", {
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
+    point_values = "est_noTrend_noComp",
+    line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)

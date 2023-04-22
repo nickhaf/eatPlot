@@ -8,6 +8,9 @@
 #'
 #' @examples #tbd
 plot_background_lines <- function(data_plot_background_lines, line_values) {
+
+ colnames(data_plot_background_lines)[colnames(data_plot_background_lines) %in% paste0(unlist(line_values), "_wholeGroup")] <- gsub("_wholeGroup", "", colnames(data_plot_background_lines)[colnames(data_plot_background_lines) %in% paste0(unlist(line_values), "_wholeGroup")])
+
   ggplot2::geom_segment(
     data = data_plot_background_lines,
     ggplot2::aes(

@@ -59,7 +59,6 @@ merging_columns <- c(merging_columns, cols_remove)
                                                   merging_columns = merging_columns,
                                                   suffix = "_Trend_Comp")
 
-
   # Prepare trend_point data ------------------------------------------------------
   ## Data.frame containing all trend rows which do not make a trend comparison
   data_trend_no_comp <- data_clean[is.na(data_clean$comparison), ]
@@ -82,8 +81,8 @@ merging_columns <- c(merging_columns, cols_remove)
   if (nrow(data_wholeGroup) != 0) {
     filtered_list[["noTrend_noComp_wholeGroup"]] <- prep_long(data_wholeGroup,
       include_pattern = c("est_|^p_|se_|es_"),
-      remove_pattern = "trend",
-      suffix = "_noTrend"
+      remove_pattern = "trend"#,
+     # suffix = "_noTrend"
     )
     filtered_list[["noTrend_noComp_wholeGroup"]] <- add_suffix(filtered_list[["noTrend_noComp_wholeGroup"]],
                                                 merging_columns = merging_columns,
@@ -171,5 +170,6 @@ prep_point_long <- function(dat)
 ## Rename directly here, all columns that aren't used for merging get the according suffix
 add_suffix <- function(dat, merging_columns, suffix ){
   colnames(dat)[!colnames(dat) %in% merging_columns] <- paste0(colnames(dat)[!colnames(dat) %in% merging_columns], suffix)
+  colnames(dat) <- gsub("_trend_Trend", "_Trend", colnames(dat))
   return(dat)
 }
