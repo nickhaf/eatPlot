@@ -7,9 +7,9 @@
 plot_single_lineplot(
   plot_data,
   y_range = NULL,
-  point_values = "est_point",
-  point_sig = "sig_point",
-  line_values = c("est_point_start", "est_point_end"),
+  point_values = est_noTrend_noComp,
+  point_sig = "sig_noTrend_noComp",
+  line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
   line_sig = "sig_Trend_CompWithin",
   label_est = "est_Trend_noComp",
   label_se = "se_Trend_noComp",
@@ -24,11 +24,11 @@ plot_single_lineplot(
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
-\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
+\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_point"}.}
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_noComp"}.}
 
-\item{line_values}{Character vector with two elements. Column names in \code{plot_data[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_point_start", "est_point_end")}. If set to \code{NULL}, no lines will be plotted.}
+\item{line_values}{Character vector with two elements. Column names in \code{plot_data[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
 \item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_CompWithin"}.}
 

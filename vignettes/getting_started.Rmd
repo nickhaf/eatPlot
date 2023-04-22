@@ -56,7 +56,7 @@ dat_plot_2011 <- subset(dat_plot_2011, grouping_var == 0)
 
 plot_tablebar(dat = dat_plot_2011,
               columns_headers = c("Land", "Jahr", "Wert"),
-              columns_table = c("state_var", "year_start", "est_point_start"),
+              columns_table = c("state_var", "year_start", "est_noTrendStart_noComp"),
               y_axis = "state_var",
               plot_settings = plotsettings_tablebarplot(
                 # columns_width = c(3, 1, 1),

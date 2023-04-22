@@ -3,14 +3,14 @@ test_that("backgroundlines is still the same", {
     TR_BUNDESLAND = rep("wholeGroup", 2),
     year_start = c(2011, 2013),
     year_end = c(2013, 2016),
-    est_point_start = c(10:11),
-    est_point_end = c(11:12),
-    trend = c("20112013", "20132016")
+    est_noTrendStart_noComp = c(10:11),
+    est_noTrendEnd_noComp = c(11:12),
+    years_Trend = c("20112013", "20132016")
   )
   vdiffr::expect_doppelganger("Plotting backgroundlines", ggplot2::ggplot() +
     plot_background_lines(
       data_plot_background_lines = df_backgroundlines,
-      line_values = c("est_point_start", "est_point_end")
+      line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")
     ))
 })
 

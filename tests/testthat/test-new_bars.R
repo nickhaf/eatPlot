@@ -28,7 +28,7 @@
 # # #          x_value = "est_no_comp",
 # # #          y_value = "state_var",
 # # #          bar_label = "est_no_comp",
-# # #          bar_sig = "sig_point_comp_whole",
+# # #          bar_sig = "sig_noTrend_noComp_comp_whole",
 # # #          bar_fill = NULL,
 # # #          bar_pattern_fill = "grouping_var",
 # # #          plot_settings = plotsettings_tablebarplot(
@@ -51,7 +51,7 @@
 # # #          x_value = "est_no_comp",
 # # #          y_value = "state_var",
 # # #          bar_label = "est_no_comp",
-# # #          bar_sig = "sig_point_comp_whole",
+# # #          bar_sig = "sig_noTrend_noComp_comp_whole",
 # # #          bar_fill = NULL,
 # # #          bar_pattern_fill = "grouping_var",
 # # #          plot_settings = plotsettings_tablebarplot(

@@ -4,7 +4,7 @@
 \alias{prep_data_blocks}
 \title{Prepare distinct building blocks, from which the data.frames for the plot-functions can be build by combining them.}
 \usage{
-prep_data_blocks(data_clean, sig_niveau, states, sub_groups)
+prep_data_blocks(data_clean, sig_niveau, states, sub_groups, merging_columns)
 }
 \arguments{
 \item{data_clean}{Input data.frame, that has already been cleaned with \code{\link[=clean_data]{clean_data()}}.}
@@ -14,6 +14,8 @@ prep_data_blocks(data_clean, sig_niveau, states, sub_groups)
 \item{states}{Character vector of the different states (Bundesländer) found in the data.}
 
 \item{sub_groups}{Character vector of the different groups found in \code{grouping_var}.}
+
+\item{merging_columns}{Columns that won't get a suffix.}
 }
 \value{
 \code{prep_data_blocks()} returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the \code{plot()} functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:

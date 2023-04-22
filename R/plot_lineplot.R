@@ -3,8 +3,8 @@
 #' @param plot_data Input is a list prepared by [prep_plot()].`
 #' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
 #' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_point"`.
-#' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_point_start", "est_point_end")`. If set to `NULL`, no lines will be plotted.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_noComp"`.
+#' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_CompWithin"`.
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
@@ -20,7 +20,7 @@ plot_lineplot <- function(plot_data,
                           seperate_plot_var = "state_var",
                           point_values = "est_noTrend_noComp",
                           point_sig = "sig_noTrend_noComp",
-                          line_values = c("est_noTrendstart_noComp", "est_noTrendend_noComp"),
+                          line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                           line_sig = "sig_Trend_CompWithin",
                           label_est = "est_Trend_noComp",
                           label_se = "se_Trend_noComp",
@@ -31,18 +31,12 @@ plot_lineplot <- function(plot_data,
 
 check_plotsettings_lineplot(plot_settings)
 
-  plot_data[["plot_points"]] <- fill_column(  plot_data[["plot_points"]], column_name = point_values, filling = NA)
-  plot_data[["plot_points"]] <- fill_column(  plot_data[["plot_points"]], column_name = point_sig, filling = FALSE)
-  plot_data[["plot_lines"]] <- fill_column(  plot_data[["plot_lines"]],
-                                             column_name = line_sig,
-                                             filling = FALSE)
-
   states <- unique(plot_data[[1]]$state_var)
   tiles <- unique(plot_data[[1]][, seperate_plot_var]) #Hier die Level nehmen
 
   plot_list <- list()
   if(!is.null(point_values)){
-  range_est <- range(plot_data[["plot_points"]][,point_values], na.rm = TRUE)
+  range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   }else{
     stop("Please provide point-values.")
   }
@@ -61,7 +55,7 @@ check_plotsettings_lineplot(plot_settings)
         point_values = point_values,
         point_sig = point_sig,
         line_values = line_values,
-        line_sig = "line_sig",
+        line_sig = line_sig,
         label_est = label_est,
         label_se = label_se,
         label_sig_high = label_sig_high,
@@ -70,7 +64,9 @@ check_plotsettings_lineplot(plot_settings)
         plot_settings = plot_settings
       ) +
       ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
-      set_plot_coords(plot_data, plot_settings = plot_settings)
+      set_plot_coords(plot_data,
+                      point_values = point_values,
+                      plot_settings = plot_settings)
 
     ## The wholeGroup plot gets a box drawn around it.
     # if (i == "wholeGroup") {

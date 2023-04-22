@@ -10,13 +10,15 @@
 #'
 #' @examples # tbd
 plot_points <- function(data_plot_points,
-                        point_values = "est_point",
-                        point_sig = "sig_point",
+                        point_values = "est_noTrend_noComp",
+                        point_sig = "sig_noTrend_noComp",
                         y_range,
                         plot_settings = plotsettings_lineplot()
                         ) {
 
-  sapply(c(point_values, point_sig), check_column, dat = data_plot_points)
+  data_plot_points <- fill_column(  data_plot_points, column_name = point_values, filling = NA)
+  data_plot_points <- fill_column(  data_plot_points, column_name = point_sig, filling = FALSE)
+
 
   data_plot_points <- data_plot_points[!is.na(data_plot_points$point_values), ]
   data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range, plot_settings = plot_settings)

@@ -31,6 +31,6 @@ test_that("x axis can be built on facetted plot", {
     ) +
       ggplot2::geom_point() +
       plot_x_axis(test_df, y_range = c(3, 4), plot_settings = plotsettings_lineplot(split_plot = TRUE, axis_x_label_centralize = 0.05)) +
-      ggplot2::facet_wrap(~trend, scales = "free_x")
+      ggplot2::facet_wrap(~years_Trend, scales = "free_x")
   )
 })

@@ -5,14 +5,14 @@ test_that("example mindeststandard short version", {
   )[["plot_tablebar"]]
 
 
-  dat_bar$est_noTrendend_noComp <- dat_bar$est_noTrendend_noComp * 100
+  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
   dat_bar <- subset(dat_bar, year_end == 2021)
   dat_bar <- subset(dat_bar, year_start == 2016)
 
-  dat_bar$sig_noTrendend_noComp[1:10] <- "FALSE"
-  dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendend_noComp == "TRUE" & dat_bar$est_noTrendend_noComp < 0,
+  dat_bar$sig_noTrendEnd_CompWhole[1:10] <- "FALSE"
+  dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole < 0,
     "below",
-    ifelse(dat_bar$sig_Trend_CompWhole == "TRUE" & dat_bar$est_Trend_CompWhole > 0,
+    ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole > 0,
       "above",
       "no_sig"
     )
@@ -23,13 +23,13 @@ test_that("example mindeststandard short version", {
 
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
-    bar_label = "est_noTrendend_noComp",
-    bar_label_sig = "sig_noTrendend_noComp",
+    bar_label = "est_noTrendEnd_noComp",
+    bar_label_sig = "sig_noTrendEnd_noComp",
     bar_sig = "sig_minstand",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
-    bar_est = "est_noTrendend_noComp",
+    bar_est = "est_noTrendEnd_noComp",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 39),
@@ -48,11 +48,11 @@ test_that("example mindeststandard short version", {
 
   p_bar_2 <- plot_tablebar(
     dat = dat_bar_2,
-    bar_label = "est_noTrendend_noComp",
-    bar_label_sig = "sig_noTrendend_noComp",
+    bar_label = "est_noTrendEnd_noComp",
+    bar_label_sig = "sig_noTrendEnd_noComp",
     bar_sig = "sig_minstand",
     bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
-    bar_est = "est_noTrendend_noComp",
+    bar_est = "est_noTrendEnd_noComp",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = 0,
@@ -71,11 +71,11 @@ test_that("example mindeststandard short version", {
 
   p_bar_3 <- plot_tablebar(
     dat = dat_bar_3,
-    bar_label = "est_noTrendend_noComp",
-    bar_label_sig = "sig_noTrendend_noComp",
+    bar_label = "est_noTrendEnd_noComp",
+    bar_label_sig = "sig_noTrendEnd_noComp",
     bar_sig = "sig_minstand",
     bar_header = "Optimalstandard<br>erreicht (MSA)",
-    bar_est = "est_noTrendend_noComp",
+    bar_est = "est_noTrendEnd_noComp",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 25),
@@ -99,10 +99,10 @@ test_that("Example barplot long format is plotted correctly", {
   )[["plot_tablebar"]]
 
 
-  dat_bar$est_noTrendstart_noComp <- dat_bar$est_noTrendstart_noComp * 100
-  dat_bar$est_noTrendend_noComp <- dat_bar$est_noTrendend_noComp * 100
+  dat_bar$est_noTrendStart_noComp <- dat_bar$est_noTrendStart_noComp * 100
+  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
   dat_bar$est_Trend_noComp <- dat_bar$est_Trend_noComp * 100
-  dat_bar$sig_noTrendstart_noComp[1:10] <- "FALSE"
+  dat_bar$sig_noTrendStart_noComp[1:10] <- "FALSE"
   dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht", dat_bar$depVar)
@@ -135,8 +135,8 @@ test_that("Example barplot long format is plotted correctly", {
     columns_table = list(
       "state_var",
       "depVar",
-      "est_noTrendstart_noComp",
-      "est_noTrendend_noComp",
+      "est_noTrendStart_noComp",
+      "est_noTrendEnd_noComp",
       "est_Trend_noComp",
       "se_Trend_noComp"
     ),
@@ -186,8 +186,8 @@ test_that("Example barplot long format is plotted correctly", {
     ),
     columns_round = list(1, 1, 1, NULL),
     columns_table = list(
-      "est_noTrendstart_noComp",
-      "est_noTrendend_noComp",
+      "est_noTrendStart_noComp",
+      "est_noTrendEnd_noComp",
       "est_Trend_noComp",
       "se_Trend_noComp"
     ),

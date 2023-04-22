@@ -6,8 +6,8 @@
 \usage{
 plot_points(
   data_plot_points,
-  point_values = "est_point",
-  point_sig = "sig_point",
+  point_values = est_noTrend_noComp,
+  point_sig = "sig_noTrend_noComp",
   y_range,
   plot_settings = plotsettings_lineplot()
 )
@@ -15,9 +15,9 @@ plot_points(
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
 
-\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
+\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_point"}.}
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_noComp"}.}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 

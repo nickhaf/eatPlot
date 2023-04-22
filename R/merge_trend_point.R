@@ -21,7 +21,7 @@ merge_trend_point <- function(trend_data, point_data){
                      sort = FALSE
 )
 
-colnames(trend_start) <- gsub("_noTrend", "_noTrendstart", colnames(trend_start))
+colnames(trend_start) <- gsub("_noTrend", "_noTrendStart", colnames(trend_start))
 
 trend <- merge(trend_start,
                point_data,
@@ -32,7 +32,7 @@ trend <- merge(trend_start,
                sort = FALSE
 )
 
-colnames(trend) <- gsub("_noTrend_", "_noTrendend_", colnames(trend))
+colnames(trend) <- gsub("_noTrend_", "_noTrendEnd_", colnames(trend))
 
 return(trend)
 }

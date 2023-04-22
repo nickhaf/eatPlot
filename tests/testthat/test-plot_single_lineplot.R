@@ -4,9 +4,9 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       state_var = rep("a", 3),
       grouping_var = factor(rep("noGroup", 3), levels = "noGroup"),
       year = c(1, 2, 3),
-      est_point = c(200, 210, 220),
-      sig_point = c(TRUE, FALSE, TRUE),
-      trend = c(12, 12, 23),
+      point_values = c(200, 210, 220),
+      sig_noTrend_noComp = c(TRUE, FALSE, TRUE),
+      years_Trend = c(12, 12, 23),
       competence_var = "a"
     ),
     plot_lines = data.frame(
@@ -14,10 +14,10 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_point_start = c(200, 210),
-      est_point_end = c(210, 220),
+      est_noTrendStart_noComp = c(200, 210),
+      est_noTrendEnd_noComp = c(210, 220),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23),
+      years_Trend = c(12, 23),
       competence_var = "a"
     ),
     plot_background_lines = data.frame(
@@ -25,10 +25,10 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_point_start = c(190, 225),
-      est_point_end = c(225, 230),
+      est_noTrendStart_noComp = c(190, 225),
+      est_noTrendEnd_noComp = c(225, 230),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23),
+      years_Trend = c(12, 23),
       competence_var = "a"
     ),
     plot_braces = data.frame(
@@ -40,7 +40,7 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       se_label = c(1, 4),
       sig_label_1 = c(TRUE, FALSE),
       sig_label_2 = c(FALSE, TRUE),
-      trend = c(12, 23),
+      years_Trend = c(12, 23),
       competence_var = "a"
     )
   )
@@ -55,11 +55,12 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
         label_est = "est_label",
         label_se = "se_label",
         label_sig_high = "sig_label_1",
-        label_sig_bold = "sig_label_2"
+        label_sig_bold = "sig_label_2",
+        point_values = "point_values",
+        point_sig = "sig_noTrend_noComp"
       )
   )
 })
-
 
 test_that("single_lineplot with two groups is plotted correctly", {
   test_plot_2 <- list(
@@ -67,9 +68,9 @@ test_that("single_lineplot with two groups is plotted correctly", {
       state_var = rep("a", 3),
       grouping_var = factor(c("group1", "group1", "group1", "group2", "group2", "group2"), levels = c("group1", "group2")),
       year = rep(c(1, 2, 3), 2),
-      est_point = c(200, 210, 220, 205, 215, 225),
-      sig_point = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
-      trend = c(12, 12, 23, 12, 12, 23),
+      point_values = c(200, 210, 220, 205, 215, 225),
+      sig_noTrend_noComp = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
+      years_Trend = c(12, 12, 23, 12, 12, 23),
       competence_var = "a"
     ),
     plot_lines = data.frame(
@@ -77,10 +78,10 @@ test_that("single_lineplot with two groups is plotted correctly", {
       grouping_var = factor(c("group1", "group2", "group1", "group2"), levels = c("group1", "group2")),
       year_start = c(1, 1, 2, 2),
       year_end = c(2, 2, 3, 3),
-      est_point_start = c(200, 205, 210, 215),
-      est_point_end = c(210, 215, 220, 225),
+      est_noTrendStart_noComp = c(200, 205, 210, 215),
+      est_noTrendEnd_noComp = c(210, 215, 220, 225),
       sig_trend = c(TRUE, FALSE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23),
+      years_Trend = c(12, 12, 23, 23),
       competence_var = "a"
     ),
     plot_background_lines = data.frame(
@@ -88,10 +89,10 @@ test_that("single_lineplot with two groups is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_point_start = c(190, 225),
-      est_point_end = c(225, 230),
+      est_noTrendStart_noComp = c(190, 225),
+      est_noTrendEnd_noComp = c(225, 230),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23),
+      years_Trend = c(12, 23),
       competence_var = "a"
     ),
     plot_braces = data.frame(
@@ -103,7 +104,7 @@ test_that("single_lineplot with two groups is plotted correctly", {
       se_label = c(1, 2, 3, 4),
       sig_label_1 = c(TRUE, FALSE, FALSE, TRUE),
       sig_label_2 = c(FALSE, TRUE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23),
+      years_Trend = c(12, 12, 23, 23),
       competence_var = "a"
     )
   )
@@ -118,6 +119,7 @@ test_that("single_lineplot with two groups is plotted correctly", {
         label_se = "se_label",
         label_sig_high = "sig_label_1",
         label_sig_bold = "sig_label_2",
+        point_values = "point_values",
         plot_settings = plotsettings_lineplot(split_plot = FALSE)
       )
   )
@@ -129,9 +131,9 @@ test_that("split lineplot with no groups is plotted correctly", {
       state_var = rep("a", 3),
       grouping_var = factor(c("group1", "group1", "group1", "group2", "group2", "group2"), levels = c("group1", "group2")),
       year = rep(c(1, 2, 3), 2),
-      est_point = c(200, 210, 220, 205, 215, 225),
-      sig_point = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
-      trend = c(12, 12, 23, 12, 12, 23),
+      point_values = c(200, 210, 220, 205, 215, 225),
+      sig_noTrend_noComp = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
+      years_Trend = c(12, 12, 23, 12, 12, 23),
       competence_var = "a"
     ),
     plot_lines = data.frame(
@@ -139,10 +141,10 @@ test_that("split lineplot with no groups is plotted correctly", {
       grouping_var = factor(c("group1", "group2", "group1", "group2"), levels = c("group1", "group2")),
       year_start = c(1, 1, 2, 2),
       year_end = c(2, 2, 3, 3),
-      est_point_start = c(200, 205, 210, 215),
-      est_point_end = c(210, 215, 220, 225),
+      est_noTrendStart_noComp = c(200, 205, 210, 215),
+      est_noTrendEnd_noComp = c(210, 215, 220, 225),
       sig_trend = c(TRUE, FALSE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23),
+      years_Trend = c(12, 12, 23, 23),
       competence_var = "a"
     ),
     plot_background_lines = data.frame(
@@ -150,10 +152,10 @@ test_that("split lineplot with no groups is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_point_start = c(190, 225),
-      est_point_end = c(225, 230),
+      est_noTrendStart_noComp = c(190, 225),
+      est_noTrendEnd_noComp = c(225, 230),
       sig_trend = c(TRUE, FALSE),
-      trend = c(12, 23),
+      years_Trend = c(12, 23),
       competence_var = "a"
     ),
     plot_braces = data.frame(
@@ -165,7 +167,7 @@ test_that("split lineplot with no groups is plotted correctly", {
       se_label = c(1, 2, 3, 4),
       sig_label_1 = c(TRUE, FALSE, FALSE, TRUE),
       sig_label_2 = c(FALSE, TRUE, FALSE, TRUE),
-      trend = c(12, 12, 23, 23),
+      years_Trend = c(12, 12, 23, 23),
       competence_var = "a"
     )
   )
@@ -180,6 +182,7 @@ test_that("split lineplot with no groups is plotted correctly", {
         label_se = "se_label",
         label_sig_high = "sig_label_1",
         label_sig_bold = "sig_label_2",
+        point_values = "point_values",
         plot_settings = plotsettings_lineplot(split_plot = TRUE,
                                      axis_x_label_centralize = 0.05,
                                      point_label_nudge_x = 0.02)

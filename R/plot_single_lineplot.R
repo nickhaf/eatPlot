@@ -10,9 +10,9 @@
 #' @examples # tbd
 plot_single_lineplot <- function(plot_data,
                                  y_range = NULL,
-                                 point_values = "est_point",
-                                 point_sig = "sig_point",
-                                 line_values = c("est_point_start", "est_point_end"),
+                                 point_values = "est_noTrend_noComp",
+                                 point_sig = "sig_noTrend_noComp",
+                                 line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                                  line_sig = "sig_Trend_CompWithin",
                                  label_est = "est_Trend_noComp",
                                  label_se = "se_Trend_noComp",

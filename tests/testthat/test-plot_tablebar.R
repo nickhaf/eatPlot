@@ -109,27 +109,27 @@ test_that("Example barplot is plotted correctly", {
   dat_bar <- subset(dat_bar, year_end == 2021)
   dat_bar <- subset(dat_bar, year_start == 2016)
 
-  dat_bar$sig_minstand <- ifelse(dat_bar$sig_point_end == "TRUE" & dat_bar$est_trend_comp < 0,
+  dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_noComp == "TRUE" & dat_bar$est_trend_comp < 0,
                                    "below",
-                                   ifelse(dat_bar$sig_point_end == "TRUE" & dat_bar$est_trend_comp > 0,
+                                   ifelse(dat_bar$sig_noTrendEnd_noComp == "TRUE" & dat_bar$est_trend_comp > 0,
                                           "above",
                                           "no_sig")
   )
 
 # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
-  dat_bar_1$sig_point_end[1:10] <- "FALSE"
+  dat_bar_1$sig_noTrendEnd_noComp[1:10] <- "FALSE"
 
 
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
-    bar_label = "est_point_end",
-    bar_label_sig = "sig_point_end",
+    bar_label = "est_noTrendEnd_noComp",
+    bar_label_sig = "sig_noTrendEnd_noComp",
     bar_sig = "sig_minstand",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
-    bar_est = "est_point_end",
+    bar_est = "est_noTrendEnd_noComp",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       columns_width = c(0.2, 0.8),
@@ -152,7 +152,7 @@ test_that("Example barplot long format is plotted correctly", {
   dat_bar$point_values_start <- dat_bar$point_values_start * 100
   dat_bar$point_values_end <- dat_bar$point_values_end * 100
   dat_bar$est_Trend_noComp <- dat_bar$est_Trend_noComp * 100
-  dat_bar$sig_point_start[1:10] <- "FALSE"
+  dat_bar$sig_noTrend_noComp_start[1:10] <- "FALSE"
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
   dat_bar$se_Trend_noComp <- dat_bar$se_Trend_noComp * 100
   dat_bar$se_Trend_noComp <- construct_label(dat_bar, label_se = "se_Trend_noComp")
@@ -170,8 +170,8 @@ test_that("Example barplot long format is plotted correctly", {
                            ),
     columns_table = list("state_var",
                          "depVar",
-                         "est_point_start",
-                         "est_point_end",
+                         "est_noTrendStart_noComp",
+                         "est_noTrendEnd_noComp",
                          "est_Trend_noComp",
                          "se_Trend_noComp"),
     columns_table_sig_bold = list(NULL,

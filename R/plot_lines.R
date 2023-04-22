@@ -9,7 +9,7 @@
 #'
 #' @examples #tbd
 plot_lines <- function(data_plot_lines,
-                       line_values = c("est_point_start", "est_point_end"),
+                       line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                        line_sig = "sig_Trend_CompWithin",
                        plot_settings = plotsettings_lineplot()){
 

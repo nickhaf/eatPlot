@@ -7,9 +7,9 @@
 plot_lineplot(
   plot_data,
   seperate_plot_var = "state_var",
-  point_values = "est_point",
-  point_sig = "sig_point",
-  line_values = c("est_point_start", "est_point_end"),
+  point_values = "est_noTrend_noComp",
+  point_sig = "sig_noTrend_noComp",
+  line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
   line_sig = "sig_Trend_CompWithin",
   label_est = "est_Trend_noComp",
   label_se = "se_Trend_noComp",
@@ -24,11 +24,11 @@ plot_lineplot(
 
 \item{seperate_plot_var}{Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to \code{state_var}.}
 
-\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_point}.}
+\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_point"}.}
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_noComp"}.}
 
-\item{line_values}{Character vector with two elements. Column names in \code{plot_data[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_point_start", "est_point_end")}. If set to \code{NULL}, no lines will be plotted.}
+\item{line_values}{Character vector with two elements. Column names in \code{plot_data[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
 \item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_CompWithin"}.}
 
