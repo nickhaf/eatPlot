@@ -82,6 +82,15 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
     sub_groups <- NULL
   }
 
+  merging_columns <- c("state_var",
+                       "grouping_var",
+                       "year_start",
+                       "year_end",
+                       "depVar",
+                       "competence_var",
+                       "years_Trend",
+                       "year")
+
   dat <- clean_data(
     dat = dat,
     states = states,
@@ -98,24 +107,28 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
     )
   }
 
+
   list_building_blocks <- prep_data_blocks(
     data_clean = dat,
     sig_niveau = sig_niveau,
     all_states,
-    sub_groups
+    sub_groups,
+    merging_columns = merging_columns
   )
-
 
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison, either comparing with the whole group, or within the state
   comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
-  comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
+comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "Whole")
+   comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
+   comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "Within")
+
 
   if (nrow(comp_state) != 0) {
     comp_within_whole <- merge_trend_data(
       trend_data_1 = comp_state,
       trend_data_2 = comp_wholeGroup,
-      suffixes = c("_trend_within", "_trend_whole"),
+      suffixes = c("", ""),
       all.x = TRUE
     )
   } else {
@@ -123,30 +136,30 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
   }
 
   ## Add data without comparison:
+
   if (nrow(comp_within_whole) != 0) {
     trend_data_merged <- merge_trend_data(
       trend_data_1 = comp_within_whole,
-      trend_data_2 = list_building_blocks[[Trend_noComp]],
-      suffixes = c("_comp", "_no_comp"),
+      trend_data_2 = list_building_blocks[["Trend_noComp"]],
+      suffixes = c("", ""),
       all = TRUE
     )
   } else {
-    trend_data_merged <- list_building_blocks[[Trend_noComp]]
+    trend_data_merged <- list_building_blocks[["Trend_noComp"]]
   }
-  colnames(trend_data_merged) <- gsub("_trend$", "_trend_no_comp", colnames(trend_data_merged))
-
 
   trend_data_final <- merge_trend_point(
     trend_data = trend_data_merged,
     point_data = list_building_blocks[["noTrend_noComp"]]
   )
+  ## Drop unused levels
   if(any(!is.na(trend_data_final$grouping_var))){
     trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
 }
   # Prepare the wholeGroup data.frame ---------------------------------------
   trend_data_wholeGroup <- merge_trend_point(
-    list_building_blocks[["wholeGroup_trend"]],
-    list_building_blocks[["wholeGroup_point"]]
+    list_building_blocks[["Trend_noComp_wholeGroup"]],
+    list_building_blocks[["noTrend_noComp_wholeGroup"]]
   )
 
   # Fill up NAs -------------------------------------------------------------
@@ -206,14 +219,12 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
   #################
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
-  ## "trend-Spalte fehlt
   dat_long <- stats::reshape(plot_dat[["plot_lines"]][,
                                                       c("depVar",
                                                         "grouping_var",
                                                         "year_start",
                                                         "year_end",
-                                                        "trend",
- #                                                       "group_var",
+                                                        "years_Trend",
                                                         "state_var",
                                                         "competence_var")],
     direction = "long",
@@ -221,12 +232,24 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
     sep = "_"
   )
 
+  dat_long <- remove_columns(dat_long, c("time", "id"))
   plot_dat[["plot_points"]] <- merge(dat_long,
                                      list_building_blocks[["noTrend_noComp"]],
-                                     by = c("grouping_var", "state_var", "year", "competence_var"),
+                                     by = c("grouping_var",
+                                            "state_var",
+                                            "year",
+                                            "competence_var",
+                                            "depVar"),
                                      all.x = TRUE)
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
+
+
+  ## Order columns
+
+  plot_dat <- lapply(plot_dat, function(x){
+    x[,order(colnames(x))]
+  })
 
   return(plot_dat)
 }

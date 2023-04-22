@@ -21,8 +21,8 @@ prep_data_blocks(data_clean, sig_niveau, states, sub_groups)
 \item \code{noTrend_noComp} contains point estimates for every years.
 \item \code{Trend_Comp} contains all trend variables performing some kind of comparison, e.g., state vs. germany.
 \item \code{trend_no_comp_data} contains the trend estimates without comparisons.
-\item \code{wholeGroup_point} contains the point estimates of the wholeGroup.
-\item \code{wholeGroup_trend} contains the trend estimates for the wholeGroup.
+\item \code{noTrend_noComp_wholeGroup} contains the point estimates of the wholeGroup.
+\item \code{Trend_noComp_wholeGroup} contains the trend estimates for the wholeGroup.
 }
 }
 \description{

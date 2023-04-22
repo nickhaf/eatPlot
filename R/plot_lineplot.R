@@ -2,7 +2,7 @@
 #'
 #' @param plot_data Input is a list prepared by [prep_plot()].`
 #' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
-#' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_point`.
+#' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_point"`.
 #' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_point_start", "est_point_end")`. If set to `NULL`, no lines will be plotted.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_trend_comp_within"`.
@@ -18,21 +18,21 @@
 #' @examples # tbd
 plot_lineplot <- function(plot_data,
                           seperate_plot_var = "state_var",
-                          point_values = "est_point",
-                          point_sig = "sig_point",
-                          line_values = c("est_point_start", "est_point_end"),
-                          line_sig = "sig_trend_comp_within",
-                          label_est = "est_trend_no_comp",
-                          label_se = "se_trend_no_comp",
-                          label_sig_high = "sig_trend_comp_whole",
-                          label_sig_bold = "sig_trend_no_comp",
+                          point_values = "est_noTrend_noComp",
+                          point_sig = "sig_noTrend_noComp",
+                          line_values = c("est_noTrendstart_noComp", "est_noTrendend_noComp"),
+                          line_sig = "sig_Trend_CompWithin",
+                          label_est = "est_Trend_noComp",
+                          label_se = "se_Trend_noComp",
+                          label_sig_high = "sig_Trend_CompWhole",
+                          label_sig_bold = "sig_Trend_noComp",
                           background_lines = TRUE,
                           plot_settings = plotsettings_lineplot()) {
 
 check_plotsettings_lineplot(plot_settings)
 
   states <- unique(plot_data[[1]]$state_var)
-  tiles <- unique(plot_data[[1]][, seperate_plot_var])
+  tiles <- unique(plot_data[[1]][, seperate_plot_var]) #Hier die Level nehmen
 
   plot_list <- list()
   if(!is.null(point_values)){

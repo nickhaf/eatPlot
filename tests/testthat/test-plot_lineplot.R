@@ -9,14 +9,14 @@ test_that("settings do something", {
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
-  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
-    line_sig = "sig_trend_no_comp",
-    label_sig_high = "sig_point_end",
+    line_sig = "sig_noTrend_noComp",
+    label_sig_high = "sig_noTrendend_noComp",
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(
       axis_x_background_colour = "red",
