@@ -30,7 +30,7 @@ test_that("Pointplot can be facetted", {
   vdiffr::expect_doppelganger("Facetted Points",
                               ggplot2::ggplot() +
                                 plot_points(df,
-                                            point_values = est_noTrend_noComp,
+                                            point_values = "est_point",
                                             point_sig = "sig_noTrend_noComp",
                                             y_range = c(100, 107)) +
                                 ggplot2::facet_wrap(~years_Trend, scales = "free_x")

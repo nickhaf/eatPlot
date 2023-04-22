@@ -5,7 +5,7 @@ test_that("calc_brace_coords works for long format", {
     year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 0, 1)),
     brace_label = rep("a", 4),
-    trend = c("2011", "2011", "2012", "2012"),
+    years_Trend = c("2011", "2011", "2012", "2012"),
     competence_var = "a"
   )
 
@@ -24,7 +24,7 @@ test_that("calc_brace_coords works for wide format", {
     year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 0, 1)),
     brace_label = rep("a", 4),
-    trend = c("20112012", "20112012", "20122013", "20122013"),
+    years_Trend = c("20112012", "20112012", "20122013", "20122013"),
     competence_var = "a"
   )
 
@@ -46,7 +46,7 @@ test_that("labels are calculated correctly for multiple groups", {
     year_end = c(2012, 2012, 2013, 2013),
     grouping_var = factor(c(0, 1, 2, 3)),
     brace_label = rep("a", 4),
-    trend = c("2011", "2011", "2012", "2012")
+    years_Trend = c("2011", "2011", "2012", "2012")
   )
 
   test_braces <- calc_brace_label_y(df, upper_label_y = 334.5, range_coords = 170, gap_label = 0.08)
@@ -56,8 +56,8 @@ test_that("labels are calculated correctly for multiple groups", {
 
 test_that("Point nudge is calculated correctly", {
     df <- data.frame(year = c(2011, 2011, 2012, 2012, 2012, 2012, 2030, 2030),
-                     est_point = c(1, 2, 2, 1, 1, 2, 1, 1),
-                     trend = c(1, 1, 1, 1, 2, 2, 2, 2),
+                     point_values = c(1, 2, 2, 1, 1, 2, 1, 1),
+                     years_Trend = c(1, 1, 1, 1, 2, 2, 2, 2),
                      grouping_var = c(1, 0, 1, 0, 1, 0, 1, 0)
     )
 
