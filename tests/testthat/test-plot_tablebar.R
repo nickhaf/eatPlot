@@ -105,31 +105,32 @@ test_that("Example barplot is plotted correctly", {
   )[["plot_lines"]]
 
 
-  dat_bar$est_point_end <- dat_bar$est_point_end * 100
+  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
   dat_bar <- subset(dat_bar, year_end == 2021)
   dat_bar <- subset(dat_bar, year_start == 2016)
 
-  dat_bar$sig_minstand <- ifelse(dat_bar$sig_point_end == "TRUE" & dat_bar$est_trend_comp < 0,
-                                   "below",
-                                   ifelse(dat_bar$sig_point_end == "TRUE" & dat_bar$est_trend_comp > 0,
-                                          "above",
-                                          "no_sig")
+  dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole < 0,
+                                 "below",
+                                 ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole > 0,
+                                        "above",
+                                        "no_sig"
+                                 )
   )
 
 # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
-  dat_bar_1$sig_point_end[1:10] <- "FALSE"
+  dat_bar_1$sig_noTrendEnd_noComp[1:10] <- "FALSE"
 
 
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
-    bar_label = "est_point_end",
-    bar_label_sig = "sig_point_end",
+    bar_label = "est_noTrendEnd_noComp",
+    bar_label_sig = "sig_noTrendEnd_noComp",
     bar_sig = "sig_minstand",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
-    bar_est = "est_point_end",
+    bar_est = "est_noTrendEnd_noComp",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       columns_width = c(0.2, 0.8),
@@ -149,18 +150,18 @@ test_that("Example barplot long format is plotted correctly", {
 
   dat_bar <- dat_bar[which(dat_bar$year_start == 2011 & dat_bar$year_end == 2016), ]
 
-  dat_bar$est_point_start <- dat_bar$est_point_start * 100
-  dat_bar$est_point_end <- dat_bar$est_point_end * 100
-  dat_bar$est_trend_no_comp <- dat_bar$est_trend_no_comp * 100
-  dat_bar$sig_point_start[1:10] <- "FALSE"
+  dat_bar$est_noTrendStart_noComp <- dat_bar$est_noTrendStart_noComp * 100
+  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
+  dat_bar$est_Trend_noComp <- dat_bar$est_Trend_noComp * 100
+  dat_bar$sig_noTrendEnd_noComp[1:10] <- "FALSE"
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
-  dat_bar$se_trend_no_comp <- dat_bar$se_trend_no_comp * 100
-  dat_bar$se_trend_no_comp <- construct_label(dat_bar, label_se = "se_trend_no_comp")
+  dat_bar$se_Trend_noComp <- dat_bar$se_Trend_noComp * 100
+  dat_bar$se_Trend_noComp <- construct_label(dat_bar, label_se = "se_Trend_noComp")
 
   p_bar <- plot_tablebar(
     dat = dat_bar,
     bar_label = NULL,
-    bar_sig = "sig_trend_no_comp",
+    bar_sig = "sig_Trend_noComp",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
     columns_headers = list("Land", " ", "%", "%", "%", "(SE)"),
@@ -170,23 +171,23 @@ test_that("Example barplot long format is plotted correctly", {
                            ),
     columns_table = list("state_var",
                          "depVar",
-                         "est_point_start",
-                         "est_point_end",
-                         "est_trend_no_comp",
-                         "se_trend_no_comp"),
+                         "est_noTrendStart_noComp",
+                         "est_noTrendEnd_noComp",
+                         "est_Trend_noComp",
+                         "se_Trend_noComp"),
     columns_table_sig_bold = list(NULL,
                                   NULL,
                                   NULL,
                                   NULL,
-                                  "sig_trend_no_comp",
+                                  "sig_Trend_noComp",
                                   NULL),
     columns_table_sig_high = list(NULL,
                                   NULL,
                                   NULL,
                                   NULL,
-                                  "sig_trend_comp",
+                                  "sig_Trend_CompWhole",
                                   NULL),
-    bar_est = "est_trend_no_comp",
+    bar_est = "est_Trend_noComp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta_trend)
   )

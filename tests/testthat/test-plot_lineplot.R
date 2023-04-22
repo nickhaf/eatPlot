@@ -9,14 +9,17 @@ test_that("settings do something", {
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
-  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
-    line_sig = "sig_trend_no_comp",
-    label_sig_high = "sig_point_end",
+    line_sig = "sig_Trend_CompWhole",
+    label_est = "est_Trend_noComp",
+    label_sig_bold = "est_Trend_CompWhole",
+    label_sig_high = "sig_noTrendEnd_noComp",
+    point_values = "est_noTrend_noComp",
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(
       axis_x_background_colour = "red",
@@ -46,7 +49,7 @@ test_that("settings do something", {
       point_size = 1,
       split_plot = TRUE,
       split_plot_gap_width = 0.01,
-      y_axis = TRUE
+      y_axis = FALSE
     )
   )
 
@@ -60,15 +63,15 @@ test_that("correct states are extracted", {
       grouping_var = factor(c("group1", "group1", "group1", "group2", "group2", "group2"), levels = c("group1", "group2")),
       year = rep(c(1, 2, 3), 2),
       est_point = c(200, 210, 220, 205, 215, 225),
-      sig_point = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)
+      sig_noTrend_noComp = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)
     ),
     plot_lines = data.frame(
       state_var = c("a", "a", "b", "b"),
       grouping_var = factor(c("group1", "group2", "group1", "group2"), levels = c("group1", "group2")),
       year_start = c(1, 1, 2, 2),
       year_end = c(2, 2, 3, 3),
-      est_point_start = c(200, 205, 210, 215),
-      est_point_end = c(210, 215, 220, 225),
+      est_noTrendStart_noComp = c(200, 205, 210, 215),
+      est_noTrendEnd_noComp = c(210, 215, 220, 225),
       sig_trend = c(TRUE, FALSE, FALSE, TRUE)
     ),
     plot_background_lines = data.frame(
@@ -76,8 +79,8 @@ test_that("correct states are extracted", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_point_start = c(190, 225),
-      est_point_end = c(225, 230),
+      est_noTrendStart_noComp = c(190, 225),
+      est_noTrendEnd_noComp = c(225, 230),
       sig_trend = c(TRUE, FALSE)
     ),
     plot_braces = data.frame(
@@ -109,14 +112,16 @@ test_that("lineplot chpt_4 with one group is still the same", {
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
-  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
-    line_sig = "sig_trend_no_comp",
-    label_sig_high = "sig_point_end",
+    point_values = "est_noTrend_noComp",
+    line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+    line_sig = "sig_Trend_noComp",
+    label_sig_high = "sig_noTrendEnd_noComp",
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
   vdiffr::expect_doppelganger("lineplot_chpt_4_1group", p_line)
@@ -134,14 +139,14 @@ test_that("lineplot chpt_4 with two groups is still the same", {
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
-  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
-    line_sig = "sig_trend_no_comp",
-    label_sig_high = "sig_point_end",
+    line_sig = "sig_Trend_noComp",
+    label_sig_high = "sig_noTrendEnd_noComp",
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
 
@@ -167,13 +172,13 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
 
   plot_dat_3 <- filter_rows(plot_dat_3, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_3$plot_points$sig_point[1:10] <- FALSE
-  plot_dat_3$plot_points <- plot_dat_3$plot_points[!(plot_dat_3$plot_points$trend == "20112016" & plot_dat_3$plot_points$grouping_var == "TRUE"), ]
+  plot_dat_3$plot_points$sig_noTrend_noComp[1:10] <- FALSE
+  plot_dat_3$plot_points <- plot_dat_3$plot_points[!(plot_dat_3$plot_points$years_Trend == "20112016" & plot_dat_3$plot_points$grouping_var == "TRUE"), ]
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_3,
-    line_sig = "sig_trend_no_comp",
-    label_sig_high = "sig_point_end",
+    line_sig = "sig_Trend_noComp",
+    label_sig_high = "sig_noTrendEnd_noComp",
     plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4
     )
@@ -205,7 +210,7 @@ test_that("competence_vars can be used as tiles", {
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
     seperate_plot_var = "competence_var",
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = NULL,
     plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4_germany
@@ -246,7 +251,7 @@ test_that("competence_vars with 3 groups", {
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
     seperate_plot_var = "competence_var",
-    line_sig = "sig_trend_no_comp",
+    line_sig = "sig_Trend_noComp",
     label_sig_high = NULL,
     plot_settings = plotsettings_lineplot(
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
@@ -270,15 +275,15 @@ test_that("adjusted means states", {
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_point[1:10] <- FALSE
-  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
+  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
     point_sig = NULL,
-    line_sig = "sig_trend_no_comp",
-    label_sig_high = "sig_point_end",
+    line_sig = "sig_Trend_noComp",
+    label_sig_high = "sig_noTrendEnd_noComp",
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(margin_bottom = 0.03, default_list = lineplot_chpt_4)
   )
@@ -310,8 +315,8 @@ test_that("adjusted means for whole group", {
     plot_data = plot_dat_test_kb,
     seperate_plot_var = "competence_var",
     point_sig = NULL,
-    line_sig = "sig_trend_no_comp",
-    label_sig_high = "sig_point_end",
+    line_sig = "sig_Trend_noComp",
+    label_sig_high = "sig_noTrendEnd_noComp",
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4_germany)
   )

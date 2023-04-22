@@ -28,7 +28,7 @@
 # # #          x_value = "est_no_comp",
 # # #          y_value = "state_var",
 # # #          bar_label = "est_no_comp",
-# # #          bar_sig = "sig_point_comp_whole",
+# # #          bar_sig = "sig_noTrend_noComp_comp_whole",
 # # #          bar_fill = NULL,
 # # #          bar_pattern_fill = "grouping_var",
 # # #          plot_settings = plotsettings_tablebarplot(
@@ -51,7 +51,7 @@
 # # #          x_value = "est_no_comp",
 # # #          y_value = "state_var",
 # # #          bar_label = "est_no_comp",
-# # #          bar_sig = "sig_point_comp_whole",
+# # #          bar_sig = "sig_noTrend_noComp_comp_whole",
 # # #          bar_fill = NULL,
 # # #          bar_pattern_fill = "grouping_var",
 # # #          plot_settings = plotsettings_tablebarplot(
@@ -102,7 +102,7 @@
 #
 # dat_p_subset <- subset(dat_p_2, x_label == 2016)
 # dat_p_subset$x_label <- "y_axis_grouping"
-# dat_p_subset$est_point_no_comp <- dat_p_subset$keyword_no_comp
+# dat_p_subset$point_values_no_comp <- dat_p_subset$keyword_no_comp
 #
 # dat_p <- rbind(dat_p_2, dat_p_subset)
 #
@@ -111,7 +111,7 @@
 # land_labels <- dat_p_subset$state_var
 # land_labels[duplicated(land_labels)] <-  ""
 #
-# dat_p_subset$est_point_no_comp <- land_labels
+# dat_p_subset$point_values_no_comp <- land_labels
 #
 # dat_p <- rbind(dat_p, dat_p_subset)
 # dat_p$x_label <- factor(dat_p$x_label, levels = c("land", "y_axis_grouping", "2011", "2016", "2021"))
@@ -128,7 +128,7 @@
 #                       ggplot2::aes(x = .data$x_label,
 #                                    y = .data$keyword_no_comp, #state_var
 #                                    group = .data$depVar,
-#                                    label = .data$est_point_no_comp)) +
+#                                    label = .data$point_values_no_comp)) +
 #   ggstats::geom_stripped_rows(
 #     odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
 #     even = "#00000000") +
@@ -160,18 +160,18 @@
 #
 # ## barplot
 # data_p_2 <- data_plot_new[["plot_lines"]]
-# data_p_2$est_trend_no_comp <- data_p_2$est_trend_no_comp * 100
+# data_p_2$est_Trend_noComp <- data_p_2$est_Trend_noComp * 100
 # data_p_2 <- data_p_2[data_p_2$year_start == 2011 & data_p_2$year_end == 2016 ,]
 #
 # plot_bar(data_p_2,
-#          x_value = "est_trend_no_comp",
+#          x_value = "est_Trend_noComp",
 #          y_value = "depVar",
-#          bar_sig = "sig_trend_comp", ##Wurde das umgestellt? Oder wird das extra dafür erstellt?
-#          bar_fill = "sig_trend_comp",
+#          bar_sig = "sig_Trend_Comp", ##Wurde das umgestellt? Oder wird das extra dafür erstellt?
+#          bar_fill = "sig_Trend_Comp",
 #          bar_label = NULL,
 #          plot_settings = plotsettings_tablebarplot(default_list = barplot_MinSta_trend))
 #
-# plot_borders <- calc_plot_borders(data_p_2$est_trend_no_comp)
+# plot_borders <- calc_plot_borders(data_p_2$est_Trend_noComp)
 # scale_breaks <- seq(plot_borders[1], plot_borders[2], by = 10)
 # bar_fill_setting = c(
 #   "minVerfehlt" = grDevices::rgb(147, 205, 221, maxColorValue = 255),
@@ -216,15 +216,15 @@
 #   "optErreicht" = "green"
 # )
 #
-# data_p_2$pattern_fill <- paste0(data_p_2$depVar, data_p_2$sig_trend_comp)
+# data_p_2$pattern_fill <- paste0(data_p_2$depVar, data_p_2$sig_Trend_Comp)
 #
 #
 # p2 <- plot_bar(data_p_2,
-#                x_value = "est_trend_no_comp",
+#                x_value = "est_Trend_noComp",
 #                y_value = "keyword_no_comp",
 #                bar_fill = "pattern_fill",
 #                bar_label = NULL,
-#                bar_sig = "sig_trend_comp",
+#                bar_sig = "sig_Trend_Comp",
 #                bar_pattern_fill = "depVar",
 #                plot_settings = plotsettings_tablebarplot(bar_pattern_fill_colour = stand_pattern_fill,
 #                                                     bar_fill_colour = stand_fill,
@@ -245,7 +245,7 @@
 #   )
 #
 # # ## Stripes:
-# # # ggplot2::ggplot(data_p_2, ggplot2::aes(x = est_trend_no_comp,
+# # # ggplot2::ggplot(data_p_2, ggplot2::aes(x = est_Trend_noComp,
 # # #                      y = keyword_no_comp)) +
 # # #   ggplot2::geom_rect(ggplot2::aes(ymin = keyword_no_comp,
 # # #                 ymax = dplyr::lead(keyword_no_comp),
@@ -257,14 +257,14 @@
 # # # ggplot2::ggplot(
 # # #   data = data_p_2,
 # # #   mapping = ggplot2::aes(
-# # #     x = est_trend_no_comp,
+# # #     x = est_Trend_noComp,
 # # #     y = keyword_no_comp,
 # # #     fill = depVar,
 # # #     # TODO: maybe find another interface for this argument?
 # # #     # TODO: linetype and pattern aes only works when specified here
 # # #     #   - when specified on geom, the first bar colors in the test plot
 # # #     #     for frame is exchanged!
-# # #     pattern = sig_trend_no_comp
+# # #     pattern = sig_Trend_noComp
 # # #   )) +
 # # #   geom_rect(
 # # #     ggplot2::aes(

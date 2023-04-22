@@ -58,24 +58,22 @@ stopifnot(is.character(parameter))
 
 sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
+# Show a message, if a grouping_var was provided, but not as factor.
+dat <- check_factor(dat, grouping_var, "grouping_var")
 
 dat <- fill_column(dat, competence_var)
-dat <- fill_column(dat, grouping_var)
+dat <- fill_column(dat, grouping_var, filling = )
 dat <- fill_column(dat, state_var)
 dat <- fill_column(dat, group_var)
+
+## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
+dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_var, state_var, group_var))]
 
 colnames(dat) <- gsub("\\.", "_", colnames(dat))
 colnames(dat) <- gsub("sig_", "p_", colnames(dat))
 colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
 
-# Show a warning, if a grouping_var was provided, but not as factor.
-if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
-  warning("Your grouping variable '", grouping_var, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order. Please recode your grouping variable into a factor with another level order prior to using this prep-function, if necessary.")
-  dat$grouping_var <- as.factor(dat$grouping_var)
-}else{
-  message("Please check that the factor levels of you grouping_var are in the correct order. The first level will be the top brace-label, the last level the bottom brace_label.")
-}
 
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
   if(!is.null(grouping_var)){
@@ -83,6 +81,15 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   }else{
     sub_groups <- NULL
   }
+
+  merging_columns <- c("state_var",
+                       "grouping_var",
+                       "year_start",
+                       "year_end",
+                       "depVar",
+                       "competence_var",
+                       "years_Trend",
+                       "year")
 
   dat <- clean_data(
     dat = dat,
@@ -100,24 +107,69 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
     )
   }
 
+
   list_building_blocks <- prep_data_blocks(
     data_clean = dat,
     sig_niveau = sig_niveau,
     all_states,
-    sub_groups
+    sub_groups,
+    merging_columns = merging_columns
   )
 
 
+
+# Build noTrend dataframe -------------------------------------------------
+  comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
+  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "Whole")
+  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
+  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "Within")
+
+
+  if (nrow(comp_state_noTrend) != 0) {
+    comp_within_whole_noTrend <- merge(
+    comp_state_noTrend,
+     comp_wholeGroup_noTrend,
+      all.x = TRUE,
+    by = c("grouping_var",
+           "state_var",
+           "year",
+           "competence_var",
+           "depVar")
+    )
+  } else {
+    comp_within_whole_noTrend <- comp_wholeGroup_noTrend
+  }
+
+
+  if (nrow(comp_within_whole_noTrend) != 0) {
+    noTrend_data_merged <- merge(
+      comp_within_whole_noTrend,
+      list_building_blocks[["noTrend_noComp"]],
+      by = c("grouping_var",
+             "state_var",
+             "year",
+             "competence_var",
+             "depVar"),
+      all = TRUE
+    )
+  } else {
+    noTrend_data_merged <- list_building_blocks[["noTrend_noComp"]]
+  }
+
   # Prepare the trend-data.frame --------------------------------------------
-  # Data with comparison:
-  comp_wholeGroup <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "wholeGroup", ]
-  comp_state <- list_building_blocks[["trend_comp_data"]][list_building_blocks[["trend_comp_data"]]$compare_2 == "BL" | list_building_blocks[["trend_comp_data"]]$compare_1 == "_groupingVar", ]
+  # Data with comparison, either comparing with the whole group, or within the state
+
+  comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
+comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "Whole")
+   comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
+   comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "Within")
+
 
   if (nrow(comp_state) != 0) {
     comp_within_whole <- merge_trend_data(
       trend_data_1 = comp_state,
       trend_data_2 = comp_wholeGroup,
-      suffixes = c("_comp_within", "_comp_whole"),
+      suffixes = c("", ""),
       all.x = TRUE
     )
   } else {
@@ -125,30 +177,33 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   }
 
   ## Add data without comparison:
+
   if (nrow(comp_within_whole) != 0) {
     trend_data_merged <- merge_trend_data(
       trend_data_1 = comp_within_whole,
-      trend_data_2 = list_building_blocks[["trend_no_comp_data"]],
-      suffixes = c("_comp", "_no_comp"),
+      trend_data_2 = list_building_blocks[["Trend_noComp"]],
+      suffixes = c("", ""),
       all = TRUE
     )
   } else {
-    trend_data_merged <- list_building_blocks[["trend_no_comp_data"]]
+    trend_data_merged <- list_building_blocks[["Trend_noComp"]]
   }
-  colnames(trend_data_merged) <- gsub("_trend$", "_trend_no_comp", colnames(trend_data_merged))
 
 
+
+# Merge to final data frame -----------------------------------------------
   trend_data_final <- merge_trend_point(
     trend_data = trend_data_merged,
-    point_data = list_building_blocks[["point_no_comp_data"]]
+    point_data = noTrend_data_merged
   )
+  ## Drop unused levels
   if(any(!is.na(trend_data_final$grouping_var))){
     trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
 }
   # Prepare the wholeGroup data.frame ---------------------------------------
-  trend_data_wholeGroup <- merge_trend_point(
-    list_building_blocks[["wholeGroup_trend"]],
-    list_building_blocks[["wholeGroup_point"]]
+     trend_data_wholeGroup <- merge_trend_point(
+    list_building_blocks[["Trend_noComp_wholeGroup"]],
+    list_building_blocks[["noTrend_noComp_wholeGroup"]]
   )
 
   # Fill up NAs -------------------------------------------------------------
@@ -208,14 +263,12 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
   #################
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
-  ## "trend-Spalte fehlt
   dat_long <- stats::reshape(plot_dat[["plot_lines"]][,
                                                       c("depVar",
                                                         "grouping_var",
                                                         "year_start",
                                                         "year_end",
-                                                        "trend",
- #                                                       "group_var",
+                                                        "years_Trend",
                                                         "state_var",
                                                         "competence_var")],
     direction = "long",
@@ -223,12 +276,25 @@ if(!is.factor(dat$grouping_var) & !is.null(grouping_var)){
     sep = "_"
   )
 
+  dat_long <- remove_columns(dat_long, c("time", "id"))
   plot_dat[["plot_points"]] <- merge(dat_long,
-                                     list_building_blocks[["point_no_comp_data"]],
-                                     by = c("grouping_var", "state_var", "year", "competence_var"),
+                                     list_building_blocks[["noTrend_noComp"]],
+                                     by = c("grouping_var",
+                                            "state_var",
+                                            "year",
+                                            "competence_var",
+                                            "depVar"),
                                      all.x = TRUE)
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
+
+
+  ## Order columns
+
+  plot_dat <- lapply(plot_dat, function(x){
+    x <- x[,grep("\\.x$|\\.y$", colnames(x), invert = TRUE)]
+    x[,order(colnames(x))]
+  })
 
   return(plot_dat)
 }

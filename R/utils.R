@@ -116,36 +116,50 @@ return(res_vec)
 
 # Helper functions for reshaping to long format ---------------------------
 prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "") {
+
+  ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
-    cols_removed <- grep(remove_pattern, colnames(data), invert = TRUE, value = TRUE)
+    cols_removed <- grep(remove_pattern,
+                         colnames(data),
+                         invert = TRUE,
+                         value = TRUE)
     data <- data[, cols_removed]
   }
 
-  col_pos <- grep(include_pattern, colnames(data))
+  col_pos <- grep(include_pattern,
+                  colnames(data)
+                  )
   colnames(data)[col_pos] <- gsub("\\.|_", "", colnames(data)[col_pos])
 
-  ## before first number, insert ".". Needed by reshape() for automatically building the new columns.
-  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], function(x) insert_first_number(x, insertion = "\\."))
+  ## before the first number of the year columns, insert ".". Needed by reshape() for automatically building the new columns.
+  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], insert_first_number, "\\.")
 
-  data_long <- stats::reshape(data, direction = "long", varying = colnames(data)[col_pos])
+  data_long <- stats::reshape(data,
+                              direction = "long",
+                              varying = colnames(data)[col_pos]
+                              )
   data_long$id <- NULL
 
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
-  for (i in new_colnames) {
-    data_long <- build_column(data_long, old = i, new = paste0(i, suffix))
-  }
 
+  data_long <- rename_columns(data_long,
+                             old_names = new_colnames,
+                             new_names = paste0(new_colnames, suffix)
+                             )
+
+  data_long <- rename_columns(data_long, old = paste0("time", suffix), new = "year")
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
-  data_long <- build_column(data_long, old = paste0("time", suffix), new = "year")
+
+
 
   return(data_long)
 }
 
 ## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
-split_years <- function(dat) {
-  years <- regmatches(dat$year, gregexpr("[[:digit:]]+", dat$year))
+split_years <- function(dat, year_col = "year") {
+  years <- regmatches(dat[, year_col], gregexpr("[[:digit:]]+", dat[, year_col]))
 
   # extract the years and add them to the long data frame
   year_cols <- data.frame()
@@ -155,8 +169,7 @@ split_years <- function(dat) {
   }
   colnames(year_cols) <- c("year_start", "year_end")
   dat <- cbind(dat, year_cols)
-  dat$trend <- paste0(dat$year_start, dat$year_end)
-  dat <- build_column(dat, "year", "trend_years")
+  dat[, year_col] <- paste0(dat$year_start, dat$year_end)
 
   return(dat)
 }
@@ -233,9 +246,9 @@ check_missing_colnames <- function(x, colnames_vec) {
 
 
 get_min_max <- function(dat) {
-  min_max_trend <- by(dat, dat$trend, function(x) {
+  min_max_trend <- by(dat, dat$years_Trend, function(x) {
     data.frame(
-      trend = unique(x$trend),
+      years_Trend = unique(x$years_Trend),
       minimum = min(x$year),
       maximum = max(x$year)
     )
@@ -276,14 +289,18 @@ build_column <- function(dat, old, new) {
 }
 
 
+
+
 ## Add a new column that is derived from an old one. Takes an object as input.
 fill_column <- function(df, column_name, filling = NA){
-
-  if(!is.null(column_name)){
-    df[[deparse(substitute(column_name))]] <- df[[column_name]]
-  }else{
+  if(is.null(column_name)){
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
-  }
+  } else if(column_name %in% colnames(df)){
+    df[[deparse(substitute(column_name))]] <- df[[column_name]]
+  }else if((!column_name %in% colnames(df))){
+    warning(paste0("Your column '", column_name, "' is not part of your data. Trying to set it automatically."))
+    df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
+    }
 return(df)
   }
 
@@ -297,3 +314,17 @@ check_columns <-  function(dat, column){
   }
 }
 
+check_factor <- function(dat, column, variable_type){
+  if (!is.factor(dat[, column]) & !is.null(column)) {
+    message("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.")
+    dat[, column]<- as.factor(dat[, column])
+  }
+  return(dat)
+}
+
+rename_columns <- function(dat, old_names, new_names){
+
+  colnames(dat)[colnames(dat) %in% old_names] <- new_names
+
+  return(dat)
+}

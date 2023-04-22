@@ -4,10 +4,16 @@
 \alias{set_plot_coords}
 \title{Set the x- and y-coordinates for a plot.}
 \usage{
-set_plot_coords(plot_data, plot_settings = plotsettings_lineplot())
+set_plot_coords(
+  plot_data,
+  point_values,
+  plot_settings = plotsettings_lineplot()
+)
 }
 \arguments{
 \item{plot_data}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
+
+\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }

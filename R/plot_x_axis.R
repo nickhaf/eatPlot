@@ -11,7 +11,7 @@ plot_x_axis <- function(data_plot_points, y_range, plot_settings = plotsettings_
   coords <- calc_coords(y_range)
   y_max <- coords[2]
 
-  dat_coords <- data_plot_points[, c("year", "trend")]
+  dat_coords <- data_plot_points[, c("year", "years_Trend")]
 
   dat_coords$x_labels <- as.character(dat_coords$year)
   dat_coords$y_coords <- y_max - y_max * plot_settings$axis_x_label_nudge_y
@@ -37,7 +37,7 @@ res_list <- list(
                      mapping = ggplot2::aes(x = .data$x_coords,
                                             y = .data$y_coords,
                                             label = .data$x_labels,
-                                            group = .data$trend),
+                                            group = .data$years_Trend),
                      size = plot_settings$axis_x_label_size),
                      ggplot2::theme(axis.line= ggplot2::element_blank(),
                                     axis.text.x=ggplot2::element_blank(),

@@ -7,11 +7,11 @@
 #'
 #' @examples #tbd
 plot_y_axis <- function(plot_data) {
-  range_est <- range(plot_data[["plot_points"]]$est_point, na.rm = TRUE)
+  range_est <- range(plot_data[["plot_points"]]$point_values, na.rm = TRUE)
   coords <- calc_coords(range_est)
 
   df_y <- data.frame(
-    trend = "20112016",
+    years_Trend = "20112016",
     x = min(plot_data[["plot_points"]]$year),
     y = round(range_est[1] - 10, -1),
     yend = round(range_est[2], -1),

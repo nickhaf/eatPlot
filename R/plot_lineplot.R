@@ -2,10 +2,10 @@
 #'
 #' @param plot_data Input is a list prepared by [prep_plot()].`
 #' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
-#' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_point`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_point"`.
-#' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_point_start", "est_point_end")`. If set to `NULL`, no lines will be plotted.
-#' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_trend_comp_within"`.
+#' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_noComp"`.
+#' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
+#' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_CompWithin"`.
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
@@ -18,25 +18,25 @@
 #' @examples # tbd
 plot_lineplot <- function(plot_data,
                           seperate_plot_var = "state_var",
-                          point_values = "est_point",
-                          point_sig = "sig_point",
-                          line_values = c("est_point_start", "est_point_end"),
-                          line_sig = "sig_trend_comp_within",
-                          label_est = "est_trend_no_comp",
-                          label_se = "se_trend_no_comp",
-                          label_sig_high = "sig_trend_comp_whole",
-                          label_sig_bold = "sig_trend_no_comp",
+                          point_values = "est_noTrend_noComp",
+                          point_sig = "sig_noTrend_noComp",
+                          line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+                          line_sig = "sig_Trend_CompWithin",
+                          label_est = "est_Trend_noComp",
+                          label_se = "se_Trend_noComp",
+                          label_sig_high = "sig_Trend_CompWhole",
+                          label_sig_bold = "sig_Trend_noComp",
                           background_lines = TRUE,
                           plot_settings = plotsettings_lineplot()) {
 
 check_plotsettings_lineplot(plot_settings)
 
   states <- unique(plot_data[[1]]$state_var)
-  tiles <- unique(plot_data[[1]][, seperate_plot_var])
+  tiles <- unique(plot_data[[1]][, seperate_plot_var]) #Hier die Level nehmen
 
   plot_list <- list()
   if(!is.null(point_values)){
-  range_est <- range(plot_data[["plot_points"]][,point_values], na.rm = TRUE)
+  range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
   }else{
     stop("Please provide point-values.")
   }
@@ -64,7 +64,9 @@ check_plotsettings_lineplot(plot_settings)
         plot_settings = plot_settings
       ) +
       ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
-      set_plot_coords(plot_data, plot_settings = plot_settings)
+      set_plot_coords(plot_data,
+                      point_values = point_values,
+                      plot_settings = plot_settings)
 
     ## The wholeGroup plot gets a box drawn around it.
     # if (i == "wholeGroup") {
@@ -75,7 +77,6 @@ check_plotsettings_lineplot(plot_settings)
     plot_list[[i]] <- p_state
     position <- position + 1
   }
-
 
   # Add y axis --------------------------------------------------------------
   if (plot_settings$y_axis == TRUE) {

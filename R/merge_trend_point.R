@@ -9,8 +9,8 @@
 #' @examples #tbd
 merge_trend_point <- function(trend_data, point_data){
 
-  trend_data <- trend_data[ , !colnames(trend_data) %in% c("modus", "comparison", "parameter")]
-  point_data <- point_data[ , !colnames(point_data) %in% c("modus", "comparison", "parameter", "group")]
+  trend_data <- trend_data[ , !colnames(trend_data) %in% c("modus", "comparison", "parameter", "group_var", "keyword")]
+  point_data <- point_data[ , !colnames(point_data) %in% c("modus", "comparison", "parameter", "group_var", "keyword")]
 
   trend_start <- merge(trend_data,
                      point_data,
@@ -21,7 +21,7 @@ merge_trend_point <- function(trend_data, point_data){
                      sort = FALSE
 )
 
-colnames(trend_start) <- gsub("_point", "_point_start", colnames(trend_start))
+colnames(trend_start) <- gsub("_noTrend", "_noTrendStart", colnames(trend_start))
 
 trend <- merge(trend_start,
                point_data,
@@ -30,10 +30,9 @@ trend <- merge(trend_start,
                all.x = TRUE,
                all.y = FALSE,
                sort = FALSE
-
 )
 
-colnames(trend) <- gsub("_point$", "_point_end", colnames(trend))
+colnames(trend) <- gsub("_noTrend_", "_noTrendEnd_", colnames(trend))
 
 return(trend)
 }

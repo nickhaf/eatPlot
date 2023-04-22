@@ -10,14 +10,14 @@
 #' @examples # tbd
 plot_single_lineplot <- function(plot_data,
                                  y_range = NULL,
-                                 point_values = "est_point",
-                                 point_sig = "sig_point",
-                                 line_values = c("est_point_start", "est_point_end"),
-                                 line_sig = "sig_trend_comp_within",
-                                 label_est = "est_trend_no_comp",
-                                 label_se = "se_trend_no_comp",
-                                 label_sig_high = "sig_trend_comp_whole",
-                                 label_sig_bold = "sig_trend_no_comp",
+                                 point_values = "est_noTrend_noComp",
+                                 point_sig = "sig_noTrend_noComp",
+                                 line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+                                 line_sig = "sig_Trend_CompWithin",
+                                 label_est = "est_Trend_noComp",
+                                 label_se = "se_Trend_noComp",
+                                 label_sig_high = "sig_Trend_CompWhole",
+                                 label_sig_bold = "sig_Trend_noComp",
                                  background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
@@ -59,7 +59,7 @@ if(!is.null(point_values)){
       plot_settings = plot_settings
     ),
     if (plot_settings$split_plot == TRUE) {
-      ggplot2::facet_wrap(~trend, scales = "free_x")
+      ggplot2::facet_wrap(~years_Trend, scales = "free_x")
     }
   )
 }

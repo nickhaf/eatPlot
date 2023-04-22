@@ -11,13 +11,13 @@
 #
 # plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
 # ## Testweise einige PUnkte auf n.s. setzen
-# plot_dat_test$plot_points$sig_point[1:10] <- FALSE
+# plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
 # plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 #
 #
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
-#                         line_sig = "sig_trend_no_comp",
-#                         label_sig_high = "sig_point_end",
+#                         line_sig = "sig_Trend_noComp",
+#                         label_sig_high = "sig_noTrendEnd_noComp",
 #                         plot_settings = lineplot_chpt_4
 # )
 
@@ -36,14 +36,14 @@
 #
 # plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
 # ## Testweise einige PUnkte auf n.s. setzen
-# plot_dat_test$plot_points$sig_point[1:10] <- FALSE
+# plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
 # plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 #
 #
 # p_line <- plot_lineplot(plot_data = plot_dat_test,
 #               split_plot = TRUE,
-#               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_point_end"
+#               line_sig = "sig_Trend_noComp",
+#               label_sig_high = "sig_noTrendEnd_noComp"
 #               )
 
 # save_plot(p_line, filename = "../split_lineplot_2.pdf")
@@ -71,12 +71,12 @@
 #
 # plot_dat_3 <- filter_rows(plot_dat_3, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
 # ## Testweise einige PUnkte auf n.s. setzen
-# plot_dat_3$plot_points$sig_point[1:10] <- FALSE
+# plot_dat_3$plot_points$sig_noTrend_noComp[1:10] <- FALSE
 # plot_dat_3$plot_points <- plot_dat_3$plot_points[!(plot_dat_3$plot_points$trend == "20112016" & plot_dat_3$plot_points$grouping_var == "TRUE"), ]
 #
 # p_line <- plot_lineplot(plot_data = plot_dat_3,
-#               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_point_end",
+#               line_sig = "sig_Trend_noComp",
+#               label_sig_high = "sig_noTrendEnd_noComp",
 #               plot_settings = plotsettings_lineplot(split_plot = TRUE, default_list = lineplot_chpt_4)
 #               )
 
@@ -103,8 +103,8 @@
 #   plot_data = plot_dat_test,
 #   seperate_plot_var = "competence_var",
 #               split_plot = TRUE,
-#               line_sig = "sig_trend_no_comp",
-#               label_sig_high = "sig_point_end"
+#               line_sig = "sig_Trend_noComp",
+#               label_sig_high = "sig_noTrendEnd_noComp"
 #               )
 #
 # save_plot(p_line, filename = "../split_lineplot_kb.pdf")
