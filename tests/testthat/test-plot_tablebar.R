@@ -150,10 +150,10 @@ test_that("Example barplot long format is plotted correctly", {
 
   dat_bar <- dat_bar[which(dat_bar$year_start == 2011 & dat_bar$year_end == 2016), ]
 
-  dat_bar$point_values_start <- dat_bar$point_values_start * 100
-  dat_bar$point_values_end <- dat_bar$point_values_end * 100
+  dat_bar$est_noTrendStart_noComp <- dat_bar$est_noTrendStart_noComp * 100
+  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
   dat_bar$est_Trend_noComp <- dat_bar$est_Trend_noComp * 100
-  dat_bar$sig_noTrend_noComp_start[1:10] <- "FALSE"
+  dat_bar$sig_noTrendEnd_noComp[1:10] <- "FALSE"
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
   dat_bar$se_Trend_noComp <- dat_bar$se_Trend_noComp * 100
   dat_bar$se_Trend_noComp <- construct_label(dat_bar, label_se = "se_Trend_noComp")
@@ -185,7 +185,7 @@ test_that("Example barplot long format is plotted correctly", {
                                   NULL,
                                   NULL,
                                   NULL,
-                                  "sig_Trend_Comp",
+                                  "sig_Trend_CompWhole",
                                   NULL),
     bar_est = "est_Trend_noComp",
     y_axis = "y_axis_new",
