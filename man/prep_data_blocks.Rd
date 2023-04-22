@@ -18,8 +18,8 @@ prep_data_blocks(data_clean, sig_niveau, states, sub_groups)
 \value{
 \code{prep_data_blocks()} returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the \code{plot()} functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:
 \itemize{
-\item \code{point_no_comp_data} contains point estimates for every years.
-\item \code{trend_comp_data} contains all trend variables performing some kind of comparison, e.g., state vs. germany.
+\item \code{noTrend_noComp} contains point estimates for every years.
+\item \code{Trend_Comp} contains all trend variables performing some kind of comparison, e.g., state vs. germany.
 \item \code{trend_no_comp_data} contains the trend estimates without comparisons.
 \item \code{wholeGroup_point} contains the point estimates of the wholeGroup.
 \item \code{wholeGroup_trend} contains the trend estimates for the wholeGroup.

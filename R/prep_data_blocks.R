@@ -6,8 +6,8 @@
 #' @param sub_groups Character vector of the different groups found in `grouping_var`.
 #'
 #' @return `prep_data_blocks()` returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the `plot()` functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:
-#' * `point_no_comp_data` contains point estimates for every years.
-#' * `trend_comp_data` contains all trend variables performing some kind of comparison, e.g., state vs. germany.
+#' * `noTrend_noComp` contains point estimates for every years.
+#' * `Trend_Comp` contains all trend variables performing some kind of comparison, e.g., state vs. germany.
 #' * `trend_no_comp_data` contains the trend estimates without comparisons.
 #' * `wholeGroup_point` contains the point estimates of the wholeGroup.
 #' * `wholeGroup_trend` contains the trend estimates for the wholeGroup.
@@ -17,18 +17,18 @@
 prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   filtered_list <- list()
 
-  # Prepare point estimates -------------------------------------------------
+  # Prepare point estimates, which don't include any trend estimates -------------------------------------------------
   if (any(is.na(data_clean$comparison))) {
     point_long_no_comp <- prep_point_long(dat = data_clean[is.na(data_clean$comparison), ])
-    filtered_list[["point_no_comp_data"]] <- point_long_no_comp[, !(colnames(point_long_no_comp) %in% c("compare_1", "compare_2")), ]
+    filtered_list[["noTrend_noComp"]] <- point_long_no_comp[, !(colnames(point_long_no_comp) %in% c("compare_1", "compare_2")), ]
   } else {
-    filtered_list["point_no_comp_data"] <- list(data.frame())
+    filtered_list["noTrend_noComp"] <- list(data.frame())
   }
 
   if (any(!is.na(data_clean$comparison))) {
-    filtered_list[["point_comp_data"]] <- prep_point_long(dat = data_clean[!is.na(data_clean$comparison), ])
+    filtered_list[["noTrend_Comp"]] <- prep_point_long(dat = data_clean[!is.na(data_clean$comparison), ])
   } else {
-    filtered_list["point_comp_data"] <- list(data.frame())
+    filtered_list["noTrend_Comp"] <- list(data.frame())
   }
 
   # Prepare trend comparison data ------------------------------------------------------
@@ -39,7 +39,7 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
   filtered_list <- prep_trend_long(data_trend_comp,
                                    filtered_list,
-                                   "trend_comp_data",
+                                   "Trend_Comp",
                                    remove_cols = exclude_cols)
 
 
@@ -47,15 +47,19 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   ## Data.frame containing all trend rows which do not make a trend comparison
   data_trend_no_comp <- data_clean[is.na(data_clean$comparison), ]
   data_trend_no_comp <- remove_columns(data_trend_no_comp, c("compare_1", "compare_2"))
-  filtered_list <- prep_trend_long(data_trend_no_comp, filtered_list, "trend_no_comp_data", remove_cols = exclude_cols)
+  filtered_list <- prep_trend_long(data_trend_no_comp,
+                                   filtered_list,
+                                   "Trend_noComp",
+                                   remove_cols = exclude_cols)
 
 
   # Prepare WholeGroup ------------------------------------------------------
-  ## Might be necessary to deal with the wholeGrou a bit differently, so it is include in two extra data frames
+  ## Might be necessary to deal with the wholeGroup a bit differently, so it is include in two extra data frames
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
+  data_wholeGroup <- remove_columns(data_wholeGroup, c("compare_1", "compare_2"))
 
   if (nrow(data_wholeGroup) != 0) {
-    filtered_list[["wholeGroup_point"]] <- prep_long(data_wholeGroup,
+    filtered_list[["noTrend_noComp_wholeGroup"]] <- prep_long(data_wholeGroup,
       include_pattern = c("est_|^p_|se_|es_"),
       remove_pattern = "trend",
       suffix = "_point"
@@ -63,7 +67,7 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups) {
   }
   filtered_list <- prep_trend_long(dat = data_wholeGroup,
                                    filtered_list,
-                                   "wholeGroup_trend",
+                                   "Trend_noComp_wholeGroup",
                                    remove_cols = exclude_cols)
 
 # Add significances -------------------------------------------------------
@@ -116,7 +120,9 @@ prep_trend_long <- function(dat, filtered_list, dat_name, remove_cols) {
       include_pattern = "est_trend|p_trend|se_trend|es_trend",
       remove_pattern = paste0(paste0("^", remove_cols, "$"), collapse = "|")
     )
-    filtered_list[[dat_name]] <- split_years(dat)
+    dat <- rename_columns(dat, old_names = "year", new = "years_trend")
+    filtered_list[[dat_name]] <- split_years(dat, year_col = "years_trend")
+
   } else {
     filtered_list[dat_name] <- list(data.frame())
   }
