@@ -68,21 +68,21 @@ test_that("reshaping to long format works", {
 
   expect_equal(df_long_test$est, 1:4)
   expect_equal(df_long_test$year, c(1, 1, 2, 2))
-  expect_equal(colnames(df_long_test), c("time", "est", "p", "p_trend", "year"))
+  expect_equal(colnames(df_long_test), c("year", "est", "p", "p_trend"))
 
   df_long_test_2 <- prep_long(df_wide,
                               include_pattern = "est",
                               remove_pattern = "p\\.|trend",
                               suffix = "_test")
 
-  expect_equal(colnames(df_long_test_2), c("time_test", "est_test", "year"   ))
+  expect_equal(colnames(df_long_test_2), c("year", "est_test"   ))
 })
 
 
 test_that("years are split correctly", {
   df_years <- data.frame(year = c("2011vs2016", "2013.2014"))
 
-  expect_equal(split_years(df_years)$year_start, c(2011, 2013))
+  expect_equal(split_years(df_years, year_col = "year")$year_start, c(2011, 2013))
 })
 
 

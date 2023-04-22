@@ -158,7 +158,7 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 }
 
 ## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
-split_years <- function(dat, year_col) {
+split_years <- function(dat, year_col = "year") {
   years <- regmatches(dat[, year_col], gregexpr("[[:digit:]]+", dat[, year_col]))
 
   # extract the years and add them to the long data frame

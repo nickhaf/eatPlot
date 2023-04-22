@@ -9,7 +9,7 @@ test_that("correct line years are extracted", {
  expect_true(!("2011vs2021" %in% prepped_list_consecutive[["plot_lines"]]$years_Trend))
 
  prepped_list_consecutive <- prep_plot(trend_books, competence = "GL", x_years = list(c(2011, 2021)))
- expect_true(all(prepped_list_consecutive[["plot_lines"]]$years_Trend == "2011vs2021"))
+ expect_true(all(prepped_list_consecutive[["plot_lines"]]$years_Trend == "20112021"))
 
  })
 
