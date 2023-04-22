@@ -8,7 +8,13 @@
 #' @export
 #'
 #' @examples #tbd
-plot_lines <- function(data_plot_lines, line_values = c("est_point_start", "est_point_end"), line_sig = "sig_trend_comp_within", plot_settings = plotsettings_lineplot()){
+plot_lines <- function(data_plot_lines,
+                       line_values = c("est_point_start", "est_point_end"),
+                       line_sig = "sig_trend_comp_within",
+                       plot_settings = plotsettings_lineplot()){
+
+  sapply(c(unlist(line_values)), check_column, dat = data_plot_lines)
+
 
   est_y <- line_values[1]
   est_y_end <- line_values[2]

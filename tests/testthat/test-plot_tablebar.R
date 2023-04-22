@@ -105,7 +105,7 @@ test_that("Example barplot is plotted correctly", {
   )[["plot_lines"]]
 
 
-  dat_bar$est_point_end <- dat_bar$est_point_end * 100
+  dat_bar$point_values_end <- dat_bar$point_values_end * 100
   dat_bar <- subset(dat_bar, year_end == 2021)
   dat_bar <- subset(dat_bar, year_start == 2016)
 
@@ -149,8 +149,8 @@ test_that("Example barplot long format is plotted correctly", {
 
   dat_bar <- dat_bar[which(dat_bar$year_start == 2011 & dat_bar$year_end == 2016), ]
 
-  dat_bar$est_point_start <- dat_bar$est_point_start * 100
-  dat_bar$est_point_end <- dat_bar$est_point_end * 100
+  dat_bar$point_values_start <- dat_bar$point_values_start * 100
+  dat_bar$point_values_end <- dat_bar$point_values_end * 100
   dat_bar$est_trend_no_comp <- dat_bar$est_trend_no_comp * 100
   dat_bar$sig_point_start[1:10] <- "FALSE"
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)

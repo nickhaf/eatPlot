@@ -293,12 +293,14 @@ build_column <- function(dat, old, new) {
 
 ## Add a new column that is derived from an old one. Takes an object as input.
 fill_column <- function(df, column_name, filling = NA){
-
-  if(!is.null(column_name)){
-    df[[deparse(substitute(column_name))]] <- df[[column_name]]
-  }else{
+  if(is.null(column_name)){
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
-  }
+  } else if(column_name %in% colnames(df)){
+    df[[deparse(substitute(column_name))]] <- df[[column_name]]
+  }else if((!column_name %in% colnames(df))){
+    warning(paste0("Your column '", column_name, "' is not part of your data. Trying to set it automatically."))
+    df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
+    }
 return(df)
   }
 

@@ -31,6 +31,12 @@ plot_lineplot <- function(plot_data,
 
 check_plotsettings_lineplot(plot_settings)
 
+  plot_data[["plot_points"]] <- fill_column(  plot_data[["plot_points"]], column_name = point_values, filling = NA)
+  plot_data[["plot_points"]] <- fill_column(  plot_data[["plot_points"]], column_name = point_sig, filling = FALSE)
+  plot_data[["plot_lines"]] <- fill_column(  plot_data[["plot_lines"]],
+                                             column_name = line_sig,
+                                             filling = FALSE)
+
   states <- unique(plot_data[[1]]$state_var)
   tiles <- unique(plot_data[[1]][, seperate_plot_var]) #Hier die Level nehmen
 
@@ -55,7 +61,7 @@ check_plotsettings_lineplot(plot_settings)
         point_values = point_values,
         point_sig = point_sig,
         line_values = line_values,
-        line_sig = line_sig,
+        line_sig = "line_sig",
         label_est = label_est,
         label_se = label_se,
         label_sig_high = label_sig_high,
@@ -75,7 +81,6 @@ check_plotsettings_lineplot(plot_settings)
     plot_list[[i]] <- p_state
     position <- position + 1
   }
-
 
   # Add y axis --------------------------------------------------------------
   if (plot_settings$y_axis == TRUE) {

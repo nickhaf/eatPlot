@@ -101,7 +101,7 @@ test_that("list ist build correctly without grouping_var", {
   )
 
   expect_equal(test_general[["noTrend_noComp"]]$year, c(1, 1, 2, 2))
-  expect_equal(test_general[["noTrend_noComp"]]$est_point, c(1, 2, 1, 2))
+  expect_equal(test_general[["noTrend_noComp"]]$point_values, c(1, 2, 1, 2))
   expect_equal(test_general[["Trend_Comp"]]$year_start, c(1, 1, 2, 2))
   expect_equal(test_general[["Trend_Comp"]]$year_end, c(2, 2, 3, 3))
   expect_equal(test_general[["Trend_Comp"]]$est_trend, c(3, 4, 3, 4))
@@ -137,7 +137,7 @@ test_that("list ist build correctly with grouping_var", {
   )
 
   expect_equal(test_general[["noTrend_noComp"]]$year, c(1, 1, 2, 2))
-  expect_equal(test_general[["noTrend_noComp"]]$est_point, c(1, 2, 1, 2))
+  expect_equal(test_general[["noTrend_noComp"]]$point_values, c(1, 2, 1, 2))
   expect_equal(test_general[["Trend_Comp"]]$year_start, c(1, 1, 2, 2))
   expect_equal(test_general[["Trend_Comp"]]$year_end, c(2, 2, 3, 3))
   expect_equal(test_general[["Trend_Comp"]]$est_trend, c(3, 4, 3, 4))

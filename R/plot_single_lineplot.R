@@ -59,7 +59,7 @@ if(!is.null(point_values)){
       plot_settings = plot_settings
     ),
     if (plot_settings$split_plot == TRUE) {
-      ggplot2::facet_wrap(~trend, scales = "free_x")
+      ggplot2::facet_wrap(~years_Trend, scales = "free_x")
     }
   )
 }

@@ -7,7 +7,7 @@
 #'
 #' @examples #tbd
 plot_y_axis <- function(plot_data) {
-  range_est <- range(plot_data[["plot_points"]]$est_point, na.rm = TRUE)
+  range_est <- range(plot_data[["plot_points"]]$point_values, na.rm = TRUE)
   coords <- calc_coords(range_est)
 
   df_y <- data.frame(

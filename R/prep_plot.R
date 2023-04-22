@@ -62,7 +62,7 @@ sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), chec
 dat <- check_factor(dat, grouping_var, "grouping_var")
 
 dat <- fill_column(dat, competence_var)
-dat <- fill_column(dat, grouping_var)
+dat <- fill_column(dat, grouping_var, filling = )
 dat <- fill_column(dat, state_var)
 dat <- fill_column(dat, group_var)
 
@@ -116,8 +116,49 @@ colnames(dat) <- gsub("^sig$", "p", colnames(dat))
     merging_columns = merging_columns
   )
 
+
+
+# Build noTrend dataframe -------------------------------------------------
+  comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
+  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "Whole")
+  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
+  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "Within")
+
+
+  if (nrow(comp_state_noTrend) != 0) {
+    comp_within_whole_noTrend <- merge(
+    comp_state_noTrend,
+     comp_wholeGroup_noTrend,
+      all.x = TRUE,
+    by = c("grouping_var",
+           "state_var",
+           "year",
+           "competence_var",
+           "depVar")
+    )
+  } else {
+    comp_within_whole_noTrend <- comp_wholeGroup_noTrend
+  }
+
+
+  if (nrow(comp_within_whole_noTrend) != 0) {
+    noTrend_data_merged <- merge(
+      comp_within_whole_noTrend,
+      list_building_blocks[["noTrend_noComp"]],
+      by = c("grouping_var",
+             "state_var",
+             "year",
+             "competence_var",
+             "depVar"),
+      all = TRUE
+    )
+  } else {
+    noTrend_data_merged <- list_building_blocks[["noTrend_noComp"]]
+  }
+
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison, either comparing with the whole group, or within the state
+
   comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
 comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "Whole")
    comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
@@ -148,9 +189,12 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
     trend_data_merged <- list_building_blocks[["Trend_noComp"]]
   }
 
+
+
+# Merge to final data frame -----------------------------------------------
   trend_data_final <- merge_trend_point(
     trend_data = trend_data_merged,
-    point_data = list_building_blocks[["noTrend_noComp"]]
+    point_data = noTrend_data_merged
   )
   ## Drop unused levels
   if(any(!is.na(trend_data_final$grouping_var))){
@@ -248,6 +292,7 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   ## Order columns
 
   plot_dat <- lapply(plot_dat, function(x){
+    x <- x[,grep("\\.x$|\\.y$", colnames(x), invert = TRUE)]
     x[,order(colnames(x))]
   })
 

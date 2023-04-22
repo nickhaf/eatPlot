@@ -23,8 +23,8 @@ test_that("merging with grouping_var", {
 
   test_prep_df <- merge_trend_point(trend_data_1, point_data_1)
 
-  expect_equal(test_prep_df$est_point_start, c(10:17))
-  expect_equal(test_prep_df$est_point_end, c(14:21))
+  expect_equal(test_prep_df$point_values_start, c(10:17))
+  expect_equal(test_prep_df$point_values_end, c(14:21))
   expect_equal(test_prep_df$year_start, c(rep(2011, 4), rep(2013, 4)))
   expect_equal(test_prep_df$year_end, c(rep(2013, 4), rep(2015, 4)))
 

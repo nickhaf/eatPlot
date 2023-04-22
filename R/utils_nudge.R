@@ -147,7 +147,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
   nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$years_Trend), function(year_df) {
     res_frame <- data.frame(
       nudge_y = ifelse(
-        year_df$est_point == min(year_df$est_point) & length(year_df$est_point) > 1,
+        year_df$point_values == min(year_df$point_values) & length(year_df$point_values) > 1,
         nudge_val * -1,
         nudge_val
       ),
@@ -156,7 +156,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
       grouping_var = year_df$grouping_var
     )
     ## If duplicated estimate values exist:
-    dup_nudge <- duplicated(year_df$est_point == min(year_df$est_point))
+    dup_nudge <- duplicated(year_df$point_values == min(year_df$point_values))
     res_frame[dup_nudge, "nudge_y"] <- res_frame[dup_nudge, "nudge_y"] * -1
     return(res_frame)
   })

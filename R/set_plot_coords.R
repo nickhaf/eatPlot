@@ -42,8 +42,8 @@ calc_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 
 set_y_coords <- function(plot_data){
   ggplot2::scale_y_continuous(
     breaks = seq(
-      from = round(min(plot_data[["plot_points"]]$est_point, na.rm = TRUE) - 10, -1),
-      to = round(max(plot_data[["plot_points"]]$est_point, na.rm = TRUE), -1),
+      from = round(min(plot_data[["plot_points"]]$point_values, na.rm = TRUE) - 10, -1),
+      to = round(max(plot_data[["plot_points"]]$point_values, na.rm = TRUE), -1),
       by = 20
     ),
     expand = c(0, 0)

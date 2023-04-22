@@ -102,7 +102,7 @@
 #
 # dat_p_subset <- subset(dat_p_2, x_label == 2016)
 # dat_p_subset$x_label <- "y_axis_grouping"
-# dat_p_subset$est_point_no_comp <- dat_p_subset$keyword_no_comp
+# dat_p_subset$point_values_no_comp <- dat_p_subset$keyword_no_comp
 #
 # dat_p <- rbind(dat_p_2, dat_p_subset)
 #
@@ -111,7 +111,7 @@
 # land_labels <- dat_p_subset$state_var
 # land_labels[duplicated(land_labels)] <-  ""
 #
-# dat_p_subset$est_point_no_comp <- land_labels
+# dat_p_subset$point_values_no_comp <- land_labels
 #
 # dat_p <- rbind(dat_p, dat_p_subset)
 # dat_p$x_label <- factor(dat_p$x_label, levels = c("land", "y_axis_grouping", "2011", "2016", "2021"))
@@ -128,7 +128,7 @@
 #                       ggplot2::aes(x = .data$x_label,
 #                                    y = .data$keyword_no_comp, #state_var
 #                                    group = .data$depVar,
-#                                    label = .data$est_point_no_comp)) +
+#                                    label = .data$point_values_no_comp)) +
 #   ggstats::geom_stripped_rows(
 #     odd = grDevices::rgb(219, 238, 244, maxColorValue = 255),
 #     even = "#00000000") +

@@ -15,7 +15,9 @@ test_that("settings do something", {
 
   p_line <- plot_lineplot(
     plot_data = plot_dat_test,
-    line_sig = "sig_noTrend_noComp",
+    line_sig = "sig_Trend_noComp",
+    label_est = "est_Trend_noComp",
+    label_sig_bold = "est_Trend_CompWhole",
     label_sig_high = "sig_noTrendend_noComp",
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(
@@ -46,7 +48,7 @@ test_that("settings do something", {
       point_size = 1,
       split_plot = TRUE,
       split_plot_gap_width = 0.01,
-      y_axis = TRUE
+      y_axis = FALSE
     )
   )
 

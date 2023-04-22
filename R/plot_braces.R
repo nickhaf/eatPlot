@@ -16,14 +16,21 @@ plot_braces <- function(dat,
                         label_sig_high = NULL,
                         label_sig_bold = NULL,
                         plot_settings = plotsettings_lineplot()) {
+  sapply(c(label_est, label_se, label_sig_high, label_sig_bold), check_column, dat = dat)
+
+
+  dat <- fill_column(dat, column_name = label_est, filling = NA)
+  dat <- fill_column(dat, column_name = label_se, filling = NA)
+  dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
+  dat <- fill_column(dat, column_name = label_sig_bold, filling = FALSE)
 
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.
 dat$brace_label <- construct_label(dat,
-                       label_est = label_est,
-                       label_se = label_se,
-                       label_sig_high = label_sig_high,
-                       label_sig_bold = label_sig_bold,
+                       label_est = "label_est",
+                       label_se = "label_se",
+                       label_sig_high = "label_sig_high",
+                       label_sig_bold = "label_sig_bold",
                        round_est = 0,
                        round_se = 1)
 
