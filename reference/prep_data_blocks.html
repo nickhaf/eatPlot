@@ -50,7 +50,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prep_data_blocks</span><span class="op">(</span><span class="va">data_clean</span>, <span class="va">sig_niveau</span>, <span class="va">states</span>, <span class="va">sub_groups</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prep_data_blocks</span><span class="op">(</span><span class="va">data_clean</span>, <span class="va">sig_niveau</span>, <span class="va">states</span>, <span class="va">sub_groups</span>, <span class="va">merging_columns</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,16 +70,20 @@
 <dt>sub_groups</dt>
 <dd><p>Character vector of the different groups found in <code>grouping_var</code>.</p></dd>
 
+
+<dt>merging_columns</dt>
+<dd><p>Columns that won't get a suffix.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>prep_data_blocks()</code> returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:</p><ul><li><p><code>point_no_comp_data</code> contains point estimates for every years.</p></li>
-<li><p><code>trend_comp_data</code> contains all trend variables performing some kind of comparison, e.g., state vs. germany.</p></li>
+<p><code>prep_data_blocks()</code> returns a list containing five data.frames which can be used as the building blocks for more specific data.frames needed for the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> functions. These data.frames contain distinct information, and can be combined according to the requirements of the respective plots. The returned list includes the data.frames:</p><ul><li><p><code>noTrend_noComp</code> contains point estimates for every years.</p></li>
+<li><p><code>Trend_Comp</code> contains all trend variables performing some kind of comparison, e.g., state vs. germany.</p></li>
 <li><p><code>trend_no_comp_data</code> contains the trend estimates without comparisons.</p></li>
-<li><p><code>wholeGroup_point</code> contains the point estimates of the wholeGroup.</p></li>
-<li><p><code>wholeGroup_trend</code> contains the trend estimates for the wholeGroup.</p></li>
+<li><p><code>noTrend_noComp_wholeGroup</code> contains the point estimates of the wholeGroup.</p></li>
+<li><p><code>Trend_noComp_wholeGroup</code> contains the trend estimates for the wholeGroup.</p></li>
 </ul></div>
 
     <div class="section level2">

@@ -53,14 +53,14 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_single_lineplot</span><span class="op">(</span></span>
 <span>  <span class="va">plot_data</span>,</span>
 <span>  y_range <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  point_values <span class="op">=</span> <span class="st">"est_point"</span>,</span>
-<span>  point_sig <span class="op">=</span> <span class="st">"sig_point"</span>,</span>
-<span>  line_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"est_point_start"</span>, <span class="st">"est_point_end"</span><span class="op">)</span>,</span>
-<span>  line_sig <span class="op">=</span> <span class="st">"sig_trend_comp_within"</span>,</span>
-<span>  label_est <span class="op">=</span> <span class="st">"est_trend_no_comp"</span>,</span>
-<span>  label_se <span class="op">=</span> <span class="st">"se_trend_no_comp"</span>,</span>
-<span>  label_sig_high <span class="op">=</span> <span class="st">"sig_trend_comp_whole"</span>,</span>
-<span>  label_sig_bold <span class="op">=</span> <span class="st">"sig_trend_no_comp"</span>,</span>
+<span>  point_values <span class="op">=</span> <span class="st">"est_noTrend_noComp"</span>,</span>
+<span>  point_sig <span class="op">=</span> <span class="st">"sig_noTrend_noComp"</span>,</span>
+<span>  line_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"est_noTrendStart_noComp"</span>, <span class="st">"est_noTrendEnd_noComp"</span><span class="op">)</span>,</span>
+<span>  line_sig <span class="op">=</span> <span class="st">"sig_Trend_CompWithin"</span>,</span>
+<span>  label_est <span class="op">=</span> <span class="st">"est_Trend_noComp"</span>,</span>
+<span>  label_se <span class="op">=</span> <span class="st">"se_Trend_noComp"</span>,</span>
+<span>  label_sig_high <span class="op">=</span> <span class="st">"sig_Trend_CompWhole"</span>,</span>
+<span>  label_sig_bold <span class="op">=</span> <span class="st">"sig_Trend_noComp"</span>,</span>
 <span>  background_lines <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -77,19 +77,19 @@
 
 
 <dt>point_values</dt>
-<dd><p>Character string of the column name in <code>plot_data[["plot_points"]]</code> containing the y-values for the plotted points. Defaults to <code>est_point</code>.</p></dd>
+<dd><p>Character string of the column name in <code>plot_data[["plot_points"]]</code> containing the y-values for the plotted points. Defaults to <code>est_noTrend_noComp</code>.</p></dd>
 
 
 <dt>point_sig</dt>
-<dd><p>Character string of the column name containing significance values for <code>point_values</code>. Defaults to <code>"sig_point"</code>.</p></dd>
+<dd><p>Character string of the column name containing significance values for <code>point_values</code>. Defaults to <code>"sig_noTrend_noComp"</code>.</p></dd>
 
 
 <dt>line_values</dt>
-<dd><p>Character vector with two elements. Column names in <code>plot_data[["plot_lines"]]</code> containing the y-values for the plotted lines. Defaults to <code>c("est_point_start", "est_point_end")</code>. If set to <code>NULL</code>, no lines will be plotted.</p></dd>
+<dd><p>Character vector with two elements. Column names in <code>plot_data[["plot_lines"]]</code> containing the y-values for the plotted lines. Defaults to <code>c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")</code>. If set to <code>NULL</code>, no lines will be plotted.</p></dd>
 
 
 <dt>line_sig</dt>
-<dd><p>Character string of the column name containing significance values for <code>line_values</code>. Defaults to <code>"sig_trend_comp_within"</code>.</p></dd>
+<dd><p>Character string of the column name containing significance values for <code>line_values</code>. Defaults to <code>"sig_Trend_CompWithin"</code>.</p></dd>
 
 
 <dt>label_est</dt>
