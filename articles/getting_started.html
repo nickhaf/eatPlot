@@ -123,13 +123,23 @@ or two functions, different plots require different settings for
 alignments, plot sizes, filling colours and more. However, the settings
 also need to be as flexible as possible, so new plots can be easily
 incorporated as well. To provide default plotsettings,
-<code>eatPlot</code> provides multiple lists with predefined plot
+<code>eatPlot</code> contains multiple lists with predefined plot
 settings for different plot types. At the same time,
 <code><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot()</a></code> or
 <code><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot()</a></code> are functions which facilitate
 the generation of new lists with altered settings. See
 <code><a href="../articles/plot_settings.html">vignette("plot_settings")</a></code> for further instructions on
 altering your own plots.</p>
+</div>
+<div class="section level3">
+<h3 id="lineplots">Lineplots<a class="anchor" aria-label="anchor" href="#lineplots"></a>
+</h3>
+<p>Lineplots are plotted using the <code><a href="../reference/plot_lineplot.html">plot_lineplot()</a></code>
+function. Input data is the list of data.frames prepated by
+<code><a href="../reference/prep_plot.html">prep_plot()</a></code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span><span class="va">dat_plot</span><span class="op">)</span></span></code></pre></div>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="tables-and-barplots">Tables and barplots<a class="anchor" aria-label="anchor" href="#tables-and-barplots"></a>
@@ -143,38 +153,31 @@ barplots need to be combined to the same plot, the function
 <code><a href="../reference/prep_plot.html">prep_plot()</a></code> or the according <code>data.frame</code>
 <code>plot_tablebar</code>. This way, you can extract and edit the
 <code>plot_tablebar</code> <code>data.frame</code> yourself, e.g. if
-some specific rows have to be removed. Then we provide further
-information about the variables that should be plotted as table columns,
-headers, and default settings (if needed).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+some specific rows have to be removed:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_plot_2011</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_plot</span><span class="op">$</span><span class="va">plot_tablebar</span>, <span class="va">year_start</span> <span class="op">==</span> <span class="fl">2011</span><span class="op">)</span></span>
 <span><span class="va">dat_plot_2011</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_plot_2011</span>, <span class="va">year_end</span> <span class="op">==</span> <span class="fl">2016</span><span class="op">)</span></span>
 <span><span class="va">dat_plot_2011</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_plot_2011</span>, <span class="va">competence_var</span> <span class="op">==</span> <span class="st">"lesen"</span><span class="op">)</span></span>
-<span><span class="va">dat_plot_2011</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_plot_2011</span>, <span class="va">grouping_var</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">dat_plot_2011</span>,</span>
+<span><span class="va">dat_plot_2011</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_plot_2011</span>, <span class="va">grouping_var</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p>When we have cleaned our data, we can plot a tablebarplot by
+providing variables that should be plotted as table columns, as well as
+the headers, and default settings (if needed).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">dat_plot_2011</span>,</span>
+<span>              bar_est <span class="op">=</span> <span class="st">"est_Trend_CompWhole"</span>,</span>
+<span>              bar_header <span class="op">=</span> <span class="st">"Wert"</span>,</span>
 <span>              columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Land"</span>, <span class="st">"Jahr"</span>, <span class="st">"Wert"</span><span class="op">)</span>,</span>
 <span>              columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"state_var"</span>, <span class="st">"year_start"</span>, <span class="st">"est_noTrendStart_noComp"</span><span class="op">)</span>,</span>
 <span>              y_axis <span class="op">=</span> <span class="st">"state_var"</span>,</span>
-<span>              plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>                <span class="co"># columns_width = c(3, 1, 1),</span></span>
-<span>                <span class="co">#                                         columns_alignment = c(0, 0.5, 0.5),</span></span>
-<span>                <span class="co">#                                         columns_nudge_x = c(0, 0, 0),</span></span>
-<span>                <span class="co">#                                         headers_alignment = c()</span></span>
-<span>                <span class="co">#                                         axis_x_background_width_x = 0.05</span></span>
-<span>                                                        <span class="op">)</span></span>
-<span>              <span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in min(scale_breaks): no non-missing arguments to min; returning Inf</span></span>
-<span><span class="co">#&gt; Warning in max(scale_breaks): no non-missing arguments to max; returning -Inf</span></span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Sinnvolle defaults überlegen</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="tables">Tables<a class="anchor" aria-label="anchor" href="#tables"></a>
-</h4>
-<p>Tables</p>
-</div>
+<span>              plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">30</span>, <span class="fl">30</span><span class="op">)</span>,</span>
+<span>                                                        columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>                                                        columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>                                                        default_list <span class="op">=</span> <span class="va">barplot_MinSta</span><span class="op">)</span></span>
+<span>              <span class="op">)</span></span></code></pre></div>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-5-1.png" width="700">
+Note that we have to change the column alignment here, so the column
+values are aligned correctly, and that we have to change the column
+width, if we don’t want alle columns to have the same size.</p>
 </div>
 <div class="section level3">
 <h3 id="combining-tables-and-barplots">Combining tables and barplots<a class="anchor" aria-label="anchor" href="#combining-tables-and-barplots"></a>
