@@ -41,6 +41,8 @@ plot_dat <- prep_plot(
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
   
+   p_line
+   
   save_plot(p_line, filename = "../split_lineplot_2_books.pdf")
 ```
 
@@ -68,6 +70,8 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
       default_list = lineplot_chpt_4_germany
     )
   )
+  
+  p_line
   
   ## We dont't want a whole A4 page for this plot, but maybe the half:
   save_plot(p_line, 
@@ -167,6 +171,8 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
   # Combine plots ---------
   minsta_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
 
+  minsta_plot
+  
   save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
 ```
 
@@ -289,8 +295,11 @@ for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp
     )
   )
 
+  # combine plots ---------
   c_plot <- combine_plots(list(p_bar_1, p_bar_2))
 
+  c_plot
+  
   save_plot(c_plot, filename = "../Kap3_2022_MSA_trend.pdf")
 ```
 
