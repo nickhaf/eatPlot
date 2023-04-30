@@ -217,6 +217,7 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   if (!is.null(grouping_var) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
   }
+   plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "wholeGroup",]
   #################
   ## plot_braces ##
   #################
@@ -278,7 +279,6 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
 
 
   ## Order columns
-
   plot_dat <- lapply(plot_dat, function(x){
     x <- x[,grep("\\.x$|\\.y$", colnames(x), invert = TRUE)]
     x[,order(colnames(x))]

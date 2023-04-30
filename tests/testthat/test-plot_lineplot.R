@@ -172,6 +172,7 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
 
   p_line <- plot_lineplot(
     plot_dat = plot_dat_3,
+    point_sig = "sig_noTrend_noComp",
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
     years_lines = list(c(2011, 2016), c(2016, 2021)),
@@ -244,6 +245,7 @@ test_that("competence_vars with 3 groups", {
 
   p_line <- plot_lineplot(
     plot_dat = plot_dat_test,
+    point_sig = "sig_noTrend_noComp",
     seperate_plot_var = "competence_var",
     line_sig = "sig_Trend_noComp",
     label_sig_high = NULL,
