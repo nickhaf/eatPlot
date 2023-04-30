@@ -1,0 +1,79 @@
+---
+title: "BT 22 example plots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bt22_plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(eatPlot)
+```
+
+
+# Lineplots
+## Chapter 4 Bundesländer
+```{r chpt4_line}
+## Prepare the data with 'KBuecher_imp3' as grouping_var
+plot_dat <- prep_plot(
+    dat = trend_books,
+    competence = "GL",
+    grouping_var = "KBuecher_imp3"
+  )
+
+## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat, 
+                               column_name = "state_var", 
+                               subsetter = "wholeGroup", 
+                               remove = TRUE)
+ ## Nochmal die genauen Spalten raussuchen, am besten mit altem Plot zusammen: 
+  p_line <- plot_lineplot(
+    plot_dat = plot_dat,
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
+    plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
+  )
+  
+  save_plot(p_line, filename = "../split_lineplot_2_books.pdf")
+```
+
+## Chapter 4 Germany
+```{r}
+plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
+
+  plot_dat_test <- prep_plot(
+    dat = plot_dat_kb,
+    grouping_var = "KBuecher_imp3",
+    states = "wholeGroup"
+  )
+
+
+  p_line <- plot_lineplot(
+    plot_dat = plot_dat_test,
+    seperate_plot_var = "competence_var",
+    label_sig_high = NULL,
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
+    background_lines = FALSE,
+    plot_settings = plotsettings_lineplot(
+      default_list = lineplot_chpt_4_germany
+    )
+  )
+  
+  save_plot(p_line_deutschland, 
+            filename = "../adjusted_means_ger.pdf", 
+            height = 226.2 / 2 + 10)
+  
+```
+
+
+# Tables/Barplots
+## Chapter 3
