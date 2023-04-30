@@ -20,6 +20,8 @@ plot_single_lineplot(
 )
 }
 \arguments{
+\item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
+
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
 \item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
