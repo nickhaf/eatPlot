@@ -2,9 +2,7 @@ test_that("settings do something", {
   plot_dat_test <- prep_plot(
     dat = trend_books,
     competence = "GL",
-    grouping_var = "KBuecher_imp3",
-    x_years = list(c(2011, 2016), c(2016, 2021)),
-    x_braces = list(c(2011, 2016), c(2016, 2021))
+    grouping_var = "KBuecher_imp3"
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
@@ -14,12 +12,14 @@ test_that("settings do something", {
 
 
   p_line <- plot_lineplot(
-    plot_data = plot_dat_test,
+    plot_dat = plot_dat_test,
     line_sig = "sig_Trend_CompWhole",
     label_est = "est_Trend_noComp",
     label_sig_bold = "est_Trend_CompWhole",
     label_sig_high = "sig_noTrendEnd_noComp",
     point_values = "est_noTrend_noComp",
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(
       axis_x_background_colour = "red",
