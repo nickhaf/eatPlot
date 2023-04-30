@@ -46,7 +46,7 @@ plot_dat <- prep_plot(
 ```
 
 ## Chapter 4 Germany
-```{r}
+```{r chpt_4_ger}
 plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
 
   plot_dat_test <- prep_plot(
@@ -77,3 +77,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
 
 # Tables/Barplots
 ## Chapter 3
+```{r}
+
+```
+
