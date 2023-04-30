@@ -21,10 +21,10 @@ library(eatPlot)
 # List of predefined plotsettings-objects
 ## Barplots
 
-* `[barplot_MinSta]`
-* `[barplot_MinSta_trend]`
+* `barplot_MinSta`
+* `barplot_MinSta_trend`
 
 ## Lineplots
 
-* `[lineplot_chpt_4`]
-* `[lineplot_chpt_4_germany]`
+* `lineplot_chpt_4`
+* `lineplot_chpt_4_germany`
