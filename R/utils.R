@@ -152,8 +152,6 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
 
-
-
   return(data_long)
 }
 
