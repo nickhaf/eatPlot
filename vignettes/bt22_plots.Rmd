@@ -67,7 +67,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
     )
   )
   
-  save_plot(p_line_deutschland, 
+  save_plot(p_line, 
             filename = "../adjusted_means_ger.pdf", 
             height = 226.2 / 2 + 10)
   
