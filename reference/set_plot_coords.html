@@ -24,6 +24,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/bt22_plots.html">BT 22 example plots</a>
     <a class="dropdown-item" href="../articles/data_preperation.html">Data Preperation</a>
     <a class="dropdown-item" href="../articles/getting_started.html">Getting Started</a>
     <a class="dropdown-item" href="../articles/plot_settings.html">Plot settings</a>
@@ -51,7 +52,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">set_plot_coords</span><span class="op">(</span></span>
-<span>  <span class="va">plot_data</span>,</span>
+<span>  <span class="va">plot_dat</span>,</span>
 <span>  <span class="va">point_values</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -59,12 +60,12 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>plot_data</dt>
+    <dl><dt>plot_dat</dt>
 <dd><p>Input is a list prepared by <code><a href="prep_plot.html">prep_plot()</a></code>.`</p></dd>
 
 
 <dt>point_values</dt>
-<dd><p>Character string of the column name in <code>plot_data[["plot_points"]]</code> containing the y-values for the plotted points. Defaults to <code>est_noTrend_noComp</code>.</p></dd>
+<dd><p>Character string of the column name in <code>plot_dat[["plot_points"]]</code> containing the y-values for the plotted points. Defaults to <code>est_noTrend_noComp</code>.</p></dd>
 
 
 <dt>plot_settings</dt>

@@ -4,6 +4,9 @@
     <loc>https://nickhaf.github.io/eatPlot/404.html</loc>
   </url>
   <url>
+    <loc>https://nickhaf.github.io/eatPlot/articles/bt22_plots.html</loc>
+  </url>
+  <url>
     <loc>https://nickhaf.github.io/eatPlot/articles/data_preperation.html</loc>
   </url>
   <url>
@@ -29,6 +32,9 @@
   </url>
   <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/barplot_MinSta_trend.html</loc>
+  </url>
+  <url>
+    <loc>https://nickhaf.github.io/eatPlot/reference/calc_MinStand.html</loc>
   </url>
   <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/clean_data.html</loc>
