@@ -211,7 +211,7 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
     ) +
     ggplot2::scale_x_continuous(breaks = scale_breaks,
                                 limits = c(NA, max(column_x_coords$right)),
-                                expand = ggplot2::expansion(mult = c(0, 0.025))) +
+                                expand = ggplot2::expansion(mult = c(0.025, 0.025))) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$axis_x_background_width_x))) +
     ggplot2::geom_rect(
       ggplot2::aes(

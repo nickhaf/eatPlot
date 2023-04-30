@@ -15,9 +15,9 @@ plot_points(
 \arguments{
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
 
-\item{point_values}{Character string of the column name in \code{plot_data[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
+\item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_noComp"}.}
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_CompWhole"}.}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 

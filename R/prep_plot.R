@@ -9,8 +9,6 @@
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
 #' @param competence_var Character string containing the column name in `dat` that contains the different competences. Defaults to `"kb"`.
-#' @param x_years  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
-#' @param x_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #' @param plot_mean Logical value indicating whether the mean of the subgroups should be plotted as well.
 #' @param parameter Character string of the parameter value that should be reported. Defaults to `"mean"`.
@@ -30,8 +28,6 @@ prep_plot <- function(dat,
                        state_var = "TR_BUNDESLAND",
                        group_var = "group",
                        grouping_var = NULL,
-                       x_years = NULL,
-                       x_braces = NULL,
                        sig_niveau = 0.05,
                        plot_mean = FALSE,
                        parameter = "mean") {
@@ -50,8 +46,6 @@ stopifnot(is.character(states) | is.null(states))
 stopifnot(is.character(state_var))
 stopifnot(is.character(competence_var))
 stopifnot(is.character(group_var))
-stopifnot(all(sapply(x_years, is.numeric)) | is.null(x_years))
-stopifnot(all(sapply(x_braces, is.numeric)) | is.null(x_braces))
 stopifnot(is.numeric(sig_niveau))
 stopifnot(is.logical(plot_mean))
 stopifnot(is.character(parameter))
@@ -218,30 +212,16 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   ################
   ## plot_lines ##
   ################
-  if (is.null(x_years)) {
-    lineplot_years <- consecutive_numbers(c(trend_data_final$year_start, trend_data_final$year_end))
-  } else {
-    lineplot_years <- x_years
-  }
-  plot_dat[["plot_lines"]] <- trend_data_final[filter_years(trend_data_final, lineplot_years), ]
+  plot_dat[["plot_lines"]] <- trend_data_final
 
   if (!is.null(grouping_var) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "noGroup", ]
   }
+   plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "wholeGroup",]
   #################
   ## plot_braces ##
   #################
-  if (is.null(x_braces)) {
-    ## Draw braces from last year to every other year
-    plot_years <- unique(c(trend_data_final$year_start, trend_data_final$year_end))
-    braceplot_years <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
-      c(x, max(plot_years))
-    })
-  } else {
-    braceplot_years <- x_braces
-  }
-
-  plot_dat[["plot_braces"]] <- trend_data_final[filter_years(trend_data_final, braceplot_years), ]
+  plot_dat[["plot_braces"]] <- trend_data_final
 
   if (!is.null(grouping_var) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
@@ -250,7 +230,7 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   ###########################
   ## plot_background_lines ##
   ###########################
-  plot_dat[["plot_background_lines"]] <- trend_data_wholeGroup[filter_years(trend_data_wholeGroup, lineplot_years), ]
+  plot_dat[["plot_background_lines"]] <- trend_data_wholeGroup
 
   ##############
   ## plot_bar ##
@@ -263,21 +243,23 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   #################
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
-  dat_long <- stats::reshape(plot_dat[["plot_lines"]][,
-                                                      c("depVar",
-                                                        "grouping_var",
-                                                        "year_start",
-                                                        "year_end",
-                                                        "years_Trend",
-                                                        "state_var",
-                                                        "competence_var")],
-    direction = "long",
-    varying = c("year_start", "year_end"),
-    sep = "_"
-  )
 
-  dat_long <- remove_columns(dat_long, c("time", "id"))
-  plot_dat[["plot_points"]] <- merge(dat_long,
+   plot_dat[["plot_points"]] <- stats::reshape(plot_dat[["plot_lines"]][,
+                                                       c("depVar",
+                                                         "grouping_var",
+                                                         "year_start",
+                                                         "year_end",
+                                                         "years_Trend",
+                                                         "state_var",
+                                                         "competence_var")],
+                              direction = "long",
+                              varying = c("year_start", "year_end"),
+                              sep = "_"
+   )
+
+
+   plot_dat[["plot_points"]] <- remove_columns(plot_dat[["plot_points"]], c("time", "id"))
+  plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
                                      list_building_blocks[["noTrend_noComp"]],
                                      by = c("grouping_var",
                                             "state_var",
@@ -285,12 +267,18 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
                                             "competence_var",
                                             "depVar"),
                                      all.x = TRUE)
-  plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
+  plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
+                                     comp_within_whole_noTrend,
+                                     by = c("grouping_var",
+                                            "state_var",
+                                            "year",
+                                            "competence_var",
+                                            "depVar"),
+                                     all.x = TRUE)
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
 
 
   ## Order columns
-
   plot_dat <- lapply(plot_dat, function(x){
     x <- x[,grep("\\.x$|\\.y$", colnames(x), invert = TRUE)]
     x[,order(colnames(x))]
@@ -299,12 +287,4 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   return(plot_dat)
 }
 
-# Utils -------------------------------------------------------------------
-# Return rows with respective start and end years.
-filter_years <- function(dat, year_list) {
-  # Filter the respective rows
-  year_rows <- unlist(lapply(year_list, function(x) {
-    which(dat$year_start == x[1] & dat$year_end == x[2])
-  }))
-  return(year_rows)
-}
+

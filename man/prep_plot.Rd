@@ -12,8 +12,6 @@ prep_plot(
   state_var = "TR_BUNDESLAND",
   group_var = "group",
   grouping_var = NULL,
-  x_years = NULL,
-  x_braces = NULL,
   sig_niveau = 0.05,
   plot_mean = FALSE,
   parameter = "mean"
@@ -33,10 +31,6 @@ prep_plot(
 \item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
 
 \item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
-
-\item{x_years}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
-
-\item{x_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 

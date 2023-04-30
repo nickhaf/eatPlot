@@ -47,7 +47,6 @@ data.frame(
 )
 })
 
-
 test_that("column length is checked correctly", {
   column_set <- list("a", "b")
   expect_equal(check_length(column_set, leng = 2), list("a", "b"))
@@ -96,13 +95,12 @@ test_that("continous barplot looks the same", {
   vdiffr::expect_doppelganger("Minimal_tablebar", p_bar)
 })
 
-
 test_that("Example barplot is plotted correctly", {
 
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
     parameter = "1"
-  )[["plot_lines"]]
+  )[["plot_tablebar"]]
 
 
   dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
@@ -142,6 +140,7 @@ test_that("Example barplot is plotted correctly", {
 })
 
 test_that("Example barplot long format is plotted correctly", {
+
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
     parameter = "1"

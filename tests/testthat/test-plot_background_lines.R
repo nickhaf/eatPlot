@@ -14,6 +14,6 @@ test_that("backgroundlines is still the same", {
     ))
 })
 
-# plot_data <- prep_plot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
+# plot_dat <- prep_plot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
 # ggplot2::ggplot() +
-#   plot_background_lines(data_plot_background_lines = plot_data[["plot_background_lines"]])
+#   plot_background_lines(data_plot_background_lines = plot_dat[["plot_background_lines"]])

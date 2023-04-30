@@ -1,56 +1,68 @@
 #' Title
 #'
-#' @param plot_data Input is a list prepared by [prep_plot()].`
+#' @param plot_dat Input is a list prepared by [prep_plot()].`
 #' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
-#' @param point_values Character string of the column name in `plot_data[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_noComp"`.
-#' @param line_values Character vector with two elements. Column names in `plot_data[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
+#' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_CompWhole"`.
+#' @param line_values Character vector with two elements. Column names in `plot_dat[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_CompWithin"`.
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
+#' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
+#' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
 #' @export
 #'
 #' @examples # tbd
-plot_lineplot <- function(plot_data,
+plot_lineplot <- function(plot_dat,
                           seperate_plot_var = "state_var",
                           point_values = "est_noTrend_noComp",
-                          point_sig = "sig_noTrend_noComp",
+                          point_sig = "sig_noTrend_CompWhole",
                           line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                           line_sig = "sig_Trend_CompWithin",
                           label_est = "est_Trend_noComp",
                           label_se = "se_Trend_noComp",
                           label_sig_high = "sig_Trend_CompWhole",
                           label_sig_bold = "sig_Trend_noComp",
+                          years_lines = NULL,
+                          years_braces = NULL,
                           background_lines = TRUE,
                           plot_settings = plotsettings_lineplot()) {
 
-check_plotsettings_lineplot(plot_settings)
+  stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
+  stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
 
-  states <- unique(plot_data[[1]]$state_var)
-  tiles <- unique(plot_data[[1]][, seperate_plot_var]) #Hier die Level nehmen
+  check_plotsettings_lineplot(plot_settings)
+
+
+# filter years ------------------------------------------------------------
+  ## Eigene Funktion:
+plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
+
+  states <- unique(plot_dat[[1]]$state_var)
+  tiles <- unique(plot_dat[[1]][, seperate_plot_var]) #Hier die Level nehmen
 
   plot_list <- list()
   if(!is.null(point_values)){
-  range_est <- range(plot_data[["plot_points"]][, point_values], na.rm = TRUE)
+  range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
   }else{
     stop("Please provide point-values.")
   }
   position <- 1
 
   for (i in tiles) {
-    plot_data_tile <- filter_rows(plot_data, column_name = seperate_plot_var, subsetter = i)
+    plot_dat_tile <- filter_rows(plot_dat, column_name = seperate_plot_var, subsetter = i)
     if (seperate_plot_var == "competence_var") {
-      plot_data_tile[["plot_background_lines"]] <- plot_data_tile[["plot_background_lines"]][plot_data_tile[["plot_background_lines"]]$competence_var == i, ]
+      plot_dat_tile[["plot_background_lines"]] <- plot_dat_tile[["plot_background_lines"]][plot_dat_tile[["plot_background_lines"]]$competence_var == i, ]
     }
 
     p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
-        plot_data = plot_data_tile,
+        plot_dat = plot_dat_tile,
         y_range = range_est,
         point_values = point_values,
         point_sig = point_sig,
@@ -63,8 +75,8 @@ check_plotsettings_lineplot(plot_settings)
         background_lines = background_lines,
         plot_settings = plot_settings
       ) +
-      ggplot2::labs(title = unique(plot_data_tile[["plot_braces"]][, seperate_plot_var])) +
-      set_plot_coords(plot_data,
+      ggplot2::labs(title = unique(plot_dat_tile[["plot_braces"]][, seperate_plot_var])) +
+      set_plot_coords(plot_dat,
                       point_values = point_values,
                       plot_settings = plot_settings)
 
@@ -81,7 +93,7 @@ check_plotsettings_lineplot(plot_settings)
   # Add y axis --------------------------------------------------------------
   if (plot_settings$y_axis == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
-      plot_y_axis(plot_data)
+      plot_y_axis(plot_dat)
 
     positions_y_axis <- calc_y_positions(states, plot_settings$n_cols)
 
@@ -95,7 +107,7 @@ check_plotsettings_lineplot(plot_settings)
     widths_setting <- 1 / plot_settings$n_cols
   }
 
-  margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_data[["plot_braces"]]$grouping_var)) - 1) # more brace labels need more space
+  margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_dat[["plot_braces"]]$grouping_var)) - 1) # more brace labels need more space
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = plot_settings$n_cols, widths = widths_setting) &
@@ -110,4 +122,42 @@ check_plotsettings_lineplot(plot_settings)
         "npc"
       ) # t, r, b, l
     )
+}
+
+
+# Utils -------------------------------------------------------------------
+# Return rows with respective start and end years.
+filter_years <- function(dat, year_list) {
+  # Filter the respective rows
+  year_rows <- unlist(lapply(year_list, function(x) {
+    which(dat$year_start == x[1] & dat$year_end == x[2])
+  }))
+  return(year_rows)
+}
+
+
+filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL){
+
+  if (is.null(years_lines)) {
+    lineplot_years <- consecutive_numbers(c(plot_dat[["plot_lines"]]$year_start, plot_dat[["plot_lines"]]$year_end))
+  } else {
+    lineplot_years <- years_lines
+  }
+
+  if (is.null(years_braces)) {
+    ## Draw braces from last year to every other year
+    plot_years <- unique(c(plot_dat[["plot_braces"]]$year_start, plot_dat[["plot_braces"]]$year_end))
+    braceplot_years <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
+      c(x, max(plot_years))
+    })
+  } else {
+    braceplot_years <- years_braces
+  }
+
+  plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][filter_years(plot_dat[["plot_lines"]], lineplot_years), ]
+  plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][filter_years(plot_dat[["plot_braces"]], braceplot_years), ]
+  plot_dat[["plot_background_lines"]] <- plot_dat[["plot_background_lines"]][filter_years(plot_dat[["plot_background_lines"]], lineplot_years), ]
+  plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$years_Trend %in% c(unique(plot_dat$plot_lines$years_Trend), unique(plot_dat$plot_braces$years_Trend)), ]
+
+  return(plot_dat)
 }
