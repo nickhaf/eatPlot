@@ -3,7 +3,7 @@
 #' @param plot_dat Input is a list prepared by [prep_plot()].`
 #' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
 #' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_noComp"`.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_CompWhole"`.
 #' @param line_values Character vector with two elements. Column names in `plot_dat[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_CompWithin"`.
 #' @param label_est Character string of the column name containing the brace labels.
@@ -21,7 +21,7 @@
 plot_lineplot <- function(plot_dat,
                           seperate_plot_var = "state_var",
                           point_values = "est_noTrend_noComp",
-                          point_sig = "sig_noTrend_noComp",
+                          point_sig = "sig_noTrend_CompWhole",
                           line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                           line_sig = "sig_Trend_CompWithin",
                           label_est = "est_Trend_noComp",
@@ -136,7 +136,7 @@ filter_years <- function(dat, year_list) {
 }
 
 
-filter_plot_years <- function(plot_dat, years_lines, years_braces){
+filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL){
 
   if (is.null(years_lines)) {
     lineplot_years <- consecutive_numbers(c(plot_dat[["plot_lines"]]$year_start, plot_dat[["plot_lines"]]$year_end))
@@ -157,7 +157,7 @@ filter_plot_years <- function(plot_dat, years_lines, years_braces){
   plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][filter_years(plot_dat[["plot_lines"]], lineplot_years), ]
   plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][filter_years(plot_dat[["plot_braces"]], braceplot_years), ]
   plot_dat[["plot_background_lines"]] <- plot_dat[["plot_background_lines"]][filter_years(plot_dat[["plot_background_lines"]], lineplot_years), ]
-  plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$year %in% unlist(c(lineplot_years, braceplot_years)), ]
+  plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$years_Trend %in% c(unique(plot_dat$plot_lines$years_Trend), unique(plot_dat$plot_braces$years_Trend)), ]
 
   return(plot_dat)
 }

@@ -15,8 +15,8 @@ plot_lineplot(
   label_se = "se_Trend_noComp",
   label_sig_high = "sig_Trend_CompWhole",
   label_sig_bold = "sig_Trend_noComp",
-  x_years = NULL,
-  x_braces = NULL,
+  years_lines = NULL,
+  years_braces = NULL,
   background_lines = TRUE,
   plot_settings = plotsettings_lineplot()
 )
@@ -42,9 +42,9 @@ plot_lineplot(
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
 
-\item{x_years}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
+\item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
 
-\item{x_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
+\item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
 \item{background_lines}{Logical, indicating whether the whole group trend should be plotted in the background.}
 

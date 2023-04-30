@@ -165,16 +165,19 @@ test_that("significances are displayed correctly in the labels", {
 })
 
 test_that("Example brace plot is still the same", {
-  plot_data <- prep_plot(
+  plot_dat <- prep_plot(
     dat = trend_books,
     grouping_var = "KBuecher_imp3",
     competence = "GL"
   )
 
+  plot_dat <- filter_plot_years(plot_dat)
+
+
   vdiffr::expect_doppelganger(
     "Brace plot trend_books",
     ggplot2::ggplot() +
-      plot_braces(plot_data[["plot_braces"]][plot_data[["plot_braces"]]$state_var == "Land-45" & !is.na(plot_data[["plot_braces"]]$state_var), ],
+      plot_braces(plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$state_var == "Land-45" & !is.na(plot_dat[["plot_braces"]]$state_var), ],
         y_range = c(397, 552),
         label_est = "est_Trend_noComp",
         label_se = "se_Trend_noComp",
@@ -200,7 +203,6 @@ test_that("Adjacent braces", {
     est_noTrendEnd_noComp = 500:503,
     years_Trend = c("20112015", "20112015", "20152023", "20152023"),
     competence_var = "a"
-
   )
 
   vdiffr::expect_doppelganger(

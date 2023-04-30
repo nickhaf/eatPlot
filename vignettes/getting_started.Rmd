@@ -28,8 +28,8 @@ The first step is the data preperation. This is handeled by the function `prep_p
 dat_plot <- prep_plot(trend_books, 
                       competence = "GL",
                       grouping_var = "KBuecher_imp3",
-                      x_years = list(c(2011, 2016), c(2016, 2021)),
-    x_braces = list(c(2011, 2016), c(2016, 2021)
+                      years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)
                       )
 )
 ```

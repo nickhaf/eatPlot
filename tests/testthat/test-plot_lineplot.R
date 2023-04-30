@@ -7,7 +7,6 @@ test_that("settings do something", {
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
   plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
@@ -105,23 +104,23 @@ test_that("lineplot chpt_4 with one group is still the same", {
   plot_dat_test <- prep_plot(
     dat = trend_books_changed,
     competence = "GL",
-    grouping_var = "KBuecher_imp3",
-    x_years = list(c(2011, 2016), c(2016, 2021)),
-    x_braces = list(c(2011, 2016), c(2016, 2021))
+    grouping_var = "KBuecher_imp3"
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
   plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
-    plot_data = plot_dat_test,
+    plot_dat = plot_dat_test,
+    point_sig = "sig_noTrend_CompWhole",
     point_values = "est_noTrend_noComp",
     line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
   vdiffr::expect_doppelganger("lineplot_chpt_4_1group", p_line)
@@ -132,21 +131,20 @@ test_that("lineplot chpt_4 with two groups is still the same", {
   plot_dat_test <- prep_plot(
     dat = trend_books,
     competence = "GL",
-    grouping_var = "KBuecher_imp3",
-    x_years = list(c(2011, 2016), c(2016, 2021)),
-    x_braces = list(c(2011, 2016), c(2016, 2021))
+    grouping_var = "KBuecher_imp3"
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
   plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
-    plot_data = plot_dat_test,
+    plot_dat = plot_dat_test,
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
   )
 
@@ -165,20 +163,19 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
   plot_dat_3 <- prep_plot(
     dat = books_3,
     competence = "GL",
-    grouping_var = "KBuecher_imp3",
-    x_years = list(c(2011, 2016), c(2016, 2021)),
-    x_braces = list(c(2011, 2016), c(2016, 2021))
+    grouping_var = "KBuecher_imp3"
   )
 
   plot_dat_3 <- filter_rows(plot_dat_3, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_3$plot_points$sig_noTrend_noComp[1:10] <- FALSE
   plot_dat_3$plot_points <- plot_dat_3$plot_points[!(plot_dat_3$plot_points$years_Trend == "20112016" & plot_dat_3$plot_points$grouping_var == "TRUE"), ]
 
   p_line <- plot_lineplot(
-    plot_data = plot_dat_3,
+    plot_dat = plot_dat_3,
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4
     )
@@ -201,17 +198,17 @@ test_that("competence_vars can be used as tiles", {
   plot_dat_test <- prep_plot(
     dat = trend_books_2,
     grouping_var = "KBuecher_imp3",
-    states = "wholeGroup",
-    x_years = list(c(2011, 2016), c(2016, 2021)),
-    x_braces = list(c(2011, 2016), c(2016, 2021))
+    states = "wholeGroup"
   )
 
 
   p_line <- plot_lineplot(
-    plot_data = plot_dat_test,
+    plot_dat = plot_dat_test,
     seperate_plot_var = "competence_var",
     line_sig = "sig_Trend_noComp",
     label_sig_high = NULL,
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(
       default_list = lineplot_chpt_4_germany
     )
@@ -243,16 +240,15 @@ test_that("competence_vars with 3 groups", {
   plot_dat_test <- prep_plot(
     dat = books_3,
     grouping_var = "KBuecher_imp3",
-    states = "wholeGroup",
-    x_years = list(c(2011, 2016), c(2016, 2021)),
-    x_braces = list(c(2011, 2016), c(2016, 2021))
-  )
+    states = "wholeGroup")
 
   p_line <- plot_lineplot(
-    plot_data = plot_dat_test,
+    plot_dat = plot_dat_test,
     seperate_plot_var = "competence_var",
     line_sig = "sig_Trend_noComp",
     label_sig_high = NULL,
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
       default_list = lineplot_chpt_4_germany
@@ -268,22 +264,21 @@ test_that("adjusted means states", {
   plot_dat_test <- prep_plot(
     dat = trend_books,
     competence = "GL",
-    grouping_var = "KBuecher_imp3",
-    x_years = list(c(2016, 2021)),
-    x_braces = list(c(2016, 2021))
+    grouping_var = "KBuecher_imp3"
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
-  plot_dat_test$plot_points$sig_noTrend_noComp[1:10] <- FALSE
   plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
-    plot_data = plot_dat_test,
+    plot_dat = plot_dat_test,
     point_sig = NULL,
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
+    years_lines = list(c(2016, 2021)),
+    years_braces = list(c(2016, 2021)),
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(margin_bottom = 0.03, default_list = lineplot_chpt_4)
   )
@@ -306,17 +301,17 @@ test_that("adjusted means for whole group", {
   plot_dat_test_kb <- prep_plot(
     dat = trend_books_2,
     states = "wholeGroup",
-    grouping_var = "KBuecher_imp3",
-    x_years = list(c(2016, 2021)),
-    x_braces = list(c(2016, 2021))
+    grouping_var = "KBuecher_imp3"
   )
 
   p_line_deutschland <- plot_lineplot(
-    plot_data = plot_dat_test_kb,
+    plot_dat = plot_dat_test_kb,
     seperate_plot_var = "competence_var",
     point_sig = NULL,
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
+    years_lines = list(c(2016, 2021)),
+    years_braces = list(c(2016, 2021)),
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4_germany)
   )

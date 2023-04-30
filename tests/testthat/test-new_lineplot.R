@@ -5,8 +5,8 @@
 # plot_dat_test <- prep_plot(dat = uneq_groups,
 #                             competence = "GL",
 #                             grouping_var = "mh",
-#                             x_years = list(c(2011, 2016), c(2016, 2021)),
-#                             x_braces = list(c(2011, 2016), c(2016, 2021))
+#                             years_lines = list(c(2011, 2016), c(2016, 2021)),
+#                             years_braces = list(c(2011, 2016), c(2016, 2021))
 # )
 #
 # plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
@@ -30,8 +30,8 @@
 # plot_dat_test <- prep_plot(dat = uneq_groups,
 #                        competence = "GL",
 #                        grouping_var = "mh",
-#                        x_years = list(c(2011, 2016), c(2016, 2021)),
-#                        x_braces = list(c(2011, 2016), c(2016, 2021))
+#                        years_lines = list(c(2011, 2016), c(2016, 2021)),
+#                        years_braces = list(c(2011, 2016), c(2016, 2021))
 #                        )
 #
 # plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
@@ -65,8 +65,8 @@
 # plot_dat_3 <- prep_plot(dat = uneq_3,
 #                        competence = "GL",
 #                        grouping_var = "mh",
-#                        x_years = list(c(2011, 2016), c(2016, 2021)),
-#                        x_braces = list(c(2011, 2021), c(2016, 2021))
+#                        years_lines = list(c(2011, 2016), c(2016, 2021)),
+#                        years_braces = list(c(2011, 2021), c(2016, 2021))
 #                        )
 #
 # plot_dat_3 <- filter_rows(plot_dat_3, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
@@ -94,8 +94,8 @@
 # plot_dat_test <- prep_plot(dat = uneq_groups,
 #                        grouping_var = "mh",
 #                        states = "wholeGroup",
-#                        x_years = list(c(2011, 2016), c(2016, 2021)),
-#                        x_braces = list(c(2011, 2016), c(2016, 2021))
+#                        years_lines = list(c(2011, 2016), c(2016, 2021)),
+#                        years_braces = list(c(2011, 2016), c(2016, 2021))
 #                        )
 
 #

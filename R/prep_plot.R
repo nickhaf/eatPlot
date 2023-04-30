@@ -242,22 +242,32 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   #################
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
-  dat_long <- stats::reshape(plot_dat[["plot_lines"]][,
-                                                      c("depVar",
-                                                        "grouping_var",
-                                                        "year_start",
-                                                        "year_end",
-                                                        "years_Trend",
-                                                        "state_var",
-                                                        "competence_var")],
-    direction = "long",
-    varying = c("year_start", "year_end"),
-    sep = "_"
-  )
 
-  dat_long <- remove_columns(dat_long, c("time", "id"))
-  plot_dat[["plot_points"]] <- merge(dat_long,
+   plot_dat[["plot_points"]] <- stats::reshape(plot_dat[["plot_lines"]][,
+                                                       c("depVar",
+                                                         "grouping_var",
+                                                         "year_start",
+                                                         "year_end",
+                                                         "years_Trend",
+                                                         "state_var",
+                                                         "competence_var")],
+                              direction = "long",
+                              varying = c("year_start", "year_end"),
+                              sep = "_"
+   )
+
+
+   plot_dat[["plot_points"]] <- remove_columns(plot_dat[["plot_points"]], c("time", "id"))
+  plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
                                      list_building_blocks[["noTrend_noComp"]],
+                                     by = c("grouping_var",
+                                            "state_var",
+                                            "year",
+                                            "competence_var",
+                                            "depVar"),
+                                     all.x = TRUE)
+  plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
+                                     comp_within_whole_noTrend,
                                      by = c("grouping_var",
                                             "state_var",
                                             "year",
