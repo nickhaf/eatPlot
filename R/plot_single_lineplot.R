@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples # tbd
-plot_single_lineplot <- function(plot_data,
+plot_single_lineplot <- function(plot_dat,
                                  y_range = NULL,
                                  point_values = "est_noTrend_noComp",
                                  point_sig = "sig_noTrend_noComp",
@@ -25,7 +25,7 @@ plot_single_lineplot <- function(plot_data,
 theme_line(plot_settings),
 set_scales(plot_settings),
     plot_braces(
-      plot_data[["plot_braces"]],
+      plot_dat[["plot_braces"]],
       y_range = y_range,
       label_est = label_est,
       label_se = label_se,
@@ -35,26 +35,26 @@ set_scales(plot_settings),
     ),
 if(background_lines == TRUE){
     plot_background_lines(
-      data_plot_background_lines = plot_data[["plot_background_lines"]],
+      data_plot_background_lines = plot_dat[["plot_background_lines"]],
       line_values = line_values
     )
   },
 if(!is.null(line_values)){
     plot_lines(
-      data_plot_lines = plot_data[["plot_lines"]],
+      data_plot_lines = plot_dat[["plot_lines"]],
       line_values = line_values,
       line_sig = line_sig,
       plot_settings = plot_settings
     )},
 if(!is.null(point_values)){
     plot_points(
-      data_plot_points = plot_data[["plot_points"]],
+      data_plot_points = plot_dat[["plot_points"]],
       point_values = point_values,
       point_sig = point_sig,
       y_range = y_range,
       plot_settings = plot_settings
     )},
-    plot_x_axis(plot_data[["plot_points"]],
+    plot_x_axis(plot_dat[["plot_points"]],
       y_range = y_range,
       plot_settings = plot_settings
     ),

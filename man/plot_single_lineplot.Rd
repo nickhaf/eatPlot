@@ -5,7 +5,7 @@
 \title{Plot a single lineplot. Multiple of this lineplots are combined as tiles to the output of \code{\link[=plot_lineplot]{plot_lineplot()}}.}
 \usage{
 plot_single_lineplot(
-  plot_data,
+  plot_dat,
   y_range = NULL,
   point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_noComp",

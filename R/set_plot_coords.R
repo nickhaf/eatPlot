@@ -6,19 +6,19 @@
 #' @export
 #'
 #' @examples # tbd
-set_plot_coords <- function(plot_data, point_values, plot_settings = plotsettings_lineplot()) {
+set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings_lineplot()) {
 
-  plot_data$plot_points <- fill_column(plot_data$plot_points, point_values, filling = NA)
+  plot_dat$plot_points <- fill_column(plot_dat$plot_points, point_values, filling = NA)
 
 
-  min_year <- min(plot_data[["plot_points"]]$year, na.rm = TRUE)
-  max_year <- max(plot_data[["plot_points"]]$year, na.rm = TRUE)
+  min_year <- min(plot_dat[["plot_points"]]$year, na.rm = TRUE)
+  max_year <- max(plot_dat[["plot_points"]]$year, na.rm = TRUE)
 
   list(
-    set_y_coords(plot_data),
+    set_y_coords(plot_dat),
     ggplot2::scale_x_continuous(
       #position = "top",
-      breaks = unique(plot_data[["plot_points"]]$year),
+      breaks = unique(plot_dat[["plot_points"]]$year),
       expand = c(plot_settings$axis_x_background_width_x, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
   )
@@ -43,11 +43,11 @@ calc_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_data){
+set_y_coords <- function(plot_dat){
   ggplot2::scale_y_continuous(
     breaks = seq(
-      from = round(min(plot_data[["plot_points"]]$point_values, na.rm = TRUE) - 10, -1),
-      to = round(max(plot_data[["plot_points"]]$point_values, na.rm = TRUE), -1),
+      from = round(min(plot_dat[["plot_points"]]$point_values, na.rm = TRUE) - 10, -1),
+      to = round(max(plot_dat[["plot_points"]]$point_values, na.rm = TRUE), -1),
       by = 20
     ),
     expand = c(0, 0)

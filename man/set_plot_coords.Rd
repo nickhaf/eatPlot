@@ -5,7 +5,7 @@
 \title{Set the x- and y-coordinates for a plot.}
 \usage{
 set_plot_coords(
-  plot_data,
+  plot_dat,
   point_values,
   plot_settings = plotsettings_lineplot()
 )

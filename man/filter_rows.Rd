@@ -4,10 +4,10 @@
 \alias{filter_rows}
 \title{Extract or remove rows from prepared data.}
 \usage{
-filter_rows(plot_data, column_name, subsetter, remove = FALSE)
+filter_rows(plot_dat, column_name, subsetter, remove = FALSE)
 }
 \arguments{
-\item{plot_data}{List of data.frames, output of \link{prep_plot}.}
+\item{plot_dat}{List of data.frames, output of \link{prep_plot}.}
 
 \item{column_name}{Column that the subsetter will be searched in.}
 
