@@ -94,8 +94,8 @@
 <span>                               column_name <span class="op">=</span> <span class="st">"state_var"</span>, </span>
 <span>                               subsetter <span class="op">=</span> <span class="st">"wholeGroup"</span>, </span>
 <span>                               remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span> <span class="co">## Nochmal die genauen Spalten raussuchen, am besten mit altem Plot zusammen: </span></span>
-<span>  <span class="va">p_line</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
+<span> </span>
+<span>   <span class="va">p_line</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>    plot_dat <span class="op">=</span> <span class="va">plot_dat</span>,</span>
 <span>    years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -110,15 +110,17 @@
 <h3 id="chapter-4-kompetenzwerte-deutschland">Chapter 4: Kompetenzwerte Deutschland<a class="anchor" aria-label="anchor" href="#chapter-4-kompetenzwerte-deutschland"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plot_dat_kb</span> <span class="op">&lt;-</span> <span class="va">trend_books</span><span class="op">[</span><span class="va">trend_books</span><span class="op">$</span><span class="va">kb</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DHW"</span>, <span class="st">"GL"</span>, <span class="st">"GM"</span>, <span class="st">"hoeren"</span>, <span class="st">"lesen"</span><span class="op">)</span>, <span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="co">## First we extract the wanted competence areas from the data:</span></span>
+<span><span class="va">plot_dat_kb</span> <span class="op">&lt;-</span> <span class="va">trend_books</span><span class="op">[</span><span class="va">trend_books</span><span class="op">$</span><span class="va">kb</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DHW"</span>, <span class="st">"GL"</span>, <span class="st">"GM"</span>, <span class="st">"hoeren"</span>, <span class="st">"lesen"</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
+<span><span class="co">## Than we can prepare it with the according function:</span></span>
 <span>  <span class="va">plot_dat_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span></span>
 <span>    dat <span class="op">=</span> <span class="va">plot_dat_kb</span>,</span>
 <span>    grouping_var <span class="op">=</span> <span class="st">"KBuecher_imp3"</span>,</span>
 <span>    states <span class="op">=</span> <span class="st">"wholeGroup"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span></span>
+<span><span class="co">## Here we change the seperate_plot_var - Argument to "competence_var", so the different competences are depicted in the tiles:</span></span>
 <span>  <span class="va">p_line</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>    plot_dat <span class="op">=</span> <span class="va">plot_dat_test</span>,</span>
 <span>    seperate_plot_var <span class="op">=</span> <span class="st">"competence_var"</span>,</span>
@@ -131,6 +133,7 @@
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  </span>
+<span>  <span class="co">## We dont't want a whole A4 page for this plot, but maybe the half:</span></span>
 <span>  <span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line</span>, </span>
 <span>            filename <span class="op">=</span> <span class="st">"../adjusted_means_ger.pdf"</span>, </span>
 <span>            height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span>
@@ -150,15 +153,20 @@
 <span>    parameter <span class="op">=</span> <span class="st">"1"</span></span>
 <span>  <span class="op">)</span><span class="op">[[</span><span class="st">"plot_tablebar"</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
+<span><span class="co">## We want to plot percantages, so multiply by 100:</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">est_noTrendEnd_noComp</span> <span class="op">&lt;-</span> <span class="va">dat_bar</span><span class="op">$</span><span class="va">est_noTrendEnd_noComp</span> <span class="op">*</span> <span class="fl">100</span></span>
+<span>  </span>
+<span><span class="co">## Subset the rows that should be plotted in the table:</span></span>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_bar</span>, <span class="va">year_end</span> <span class="op">==</span> <span class="fl">2021</span><span class="op">)</span></span>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_bar</span>, <span class="va">year_start</span> <span class="op">==</span> <span class="fl">2016</span><span class="op">)</span></span>
 <span></span>
+<span>  <span class="co">## Calculate the significances for the Mindeststandards (above, not significant, below)</span></span>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calc_MinStand.html">calc_MinStand</a></span><span class="op">(</span><span class="va">dat_bar</span>, </span>
 <span>                           sig_column <span class="op">=</span> <span class="st">"sig_noTrendEnd_CompWhole"</span>,</span>
 <span>                           est_column <span class="op">=</span> <span class="st">"est_noTrendEnd_CompWhole"</span></span>
 <span>                           <span class="op">)</span></span>
 <span>  </span>
+<span><span class="co">## Plot three different plots  </span></span>
 <span>  <span class="co"># Plot 1 ------------------------------------------------------------------</span></span>
 <span>  <span class="va">dat_bar_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_bar</span>, <span class="va">depVar</span> <span class="op">==</span> <span class="st">"minVerfehlt"</span><span class="op">)</span></span>
 <span></span>
@@ -224,6 +232,7 @@
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
+<span>  <span class="co"># Combine plots ---------</span></span>
 <span>  <span class="va">minsta_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_bar_1</span>, <span class="va">p_bar_2</span>, <span class="va">p_bar_3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span></span>
@@ -244,7 +253,10 @@
 <span>  <span class="va">dat_bar</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">dat_bar</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fl">100</span></span>
 <span><span class="op">}</span></span>
 <span></span>
+<span><span class="co">## Use the 'construct_label()' function to build the SE-Column, as the SE has to be in brackets:</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">se_Trend_noComp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_label.html">construct_label</a></span><span class="op">(</span><span class="va">dat_bar</span>, label_se <span class="op">=</span> <span class="st">"se_Trend_noComp"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co">## The most left-column can go over multiple rows. Here we use markdown-Syntax to add a linebreak at the "-" for state names. </span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"-&lt;br&gt;"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="co"># Plot 1 ------------------------------------------------------------------</span></span>
