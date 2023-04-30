@@ -102,7 +102,7 @@ test_that("Example barplot is plotted correctly", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
     parameter = "1"
-  )[["plot_lines"]]
+  )[["plot_tablebar"]]
 
 
   dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
