@@ -33,8 +33,8 @@ plot_dat <- prep_plot(
                                column_name = "state_var", 
                                subsetter = "wholeGroup", 
                                remove = TRUE)
- ## Nochmal die genauen Spalten raussuchen, am besten mit altem Plot zusammen: 
-  p_line <- plot_lineplot(
+ 
+   p_line <- plot_lineplot(
     plot_dat = plot_dat,
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
@@ -46,15 +46,17 @@ plot_dat <- prep_plot(
 
 ## Chapter 4: Kompetenzwerte Deutschland
 ```{r chpt_4_ger}
+## First we extract the wanted competence areas from the data:
 plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
 
+## Than we can prepare it with the according function:
   plot_dat_test <- prep_plot(
     dat = plot_dat_kb,
     grouping_var = "KBuecher_imp3",
     states = "wholeGroup"
   )
 
-
+## Here we change the seperate_plot_var - Argument to "competence_var", so the different competences are depicted in the tiles:
   p_line <- plot_lineplot(
     plot_dat = plot_dat_test,
     seperate_plot_var = "competence_var",
@@ -67,6 +69,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
     )
   )
   
+  ## We dont't want a whole A4 page for this plot, but maybe the half:
   save_plot(p_line, 
             filename = "../adjusted_means_ger.pdf", 
             height = 226.2 / 2 + 10)
@@ -82,15 +85,20 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
     parameter = "1"
   )[["plot_tablebar"]]
 
+## We want to plot percantages, so multiply by 100:
   dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
+  
+## Subset the rows that should be plotted in the table:
   dat_bar <- subset(dat_bar, year_end == 2021)
   dat_bar <- subset(dat_bar, year_start == 2016)
 
+  ## Calculate the significances for the Mindeststandards (above, not significant, below)
   dat_bar <- calc_MinStand(dat_bar, 
                            sig_column = "sig_noTrendEnd_CompWhole",
                            est_column = "est_noTrendEnd_CompWhole"
                            )
   
+## Plot three different plots  
   # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
 
@@ -156,6 +164,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
     )
   )
 
+  # Combine plots ---------
   minsta_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
 
   save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
@@ -173,7 +182,10 @@ for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp
   dat_bar[, i] <- dat_bar[, i] * 100
 }
 
+## Use the 'construct_label()' function to build the SE-Column, as the SE has to be in brackets:
   dat_bar$se_Trend_noComp <- construct_label(dat_bar, label_se = "se_Trend_noComp")
+  
+  ## The most left-column can go over multiple rows. Here we use markdown-Syntax to add a linebreak at the "-" for state names. 
   dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
   # Plot 1 ------------------------------------------------------------------
