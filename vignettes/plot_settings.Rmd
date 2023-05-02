@@ -21,7 +21,7 @@ library(eatPlot)
 # List of predefined plotsettings-objects
 ## Barplots
 
-* `?barplot_MinSta()`
+* `?barplot_MinSta`
 * `?barplot_MinSta_trend`
 
 ## Lineplots

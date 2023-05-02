@@ -37,12 +37,16 @@ plot_lineplot <- function(plot_dat,
 
   check_plotsettings_lineplot(plot_settings)
 
-  if (any(!unique(unlist(years_lines)) %in% plot_dat$plot_points$year) & !is.null(years_lines)) {
+  if(!is.null(years_lines)){
+  if (any(!unique(unlist(years_lines)) %in% plot_dat$plot_points$year)) {
     stop("Please check your years_lines argument. Are the years included in your data?")
   }
+  }
 
-  if (any(!unique(unlist(years_braces)) %in% plot_dat$plot_points$year) & !is.null(years_braces)) {
+  if(!is.null(years_braces)){
+  if (any(!unique(unlist(years_braces)) %in% plot_dat$plot_points$year)) {
     stop("Please check your years_braces argument. Are the years included in your data?")
+  }
   }
 
   # filter years ------------------------------------------------------------
