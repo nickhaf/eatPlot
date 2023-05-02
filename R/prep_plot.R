@@ -2,6 +2,9 @@
 #'
 #' Performs different data transformations, to bring the input data.frame into the correct formats for different kind of plots.
 #'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param dat Input data.frame stemming from `eatRep`.
 #' @param competence Character string containing the competence that should be plotted.
 #' @param grouping_var Character string containing the column name in `dat` that should be used to distinguish between subgroups.

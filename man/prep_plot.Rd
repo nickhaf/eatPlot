@@ -48,6 +48,9 @@ prep_plot(
 }
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 Performs different data transformations, to bring the input data.frame into the correct formats for different kind of plots.
 }
 \examples{
