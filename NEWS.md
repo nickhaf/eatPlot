@@ -1,3 +1,4 @@
-# eatPlot 0.0.0.9000
+# eatPlot (development version)
 
-* Added a `NEWS.md` file to track changes to the package.
+# eatPlot 0.0.0.9001
+* Fixed Bug in `prep_plot()` that threw an error, if the comparison-column was empty. 
