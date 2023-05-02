@@ -205,8 +205,8 @@ calc_plot_borders <- function(x, accuracy = 10) {
 insert_first_number <- function(char_string, insertion) {
   string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))
 
-  if(length(string_number > 0)){
-  res <- sub(string_number[[1]], paste0(insertion, string_number), char_string)
+  if(length(string_number != 0)){
+  res <- sub(string_number[[1]], paste0(insertion, string_number[[1]]), char_string)
   }else{
     res <- NULL
   }
