@@ -32,32 +32,30 @@ plot_lineplot <- function(plot_dat,
                           years_braces = NULL,
                           background_lines = TRUE,
                           plot_settings = plotsettings_lineplot()) {
-
   stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
   stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
 
   check_plotsettings_lineplot(plot_settings)
 
+  if (any(!unique(unlist(years_lines)) %in% plot_dat$plot_points$year) & !is.null(years_lines)) {
+    stop("Please check your years_lines argument. Are the years included in your data?")
+  }
 
-if(!unique(unlist(years_lines)) %in% plot_dat$plot_points$year & !is.null(years_lines)){
-  stop("Please check your years_lines argument. Are the years included in your data?")
-}
-
-  if(!unique(unlist(years_brace)) %in% plot_dat$plot_points$year & !is.null(years_braces)){
+  if (any(!unique(unlist(years_brace)) %in% plot_dat$plot_points$year) & !is.null(years_braces)) {
     stop("Please check your years_braces argument. Are the years included in your data?")
   }
 
-# filter years ------------------------------------------------------------
+  # filter years ------------------------------------------------------------
   ## Eigene Funktion:
-plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
+  plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
 
   states <- unique(plot_dat[[1]]$state_var)
-  tiles <- unique(plot_dat[[1]][, seperate_plot_var]) #Hier die Level nehmen
+  tiles <- unique(plot_dat[[1]][, seperate_plot_var]) # Hier die Level nehmen
 
   plot_list <- list()
-  if(!is.null(point_values)){
-  range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
-  }else{
+  if (!is.null(point_values)) {
+    range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+  } else {
     stop("Please provide point-values.")
   }
   position <- 1
@@ -85,8 +83,9 @@ plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
       ) +
       ggplot2::labs(title = unique(plot_dat_tile[["plot_braces"]][, seperate_plot_var])) +
       set_plot_coords(plot_dat,
-                      point_values = point_values,
-                      plot_settings = plot_settings)
+        point_values = point_values,
+        plot_settings = plot_settings
+      )
 
     ## The wholeGroup plot gets a box drawn around it.
     # if (i == "wholeGroup") {
@@ -144,8 +143,7 @@ filter_years <- function(dat, year_list) {
 }
 
 
-filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL){
-
+filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL) {
   if (is.null(years_lines)) {
     lineplot_years <- consecutive_numbers(c(plot_dat[["plot_lines"]]$year_start, plot_dat[["plot_lines"]]$year_end))
   } else {
