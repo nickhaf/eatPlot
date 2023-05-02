@@ -70,6 +70,9 @@ colnames(dat) <- gsub("\\.", "_", colnames(dat))
 colnames(dat) <- gsub("sig_", "p_", colnames(dat))
 colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
+if(!competence %in% dat$competence_var & !is.null(competence)){
+  stop("Your competence is not in your competence_var column.")
+}
 
 
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
