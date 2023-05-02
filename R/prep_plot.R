@@ -273,7 +273,9 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
      plot_dat[["plot_points"]] <- plot_dat[["plot_lines"]]
    }
 
-  plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
+
+   if(nrow(list_building_blocks[["noTrend_noComp"]]) != 0){
+    plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
                                      list_building_blocks[["noTrend_noComp"]],
                                      by = c("grouping_var",
                                             "state_var",
@@ -281,6 +283,8 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
                                             "competence_var",
                                             "depVar"),
                                      all.x = TRUE)
+}
+  if(nrow(comp_within_whole_noTrend) != 0){
   plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
                                      comp_within_whole_noTrend,
                                      by = c("grouping_var",
@@ -289,6 +293,8 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
                                             "competence_var",
                                             "depVar"),
                                      all.x = TRUE)
+  }
+
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
 
 
