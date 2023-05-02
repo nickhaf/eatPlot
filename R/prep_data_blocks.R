@@ -46,6 +46,8 @@ merging_columns <- c(merging_columns, cols_remove)
   }
 
   # Prepare trend comparison data ------------------------------------------------------
+
+if(any(grepl("trend", colnames(data_clean))) == TRUE){
   ## Data.frame containing all rows which make some kind of comparison, e.g. state vs. germany.
   years_colnames <- extract_numbers(colnames(data_clean))
   exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
@@ -72,7 +74,10 @@ merging_columns <- c(merging_columns, cols_remove)
                                               merging_columns = merging_columns,
                                               suffix = "_Trend_noComp")
 
-
+} else{
+  filtered_list[["Trend_Comp"]] <- data.frame()
+  filtered_list[["Trend_noComp"]] <- data.frame()
+}
   # Prepare WholeGroup ------------------------------------------------------
   ## Might be necessary to deal with the wholeGroup a bit differently, so it is include in two extra data frames
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
@@ -90,6 +95,7 @@ merging_columns <- c(merging_columns, cols_remove)
 
   }
 
+  if(any(grepl("trend", colnames(data_clean))) == TRUE){
   filtered_list <- prep_trend_long(dat = data_wholeGroup,
                                    filtered_list,
                                    "Trend_noComp_wholeGroup",
@@ -97,6 +103,9 @@ merging_columns <- c(merging_columns, cols_remove)
   filtered_list[["Trend_noComp_wholeGroup"]] <- add_suffix(filtered_list[["Trend_noComp_wholeGroup"]],
                                                              merging_columns = merging_columns,
                                                              suffix = "_Trend_noComp_wholeGroup")
+  }else{
+    filtered_list[["Trend_noComp_wholeGroup"]] <- data.frame()
+  }
 
 # Add significances -------------------------------------------------------
   filtered_list <- add_sig_col(filtered_list, sig_niveau = sig_niveau)
