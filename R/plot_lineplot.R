@@ -41,7 +41,7 @@ plot_lineplot <- function(plot_dat,
     stop("Please check your years_lines argument. Are the years included in your data?")
   }
 
-  if (any(!unique(unlist(years_brace)) %in% plot_dat$plot_points$year) & !is.null(years_braces)) {
+  if (any(!unique(unlist(years_braces)) %in% plot_dat$plot_points$year) & !is.null(years_braces)) {
     stop("Please check your years_braces argument. Are the years included in your data?")
   }
 
