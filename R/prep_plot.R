@@ -159,6 +159,7 @@ if(!competence %in% dat$competence_var ){
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison, either comparing with the whole group, or within the state
 
+  if(nrow(list_building_blocks[["Trend_Comp"]] > 0 )){
   comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
 comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "Whole")
    comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
@@ -205,7 +206,10 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
     list_building_blocks[["Trend_noComp_wholeGroup"]],
     list_building_blocks[["noTrend_noComp_wholeGroup"]]
   )
-
+  }else{
+  trend_data_final <- noTrend_data_merged
+  trend_data_wholeGroup <- list_building_blocks[["noTrend_noComp_wholeGroup"]]
+}
   # Fill up NAs -------------------------------------------------------------
   ## Fill up NA significances with FALSE (those which emerged through merging)
   for (i in grep("sig_", colnames(trend_data_final))) {
@@ -249,7 +253,7 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
   #################
   ## for the split lineplot, the middle points have to be plotted two times. Therefore, the plot_points function is build using the comparisons already calculated.
 
-
+   if(any(grepl("trend", colnames(dat)))){
    plot_dat[["plot_points"]] <- stats::reshape(plot_dat[["plot_lines"]][,
                                                        c("depVar",
                                                          "grouping_var",
@@ -265,6 +269,10 @@ comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns
 
 
    plot_dat[["plot_points"]] <- remove_columns(plot_dat[["plot_points"]], c("time", "id"))
+   }else{
+     plot_dat[["plot_points"]] <- plot_dat[["plot_lines"]]
+   }
+
   plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
                                      list_building_blocks[["noTrend_noComp"]],
                                      by = c("grouping_var",

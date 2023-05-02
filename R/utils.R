@@ -131,15 +131,23 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
                   )
   colnames(data)[col_pos] <- gsub("\\.|_", "", colnames(data)[col_pos])
 
+
   ## before the first number of the year columns, insert ".". Needed by reshape() for automatically building the new columns.
-  colnames(data)[col_pos] <- sapply(colnames(data)[col_pos], insert_first_number, "\\.")
+  year_cols <- unlist(sapply(colnames(data)[col_pos], insert_first_number, "\\."))
+
+
+  if(!is.null(year_cols)){
+  colnames(data)[col_pos] <- year_cols
 
   data_long <- stats::reshape(data,
                               direction = "long",
                               varying = colnames(data)[col_pos]
                               )
   data_long$id <- NULL
-
+  }else{
+  data_long <- data
+  data_long$time <- 9999
+}
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
 
@@ -195,8 +203,13 @@ calc_plot_borders <- function(x, accuracy = 10) {
 
 
 insert_first_number <- function(char_string, insertion) {
-  string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))[[1]]
-  res <- sub(string_number, paste0(insertion, string_number), char_string)
+  string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))
+
+  if(length(string_number > 0)){
+  res <- sub(string_number[[1]], paste0(insertion, string_number), char_string)
+  }else{
+    res <- NULL
+  }
   return(res)
 }
 
