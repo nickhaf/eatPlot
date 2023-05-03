@@ -7,9 +7,9 @@
 construct_percent(df, columns)
 }
 \arguments{
-\item{columns}{Character vector with the column names of the columns you want to multiply by 100.}
+\item{df}{Input data.frame.}
 
-\item{dat}{Input data.frame.}
+\item{columns}{Character vector with the column names of the columns you want to multiply by 100.}
 }
 \value{
 The input data.frame with the new columns multiplied by 100. New columns have the suffix "_percent" in their name.
