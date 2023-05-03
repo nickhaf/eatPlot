@@ -5,15 +5,14 @@ test_that("backgroundlines is still the same", {
     year_end = c(2013, 2016),
     est_noTrendStart_noComp_wholeGroup = c(10:11),
     est_noTrendEnd_noComp_wholeGroup = c(11:12),
+    se_noTrendStart_noComp_wholeGroup = c(0.5, 1.2),
+    se_noTrendEnd_noComp_wholeGroup = c(0.1, 0.9),
     years_Trend = c("20112013", "20132016")
   )
   vdiffr::expect_doppelganger("Plotting backgroundlines", ggplot2::ggplot() +
     plot_background_lines(
-      data_plot_background_lines = df_backgroundlines,
-      line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")
+      dat = df_backgroundlines,
+      line_values = c("est_noTrendStart_noComp_wholeGroup", "est_noTrendEnd_noComp_wholeGroup"),
+      line_se = c("se_noTrendStart_noComp_wholeGroup", "se_noTrendEnd_noComp_wholeGroup")
     ))
 })
-
-# plot_dat <- prep_plot(data = trend_books, grouping_var = "KBuecher_imp3", competence = "GL")
-# ggplot2::ggplot() +
-#   plot_background_lines(data_plot_background_lines = plot_dat[["plot_background_lines"]])
