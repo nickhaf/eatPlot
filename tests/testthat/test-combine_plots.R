@@ -60,7 +60,6 @@ for(i in c("2011", "2016", "2021")){
 
   # Plot 3 ------------------------------------------------------------------
   dat_bar_3 <- subset(dat_bar, depVar == "optErreicht")
-## wholeGroup fehlt
 
   p_bar_3 <- plot_tablebar(
     dat = dat_bar_3,
