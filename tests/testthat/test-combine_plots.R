@@ -6,8 +6,8 @@ test_that("example mindeststandard short version", {
 
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
+  dat_bar <- construct_directional_sig(dat_bar, sig_column = "sig_noTrend_CompWhole_2011", est_column = "est_noTrend_CompWhole_2011")
 
-  dat_bar$sig_noTrendEnd_CompWhole[1:10] <- "FALSE"
   dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole < 0,
     "below",
     ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole > 0,
