@@ -51,6 +51,10 @@ prep_plot <- function(dat,
   stopifnot(is.logical(plot_mean))
   stopifnot(is.character(parameter))
 
+  if(is.null(grouping_var)){
+    message("Are you sure your data isn't grouped? If it is, but you didn't provide a grouping_var, this might lead to duplicated rows in the prepared data.frames.")
+  }
+
   sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
   # Show a message, if a grouping_var was provided, but not as factor.

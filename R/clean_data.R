@@ -66,6 +66,8 @@ clean_data <- function(dat,
 
   dat$state_var <- gsub("ue", "\u00fc", dat$state_var)
 
+# dat <- dat[, grep("depVar|est_|p_|se_|competence_var|grouping_var|state_var|group_var|comparison", colnames(dat))]
+
   return(dat)
 }
 
