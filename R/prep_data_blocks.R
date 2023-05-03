@@ -159,7 +159,7 @@ prep_trend_long <- function(dat, filtered_list, dat_name, remove_cols) {
       include_pattern = "est_trend|p_trend|se_trend|es_trend",
       remove_pattern = paste0(paste0("^", remove_cols, "$"), collapse = "|")
     )
-    dat <- rename_columns(dat, old_names = "year", new = "years_Trend")
+    dat <- rename_columns(dat, old_names = "year", new_names = "years_Trend")
     filtered_list[[dat_name]] <- split_years(dat, year_col = "years_Trend")
 
   } else {

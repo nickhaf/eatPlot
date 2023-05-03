@@ -1,6 +1,6 @@
 #' Multiply Values in Columns by 100 to build percentages.
 #'
-#' @param dat Input data.frame.
+#' @param df Input data.frame.
 #' @param columns Character vector with the column names of the columns you want to multiply by 100.
 #'
 #' @return The input data.frame with the new columns multiplied by 100. New columns have the suffix "_percent" in their name.
