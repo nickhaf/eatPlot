@@ -66,12 +66,16 @@ plot_tablebar <- function(dat,
     stop("Please provide column widths for your table columns.")
   }
 
+  if(is.null(bar_header)){
+    bar_header <- " "
 
+  }
   columns_headers <- check_length(columns_headers, length(columns_table))
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
   columns_table_se <- check_length(columns_table_se, length(columns_table))
+
 
   if(is.null(plot_settings$headers_alignment)){
     plot_settings$headers_alignment <- plot_settings$columns_alignment
@@ -81,6 +85,7 @@ plot_tablebar <- function(dat,
   plot_settings$columns_nudge_x <- unlist(check_length( plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1]))
   plot_settings$headers_alignment <- unlist(check_length( plot_settings$headers_alignment, length(columns_table), fill = plot_settings$headers_alignment[1]))
   plot_settings$headers_nudge_x <- unlist(check_length( plot_settings$headers_nudge_x, length(columns_table), fill = plot_settings$headers_nudge_x[1]))
+
 
 
   ## Check Column widths
@@ -145,6 +150,7 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
      round_est = 1
    )
   }
+
 
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
@@ -411,6 +417,7 @@ build_columns_3 <- function(df,
           hjust = rev(plot_settings$columns_alignment)[i],
           nudge_x = rev(plot_settings$columns_nudge_x)[i]
         ),
+        if(!is.null(columns_headers)){
         ggtext::geom_richtext(data = data.frame(),
                               ggplot2::aes(x =  x_axis_i_header,
                                            y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y),
@@ -422,6 +429,7 @@ build_columns_3 <- function(df,
                               hjust = rev(plot_settings$headers_alignment)[i],
                               nudge_x =  rev(plot_settings$headers_nudge_x)[i]
       )
+        }
       )
     })
   )
