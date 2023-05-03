@@ -259,7 +259,43 @@ prep_plot <- function(dat,
   ## plot_bar ##
   ##############
 
-  plot_dat[["plot_tablebar"]] <- plot_dat[["plot_lines"]]
+  if(nrow(noTrend_data_merged) != 0){
+  noTrend_data_merged_long <- stats::reshape(noTrend_data_merged,
+                                      direction = "wide",
+                                      timevar = "year",
+                                      idvar = c("grouping_var", "state_var", "competence_var", "depVar"),
+                                      sep = "_"
+                                      )
+
+
+  }else{
+    noTrend_data_merged_long <- data.frame()
+  }
+
+  if(nrow(trend_data_merged) != 0){
+    Trend_data_merged_long <- stats::reshape(trend_data_merged,
+                                             direction = "wide",
+                                             timevar = "years_Trend",
+                                             idvar = c("grouping_var", "state_var", "competence_var", "depVar"),
+                                             sep = "_"
+    )
+
+
+  }else{
+    Trend_data_merged_long <- data.frame()
+  }
+
+
+if(nrow(noTrend_data_merged_long) != 0 & nrow(Trend_data_merged_long) != 0){
+  plot_dat[["plot_tablebar"]] <- merge(noTrend_data_merged_long,
+                                       Trend_data_merged_long,
+                                       by = c("grouping_var", "state_var", "competence_var", "depVar"),
+                                       all = TRUE
+                                       )
+
+
+}
+
 
   #################
   ## plot_points ##
