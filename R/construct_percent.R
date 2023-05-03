@@ -9,10 +9,11 @@
 #' @examples
 #' df <- c(col_1 = c(1, 2), col_2 = c(3, 4), col_3 = c("a", "b"))
 #' construct_percent(df, columns = c("col_1", "col_2"))
-construct_percent <- function(dat, columns){
+construct_percent <- function(df, columns){
   for(i in columns){
-    if(is.numeric(dat[, i])){
-    dat[,i] <- dat[,i] * 100
+    if(is.numeric(df[, i])){
+    df[,i] <- df[,i] * 100
     }
   }
+  return(df)
 }
