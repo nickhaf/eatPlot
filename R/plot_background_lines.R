@@ -40,6 +40,8 @@ dat_coords <- dat_coords[order(dat_coords$y), ]
 dat_coords <- dat_coords[order(dat_coords$est_noTrend), ]
 dat_coords <- dat_coords[dat_coords$years_Trend == "20112013",]
 
+
+## Kleiner Test:
 ggplot2::ggplot() +
 ggplot2::geom_polygon(data = dat_coords,
                       ggplot2::aes(
@@ -50,18 +52,19 @@ ggplot2::geom_polygon(data = dat_coords,
   ggplot2::facet_wrap(~years_Trend)
 
 
-  ggplot2::geom_segment(
-    data = dat,
-    ggplot2::aes(
-      x = .data$year_start,
-      xend = .data$year_end,
-      y = .data[[line_values[1]]],
-      yend = .data[[line_values[2]]],
-      group = .data$years_Trend
-    ),
-    linewidth = 1,
-    color = grDevices::rgb(147, 205, 221,
-      maxColorValue = 255
-    )
-  )
+## Alte Linien:
+  # ggplot2::geom_segment(
+  #   data = dat,
+  #   ggplot2::aes(
+  #     x = .data$year_start,
+  #     xend = .data$year_end,
+  #     y = .data[[line_values[1]]],
+  #     yend = .data[[line_values[2]]],
+  #     group = .data$years_Trend
+  #   ),
+  #   linewidth = 1,
+  #   color = grDevices::rgb(147, 205, 221,
+  #     maxColorValue = 255
+  #   )
+  # )
 }
