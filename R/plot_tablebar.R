@@ -41,6 +41,10 @@ plot_tablebar <- function(dat,
                           plot_settings = plotsettings_tablebarplot()) {
   ## Namen der Einstellungslisten checken: Taucht so in der entsprechenden Spalte auf? Kann man auch über die Reihenfolge gehen? eventl. in der scale_manual mit breaks arbeiten (oder so ähnlich) und dann nur Warnung ausgeben.
 
+  if(inherits(dat, "list")){
+    dat <- dat$plot_tablebar
+  }
+
   # Check columns -----------------------------------------------------------
 
   ## Checken ob Liste oder Dataframe
