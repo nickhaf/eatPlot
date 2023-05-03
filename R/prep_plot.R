@@ -258,37 +258,46 @@ prep_plot <- function(dat,
   ##############
   ## plot_bar ##
   ##############
-
   if(nrow(noTrend_data_merged) != 0){
-  noTrend_data_merged_long <- stats::reshape(noTrend_data_merged,
+    # earlier merging might lead to NAs in the comparison columns. As they might be needed as ID for reshaping, NAs are substituted
+    compare_cols <-  colnames(noTrend_data_merged)[grep("compare_", colnames(noTrend_data_merged))]
+    for(i in compare_cols){
+    noTrend_data_merged[is.na(noTrend_data_merged[, i]), i] <- "no_comp"
+    }
+
+  id_vars <- c("grouping_var", "state_var", "competence_var", "depVar", colnames(noTrend_data_merged)[grep("compare_", colnames(noTrend_data_merged))])
+
+
+  noTrend_data_merged_wide <- stats::reshape(noTrend_data_merged,
                                       direction = "wide",
                                       timevar = "year",
-                                      idvar = c("grouping_var", "state_var", "competence_var", "depVar"),
+                                      idvar = id_vars,
                                       sep = "_"
                                       )
 
 
   }else{
-    noTrend_data_merged_long <- data.frame()
+    noTrend_data_merged_wide <- data.frame()
   }
 
   if(nrow(trend_data_merged) != 0){
-    Trend_data_merged_long <- stats::reshape(trend_data_merged,
+    id_vars <- c("grouping_var", "state_var", "competence_var", "depVar", colnames(trend_data_merged)[grep("compare_", colnames(trend_data_merged))])
+    Trend_data_merged_wide <- stats::reshape(trend_data_merged,
                                              direction = "wide",
                                              timevar = "years_Trend",
-                                             idvar = c("grouping_var", "state_var", "competence_var", "depVar"),
+                                             idvar = id_vars,
                                              sep = "_"
     )
 
 
   }else{
-    Trend_data_merged_long <- data.frame()
+    Trend_data_merged_wide <- data.frame()
   }
 
 
-if(nrow(noTrend_data_merged_long) != 0 & nrow(Trend_data_merged_long) != 0){
-  plot_dat[["plot_tablebar"]] <- merge(noTrend_data_merged_long,
-                                       Trend_data_merged_long,
+if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
+  plot_dat[["plot_tablebar"]] <- merge(noTrend_data_merged_wide,
+                                       Trend_data_merged_wide,
                                        by = c("grouping_var", "state_var", "competence_var", "depVar"),
                                        all = TRUE
                                        )

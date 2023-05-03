@@ -232,6 +232,8 @@ get_comparisons <- function(dat, states, sub_groups) {
       dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
     }
     dat[, i] <- gsub("__|___", "_", dat[, i])
+
+    dat[is.na(dat[, i]), i] <- "no_comp"
   }
 
   return(dat)
