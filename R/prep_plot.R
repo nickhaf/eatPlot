@@ -189,26 +189,26 @@ prep_plot <- function(dat,
     ## Add data without comparison:
 
     if (nrow(comp_within_whole) != 0 & nrow(list_building_blocks[["Trend_noComp"]]) != 0) {
-      trend_data_merged <- merge_trend_data(
+      Trend_data_merged <- merge_trend_data(
         trend_data_1 = comp_within_whole,
         trend_data_2 = list_building_blocks[["Trend_noComp"]],
         suffixes = c("", ""),
         all = TRUE
       )
     } else {
-      trend_data_merged <- list_building_blocks[["Trend_noComp"]]
+      Trend_data_merged <- list_building_blocks[["Trend_noComp"]]
     }
 
 
 
     # Merge to final data frame -----------------------------------------------
-    if(nrow(trend_data_merged) != 0 & nrow(noTrend_data_merged) != 0){
+    if(nrow(Trend_data_merged) != 0 & nrow(noTrend_data_merged) != 0){
     trend_data_final <- merge_trend_point(
-      trend_data = trend_data_merged,
+      trend_data = Trend_data_merged,
       point_data = noTrend_data_merged
     )
     }else{
-      trend_data_final <- trend_data_merged
+      trend_data_final <- Trend_data_merged
   }
     ## Drop unused levels
     if (any(!is.na(trend_data_final$grouping_var))) {
@@ -280,9 +280,15 @@ prep_plot <- function(dat,
     noTrend_data_merged_wide <- data.frame()
   }
 
-  if(nrow(trend_data_merged) != 0){
-    id_vars <- c("grouping_var", "state_var", "competence_var", "depVar", colnames(trend_data_merged)[grep("compare_", colnames(trend_data_merged))])
-    Trend_data_merged_wide <- stats::reshape(trend_data_merged,
+  if(nrow(Trend_data_merged) != 0){
+    # earlier merging might lead to NAs in the comparison columns. As they might be needed as ID for reshaping, NAs are substituted
+    compare_cols <-  colnames(Trend_data_merged)[grep("compare_", colnames(Trend_data_merged))]
+    for(i in compare_cols){
+      Trend_data_merged[is.na(Trend_data_merged[, i]), i] <- "no_comp"
+    }
+
+    id_vars <- c("grouping_var", "state_var", "competence_var", "depVar", colnames(Trend_data_merged)[grep("compare_", colnames(Trend_data_merged))])
+    Trend_data_merged_wide <- stats::reshape(Trend_data_merged,
                                              direction = "wide",
                                              timevar = "years_Trend",
                                              idvar = id_vars,
