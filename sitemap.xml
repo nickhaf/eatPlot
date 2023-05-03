@@ -37,16 +37,19 @@
     <loc>https://nickhaf.github.io/eatPlot/reference/barplot_MinSta_trend.html</loc>
   </url>
   <url>
-    <loc>https://nickhaf.github.io/eatPlot/reference/calc_MinStand.html</loc>
-  </url>
-  <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/clean_data.html</loc>
   </url>
   <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/combine_plots.html</loc>
   </url>
   <url>
+    <loc>https://nickhaf.github.io/eatPlot/reference/construct_directional_sig.html</loc>
+  </url>
+  <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/construct_label.html</loc>
+  </url>
+  <url>
+    <loc>https://nickhaf.github.io/eatPlot/reference/construct_percent.html</loc>
   </url>
   <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/eatPlot-package.html</loc>
