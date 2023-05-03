@@ -163,6 +163,7 @@
 <span>    competence <span class="op">=</span> <span class="st">"lesen"</span>,</span>
 <span>    parameter <span class="op">=</span> <span class="st">"1"</span></span>
 <span>  <span class="op">)</span><span class="op">[[</span><span class="st">"plot_tablebar"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; Are you sure your data isn't grouped? If it is, but you didn't provide a grouping_var, this might lead to duplicated rows in the prepared data.frames.</span></span>
 <span></span>
 <span><span class="co">## We want to plot percantages, so multiply by 100:</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">est_noTrendEnd_noComp</span> <span class="op">&lt;-</span> <span class="va">dat_bar</span><span class="op">$</span><span class="va">est_noTrendEnd_noComp</span> <span class="op">*</span> <span class="fl">100</span></span>
@@ -262,6 +263,7 @@
 <span>    competence <span class="op">=</span> <span class="st">"lesen"</span>,</span>
 <span>    parameter <span class="op">=</span> <span class="st">"1"</span></span>
 <span>  <span class="op">)</span><span class="op">[[</span><span class="st">"plot_tablebar"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; Are you sure your data isn't grouped? If it is, but you didn't provide a grouping_var, this might lead to duplicated rows in the prepared data.frames.</span></span>
 <span></span>
 <span><span class="co">## We want to plot the values in percent, so multiply the respective columns with 100</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"est_noTrendStart_noComp"</span>, <span class="st">"est_noTrendEnd_noComp"</span>, <span class="st">"est_Trend_noComp"</span>, <span class="st">"se_Trend_noComp"</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
