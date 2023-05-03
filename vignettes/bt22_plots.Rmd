@@ -97,7 +97,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
   dat_bar <- subset(dat_bar, year_start == 2016)
 
   ## Calculate the significances for the Mindeststandards (above, not significant, below)
-  dat_bar <- calc_MinStand(dat_bar, 
+  dat_bar <- construct_directional_sig(dat_bar, 
                            sig_column = "sig_noTrendEnd_CompWhole",
                            est_column = "est_noTrendEnd_CompWhole"
                            )

@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples #tbd
-calc_MinStand <- function(dat_bar, sig_column, est_column){
+construct_directional_sig <- function(dat_bar, sig_column, est_column){
 
   dat_bar$sig_minstand <- ifelse(dat_bar[, sig_column] == "TRUE" & dat_bar[, est_column] < 0,
                                   "below",

@@ -5,9 +5,7 @@ test_that("example mindeststandard short version", {
   )[["plot_tablebar"]]
 
 
-  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
-  dat_bar <- subset(dat_bar, year_end == 2021)
-  dat_bar <- subset(dat_bar, year_start == 2016)
+  dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
 
   dat_bar$sig_noTrendEnd_CompWhole[1:10] <- "FALSE"
   dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole < 0,
