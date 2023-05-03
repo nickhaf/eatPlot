@@ -28,10 +28,10 @@ if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){
   }
 }
 
-  if (is.numeric(dat$label_est)) {
+  if (is.numeric(dat$label_est) & !is.null(round_est)) {
     dat$label_est <- format(round(dat$label_est, round_est), trim = TRUE)
   }
-  if (is.numeric(dat$label_se)) {
+  if (is.numeric(dat$label_se) & !is.null(round_se)) {
     dat$label_se <- format(round(dat$label_se, round_se), trim = TRUE)
   }
 

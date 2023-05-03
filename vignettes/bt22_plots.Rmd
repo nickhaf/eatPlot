@@ -84,37 +84,29 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
 # Tables/Barplots
 ## Chapter 3: Mindeststandards
 ```{r chpt_3_MinStand}
-   dat_bar <- prep_plot(min_stand,
+  dat_bar <- prep_plot(min_stand,
     competence = "lesen",
     parameter = "1"
   )[["plot_tablebar"]]
 
-## We want to plot percantages, so multiply by 100:
-  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
-  
-## Subset the rows that should be plotted in the table:
-  dat_bar <- subset(dat_bar, year_end == 2021)
-  dat_bar <- subset(dat_bar, year_start == 2016)
+## Some columns have to be prepared manually (with convenience functions):
+  dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
+for(i in c("2011", "2016", "2021")){
+  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompWhole_", i), sig_column = paste0("sig_noTrend_CompWhole_", i))
+}
 
-  ## Calculate the significances for the Mindeststandards (above, not significant, below)
-  dat_bar <- calc_MinStand(dat_bar, 
-                           sig_column = "sig_noTrendEnd_CompWhole",
-                           est_column = "est_noTrendEnd_CompWhole"
-                           )
-  
-## Plot three different plots  
   # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
 
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
-    bar_label = "est_noTrendEnd_noComp",
-    bar_label_sig = "sig_noTrendEnd_noComp",
-    bar_sig = "sig_minstand",
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
-    bar_est = "est_noTrendEnd_noComp",
+    bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 39),
@@ -133,11 +125,11 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
 
   p_bar_2 <- plot_tablebar(
     dat = dat_bar_2,
-    bar_label = "est_noTrendEnd_noComp",
-    bar_label_sig = "sig_noTrendEnd_noComp",
-    bar_sig = "sig_minstand",
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
     bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
-    bar_est = "est_noTrendEnd_noComp",
+    bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = 0,
@@ -156,11 +148,11 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
 
   p_bar_3 <- plot_tablebar(
     dat = dat_bar_3,
-    bar_label = "est_noTrendEnd_noComp",
-    bar_label_sig = "sig_noTrendEnd_noComp",
-    bar_sig = "sig_minstand",
-    bar_header = "Optimalstandard<br>erreicht (MSA)",
-    bar_est = "est_noTrendEnd_noComp",
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
+    bar_header = "Optimalstandard erreicht (MSA)",
+    bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 25),
@@ -168,7 +160,6 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
     )
   )
 
-  # Combine plots ---------
   minsta_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
 
   minsta_plot
@@ -183,42 +174,46 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
     parameter = "1"
   )[["plot_tablebar"]]
 
-## We want to plot the values in percent, so multiply the respective columns with 100
-for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp", "se_Trend_noComp")){
-  dat_bar[, i] <- dat_bar[, i] * 100
-}
 
-## Use the 'construct_label()' function to build the SE-Column, as the SE has to be in brackets:
-  dat_bar$se_Trend_noComp <- construct_label(dat_bar, label_se = "se_Trend_noComp")
-  
-  ## The most left-column can go over multiple rows. Here we use markdown-Syntax to add a linebreak at the "-" for state names. 
+  dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
+  dat_bar$se_Trend_noComp_20112016_percent <- construct_label(dat_bar, label_se = "se_Trend_noComp_20112016_percent", round_se = 1)
+  dat_bar$se_Trend_noComp_20162021_percent <- construct_label(dat_bar, label_se = "se_Trend_noComp_20162021_percent", round_se = 1)
+
+
+  dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
+  dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht", dat_bar$depVar)
+  dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht", dat_bar$depVar)
+
+  dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
+  dat_bar$y_axis_new <- as.factor(dat_bar$y_axis_new)
+
+  dat_bar <- dat_bar[order(dat_bar$y_axis_new), ]
   dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
   # Plot 1 ------------------------------------------------------------------
+  dat_bar$state_var[duplicated(dat_bar$state_var)] <- " "
 
-  dat_bar_1 <- dat_bar[which(dat_bar$year_start == 2011 & dat_bar$year_end == 2016), ]
-  ## Build Land-column, where only the first Land is plotted
-  dat_bar_1$state_var[duplicated(dat_bar_1$state_var)] <- " "
 
   p_bar_1 <- plot_tablebar(
-    dat = dat_bar_1,
+    dat = dat_bar,
+    bar_est = "est_Trend_noComp_20112016_percent",
     bar_label = NULL,
-    bar_sig = "sig_Trend_noComp",
+    bar_sig = "sig_Trend_noComp_20112016",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"), 
+    columns_headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
     column_spanners = list(
-      "**2011**" = 3, 
+      "**2011**" = 3,
       "**2016**" = 4,
       "**Differenz 2016 - 2011**" = c(5, 7)
     ),
     columns_table = list(
       "state_var",
       "depVar",
-      "est_noTrendStart_noComp",
-      "est_noTrendEnd_noComp",
-      "est_Trend_noComp",
-      "se_Trend_noComp"
+      "est_noTrend_noComp_2011_percent",
+      "est_noTrend_noComp_2016_percent",
+      "est_Trend_noComp_20112016_percent",
+      "se_Trend_noComp_20112016_percent"
     ),
     columns_round = list(NULL, NULL, 1, 1, 1, NULL),
     columns_table_sig_bold = list(
@@ -226,7 +221,7 @@ for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp
       NULL,
       NULL,
       NULL,
-      "sig_Trend_noComp",
+      "sig_Trend_noComp_20112016",
       NULL
     ),
     columns_table_sig_high = list(
@@ -234,11 +229,10 @@ for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp
       NULL,
       NULL,
       NULL,
-      "sig_Trend_CompWhole",
+      "sig_Trend_CompWhole_20112016",
       NULL
     ),
-    bar_est = "est_Trend_noComp",
-    y_axis = "keyword_Trend_noComp",
+    y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(0, 0, 1, 1, 1, 1),
       columns_width = c(0.175, 0.35, 0.075, 0.075, 0.075, 0.075, 0.175),
@@ -250,13 +244,12 @@ for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp
 
 
   # Plot 2 ------------------------------------------------------------------
-  dat_bar_2 <- dat_bar[which(dat_bar$year_start == 2016 & dat_bar$year_end == 2021), ]
-
   p_bar_2 <- plot_tablebar(
-    dat = dat_bar_2,
+    dat = dat_bar,
+    bar_est = "est_Trend_noComp_20162021_percent",
     bar_label = NULL,
-    bar_sig = "sig_Trend_noComp",
-    bar_header = " ", # Zu column headers dazu
+    bar_sig = "sig_Trend_noComp_20162021",
+    bar_header = " ",
     bar_fill = "depVar",
     columns_headers = list("%", "%", "%", "*(SE)*"),
     column_spanners = list(
@@ -266,25 +259,24 @@ for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp
     ),
     columns_round = list(1, 1, 1, NULL),
     columns_table = list(
-      "est_noTrendStart_noComp",
-      "est_noTrendEnd_noComp",
-      "est_Trend_noComp",
-      "se_Trend_noComp"
+      "est_noTrend_noComp_2016_percent",
+      "est_noTrend_noComp_2021_percent",
+      "est_Trend_noComp_20162021_percent",
+      "se_Trend_noComp_20162021_percent"
     ),
     columns_table_sig_bold = list(
       NULL,
       NULL,
-      "sig_Trend_noComp",
+      "sig_Trend_noComp_20162021",
       NULL
     ),
     columns_table_sig_high = list(
       NULL,
       NULL,
-      "sig_Trend_CompWhole",
+      "sig_Trend_CompWhole_20162021",
       NULL
     ),
-    bar_est = "est_Trend_noComp",
-    y_axis = "keyword_Trend_noComp",
+    y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(1, 1, 1, 1),
       columns_width = c(0.12, 0.12, 0.12, 0.12, 0.52),
@@ -295,7 +287,6 @@ for(i in c("est_noTrendStart_noComp", "est_noTrendEnd_noComp", "est_Trend_noComp
     )
   )
 
-  # combine plots ---------
   c_plot <- combine_plots(list(p_bar_1, p_bar_2))
 
   c_plot

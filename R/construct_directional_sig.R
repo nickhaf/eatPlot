@@ -1,16 +1,16 @@
 #' Calculate the significance descriptions for the 'Mindeststandards'
 #'
 #' @param dat_bar Data prepared by `prep_plot()`.
-#' @param sig_column Column that contains the significances.
 #' @param est_column Column that contains the estimates.
+#' @param sig_column Column that contains the significances.
 #'
-#' @return Dataframe with added `sig_minstand` column.
+#' @return Dataframe with an added column with a name that ends with `_directional_sig`.
 #' @export
 #'
 #' @examples #tbd
-calc_MinStand <- function(dat_bar, sig_column, est_column){
+construct_directional_sig <- function(dat_bar, est_column, sig_column){
 
-  dat_bar$sig_minstand <- ifelse(dat_bar[, sig_column] == "TRUE" & dat_bar[, est_column] < 0,
+  dat_bar[, paste0(sig_column, "_directional_sig")] <- ifelse(dat_bar[, sig_column] == "TRUE" & dat_bar[, est_column] < 0,
                                   "below",
                                   ifelse(dat_bar[, sig_column] == "TRUE" & dat_bar[, est_column] > 0,
                                          "above",
