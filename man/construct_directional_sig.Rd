@@ -4,17 +4,17 @@
 \alias{construct_directional_sig}
 \title{Calculate the significance descriptions for the 'Mindeststandards'}
 \usage{
-construct_directional_sig(dat_bar, sig_column, est_column)
+construct_directional_sig(dat_bar, est_column, sig_column)
 }
 \arguments{
 \item{dat_bar}{Data prepared by \code{prep_plot()}.}
 
-\item{sig_column}{Column that contains the significances.}
-
 \item{est_column}{Column that contains the estimates.}
+
+\item{sig_column}{Column that contains the significances.}
 }
 \value{
-Dataframe with added \code{sig_minstand} column.
+Dataframe with an added column with a name that ends with \verb{_directional_sig}.
 }
 \description{
 Calculate the significance descriptions for the 'Mindeststandards'
