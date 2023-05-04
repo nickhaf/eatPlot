@@ -344,7 +344,5 @@ rename_columns <- function(dat, old_names, new_names){
 
 
 
-ksource <- function(x, ...) {
-  source(knitr::purl(x, output = tempfile()), ...)
-}
+
 

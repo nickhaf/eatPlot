@@ -1,3 +1,5 @@
+ksource(vignette_path)
+
 test_that("minsta_plot works", {
   vdiffr::expect_doppelganger("minsta_plot", minsta_plot )
 })
