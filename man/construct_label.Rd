@@ -6,6 +6,7 @@
 \usage{
 construct_label(
   dat,
+  new_name = "label",
   label_est = NULL,
   label_se = NULL,
   label_sig_bold = NULL,
@@ -16,6 +17,8 @@ construct_label(
 }
 \arguments{
 \item{dat}{Dataframe with the columns that should be merged into labels.}
+
+\item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 
 \item{label_est}{Character string of the column name containing the brace labels.}
 
@@ -30,7 +33,7 @@ construct_label(
 \item{round_se}{Rounding of label_se.}
 }
 \value{
-A character vector with the constructed labels.
+The data.frame with an added column for the constructed label.
 }
 \description{
 Build labels with significances represented in bold or as raised 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
