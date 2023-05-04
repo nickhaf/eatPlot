@@ -45,11 +45,11 @@ plot_tablebar <- function(dat,
     dat <- dat$plot_tablebar
   }
 
+  if(!inherits(columns_headers, "list") & !is.null(columns_headers)){
+    stop("Columns_headers has to be a list or NULL.")
+  }
+
   # Check columns -----------------------------------------------------------
-
-  ## Checken ob Liste oder Dataframe
-
-
 
   if (is.null(y_axis)) {
     stop("Please provide a y-axis.")
@@ -74,7 +74,7 @@ plot_tablebar <- function(dat,
     bar_header <- " "
 
   }
-  columns_headers <- check_length(columns_headers, length(columns_table))
+  columns_headers <- check_length(columns_headers, length(columns_table), fill = " ")
   columns_headers <- lapply(columns_headers, function(x){
     if(is.null(x)){
       " "
@@ -481,9 +481,11 @@ set_axis_limits <- function(dat, x_value, plot_settings) {
 }
 
 check_length <- function(obj, leng, fill = NULL) {
-  if (is.null(obj)) {
+  if (is.null(obj) & is.null(fill)) {
     return(NULL)
-  } else if (length(obj) != leng & length(obj) > 1) {
+  } else if(is.null(obj) & !is.null(fill)){
+    obj <- rep(fill, leng)
+  }else if(length(obj) != leng & length(obj) > 1) {
     stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1."), call. = FALSE)
   } else if(length(obj) == 1 & leng > 1){
     obj <- c(obj, lapply(1:(leng - length(obj)), function(x) {
