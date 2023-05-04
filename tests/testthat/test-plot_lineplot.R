@@ -121,9 +121,9 @@ test_that("lineplot chpt_4 with one group is still the same", {
     label_sig_high = "sig_noTrendEnd_noComp",
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
-    plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
+    plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
   )
-  vdiffr::expect_doppelganger("lineplot_chpt_4_1group", p_line)
+  vdiffr::expect_doppelganger("lineplot_4x4_1group", p_line)
   # save_plot(p_line, filename = "../split_lineplot_trend_books-v02.pdf")
 })
 
@@ -145,10 +145,10 @@ test_that("lineplot chpt_4 with two groups is still the same", {
     label_sig_high = "sig_noTrendEnd_noComp",
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
-    plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4)
+    plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
   )
 
-  vdiffr::expect_doppelganger("lineplot_chpt_4_2groups", p_line)
+  vdiffr::expect_doppelganger("lineplot_4x4_2groups", p_line)
   # save_plot(p_line, filename = "../split_lineplot_2_books.pdf")
 })
 
@@ -178,11 +178,11 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(
-      default_list = lineplot_chpt_4
+      default_list = lineplot_4x4
     )
   )
 
-  vdiffr::expect_doppelganger("lineplot_chpt_4_3groups", p_line)
+  vdiffr::expect_doppelganger("lineplot_4x4_3groups", p_line)
 
   #  save_plot(p_line, filename = "../split_lineplot_3_books.pdf")
 })
@@ -211,12 +211,12 @@ test_that("competence_vars can be used as tiles", {
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(
-      default_list = lineplot_chpt_4_germany
+      default_list = lineplot_2x3
     )
   )
 
 
-  vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles", p_line)
+  vdiffr::expect_doppelganger("lineplot_4x4_kb_tiles", p_line)
 
   # save_plot(p_line, filename = "../split_lineplot_kb_books.pdf", height = 226.2 / 2)
 })
@@ -253,11 +253,11 @@ test_that("competence_vars with 3 groups", {
     years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
-      default_list = lineplot_chpt_4_germany
+      default_list = lineplot_2x3
     )
   )
 
-  vdiffr::expect_doppelganger("lineplot_chpt_4_kb_tiles_3groups", p_line)
+  vdiffr::expect_doppelganger("lineplot_4x4_kb_tiles_3groups", p_line)
 
   #save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 1.5) #2 + 10)
 })
@@ -282,10 +282,10 @@ test_that("adjusted means states", {
     years_lines = list(c(2016, 2021)),
     years_braces = list(c(2016, 2021)),
     background_lines = FALSE,
-    plot_settings = plotsettings_lineplot(margin_bottom = 0.03, default_list = lineplot_chpt_4)
+    plot_settings = plotsettings_lineplot(margin_bottom = 0.03, default_list = lineplot_4x4)
   )
 
-  vdiffr::expect_doppelganger("lineplot_chpt_4_adj_means", p_line)
+  vdiffr::expect_doppelganger("lineplot_4x4_adj_means", p_line)
 
 
   # save_plot(p_line, filename = "../adjusted_means_states.pdf")
@@ -315,9 +315,9 @@ test_that("adjusted means for whole group", {
     years_lines = list(c(2016, 2021)),
     years_braces = list(c(2016, 2021)),
     background_lines = FALSE,
-    plot_settings = plotsettings_lineplot(default_list = lineplot_chpt_4_germany)
+    plot_settings = plotsettings_lineplot(default_list = lineplot_2x3)
   )
 
-  vdiffr::expect_doppelganger("lineplot_chpt_4_adjusted_ger", p_line_deutschland)
+  vdiffr::expect_doppelganger("lineplot_4x4_adjusted_ger", p_line_deutschland)
   # save_plot(p_line_deutschland, filename = "../adjusted_means_ger.pdf", height = 226.2 / 2 + 10)
 })

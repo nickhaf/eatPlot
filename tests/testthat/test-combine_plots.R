@@ -29,7 +29,7 @@ for(i in c("2011", "2016", "2021")){
       columns_alignment = 0,
       columns_width = c(0.3, 0.7),
       headers_alignment = 0,
-      default_list = barplot_MinSta
+      default_list = barplot_plot_frame
     )
   )
 
@@ -52,7 +52,7 @@ for(i in c("2011", "2016", "2021")){
       columns_width = NULL,
       axis_x_lims = c(0, 75),
       bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
-      default_list = barplot_MinSta
+      default_list = barplot_plot_frame
     )
   )
 
@@ -71,7 +71,7 @@ for(i in c("2011", "2016", "2021")){
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 25),
-      default_list = barplot_MinSta
+      default_list = barplot_plot_frame
     )
   )
 
@@ -154,7 +154,7 @@ test_that("Example barplot long format is plotted correctly", {
       columns_width = c(0.175, 0.35, 0.075, 0.075, 0.075, 0.075, 0.175),
       columns_nudge_x = c(0, 0, -2, -2, -2, -1),
       headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
-      default_list = barplot_MinSta_trend
+      default_list = barplot_table_plot_pattern
     )
   )
 
@@ -199,7 +199,7 @@ test_that("Example barplot long format is plotted correctly", {
       columns_nudge_x = c(-2, -2, -2, -2),
       headers_alignment = c(0.5, 0.5, 0.5, 0.5),
       pattern_spacing = 0.0125,
-      default_list = barplot_MinSta_trend
+      default_list = barplot_table_plot_pattern
     )
   )
 
