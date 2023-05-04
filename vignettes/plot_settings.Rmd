@@ -17,10 +17,10 @@ knitr::opts_chunk$set(
 # List of predefined plotsettings-objects
 ## Barplots
 
-* `?barplot_MinSta`
-* `?barplot_MinSta_trend`
+* `?barplot_plot_frame`
+* `?barplot_table_plot_pattern`
 
 ## Lineplots
 
-* `?lineplot_chpt_4`
-* `?lineplot_chpt_4_germany`
+* `?lineplot_4x4`
+* `?lineplot_2x3`
