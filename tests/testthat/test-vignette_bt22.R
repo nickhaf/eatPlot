@@ -1,7 +1,3 @@
-
-## Plots are built in this vignette, so source the code and compare it here:
-ksource(here::here("vignettes", "bt22_plots.Rmd"))
-
 test_that("minsta_plot works", {
   vdiffr::expect_doppelganger("minsta_plot", minsta_plot )
 })
