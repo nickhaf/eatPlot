@@ -56,6 +56,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">construct_label</span><span class="op">(</span></span>
 <span>  <span class="va">dat</span>,</span>
+<span>  new_name <span class="op">=</span> <span class="st">"label"</span>,</span>
 <span>  label_est <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label_se <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label_sig_bold <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -69,6 +70,10 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>dat</dt>
 <dd><p>Dataframe with the columns that should be merged into labels.</p></dd>
+
+
+<dt>new_name</dt>
+<dd><p>Character string for the new column that is added to <code>dat</code>. Defaults to <code>'label'</code>.</p></dd>
 
 
 <dt>label_est</dt>
@@ -99,7 +104,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A character vector with the constructed labels.</p>
+<p>The data.frame with an added column for the constructed label.</p>
     </div>
 
     <div class="section level2">

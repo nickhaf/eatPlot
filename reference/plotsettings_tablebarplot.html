@@ -55,7 +55,6 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotsettings_tablebarplot</span><span class="op">(</span></span>
-<span>  axis_x_background_width_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_x_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_stripes_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_fill_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -71,6 +70,8 @@
 <span>  columns_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_alignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  headers_background_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  headers_background_width_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  font_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -82,11 +83,7 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>axis_x_background_width_x</dt>
-<dd><p>Numeric for the width of the x_axis - title background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to <code>0</code>.</p></dd>
-
-
-<dt>axis_x_lims</dt>
+    <dl><dt>axis_x_lims</dt>
 <dd><p>Numeric vector of length <code>2</code> for the x-axis limits. Will be set automatically, <code>NULL</code> (default).</p></dd>
 
 
@@ -146,6 +143,14 @@
 <dd><p>Numeric vector with one element for each column, determining the text adjustement of the headers. Can be <code>0</code> (left-aligned), <code>0.5</code> (central-aligned), or <code>1</code> (right-aligned). Defaults to <code>NULL</code>, in which case the alignment of the columns will be adopted.</p></dd>
 
 
+<dt>headers_background_colour</dt>
+<dd><p>Colour of the background of the headers.</p></dd>
+
+
+<dt>headers_background_width_x</dt>
+<dd><p>Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to <code>0</code>.</p></dd>
+
+
 <dt>headers_nudge_x</dt>
 <dd><p>Numeric to nudge the column_headers in x direction. Defaults to <code>0</code>.</p></dd>
 
@@ -181,9 +186,6 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Calling the function without any arguments will result in the default settings-list.</span></span></span>
 <span class="r-in"><span><span class="fu">plotsettings_tablebarplot</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_background_width_x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -229,6 +231,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_alignment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_colour</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -256,9 +264,6 @@
 <span class="r-in"><span>                      <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">82</span>, maxColorValue <span class="op">=</span> <span class="fl">255</span><span class="op">)</span></span></span>
 <span class="r-in"><span>                      <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_background_width_x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -304,6 +309,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_alignment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_colour</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -330,9 +341,6 @@
 <span class="r-in"><span>                       <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">82</span>, maxColorValue <span class="op">=</span> <span class="fl">255</span><span class="op">)</span></span></span>
 <span class="r-in"><span>                     <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_background_width_x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -378,6 +386,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_alignment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_colour</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
