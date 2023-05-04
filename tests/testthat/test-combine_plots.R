@@ -92,7 +92,11 @@ test_that("Example barplot long format is plotted correctly", {
 
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
-  dat_bar$se_Trend_noComp_20112016_percent <- construct_label(dat_bar, label_se = "se_Trend_noComp_20112016_percent", round_se = 1)
+  dat_bar <- construct_label(dat_bar,
+                             new_name = "se_Trend_noComp_20112016_percent_label",
+                             label_se = "se_Trend_noComp_20112016_percent",
+                             round_se = 1)
+
   dat_bar$se_Trend_noComp_20162021_percent <- construct_label(dat_bar, label_se = "se_Trend_noComp_20162021_percent", round_se = 1)
 
 

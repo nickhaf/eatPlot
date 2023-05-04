@@ -2,14 +2,16 @@
 #'
 #' @inheritParams plot_lineplot
 #' @param dat Dataframe with the columns that should be merged into labels.
+#' @param new_name Character string for the new column that is added to `dat`. Defaults to `'label'`.
 #' @param round_est Rounding of label_est.
 #' @param round_se Rounding of label_se.
 #'
-#' @return A character vector with the constructed labels.
+#' @return The data.frame with an added column for the constructed label.
 #' @export
 #'
 #' @examples #tbd
 construct_label <- function(dat,
+                            new_name = "label",
                             label_est = NULL,
                             label_se = NULL,
                             label_sig_bold = NULL,
@@ -49,11 +51,13 @@ if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){
 
   dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
 
-  dat$label <- paste0(
+  dat[, new_name] <- paste0(
     dat$label_est,
     dat$label_sig,
     dat$label_se
   )
 
-  return(dat$label)
+  dat <- remove_columns(dat, cols = c("label_est", "label_sig", "label_se", "label_sig_bold", "label_sig_high"))
+
+  return(dat)
 }

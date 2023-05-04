@@ -45,11 +45,11 @@ plot_tablebar <- function(dat,
     dat <- dat$plot_tablebar
   }
 
+  if(!inherits(columns_headers, "list") & !is.null(columns_headers)){
+    stop("Columns_headers has to be a list or NULL.")
+  }
+
   # Check columns -----------------------------------------------------------
-
-  ## Checken ob Liste oder Dataframe
-
-
 
   if (is.null(y_axis)) {
     stop("Please provide a y-axis.")
@@ -74,10 +74,20 @@ plot_tablebar <- function(dat,
     bar_header <- " "
 
   }
-  columns_headers <- check_length(columns_headers, length(columns_table))
+  columns_headers <- check_length(columns_headers, length(columns_table), fill = " ")
+  columns_headers <- lapply(columns_headers, function(x){
+    if(is.null(x)){
+      " "
+      }else{
+        x
+        }}
+    )
+
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
+
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
+
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
 
@@ -134,8 +144,9 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
   new_colnames <- paste0("col_", 1:length(columns_table))
 
   for (i in seq_along(columns_table)) {
-    dat[[new_colnames[i]]] <- construct_label(
+    dat <- construct_label(
       dat,
+      new_name = new_colnames[i],
       label_est = columns_table[[i]],
       label_se = columns_table_se[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
@@ -145,8 +156,9 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
   }
 
   if(!is.null(bar_label)){
-   dat$bar_label_text <- construct_label(
+   dat <- construct_label(
      dat,
+     new_name = "bar_label_text",
      label_est = bar_label,
      label_se = NULL,
      label_sig_bold = bar_label_sig,
@@ -222,14 +234,14 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
     ggplot2::scale_x_continuous(breaks = scale_breaks,
                                 limits = c(NA, max(column_x_coords$right)),
                                 expand = ggplot2::expansion(mult = c(0.025, 0.025))) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$axis_x_background_width_x))) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$headers_background_width_x))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
         ymin = max(.data$y_axis) + 0.5, ymax = Inf
       ),
       colour = NA,
-      fill = "lightblue"
+      fill = plot_settings$headers_background_colour
     ) +
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     theme_table() +
@@ -471,9 +483,11 @@ set_axis_limits <- function(dat, x_value, plot_settings) {
 }
 
 check_length <- function(obj, leng, fill = NULL) {
-  if (is.null(obj)) {
+  if (is.null(obj) & is.null(fill)) {
     return(NULL)
-  } else if (length(obj) != leng & length(obj) > 1) {
+  } else if(is.null(obj) & !is.null(fill)){
+    obj <- rep(fill, leng)
+  }else if(length(obj) != leng & length(obj) > 1) {
     stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1."), call. = FALSE)
   } else if(length(obj) == 1 & leng > 1){
     obj <- c(obj, lapply(1:(leng - length(obj)), function(x) {

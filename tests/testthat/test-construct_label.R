@@ -13,7 +13,7 @@ test_that("labels are build correctly", {
       label_sig_bold = "label_sig_bold",
       label_sig_high = "label_sig_high",
       round_est = 4, round_se = 5
-    ),
+    )$label,
     c("1.3400 (0.10000)", "**2.1221** (0.23000)", "3.5600<sup>a</sup> (0.47000)", "**10.1500**<sup>a</sup> (0.43236)")
   )
 
@@ -25,7 +25,7 @@ test_that("labels are build correctly", {
       label_sig_bold = "label_sig_bold",
       label_sig_high = "label_sig_high",
       round_est = 4, round_se = 5
-    ),
+    )$label,
     c("1.3400", "**2.1221**", "3.5600<sup>a</sup>", "**10.1500**<sup>a</sup>")
   )
 
@@ -37,7 +37,7 @@ test_that("labels are build correctly", {
                     label_sig_bold = NULL,
                     label_sig_high = "label_sig_high",
                     round_est = 4, round_se = 5
-    ),
+    )$label,
     c("1.3400", "2.1221", "3.5600<sup>a</sup>", "10.1500<sup>a</sup>")
   )
 })
