@@ -75,9 +75,19 @@ plot_tablebar <- function(dat,
 
   }
   columns_headers <- check_length(columns_headers, length(columns_table))
+  columns_headers <- lapply(columns_headers, function(x){
+    if(is.null(x)){
+      " "
+      }else{
+        x
+        }}
+    )
+
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
+
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
   columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
+
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
 
