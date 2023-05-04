@@ -234,14 +234,14 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
     ggplot2::scale_x_continuous(breaks = scale_breaks,
                                 limits = c(NA, max(column_x_coords$right)),
                                 expand = ggplot2::expansion(mult = c(0.025, 0.025))) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$axis_x_background_width_x))) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$headers_background_width_x))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
         ymin = max(.data$y_axis) + 0.5, ymax = Inf
       ),
       colour = NA,
-      fill = plot_settings$axis_x_background_colour
+      fill = plot_settings$headers_background_colour
     ) +
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     theme_table() +

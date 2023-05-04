@@ -1,7 +1,5 @@
 ## code to prepare `barplot_table_plot_pattern` dataset goes here
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
-  axis_x_background_colour = "lightblue",
-  axis_x_background_width_x = 0.5,
   background_stripes_colour = c(rep(c("white", "white", "white", "gray94", "gray94", "gray94"), 8), rep("gray87", 3)),
   bar_fill_colour = c(grDevices::rgb(33, 89, 104, maxColorValue = 255),
                       grDevices::rgb(49, 133, 156, maxColorValue = 255),
@@ -11,6 +9,8 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   bar_pattern_type = c("TRUE" = "stripe", "FALSE" = "none"),
   bar_sig_type = "pattern",
   bar_width = 0.7,
+  headers_background_colour = "lightblue",
+  headers_background_width_x = 0.5,
   font_size = 2,
   pattern_spacing = 0.01,
   pattern_width = 0.4
