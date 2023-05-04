@@ -78,7 +78,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param columns_nudge_x Numeric to nudge the column text in x direction. Defaults to `0`.
 #' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
-#' #' @param headers_background_colour Colour of the background of the headers.
+#' @param headers_background_colour Colour of the background of the headers.
 #' @param headers_background_width_x Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to `0`.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
