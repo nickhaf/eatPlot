@@ -241,7 +241,7 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
         ymin = max(.data$y_axis) + 0.5, ymax = Inf
       ),
       colour = NA,
-      fill = "lightblue"
+      fill = plot_settings$axis_x_background_colour
     ) +
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     theme_table() +

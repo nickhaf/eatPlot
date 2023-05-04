@@ -2,11 +2,12 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 21
+      length(settings_list) == 22
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
       names(settings_list) %in% c(
+        "axis_x_background_colour",
         "axis_x_background_width_x",
         "axis_x_lims",
         "background_stripes_colour",
@@ -32,6 +33,7 @@ check_plotsettings_barplot <- function(settings_list) {
       )
   )
 
+  stopifnot(is_colour(settings_list$axis_x_background_colour) | is.null(settings_list$axis_x_background_colour))
   stopifnot(is.numeric(settings_list$axis_x_background_width_x))
   stopifnot(is.numeric(settings_list$axis_x_lims) & length(settings_list$axis_x_lims) == 2 | is.null(settings_list$axis_x_lims))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
@@ -59,6 +61,7 @@ check_plotsettings_barplot <- function(settings_list) {
 
 #' Set parameters for the barplots.
 #'
+#' @param axis_x_background_colour Colour of the background of the x-axis/headers.
 #' @param axis_x_background_width_x Numeric for the width of the x_axis - title background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to `0`.
 #' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, `NULL` (default).
 #' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background. Defaults to `NULL`.
@@ -113,6 +116,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #'
 #'
 plotsettings_tablebarplot <- function(
+                                      axis_x_background_colour = NULL,
                                       axis_x_background_width_x = NULL,
                                       axis_x_lims = NULL,
                                       background_stripes_colour = NULL,
@@ -138,6 +142,7 @@ plotsettings_tablebarplot <- function(
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
+      "axis_x_background_colour" = "white",
       "axis_x_background_width_x" = 0,
       "axis_x_lims" = NULL,
       "background_stripes_colour" = "white",
