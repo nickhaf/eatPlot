@@ -144,8 +144,9 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
   new_colnames <- paste0("col_", 1:length(columns_table))
 
   for (i in seq_along(columns_table)) {
-    dat[[new_colnames[i]]] <- construct_label(
+    dat <- construct_label(
       dat,
+      new_name = new_colnames[i],
       label_est = columns_table[[i]],
       label_se = columns_table_se[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
@@ -155,8 +156,9 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
   }
 
   if(!is.null(bar_label)){
-   dat$bar_label_text <- construct_label(
+   dat <- construct_label(
      dat,
+     new_name = "bar_label_text",
      label_est = bar_label,
      label_se = NULL,
      label_sig_bold = bar_label_sig,
