@@ -20,7 +20,6 @@ usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 
 barplot_plot_frame <- plotsettings_tablebarplot(
-  axis_x_lims = c(0, 35),
   background_stripes_colour = c(rep(c("white", "gray94"), 8), "gray87"),
   bar_fill_colour = c("lightblue"),
   bar_frame_linetype = c("above" = "solid", "below" = "longdash", "no_sig" = "blank"),
