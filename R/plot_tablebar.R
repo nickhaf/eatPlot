@@ -202,7 +202,6 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
 
-
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -287,7 +286,7 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggtext::geom_richtext(data = data.frame(),
                               ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
-                                            y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y ),
+                                            y = max(dat$y_axis) + 1.25 + 0.25 + plot_settings$headers_nudge_y ),
                               label = bar_header,
                               size = plot_settings$font_size,
                               label.padding = grid::unit(rep(0, 4), "pt"),
@@ -315,7 +314,7 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggtext::geom_richtext(data = data.frame(),
           ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
-                                           y = max(dat$y_axis, na.rm = TRUE) + 1 + plot_settings$headers_nudge_y ,
+                                           y = max(dat$y_axis, na.rm = TRUE) + 1.25 + 0.25 + plot_settings$headers_nudge_y ,
                                            label = bar_header),
                               size = plot_settings$font_size,
                               label.padding = grid::unit(rep(0, 4), "pt"),
@@ -360,13 +359,13 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
             ggplot2::annotate("segment",
               x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
               xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
-              y = max(dat$y_axis) + 1.75 + plot_settings$headers_nudge_y,
-              yend = max(dat$y_axis) + 1.75 + plot_settings$headers_nudge_y,
+              y = max(dat$y_axis) + 1.25 + 0.75 + plot_settings$headers_nudge_y,
+              yend = max(dat$y_axis) + 1.25 + 0.75 + plot_settings$headers_nudge_y,
               linewidth = 0.15
             ),
             ggtext::geom_richtext(data = data.frame(),
                                   ggplot2::aes(x = header_x,
-                                               y = max(dat$y_axis) + 2.25 + plot_settings$headers_nudge_y),
+                                               y = max(dat$y_axis) + 1.25 + 1.25 + plot_settings$headers_nudge_y),
                                   label = names(column_spanners)[spanner],
                                   size = plot_settings$font_size,
                                   label.padding = grid::unit(rep(0, 4), "pt"),
@@ -436,7 +435,7 @@ build_columns_3 <- function(df,
         if(!is.null(columns_headers)){
         ggtext::geom_richtext(data = data.frame(),
                               ggplot2::aes(x =  x_axis_i_header,
-                                           y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y),
+                                           y = max(df$y_axis) + 1.25 + 0.25 + plot_settings$headers_nudge_y),
                               label = columns_headers[[i]],
                               size = plot_settings$font_size,
                               label.padding = grid::unit(rep(0, 4), "pt"),

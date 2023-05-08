@@ -34,17 +34,21 @@ plot_dat <- prep_plot(
                                subsetter = "wholeGroup", 
                                remove = TRUE)
  
-   p_line <- plot_lineplot(
+   p_line_states <- plot_lineplot(
     plot_dat = plot_dat,
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
   )
   
-   p_line
+   p_line_states
    
-  save_plot(p_line, filename = "../split_lineplot_2_books.pdf")
 ```
+
+```{r, eval = FALSE}
+save_plot(p_line_states, filename = "../split_lineplot_2_books.pdf")
+```
+
 
 ## Chapter 4: Kompetenzwerte Deutschland
 ```{r chpt_4_ger}
@@ -59,7 +63,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
   )
 
 ## Here we change the seperate_plot_var - Argument to "competence_var", so the different competences are depicted in the tiles:
-  p_line <- plot_lineplot(
+  p_line_ger <- plot_lineplot(
     plot_dat = plot_dat_test,
     seperate_plot_var = "competence_var",
     label_sig_high = NULL,
@@ -71,13 +75,15 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
     )
   )
   
-  p_line
+  p_line_ger
   
+```
+
+```{r, eval = FALSE}
   ## We dont't want a whole A4 page for this plot, but maybe the half:
-  save_plot(p_line, 
+  save_plot(p_line_ger, 
             filename = "../adjusted_means_ger.pdf", 
             height = 226.2 / 2 + 10)
-  
 ```
 
 
@@ -90,6 +96,9 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
   )[["plot_tablebar"]]
 
 ## Some columns have to be prepared manually (with convenience functions):
+## wholeGroup should not be plotted in bold, so set to FALSE
+dat_bar[dat_bar$state_var == "wholeGroup", "sig_noTrend_noComp_2021"] <- FALSE
+
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
 for(i in c("2011", "2016", "2021")){
   dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompWhole_", i), sig_column = paste0("sig_noTrend_CompWhole_", i))
@@ -103,13 +112,13 @@ for(i in c("2011", "2016", "2021")){
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
-    bar_header = "Mindeststandard nicht erreicht (MSA)",
+    bar_header = "**Mindeststandard nicht erreicht**",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
-      axis_x_lims = c(0, 39),
+      axis_x_lims = c(0, 40),
       bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
       columns_alignment = 0,
       columns_width = c(0.3, 0.7),
@@ -128,7 +137,7 @@ for(i in c("2011", "2016", "2021")){
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
-    bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
+    bar_header = "**Regelstandard erreicht oder übertroffen**",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -151,7 +160,7 @@ for(i in c("2011", "2016", "2021")){
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
-    bar_header = "Optimalstandard erreicht (MSA)",
+    bar_header = "**Optimalstandard<br>erreicht**",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -160,12 +169,16 @@ for(i in c("2011", "2016", "2021")){
     )
   )
 
+  # Combine plots --------------
   minsta_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
 
   minsta_plot
-  
-  save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
 ```
+
+```{r, eval = FALSE}
+save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
+```
+
 
 ## Chapter 4: Mindeststandards Trend
 ```{r chpt_3_MinStand_trend}
@@ -293,10 +306,13 @@ for(i in c("2011", "2016", "2021")){
     )
   )
 
-  c_plot <- combine_plots(list(p_bar_1, p_bar_2))
+  minsta_plot_trend <- combine_plots(list(p_bar_1, p_bar_2))
 
-  c_plot
-  
-  save_plot(c_plot, filename = "../Kap3_2022_MSA_trend.pdf")
+  minsta_plot_trend
+
+```
+
+```{r, eval = FALSE}
+save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend.pdf")
 ```
 
