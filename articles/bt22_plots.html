@@ -98,20 +98,17 @@
 <span>                               subsetter <span class="op">=</span> <span class="st">"wholeGroup"</span>, </span>
 <span>                               remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span> </span>
-<span>   <span class="va">p_line</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
+<span>   <span class="va">p_line_states</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>    plot_dat <span class="op">=</span> <span class="va">plot_dat</span>,</span>
 <span>    years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>default_list <span class="op">=</span> <span class="va">lineplot_4x4</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  </span>
-<span>   <span class="va">p_line</span></span></code></pre></div>
+<span>   <span class="va">p_line_states</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt4_line-1.png" width="700"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>   </span>
-<span>  <span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line</span>, filename <span class="op">=</span> <span class="st">"../split_lineplot_2_books.pdf"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; agg_png </span></span>
-<span><span class="co">#&gt;       2</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states</span>, filename <span class="op">=</span> <span class="st">"../split_lineplot_2_books.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="chapter-4-kompetenzwerte-deutschland">Chapter 4: Kompetenzwerte Deutschland<a class="anchor" aria-label="anchor" href="#chapter-4-kompetenzwerte-deutschland"></a>
@@ -128,7 +125,7 @@
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Here we change the seperate_plot_var - Argument to "competence_var", so the different competences are depicted in the tiles:</span></span>
-<span>  <span class="va">p_line</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">p_line_ger</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>    plot_dat <span class="op">=</span> <span class="va">plot_dat_test</span>,</span>
 <span>    seperate_plot_var <span class="op">=</span> <span class="st">"competence_var"</span>,</span>
 <span>    label_sig_high <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -140,16 +137,13 @@
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  </span>
-<span>  <span class="va">p_line</span></span></code></pre></div>
+<span>  <span class="va">p_line_ger</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_4_ger-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  </span>
-<span>  <span class="co">## We dont't want a whole A4 page for this plot, but maybe the half:</span></span>
-<span>  <span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line</span>, </span>
+<code class="sourceCode R"><span>  <span class="co">## We dont't want a whole A4 page for this plot, but maybe the half:</span></span>
+<span>  <span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_ger</span>, </span>
 <span>            filename <span class="op">=</span> <span class="st">"../adjusted_means_ger.pdf"</span>, </span>
-<span>            height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; agg_png </span></span>
-<span><span class="co">#&gt;       2</span></span></code></pre></div>
+<span>            height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -236,15 +230,13 @@
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
+<span>  <span class="co"># Combine plots --------------</span></span>
 <span>  <span class="va">minsta_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_bar_1</span>, <span class="va">p_bar_2</span>, <span class="va">p_bar_3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="va">minsta_plot</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  </span>
-<span>  <span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; agg_png </span></span>
-<span><span class="co">#&gt;       2</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="chapter-4-mindeststandards-trend">Chapter 4: Mindeststandards Trend<a class="anchor" aria-label="anchor" href="#chapter-4-mindeststandards-trend"></a>
@@ -375,15 +367,12 @@
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span>  <span class="va">c_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_bar_1</span>, <span class="va">p_bar_2</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">minsta_plot_trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_bar_1</span>, <span class="va">p_bar_2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="va">c_plot</span></span></code></pre></div>
+<span>  <span class="va">minsta_plot_trend</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand_trend-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  </span>
-<span>  <span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">c_plot</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA_trend.pdf"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; agg_png </span></span>
-<span><span class="co">#&gt;       2</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot_trend</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA_trend.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
