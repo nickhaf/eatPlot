@@ -65,6 +65,10 @@ prep_plot <- function(dat,
   dat <- fill_column(dat, state_var)
   dat <- fill_column(dat, group_var)
 
+  if(any(dat$state_var == "")){
+    warning(paste0("Your state_var column '", state_var, "' includes missing Values that are not coded as NA. Please recode to NA."))
+  }
+
   ## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
   dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_var, state_var, group_var))]
 
@@ -220,6 +224,7 @@ prep_plot <- function(dat,
       list_building_blocks[["noTrend_noComp_wholeGroup"]]
     )
   } else {
+    Trend_data_merged <- data.frame()
     trend_data_final <- noTrend_data_merged
     trend_data_wholeGroup <- list_building_blocks[["noTrend_noComp_wholeGroup"]]
   }
@@ -309,6 +314,8 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
                                        )
 
 
+}else{
+  plot_dat[["plot_tablebar"]] <- noTrend_data_merged_wide
 }
 
 
