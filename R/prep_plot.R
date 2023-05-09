@@ -215,7 +215,7 @@ prep_plot <- function(dat,
       trend_data_final <- Trend_data_merged
   }
     ## Drop unused levels
-    if (any(!is.na(trend_data_final$grouping_var))) {
+    if (any(!is.na(trend_data_final$grouping_var)) & nrow(list_building_blocks[["Trend_noComp_wholeGroup"]]) != 0 & nrow(list_building_blocks[["noTrend_noComp_wholeGroup"]]) ) {
       trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
     }
     # Prepare the wholeGroup data.frame ---------------------------------------
