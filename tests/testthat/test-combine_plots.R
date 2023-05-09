@@ -1,3 +1,4 @@
+
 test_that("example mindeststandard short version", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
