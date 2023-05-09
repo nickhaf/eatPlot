@@ -113,7 +113,7 @@ for(i in c("2011", "2016", "2021")){
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
     bar_header = "**Mindeststandard nicht erreicht**",
-    columns_headers = list("Land"),
+    columns_headers = list("**Land**"),
     columns_table = list("state_var"),
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -220,7 +220,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     bar_sig = "sig_Trend_noComp_20112016",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
+    columns_headers = list("**Land**", " ", "**%**", "**%**", "**%**", "*(SE)*"),
     column_spanners = list(
       "**2011**" = 3,
       "**2016**" = 4,
@@ -313,6 +313,6 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend.pdf")
+save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend-v02.pdf")
 ```
 
