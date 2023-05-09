@@ -55,6 +55,10 @@ prep_plot <- function(dat,
     message("Are you sure your data isn't grouped? If it is, but you didn't provide a grouping_var, this might lead to duplicated rows in the prepared data.frames.")
   }
 
+  if(any(dat[!is.na(dat[, state_var]), state_var] == "")){
+    warning(paste0("Your state_var column '", state_var, "' includes missing Values that are not coded as NA. Please recode to NA."), call. = FALSE)
+  }
+
   sapply(c(grouping_var, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
 
   # Show a message, if a grouping_var was provided, but not as factor.
@@ -64,10 +68,6 @@ prep_plot <- function(dat,
   dat <- fill_column(dat, grouping_var, filling = )
   dat <- fill_column(dat, state_var)
   dat <- fill_column(dat, group_var)
-
-  if(any(dat$state_var == "")){
-    warning(paste0("Your state_var column '", state_var, "' includes missing Values that are not coded as NA. Please recode to NA."))
-  }
 
   ## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
   dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_var, state_var, group_var))]
