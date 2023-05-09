@@ -146,7 +146,7 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   data_long$id <- NULL
   }else{
   data_long <- data
-  data_long$time <- 9999
+  data_long$time <- "noTrend"
 }
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
