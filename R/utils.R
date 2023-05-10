@@ -317,6 +317,14 @@ fill_column <- function(df, column_name, filling = NA){
 return(df)
   }
 
+fill_na <- function(df, column_name, filling){
+  if(is.null(column_name)){
+    return(NULL)
+  }else{
+    df[is.na(df[, column_name]), column_name] <- filling
+    return(df)
+  }
+}
 
 check_columns <-  function(dat, column){
   if(column %in% colnames(dat)){

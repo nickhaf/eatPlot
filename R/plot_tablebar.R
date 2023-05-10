@@ -32,7 +32,7 @@ plot_tablebar <- function(dat,
                           bar_header = NULL,
                           columns_headers = NULL,
                           columns_round = 0,
-                          column_spanners = NULL, # c("name" = c(1,2))
+                          column_spanners = NULL,
                           columns_table = NULL,
                           columns_table_sig_bold = NULL,
                           columns_table_sig_high = NULL,
@@ -60,6 +60,11 @@ plot_tablebar <- function(dat,
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
   dat <- fill_column(dat, column_name = y_axis, filling = NA)
 
+  for(i in c(columns_table_sig_bold, columns_table_sig_high, bar_label_sig, "bar_sig")){
+    if(any(is.na(dat[, i]))){warning("Your column '", i,"' contains missing values. They will be converted to FALSE for the plot.", .call = FALSE)
+}
+    dat <- fill_na(dat, column_name = i, filling = "FALSE")
+  }
 
 
   ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
@@ -174,10 +179,10 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
   dat <- dat[order(dat$y_axis), ]
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
-  dat$bar_fill_2 <- ifelse(dat$bar_sig == TRUE,
-    paste0(dat$bar_fill, dat$bar_sig),
-    "pattern"
-  )
+  # dat$bar_fill_2 <- ifelse(dat$bar_sig == TRUE,
+  #   paste0(dat$bar_fill, dat$bar_sig),
+  #   "pattern"
+  # )
 
   if (!is.null(bar_est)) {
     plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
