@@ -7,7 +7,7 @@
 #' @return The plot_dat list with rows filtered as specified.
 #' @export
 #'
-#' @examples
+#' @examples #tbd
 filter_plot_dat <- function(plot_dat,
                         filter_statement,
                         list_elements = c("plot_lines", "plot_points", "plot_background_lines", "plot_braces")){
