@@ -14,7 +14,7 @@ construct_directional_sig <- function(dat_bar, est_column, sig_column){
                                   "below",
                                   ifelse(dat_bar[, sig_column] == "TRUE" & dat_bar[, est_column] > 0,
                                          "above",
-                                         "no_sig"
+                                         "FALSE"
                                   )
   )
   return(dat_bar)
