@@ -319,7 +319,7 @@ return(df)
 
 fill_na <- function(df, column_name, filling){
   if(is.null(column_name)){
-    return(NULL)
+    return(df)
   }else{
     df[is.na(df[, column_name]), column_name] <- filling
     return(df)

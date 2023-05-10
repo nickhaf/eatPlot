@@ -60,12 +60,6 @@ plot_tablebar <- function(dat,
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
   dat <- fill_column(dat, column_name = y_axis, filling = NA)
 
-  for(i in c(columns_table_sig_bold, columns_table_sig_high, bar_label_sig, "bar_sig")){
-    if(any(is.na(dat[, i]))){warning("Your column '", i,"' contains missing values. They will be converted to FALSE for the plot.", .call = FALSE)
-}
-    dat <- fill_na(dat, column_name = i, filling = "FALSE")
-  }
-
 
   ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
   # column_width = 0 if not needed
@@ -265,6 +259,15 @@ if(sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 
 
   if (!is.null(bar_est)) {
     if (plot_settings$bar_sig_type == "pattern") {
+      ## ggpattern can't deal with NAs, therefore convert them to FALSE (not significant):
+
+      for(i in c(columns_table_sig_bold, columns_table_sig_high, bar_label_sig, "bar_sig")){
+        # if(any(is.na(dat[, i]))){warning("Your column '", i,"' contains missing values. They will be converted to FALSE for the plot.", .call = FALSE)
+        # }
+        dat <- fill_na(dat, column_name = i, filling = "FALSE")
+      }
+
+
       res_plot <- res_plot +
         ggnewscale::new_scale_fill() +
         ggnewscale::new_scale_colour() +
