@@ -129,7 +129,7 @@ prep_plot <- function(dat,
   # Build noTrend dataframe -------------------------------------------------
   comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
   comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "Whole")
-  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
+  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar" | list_building_blocks[["noTrend_Comp"]]$compare_2 == "_groupingVar", ]
   comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "Within")
 
 
