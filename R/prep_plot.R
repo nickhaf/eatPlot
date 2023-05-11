@@ -136,6 +136,10 @@ prep_plot <- function(dat,
     comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "CrossDiffWhole")
     comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
     comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "CrossDiffWithin")
+    comp_state_groups <- list_building_blocks[["Trend_Comp"]][grepl("__groupingVar", list_building_blocks[["Trend_Comp"]]$compare_1) & list_building_blocks[["Trend_Comp"]]$compare_2 == "_groupingVar", ]
+
+    comp_state_groups <- add_suffix(comp_state_groups, merging_columns = merging_columns, suffix = "GroupDiff")
+
 
 
     if (nrow(comp_state) != 0 & nrow(comp_wholeGroup) != 0) {
