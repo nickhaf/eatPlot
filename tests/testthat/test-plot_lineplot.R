@@ -6,6 +6,7 @@ test_that("settings do something", {
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  plot_dat_test <- filter_rows(plot_dat_test, column_name = "grouping_var", subsetter = "0.vs.1", remove = TRUE)
   ## Testweise einige PUnkte auf n.s. setzen
   plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 

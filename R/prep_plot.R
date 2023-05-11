@@ -136,47 +136,45 @@ prep_plot <- function(dat,
     comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "CrossDiffWhole")
     comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
     comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "CrossDiffWithin")
-    comp_state_groups <- list_building_blocks[["Trend_Comp"]][grepl("__groupingVar", list_building_blocks[["Trend_Comp"]]$compare_1) & list_building_blocks[["Trend_Comp"]]$compare_2 == "_groupingVar", ]
+    comp_groups <- list_building_blocks[["Trend_Comp"]][grepl("__groupingVar", list_building_blocks[["Trend_Comp"]]$compare_1) & list_building_blocks[["Trend_Comp"]]$compare_2 == "_groupingVar", ]
 
-    comp_state_groups <- add_suffix(comp_state_groups, merging_columns = merging_columns, suffix = "GroupDiff")
+    comp_groups <- add_suffix(comp_groups, merging_columns = merging_columns, suffix = "GroupDiff")
 
-
-
-    if (nrow(comp_state) != 0 & nrow(comp_wholeGroup) != 0) {
       comp_within_whole <- merge_trend_data(
         trend_data_1 = comp_state,
         trend_data_2 = comp_wholeGroup,
+        return_dat = comp_wholeGroup,
         suffixes = c("", ""),
         all.x = TRUE
       )
-    } else {
-      comp_within_whole <- comp_wholeGroup
-    }
 
-    ## Add data without comparison:
-
-    if (nrow(comp_within_whole) != 0 & nrow(list_building_blocks[["Trend_noComp"]]) != 0) {
-      Trend_data_merged <- merge_trend_data(
+      comp_within_whole <- merge_trend_data(
         trend_data_1 = comp_within_whole,
-        trend_data_2 = list_building_blocks[["Trend_noComp"]],
+        trend_data_2 = comp_groups,
+        return_dat = comp_within_whole,
         suffixes = c("", ""),
         all = TRUE
       )
-    } else {
-      Trend_data_merged <- list_building_blocks[["Trend_noComp"]]
-    }
+
+
+    ## Add data without comparison:
+      Trend_data_merged <- merge_trend_data(
+        trend_data_1 = comp_within_whole,
+        trend_data_2 = list_building_blocks[["Trend_noComp"]],
+        return_dat = list_building_blocks[["Trend_noComp"]],
+        suffixes = c("", ""),
+        all = TRUE
+      )
 
 
 
     # Merge to final data frame -----------------------------------------------
-    if(nrow(Trend_data_merged) != 0 & nrow(noTrend_data_merged) != 0){
     trend_data_final <- merge_trend_point(
       trend_data = Trend_data_merged,
-      point_data = noTrend_data_merged
+      point_data = noTrend_data_merged,
+      return_dat = Trend_data_merged
     )
-    }else{
-      trend_data_final <- Trend_data_merged
-  }
+
     ## Drop unused levels
     if (any(!is.na(trend_data_final$grouping_var)) & nrow(list_building_blocks[["Trend_noComp_wholeGroup"]]) != 0 & nrow(list_building_blocks[["noTrend_noComp_wholeGroup"]]) ) {
       trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
@@ -186,11 +184,12 @@ prep_plot <- function(dat,
       list_building_blocks[["Trend_noComp_wholeGroup"]],
       list_building_blocks[["noTrend_noComp_wholeGroup"]]
     )
-  } else {
+  } else { ## If no trend columns in data.
     Trend_data_merged <- data.frame()
     trend_data_final <- noTrend_data_merged
     trend_data_wholeGroup <- list_building_blocks[["noTrend_noComp_wholeGroup"]]
   }
+
   # Fill up NAs -------------------------------------------------------------
   ## Fill up NA significances with FALSE (those which emerged through merging)
   for (i in grep("sig_", colnames(trend_data_final))) {

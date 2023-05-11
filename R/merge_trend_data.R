@@ -11,14 +11,16 @@
 #' @examples # tbd
 merge_trend_data <- function(trend_data_1,
                              trend_data_2,
+                             return_dat,
                              suffixes,
                              ...) {
   trend_data_1 <- trend_data_1[, !(colnames(trend_data_1) %in% c("modus", "comparison", "parameter", "group_var", "keyword"))]
   trend_data_2 <- trend_data_2[, !(colnames(trend_data_2) %in% c("modus", "comparison", "parameter", "group_var", "keyword"))]
 
-data_merged <- merge(
+data_merged <- merge_2(
     trend_data_1,
     trend_data_2,
+    return_dat = return_dat,
     by = c("state_var", "grouping_var", "year_start", "year_end", "depVar", "competence_var", "years_Trend"),
     sort = FALSE,
     suffixes = suffixes,
