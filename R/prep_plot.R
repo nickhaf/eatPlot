@@ -128,10 +128,12 @@ prep_plot <- function(dat,
 
   # Build noTrend dataframe -------------------------------------------------
   comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
-  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "Whole")
-  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar" | list_building_blocks[["noTrend_Comp"]]$compare_2 == "_groupingVar", ]
-  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "Within")
+  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWhole")
+  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
+  comp_state_groups <- list_building_blocks[["noTrend_Comp"]][grepl("__groupingVar", list_building_blocks[["noTrend_Comp"]]$compare_1) & list_building_blocks[["noTrend_Comp"]]$compare_2 == "_groupingVar", ]
 
+  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWithin")
+  comp_state_groups <- add_suffix(comp_state_groups, merging_columns = merging_columns, suffix = "GroupDiff")
 
   if (nrow(comp_state_noTrend) != 0) {
     comp_within_whole_noTrend <- merge(
@@ -148,6 +150,22 @@ prep_plot <- function(dat,
     )
   } else {
     comp_within_whole_noTrend <- comp_wholeGroup_noTrend
+  }
+
+  if(nrow(comp_state_groups) != 0){
+    comp_within_whole_noTrend <- merge(
+      comp_within_whole_noTrend,
+      comp_state_groups,
+      all = TRUE,
+      #all.y = FALSE,
+      by = c(
+        "grouping_var",
+        "state_var",
+        "year",
+        "competence_var",
+        "depVar"
+      )
+    )
   }
 
 
@@ -174,9 +192,9 @@ prep_plot <- function(dat,
   if (any(grepl("trend", colnames(dat)))) {
 
     comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
-    comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "Whole")
+    comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "CrossDiffWhole")
     comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
-    comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "Within")
+    comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "CrossDiffWithin")
 
 
     if (nrow(comp_state) != 0 & nrow(comp_wholeGroup) != 0) {

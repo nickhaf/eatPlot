@@ -52,7 +52,7 @@ if(any(grepl("trend", colnames(data_clean))) == TRUE){
   years_colnames <- extract_numbers(colnames(data_clean))
   exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
-  data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
+  data_trend_comp <- data_clean[!is.na(data_clean$comparison), ]
   filtered_list <- prep_trend_long(data_trend_comp,
                                    filtered_list,
                                    "Trend_Comp",
