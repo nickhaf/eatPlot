@@ -50,7 +50,7 @@ test_that("labels are calculated correctly for multiple groups", {
   )
 
   test_braces <- calc_brace_label_y(df, upper_label_y = 334.5, range_coords = 170, gap_label = 0.08)
-  expect_equal(test_braces, c(334.5, 320.9, 307.3, 293.7))
+  expect_equal(test_braces, rep(c(334.5, 320.9), 2))
 })
 
 
