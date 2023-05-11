@@ -3,7 +3,8 @@ Title: Plot eatRep output
 Version: 0.0.0.9004
 Authors@R: 
     person("Nicklas", "Hafiz", , "hafiznij@hu-berlin.de", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           comment = c(ORCID = "YOUR-ORCID-ID")),
+    person("Philipp", "Franikowski", role = c("ctb"))
 Description: Functions for plotting eatModel output. 
 License: GPL (>= 2)
 Encoding: UTF-8
