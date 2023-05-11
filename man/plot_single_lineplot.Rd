@@ -10,7 +10,8 @@ plot_single_lineplot(
   point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_noComp",
   line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-  line_sig = "sig_Trend_CompCrossDiffWithin",
+  line_se = NULL,
+  line_sig = "sig_Trend_CompWithin",
   label_est = "est_Trend_noComp",
   label_se = "se_Trend_noComp",
   label_sig_high = "sig_Trend_CompCrossDiffWhole",
@@ -30,7 +31,9 @@ plot_single_lineplot(
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
-\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_CompCrossDiffWithin"}.}
+\item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
+
+\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_CompWithin"}.}
 
 \item{label_est}{Character string of the column name containing the brace labels.}
 

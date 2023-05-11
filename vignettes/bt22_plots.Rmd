@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+ACHTUNG: Schaut bitte selbst noch einmal genau, welche Spalten ihr zum Plotten benötigt. Die Plots sind zur Veranschaulichung des Workflows gedacht, es kann sein, dass ihr für bestimmte Kapitel andere Spalten angeben müsst! Also vergleicht am besten noch einmal Stichprobenartig mit dem `eatRep` output, dass es sich um die richtigen Werte handelt.
+
 ```{r setup}
 library(eatPlot)
 ```

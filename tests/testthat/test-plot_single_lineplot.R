@@ -25,8 +25,8 @@ test_that("single_lineplot with one grouping_var is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_noTrendStart_noComp = c(190, 225),
-      est_noTrendEnd_noComp = c(225, 230),
+      est_noTrendStart_noComp_wholeGroup = c(190, 225),
+      est_noTrendEnd_noComp_wholeGroup = c(225, 230),
       sig_trend = c(TRUE, FALSE),
       years_Trend = c(12, 23),
       competence_var = "a"
@@ -89,8 +89,8 @@ test_that("single_lineplot with two groups is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_noTrendStart_noComp = c(190, 225),
-      est_noTrendEnd_noComp = c(225, 230),
+      est_noTrendStart_noComp_wholeGroup = c(190, 225),
+      est_noTrendEnd_noComp_wholeGroup = c(225, 230),
       sig_trend = c(TRUE, FALSE),
       years_Trend = c(12, 23),
       competence_var = "a"
@@ -152,8 +152,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start = c(1, 2),
       year_end = c(2, 3),
-      est_noTrendStart_noComp = c(190, 225),
-      est_noTrendEnd_noComp = c(225, 230),
+      est_noTrendStart_noComp_wholeGroup = c(190, 225),
+      est_noTrendEnd_noComp_wholeGroup = c(225, 230),
       sig_trend = c(TRUE, FALSE),
       years_Trend = c(12, 23),
       competence_var = "a"

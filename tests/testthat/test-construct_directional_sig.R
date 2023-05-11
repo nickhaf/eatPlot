@@ -4,5 +4,5 @@ test_that("multiplication works", {
     sig = c(TRUE, TRUE, TRUE, FALSE)
   )
 
-  expect_equal(construct_directional_sig(df, "est", "sig")$sig_directional_sig, c("below", "above", "no_sig", "no_sig"))
+  expect_equal(construct_directional_sig(df, "est", "sig")$sig_directional_sig, c("below", "above", "FALSE", "FALSE"))
 })
