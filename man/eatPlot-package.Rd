@@ -15,4 +15,13 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Nicklas hafiznij@hu-berlin.de Hafiz
+
+Other contributors:
+\itemize{
+  \item Philipp Franikowski [contributor]
+}
+
+}
 \keyword{internal}
