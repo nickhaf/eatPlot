@@ -11,6 +11,7 @@
 #' @param states Character vector of the states that should be plotted.
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
+#' @param grouping_var_groups Character vector containing the groups from `grouping_var` you want to plot. Defaults to `NULL`, in which case all groups are prepared.
 #' @param competence_var Character string containing the column name in `dat` that contains the different competences. Defaults to `"kb"`.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #' @param plot_mean Logical value indicating whether the mean of the subgroups should be plotted as well.
@@ -31,6 +32,7 @@ prep_plot <- function(dat,
                       state_var = "TR_BUNDESLAND",
                       group_var = "group",
                       grouping_var = NULL,
+                      grouping_var_groups = NULL,
                       sig_niveau = 0.05,
                       plot_mean = FALSE,
                       parameter = "mean") {
@@ -43,6 +45,7 @@ prep_plot <- function(dat,
   stopifnot(is.data.frame(dat))
   stopifnot(is.character(competence) | is.null(competence))
   stopifnot(is.character(grouping_var) | is.null(grouping_var))
+  stopifnot(is.character(grouping_var_groups) | is.null(grouping_var_groups))
   stopifnot(is.character(states) | is.null(states))
   stopifnot(is.character(state_var))
   stopifnot(is.character(competence_var))
@@ -65,12 +68,21 @@ prep_plot <- function(dat,
   dat <- check_factor(dat, grouping_var, "grouping_var")
 
   dat <- fill_column(dat, competence_var)
-  dat <- fill_column(dat, grouping_var, filling = )
+  dat <- fill_column(dat, grouping_var)
   dat <- fill_column(dat, state_var)
   dat <- fill_column(dat, group_var)
 
   ## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
   dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_var, state_var, group_var))]
+
+
+  if(!is.null(grouping_var_groups)){
+
+    if(any(!grouping_var_groups %in% dat$grouping_var)){
+      error(paste0("One or more of your grouping_var_groups are not found in your grouping_var column '", grouping_var, "'."))
+    }
+    dat <- dat[is.na(dat$grouping_var) | dat$grouping_var %in% grouping_var_groups, ]
+  }
 
   colnames(dat) <- gsub("\\.", "_", colnames(dat))
   colnames(dat) <- gsub("sig_", "p_", colnames(dat))

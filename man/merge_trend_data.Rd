@@ -4,7 +4,7 @@
 \alias{merge_trend_data}
 \title{Wrapper for merging to trend data.frames by the year columns.}
 \usage{
-merge_trend_data(trend_data_1, trend_data_2, suffixes, ...)
+merge_trend_data(trend_data_1, trend_data_2, return_dat, suffixes, ...)
 }
 \arguments{
 \item{trend_data_1}{Trend data.frame 1.}

@@ -4,7 +4,7 @@
 \alias{merge_trend_point}
 \title{Merge point estimates onto the resepective timepoints.}
 \usage{
-merge_trend_point(trend_data, point_data)
+merge_trend_point(trend_data, point_data, return_dat)
 }
 \arguments{
 \item{trend_data}{Data.frame with the trend comparisons.}

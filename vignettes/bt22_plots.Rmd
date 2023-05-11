@@ -27,7 +27,8 @@ library(eatPlot)
 plot_dat <- prep_plot(
     dat = trend_books,
     competence = "GL",
-    grouping_var = "KBuecher_imp3"
+    grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("0", "1")
   )
 
 ## Remove wholeGroup, as we don't want to plot it
@@ -61,6 +62,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
   plot_dat_test <- prep_plot(
     dat = plot_dat_kb,
     grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("0", "1"),
     states = "wholeGroup"
   )
 

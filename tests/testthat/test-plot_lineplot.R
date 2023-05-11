@@ -2,7 +2,8 @@ test_that("settings do something", {
   plot_dat_test <- prep_plot(
     dat = trend_books,
     competence = "GL",
-    grouping_var = "KBuecher_imp3"
+    grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("1", "0")
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
@@ -100,7 +101,7 @@ test_that("correct states are extracted", {
 })
 
 test_that("lineplot chpt_4 with one group is still the same", {
-  trend_books_changed <- trend_books[trend_books$KBuecher_imp3 != "0" | is.na(trend_books$KBuecher_imp3), ]
+  trend_books_changed <- trend_books[trend_books$KBuecher_imp3 == "1" | is.na(trend_books$KBuecher_imp3), ]
 
   plot_dat_test <- prep_plot(
     dat = trend_books_changed,
@@ -130,6 +131,7 @@ test_that("lineplot chpt_4 with one group is still the same", {
 test_that("lineplot chpt_4 with two groups is still the same", {
   plot_dat_test <- prep_plot(
     dat = trend_books,
+    grouping_var_groups = c("0", "1"),
     competence = "GL",
     grouping_var = "KBuecher_imp3"
   )
@@ -162,6 +164,7 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
 
   plot_dat_3 <- prep_plot(
     dat = books_3,
+    grouping_var_groups = c("0", "1", "Drei"),
     competence = "GL",
     grouping_var = "KBuecher_imp3"
   )
@@ -199,6 +202,7 @@ test_that("competence_vars can be used as tiles", {
   plot_dat_test <- prep_plot(
     dat = trend_books_2,
     grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("0", "1"),
     states = "wholeGroup"
   )
 
@@ -241,6 +245,7 @@ test_that("competence_vars with 3 groups", {
   plot_dat_test <- prep_plot(
     dat = books_3,
     grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("0", "1", "Drei"),
     states = "wholeGroup")
 
   p_line <- plot_lineplot(
@@ -265,6 +270,7 @@ test_that("competence_vars with 3 groups", {
 test_that("adjusted means states", {
   plot_dat_test <- prep_plot(
     dat = trend_books,
+    grouping_var_groups = c("1", "0"),
     competence = "GL",
     grouping_var = "KBuecher_imp3"
   )
@@ -303,7 +309,8 @@ test_that("adjusted means for whole group", {
   plot_dat_test_kb <- prep_plot(
     dat = trend_books_2,
     states = "wholeGroup",
-    grouping_var = "KBuecher_imp3"
+    grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("1", "0"),
   )
 
   p_line_deutschland <- plot_lineplot(

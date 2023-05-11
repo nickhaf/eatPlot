@@ -12,6 +12,7 @@ prep_plot(
   state_var = "TR_BUNDESLAND",
   group_var = "group",
   grouping_var = NULL,
+  grouping_var_groups = NULL,
   sig_niveau = 0.05,
   plot_mean = FALSE,
   parameter = "mean"
@@ -31,6 +32,8 @@ prep_plot(
 \item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
 
 \item{grouping_var}{Character string containing the column name in \code{dat} that should be used to distinguish between subgroups.}
+
+\item{grouping_var_groups}{Character vector containing the groups from \code{grouping_var} you want to plot. Defaults to \code{NULL}, in which case all groups are prepared.}
 
 \item{sig_niveau}{Numeric indicating the border, below which p-values will be considered significant. Defaults to \code{0.05}.}
 
