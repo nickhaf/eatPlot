@@ -35,7 +35,7 @@ set_scales(plot_settings),
     ),
 if(background_lines == TRUE){
     plot_background_lines(
-      data_plot_background_lines = plot_dat[["plot_background_lines"]],
+      dat = plot_dat[["plot_background_lines"]],
       line_values = line_values
     )
   },

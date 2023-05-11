@@ -4,10 +4,10 @@
 \alias{plot_background_lines}
 \title{Plot background lines.}
 \usage{
-plot_background_lines(data_plot_background_lines, line_values)
+plot_background_lines(dat, line_values)
 }
 \arguments{
-\item{data_plot_background_lines}{Data.}
+\item{dat}{Data.}
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 }
