@@ -16,7 +16,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Nicklas hafiznij@hu-berlin.de Hafiz
+\strong{Maintainer}: Nicklas Hafiz \email{hafiznij@hu-berlin.de}
 
 Other contributors:
 \itemize{
