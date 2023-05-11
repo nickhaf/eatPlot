@@ -343,6 +343,13 @@ rename_columns <- function(dat, old_names, new_names){
 }
 
 
+merge_2 <- function(dat_1, dat_2, ...){
+  if(is.null(dat_1) | is.null(dat_2)){return(data.frame())}
+  if(nrow(dat_1) == 0 | nrow(dat_2) == 0){return(data.frame())}
+
+dat_merged <- merge(dat_1, dat_2, ...)
+
+}
 
 
 
