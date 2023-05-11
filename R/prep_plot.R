@@ -124,16 +124,12 @@ prep_plot <- function(dat,
     merging_columns = merging_columns
   )
 
-
-
   # Build noTrend dataframe -------------------------------------------------
   noTrend_merged <- prepare_noTrend(list_building_blocks, merging_columns)
   noTrend_data_merged <- noTrend_merged$noTrend_merged
 
 
   # Prepare the trend-data.frame --------------------------------------------
-  # Data with comparison, either comparing with the whole group, or within the state
-
   if (any(grepl("trend", colnames(dat)))) {
 
     comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
@@ -367,6 +363,8 @@ prepare_noTrend <- function(list_building_blocks, merging_columns){
     "competence_var",
     "depVar"
   )
+
+  ## In for-Loop?:
 
   comp_within_whole_noTrend <- merge_2(
     comp_state_noTrend,
