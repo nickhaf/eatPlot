@@ -168,6 +168,7 @@ test_that("Example brace plot is still the same", {
   plot_dat <- prep_plot(
     dat = trend_books,
     grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("1", "0"),
     competence = "GL"
   )
 
