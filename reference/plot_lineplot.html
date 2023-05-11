@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,12 +58,12 @@
 <span>  <span class="va">plot_dat</span>,</span>
 <span>  seperate_plot_var <span class="op">=</span> <span class="st">"state_var"</span>,</span>
 <span>  point_values <span class="op">=</span> <span class="st">"est_noTrend_noComp"</span>,</span>
-<span>  point_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompWhole"</span>,</span>
+<span>  point_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompCrossDiffWhole"</span>,</span>
 <span>  line_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"est_noTrendStart_noComp"</span>, <span class="st">"est_noTrendEnd_noComp"</span><span class="op">)</span>,</span>
-<span>  line_sig <span class="op">=</span> <span class="st">"sig_Trend_CompWithin"</span>,</span>
+<span>  line_sig <span class="op">=</span> <span class="st">"sig_Trend_CompCrossDiffWithin"</span>,</span>
 <span>  label_est <span class="op">=</span> <span class="st">"est_Trend_noComp"</span>,</span>
 <span>  label_se <span class="op">=</span> <span class="st">"se_Trend_noComp"</span>,</span>
-<span>  label_sig_high <span class="op">=</span> <span class="st">"sig_Trend_CompWhole"</span>,</span>
+<span>  label_sig_high <span class="op">=</span> <span class="st">"sig_Trend_CompCrossDiffWhole"</span>,</span>
 <span>  label_sig_bold <span class="op">=</span> <span class="st">"sig_Trend_noComp"</span>,</span>
 <span>  line_se <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  years_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -88,7 +88,7 @@
 
 
 <dt>point_sig</dt>
-<dd><p>Character string of the column name containing significance values for <code>point_values</code>. Defaults to <code>"sig_noTrend_CompWhole"</code>.</p></dd>
+<dd><p>Character string of the column name containing significance values for <code>point_values</code>. Defaults to <code>"sig_noTrend_CompCrossDiffWhole"</code>.</p></dd>
 
 
 <dt>line_values</dt>
