@@ -21,6 +21,10 @@ plot_background_lines <- function(dat, line_values, line_se) {
     colnames(dat) <- gsub("_start", ".Start", colnames(dat))
     colnames(dat) <- gsub("_end", ".End", colnames(dat))
 
+    est_col <- gsub("\\..*", "", line_values[1])
+    se_col <- gsub("\\..*", "", colnames_se[1])
+
+
     dat_long <- stats::reshape(
       dat,
       direction = "long",
@@ -28,17 +32,16 @@ plot_background_lines <- function(dat, line_values, line_se) {
       sep = "."
     )
 
-    dat_long <- within(dat_long, {
-      y_pos <- est_noTrend + se_noTrend
-      y_neg <- est_noTrend - se_noTrend
-    })
+    dat_long$y_pos <- dat_long[, est_col] + dat_long[, se_col]
+    dat_long$y_neg <- dat_long[, est_col] - dat_long[, se_col]
+
 
     # ggplot2::ggplot() +
     ggplot2::geom_ribbon(data = dat_long,
                          ggplot2::aes(
-                           x = year,
-                           ymin = y_neg,
-                           ymax = y_pos,
+                           x = .data$year,
+                           ymin = .data$y_neg,
+                           ymax = .data$y_pos,
                            group = .data$years_Trend
                          ),
                          fill = grDevices::rgb(147, 205, 221,
@@ -71,18 +74,3 @@ plot_background_lines <- function(dat, line_values, line_se) {
   name_vector <- gsub("End.*", ".End", name_vector)
   name_vector
 }
-
-# df_backgroundlines <- data.frame(
-#   TR_BUNDESLAND = rep("wholeGroup", 2),
-#   year_start = c(2011, 2013),
-#   year_end = c(2013, 2016),
-#   est_noTrendStart_noComp_wholeGroup = c(10:11),
-#   est_noTrendEnd_noComp_wholeGroup = c(11:12),
-#   se_noTrendStart_noComp_wholeGroup = c(0.5, 1.2),
-#   se_noTrendEnd_noComp_wholeGroup = c(0.1, 0.9),
-#   years_Trend = c("20112013", "20132016")
-# )
-# dat = df_backgroundlines
-# line_values = c("est_noTrendStart_noComp_wholeGroup", "est_noTrendEnd_noComp_wholeGroup")
-# line_se = c("se_noTrendStart_noComp_wholeGroup", "se_noTrendEnd_noComp_wholeGroup")
-
