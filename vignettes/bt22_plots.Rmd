@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+ACHTUNG: Schaut bitte selbst noch einmal genau, welche Spalten ihr zum Plotten benötigt. Die Plots sind zur Veranschaulichung des Workflows gedacht, es kann sein, dass ihr für bestimmte Kapitel andere Spalten angeben müsst! Also vergleicht am besten noch einmal Stichprobenartig mit dem `eatRep` output, dass es sich um die richtigen Werte handelt.
+
 ```{r setup}
 library(eatPlot)
 ```
@@ -25,14 +27,15 @@ library(eatPlot)
 plot_dat <- prep_plot(
     dat = trend_books,
     competence = "GL",
-    grouping_var = "KBuecher_imp3"
+    grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("0", "1")
   )
 
 ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat, 
-                               column_name = "state_var", 
-                               subsetter = "wholeGroup", 
-                               remove = TRUE)
+                          column_name = "state_var", 
+                          subsetter = "wholeGroup", 
+                          remove = TRUE)
  
    p_line_states <- plot_lineplot(
     plot_dat = plot_dat,
@@ -59,6 +62,7 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
   plot_dat_test <- prep_plot(
     dat = plot_dat_kb,
     grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("0", "1"),
     states = "wholeGroup"
   )
 
@@ -101,7 +105,7 @@ dat_bar[dat_bar$state_var == "wholeGroup", "sig_noTrend_noComp_2021"] <- FALSE
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
 for(i in c("2011", "2016", "2021")){
-  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompWhole_", i), sig_column = paste0("sig_noTrend_CompWhole_", i))
+  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
 }
 
   # Plot 1 ------------------------------------------------------------------
@@ -111,7 +115,7 @@ for(i in c("2011", "2016", "2021")){
     dat = dat_bar_1,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
     bar_header = "**Mindeststandard nicht erreicht**",
     columns_headers = list("**Land**"),
     columns_table = list("state_var"),
@@ -136,7 +140,7 @@ for(i in c("2011", "2016", "2021")){
     dat = dat_bar_2,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
     bar_header = "**Regelstandard erreicht oder übertroffen**",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -159,7 +163,7 @@ for(i in c("2011", "2016", "2021")){
     dat = dat_bar_3,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
     bar_header = "**Optimalstandard<br>erreicht**",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -248,7 +252,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
       NULL,
       NULL,
       NULL,
-      "sig_Trend_CompWhole_20112016",
+      "sig_Trend_CompCrossDiffWhole_20112016",
       NULL
     ),
     y_axis = "y_axis_new",
@@ -292,7 +296,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     columns_table_sig_high = list(
       NULL,
       NULL,
-      "sig_Trend_CompWhole_20162021",
+      "sig_Trend_CompCrossDiffWhole_20162021",
       NULL
     ),
     y_axis = "y_axis_new",

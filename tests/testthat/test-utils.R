@@ -164,3 +164,22 @@ test_that("Columns are renamed correctly", {
   data.frame("c" = 1, "d" = 1)
                )
 })
+
+
+test_that("Own merge command works correctly", {
+  df_1 <- data.frame(group = c("a", "b"),
+                     values = c(1, 2)
+                     )
+  df_2 <- data.frame(group = c("a", "c"),
+                     values = c(1, 2)
+  )
+
+  df_null <- NULL
+  df_empty <- data.frame()
+
+expect_equal(merge_2(df_1, df_2, by = "group", all = TRUE)$group, c("a", "b", "c"))
+expect_equal(merge_2(df_null, df_2, by = "group", all = TRUE), data.frame())
+expect_equal(merge_2(df_1, df_empty, by = "group", all = TRUE), df_1)
+expect_equal(merge_2(df_1, df_empty, by = "group"), df_1)
+
+  })

@@ -146,7 +146,7 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   data_long$id <- NULL
   }else{
   data_long <- data
-  data_long$time <- 9999
+  data_long$time <- "noTrend"
 }
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
@@ -317,6 +317,14 @@ fill_column <- function(df, column_name, filling = NA){
 return(df)
   }
 
+fill_na <- function(df, column_name, filling){
+  if(is.null(column_name)){
+    return(df)
+  }else{
+    df[is.na(df[, column_name]), column_name] <- filling
+    return(df)
+  }
+}
 
 check_columns <-  function(dat, column){
   if(column %in% colnames(dat)){
@@ -343,6 +351,16 @@ rename_columns <- function(dat, old_names, new_names){
 }
 
 
+merge_2 <- function(dat_1, dat_2, ...){
+  if(is.null(dat_1) | is.null(dat_2)){return(data.frame())}
+  if(nrow(dat_1) == 0 & nrow(dat_2) == 0){return(data.frame())}
+  if(sum(nrow(dat_1) == 0 | nrow(dat_2) == 0) == 1){
+    if(nrow(dat_1) > nrow(dat_2)){return(dat_1)}else{return(dat_2)}
+  }
+
+dat_merged <- merge(dat_1, dat_2, ...)
+
+}
 
 
 

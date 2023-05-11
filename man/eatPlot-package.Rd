@@ -16,7 +16,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Nicklas Hafiz \email{hafiznij@hu-berlin.de} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Nicklas Hafiz \email{hafiznij@hu-berlin.de}
+
+Other contributors:
+\itemize{
+  \item Philipp Franikowski [contributor]
+}
 
 }
 \keyword{internal}

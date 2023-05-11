@@ -18,17 +18,18 @@
 prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging_columns) {
 
   filtered_list <- list()
-cols_remove <- c("group_var", "comparison")
-merging_columns <- c(merging_columns, cols_remove)
+  remove_columns <- c("group_var", "comparison")
+  merging_columns <- c(merging_columns, remove_columns)
 
   # Prepare point estimates, which don't include any trend estimates -------------------------------------------------
   if (any(is.na(data_clean$comparison))) {
     point_long_no_comp <- prep_point_long(dat = data_clean[is.na(data_clean$comparison), ])
     filtered_list[["noTrend_noComp"]] <- point_long_no_comp[, !(colnames(point_long_no_comp) %in% c("compare_1", "compare_2")), ]
     filtered_list[["noTrend_noComp"]] <- add_suffix(filtered_list[["noTrend_noComp"]],
-                                                    merging_columns = merging_columns,
-                                                    suffix = "_noComp")
-    } else {
+      merging_columns = merging_columns,
+      suffix = "_noComp"
+    )
+  } else {
     filtered_list["noTrend_noComp"] <- list(data.frame())
   }
 
@@ -38,47 +39,50 @@ merging_columns <- c(merging_columns, cols_remove)
     filtered_list[["noTrend_Comp"]] <- prep_point_long(dat = data_clean[!is.na(data_clean$comparison), ])
 
     filtered_list[["noTrend_Comp"]] <- add_suffix(filtered_list[["noTrend_Comp"]],
-                                                    merging_columns = merging_columns,
-                                                    suffix = "_Comp")
-
-    } else {
+      merging_columns = merging_columns,
+      suffix = "_Comp"
+    )
+  } else {
     filtered_list["noTrend_Comp"] <- list(data.frame())
   }
 
   # Prepare trend comparison data ------------------------------------------------------
 
-if(any(grepl("trend", colnames(data_clean))) == TRUE){
-  ## Data.frame containing all rows which make some kind of comparison, e.g. state vs. germany.
-  years_colnames <- extract_numbers(colnames(data_clean))
-  exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
+  if (any(grepl("trend", colnames(data_clean))) == TRUE) {
+    ## Data.frame containing all rows which make some kind of comparison, e.g. state vs. germany.
+    years_colnames <- extract_numbers(colnames(data_clean))
+    exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
-  data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
-  filtered_list <- prep_trend_long(data_trend_comp,
-                                   filtered_list,
-                                   "Trend_Comp",
-                                   remove_cols = exclude_cols)
-  filtered_list[["Trend_Comp"]] <- add_suffix(filtered_list[["Trend_Comp"]],
-                                                  merging_columns = merging_columns,
-                                                  suffix = "_Trend_Comp")
+    data_trend_comp <- data_clean[!is.na(data_clean$comparison), ]
+    filtered_list <- prep_trend_long(data_trend_comp,
+      filtered_list,
+      "Trend_Comp",
+      remove_cols = exclude_cols
+    )
+    filtered_list[["Trend_Comp"]] <- add_suffix(filtered_list[["Trend_Comp"]],
+      merging_columns = merging_columns,
+      suffix = "_Trend_Comp"
+    )
 
-  # Prepare trend_point data ------------------------------------------------------
-  ## Data.frame containing all trend rows which do not make a trend comparison
-  data_trend_no_comp <- data_clean[is.na(data_clean$comparison), ]
-  data_trend_no_comp <- remove_columns(data_trend_no_comp, c("compare_1", "compare_2"))
-  filtered_list <- prep_trend_long(data_trend_no_comp,
-                                   filtered_list,
-                                   "Trend_noComp",
-                                   remove_cols = exclude_cols)
+    # Prepare trend_point data ------------------------------------------------------
+    ## Data.frame containing all trend rows which do not make a trend comparison
+    data_trend_no_comp <- data_clean[is.na(data_clean$comparison), ]
+    data_trend_no_comp <- remove_columns(data_trend_no_comp, c("compare_1", "compare_2"))
+    filtered_list <- prep_trend_long(data_trend_no_comp,
+      filtered_list,
+      "Trend_noComp",
+      remove_cols = exclude_cols
+    )
 
-  filtered_list[["Trend_noComp"]] <- add_suffix(filtered_list[["Trend_noComp"]],
-                                              merging_columns = merging_columns,
-                                              suffix = "_Trend_noComp")
-
-} else{
-  filtered_list[["Trend_Comp"]] <- data.frame()
-  filtered_list[["Trend_noComp"]] <- data.frame()
-}
-  # Prepare WholeGroup ------------------------------------------------------
+    filtered_list[["Trend_noComp"]] <- add_suffix(filtered_list[["Trend_noComp"]],
+      merging_columns = merging_columns,
+      suffix = "_Trend_noComp"
+    )
+  } else {
+    filtered_list[["Trend_Comp"]] <- data.frame()
+    filtered_list[["Trend_noComp"]] <- data.frame()
+  }
+  # Prepare CrossDiffWholeGroup ------------------------------------------------------
   ## Might be necessary to deal with the wholeGroup a bit differently, so it is include in two extra data frames
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
   data_wholeGroup <- remove_columns(data_wholeGroup, c("compare_1", "compare_2"))
@@ -86,31 +90,36 @@ if(any(grepl("trend", colnames(data_clean))) == TRUE){
   if (nrow(data_wholeGroup) != 0) {
     filtered_list[["noTrend_noComp_wholeGroup"]] <- prep_long(data_wholeGroup,
       include_pattern = c("est_|^p_|se_|es_"),
-      remove_pattern = "trend"#,
-     # suffix = "_noTrend"
+      remove_pattern = "trend" # ,
+      # suffix = "_noTrend"
     )
     filtered_list[["noTrend_noComp_wholeGroup"]] <- add_suffix(filtered_list[["noTrend_noComp_wholeGroup"]],
-                                                merging_columns = merging_columns,
-                                                suffix = "_noTrend_noComp_wholeGroup")
-
+      merging_columns = merging_columns,
+      suffix = "_noTrend_noComp_wholeGroup"
+    )
+  } else {
+    filtered_list[["noTrend_noComp_wholeGroup"]] <- data.frame()
   }
 
-  if(any(grepl("trend", colnames(data_clean))) == TRUE){
-  filtered_list <- prep_trend_long(dat = data_wholeGroup,
-                                   filtered_list,
-                                   "Trend_noComp_wholeGroup",
-                                   remove_cols = exclude_cols)
-  filtered_list[["Trend_noComp_wholeGroup"]] <- add_suffix(filtered_list[["Trend_noComp_wholeGroup"]],
-                                                             merging_columns = merging_columns,
-                                                             suffix = "_Trend_noComp_wholeGroup")
-  }else{
+  if (any(grepl("trend", colnames(data_clean))) == TRUE) {
+    filtered_list <- prep_trend_long(
+      dat = data_wholeGroup,
+      filtered_list,
+      "Trend_noComp_wholeGroup",
+      remove_cols = exclude_cols
+    )
+    filtered_list[["Trend_noComp_wholeGroup"]] <- add_suffix(filtered_list[["Trend_noComp_wholeGroup"]],
+      merging_columns = merging_columns,
+      suffix = "_Trend_noComp_wholeGroup"
+    )
+  } else {
     filtered_list[["Trend_noComp_wholeGroup"]] <- data.frame()
   }
 
-# Add significances -------------------------------------------------------
+  # Add significances -------------------------------------------------------
   filtered_list <- add_sig_col(filtered_list, sig_niveau = sig_niveau)
 
-  filtered_list <- lapply(filtered_list, remove_columns, cols_remove)
+  filtered_list <- lapply(filtered_list, remove_columns, remove_columns)
 
   return(filtered_list)
 }
@@ -161,7 +170,6 @@ prep_trend_long <- function(dat, filtered_list, dat_name, remove_cols) {
     )
     dat <- rename_columns(dat, old_names = "year", new_names = "years_Trend")
     filtered_list[[dat_name]] <- split_years(dat, year_col = "years_Trend")
-
   } else {
     filtered_list[dat_name] <- list(data.frame())
   }
@@ -169,15 +177,16 @@ prep_trend_long <- function(dat, filtered_list, dat_name, remove_cols) {
 }
 
 
-prep_point_long <- function(dat)
+prep_point_long <- function(dat) {
   point_long <- prep_long(dat,
-                          include_pattern = "^est|^p$|^p_|^se|^es",
-                          remove_pattern = "trend",
-                          suffix = "_noTrend"
+    include_pattern = "^est|^p$|^p_|^se|^es",
+    remove_pattern = "trend",
+    suffix = "_noTrend"
   )
+}
 
 ## Rename directly here, all columns that aren't used for merging get the according suffix
-add_suffix <- function(dat, merging_columns, suffix ){
+add_suffix <- function(dat, merging_columns, suffix) {
   colnames(dat)[!colnames(dat) %in% merging_columns] <- paste0(colnames(dat)[!colnames(dat) %in% merging_columns], suffix)
   colnames(dat) <- gsub("_trend_Trend", "_Trend", colnames(dat))
   return(dat)

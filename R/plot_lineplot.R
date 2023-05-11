@@ -3,8 +3,9 @@
 #' @param plot_dat Input is a list prepared by [prep_plot()].`
 #' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
 #' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_CompWhole"`.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_CompCrossDiffWhole"`.
 #' @param line_values Character vector with two elements. Column names in `plot_dat[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
+#' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_CompWithin"`.
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
@@ -21,13 +22,14 @@
 plot_lineplot <- function(plot_dat,
                           seperate_plot_var = "state_var",
                           point_values = "est_noTrend_noComp",
-                          point_sig = "sig_noTrend_CompWhole",
+                          point_sig = "sig_noTrend_CompCrossDiffWhole",
                           line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-                          line_sig = "sig_Trend_CompWithin",
+                          line_sig = "sig_Trend_CompCrossDiffWithin",
                           label_est = "est_Trend_noComp",
                           label_se = "se_Trend_noComp",
-                          label_sig_high = "sig_Trend_CompWhole",
+                          label_sig_high = "sig_Trend_CompCrossDiffWhole",
                           label_sig_bold = "sig_Trend_noComp",
+                          line_se = NULL,
                           years_lines = NULL,
                           years_braces = NULL,
                           background_lines = TRUE,
@@ -77,6 +79,7 @@ plot_lineplot <- function(plot_dat,
         point_values = point_values,
         point_sig = point_sig,
         line_values = line_values,
+        line_se = line_se,
         line_sig = line_sig,
         label_est = label_est,
         label_se = label_se,

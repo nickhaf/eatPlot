@@ -13,10 +13,11 @@ plot_single_lineplot <- function(plot_dat,
                                  point_values = "est_noTrend_noComp",
                                  point_sig = "sig_noTrend_noComp",
                                  line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+                                 line_se = NULL,
                                  line_sig = "sig_Trend_CompWithin",
                                  label_est = "est_Trend_noComp",
                                  label_se = "se_Trend_noComp",
-                                 label_sig_high = "sig_Trend_CompWhole",
+                                 label_sig_high = "sig_Trend_CompCrossDiffWhole",
                                  label_sig_bold = "sig_Trend_noComp",
                                  background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {
@@ -35,8 +36,9 @@ set_scales(plot_settings),
     ),
 if(background_lines == TRUE){
     plot_background_lines(
-      data_plot_background_lines = plot_dat[["plot_background_lines"]],
-      line_values = line_values
+      dat = plot_dat[["plot_background_lines"]],
+      line_values = line_values,
+      line_se = line_se
     )
   },
 if(!is.null(line_values)){

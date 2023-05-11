@@ -8,13 +8,14 @@ plot_lineplot(
   plot_dat,
   seperate_plot_var = "state_var",
   point_values = "est_noTrend_noComp",
-  point_sig = "sig_noTrend_CompWhole",
+  point_sig = "sig_noTrend_CompCrossDiffWhole",
   line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-  line_sig = "sig_Trend_CompWithin",
+  line_sig = "sig_Trend_CompCrossDiffWithin",
   label_est = "est_Trend_noComp",
   label_se = "se_Trend_noComp",
-  label_sig_high = "sig_Trend_CompWhole",
+  label_sig_high = "sig_Trend_CompCrossDiffWhole",
   label_sig_bold = "sig_Trend_noComp",
+  line_se = NULL,
   years_lines = NULL,
   years_braces = NULL,
   background_lines = TRUE,
@@ -28,7 +29,7 @@ plot_lineplot(
 
 \item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_CompWhole"}.}
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_CompCrossDiffWhole"}.}
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
@@ -41,6 +42,8 @@ plot_lineplot(
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
+
+\item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
 
 \item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
 
