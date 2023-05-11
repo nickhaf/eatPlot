@@ -43,7 +43,7 @@ plot_dat <- prep_plot(
   
    p_line
    
-  save_plot(p_line, filename = "../split_lineplot_2_books.pdf")
+  save_plot(p_line, filename = "../split_lineplot_2_books-ribbon.pdf")
 ```
 
 ## Chapter 4: Kompetenzwerte Deutschland

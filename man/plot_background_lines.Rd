@@ -4,12 +4,14 @@
 \alias{plot_background_lines}
 \title{Plot background lines.}
 \usage{
-plot_background_lines(dat, line_values)
+plot_background_lines(dat, line_values, line_se)
 }
 \arguments{
 \item{dat}{Data.}
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
+
+\item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
 }
 \value{
 ggplot2 object.

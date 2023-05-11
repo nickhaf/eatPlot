@@ -9,7 +9,7 @@ df_backgroundlines <- data.frame(
   years_Trend = c("20112013", "20132016")
 )
 
-line_values <- c("est_noTrendStart_noComp_wholeGroup", "est_noTrendEnd_noComp_wholeGroup")
+line_values <- c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")
 line_se <- c("se_noTrendStart_noComp_wholeGroup", "se_noTrendEnd_noComp_wholeGroup")
 
 test_that("backgroundlines is still the same", {

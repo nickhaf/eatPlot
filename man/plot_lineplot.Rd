@@ -15,6 +15,7 @@ plot_lineplot(
   label_se = "se_Trend_noComp",
   label_sig_high = "sig_Trend_CompWhole",
   label_sig_bold = "sig_Trend_noComp",
+  line_se = NULL,
   years_lines = NULL,
   years_braces = NULL,
   background_lines = TRUE,
@@ -41,6 +42,8 @@ plot_lineplot(
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
+
+\item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
 
 \item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
 
