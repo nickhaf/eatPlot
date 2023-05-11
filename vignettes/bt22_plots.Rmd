@@ -45,7 +45,6 @@ plot_dat <- prep_plot(
   
    p_line_states
    
-  save_plot(p_line, filename = "../split_lineplot_2_books-ribbon.pdf")
 ```
 
 ```{r, eval = FALSE}

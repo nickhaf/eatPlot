@@ -23,3 +23,6 @@ The plot_dat list with rows filtered as specified.
 \description{
 Filter specified rows from plot_dat objects.
 }
+\examples{
+#tbd
+}
