@@ -7,7 +7,7 @@
 plot_lines(
   data_plot_lines,
   line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-  line_sig = "sig_Trend_CompWithin",
+  line_sig = "sig_Trend_CompCrossDiffWithin",
   plot_settings = plotsettings_lineplot()
 )
 }
@@ -16,7 +16,7 @@ plot_lines(
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
-\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_CompWithin"}.}
+\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_CompCrossDiffWithin"}.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }

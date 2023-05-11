@@ -166,7 +166,7 @@ test_that("Columns are renamed correctly", {
 })
 
 
-test_that("Own merge command works correctly"{
+test_that("Own merge command works correctly", {
   df_1 <- data.frame(group = c("a", "b"),
                      values = c(1, 2)
                      )

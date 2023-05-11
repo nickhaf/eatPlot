@@ -12,9 +12,9 @@ test_that("settings do something", {
 
   p_line <- plot_lineplot(
     plot_dat = plot_dat_test,
-    line_sig = "sig_Trend_CompWhole",
+    line_sig = "sig_Trend_CompCrossDiffWhole",
     label_est = "est_Trend_noComp",
-    label_sig_bold = "est_Trend_CompWhole",
+    label_sig_bold = "est_Trend_CompCrossDiffWhole",
     label_sig_high = "sig_noTrendEnd_noComp",
     point_values = "est_noTrend_noComp",
     years_lines = list(c(2011, 2016), c(2016, 2021)),
@@ -108,13 +108,12 @@ test_that("lineplot chpt_4 with one group is still the same", {
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
-  ## Testweise einige PUnkte auf n.s. setzen
   plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "TRUE"), ]
 
 
   p_line <- plot_lineplot(
     plot_dat = plot_dat_test,
-    point_sig = "sig_noTrend_CompWhole",
+    point_sig = "sig_noTrend_CompCrossDiffWhole",
     point_values = "est_noTrend_noComp",
     line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
     line_sig = "sig_Trend_noComp",

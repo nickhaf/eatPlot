@@ -10,7 +10,7 @@
 #' @examples #tbd
 plot_lines <- function(data_plot_lines,
                        line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-                       line_sig = "sig_Trend_CompWithin",
+                       line_sig = "sig_Trend_CompCrossDiffWithin",
                        plot_settings = plotsettings_lineplot()){
 
   sapply(c(unlist(line_values)), check_column, dat = data_plot_lines)

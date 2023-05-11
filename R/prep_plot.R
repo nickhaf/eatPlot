@@ -159,7 +159,7 @@ prep_plot <- function(dat,
       all = TRUE,
       by = noTrend_merge_cols
     )
-  }
+
 
 
     noTrend_data_merged <- merge_2(

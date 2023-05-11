@@ -78,7 +78,7 @@ if(any(grepl("trend", colnames(data_clean))) == TRUE){
   filtered_list[["Trend_Comp"]] <- data.frame()
   filtered_list[["Trend_noComp"]] <- data.frame()
 }
-  # Prepare WholeGroup ------------------------------------------------------
+  # Prepare CrossDiffWholeGroup ------------------------------------------------------
   ## Might be necessary to deal with the wholeGroup a bit differently, so it is include in two extra data frames
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
   data_wholeGroup <- remove_columns(data_wholeGroup, c("compare_1", "compare_2"))
