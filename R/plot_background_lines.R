@@ -9,6 +9,7 @@
 #' @examples #tbd
 plot_background_lines <- function(dat, line_values, line_se) {
 
+  line_values <- paste0(line_values, "_wholeGroup")
   colnames_se <- if (is.null(line_se)) gsub("est_", "se_", line_values) else line_se
 
   if (all(colnames_se %in% colnames(dat))) {
