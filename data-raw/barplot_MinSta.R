@@ -6,7 +6,7 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
                       grDevices::rgb(75, 172, 198, maxColorValue = 255)),
   bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
   bar_pattern_fill_colour = "white",
-  bar_pattern_type = c("TRUE" = "stripe", "FALSE" = "none"),
+  bar_pattern_type = c("FALSE" = "stripe", "TRUE" = "none"),
   bar_sig_type = "pattern",
   bar_width = 0.7,
   headers_background_colour = "lightblue",
