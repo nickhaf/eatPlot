@@ -307,18 +307,12 @@ prep_plot <- function(dat,
     Trend_data_merged_wide <- data.frame()
   }
 
-
-if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
-  plot_dat[["plot_tablebar"]] <- merge(noTrend_data_merged_wide,
+  plot_dat[["plot_tablebar"]] <- merge_2(noTrend_data_merged_wide,
                                        Trend_data_merged_wide,
+                                       return_dat = notrend_data_merged_wide,
                                        by = c("grouping_var", "state_var", "competence_var", "depVar"),
                                        all = TRUE
                                        )
-
-
-}else{
-  plot_dat[["plot_tablebar"]] <- noTrend_data_merged_wide
-}
 
 
   #################
@@ -352,9 +346,10 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
   }
 
 
-  if (nrow(list_building_blocks[["noTrend_noComp"]]) != 0) {
-    plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
+    plot_dat[["plot_points"]] <- merge_2(
+      plot_dat[["plot_points"]],
       list_building_blocks[["noTrend_noComp"]],
+      return_dat = plot_dat[["plot_points"]],
       by = c(
         "grouping_var",
         "state_var",
@@ -364,10 +359,11 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
       ),
       all.x = TRUE
     )
-  }
-  if (nrow(comp_within_whole_noTrend) != 0) {
-    plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
+
+    plot_dat[["plot_points"]] <- merge_2(
+      plot_dat[["plot_points"]],
       comp_within_whole_noTrend,
+      return_dat = plot_dat[["plot_points"]],
       by = c(
         "grouping_var",
         "state_var",
@@ -377,7 +373,6 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
       ),
       all.x = TRUE
     )
-  }
 
 # if(any(grouping_var) != noGroup ){
 #   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
