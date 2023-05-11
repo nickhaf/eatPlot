@@ -127,48 +127,9 @@ prep_plot <- function(dat,
 
 
   # Build noTrend dataframe -------------------------------------------------
-  comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
-  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWhole")
-  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
-  comp_state_groups <- list_building_blocks[["noTrend_Comp"]][grepl("__groupingVar", list_building_blocks[["noTrend_Comp"]]$compare_1) & list_building_blocks[["noTrend_Comp"]]$compare_2 == "_groupingVar", ]
+  noTrend_merged <- prepare_noTrend(list_building_blocks, merging_columns)
+  noTrend_data_merged <- noTrend_merged$noTrend_merged
 
-  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWithin")
-  comp_state_groups <- add_suffix(comp_state_groups, merging_columns = merging_columns, suffix = "GroupDiff")
-
-  noTrend_merge_cols <- c(
-    "grouping_var",
-    "state_var",
-    "year",
-    "competence_var",
-    "depVar"
-  )
-
-    comp_within_whole_noTrend <- merge_2(
-      comp_state_noTrend,
-      comp_wholeGroup_noTrend,
-      return_dat = comp_wholeGroup_noTrend,
-      all.x = TRUE,
-      by = noTrend_merge_cols
-    )
-
-
-    comp_within_whole_noTrend <- merge_2(
-      comp_within_whole_noTrend,
-      comp_state_groups,
-      return_dat = comp_within_whole_noTrend,
-      all = TRUE,
-      by = noTrend_merge_cols
-    )
-
-
-
-    noTrend_data_merged <- merge_2(
-      comp_within_whole_noTrend,
-      list_building_blocks[["noTrend_noComp"]],
-      return_dat = list_building_blocks[["noTrend_noComp"]],
-      by = noTrend_merge_cols,
-      all = TRUE
-    )
 
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison, either comparing with the whole group, or within the state
@@ -362,7 +323,7 @@ prep_plot <- function(dat,
 
     plot_dat[["plot_points"]] <- merge_2(
       plot_dat[["plot_points"]],
-      comp_within_whole_noTrend,
+      noTrend_merged$comp_within_whole_noTrend,
       return_dat = plot_dat[["plot_points"]],
       by = c(
         "grouping_var",
@@ -386,4 +347,52 @@ prep_plot <- function(dat,
   })
 
   return(plot_dat)
+}
+
+
+prepare_noTrend <- function(list_building_blocks, merging_columns){
+
+  comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
+  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWhole")
+  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
+  comp_state_groups <- list_building_blocks[["noTrend_Comp"]][grepl("__groupingVar", list_building_blocks[["noTrend_Comp"]]$compare_1) & list_building_blocks[["noTrend_Comp"]]$compare_2 == "_groupingVar", ]
+
+  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWithin")
+  comp_state_groups <- add_suffix(comp_state_groups, merging_columns = merging_columns, suffix = "GroupDiff")
+
+  noTrend_merge_cols <- c(
+    "grouping_var",
+    "state_var",
+    "year",
+    "competence_var",
+    "depVar"
+  )
+
+  comp_within_whole_noTrend <- merge_2(
+    comp_state_noTrend,
+    comp_wholeGroup_noTrend,
+    return_dat = comp_wholeGroup_noTrend,
+    all.x = TRUE,
+    by = noTrend_merge_cols
+  )
+
+  comp_within_whole_noTrend <- merge_2(
+    comp_within_whole_noTrend,
+    comp_state_groups,
+    return_dat = comp_within_whole_noTrend,
+    all = TRUE,
+    by = noTrend_merge_cols
+  )
+
+  noTrend_data_merged <- merge_2(
+    comp_within_whole_noTrend,
+    list_building_blocks[["noTrend_noComp"]],
+    return_dat = list_building_blocks[["noTrend_noComp"]],
+    by = noTrend_merge_cols,
+    all = TRUE
+  )
+
+  return(list("noTrend_merged" = noTrend_data_merged,
+              "comp_within_whole_noTrend" = comp_within_whole_noTrend)
+  )
 }
