@@ -179,11 +179,16 @@ calc_pos <- function(coords_min, range_coords, width) {
 
 
 calc_brace_label_y <- function(dat, upper_label_y, range_coords, gap_label) {
-  for (i in 1:length(levels(dat$grouping_var))) {
-    lvl <- levels(dat$grouping_var)[i]
-    dat_lvl <- dat[dat$grouping_var == lvl, ]
-    dat[dat$grouping_var == lvl, "label_pos_y"] <- upper_label_y - (range_coords * gap_label * (i - 1))
+
+for(i in unique(dat$years_Trend)){
+  dat_trend <- dat[dat$years_Trend == i, ]
+  dat_trend$grouping_var <- droplevels(dat_trend$grouping_var)
+  for (j in seq_along(levels(dat_trend$grouping_var))) {
+    lvl <- levels(dat_trend$grouping_var)[j]
+    dat_lvl <- dat[dat$years_Trend == i & dat$grouping_var == lvl, ]
+    dat[dat$years_Trend == i & dat$grouping_var == lvl, "label_pos_y"] <- upper_label_y - (range_coords * gap_label * (j - 1))
   }
+}
   return(dat$label_pos_y)
 }
 

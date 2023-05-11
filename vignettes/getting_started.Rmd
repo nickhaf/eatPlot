@@ -86,7 +86,7 @@ When we have cleaned our data, we can plot a tablebarplot by providing variables
 dat_plot <- subset(dat_plot$plot_tablebar, grouping_var == 0)
 
 bartable_1 <- plot_tablebar(dat = dat_plot,
-              bar_est = "est_Trend_CompWhole_20162021",
+              bar_est = "est_Trend_CompCrossDiffWhole_20162021",
               bar_header = "Wert",
               columns_headers = list("Land", "Wert"),
               columns_table = c("state_var", "est_noTrend_noComp_2016"),
@@ -105,7 +105,7 @@ Currently, `eatPlot` only supports the generation of a table with the desired nu
 
 ```{r}
 bartable_2 <- plot_tablebar(dat = dat_plot,
-              bar_est = "est_Trend_CompWithin_20162021",
+              bar_est = "est_Trend_CompCrossDiffWithin_20162021",
               bar_header = "Wert",
               columns_headers = list("Wert"),
               columns_table = c("est_noTrend_noComp_2021"),

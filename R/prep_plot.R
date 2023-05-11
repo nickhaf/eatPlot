@@ -11,6 +11,7 @@
 #' @param states Character vector of the states that should be plotted.
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
+#' @param grouping_var_groups Character vector containing the groups from `grouping_var` you want to plot. Defaults to `NULL`, in which case all groups are prepared.
 #' @param competence_var Character string containing the column name in `dat` that contains the different competences. Defaults to `"kb"`.
 #' @param sig_niveau Numeric indicating the border, below which p-values will be considered significant. Defaults to `0.05`.
 #' @param plot_mean Logical value indicating whether the mean of the subgroups should be plotted as well.
@@ -31,6 +32,7 @@ prep_plot <- function(dat,
                       state_var = "TR_BUNDESLAND",
                       group_var = "group",
                       grouping_var = NULL,
+                      grouping_var_groups = NULL,
                       sig_niveau = 0.05,
                       plot_mean = FALSE,
                       parameter = "mean") {
@@ -43,6 +45,7 @@ prep_plot <- function(dat,
   stopifnot(is.data.frame(dat))
   stopifnot(is.character(competence) | is.null(competence))
   stopifnot(is.character(grouping_var) | is.null(grouping_var))
+  stopifnot(is.character(grouping_var_groups) | is.null(grouping_var_groups))
   stopifnot(is.character(states) | is.null(states))
   stopifnot(is.character(state_var))
   stopifnot(is.character(competence_var))
@@ -65,12 +68,21 @@ prep_plot <- function(dat,
   dat <- check_factor(dat, grouping_var, "grouping_var")
 
   dat <- fill_column(dat, competence_var)
-  dat <- fill_column(dat, grouping_var, filling = )
+  dat <- fill_column(dat, grouping_var)
   dat <- fill_column(dat, state_var)
   dat <- fill_column(dat, group_var)
 
   ## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
   dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_var, state_var, group_var))]
+
+
+  if(!is.null(grouping_var_groups)){
+
+    if(any(!grouping_var_groups %in% dat$grouping_var)){
+      stop(paste0("One or more of your grouping_var_groups are not found in your grouping_var column '", grouping_var, "'."))
+    }
+    dat <- dat[is.na(dat$grouping_var) | dat$grouping_var %in% grouping_var_groups, ]
+  }
 
   colnames(dat) <- gsub("\\.", "_", colnames(dat))
   colnames(dat) <- gsub("sig_", "p_", colnames(dat))
@@ -124,96 +136,57 @@ prep_plot <- function(dat,
     merging_columns = merging_columns
   )
 
-
-
   # Build noTrend dataframe -------------------------------------------------
-  comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
-  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "Whole")
-  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
-  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "Within")
+  noTrend_merged <- prepare_noTrend(list_building_blocks, merging_columns)
+  noTrend_data_merged <- noTrend_merged$noTrend_merged
 
-
-  if (nrow(comp_state_noTrend) != 0) {
-    comp_within_whole_noTrend <- merge(
-      comp_state_noTrend,
-      comp_wholeGroup_noTrend,
-      all.x = TRUE,
-      by = c(
-        "grouping_var",
-        "state_var",
-        "year",
-        "competence_var",
-        "depVar"
-      )
-    )
-  } else {
-    comp_within_whole_noTrend <- comp_wholeGroup_noTrend
-  }
-
-
-  if (nrow(comp_within_whole_noTrend) != 0) {
-    noTrend_data_merged <- merge(
-      comp_within_whole_noTrend,
-      list_building_blocks[["noTrend_noComp"]],
-      by = c(
-        "grouping_var",
-        "state_var",
-        "year",
-        "competence_var",
-        "depVar"
-      ),
-      all = TRUE
-    )
-  } else {
-    noTrend_data_merged <- list_building_blocks[["noTrend_noComp"]]
-  }
 
   # Prepare the trend-data.frame --------------------------------------------
-  # Data with comparison, either comparing with the whole group, or within the state
-
   if (any(grepl("trend", colnames(dat)))) {
 
     comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
-    comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "Whole")
+    comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "CrossDiffWhole")
     comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
-    comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "Within")
+    comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "CrossDiffWithin")
+    comp_groups <- list_building_blocks[["Trend_Comp"]][grepl("__groupingVar", list_building_blocks[["Trend_Comp"]]$compare_1) & list_building_blocks[["Trend_Comp"]]$compare_2 == "_groupingVar", ]
 
+    comp_groups <- add_suffix(comp_groups, merging_columns = merging_columns, suffix = "GroupDiff")
 
-    if (nrow(comp_state) != 0 & nrow(comp_wholeGroup) != 0) {
       comp_within_whole <- merge_trend_data(
         trend_data_1 = comp_state,
         trend_data_2 = comp_wholeGroup,
+        return_dat = comp_wholeGroup,
         suffixes = c("", ""),
         all.x = TRUE
       )
-    } else {
-      comp_within_whole <- comp_wholeGroup
-    }
 
-    ## Add data without comparison:
-
-    if (nrow(comp_within_whole) != 0 & nrow(list_building_blocks[["Trend_noComp"]]) != 0) {
-      Trend_data_merged <- merge_trend_data(
+      comp_within_whole <- merge_trend_data(
         trend_data_1 = comp_within_whole,
-        trend_data_2 = list_building_blocks[["Trend_noComp"]],
+        trend_data_2 = comp_groups,
+        return_dat = comp_within_whole,
         suffixes = c("", ""),
         all = TRUE
       )
-    } else {
-      Trend_data_merged <- list_building_blocks[["Trend_noComp"]]
-    }
+
+
+    ## Add data without comparison:
+      Trend_data_merged <- merge_trend_data(
+        trend_data_1 = comp_within_whole,
+        trend_data_2 = list_building_blocks[["Trend_noComp"]],
+        return_dat = list_building_blocks[["Trend_noComp"]],
+        suffixes = c("", ""),
+        all = TRUE
+      )
 
 
 
     # Merge to final data frame -----------------------------------------------
-    if(nrow(Trend_data_merged) != 0 & nrow(noTrend_data_merged) != 0){
     trend_data_final <- merge_trend_point(
       trend_data = Trend_data_merged,
-      point_data = noTrend_data_merged
+      point_data = noTrend_data_merged,
+      return_dat = Trend_data_merged
     )
-    }else{
-      trend_data_final <- Trend_data_merged
-  }
+
     ## Drop unused levels
     if (any(!is.na(trend_data_final$grouping_var)) & nrow(list_building_blocks[["Trend_noComp_wholeGroup"]]) != 0 & nrow(list_building_blocks[["noTrend_noComp_wholeGroup"]]) ) {
       trend_data_final$grouping_var <- droplevels(trend_data_final$grouping_var)
@@ -223,11 +196,12 @@ prep_plot <- function(dat,
       list_building_blocks[["Trend_noComp_wholeGroup"]],
       list_building_blocks[["noTrend_noComp_wholeGroup"]]
     )
-  } else {
+  } else { ## If no trend columns in data.
     Trend_data_merged <- data.frame()
     trend_data_final <- noTrend_data_merged
     trend_data_wholeGroup <- list_building_blocks[["noTrend_noComp_wholeGroup"]]
   }
+
   # Fill up NAs -------------------------------------------------------------
   ## Fill up NA significances with FALSE (those which emerged through merging)
   for (i in grep("sig_", colnames(trend_data_final))) {
@@ -305,18 +279,12 @@ prep_plot <- function(dat,
     Trend_data_merged_wide <- data.frame()
   }
 
-
-if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
-  plot_dat[["plot_tablebar"]] <- merge(noTrend_data_merged_wide,
+  plot_dat[["plot_tablebar"]] <- merge_2(noTrend_data_merged_wide,
                                        Trend_data_merged_wide,
+                                       return_dat = noTrend_data_merged_wide,
                                        by = c("grouping_var", "state_var", "competence_var", "depVar"),
                                        all = TRUE
                                        )
-
-
-}else{
-  plot_dat[["plot_tablebar"]] <- noTrend_data_merged_wide
-}
 
 
   #################
@@ -350,9 +318,10 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
   }
 
 
-  if (nrow(list_building_blocks[["noTrend_noComp"]]) != 0) {
-    plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
+    plot_dat[["plot_points"]] <- merge_2(
+      plot_dat[["plot_points"]],
       list_building_blocks[["noTrend_noComp"]],
+      return_dat = plot_dat[["plot_points"]],
       by = c(
         "grouping_var",
         "state_var",
@@ -362,10 +331,11 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
       ),
       all.x = TRUE
     )
-  }
-  if (nrow(comp_within_whole_noTrend) != 0) {
-    plot_dat[["plot_points"]] <- merge(plot_dat[["plot_points"]],
-      comp_within_whole_noTrend,
+
+    plot_dat[["plot_points"]] <- merge_2(
+      plot_dat[["plot_points"]],
+      noTrend_merged$comp_within_whole_noTrend,
+      return_dat = plot_dat[["plot_points"]],
       by = c(
         "grouping_var",
         "state_var",
@@ -375,7 +345,6 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
       ),
       all.x = TRUE
     )
-  }
 
 # if(any(grouping_var) != noGroup ){
 #   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$grouping_var != "noGroup", ]
@@ -389,4 +358,54 @@ if(nrow(noTrend_data_merged_wide) != 0 & nrow(Trend_data_merged_wide) != 0){
   })
 
   return(plot_dat)
+}
+
+
+prepare_noTrend <- function(list_building_blocks, merging_columns){
+
+  comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
+  comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWhole")
+  comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]
+  comp_state_groups <- list_building_blocks[["noTrend_Comp"]][grepl("__groupingVar", list_building_blocks[["noTrend_Comp"]]$compare_1) & list_building_blocks[["noTrend_Comp"]]$compare_2 == "_groupingVar", ]
+
+  comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWithin")
+  comp_state_groups <- add_suffix(comp_state_groups, merging_columns = merging_columns, suffix = "GroupDiff")
+
+  noTrend_merge_cols <- c(
+    "grouping_var",
+    "state_var",
+    "year",
+    "competence_var",
+    "depVar"
+  )
+
+  ## In for-Loop?:
+
+  comp_within_whole_noTrend <- merge_2(
+    comp_state_noTrend,
+    comp_wholeGroup_noTrend,
+    return_dat = comp_wholeGroup_noTrend,
+    all.x = TRUE,
+    by = noTrend_merge_cols
+  )
+
+  comp_within_whole_noTrend <- merge_2(
+    comp_within_whole_noTrend,
+    comp_state_groups,
+    return_dat = comp_within_whole_noTrend,
+    all = TRUE,
+    by = noTrend_merge_cols
+  )
+
+  noTrend_data_merged <- merge_2(
+    comp_within_whole_noTrend,
+    list_building_blocks[["noTrend_noComp"]],
+    return_dat = list_building_blocks[["noTrend_noComp"]],
+    by = noTrend_merge_cols,
+    all = TRUE
+  )
+
+  return(list("noTrend_merged" = noTrend_data_merged,
+              "comp_within_whole_noTrend" = comp_within_whole_noTrend)
+  )
 }

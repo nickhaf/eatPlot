@@ -17,7 +17,7 @@ plot_single_lineplot <- function(plot_dat,
                                  line_sig = "sig_Trend_CompWithin",
                                  label_est = "est_Trend_noComp",
                                  label_se = "se_Trend_noComp",
-                                 label_sig_high = "sig_Trend_CompWhole",
+                                 label_sig_high = "sig_Trend_CompCrossDiffWhole",
                                  label_sig_bold = "sig_Trend_noComp",
                                  background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {

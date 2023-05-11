@@ -39,7 +39,7 @@ test_that("competence and grouping_var is optional", {
     sig_niveau = 0.05
   )
   expect_equal(test_general[["noTrend_noComp"]]$grouping_var, rep("noGroup", 2))
-  expect_equal(nrow(test_general[["Trend_Comp"]]), 0)
+  expect_equal(nrow(test_general[["Trend_Comp"]]), 6)
 })
 
 test_that("point estimates are optional", {

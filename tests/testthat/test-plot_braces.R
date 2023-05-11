@@ -168,6 +168,7 @@ test_that("Example brace plot is still the same", {
   plot_dat <- prep_plot(
     dat = trend_books,
     grouping_var = "KBuecher_imp3",
+    grouping_var_groups = c("1", "0"),
     competence = "GL"
   )
 
@@ -181,7 +182,7 @@ test_that("Example brace plot is still the same", {
         y_range = c(397, 552),
         label_est = "est_Trend_noComp",
         label_se = "se_Trend_noComp",
-        label_sig_high = "sig_Trend_CompWhole",
+        label_sig_high = "sig_Trend_CompCrossDiffWhole",
         label_sig_bold = "sig_Trend_noComp"
       ) +
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))

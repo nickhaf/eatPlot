@@ -52,7 +52,7 @@ if(any(grepl("trend", colnames(data_clean))) == TRUE){
   years_colnames <- extract_numbers(colnames(data_clean))
   exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
-  data_trend_comp <- data_clean[!is.na(data_clean$comparison) & data_clean$comparison == "crossDiff", ]
+  data_trend_comp <- data_clean[!is.na(data_clean$comparison), ]
   filtered_list <- prep_trend_long(data_trend_comp,
                                    filtered_list,
                                    "Trend_Comp",
@@ -78,7 +78,7 @@ if(any(grepl("trend", colnames(data_clean))) == TRUE){
   filtered_list[["Trend_Comp"]] <- data.frame()
   filtered_list[["Trend_noComp"]] <- data.frame()
 }
-  # Prepare WholeGroup ------------------------------------------------------
+  # Prepare CrossDiffWholeGroup ------------------------------------------------------
   ## Might be necessary to deal with the wholeGroup a bit differently, so it is include in two extra data frames
   data_wholeGroup <- data_clean[data_clean$group_var == "wholeGroup", ]
   data_wholeGroup <- remove_columns(data_wholeGroup, c("compare_1", "compare_2"))
