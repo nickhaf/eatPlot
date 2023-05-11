@@ -79,7 +79,7 @@ prep_plot <- function(dat,
   if(!is.null(grouping_var_groups)){
 
     if(any(!grouping_var_groups %in% dat$grouping_var)){
-      error(paste0("One or more of your grouping_var_groups are not found in your grouping_var column '", grouping_var, "'."))
+      stop(paste0("One or more of your grouping_var_groups are not found in your grouping_var column '", grouping_var, "'."))
     }
     dat <- dat[is.na(dat$grouping_var) | dat$grouping_var %in% grouping_var_groups, ]
   }
@@ -281,7 +281,7 @@ prep_plot <- function(dat,
 
   plot_dat[["plot_tablebar"]] <- merge_2(noTrend_data_merged_wide,
                                        Trend_data_merged_wide,
-                                       return_dat = notrend_data_merged_wide,
+                                       return_dat = noTrend_data_merged_wide,
                                        by = c("grouping_var", "state_var", "competence_var", "depVar"),
                                        all = TRUE
                                        )
