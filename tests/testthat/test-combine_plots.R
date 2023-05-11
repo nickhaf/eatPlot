@@ -98,7 +98,10 @@ test_that("Example barplot long format is plotted correctly", {
                              label_se = "se_Trend_noComp_20112016_percent",
                              round_se = 1)
 
-  dat_bar$se_Trend_noComp_20162021_percent <- construct_label(dat_bar, label_se = "se_Trend_noComp_20162021_percent", round_se = 1)
+  dat_bar <- construct_label(dat_bar,
+                             label_se = "se_Trend_noComp_20162021_percent",
+                             new_name = "se_Trend_noComp_20162021_percent",
+                             round_se = 1)
 
 
   dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
