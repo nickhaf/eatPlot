@@ -54,17 +54,21 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_background_lines</span><span class="op">(</span><span class="va">data_plot_background_lines</span>, <span class="va">line_values</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_background_lines</span><span class="op">(</span><span class="va">dat</span>, <span class="va">line_values</span>, <span class="va">line_se</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>data_plot_background_lines</dt>
+    <dl><dt>dat</dt>
 <dd><p>Data.</p></dd>
 
 
 <dt>line_values</dt>
 <dd><p>Character vector with two elements. Column names in <code>plot_dat[["plot_lines"]]</code> containing the y-values for the plotted lines. Defaults to <code>c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")</code>. If set to <code>NULL</code>, no lines will be plotted.</p></dd>
+
+
+<dt>line_se</dt>
+<dd><p>Character vector of the column name containing the standard errors for the plotted lines. Defaults to <code>NULL</code>, in which case they will be deducted from the line values.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -65,6 +65,7 @@
 <span>  label_se <span class="op">=</span> <span class="st">"se_Trend_noComp"</span>,</span>
 <span>  label_sig_high <span class="op">=</span> <span class="st">"sig_Trend_CompWhole"</span>,</span>
 <span>  label_sig_bold <span class="op">=</span> <span class="st">"sig_Trend_noComp"</span>,</span>
+<span>  line_se <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  years_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  years_braces <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_lines <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -112,6 +113,10 @@
 
 <dt>label_sig_bold</dt>
 <dd><p>Character string of the column name containing significance values for <code>label_est</code>. Significant values will be marked as bold.</p></dd>
+
+
+<dt>line_se</dt>
+<dd><p>Character vector of the column name containing the standard errors for the plotted lines. Defaults to <code>NULL</code>, in which case they will be deducted from the line values.</p></dd>
 
 
 <dt>years_lines</dt>
