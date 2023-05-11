@@ -22,8 +22,8 @@ test_that("backgroundlines is still the same", {
                                 ))
 })
 
-test_that("backgroundlines are also plotted if no SE labels are provided, but are in the dataset", {
-  vdiffr::expect_doppelganger("Plotting backgroundlines with no provided SE labels",
+test_that("backgroundlines with deducting SE", {
+  vdiffr::expect_doppelganger("backgroundlines deductiong SE",
                               ggplot2::ggplot() +
                                 plot_background_lines(
                                   dat = df_backgroundlines,
@@ -32,13 +32,13 @@ test_that("backgroundlines are also plotted if no SE labels are provided, but ar
                                 ))
 })
 
-test_that("backgroundlines are not plotted if no SEs are available in the dataset", {
+test_that("backgroundlines without SEs", {
   df_backgroundlines_noSE <- within(df_backgroundlines, {
     se_noTrendStart_noComp_wholeGroup <- NULL
     se_noTrendEnd_noComp_wholeGroup <- NULL
   })
 
-  vdiffr::expect_doppelganger("Plotting backgroundlines with no available SE labels",
+  vdiffr::expect_doppelganger("backgroundlines without SE",
                               ggplot2::ggplot() +
                                 plot_background_lines(
                                   dat = df_backgroundlines_noSE,
