@@ -45,7 +45,7 @@
 #'
 #' Default plot settings for lineplots in the BT_22 for chapter 4.
 #'
-#' @format ## `lineplot_chpt_4`
+#' @format ## `lineplot_4x4`
 #' A list with two elements.
 #' \describe{
 #'   \item{n_cols}{Four columns of smaller plots are used for the final lineplot.}
@@ -54,13 +54,13 @@
 #'   \item{y_axis}{}
 #'   ...
 #' }
-"lineplot_chpt_4"
+"lineplot_4x4"
 
 #' BT22 default plot settings.
 #'
 #' Default plot settings for lineplots for different competences of total germany in the BT_22 for chapter 4.
 #'
-#' @format ## `lineplot_chpt_4_germany`
+#' @format ## `lineplot_2x3`
 #' A list with two elements.
 #' \describe{
 #'   \item{n_cols}{Four columns of smaller plots are used for the final lineplot.}
@@ -69,20 +69,20 @@
 #'   \item{y_axis}{}
 #'   ...
 #' }
-"lineplot_chpt_4_germany"
+"lineplot_2x3"
 
 
 #' BT22 default plot settings.
 #'
 #' Default plot settings for Mindest Standards trend.
 #'
-#' @format ## `barplot_MinSta_trend`
+#' @format ## `barplot_table_plot_pattern`
 #' A list with two elements.
 #' \describe{
 #'   \item{background_stripes_colour}{Colour of the background stripes.}
 #'   ...
 #' }
-"barplot_MinSta_trend"
+"barplot_table_plot_pattern"
 
 
 
@@ -90,10 +90,10 @@
 #'
 #' Default plot settings for Mindest Standard.
 #'
-#' @format ## `barplot_MinSta`
+#' @format ## `barplot_plot_frame`
 #' A list with two elements.
 #' \describe{
 #'   \item{background_stripes_colour}{Colour of the background stripes.}
 #'   ...
 #' }
-"barplot_MinSta"
+"barplot_plot_frame"

@@ -1,3 +1,4 @@
+
 test_that("example mindeststandard short version", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
@@ -5,31 +6,23 @@ test_that("example mindeststandard short version", {
   )[["plot_tablebar"]]
 
 
-  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
-  dat_bar <- subset(dat_bar, year_end == 2021)
-  dat_bar <- subset(dat_bar, year_start == 2016)
-
-  dat_bar$sig_noTrendEnd_CompWhole[1:10] <- "FALSE"
-  dat_bar$sig_minstand <- ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole < 0,
-    "below",
-    ifelse(dat_bar$sig_noTrendEnd_CompWhole == "TRUE" & dat_bar$est_noTrendEnd_CompWhole > 0,
-      "above",
-      "no_sig"
-    )
-  )
+  dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
+for(i in c("2011", "2016", "2021")){
+  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompWhole_", i), sig_column = paste0("sig_noTrend_CompWhole_", i))
+}
 
   # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
 
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
-    bar_label = "est_noTrendEnd_noComp",
-    bar_label_sig = "sig_noTrendEnd_noComp",
-    bar_sig = "sig_minstand",
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
-    bar_est = "est_noTrendEnd_noComp",
+    bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 39),
@@ -37,7 +30,7 @@ test_that("example mindeststandard short version", {
       columns_alignment = 0,
       columns_width = c(0.3, 0.7),
       headers_alignment = 0,
-      default_list = barplot_MinSta
+      default_list = barplot_plot_frame
     )
   )
 
@@ -48,11 +41,11 @@ test_that("example mindeststandard short version", {
 
   p_bar_2 <- plot_tablebar(
     dat = dat_bar_2,
-    bar_label = "est_noTrendEnd_noComp",
-    bar_label_sig = "sig_noTrendEnd_noComp",
-    bar_sig = "sig_minstand",
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
     bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
-    bar_est = "est_noTrendEnd_noComp",
+    bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = 0,
@@ -60,7 +53,7 @@ test_that("example mindeststandard short version", {
       columns_width = NULL,
       axis_x_lims = c(0, 75),
       bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
-      default_list = barplot_MinSta
+      default_list = barplot_plot_frame
     )
   )
 
@@ -71,15 +64,15 @@ test_that("example mindeststandard short version", {
 
   p_bar_3 <- plot_tablebar(
     dat = dat_bar_3,
-    bar_label = "est_noTrendEnd_noComp",
-    bar_label_sig = "sig_noTrendEnd_noComp",
-    bar_sig = "sig_minstand",
-    bar_header = "Optimalstandard<br>erreicht (MSA)",
-    bar_est = "est_noTrendEnd_noComp",
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_CompWhole_2021_directional_sig",
+    bar_header = "Optimalstandard erreicht (MSA)",
+    bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 25),
-      default_list = barplot_MinSta
+      default_list = barplot_plot_frame
     )
   )
 
@@ -89,7 +82,7 @@ test_that("example mindeststandard short version", {
   vdiffr::expect_doppelganger("Mindeststandards", minsta_plot)
 
 
-  # save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
+  #save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
 })
 
 test_that("Example barplot long format is plotted correctly", {
@@ -99,31 +92,34 @@ test_that("Example barplot long format is plotted correctly", {
   )[["plot_tablebar"]]
 
 
-  dat_bar$est_noTrendStart_noComp <- dat_bar$est_noTrendStart_noComp * 100
-  dat_bar$est_noTrendEnd_noComp <- dat_bar$est_noTrendEnd_noComp * 100
-  dat_bar$est_Trend_noComp <- dat_bar$est_Trend_noComp * 100
-  dat_bar$sig_noTrendStart_noComp[1:10] <- "FALSE"
+  dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
+  dat_bar <- construct_label(dat_bar,
+                             new_name = "se_Trend_noComp_20112016_percent_label",
+                             label_se = "se_Trend_noComp_20112016_percent",
+                             round_se = 1)
+
+  dat_bar$se_Trend_noComp_20162021_percent <- construct_label(dat_bar, label_se = "se_Trend_noComp_20162021_percent", round_se = 1)
+
+
   dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht", dat_bar$depVar)
+
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
-  dat_bar$se_Trend_noComp <- dat_bar$se_Trend_noComp * 100
-  dat_bar$se_Trend_noComp <- construct_label(dat_bar, label_se = "se_Trend_noComp")
   dat_bar$y_axis_new <- as.factor(dat_bar$y_axis_new)
+
   dat_bar <- dat_bar[order(dat_bar$y_axis_new), ]
   dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
-  ## y_axis sollte bereits geordneter factor sein.
 
   # Plot 1 ------------------------------------------------------------------
-
-  dat_bar_1 <- dat_bar[which(dat_bar$year_start == 2011 & dat_bar$year_end == 2016), ]
-  dat_bar_1$state_var[duplicated(dat_bar_1$state_var)] <- " "
+  dat_bar$state_var[duplicated(dat_bar$state_var)] <- " "
 
 
   p_bar_1 <- plot_tablebar(
-    dat = dat_bar_1,
+    dat = dat_bar,
+    bar_est = "est_Trend_noComp_20112016_percent",
     bar_label = NULL,
-    bar_sig = "sig_Trend_noComp",
+    bar_sig = "sig_Trend_noComp_20112016",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
     columns_headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
@@ -135,10 +131,10 @@ test_that("Example barplot long format is plotted correctly", {
     columns_table = list(
       "state_var",
       "depVar",
-      "est_noTrendStart_noComp",
-      "est_noTrendEnd_noComp",
-      "est_Trend_noComp",
-      "se_Trend_noComp"
+      "est_noTrend_noComp_2011_percent",
+      "est_noTrend_noComp_2016_percent",
+      "est_Trend_noComp_20112016_percent",
+      "se_Trend_noComp_20112016_percent"
     ),
     columns_round = list(NULL, NULL, 1, 1, 1, NULL),
     columns_table_sig_bold = list(
@@ -146,7 +142,7 @@ test_that("Example barplot long format is plotted correctly", {
       NULL,
       NULL,
       NULL,
-      "sig_Trend_noComp",
+      "sig_Trend_noComp_20112016",
       NULL
     ),
     columns_table_sig_high = list(
@@ -154,29 +150,27 @@ test_that("Example barplot long format is plotted correctly", {
       NULL,
       NULL,
       NULL,
-      "sig_Trend_CompWhole",
+      "sig_Trend_CompWhole_20112016",
       NULL
     ),
-    bar_est = "est_Trend_noComp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(0, 0, 1, 1, 1, 1),
       columns_width = c(0.175, 0.35, 0.075, 0.075, 0.075, 0.075, 0.175),
       columns_nudge_x = c(0, 0, -2, -2, -2, -1),
       headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
-      default_list = barplot_MinSta_trend
+      default_list = barplot_table_plot_pattern
     )
   )
 
 
   # Plot 2 ------------------------------------------------------------------
-  dat_bar_2 <- dat_bar[which(dat_bar$year_start == 2016 & dat_bar$year_end == 2021), ]
-
   p_bar_2 <- plot_tablebar(
-    dat = dat_bar_2,
+    dat = dat_bar,
+    bar_est = "est_Trend_noComp_20162021_percent",
     bar_label = NULL,
-    bar_sig = "sig_Trend_noComp",
-    bar_header = " ", # Zu column headers dazu
+    bar_sig = "sig_Trend_noComp_20162021",
+    bar_header = " ",
     bar_fill = "depVar",
     columns_headers = list("%", "%", "%", "*(SE)*"),
     column_spanners = list(
@@ -186,24 +180,23 @@ test_that("Example barplot long format is plotted correctly", {
     ),
     columns_round = list(1, 1, 1, NULL),
     columns_table = list(
-      "est_noTrendStart_noComp",
-      "est_noTrendEnd_noComp",
-      "est_Trend_noComp",
-      "se_Trend_noComp"
+      "est_noTrend_noComp_2016_percent",
+      "est_noTrend_noComp_2021_percent",
+      "est_Trend_noComp_20162021_percent",
+      "se_Trend_noComp_20162021_percent"
     ),
     columns_table_sig_bold = list(
       NULL,
       NULL,
-      "sig_Trend_noComp",
+      "sig_Trend_noComp_20162021",
       NULL
     ),
     columns_table_sig_high = list(
       NULL,
       NULL,
-      "sig_Trend_CompWhole",
+      "sig_Trend_CompWhole_20162021",
       NULL
     ),
-    bar_est = "est_Trend_noComp",
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(1, 1, 1, 1),
@@ -211,7 +204,7 @@ test_that("Example barplot long format is plotted correctly", {
       columns_nudge_x = c(-2, -2, -2, -2),
       headers_alignment = c(0.5, 0.5, 0.5, 0.5),
       pattern_spacing = 0.0125,
-      default_list = barplot_MinSta_trend
+      default_list = barplot_table_plot_pattern
     )
   )
 
@@ -219,5 +212,5 @@ test_that("Example barplot long format is plotted correctly", {
 
   vdiffr::expect_doppelganger("MinStand_trend", c_plot)
 
-  # save_plot(c_plot, filename = "../Kap3_2022_MSA_trend.pdf")
+  #save_plot(c_plot, filename = "../Kap3_2022_MSA_trend_v02.pdf")
 })

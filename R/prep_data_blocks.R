@@ -93,6 +93,8 @@ if(any(grepl("trend", colnames(data_clean))) == TRUE){
                                                 merging_columns = merging_columns,
                                                 suffix = "_noTrend_noComp_wholeGroup")
 
+  }else{
+    filtered_list[["noTrend_noComp_wholeGroup"]] <- data.frame()
   }
 
   if(any(grepl("trend", colnames(data_clean))) == TRUE){

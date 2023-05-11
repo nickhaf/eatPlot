@@ -146,7 +146,7 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   data_long$id <- NULL
   }else{
   data_long <- data
-  data_long$time <- 9999
+  data_long$time <- "noTrend"
 }
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
@@ -232,6 +232,8 @@ get_comparisons <- function(dat, states, sub_groups) {
       dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
     }
     dat[, i] <- gsub("__|___", "_", dat[, i])
+
+    dat[is.na(dat[, i]), i] <- "no_comp"
   }
 
   return(dat)
@@ -315,6 +317,14 @@ fill_column <- function(df, column_name, filling = NA){
 return(df)
   }
 
+fill_na <- function(df, column_name, filling){
+  if(is.null(column_name)){
+    return(df)
+  }else{
+    df[is.na(df[, column_name]), column_name] <- filling
+    return(df)
+  }
+}
 
 check_columns <-  function(dat, column){
   if(column %in% colnames(dat)){
@@ -339,3 +349,8 @@ rename_columns <- function(dat, old_names, new_names){
 
   return(dat)
 }
+
+
+
+
+

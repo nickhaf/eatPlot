@@ -2,12 +2,11 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 21
+      length(settings_list) == 22
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
       names(settings_list) %in% c(
-        "axis_x_background_width_x",
         "axis_x_lims",
         "background_stripes_colour",
         "bar_fill_colour",
@@ -23,6 +22,8 @@ check_plotsettings_barplot <- function(settings_list) {
         "columns_nudge_x",
         "columns_width",
         "headers_alignment",
+        "headers_background_colour",
+        "headers_background_width_x",
         "headers_nudge_x",
         "headers_nudge_y",
         "font_size",
@@ -32,7 +33,7 @@ check_plotsettings_barplot <- function(settings_list) {
       )
   )
 
-  stopifnot(is.numeric(settings_list$axis_x_background_width_x))
+
   stopifnot(is.numeric(settings_list$axis_x_lims) & length(settings_list$axis_x_lims) == 2 | is.null(settings_list$axis_x_lims))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
@@ -48,6 +49,8 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$columns_nudge_x))
   stopifnot(is.numeric(settings_list$columns_width) | is.null(settings_list$columns_width))
   stopifnot(is.numeric(settings_list$headers_alignment) | is.null(settings_list$headers_alignment))
+  stopifnot(is_colour(settings_list$headers_background_colour) | is.null(settings_list$headers_background_colour))
+  stopifnot(is.numeric(settings_list$headers_background_width_x))
   stopifnot(is.numeric(settings_list$headers_nudge_x))
   stopifnot(is.numeric(settings_list$headers_nudge_y))
   stopifnot(is.numeric(settings_list$font_size))
@@ -59,7 +62,7 @@ check_plotsettings_barplot <- function(settings_list) {
 
 #' Set parameters for the barplots.
 #'
-#' @param axis_x_background_width_x Numeric for the width of the x_axis - title background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to `0`.
+
 #' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, `NULL` (default).
 #' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background. Defaults to `NULL`.
 #' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in `bar_fill`. If no names are provided for the vector, the order of the factor levels of `bar_fill` will be used for determining the colour assignment.
@@ -75,6 +78,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param columns_nudge_x Numeric to nudge the column text in x direction. Defaults to `0`.
 #' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
+#' @param headers_background_colour Colour of the background of the headers.
+#' @param headers_background_width_x Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to `0`.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
@@ -113,7 +118,6 @@ check_plotsettings_barplot <- function(settings_list) {
 #'
 #'
 plotsettings_tablebarplot <- function(
-                                      axis_x_background_width_x = NULL,
                                       axis_x_lims = NULL,
                                       background_stripes_colour = NULL,
                                       bar_fill_colour = NULL,
@@ -129,6 +133,8 @@ plotsettings_tablebarplot <- function(
                                       columns_nudge_x = NULL,
                                       columns_width = NULL,
                                       headers_alignment = NULL,
+                                      headers_background_colour = NULL,
+                                      headers_background_width_x = NULL,
                                       headers_nudge_x = NULL,
                                       headers_nudge_y = NULL,
                                       font_size = NULL,
@@ -138,7 +144,6 @@ plotsettings_tablebarplot <- function(
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
-      "axis_x_background_width_x" = 0,
       "axis_x_lims" = NULL,
       "background_stripes_colour" = "white",
       "bar_fill_colour" = "white",
@@ -154,6 +159,8 @@ plotsettings_tablebarplot <- function(
       "columns_nudge_x" = 0,
       "columns_width" = NULL,
       "headers_alignment" = NULL,
+      "headers_background_colour" = "white",
+      "headers_background_width_x" = 0,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
       "pattern_spacing" = 0.1,

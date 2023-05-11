@@ -1,6 +1,6 @@
-## code to prepare `lineplot_chpt_4` dataset goes here
+## code to prepare `lineplot_4x4` dataset goes here
 
-lineplot_chpt_4 <- plotsettings_lineplot(
+lineplot_4x4 <- plotsettings_lineplot(
   axis_x_background_colour = "lightblue",
   axis_x_background_width_x = 0.1,
   axis_x_background_width_y = 0.04,
@@ -42,4 +42,4 @@ lineplot_chpt_4 <- plotsettings_lineplot(
   y_axis = FALSE
 )
 
-usethis::use_data(lineplot_chpt_4, overwrite = TRUE)
+usethis::use_data(lineplot_4x4, overwrite = TRUE)
