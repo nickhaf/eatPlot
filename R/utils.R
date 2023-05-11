@@ -351,9 +351,12 @@ rename_columns <- function(dat, old_names, new_names){
 }
 
 
-merge_2 <- function(dat_1, dat_2, return_dat = data.frame(), ...){
-  if(is.null(dat_1) | is.null(dat_2)){return(return_dat)}
-  if(nrow(dat_1) == 0 | nrow(dat_2) == 0){return(return_dat)}
+merge_2 <- function(dat_1, dat_2, ...){
+  if(is.null(dat_1) | is.null(dat_2)){return(data.frame())}
+  if(nrow(dat_1) == 0 & nrow(dat_2) == 0){return(data.frame())}
+  if(sum(nrow(dat_1) == 0 | nrow(dat_2) == 0) == 1){
+    if(nrow(dat_1) > nrow(dat_2)){return(dat_1)}else{return(dat_2)}
+  }
 
 dat_merged <- merge(dat_1, dat_2, ...)
 

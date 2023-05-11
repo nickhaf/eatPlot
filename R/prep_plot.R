@@ -155,7 +155,6 @@ prep_plot <- function(dat,
       comp_within_whole <- merge_trend_data(
         trend_data_1 = comp_state,
         trend_data_2 = comp_wholeGroup,
-        return_dat = comp_wholeGroup,
         suffixes = c("", ""),
         all.x = TRUE
       )
@@ -163,7 +162,6 @@ prep_plot <- function(dat,
       comp_within_whole <- merge_trend_data(
         trend_data_1 = comp_within_whole,
         trend_data_2 = comp_groups,
-        return_dat = comp_within_whole,
         suffixes = c("", ""),
         all = TRUE
       )
@@ -173,7 +171,6 @@ prep_plot <- function(dat,
       Trend_data_merged <- merge_trend_data(
         trend_data_1 = comp_within_whole,
         trend_data_2 = list_building_blocks[["Trend_noComp"]],
-        return_dat = list_building_blocks[["Trend_noComp"]],
         suffixes = c("", ""),
         all = TRUE
       )
@@ -183,8 +180,7 @@ prep_plot <- function(dat,
     # Merge to final data frame -----------------------------------------------
     trend_data_final <- merge_trend_point(
       trend_data = Trend_data_merged,
-      point_data = noTrend_data_merged,
-      return_dat = Trend_data_merged
+      point_data = noTrend_data_merged
     )
 
     ## Drop unused levels
@@ -281,7 +277,6 @@ prep_plot <- function(dat,
 
   plot_dat[["plot_tablebar"]] <- merge_2(noTrend_data_merged_wide,
                                        Trend_data_merged_wide,
-                                       return_dat = noTrend_data_merged_wide,
                                        by = c("grouping_var", "state_var", "competence_var", "depVar"),
                                        all = TRUE
                                        )
@@ -321,7 +316,6 @@ prep_plot <- function(dat,
     plot_dat[["plot_points"]] <- merge_2(
       plot_dat[["plot_points"]],
       list_building_blocks[["noTrend_noComp"]],
-      return_dat = plot_dat[["plot_points"]],
       by = c(
         "grouping_var",
         "state_var",
@@ -335,7 +329,6 @@ prep_plot <- function(dat,
     plot_dat[["plot_points"]] <- merge_2(
       plot_dat[["plot_points"]],
       noTrend_merged$comp_within_whole_noTrend,
-      return_dat = plot_dat[["plot_points"]],
       by = c(
         "grouping_var",
         "state_var",
@@ -384,15 +377,14 @@ prepare_noTrend <- function(list_building_blocks, merging_columns){
   comp_within_whole_noTrend <- merge_2(
     comp_state_noTrend,
     comp_wholeGroup_noTrend,
-    return_dat = comp_wholeGroup_noTrend,
     all.x = TRUE,
     by = noTrend_merge_cols
   )
 
+  ## return besser überlegen: Jeweils den vollen?
   comp_within_whole_noTrend <- merge_2(
     comp_within_whole_noTrend,
     comp_state_groups,
-    return_dat = comp_within_whole_noTrend,
     all = TRUE,
     by = noTrend_merge_cols
   )
@@ -400,7 +392,6 @@ prepare_noTrend <- function(list_building_blocks, merging_columns){
   noTrend_data_merged <- merge_2(
     comp_within_whole_noTrend,
     list_building_blocks[["noTrend_noComp"]],
-    return_dat = list_building_blocks[["noTrend_noComp"]],
     by = noTrend_merge_cols,
     all = TRUE
   )

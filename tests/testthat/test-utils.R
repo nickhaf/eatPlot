@@ -179,7 +179,7 @@ test_that("Own merge command works correctly", {
 
 expect_equal(merge_2(df_1, df_2, by = "group", all = TRUE)$group, c("a", "b", "c"))
 expect_equal(merge_2(df_null, df_2, by = "group", all = TRUE), data.frame())
-expect_equal(merge_2(df_1, df_empty, by = "group", all = TRUE), data.frame())
-expect_equal(merge_2(df_1, df_empty, by = "group", return_dat = df_1), df_1)
+expect_equal(merge_2(df_1, df_empty, by = "group", all = TRUE), df_1)
+expect_equal(merge_2(df_1, df_empty, by = "group"), df_1)
 
   })
