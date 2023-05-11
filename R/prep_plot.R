@@ -135,56 +135,40 @@ prep_plot <- function(dat,
   comp_state_noTrend <- add_suffix(comp_state_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWithin")
   comp_state_groups <- add_suffix(comp_state_groups, merging_columns = merging_columns, suffix = "GroupDiff")
 
-  if (nrow(comp_state_noTrend) != 0) {
-    comp_within_whole_noTrend <- merge(
+  noTrend_merge_cols <- c(
+    "grouping_var",
+    "state_var",
+    "year",
+    "competence_var",
+    "depVar"
+  )
+
+    comp_within_whole_noTrend <- merge_2(
       comp_state_noTrend,
       comp_wholeGroup_noTrend,
+      return_dat = comp_wholeGroup_noTrend,
       all.x = TRUE,
-      by = c(
-        "grouping_var",
-        "state_var",
-        "year",
-        "competence_var",
-        "depVar"
-      )
+      by = noTrend_merge_cols
     )
-  } else {
-    comp_within_whole_noTrend <- comp_wholeGroup_noTrend
-  }
 
-  if(nrow(comp_state_groups) != 0){
-    comp_within_whole_noTrend <- merge(
+
+    comp_within_whole_noTrend <- merge_2(
       comp_within_whole_noTrend,
       comp_state_groups,
+      return_dat = comp_within_whole_noTrend,
       all = TRUE,
-      #all.y = FALSE,
-      by = c(
-        "grouping_var",
-        "state_var",
-        "year",
-        "competence_var",
-        "depVar"
-      )
+      by = noTrend_merge_cols
     )
   }
 
 
-  if (nrow(comp_within_whole_noTrend) != 0) {
-    noTrend_data_merged <- merge(
+    noTrend_data_merged <- merge_2(
       comp_within_whole_noTrend,
       list_building_blocks[["noTrend_noComp"]],
-      by = c(
-        "grouping_var",
-        "state_var",
-        "year",
-        "competence_var",
-        "depVar"
-      ),
+      return_dat = list_building_blocks[["noTrend_noComp"]],
+      by = noTrend_merge_cols,
       all = TRUE
     )
-  } else {
-    noTrend_data_merged <- list_building_blocks[["noTrend_noComp"]]
-  }
 
   # Prepare the trend-data.frame --------------------------------------------
   # Data with comparison, either comparing with the whole group, or within the state
