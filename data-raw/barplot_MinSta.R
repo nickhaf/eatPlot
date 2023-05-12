@@ -9,6 +9,7 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   bar_pattern_type = c("FALSE" = "stripe", "TRUE" = "none"),
   bar_sig_type = "pattern",
   bar_width = 0.7,
+  columns_table_sig_high_letter = "b",
   headers_background_colour = "lightblue",
   headers_background_width_x = 0.5,
   font_size = 2,
