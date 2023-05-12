@@ -58,15 +58,6 @@ plot_tablebar <- function(dat,
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
   dat <- fill_column(dat, column_name = y_axis, filling = NA)
 
-
-  ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
-  # column_width = 0 if not needed
-
-
-  if (!is.null(plot_settings$columns_table) & is.null(plot_settings$columns_width)) {
-    stop("Please provide column widths for your table columns.")
-  }
-
   if (is.null(bar_header)) {
     bar_header <- " "
   }
