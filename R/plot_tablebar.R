@@ -578,7 +578,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
         fill = NA,
         label.color = NA,
         hjust = rev(plot_settings$columns_alignment)[i],
-        nudge_x = rev(plot_settings$columns_nudge_x)[i] + x_range * 0.03 ##hier plotsettings für den superscript nudge
+        nudge_x = rev(plot_settings$columns_nudge_x)[i] + x_range * plot_settings$columns_table_sig_high_letter_nudge_
       )
     }
   }
