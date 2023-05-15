@@ -206,18 +206,7 @@ plot_tablebar <- function(dat,
       breaks = dat$background_colour,
       values = dat$background_colour
     ) +
-    # ggplot2::geom_vline(
-    #   xintercept = scale_breaks,
-    #   linetype = "dashed", colour = "darkgrey"
-    # ) +
-    ggplot2::annotate(
-      "segment",
-      x = 0,
-      xend = 0,
-      y = 0.5,
-      yend = Inf,
-      colour = "darkgrey"
-    ) +
+    add_vlines(plot_settings, plot_borders) +
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
       limits = c(NA, max(column_x_coords$right)),
@@ -585,4 +574,38 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
       )
     }
   }
+}
+
+
+add_vlines <- function(plot_settings, plot_borders){
+  c(if(plot_settings$bar_border_lines == TRUE){
+   c(ggplot2::annotate(
+     "segment",
+     x = plot_borders[1],
+     xend = plot_borders[1],
+     y = 0.5,
+     yend = Inf,
+     colour = "darkgrey",
+     linetype = "dotted"
+
+   ),
+   ggplot2::annotate(
+     "segment",
+     x = plot_borders[2],
+     xend = plot_borders[2],
+     y = 0.5,
+     yend = Inf,
+     colour = "darkgrey",
+     linetype = "dotted"
+   ))
+  },
+  ggplot2::annotate(
+    "segment",
+    x = 0,
+    xend = 0,
+    y = 0.5,
+    yend = Inf,
+    colour = "darkgrey"
+  )
+  )
 }
