@@ -352,6 +352,7 @@ plot_tablebar <- function(dat,
         cols = rev(new_colnames),
         column_x_coords = column_x_coords,
         columns_headers = rev(columns_headers),
+        plot_borders = plot_borders,
         plot_settings = plot_settings
       ) +
       if (!is.null(column_spanners)) {
@@ -409,9 +410,10 @@ build_columns_3 <- function(df,
                             cols,
                             column_x_coords,
                             columns_headers,
+                            plot_borders,
                             plot_settings = plotsettings_tablebarplot()) {
   column_x_coords <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
-  x_range <- diff(range(unlist(column_x_coords[, c("left", "middle", "right")])))
+  x_range <- diff(range(plot_borders))
   c(
     lapply(1:length(cols), function(i) {
       ## Left alignment should start at the left side of the column. Right alignment is mainly needed for aligning the number, they can stay in the middle:
@@ -576,7 +578,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
         fill = NA,
         label.color = NA,
         hjust = rev(plot_settings$columns_alignment)[i],
-        nudge_x = rev(plot_settings$columns_nudge_x)[i] + x_range * 0.0125
+        nudge_x = rev(plot_settings$columns_nudge_x)[i] + x_range * 0.03 ##hier plotsettings für den superscript nudge
       )
     }
   }
