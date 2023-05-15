@@ -18,6 +18,7 @@ plotsettings_tablebarplot(
   bar_width = NULL,
   columns_alignment = NULL,
   columns_nudge_x = NULL,
+  columns_table_sig_high_letter = NULL,
   columns_width = NULL,
   headers_alignment = NULL,
   headers_background_colour = NULL,
@@ -56,6 +57,8 @@ plotsettings_tablebarplot(
 \item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned). Defaults to \code{0.5}.}
 
 \item{columns_nudge_x}{Numeric to nudge the column text in x direction. Defaults to \code{0}.}
+
+\item{columns_table_sig_high_letter}{Character, that will be added on significant values defined by \code{columns_table_sig_high}.}
 
 \item{columns_width}{Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to \code{NULL}, in which case all collumns will get the same width.}
 
