@@ -100,6 +100,9 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
   )[["plot_tablebar"]]
 
 ## Some columns have to be prepared manually (with convenience functions):
+## wholeGroup should not be plotted in bold, so set to FALSE
+dat_bar[dat_bar$state_var == "wholeGroup", "sig_noTrend_noComp_2021"] <- FALSE
+
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
 for(i in c("2011", "2016", "2021")){
   dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
@@ -113,13 +116,13 @@ for(i in c("2011", "2016", "2021")){
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
-    bar_header = "Mindeststandard nicht erreicht (MSA)",
-    columns_headers = list("Land"),
+    bar_header = "**Mindeststandard nicht erreicht**",
+    columns_headers = list("**Land**"),
     columns_table = list("state_var"),
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
-      axis_x_lims = c(0, 39),
+      axis_x_lims = c(0, 40),
       bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
       columns_alignment = 0,
       columns_width = c(0.3, 0.7),
@@ -138,7 +141,7 @@ for(i in c("2011", "2016", "2021")){
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
-    bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
+    bar_header = "**Regelstandard erreicht oder übertroffen**",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -161,7 +164,7 @@ for(i in c("2011", "2016", "2021")){
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
-    bar_header = "Optimalstandard erreicht (MSA)",
+    bar_header = "**Optimalstandard<br>erreicht**",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -221,7 +224,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     bar_sig = "sig_Trend_noComp_20112016",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
+    columns_headers = list("**Land**", " ", "**%**", "**%**", "**%**", "*(SE)*"),
     column_spanners = list(
       "**2011**" = 3,
       "**2016**" = 4,
@@ -254,7 +257,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     ),
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
-      columns_alignment = c(0, 0, 1, 1, 1, 1),
+      columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
       columns_width = c(0.175, 0.35, 0.075, 0.075, 0.075, 0.075, 0.175),
       columns_nudge_x = c(0, 0, -2, -2, -2, -1),
       headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
@@ -314,6 +317,6 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend.pdf")
+save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend-v02.pdf")
 ```
 

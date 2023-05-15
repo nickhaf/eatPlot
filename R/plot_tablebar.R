@@ -58,15 +58,6 @@ plot_tablebar <- function(dat,
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
   dat <- fill_column(dat, column_name = y_axis, filling = NA)
 
-
-  ## Hier alle benötigten Spalten bauen mit entsprechenden Defaults. Danach checken, ob richtiges Format. Wenn NULL, sollte ein Default gebaut werden, der im Plot nicht zu sehen ist.
-  # column_width = 0 if not needed
-
-
-  if (!is.null(plot_settings$columns_table) & is.null(plot_settings$columns_width)) {
-    stop("Please provide column widths for your table columns.")
-  }
-
   if (is.null(bar_header)) {
     bar_header <- " "
   }
@@ -198,7 +189,6 @@ plot_tablebar <- function(dat,
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
 
-
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -308,6 +298,18 @@ plot_tablebar <- function(dat,
           fill = NA,
           label.color = NA
         ) +
+      ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
+      ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
+       ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
+        ggtext::geom_richtext(data = data.frame(),
+                              ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
+                                            y = max(dat$y_axis) + 1.25 + 0.25 + plot_settings$headers_nudge_y ),
+                              label = bar_header,
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA
+                              ) +
         NULL
     } else if (plot_settings$bar_sig_type == "frame") {
       res_plot <- res_plot +
@@ -327,17 +329,14 @@ plot_tablebar <- function(dat,
         ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggtext::geom_richtext(
-          data = data.frame(),
-          ggplot2::aes(
-            x = mean(plot_borders, na.rm = TRUE),
-            y = max(dat$y_axis, na.rm = TRUE) + 1 + plot_settings$headers_nudge_y,
-            label = bar_header
-          ),
-          size = plot_settings$font_size,
-          label.padding = grid::unit(rep(0, 4), "pt"),
-          fill = NA,
-          label.color = NA
+        ggtext::geom_richtext(data = data.frame(),
+          ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
+                                           y = max(dat$y_axis, na.rm = TRUE) + 1.25 + 0.25 + plot_settings$headers_nudge_y ,
+                                           label = bar_header),
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA
         ) +
         NULL
     } else {
@@ -377,22 +376,19 @@ plot_tablebar <- function(dat,
             ggplot2::annotate("segment",
               x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
               xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
-              y = max(dat$y_axis) + 1.75 + plot_settings$headers_nudge_y,
-              yend = max(dat$y_axis) + 1.75 + plot_settings$headers_nudge_y,
+              y = max(dat$y_axis) + 1.25 + 0.75 + plot_settings$headers_nudge_y,
+              yend = max(dat$y_axis) + 1.25 + 0.75 + plot_settings$headers_nudge_y,
               linewidth = 0.15
             ),
-            ggtext::geom_richtext(
-              data = data.frame(),
-              ggplot2::aes(
-                x = header_x,
-                y = max(dat$y_axis) + 2.25 + plot_settings$headers_nudge_y
-              ),
-              label = names(column_spanners)[spanner],
-              size = plot_settings$font_size,
-              label.padding = grid::unit(rep(0, 4), "pt"),
-              fill = NA,
-              label.color = NA,
-              hjust = 0.5
+            ggtext::geom_richtext(data = data.frame(),
+                                  ggplot2::aes(x = header_x,
+                                               y = max(dat$y_axis) + 1.25 + 1.25 + plot_settings$headers_nudge_y),
+                                  label = names(column_spanners)[spanner],
+                                  size = plot_settings$font_size,
+                                  label.padding = grid::unit(rep(0, 4), "pt"),
+                                  fill = NA,
+                                  label.color = NA,
+                                  hjust = 0.5
             )
           )
 
@@ -451,21 +447,18 @@ build_columns_3 <- function(df,
           hjust = rev(plot_settings$columns_alignment)[i],
           nudge_x = rev(plot_settings$columns_nudge_x)[i]
         ),
-        if (!is.null(columns_headers)) {
-          ggtext::geom_richtext(
-            data = data.frame(),
-            ggplot2::aes(
-              x = x_axis_i_header,
-              y = max(df$y_axis) + 1 + plot_settings$headers_nudge_y
-            ),
-            label = columns_headers[[i]],
-            size = plot_settings$font_size,
-            label.padding = grid::unit(rep(0, 4), "pt"),
-            fill = NA,
-            label.color = NA,
-            hjust = rev(plot_settings$headers_alignment)[i],
-            nudge_x = rev(plot_settings$headers_nudge_x)[i]
-          )
+        if(!is.null(columns_headers)){
+        ggtext::geom_richtext(data = data.frame(),
+                              ggplot2::aes(x =  x_axis_i_header,
+                                           y = max(df$y_axis) + 1.25 + 0.25 + plot_settings$headers_nudge_y),
+                              label = columns_headers[[i]],
+                              size = plot_settings$font_size,
+                              label.padding = grid::unit(rep(0, 4), "pt"),
+                              fill = NA,
+                              label.color = NA,
+                              hjust = rev(plot_settings$headers_alignment)[i],
+                              nudge_x =  rev(plot_settings$headers_nudge_x)[i]
+      )
         }
       )
     })

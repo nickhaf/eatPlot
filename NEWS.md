@@ -1,5 +1,9 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9005
+* The default setting for patterned bars is now reversed, so that the pattern is shown in non-significant bars. 
+* It is now possible to specify which letter should be used for the superscript significance.
+
 # eatPlot 0.0.0.9004
 * `plot_lineplot()` no tries to plot the background lines of the whole group trend as confidence intervall, derived from the values for the whole Group and theire standard errors. 
 * `prep_plot()` now distinguishes between columns for crossDiff and groupDiff. 
