@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,6 +69,7 @@
 <span>  columns_alignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table_sig_high_letter <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  columns_table_sig_high_letter_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_alignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_background_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -138,6 +139,10 @@
 
 <dt>columns_table_sig_high_letter</dt>
 <dd><p>Character, that will be added on significant values defined by <code>columns_table_sig_high</code>.</p></dd>
+
+
+<dt>columns_table_sig_high_letter_nudge_x</dt>
+<dd><p>Numeric for nudging the superscript towards or away from a number.</p></dd>
 
 
 <dt>columns_width</dt>
@@ -233,6 +238,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $columns_table_sig_high_letter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $columns_table_sig_high_letter_nudge_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $columns_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -314,6 +322,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $columns_table_sig_high_letter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $columns_table_sig_high_letter_nudge_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $columns_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -394,6 +405,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $columns_table_sig_high_letter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $columns_table_sig_high_letter_nudge_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $columns_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>

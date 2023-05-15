@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -266,7 +266,7 @@ handelt.</p>
 <span>                             label_se <span class="op">=</span> <span class="st">"se_Trend_noComp_20112016_percent"</span>, </span>
 <span>                             round_se <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_label.html">construct_label</a></span><span class="op">(</span><span class="va">dat_bar</span>, </span>
-<span>                             new_name <span class="op">=</span> <span class="st">"se_Trend_noComp_20162021_percent"</span>, </span>
+<span>                             new_name <span class="op">=</span> <span class="st">"se_Trend_noComp_20162021_percent_label"</span>, </span>
 <span>                             label_se <span class="op">=</span> <span class="st">"se_Trend_noComp_20162021_percent"</span>, </span>
 <span>                             round_se <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
@@ -275,13 +275,19 @@ handelt.</p>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"regErreicht"</span>, <span class="st">"Regelstandard erreicht"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"optErreicht"</span>, <span class="st">"Optimalstandard erreicht"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
 <span></span>
+<span>  <span class="co">## Order the data.frame:</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">y_axis_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
-<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">y_axis_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">y_axis_new</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="va">dat_bar</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">y_axis_new</span><span class="op">)</span>, <span class="op">]</span></span>
+<span>  <span class="co">## Dummy-variable needed for sorting:</span></span>
+<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar_fac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mindeststandard nicht erreicht"</span>,</span>
+<span>                                                          <span class="st">"Regelstandard erreicht"</span>, </span>
+<span>                                                          <span class="st">"Optimalstandard erreicht"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="va">dat_bar</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar_fac</span><span class="op">)</span>, <span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="co">## add a linebreak at the '-':</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"-&lt;br&gt;"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="co"># Plot 1 ------------------------------------------------------------------</span></span>
+<span>  <span class="co">## Only plot the first state respectively:</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">" "</span></span>
 <span></span>
 <span></span>
@@ -290,7 +296,7 @@ handelt.</p>
 <span>    bar_est <span class="op">=</span> <span class="st">"est_Trend_noComp_20112016_percent"</span>,</span>
 <span>    bar_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    bar_sig <span class="op">=</span> <span class="st">"sig_Trend_noComp_20112016"</span>,</span>
-<span>    bar_header <span class="op">=</span> <span class="st">" "</span>, <span class="co"># Zu column headers dazu</span></span>
+<span>    bar_header <span class="op">=</span> <span class="st">" "</span>, </span>
 <span>    bar_fill <span class="op">=</span> <span class="st">"depVar"</span>,</span>
 <span>    columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"**Land**"</span>, <span class="st">" "</span>, <span class="st">"**%**"</span>, <span class="st">"**%**"</span>, <span class="st">"**%**"</span>, <span class="st">"*(SE)*"</span><span class="op">)</span>,</span>
 <span>    column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -304,7 +310,7 @@ handelt.</p>
 <span>      <span class="st">"est_noTrend_noComp_2011_percent"</span>,</span>
 <span>      <span class="st">"est_noTrend_noComp_2016_percent"</span>,</span>
 <span>      <span class="st">"est_Trend_noComp_20112016_percent"</span>,</span>
-<span>      <span class="st">"se_Trend_noComp_20112016_percent"</span></span>
+<span>      <span class="st">"se_Trend_noComp_20112016_percent_label"</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>    columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -325,8 +331,9 @@ handelt.</p>
 <span>    <span class="op">)</span>,</span>
 <span>    y_axis <span class="op">=</span> <span class="st">"y_axis_new"</span>,</span>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.175</span>, <span class="fl">0.35</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.175</span><span class="op">)</span>,</span>
+<span>      axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.35</span>, <span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
 <span>      columns_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>      headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>      default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
@@ -359,7 +366,7 @@ handelt.</p>
 <span>      <span class="st">"est_noTrend_noComp_2016_percent"</span>,</span>
 <span>      <span class="st">"est_noTrend_noComp_2021_percent"</span>,</span>
 <span>      <span class="st">"est_Trend_noComp_20162021_percent"</span>,</span>
-<span>      <span class="st">"se_Trend_noComp_20162021_percent"</span></span>
+<span>      <span class="st">"se_Trend_noComp_20162021_percent_label"</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="cn">NULL</span>,</span>
@@ -395,7 +402,7 @@ handelt.</p>
 <span>  <span class="va">minsta_plot_trend</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand_trend-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot_trend</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA_trend-v02.pdf"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot_trend</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA_trend-v04.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

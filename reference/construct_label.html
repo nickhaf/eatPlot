@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,8 +61,10 @@
 <span>  label_se <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label_sig_bold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label_sig_high <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label_sig_high_extra_column <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  round_est <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  round_se <span class="op">=</span> <span class="fl">1</span></span>
+<span>  round_se <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -92,12 +94,20 @@
 <dd><p>Character string of the column name containing significance values for <code>label_est</code>. Significant values will be marked by a raised 'a'.</p></dd>
 
 
+<dt>label_sig_high_extra_column</dt>
+<dd><p>Logical indicating whether the superscript for significances should be added directly into the label (necessary for lineplots), or should be written into an extra column with the ending '_sig_superscript' (necessary for tables).</p></dd>
+
+
 <dt>round_est</dt>
 <dd><p>Rounding of label_est.</p></dd>
 
 
 <dt>round_se</dt>
 <dd><p>Rounding of label_se.</p></dd>
+
+
+<dt>plot_settings</dt>
+<dd><p>Named list constructed with <code><a href="plotsettings_lineplot.html">plotsettings_lineplot()</a></code>. Defaults to a list with all settings set to <code>0</code>. There are several predefined lists with optimized settings for different plots. See <code><a href="plotsettings_lineplot.html">plotsettings_lineplot()</a></code> for an overview.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -109,7 +119,7 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#tbd</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># tbd</span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
