@@ -53,7 +53,7 @@ test_that("column length is checked correctly", {
 
   expect_error(check_length(column_set, 3))
   expect_equal(check_length("a", 3, fill = "a")
-  , list("a", "a", "a"))
+  , c("a", "a", "a"))
 })
 
 test_that("continous barplot looks the same", {
