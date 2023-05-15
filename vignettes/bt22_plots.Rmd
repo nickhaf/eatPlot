@@ -207,13 +207,19 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
   dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht", dat_bar$depVar)
 
+  ## Order the data.frame:
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
-  dat_bar$y_axis_new <- as.factor(dat_bar$y_axis_new)
-
-  dat_bar <- dat_bar[order(dat_bar$y_axis_new), ]
+  ## Dummy-variable needed for sorting:
+  dat_bar$depVar_fac <- factor(dat_bar$depVar, levels = c("Mindeststandard nicht erreicht",
+                                                          "Regelstandard erreicht", 
+                                                          "Optimalstandard erreicht"))
+  dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
+  
+  ## add a linebreak at the '-':
   dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
   # Plot 1 ------------------------------------------------------------------
+  ## Only plot the first state respectively:
   dat_bar$state_var[duplicated(dat_bar$state_var)] <- " "
 
 

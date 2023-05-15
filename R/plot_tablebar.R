@@ -160,14 +160,11 @@ plot_tablebar <- function(dat,
 
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
-  dat$y_axis <- as.factor(dat$y_axis)
-  dat <- dat[order(dat$y_axis), ]
+  if(!is.factor(dat$y_axis)){
+  dat$y_axis <- factor(dat$y_axis, levels = dat$y_axis)
+  }
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
-  # dat$bar_fill_2 <- ifelse(dat$bar_sig == TRUE,
-  #   paste0(dat$bar_fill, dat$bar_sig),
-  #   "pattern"
-  # )
 
   if (!is.null(bar_est)) {
     plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
