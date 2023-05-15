@@ -1,5 +1,10 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9008
+* Added argument `plotsettings_tablebarplot(bar_border_lines = TRUE)` for striped border lines in barplots.
+* Added alignent option `2` for tablebars. This will right align columns in the middle of the column, usefull for numeric columns. 
+
+
 # eatPlot 0.0.0.9007
 * Tables/Barplots now take the sorting of the data.frame input. 
 
