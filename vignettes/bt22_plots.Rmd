@@ -232,9 +232,9 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     bar_fill = "depVar",
     columns_headers = list("**Land**", " ", "**%**", "**%**", "**%**", "*(SE)*"),
     column_spanners = list(
-      "**2011**" = 3,
-      "**2016**" = 4,
-      "**Differenz 2016 - 2011**" = c(5, 7)
+      "**2011<sup>a<sup>**" = 3,
+      "**2016<sup>a<sup>**" = 4,
+      "**Differenz 2016 - 2011<sup>a<sup>**" = c(5, 7)
     ),
     columns_table = list(
       "state_var",
