@@ -138,7 +138,9 @@ plot_tablebar <- function(dat,
       label_se = columns_table_se[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
       label_sig_high = columns_table_sig_high[[i]],
-      round_est = columns_round[[i]]
+      label_sig_high_extra_column = TRUE,
+      round_est = columns_round[[i]],
+      plot_settings = plot_settings
     )
   }
 
@@ -150,21 +152,19 @@ plot_tablebar <- function(dat,
       label_se = NULL,
       label_sig_bold = bar_label_sig,
       label_sig_high = NULL,
-      round_est = 1
+      round_est = 1,
+      plot_settings = plot_settings
     )
   }
 
 
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
-  dat$y_axis <- as.factor(dat$y_axis)
-  dat <- dat[order(dat$y_axis), ]
+  if(!is.factor(dat$y_axis)){
+  dat$y_axis <- factor(dat$y_axis, levels = dat$y_axis)
+  }
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
-  # dat$bar_fill_2 <- ifelse(dat$bar_sig == TRUE,
-  #   paste0(dat$bar_fill, dat$bar_sig),
-  #   "pattern"
-  # )
 
   if (!is.null(bar_est)) {
     plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
@@ -350,6 +350,7 @@ plot_tablebar <- function(dat,
         cols = rev(new_colnames),
         column_x_coords = column_x_coords,
         columns_headers = rev(columns_headers),
+        plot_borders = plot_borders,
         plot_settings = plot_settings
       ) +
       if (!is.null(column_spanners)) {
@@ -407,8 +408,10 @@ build_columns_3 <- function(df,
                             cols,
                             column_x_coords,
                             columns_headers,
+                            plot_borders,
                             plot_settings = plotsettings_tablebarplot()) {
   column_x_coords <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
+  x_range <- diff(range(plot_borders))
   c(
     lapply(1:length(cols), function(i) {
       ## Left alignment should start at the left side of the column. Right alignment is mainly needed for aligning the number, they can stay in the middle:
@@ -447,6 +450,12 @@ build_columns_3 <- function(df,
           hjust = rev(plot_settings$columns_alignment)[i],
           nudge_x = rev(plot_settings$columns_nudge_x)[i]
         ),
+        add_superscript(df,
+                        column_name,
+                        x_coord = x_axis_i,
+                        i,
+                        x_range = x_range,
+                        plot_settings),
         if(!is.null(columns_headers)){
         ggtext::geom_richtext(data = data.frame(),
                               ggplot2::aes(x =  x_axis_i_header,
@@ -548,4 +557,27 @@ calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings
   col_coords <- col_coords[, order(names(col_coords))]
 
   return(col_coords)
+}
+
+
+
+add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings){
+  if(paste0(column_name, "_sig_superscript") %in% colnames(df)){
+    if(any(df[ ,paste0(column_name, "_sig_superscript")] != "")){
+      ggtext::geom_richtext(
+        data = df,
+        ggplot2::aes(
+          x = x_coord,
+          y = .data$y_axis,
+          label = .data[[paste0(column_name, "_sig_superscript")]]
+        ),
+        size = plot_settings$font_size,
+        label.padding = grid::unit(rep(0, 4), "pt"),
+        fill = NA,
+        label.color = NA,
+        hjust = rev(plot_settings$columns_alignment)[i],
+        nudge_x = rev(plot_settings$columns_nudge_x)[i] + x_range * plot_settings$columns_table_sig_high_letter_nudge_x
+      )
+    }
+  }
 }

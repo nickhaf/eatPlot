@@ -198,7 +198,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
                              label_se = "se_Trend_noComp_20112016_percent", 
                              round_se = 1)
   dat_bar <- construct_label(dat_bar, 
-                             new_name = "se_Trend_noComp_20162021_percent", 
+                             new_name = "se_Trend_noComp_20162021_percent_label", 
                              label_se = "se_Trend_noComp_20162021_percent", 
                              round_se = 1)
 
@@ -207,13 +207,19 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
   dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht", dat_bar$depVar)
   dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht", dat_bar$depVar)
 
+  ## Order the data.frame:
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
-  dat_bar$y_axis_new <- as.factor(dat_bar$y_axis_new)
-
-  dat_bar <- dat_bar[order(dat_bar$y_axis_new), ]
+  ## Dummy-variable needed for sorting:
+  dat_bar$depVar_fac <- factor(dat_bar$depVar, levels = c("Mindeststandard nicht erreicht",
+                                                          "Regelstandard erreicht", 
+                                                          "Optimalstandard erreicht"))
+  dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
+  
+  ## add a linebreak at the '-':
   dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
   # Plot 1 ------------------------------------------------------------------
+  ## Only plot the first state respectively:
   dat_bar$state_var[duplicated(dat_bar$state_var)] <- " "
 
 
@@ -222,7 +228,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     bar_est = "est_Trend_noComp_20112016_percent",
     bar_label = NULL,
     bar_sig = "sig_Trend_noComp_20112016",
-    bar_header = " ", # Zu column headers dazu
+    bar_header = " ", 
     bar_fill = "depVar",
     columns_headers = list("**Land**", " ", "**%**", "**%**", "**%**", "*(SE)*"),
     column_spanners = list(
@@ -236,7 +242,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
       "est_noTrend_noComp_2011_percent",
       "est_noTrend_noComp_2016_percent",
       "est_Trend_noComp_20112016_percent",
-      "se_Trend_noComp_20112016_percent"
+      "se_Trend_noComp_20112016_percent_label"
     ),
     columns_round = list(NULL, NULL, 1, 1, 1, NULL),
     columns_table_sig_bold = list(
@@ -257,8 +263,9 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     ),
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
-      columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
-      columns_width = c(0.175, 0.35, 0.075, 0.075, 0.075, 0.075, 0.175),
+      axis_x_lims = c(-20, 20),
+      columns_alignment = c(0, 0, 1, 1, 1, 1),
+      columns_width = c(0.15, 0.35, 0.06, 0.06, 0.06, 0.06, 0.3),
       columns_nudge_x = c(0, 0, -2, -2, -2, -1),
       headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
       default_list = barplot_table_plot_pattern
@@ -285,7 +292,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
       "est_noTrend_noComp_2016_percent",
       "est_noTrend_noComp_2021_percent",
       "est_Trend_noComp_20162021_percent",
-      "se_Trend_noComp_20162021_percent"
+      "se_Trend_noComp_20162021_percent_label"
     ),
     columns_table_sig_bold = list(
       NULL,
@@ -317,6 +324,6 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend-v02.pdf")
+save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend-v04.pdf")
 ```
 

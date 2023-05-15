@@ -11,8 +11,10 @@ construct_label(
   label_se = NULL,
   label_sig_bold = NULL,
   label_sig_high = NULL,
+  label_sig_high_extra_column = FALSE,
   round_est = 0,
-  round_se = 1
+  round_se = 1,
+  plot_settings = plotsettings_tablebarplot()
 )
 }
 \arguments{
@@ -28,9 +30,13 @@ construct_label(
 
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
 
+\item{label_sig_high_extra_column}{Logical indicating whether the superscript for significances should be added directly into the label (necessary for lineplots), or should be written into an extra column with the ending '_sig_superscript' (necessary for tables).}
+
 \item{round_est}{Rounding of label_est.}
 
 \item{round_se}{Rounding of label_se.}
+
+\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
 \value{
 The data.frame with an added column for the constructed label.
@@ -39,5 +45,5 @@ The data.frame with an added column for the constructed label.
 Build labels with significances represented in bold or as raised 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
 }
 \examples{
-#tbd
+# tbd
 }
