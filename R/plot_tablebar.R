@@ -423,6 +423,7 @@ build_columns_3 <- function(df,
 
 
 
+
       column_name <- cols[i]
 
       c(

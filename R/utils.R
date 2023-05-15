@@ -362,5 +362,6 @@ dat_merged <- merge(dat_1, dat_2, ...)
 
 }
 
-
-
+get_plot_coords <- function(plot){
+  diff(ggplot2::layer_scales(plot)$x$get_limits())
+}

@@ -9,7 +9,7 @@
 combine_plots <- function(plot_list){
 
   coordinates <- vapply(plot_list, function(plot){
-    diff(ggplot2::layer_scales(plot)$x$get_limits())
+get_plot_coords(plot)
     }, FUN.VALUE = numeric(1)
   )
 

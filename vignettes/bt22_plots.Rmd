@@ -265,8 +265,9 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(-20, 20),
       columns_alignment = c(0, 0, 1, 1, 1, 1),
-      columns_width = c(0.15, 0.35, 0.06, 0.06, 0.06, 0.06, 0.3),
-     # columns_nudge_x = c(0, 0, -2, -2, -2, -1),
+      headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
+      columns_width = c(0.15, 0.325, 0.075, 0.075, 0.075, 0.075, 0.225),
+      columns_nudge_x = c(0, 0, -2, -2, -2, -2),
       default_list = barplot_table_plot_pattern
     )
   )
@@ -308,15 +309,15 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     y_axis = "y_axis_new",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(1, 1, 1, 1),
-      columns_width = c(0.12, 0.12, 0.12, 0.12, 0.52),
+      columns_width = c(0.122, 0.122, 0.122, 0.122, 0.512),
       columns_nudge_x = c(-2, -2, -2, -2),
+      headers_alignment = c(0.5, 0.5, 0.5, 0.5),
       pattern_spacing = 0.0125,
       default_list = barplot_table_plot_pattern
     )
   )
 
   minsta_plot_trend <- combine_plots(list(p_bar_1, p_bar_2))
-
   minsta_plot_trend
 
 ```
