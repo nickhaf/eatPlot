@@ -138,6 +138,7 @@ plot_tablebar <- function(dat,
       label_se = columns_table_se[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
       label_sig_high = columns_table_sig_high[[i]],
+      label_sig_high_extra_column = TRUE,
       round_est = columns_round[[i]],
       plot_settings = plot_settings
     )
