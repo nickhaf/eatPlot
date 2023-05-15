@@ -82,12 +82,13 @@ plot_tablebar <- function(dat,
     plot_settings$headers_alignment <- plot_settings$columns_alignment
   }
 
-  plot_settings$columns_alignment <- unlist(check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1]))
-  plot_settings$columns_nudge_x <- unlist(check_length(plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1]))
-  plot_settings$headers_alignment <- unlist(check_length(plot_settings$headers_alignment, length(columns_table), fill = plot_settings$headers_alignment[1]))
-  plot_settings$headers_nudge_x <- unlist(check_length(plot_settings$headers_nudge_x, length(columns_table), fill = plot_settings$headers_nudge_x[1]))
-
-
+  plot_settings$columns_alignment <- check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1])
+  plot_settings$columns_nudge_x <- check_length(plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1])
+  plot_settings$headers_alignment <- check_length(plot_settings$headers_alignment, length(columns_table), fill = plot_settings$headers_alignment[1])
+  plot_settings$headers_nudge_x <- check_length(plot_settings$headers_nudge_x, length(columns_table), fill = plot_settings$headers_nudge_x[1])
+  if(length(plot_settings$background_stripes_colour) != nrow(dat)){
+    plot_settings$background_stripes_colour <- fill_up(plot_settings$background_stripes_colour, leng = nrow(dat), fill = "white")
+  }
 
   ## Check Column widths
   ## Warnmeldung wenn eine col_width zu wenig: please provide one for the bar es well.
@@ -513,15 +514,19 @@ check_length <- function(obj, leng, fill = NULL) {
   } else if (length(obj) != leng & length(obj) > 1) {
     stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1."), call. = FALSE)
   } else if (length(obj) == 1 & leng > 1) {
-    obj <- c(obj, lapply(1:(leng - length(obj)), function(x) {
-      fill
-    }))
+    obj <- fill_up(obj, leng, fill)
     return(obj)
   } else {
     return(obj)
   }
 }
 
+fill_up <- function(vec, leng, fill){
+  out <- c(vec, sapply(1:(leng - length(vec)), function(x) {
+  fill
+}))
+  return(out)
+}
 
 calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings) {
   x_axis_range <- diff(range(plot_borders))

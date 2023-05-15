@@ -80,7 +80,7 @@ test_that("continous barplot looks the same", {
     bar_est = "est_1",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
-      background_stripes_colour = c("white", "lightgrey", "white", "darkgrey"),
+      background_stripes_colour = c("white", "lightgrey"),
       bar_fill_colour = c("red", "blue", "yellow", "green"),
       bar_pattern_fill_colour = "white",
       bar_pattern_type = c("stripe", "none"),
