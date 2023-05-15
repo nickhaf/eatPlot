@@ -101,20 +101,22 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
 
 ## Some columns have to be prepared manually (with convenience functions):
 ## wholeGroup should not be plotted in bold, so set to FALSE
-dat_bar[dat_bar$state_var == "wholeGroup", "sig_noTrend_noComp_2021"] <- FALSE
+dat_bar[dat_bar$state_var == "wholeGroup", grep("sig_", colnames(dat_bar))] <- FALSE
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
 for(i in c("2011", "2016", "2021")){
   dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
 }
 
+  dat_bar$state_var <- gsub("wholeGroup", "Deutschland", dat_bar$state_var)
+  
   # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
 
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
     bar_label = "est_noTrend_noComp_2021_percent",
-    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_label_sig = "sig_noTrend_CompCrossDiffWhole_2021",
     bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
     bar_header = "**Mindeststandard nicht erreicht**",
     columns_headers = list("**Land**"),
@@ -125,7 +127,7 @@ for(i in c("2011", "2016", "2021")){
       axis_x_lims = c(0, 40),
       bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
       columns_alignment = 0,
-      columns_width = c(0.3, 0.7),
+      columns_width = c(0.45, 0.55),
       headers_alignment = 0,
       default_list = barplot_plot_frame
     )
@@ -139,7 +141,7 @@ for(i in c("2011", "2016", "2021")){
   p_bar_2 <- plot_tablebar(
     dat = dat_bar_2,
     bar_label = "est_noTrend_noComp_2021_percent",
-    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_label_sig = "sig_noTrend_CompCrossDiffWhole_2021",
     bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
     bar_header = "**Regelstandard erreicht oder übertroffen**",
     bar_est = "est_noTrend_noComp_2021_percent",
@@ -162,7 +164,7 @@ for(i in c("2011", "2016", "2021")){
   p_bar_3 <- plot_tablebar(
     dat = dat_bar_3,
     bar_label = "est_noTrend_noComp_2021_percent",
-    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_label_sig = "sig_noTrend_CompCrossDiffWhole_2021",
     bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
     bar_header = "**Optimalstandard<br>erreicht**",
     bar_est = "est_noTrend_noComp_2021_percent",
@@ -180,7 +182,7 @@ for(i in c("2011", "2016", "2021")){
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
+save_plot(minsta_plot, filename = "../Kap3_2022_MSA-v02.pdf", height = 226.2 / 3)
 ```
 
 
@@ -203,16 +205,16 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
                              round_se = 1)
 
 
-  dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
-  dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht", dat_bar$depVar)
-  dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht", dat_bar$depVar)
+  dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht (MSA)", dat_bar$depVar)
+  dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht (MSA)", dat_bar$depVar)
+  dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht (MSA)", dat_bar$depVar)
 
   ## Order the data.frame:
   dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
   ## Dummy-variable needed for sorting:
-  dat_bar$depVar_fac <- factor(dat_bar$depVar, levels = c("Mindeststandard nicht erreicht",
-                                                          "Regelstandard erreicht", 
-                                                          "Optimalstandard erreicht"))
+  dat_bar$depVar_fac <- factor(dat_bar$depVar, levels = c("Mindeststandard nicht erreicht (MSA)",
+                                                          "Regelstandard erreicht (MSA)", 
+                                                          "Optimalstandard erreicht (MSA)"))
   dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
   
   ## add a linebreak at the '-':
@@ -266,7 +268,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
       axis_x_lims = c(-20, 20),
       columns_alignment = c(0, 0, 2, 2, 2, 2),
       headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
-      columns_width = c(0.15, 0.325, 0.075, 0.075, 0.075, 0.075, 0.225),
+      columns_width = c(0.15, 0.375, 0.07, 0.07, 0.07, 0.07, 0.225),
       default_list = barplot_table_plot_pattern
     )
   )
@@ -280,7 +282,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     bar_sig = "sig_Trend_noComp_20162021",
     bar_header = " ",
     bar_fill = "depVar",
-    columns_headers = list("%", "%", "%", "*(SE)*"),
+    columns_headers = list("**%**", "**%**", "**%**", "*(SE)*"),
     column_spanners = list(
       "**2016**" = 1,
       "**2021**" = 2,
