@@ -17,7 +17,8 @@ construct_label <- function(dat,
                             label_sig_bold = NULL,
                             label_sig_high = NULL,
                             round_est = 0,
-                            round_se = 1) {
+                            round_se = 1,
+                            plot_settings = plotsettings_tablebarplot()) {
   dat <- fill_column(dat, column_name = label_est, filling = "")
   dat <- fill_column(dat, column_name = label_se, filling = NA)
   dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
@@ -42,7 +43,7 @@ if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){
     dat$label_est
   )
 
-  dat$label_sig <- ifelse(dat$label_sig_high == TRUE, "<sup>a</sup>", "")
+  dat$label_sig <- ifelse(dat$label_sig_high == TRUE, paste0("<sup>", plot_settings$columns_table_sig_high_letter, "</sup>"), "")
 
   dat$label_se <- ifelse(!is.na(dat$label_se),
     paste0(" (", dat$label_se, ")"),
@@ -53,11 +54,15 @@ if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){
 
   dat[, new_name] <- paste0(
     dat$label_est,
-    dat$label_sig,
     dat$label_se
   )
 
-  dat <- remove_columns(dat, cols = c("label_est", "label_sig", "label_se", "label_sig_bold", "label_sig_high"))
+## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved
+  if(any(dat$label_sig != "")){
+dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
+  }
+
+dat <- remove_columns(dat, cols = c("label_est", "label_sig", "label_se", "label_sig_bold", "label_sig_high"))
 
   return(dat)
 }
