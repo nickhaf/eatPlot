@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9007
+* Tables/Barplots now take the sorting of the data.frame input. 
+
 # eatPlot 0.0.0.9006
 * Columns can now be aligned by the decimal point (only possible for alignment = 1).
 
