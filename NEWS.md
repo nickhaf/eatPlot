@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9006
+* Columns can now be aligned by the decimal point (only possible for alignment = 1).
+
 # eatPlot 0.0.0.9005
 * The default setting for patterned bars is now reversed, so that the pattern is shown in non-significant bars. 
 * It is now possible to specify which letter should be used for the superscript significance.
