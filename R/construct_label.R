@@ -9,7 +9,7 @@
 #' @return The data.frame with an added column for the constructed label.
 #' @export
 #'
-#' @examples #tbd
+#' @examples # tbd
 construct_label <- function(dat,
                             new_name = "label",
                             label_est = NULL,
@@ -25,11 +25,11 @@ construct_label <- function(dat,
   dat <- fill_column(dat, column_name = label_sig_bold, filling = FALSE)
 
 
-if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){
-  for (i in c("label_sig_high", "label_sig_bold")) {
-    dat[is.na(dat[, i]), i] <- FALSE
+  if (any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))) {
+    for (i in c("label_sig_high", "label_sig_bold")) {
+      dat[is.na(dat[, i]), i] <- FALSE
+    }
   }
-}
 
   if (is.numeric(dat$label_est) & !is.null(round_est)) {
     dat$label_est <- format(round(dat$label_est, round_est), trim = TRUE)
@@ -57,12 +57,12 @@ if(any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))){
     dat$label_se
   )
 
-## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved
-  if(any(dat$label_sig != "")){
-dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
+  ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column
+  if (any(dat$label_sig != "")) {
+    dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
   }
 
-dat <- remove_columns(dat, cols = c("label_est", "label_sig", "label_se", "label_sig_bold", "label_sig_high"))
+  dat <- remove_columns(dat, cols = c("label_est", "label_sig", "label_se", "label_sig_bold", "label_sig_high"))
 
   return(dat)
 }
