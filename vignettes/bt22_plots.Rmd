@@ -228,7 +228,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
     bar_est = "est_Trend_noComp_20112016_percent",
     bar_label = NULL,
     bar_sig = "sig_Trend_noComp_20112016",
-    bar_header = " ", # Zu column headers dazu
+    bar_header = " ", 
     bar_fill = "depVar",
     columns_headers = list("**Land**", " ", "**%**", "**%**", "**%**", "*(SE)*"),
     column_spanners = list(
