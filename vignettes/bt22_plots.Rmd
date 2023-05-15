@@ -198,7 +198,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
                              label_se = "se_Trend_noComp_20112016_percent", 
                              round_se = 1)
   dat_bar <- construct_label(dat_bar, 
-                             new_name = "se_Trend_noComp_20162021_percent", 
+                             new_name = "se_Trend_noComp_20162021_percent_label", 
                              label_se = "se_Trend_noComp_20162021_percent", 
                              round_se = 1)
 
@@ -236,7 +236,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
       "est_noTrend_noComp_2011_percent",
       "est_noTrend_noComp_2016_percent",
       "est_Trend_noComp_20112016_percent",
-      "se_Trend_noComp_20112016_percent"
+      "se_Trend_noComp_20112016_percent_label"
     ),
     columns_round = list(NULL, NULL, 1, 1, 1, NULL),
     columns_table_sig_bold = list(
@@ -286,7 +286,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
       "est_noTrend_noComp_2016_percent",
       "est_noTrend_noComp_2021_percent",
       "est_Trend_noComp_20162021_percent",
-      "se_Trend_noComp_20162021_percent"
+      "se_Trend_noComp_20162021_percent_label"
     ),
     columns_table_sig_bold = list(
       NULL,
@@ -313,7 +313,7 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA.pdf", height = 226.2 / 3)
 
   minsta_plot_trend <- combine_plots(list(p_bar_1, p_bar_2))
 
-  #minsta_plot_trend
+  minsta_plot_trend
 
 ```
 
