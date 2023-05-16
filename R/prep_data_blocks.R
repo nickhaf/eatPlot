@@ -54,7 +54,8 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging
     exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
     data_trend_comp <- data_clean[!is.na(data_clean$comparison), ]
-    filtered_list <- prep_trend_long(data_trend_comp,
+    filtered_list <- prep_trend_long(
+      data_trend_comp,
       filtered_list,
       "Trend_Comp",
       remove_cols = exclude_cols

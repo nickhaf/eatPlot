@@ -35,7 +35,7 @@ merge_trend_point <- function(trend_data, point_data) {
 
   colnames(trend_start) <- gsub("_noTrend", "_noTrendStart", colnames(trend_start))
 
-  trend <- merge(trend_start,
+  trend <- merge_2(trend_start,
     point_data,
     by.x = c("state_var", "year_end", "grouping_var", "depVar", "competence_var"),
     by.y = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
