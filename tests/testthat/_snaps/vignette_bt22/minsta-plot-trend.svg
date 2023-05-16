@@ -761,16 +761,16 @@
 <text x='11.72' y='39.25' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>Land</text>
 <line x1='251.61' y1='27.59' x2='281.41' y2='27.59' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='258.91' y='24.21' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2011</text>
-<text x='271.57' y='22.64' style='font-size: 4.55px; font-weight: bold; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
+<text x='271.57' y='22.64' style='font-size: 4.55px; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
 <line x1='283.46' y1='27.59' x2='313.26' y2='27.59' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='290.76' y='24.21' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
-<text x='303.42' y='22.64' style='font-size: 4.55px; font-weight: bold; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
+<text x='303.42' y='22.64' style='font-size: 4.55px; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
 <line x1='315.31' y1='27.59' x2='479.33' y2='27.59' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='368.69' y='24.21' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='22.77px' lengthAdjust='spacingAndGlyphs'>Differenz</text>
 <text x='393.04' y='24.21' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='407.28' y='24.21' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>-</text>
 <text x='410.76' y='24.21' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2011</text>
-<text x='423.42' y='22.64' style='font-size: 4.55px; font-weight: bold; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
+<text x='423.42' y='22.64' style='font-size: 4.55px; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='429.17,571.52 429.17,568.78 ' style='stroke-width: 0.21; stroke: #333333; stroke-linecap: butt;' />
