@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,20 +169,22 @@ handelt.</p>
 <span></span>
 <span><span class="co">## Some columns have to be prepared manually (with convenience functions):</span></span>
 <span><span class="co">## wholeGroup should not be plotted in bold, so set to FALSE</span></span>
-<span><span class="va">dat_bar</span><span class="op">[</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span> <span class="op">==</span> <span class="st">"wholeGroup"</span>, <span class="st">"sig_noTrend_noComp_2021"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
+<span><span class="va">dat_bar</span><span class="op">[</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span> <span class="op">==</span> <span class="st">"wholeGroup"</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"sig_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
 <span></span>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_percent.html">construct_percent</a></span><span class="op">(</span><span class="va">dat_bar</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"est"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2011"</span>, <span class="st">"2016"</span>, <span class="st">"2021"</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_directional_sig.html">construct_directional_sig</a></span><span class="op">(</span><span class="va">dat_bar</span>, est_column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"est_noTrend_CompCrossDiffWhole_"</span>, <span class="va">i</span><span class="op">)</span>, sig_column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sig_noTrend_CompCrossDiffWhole_"</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
+<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"wholeGroup"</span>, <span class="st">"Deutschland"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
+<span>  </span>
 <span>  <span class="co"># Plot 1 ------------------------------------------------------------------</span></span>
 <span>  <span class="va">dat_bar_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_bar</span>, <span class="va">depVar</span> <span class="op">==</span> <span class="st">"minVerfehlt"</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="va">p_bar_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span></span>
 <span>    dat <span class="op">=</span> <span class="va">dat_bar_1</span>,</span>
 <span>    bar_label <span class="op">=</span> <span class="st">"est_noTrend_noComp_2021_percent"</span>,</span>
-<span>    bar_label_sig <span class="op">=</span> <span class="st">"sig_noTrend_noComp_2021"</span>,</span>
+<span>    bar_label_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompCrossDiffWhole_2021"</span>,</span>
 <span>    bar_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompCrossDiffWhole_2021_directional_sig"</span>,</span>
 <span>    bar_header <span class="op">=</span> <span class="st">"**Mindeststandard nicht erreicht**"</span>,</span>
 <span>    columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"**Land**"</span><span class="op">)</span>,</span>
@@ -193,7 +195,7 @@ handelt.</p>
 <span>      axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>,</span>
 <span>      bar_fill_colour <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">49</span>, <span class="fl">133</span>, <span class="fl">156</span>, maxColorValue <span class="op">=</span> <span class="fl">255</span><span class="op">)</span>,</span>
 <span>      columns_alignment <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.45</span>, <span class="fl">0.55</span><span class="op">)</span>,</span>
 <span>      headers_alignment <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>      default_list <span class="op">=</span> <span class="va">barplot_plot_frame</span></span>
 <span>    <span class="op">)</span></span>
@@ -207,7 +209,7 @@ handelt.</p>
 <span>  <span class="va">p_bar_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span></span>
 <span>    dat <span class="op">=</span> <span class="va">dat_bar_2</span>,</span>
 <span>    bar_label <span class="op">=</span> <span class="st">"est_noTrend_noComp_2021_percent"</span>,</span>
-<span>    bar_label_sig <span class="op">=</span> <span class="st">"sig_noTrend_noComp_2021"</span>,</span>
+<span>    bar_label_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompCrossDiffWhole_2021"</span>,</span>
 <span>    bar_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompCrossDiffWhole_2021_directional_sig"</span>,</span>
 <span>    bar_header <span class="op">=</span> <span class="st">"**Regelstandard erreicht oder übertroffen**"</span>,</span>
 <span>    bar_est <span class="op">=</span> <span class="st">"est_noTrend_noComp_2021_percent"</span>,</span>
@@ -230,7 +232,7 @@ handelt.</p>
 <span>  <span class="va">p_bar_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span></span>
 <span>    dat <span class="op">=</span> <span class="va">dat_bar_3</span>,</span>
 <span>    bar_label <span class="op">=</span> <span class="st">"est_noTrend_noComp_2021_percent"</span>,</span>
-<span>    bar_label_sig <span class="op">=</span> <span class="st">"sig_noTrend_noComp_2021"</span>,</span>
+<span>    bar_label_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompCrossDiffWhole_2021"</span>,</span>
 <span>    bar_sig <span class="op">=</span> <span class="st">"sig_noTrend_CompCrossDiffWhole_2021_directional_sig"</span>,</span>
 <span>    bar_header <span class="op">=</span> <span class="st">"**Optimalstandard&lt;br&gt;erreicht**"</span>,</span>
 <span>    bar_est <span class="op">=</span> <span class="st">"est_noTrend_noComp_2021_percent"</span>,</span>
@@ -247,7 +249,7 @@ handelt.</p>
 <span>  <span class="va">minsta_plot</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2022_MSA-v02.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="chapter-4-mindeststandards-trend">Chapter 4: Mindeststandards Trend<a class="anchor" aria-label="anchor" href="#chapter-4-mindeststandards-trend"></a>
@@ -271,16 +273,16 @@ handelt.</p>
 <span>                             round_se <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"minVerfehlt"</span>, <span class="st">"Mindeststandard nicht erreicht"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
-<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"regErreicht"</span>, <span class="st">"Regelstandard erreicht"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
-<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"optErreicht"</span>, <span class="st">"Optimalstandard erreicht"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
+<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"minVerfehlt"</span>, <span class="st">"Mindeststandard nicht erreicht (MSA)"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
+<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"regErreicht"</span>, <span class="st">"Regelstandard erreicht (MSA)"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
+<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"optErreicht"</span>, <span class="st">"Optimalstandard erreicht (MSA)"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="co">## Order the data.frame:</span></span>
 <span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">y_axis_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
 <span>  <span class="co">## Dummy-variable needed for sorting:</span></span>
-<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar_fac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mindeststandard nicht erreicht"</span>,</span>
-<span>                                                          <span class="st">"Regelstandard erreicht"</span>, </span>
-<span>                                                          <span class="st">"Optimalstandard erreicht"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar_fac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mindeststandard nicht erreicht (MSA)"</span>,</span>
+<span>                                                          <span class="st">"Regelstandard erreicht (MSA)"</span>, </span>
+<span>                                                          <span class="st">"Optimalstandard erreicht (MSA)"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="va">dat_bar</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar_fac</span><span class="op">)</span>, <span class="op">]</span></span>
 <span>  </span>
 <span>  <span class="co">## add a linebreak at the '-':</span></span>
@@ -300,9 +302,9 @@ handelt.</p>
 <span>    bar_fill <span class="op">=</span> <span class="st">"depVar"</span>,</span>
 <span>    columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"**Land**"</span>, <span class="st">" "</span>, <span class="st">"**%**"</span>, <span class="st">"**%**"</span>, <span class="st">"**%**"</span>, <span class="st">"*(SE)*"</span><span class="op">)</span>,</span>
 <span>    column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>      <span class="st">"**2011**"</span> <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>      <span class="st">"**2016**"</span> <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>      <span class="st">"**Differenz 2016 - 2011**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span></span>
+<span>      <span class="st">"**2011&lt;sup&gt;a&lt;sup&gt;**"</span> <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>      <span class="st">"**2016&lt;sup&gt;a&lt;sup&gt;**"</span> <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>      <span class="st">"**Differenz 2016 - 2011&lt;sup&gt;a&lt;sup&gt;**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="st">"state_var"</span>,</span>
@@ -332,10 +334,9 @@ handelt.</p>
 <span>    y_axis <span class="op">=</span> <span class="st">"y_axis_new"</span>,</span>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>      axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
-<span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.35</span>, <span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.06</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
-<span>      columns_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>      headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.375</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.225</span><span class="op">)</span>,</span>
 <span>      default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -355,7 +356,7 @@ handelt.</p>
 <span>    bar_sig <span class="op">=</span> <span class="st">"sig_Trend_noComp_20162021"</span>,</span>
 <span>    bar_header <span class="op">=</span> <span class="st">" "</span>,</span>
 <span>    bar_fill <span class="op">=</span> <span class="st">"depVar"</span>,</span>
-<span>    columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"%"</span>, <span class="st">"%"</span>, <span class="st">"%"</span>, <span class="st">"*(SE)*"</span><span class="op">)</span>,</span>
+<span>    columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"**%**"</span>, <span class="st">"**%**"</span>, <span class="st">"**%**"</span>, <span class="st">"*(SE)*"</span><span class="op">)</span>,</span>
 <span>    column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="st">"**2016**"</span> <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>      <span class="st">"**2021**"</span> <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -382,9 +383,8 @@ handelt.</p>
 <span>    <span class="op">)</span>,</span>
 <span>    y_axis <span class="op">=</span> <span class="st">"y_axis_new"</span>,</span>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.12</span>, <span class="fl">0.12</span>, <span class="fl">0.12</span>, <span class="fl">0.12</span>, <span class="fl">0.52</span><span class="op">)</span>,</span>
-<span>      columns_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>      columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.13</span>, <span class="fl">0.13</span>, <span class="fl">0.13</span>, <span class="fl">0.13</span>, <span class="fl">0.46</span><span class="op">)</span>,</span>
 <span>      headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>      pattern_spacing <span class="op">=</span> <span class="fl">0.0125</span>,</span>
 <span>      default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
@@ -398,7 +398,6 @@ handelt.</p>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">fill</span>, which will replace the existing scale.</span></span>
 <span></span>
 <span>  <span class="va">minsta_plot_trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_bar_1</span>, <span class="va">p_bar_2</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
 <span>  <span class="va">minsta_plot_trend</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand_trend-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotsettings_tablebarplot</span><span class="op">(</span></span>
 <span>  axis_x_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_stripes_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_border_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_fill_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_frame_linetype <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -91,6 +92,10 @@
 
 <dt>background_stripes_colour</dt>
 <dd><p>Named vector containing the two colours that should be used for the striped background. Defaults to <code>NULL</code>.</p></dd>
+
+
+<dt>bar_border_lines</dt>
+<dd><p>Logical indicating whether the barplot should receive dotted lines on its borders.</p></dd>
 
 
 <dt>bar_fill_colour</dt>
@@ -202,6 +207,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_border_lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_fill_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -286,6 +294,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_border_lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_fill_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "blue"    "#0A0D52"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -368,6 +379,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_border_lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_fill_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fill_group_1 fill_group_2 </span>
