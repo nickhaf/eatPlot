@@ -206,18 +206,7 @@ plot_tablebar <- function(dat,
       breaks = dat$background_colour,
       values = dat$background_colour
     ) +
-    # ggplot2::geom_vline(
-    #   xintercept = scale_breaks,
-    #   linetype = "dashed", colour = "darkgrey"
-    # ) +
-    ggplot2::annotate(
-      "segment",
-      x = 0,
-      xend = 0,
-      y = 0.5,
-      yend = Inf,
-      colour = "darkgrey"
-    ) +
+    add_vlines(plot_settings, plot_borders) +
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
       limits = c(NA, max(column_x_coords$right)),
@@ -304,7 +293,7 @@ plot_tablebar <- function(dat,
        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggtext::geom_richtext(data = data.frame(),
                               ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
-                                            y = max(dat$y_axis) + 1.25 + 0.25 + plot_settings$headers_nudge_y ),
+                                            y = max(dat$y_axis) + 1.25 + plot_settings$headers_nudge_y ),
                               label = bar_header,
                               size = plot_settings$font_size,
                               label.padding = grid::unit(rep(0, 4), "pt"),
@@ -332,7 +321,7 @@ plot_tablebar <- function(dat,
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggtext::geom_richtext(data = data.frame(),
           ggplot2::aes(x = mean(plot_borders, na.rm = TRUE),
-                                           y = max(dat$y_axis, na.rm = TRUE) + 1.25 + 0.25 + plot_settings$headers_nudge_y ,
+                                           y = max(dat$y_axis, na.rm = TRUE) + 1.25 + plot_settings$headers_nudge_y ,
                                            label = bar_header),
                               size = plot_settings$font_size,
                               label.padding = grid::unit(rep(0, 4), "pt"),
@@ -420,8 +409,11 @@ build_columns_3 <- function(df,
         x_axis_i <- column_x_coords$left[i]
       } else if (rev(plot_settings$columns_alignment)[i] == 0.5) {
         x_axis_i <- column_x_coords$middle[i]
-      } else {
+      } else if(rev(plot_settings$columns_alignment)[i] == 1){
         x_axis_i <- column_x_coords$right[i]
+      } else if(rev(plot_settings$columns_alignment)[i] == 2){ ## right align, but in the middle of the table:
+        x_axis_i <- (column_x_coords$middle[i] + column_x_coords$right[i])/2
+        plot_settings$columns_alignment[length(plot_settings$columns_alignment) - i + 1] <- 1
       }
 
       if (rev(plot_settings$headers_alignment)[i] == 0) {
@@ -429,12 +421,15 @@ build_columns_3 <- function(df,
       } else if (rev(plot_settings$headers_alignment)[i] == 0.5) {
         x_axis_i_header <- column_x_coords$middle[i]
       } else {
-        x_axis_i_header <- column_x_coords$right[i]
+        x_axis_i_header <- column_x_coords$middle[i]
       }
 
 
 
+
       column_name <- cols[i]
+
+      df$y_axis <-  df$y_axis - ifelse(grepl("<br>", df[, column_name]), 0.25, 0)
 
       c(
         ggtext::geom_richtext(
@@ -449,8 +444,7 @@ build_columns_3 <- function(df,
           fill = NA,
           label.color = NA,
           hjust = rev(plot_settings$columns_alignment)[i],
-          nudge_x = rev(plot_settings$columns_nudge_x)[i]
-        ),
+          nudge_x = rev(plot_settings$columns_nudge_x)[i]),
         add_superscript(df,
                         column_name,
                         x_coord = x_axis_i,
@@ -460,7 +454,7 @@ build_columns_3 <- function(df,
         if(!is.null(columns_headers)){
         ggtext::geom_richtext(data = data.frame(),
                               ggplot2::aes(x =  x_axis_i_header,
-                                           y = max(df$y_axis) + 1.25 + 0.25 + plot_settings$headers_nudge_y),
+                                           y = max(df$y_axis) + 1.25 + plot_settings$headers_nudge_y),
                               label = columns_headers[[i]],
                               size = plot_settings$font_size,
                               label.padding = grid::unit(rep(0, 4), "pt"),
@@ -585,4 +579,38 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
       )
     }
   }
+}
+
+
+add_vlines <- function(plot_settings, plot_borders){
+  c(if(plot_settings$bar_border_lines == TRUE){
+   c(ggplot2::annotate(
+     "segment",
+     x = plot_borders[1],
+     xend = plot_borders[1],
+     y = 0.5,
+     yend = Inf,
+     colour = "darkgrey",
+     linetype = "dotted"
+
+   ),
+   ggplot2::annotate(
+     "segment",
+     x = plot_borders[2],
+     xend = plot_borders[2],
+     y = 0.5,
+     yend = Inf,
+     colour = "darkgrey",
+     linetype = "dotted"
+   ))
+  },
+  ggplot2::annotate(
+    "segment",
+    x = 0,
+    xend = 0,
+    y = 0.5,
+    yend = Inf,
+    colour = "darkgrey"
+  )
+  )
 }

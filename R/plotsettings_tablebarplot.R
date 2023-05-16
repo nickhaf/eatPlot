@@ -2,13 +2,14 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 24
+      length(settings_list) == 25
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
       names(settings_list) %in% c(
         "axis_x_lims",
         "background_stripes_colour",
+        "bar_border_lines",
         "bar_fill_colour",
         "bar_frame_linetype",
         "bar_label_nudge_x",
@@ -38,6 +39,7 @@ check_plotsettings_barplot <- function(settings_list) {
 
   stopifnot(is.numeric(settings_list$axis_x_lims) & length(settings_list$axis_x_lims) == 2 | is.null(settings_list$axis_x_lims))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
+  stopifnot(is.logical(settings_list$bar_border_lines))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
   stopifnot(is.character(settings_list$bar_frame_linetype))
   stopifnot(is.numeric(settings_list$bar_label_nudge_x))
@@ -69,6 +71,7 @@ check_plotsettings_barplot <- function(settings_list) {
 
 #' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, `NULL` (default).
 #' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background. Defaults to `NULL`.
+#' @param bar_border_lines Logical indicating whether the barplot should receive dotted lines on its borders.
 #' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in `bar_fill`. If no names are provided for the vector, the order of the factor levels of `bar_fill` will be used for determining the colour assignment.
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebar()`. Defaults to `solid`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
@@ -126,6 +129,7 @@ check_plotsettings_barplot <- function(settings_list) {
 plotsettings_tablebarplot <- function(
                                       axis_x_lims = NULL,
                                       background_stripes_colour = NULL,
+                                      bar_border_lines = NULL,
                                       bar_fill_colour = NULL,
                                       bar_frame_linetype = NULL,
                                       bar_label_nudge_x = NULL,
@@ -154,6 +158,7 @@ plotsettings_tablebarplot <- function(
     plot_settings <- list(
       "axis_x_lims" = NULL,
       "background_stripes_colour" = "white",
+      "bar_border_lines" = FALSE,
       "bar_fill_colour" = "white",
       "bar_frame_linetype" = "solid",
       "bar_label_size" = 2,
