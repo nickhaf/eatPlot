@@ -356,6 +356,48 @@ prep_plot <- function(dat,
 
 prepare_noTrend <- function(list_building_blocks, merging_columns){
 
+
+
+prepare_comp_noTrend <- function(dat){ # noTrend_Comp
+
+  comp_trend <- data.frame()
+  dat_comp_wide_list <- list()
+
+  for(comp in unique(dat$comparison)){
+
+    dat_comp <- dat[!is.na(dat$comparison) & dat$comparison == comp, ]
+    dat_comp$grouping_var <- gsub("\\.vs\\..*", "", dat_comp$grouping_var)
+
+    ## Get all state comparisons (without wholeGroup)
+    dat_comp <- dat_comp[dat_comp$grouping_var != "noGroup" & dat_comp$state_var != "wholeGroup" & dat_comp$compare_2_Comp != "wholeGroup" & !is.na(dat_comp$compare_2_Comp), ]
+
+    if(nrow(dat_comp) > 0){
+
+    dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
+
+    dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
+
+  dat_comp_wide_list[[comp]] <- reshape(dat_comp,
+                           direction = "wide",
+                           idvar = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
+                           timevar = c("compare_2_Comp"),
+                           sep = "_"
+                           )
+
+  if(nrow(dat_comp_wide_list[[comp]]) != 288){warning(comp)}
+
+  comp_trend <- merge_2(comp_trend,
+                        dat_comp_wide_list[[comp]],
+                        by = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
+                        all.x = TRUE
+                        )
+
+  }
+  }
+}
+## Noch irgendwie checken, ob compare_1 wirklich jeweils gleich ist -> evtl danach in dat_comp_wide_list
+
+
   comp_wholeGroup_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "wholeGroup", ]
   comp_wholeGroup_noTrend <- add_suffix(comp_wholeGroup_noTrend, merging_columns = merging_columns, suffix = "CrossDiffWhole")
   comp_state_noTrend <- list_building_blocks[["noTrend_Comp"]][list_building_blocks[["noTrend_Comp"]]$compare_2 == "BL" | list_building_blocks[["noTrend_Comp"]]$compare_1 == "_groupingVar", ]

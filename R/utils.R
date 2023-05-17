@@ -216,19 +216,39 @@ insert_first_number <- function(char_string, insertion) {
 
 
 ## Split all groups containing "vs" to get the respective comparisons
+
+## Problem: sub_groups mit vs-grouping_var
+
 get_comparisons <- function(dat, states, sub_groups) {
+
+  sub_groups <- unique(unlist(strsplit(levels(sub_groups), split = "\\.vs\\.")))
+
+  dat$group_var <- gsub("TR_BUNDESLAND=", "", dat$group_var)
+
   comparisons_log <- grepl("\\.vs\\.", dat$group_var)
 
-  dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.vs\\."), function(x) {
+  dat$group_var <- replace_VS(dat$group_var)
+
+
+
+
+  dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.VS\\."), function(x) {
     x[[1]]
   })
-  dat[comparisons_log, "compare_2"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.vs\\."), function(x) {
+  dat[comparisons_log, "compare_2"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.VS\\."), function(x) {
     x[[2]]
   })
 
   for (i in c("compare_1", "compare_2")) {
+
+    for(j in seq_along(sub_groups)){
+      group_j <- sub_groups[j]
+      dat[, i] <- gsub(group_j, paste0("grouping_var_", j), dat[, i])
+    }
+
     dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
-    if (!is.null(sub_groups)) {
+
+  if (!is.null(sub_groups)) {
       dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
     }
     dat[, i] <- gsub("__|___", "_", dat[, i])
@@ -236,8 +256,40 @@ get_comparisons <- function(dat, states, sub_groups) {
     dat[is.na(dat[, i]), i] <- "no_comp"
   }
 
+  dat$compare_1_dummy <- gsub("BL_|BL__", "", dat$compare_1)
+
+  ## Check if comparison is one of group in state vs. the group in wholeGroup
+
+ dat$compare_2 <- ifelse(dat$compare_1_dummy == dat$compare_2 & !is.na(dat$compare_1) & !is.na(dat$compare_2) & dat$compare_1 != "noGroup" & dat$compare_2 != "noGroup",
+         "wholeGroupSameGroup",
+         dat$compare_2
+)
+
+ dat <- remove_columns(dat, "compare_1_dummy")
   return(dat)
 }
+
+
+# x = character string
+replace_VS <- function(x) {
+  if(!inherits(x, "character")) {stop("'x' must be a character vector.")}
+  y   <- strsplit(x, split = ".vs.")
+
+  len2<- which(sapply(y, length) == 2)
+  if(length(len2) > 0){
+    for(i in len2){
+      x[i] <- paste0(y[[i]][1], ".VS.", y[[i]][2])
+    }
+  }
+
+  len4<- which(sapply(y, length) == 4)
+  if(length(len4)>0) {
+    for ( i in len4) {
+      x[i] <- paste0(y[[i]][1], ".vs.", y[[i]][2], ".VS.", y[[i]][3], ".vs.", y[[i]][4])
+    }
+  }
+  return(x) }
+
 
 
 # Overlap occurs, when one start point lies between a start and end point, or an end point lies between a start and an end point

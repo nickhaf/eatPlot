@@ -91,13 +91,21 @@ test_that("number insertion works", {
   expect_equal(insert_first_number("a45c6", insertion = "\\."), "a.45c6")
 })
 
-test_that("comparison splits works", {
+test_that("comparison splits works for simple example", {
   df_comp <- data.frame(group_var = c("a.vs.b", "b.vs.c"))
 
   expect_equal(get_comparisons(df_comp, states = "a", sub_groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
   expect_equal(get_comparisons(df_comp, states = "b", sub_groups = c("a"))$compare_2, c("BL", "c"))
   expect_equal(get_comparisons(df_comp, states = "a", sub_groups = NULL)$compare_2, c("b", "c"))
 })
+
+test_that("comparison splits work for complex comparisons", {
+  df_comp <- data.frame(group_var = c("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.vs.all.group=1____ersteGen.vs.zweiteGen"))
+
+get_comparisons(df_comp, states = c("Baden-Wuerttemberg"), sub_groups = c("aohneZWH", "ersteGen", "zweiteGen"))
+
+})
+
 
 test_that("column renaming works", {
   expect_equal(colnames(build_column(data.frame(col1 = 1), "col1", "col_1")), c("col1","col_1"))
@@ -183,3 +191,12 @@ expect_equal(merge_2(df_1, df_empty, by = "group", all = TRUE), df_1)
 expect_equal(merge_2(df_1, df_empty, by = "group"), df_1)
 
   })
+
+test_that("second vs is replaced correctly", {
+  x <- c("as", "", NA, "black.vs.white",
+         "TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.vs.all.group=1____ersteGen.vs.zweiteGen",
+         "TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen")
+
+  expect_equal(replace_VS(x)[c(4, 5,6)], c("black.VS.white", rep("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen", 2)))
+
+})
