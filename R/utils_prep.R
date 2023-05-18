@@ -53,23 +53,29 @@ prepare_comp_noTrend <- function(dat) {
 
   comp_trend <- data.frame()
 
-  for (comp in unique(dat$comparison)) {
+  for (comp in c("crossDiff", "groupDiff")){ #unique(dat$comparison)) {
 
-    if(comp == "trendDiff_cross"){browser()}
+    if(!comp %in% c("crossDiff", "groupDiff")){
+      stop(paste0("The comparison '", comp, "' has not been implemented yet. Please contact the package author."))
+    }
+
+    ## Bei GroupDiff: Je nach Antwort von Sebastian ein BL oder eine wholeGroup vor Term hinterm Vs.
 
     dat_comp <- dat[!is.na(dat$comparison) & dat$comparison == comp, ]
     dat_comp$grouping_var <- gsub("\\.vs\\..*", "", dat_comp$grouping_var)
 
     dat_comp_state <- dat_comp[dat_comp$grouping_var != "noGroup" & dat_comp$state_var != "wholeGroup" & dat_comp$compare_2_Comp != "wholeGroup" & !is.na(dat_comp$compare_2_Comp), ]
+    dat_comp_wide_state <- reshape_dat_comp_wide(dat_comp_state, comp)
 
-    dat_comp_wide <- reshape_dat_comp_wide(dat_comp_state, comp)
 
-    if (nrow(dat_comp_wide) != 288) {
+    dat_comp_whole <- dat_comp[grepl("wholeGroup", dat_comp$compare_2), ]
+
+    if (nrow(dat_comp_wide_state) != 288) {
       warning(comp)
     }
 
     comp_trend <- merge_2(comp_trend,
-                          dat_comp_wide,
+                          dat_comp_wide_state,
                           by = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
                           all.x = TRUE
     )
