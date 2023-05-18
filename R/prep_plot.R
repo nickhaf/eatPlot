@@ -350,7 +350,7 @@ filter_subgroups <- function(dat, grouping_vars, grouping_vars_groups){
 
   if(!is.na(grouping_vars[2])){
     if(any(grouping_vars_groups %in% dat[, grouping_vars[2]])){
-      dat <- dat[is.na(dat$grouping_var) | dat[,grouping_vars[2]] %in% grouping_vars_groups, ]
+      dat <- dat[is.na(dat$grouping_var) | dat[, grouping_vars[1]] %in% grouping_vars_groups | dat[,grouping_vars[2]] %in% grouping_vars_groups, ]
     }
   }
   }
