@@ -21,6 +21,12 @@ test_that("write_group finds the correct group membership", {
     write_group(c("a_1", NA, "b_1", "ab_1", "c_a_1"), groups = c("a", "c")),
     c("a", NA, NA, NA, "c")
   )
+
+  expect_equal(
+    write_group(
+      "TR_BUNDESLAND=Berlin____einET-alle.vs.zweiteGen-alle.VS.all.group=1____einET-alle.vs.zweiteGen-alle", groups = "Berlin"
+    ), "Berlin"
+  )
 })
 
 

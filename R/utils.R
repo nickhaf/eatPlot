@@ -92,9 +92,10 @@ get_wholeGroup <- function(val_vec) {
 write_group <- function(val_vec, groups) {
   ## Umwandeln aller "_" in groups in "-"
   if(any(grepl("_", groups))){
-    stop("Your state variables contains '_', please use '-' instead.")
+    stop("Your grouping_var or state_var contains '_', please use '-' instead.")
   }
 
+  val_vec <- gsub("TR_BUNDESLAND=", "", val_vec)
   val_vec <- gsub("_", "\\.", val_vec)
   group_vec <- strsplit(val_vec, split = "\\.")
 
