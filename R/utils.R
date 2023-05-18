@@ -430,38 +430,4 @@ get_plot_coords <- function(plot) {
 }
 
 
-## Merge mutliple grouping_vars into one:
-merge_grouping_vars <- function(dat, grouping_vars) {
-  if (length(grouping_vars) == 1) {
-    return(dat)
-  } else {
-    if (length(grouping_vars)>2) {
-      stop("You can only provide two grouping vars at maximum.")
-    }
 
-    dat$grouping_var <- dat[, grouping_vars[1]]
-
-    grep_groups <- paste0(unique(dat[, grouping_vars[1]]), collapse = "|")
-
-    if (any(grepl(grep_groups, dat$group_var))) {
-    for (group_1 in unique(dat[!is.na(dat[, grouping_vars[1]]), grouping_vars[1]])) {
-        for (group_2 in unique(dat[!is.na(dat[, grouping_vars[2]]), grouping_vars[2]])) {
-          dat$group_var <- ifelse(
-            dat[, grouping_vars[2]] == group_2,
-            gsub(group_1, paste0(group_1, "-", group_2), dat$group_var),
-            dat$group_var
-          )
-
-          dat$grouping_var <- ifelse(
-            dat[, grouping_vars[2]] == group_2,
-            gsub(group_1, paste0(group_1, "-", group_2), dat$grouping_var),
-            dat$grouping_var
-          )
-        }
-    }
-      return(dat)
-      }else {
-        stop("Your first grouping_var has to be found in the group_var-column of your data.")
-    }
-  }
-}
