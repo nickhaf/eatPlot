@@ -23,8 +23,8 @@ plot_single_lineplot <- function(plot_dat,
                                  plot_settings = plotsettings_lineplot()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
-theme_line(plot_settings),
-set_scales(plot_settings),
+    theme_line(plot_settings),
+    set_scales(plot_settings),
     plot_braces(
       plot_dat[["plot_braces"]],
       y_range = y_range,
@@ -34,28 +34,30 @@ set_scales(plot_settings),
       label_sig_bold = label_sig_bold,
       plot_settings = plot_settings
     ),
-if(background_lines == TRUE){
-    plot_background_lines(
-      dat = plot_dat[["plot_background_lines"]],
-      line_values = line_values,
-      line_se = line_se
-    )
-  },
-if(!is.null(line_values)){
-    plot_lines(
-      data_plot_lines = plot_dat[["plot_lines"]],
-      line_values = line_values,
-      line_sig = line_sig,
-      plot_settings = plot_settings
-    )},
-if(!is.null(point_values)){
-    plot_points(
-      data_plot_points = plot_dat[["plot_points"]],
-      point_values = point_values,
-      point_sig = point_sig,
-      y_range = y_range,
-      plot_settings = plot_settings
-    )},
+    if (background_lines == TRUE) {
+      plot_background_lines(
+        dat = plot_dat[["plot_background_lines"]],
+        line_values = line_values,
+        line_se = line_se
+      )
+    },
+    if (!is.null(line_values)) {
+      plot_lines(
+        data_plot_lines = plot_dat[["plot_lines"]],
+        line_values = line_values,
+        line_sig = line_sig,
+        plot_settings = plot_settings
+      )
+    },
+    if (!is.null(point_values)) {
+      plot_points(
+        data_plot_points = plot_dat[["plot_points"]],
+        point_values = point_values,
+        point_sig = point_sig,
+        y_range = y_range,
+        plot_settings = plot_settings
+      )
+    },
     plot_x_axis(plot_dat[["plot_points"]],
       y_range = y_range,
       plot_settings = plot_settings

@@ -13,23 +13,27 @@ line_values <- c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")
 line_se <- c("se_noTrendStart_noComp_wholeGroup", "se_noTrendEnd_noComp_wholeGroup")
 
 test_that("backgroundlines is still the same", {
-  vdiffr::expect_doppelganger("Plotting backgroundlines",
-                              ggplot2::ggplot() +
-                                plot_background_lines(
-                                  dat = df_backgroundlines,
-                                  line_values = line_values,
-                                  line_se = line_se
-                                ))
+  vdiffr::expect_doppelganger(
+    "Plotting backgroundlines",
+    ggplot2::ggplot() +
+      plot_background_lines(
+        dat = df_backgroundlines,
+        line_values = line_values,
+        line_se = line_se
+      )
+  )
 })
 
 test_that("backgroundlines with deducting SE", {
-  vdiffr::expect_doppelganger("backgroundlines deductiong SE",
-                              ggplot2::ggplot() +
-                                plot_background_lines(
-                                  dat = df_backgroundlines,
-                                  line_values = line_values,
-                                  line_se = NULL
-                                ))
+  vdiffr::expect_doppelganger(
+    "backgroundlines deductiong SE",
+    ggplot2::ggplot() +
+      plot_background_lines(
+        dat = df_backgroundlines,
+        line_values = line_values,
+        line_se = NULL
+      )
+  )
 })
 
 test_that("backgroundlines without SEs", {
@@ -38,18 +42,20 @@ test_that("backgroundlines without SEs", {
     se_noTrendEnd_noComp_wholeGroup <- NULL
   })
 
-  vdiffr::expect_doppelganger("backgroundlines without SE",
-                              ggplot2::ggplot() +
-                                plot_background_lines(
-                                  dat = df_backgroundlines_noSE,
-                                  line_values = line_values,
-                                  line_se = line_se
-                                ))
+  vdiffr::expect_doppelganger(
+    "backgroundlines without SE",
+    ggplot2::ggplot() +
+      plot_background_lines(
+        dat = df_backgroundlines_noSE,
+        line_values = line_values,
+        line_se = line_se
+      )
+  )
 
   expect_message(ggplot2::ggplot() +
-                   plot_background_lines(
-                     dat = df_backgroundlines_noSE,
-                     line_values = line_values,
-                     line_se = line_se
-                   ))
+    plot_background_lines(
+      dat = df_backgroundlines_noSE,
+      line_values = line_values,
+      line_se = line_se
+    ))
 })

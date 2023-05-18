@@ -26,14 +26,15 @@ plot_braces <- function(dat,
 
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.
-dat <- construct_label(dat,
-                       new_name = "brace_label",
-                       label_est = "label_est",
-                       label_se = "label_se",
-                       label_sig_high = "label_sig_high",
-                       label_sig_bold = "label_sig_bold",
-                       round_est = 0,
-                       round_se = 1)
+  dat <- construct_label(dat,
+    new_name = "brace_label",
+    label_est = "label_est",
+    label_se = "label_se",
+    label_sig_high = "label_sig_high",
+    label_sig_bold = "label_sig_bold",
+    round_est = 0,
+    round_se = 1
+  )
 
 
   # Calculate brace coordinates ---------------------------------------------

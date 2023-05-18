@@ -1,4 +1,3 @@
-
 test_that("y limits are set correctly", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
@@ -45,7 +44,7 @@ test_that("x-position of brace label is calculated correctly", {
     years_Trend = c("20112020", "20112020", "2152020", "20152020"),
     competence_var = "a"
   )
-range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
+  range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
 
   expect_equal(calc_brace_label_x(year_start = 0, year_end = 10, range_total = range_years, brace_indent_pos = 0.25), 2.5)
   expect_equal(

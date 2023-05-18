@@ -32,11 +32,11 @@ test_that("labels are build correctly", {
 
   expect_equal(
     construct_label(df,
-                    label_est = "label_est",
-                    label_se = NULL,
-                    label_sig_bold = NULL,
-                    label_sig_high = "label_sig_high",
-                    round_est = 4, round_se = 5
+      label_est = "label_est",
+      label_se = NULL,
+      label_sig_bold = NULL,
+      label_sig_high = "label_sig_high",
+      round_est = 4, round_se = 5
     )$label,
     c("1.3400", "2.1221", "3.5600<sup>a</sup>", "10.1500<sup>a</sup>")
   )

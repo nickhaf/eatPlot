@@ -1,4 +1,3 @@
-
 test_that("example mindeststandard short version", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
@@ -7,9 +6,9 @@ test_that("example mindeststandard short version", {
 
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
-for(i in c("2011", "2016", "2021")){
-  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
-}
+  for (i in c("2011", "2016", "2021")) {
+    dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
+  }
 
   # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
@@ -82,7 +81,7 @@ for(i in c("2011", "2016", "2021")){
   vdiffr::expect_doppelganger("Mindeststandards", minsta_plot)
 
 
-  #save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
+  # save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
 })
 
 test_that("Example barplot long format is plotted correctly", {
@@ -94,14 +93,16 @@ test_that("Example barplot long format is plotted correctly", {
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
   dat_bar <- construct_label(dat_bar,
-                             new_name = "se_Trend_noComp_20112016_percent_label",
-                             label_se = "se_Trend_noComp_20112016_percent",
-                             round_se = 1)
+    new_name = "se_Trend_noComp_20112016_percent_label",
+    label_se = "se_Trend_noComp_20112016_percent",
+    round_se = 1
+  )
 
   dat_bar <- construct_label(dat_bar,
-                             label_se = "se_Trend_noComp_20162021_percent",
-                             new_name = "se_Trend_noComp_20162021_percent",
-                             round_se = 1)
+    label_se = "se_Trend_noComp_20162021_percent",
+    new_name = "se_Trend_noComp_20162021_percent",
+    round_se = 1
+  )
 
 
   dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
@@ -215,5 +216,5 @@ test_that("Example barplot long format is plotted correctly", {
 
   vdiffr::expect_doppelganger("MinStand_trend", c_plot)
 
-  #save_plot(c_plot, filename = "../Kap3_2022_MSA_trend_v02.pdf")
+  # save_plot(c_plot, filename = "../Kap3_2022_MSA_trend_v02.pdf")
 })

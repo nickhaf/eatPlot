@@ -16,7 +16,6 @@
 #'
 #' @examples # tbd
 prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging_columns) {
-
   filtered_list <- list()
   remove_columns <- c("group_var", "comparison")
   merging_columns <- c(merging_columns, remove_columns)
@@ -120,7 +119,7 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging
   # Add significances -------------------------------------------------------
   filtered_list <- add_sig_col(filtered_list, sig_niveau = sig_niveau)
 
-  #filtered_list <- lapply(filtered_list, remove_columns, remove_columns)
+  # filtered_list <- lapply(filtered_list, remove_columns, remove_columns)
 
   return(filtered_list)
 }

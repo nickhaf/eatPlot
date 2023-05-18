@@ -1,4 +1,3 @@
-
 prepare_noTrend <- function(list_building_blocks, merging_columns) {
   comp_noTrend <- prepare_comp_noTrend(list_building_blocks$noTrend_Comp)
 
@@ -50,12 +49,11 @@ prepare_noTrend <- function(list_building_blocks, merging_columns) {
 }
 
 prepare_comp_noTrend <- function(dat) {
-
   comp_trend <- data.frame()
 
-  for (comp in c("crossDiff", "groupDiff")){ #unique(dat$comparison)) {
+  for (comp in c("crossDiff", "groupDiff")) { # unique(dat$comparison)) {
 
-    if(!comp %in% c("crossDiff", "groupDiff")){
+    if (!comp %in% c("crossDiff", "groupDiff")) {
       stop(paste0("The comparison '", comp, "' has not been implemented yet. Please contact the package author."))
     }
 
@@ -68,36 +66,37 @@ prepare_comp_noTrend <- function(dat) {
     dat_comp_wide_state <- reshape_dat_comp_wide(dat_comp_state, comp)
 
 
+    browser()
     dat_comp_whole <- dat_comp[grepl("wholeGroup", dat_comp$compare_2), ]
+    dat_comp_wide_whole <- reshape_dat_comp_wide(dat_comp_whole, comp)
 
     if (nrow(dat_comp_wide_state) != 288) {
       warning(comp)
     }
 
     comp_trend <- merge_2(comp_trend,
-                          dat_comp_wide_state,
-                          by = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
-                          all.x = TRUE
+      dat_comp_wide_state,
+      by = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
+      all.x = TRUE
     )
   }
 
   return(comp_trend)
 }
 
-reshape_dat_comp_wide <- function(dat_comp, comp){
-
+reshape_dat_comp_wide <- function(dat_comp, comp) {
   if (nrow(dat_comp) > 0) {
     dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
     dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 
     dat_comp_wide <- reshape(dat_comp,
-                             direction = "wide",
-                             idvar = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
-                             timevar = c("compare_2_Comp"),
-                             sep = "_"
+      direction = "wide",
+      idvar = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
+      timevar = c("compare_2_Comp"),
+      sep = "_"
     )
     return(dat_comp_wide)
-  }else{
+  } else {
     return(data.frame())
   }
 }

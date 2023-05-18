@@ -32,7 +32,6 @@ check_plotsettings_barplot <- function(settings_list) {
         "font_size",
         "pattern_spacing",
         "pattern_width"
-
       )
   )
 
@@ -62,7 +61,6 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$font_size))
   stopifnot(is.numeric(settings_list$pattern_spacing))
   stopifnot(is.numeric(settings_list$pattern_width))
-
 }
 
 
@@ -109,9 +107,10 @@ check_plotsettings_barplot <- function(settings_list) {
 #'
 #' ## Colours can be defined like so:
 #' plotsettings_tablebarplot(
-#'   bar_fill_colour = c("blue",
-#'                       grDevices::rgb(10, 13, 82, maxColorValue = 255)
-#'                       )
+#'   bar_fill_colour = c(
+#'     "blue",
+#'     grDevices::rgb(10, 13, 82, maxColorValue = 255)
+#'   )
 #' )
 #'
 #' ## Or, to get better control over the colour assignment
@@ -119,15 +118,16 @@ check_plotsettings_barplot <- function(settings_list) {
 #' ## defined in the bar_sig-argument of plot_tablebar()
 #' ## (as these groups are used to distinguish between different bar colours):
 #' plotsettings_tablebarplot(
-#'  bar_fill_colour = c(fill_group_1 = "blue",
-#'                      fill_group_2 = grDevices::rgb(
-#'                        10, 13, 82, maxColorValue = 255)
-#'                      )
+#'   bar_fill_colour = c(
+#'     fill_group_1 = "blue",
+#'     fill_group_2 = grDevices::rgb(
+#'       10, 13, 82,
+#'       maxColorValue = 255
+#'     )
+#'   )
 #' )
 #'
-#'
-plotsettings_tablebarplot <- function(
-                                      axis_x_lims = NULL,
+plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       background_stripes_colour = NULL,
                                       bar_border_lines = NULL,
                                       bar_fill_colour = NULL,

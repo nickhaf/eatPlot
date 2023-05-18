@@ -1,10 +1,12 @@
 is_colour <- function(x) {
   vapply(x, function(X) {
     tryCatch(is.matrix(grDevices::col2rgb(X)),
-             error = function(e) FALSE)
+      error = function(e) FALSE
+    )
   },
   USE.NAMES = FALSE,
-  FUN.VALUE = logical(1))
+  FUN.VALUE = logical(1)
+  )
 }
 
 
@@ -91,7 +93,7 @@ get_wholeGroup <- function(val_vec) {
 # Extract group membership from group column. Splits String by "." and extracts the first value that is found in the group_vector
 write_group <- function(val_vec, groups) {
   ## Umwandeln aller "_" in groups in "-"
-  if(any(grepl("_", groups))){
+  if (any(grepl("_", groups))) {
     stop("Your grouping_var or state_var contains '_', please use '-' instead.")
   }
 
@@ -99,7 +101,7 @@ write_group <- function(val_vec, groups) {
   val_vec <- gsub("_", "\\.", val_vec)
   group_vec <- strsplit(val_vec, split = "\\.")
 
-res_vec <- unlist(
+  res_vec <- unlist(
     lapply(group_vec, function(x) {
       log_vec <- x %in% groups
       if (all(log_vec == FALSE)) {
@@ -111,25 +113,26 @@ res_vec <- unlist(
     })
   )
 
-return(res_vec)
+  return(res_vec)
 }
 
 
 # Helper functions for reshaping to long format ---------------------------
 prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "") {
-
   ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
     cols_removed <- grep(remove_pattern,
-                         colnames(data),
-                         invert = TRUE,
-                         value = TRUE)
+      colnames(data),
+      invert = TRUE,
+      value = TRUE
+    )
     data <- data[, cols_removed]
   }
 
-  col_pos <- grep(include_pattern,
-                  colnames(data)
-                  )
+  col_pos <- grep(
+    include_pattern,
+    colnames(data)
+  )
   colnames(data)[col_pos] <- gsub("\\.|_", "", colnames(data)[col_pos])
 
 
@@ -137,25 +140,25 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   year_cols <- unlist(sapply(colnames(data)[col_pos], insert_first_number, "\\."))
 
 
-  if(!is.null(year_cols)){
-  colnames(data)[col_pos] <- year_cols
+  if (!is.null(year_cols)) {
+    colnames(data)[col_pos] <- year_cols
 
-  data_long <- stats::reshape(data,
-                              direction = "long",
-                              varying = colnames(data)[col_pos]
-                              )
-  data_long$id <- NULL
-  }else{
-  data_long <- data
-  data_long$time <- "noTrend"
-}
+    data_long <- stats::reshape(data,
+      direction = "long",
+      varying = colnames(data)[col_pos]
+    )
+    data_long$id <- NULL
+  } else {
+    data_long <- data
+    data_long$time <- "noTrend"
+  }
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
 
   data_long <- rename_columns(data_long,
-                             old_names = new_colnames,
-                             new_names = paste0(new_colnames, suffix)
-                             )
+    old_names = new_colnames,
+    new_names = paste0(new_colnames, suffix)
+  )
 
   data_long <- rename_columns(data_long, old_names = paste0("time", suffix), new_names = "year")
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
@@ -206,9 +209,9 @@ calc_plot_borders <- function(x, accuracy = 10) {
 insert_first_number <- function(char_string, insertion) {
   string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))
 
-  if(length(string_number != 0)){
-  res <- sub(string_number[[1]], paste0(insertion, string_number[[1]]), char_string)
-  }else{
+  if (length(string_number != 0)) {
+    res <- sub(string_number[[1]], paste0(insertion, string_number[[1]]), char_string)
+  } else {
     res <- NULL
   }
   return(res)
@@ -221,7 +224,6 @@ insert_first_number <- function(char_string, insertion) {
 ## Problem: sub_groups mit vs-grouping_var
 
 get_comparisons <- function(dat, states, sub_groups) {
-
   sub_groups <- unique(unlist(strsplit(levels(sub_groups), split = "\\.vs\\.")))
 
   dat$group_var <- gsub("TR_BUNDESLAND=", "", dat$group_var)
@@ -241,15 +243,14 @@ get_comparisons <- function(dat, states, sub_groups) {
   })
 
   for (i in c("compare_1", "compare_2")) {
-
-    for(j in seq_along(sub_groups)){
+    for (j in seq_along(sub_groups)) {
       group_j <- sub_groups[j]
       dat[, i] <- gsub(group_j, paste0("grouping_var_", j), dat[, i])
     }
 
     dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
 
-  if (!is.null(sub_groups)) {
+    if (!is.null(sub_groups)) {
       dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
     }
     dat[, i] <- gsub("__|___", "_", dat[, i])
@@ -261,35 +262,38 @@ get_comparisons <- function(dat, states, sub_groups) {
 
   ## Check if comparison is one of group in state vs. the group in wholeGroup
 
- dat$compare_2 <- ifelse(dat$compare_1_dummy == dat$compare_2 & !is.na(dat$compare_1) & !is.na(dat$compare_2) & dat$compare_1 != "noGroup" & dat$compare_2 != "noGroup",
-         "wholeGroupSameGroup",
-         dat$compare_2
-)
+  dat$compare_2 <- ifelse(dat$compare_1_dummy == dat$compare_2 & !is.na(dat$compare_1) & !is.na(dat$compare_2) & dat$compare_1 != "noGroup" & dat$compare_2 != "noGroup",
+    "wholeGroupSameGroup",
+    dat$compare_2
+  )
 
- dat <- remove_columns(dat, "compare_1_dummy")
+  dat <- remove_columns(dat, "compare_1_dummy")
   return(dat)
 }
 
 
 # x = character string
 replace_VS <- function(x) {
-  if(!inherits(x, "character")) {stop("'x' must be a character vector.")}
-  y   <- strsplit(x, split = ".vs.")
+  if (!inherits(x, "character")) {
+    stop("'x' must be a character vector.")
+  }
+  y <- strsplit(x, split = ".vs.")
 
-  len2<- which(sapply(y, length) == 2)
-  if(length(len2) > 0){
-    for(i in len2){
+  len2 <- which(sapply(y, length) == 2)
+  if (length(len2) > 0) {
+    for (i in len2) {
       x[i] <- paste0(y[[i]][1], ".VS.", y[[i]][2])
     }
   }
 
-  len4<- which(sapply(y, length) == 4)
-  if(length(len4)>0) {
-    for ( i in len4) {
+  len4 <- which(sapply(y, length) == 4)
+  if (length(len4) > 0) {
+    for (i in len4) {
       x[i] <- paste0(y[[i]][1], ".vs.", y[[i]][2], ".VS.", y[[i]][3], ".vs.", y[[i]][4])
     }
   }
-  return(x) }
+  return(x)
+}
 
 
 
@@ -334,9 +338,9 @@ check_column <- function(dat, column) {
 }
 
 
-fill_null <- function(dat, column_name, filling){
-    dat[[column_name]] <- rep(filling, nrow(dat))
-    return(dat)
+fill_null <- function(dat, column_name, filling) {
+  dat[[column_name]] <- rep(filling, nrow(dat))
+  return(dat)
 }
 
 
@@ -347,8 +351,8 @@ build_column <- function(dat, old, new) {
     dat[, new] <- NA
     return(dat)
   } else {
-    #colnames(dat)[colnames(dat) == old] <- new
-    dat[, new] <- dat[ , old]
+    # colnames(dat)[colnames(dat) == old] <- new
+    dat[, new] <- dat[, old]
 
     return(dat)
   }
@@ -358,63 +362,101 @@ build_column <- function(dat, old, new) {
 
 
 ## Add a new column that is derived from an old one. Takes an object as input.
-fill_column <- function(df, column_name, filling = NA){
-  if(is.null(column_name)){
+fill_column <- function(df, column_name, filling = NA) {
+  if (is.null(column_name)) {
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
-  } else if(column_name %in% colnames(df)){
+  } else if (column_name %in% colnames(df)) {
     df[[deparse(substitute(column_name))]] <- df[[column_name]]
-  }else if((!column_name %in% colnames(df))){
+  } else if ((!column_name %in% colnames(df))) {
     warning(paste0("Your column '", column_name, "' is not part of your data. Trying to set it automatically."))
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
-    }
-return(df)
   }
+  return(df)
+}
 
-fill_na <- function(df, column_name, filling){
-  if(is.null(column_name)){
+fill_na <- function(df, column_name, filling) {
+  if (is.null(column_name)) {
     return(df)
-  }else{
+  } else {
     df[is.na(df[, column_name]), column_name] <- filling
     return(df)
   }
 }
 
-check_columns <-  function(dat, column){
-  if(column %in% colnames(dat)){
+check_columns <- function(dat, column) {
+  if (column %in% colnames(dat)) {
     return(column)
-  }else{
+  } else {
     warning(paste0("The column '", column, "' was not found in data and will not be considered for the plot."))
     return(NULL)
   }
 }
 
-check_factor <- function(dat, column, variable_type){
+check_factor <- function(dat, column, variable_type) {
   if (!is.factor(dat[, column]) & !is.null(column)) {
     message("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.")
-    dat[, column]<- as.factor(dat[, column])
+    dat[, column] <- as.factor(dat[, column])
   }
   return(dat)
 }
 
-rename_columns <- function(dat, old_names, new_names){
-
+rename_columns <- function(dat, old_names, new_names) {
   colnames(dat)[colnames(dat) %in% old_names] <- new_names
 
   return(dat)
 }
 
 
-merge_2 <- function(dat_1, dat_2, ...){
-  if(is.null(dat_1) | is.null(dat_2)){return(data.frame())}
-  if(nrow(dat_1) == 0 & nrow(dat_2) == 0){return(data.frame())}
-  if(sum(nrow(dat_1) == 0 | nrow(dat_2) == 0) == 1){
-    if(nrow(dat_1) > nrow(dat_2)){return(dat_1)}else{return(dat_2)}
+merge_2 <- function(dat_1, dat_2, ...) {
+  if (is.null(dat_1) | is.null(dat_2)) {
+    return(data.frame())
+  }
+  if (nrow(dat_1) == 0 & nrow(dat_2) == 0) {
+    return(data.frame())
+  }
+  if (sum(nrow(dat_1) == 0 | nrow(dat_2) == 0) == 1) {
+    if (nrow(dat_1) > nrow(dat_2)) {
+      return(dat_1)
+    } else {
+      return(dat_2)
+    }
   }
 
-dat_merged <- merge(dat_1, dat_2, ...)
-
+  dat_merged <- merge(dat_1, dat_2, ...)
 }
 
-get_plot_coords <- function(plot){
+get_plot_coords <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
+}
+
+
+## Merge mutliple grouping_vars into one:
+merge_grouping_vars <- function(dat, grouping_vars) {
+  if (length(grouping_vars) == 1) {
+    return(dat)
+  } else {
+    if (length(grouping_vars > 2)) {
+      stop("You can only provide two grouping vars at maximum.")
+    }
+
+    dat[, "grouping_var"] <- dat[, grouping_vars[1]]
+
+    for (group_1 in unique(dat[!is.na(dat[, grouping_vars[1]]), grouping_vars[1]])) {
+      if (any(unique(dat[, grouping_var[1]]) %in% dat$group_var)) {
+        for (group_2 in unique(dat[!is.na(dat[, grouping_vars[2]]), grouping_vars[2]])) {
+          dat$group_var <- ifelse(dat[, grouping_vars[2]] == group_2,
+            gsub(group_1, paste0(group_1, "-", group_2)),
+            dat$group_var
+          )
+
+          dat$grouping_var <- ifelse(dat[, grouping_vars[2]] == group_2,
+            gsub(group_1, paste0(group_1, "-", group_2)),
+            dat$group_var
+          )
+        }
+      } else {
+        stop("Your first grouping_var has to be found in the group_var-column of your data.")
+      }
+    }
+  }
 }

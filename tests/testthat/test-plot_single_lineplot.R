@@ -183,9 +183,11 @@ test_that("split lineplot with no groups is plotted correctly", {
         label_sig_high = "sig_label_1",
         label_sig_bold = "sig_label_2",
         point_values = "point_values",
-        plot_settings = plotsettings_lineplot(split_plot = TRUE,
-                                     axis_x_label_centralize = 0.05,
-                                     point_label_nudge_x = 0.02)
+        plot_settings = plotsettings_lineplot(
+          split_plot = TRUE,
+          axis_x_label_centralize = 0.05,
+          point_label_nudge_x = 0.02
+        )
       )
   )
 })

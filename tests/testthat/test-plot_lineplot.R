@@ -246,7 +246,8 @@ test_that("competence_vars with 3 groups", {
     dat = books_3,
     grouping_var = "KBuecher_imp3",
     grouping_var_groups = c("0", "1", "Drei"),
-    states = "wholeGroup")
+    states = "wholeGroup"
+  )
 
   p_line <- plot_lineplot(
     plot_dat = plot_dat_test,
@@ -264,7 +265,7 @@ test_that("competence_vars with 3 groups", {
 
   vdiffr::expect_doppelganger("lineplot_4x4_kb_tiles_3groups", p_line)
 
-  #save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 1.5) #2 + 10)
+  # save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 1.5) #2 + 10)
 })
 
 test_that("adjusted means states", {

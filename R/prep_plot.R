@@ -346,4 +346,3 @@ prep_plot <- function(dat,
 
   return(plot_dat)
 }
-

@@ -27,12 +27,13 @@ test_that("lines can be facetted", {
     sig_trend = c(TRUE, FALSE)
   )
 
-  vdiffr::expect_doppelganger("wrapped lineplot",
-  ggplot2::ggplot() +
-    plot_lines(df,
-               line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-               line_sig = "sig_trend"
-    ) +
-    ggplot2::facet_wrap(~years_Trend, scales = "free_x")
-)
+  vdiffr::expect_doppelganger(
+    "wrapped lineplot",
+    ggplot2::ggplot() +
+      plot_lines(df,
+        line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+        line_sig = "sig_trend"
+      ) +
+      ggplot2::facet_wrap(~years_Trend, scales = "free_x")
+  )
 })

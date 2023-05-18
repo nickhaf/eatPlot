@@ -6,14 +6,12 @@
 #' @return ggplot2 object.
 #' @export
 #'
-#' @examples #tbd
+#' @examples # tbd
 plot_background_lines <- function(dat, line_values, line_se) {
-
   line_values <- paste0(line_values, "_wholeGroup")
   colnames_se <- if (is.null(line_se)) gsub("est_", "se_", line_values) else line_se
 
   if (all(colnames_se %in% colnames(dat))) {
-
     colnames(dat) <- .trimNames(colnames(dat))
     line_values <- .trimNames(line_values)
     colnames_se <- .trimNames(colnames_se)
@@ -37,18 +35,20 @@ plot_background_lines <- function(dat, line_values, line_se) {
 
 
     # ggplot2::ggplot() +
-    ggplot2::geom_ribbon(data = dat_long,
-                         ggplot2::aes(
-                           x = .data$year,
-                           ymin = .data$y_neg,
-                           ymax = .data$y_pos,
-                           group = .data$years_Trend
-                         ),
-                         fill = grDevices::rgb(147, 205, 221,
-                                               maxColorValue = 255),
-                         linewidth = 1)
+    ggplot2::geom_ribbon(
+      data = dat_long,
+      ggplot2::aes(
+        x = .data$year,
+        ymin = .data$y_neg,
+        ymax = .data$y_pos,
+        group = .data$years_Trend
+      ),
+      fill = grDevices::rgb(147, 205, 221,
+        maxColorValue = 255
+      ),
+      linewidth = 1
+    )
   } else {
-
     message("Plotting only the lines for the estimates as no SE column was found. Please check if this was not intended.")
 
     # ggplot2::ggplot() +

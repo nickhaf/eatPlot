@@ -2,9 +2,11 @@
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", "white", "white", "gray94", "gray94", "gray94"), 8), rep("gray87", 3)),
   bar_border_lines = TRUE,
-  bar_fill_colour = c(grDevices::rgb(33, 89, 104, maxColorValue = 255),
-                      grDevices::rgb(49, 133, 156, maxColorValue = 255),
-                      grDevices::rgb(75, 172, 198, maxColorValue = 255)),
+  bar_fill_colour = c(
+    grDevices::rgb(33, 89, 104, maxColorValue = 255),
+    grDevices::rgb(49, 133, 156, maxColorValue = 255),
+    grDevices::rgb(75, 172, 198, maxColorValue = 255)
+  ),
   bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
   bar_pattern_fill_colour = "white",
   bar_pattern_type = c("FALSE" = "stripe", "TRUE" = "none"),

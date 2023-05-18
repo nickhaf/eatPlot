@@ -1,7 +1,5 @@
 test_that("colour checks are working", {
-
   expect_equal(is_colour(c("lightblue", grDevices::rgb(147, 205, 221, maxColorValue = 255), "no_colour")), c(TRUE, TRUE, FALSE))
-
 })
 
 test_that("Plot borders are calculated correctly", {
@@ -24,7 +22,8 @@ test_that("write_group finds the correct group membership", {
 
   expect_equal(
     write_group(
-      "TR_BUNDESLAND=Berlin____einET-alle.vs.zweiteGen-alle.VS.all.group=1____einET-alle.vs.zweiteGen-alle", groups = "Berlin"
+      "TR_BUNDESLAND=Berlin____einET-alle.vs.zweiteGen-alle.VS.all.group=1____einET-alle.vs.zweiteGen-alle",
+      groups = "Berlin"
     ), "Berlin"
   )
 })
@@ -77,11 +76,12 @@ test_that("reshaping to long format works", {
   expect_equal(colnames(df_long_test), c("year", "est", "p", "p_trend"))
 
   df_long_test_2 <- prep_long(df_wide,
-                              include_pattern = "est",
-                              remove_pattern = "p\\.|trend",
-                              suffix = "_test")
+    include_pattern = "est",
+    remove_pattern = "p\\.|trend",
+    suffix = "_test"
+  )
 
-  expect_equal(colnames(df_long_test_2), c("year", "est_test"   ))
+  expect_equal(colnames(df_long_test_2), c("year", "est_test"))
 })
 
 
@@ -108,13 +108,12 @@ test_that("comparison splits works for simple example", {
 test_that("comparison splits work for complex comparisons", {
   df_comp <- data.frame(group_var = c("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.vs.all.group=1____ersteGen.vs.zweiteGen"))
 
-get_comparisons(df_comp, states = c("Baden-Wuerttemberg"), sub_groups = c("aohneZWH", "ersteGen", "zweiteGen"))
-
+  get_comparisons(df_comp, states = c("Baden-Wuerttemberg"), sub_groups = c("aohneZWH", "ersteGen", "zweiteGen"))
 })
 
 
 test_that("column renaming works", {
-  expect_equal(colnames(build_column(data.frame(col1 = 1), "col1", "col_1")), c("col1","col_1"))
+  expect_equal(colnames(build_column(data.frame(col1 = 1), "col1", "col_1")), c("col1", "col_1"))
   expect_error(build_column(data.frame(col1 = 1), "col2", "col1"))
   expect_equal(build_column(data.frame(col1 = 1), NULL, "col2"), data.frame(col1 = 1, col2 = NA))
 })
@@ -157,52 +156,64 @@ test_that("columns are checked correctly", {
 
 
 test_that("NULL-cols are filled", {
-  df <- data.frame(col1 = c(2,3))
+  df <- data.frame(col1 = c(2, 3))
   plot_points <- "col1"
   res_df <- fill_column(df = df, column_name = plot_points, filling = NA)
-  expect_equal(res_df$plot_points, c(2,3))
+  expect_equal(res_df$plot_points, c(2, 3))
 
 
-  df <- data.frame(col1 = c(2,3))
+  df <- data.frame(col1 = c(2, 3))
   plot_points <- NULL
   res_df_null <- fill_column(df = df, column_name = plot_points, filling = NA)
   expect_equal(res_df_null$plot_points, c(NA, NA))
-  })
+})
 
 
 test_that("Columns are renamed correctly", {
-  expect_equal(rename_columns(data.frame("a" = 1, "b" = 1),
-                              old_names = c("a", "b"),
-                              new_names = c("c", "d")
-  ),
-  data.frame("c" = 1, "d" = 1)
-               )
+  expect_equal(
+    rename_columns(data.frame("a" = 1, "b" = 1),
+      old_names = c("a", "b"),
+      new_names = c("c", "d")
+    ),
+    data.frame("c" = 1, "d" = 1)
+  )
 })
 
 
 test_that("Own merge command works correctly", {
-  df_1 <- data.frame(group = c("a", "b"),
-                     values = c(1, 2)
-                     )
-  df_2 <- data.frame(group = c("a", "c"),
-                     values = c(1, 2)
+  df_1 <- data.frame(
+    group = c("a", "b"),
+    values = c(1, 2)
+  )
+  df_2 <- data.frame(
+    group = c("a", "c"),
+    values = c(1, 2)
   )
 
   df_null <- NULL
   df_empty <- data.frame()
 
-expect_equal(merge_2(df_1, df_2, by = "group", all = TRUE)$group, c("a", "b", "c"))
-expect_equal(merge_2(df_null, df_2, by = "group", all = TRUE), data.frame())
-expect_equal(merge_2(df_1, df_empty, by = "group", all = TRUE), df_1)
-expect_equal(merge_2(df_1, df_empty, by = "group"), df_1)
-
-  })
+  expect_equal(merge_2(df_1, df_2, by = "group", all = TRUE)$group, c("a", "b", "c"))
+  expect_equal(merge_2(df_null, df_2, by = "group", all = TRUE), data.frame())
+  expect_equal(merge_2(df_1, df_empty, by = "group", all = TRUE), df_1)
+  expect_equal(merge_2(df_1, df_empty, by = "group"), df_1)
+})
 
 test_that("second vs is replaced correctly", {
-  x <- c("as", "", NA, "black.vs.white",
-         "TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.vs.all.group=1____ersteGen.vs.zweiteGen",
-         "TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen")
+  x <- c(
+    "as", "", NA, "black.vs.white",
+    "TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.vs.all.group=1____ersteGen.vs.zweiteGen",
+    "TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen"
+  )
 
-  expect_equal(replace_VS(x)[c(4, 5,6)], c("black.VS.white", rep("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen", 2)))
+  expect_equal(replace_VS(x)[c(4, 5, 6)], c("black.VS.white", rep("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen", 2)))
+})
 
+
+test_that("multiple grouping_vars can be merged into one", {
+  df_test <- data.frame(
+    group_1 = c("a", "b", "a", "b"),
+    group_2 = c("1", "1", "2", "2"),
+    group_var = c("a.vs.b", "b.vs.a", "a.vs.wholeGroup", "b.vs.wholeGroup")
+  )
 })

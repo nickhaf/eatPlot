@@ -19,7 +19,7 @@ theme_table <- function() {
       axis.ticks.y = ggplot2::element_blank(),
       # plot.margin = ggplot2::unit(c(0, -0.1, 0, 0), "cm"),
       plot.caption = ggplot2::element_text(hjust = 0),
-      legend.position = "none"#"bottom"
+      legend.position = "none" # "bottom"
     )
 }
 
@@ -49,7 +49,7 @@ theme_table_col <- function() {
   theme_line() %+replace%
     ggplot2::theme(
       axis.line = ggplot2::element_blank(),
-      #axis.text.x = ggplot2::element_blank(),
+      # axis.text.x = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
       axis.ticks = ggplot2::element_blank(),
       axis.title.x = ggplot2::element_blank(),

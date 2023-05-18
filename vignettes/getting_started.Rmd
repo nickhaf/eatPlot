@@ -25,11 +25,10 @@ The packages aim is it to make the plotting as easy but flexible as possible, so
 ## Data preperation
 The first step is the data preperation. This is handeled by the function `prep_plot()`:
 ```{r}
-dat_plot <- prep_plot(trend_books, 
-                      competence = "GL",
-                      grouping_var = "KBuecher_imp3"
-                      )
-
+dat_plot <- prep_plot(trend_books,
+  competence = "GL",
+  grouping_var = "KBuecher_imp3"
+)
 ```
 The only thing that needs to be done in this step is to define the columns in your data set (here named "trend_books"), if they differ from the defaults, so the function knows which on is which.
 
@@ -54,18 +53,18 @@ Lineplots are plotted using the `plot_lineplot()` function. Input data is the li
 
 ```{r}
 plot_lineplot(dat_plot,
-              years_lines = list(c(2011, 2016), c(2016, 2021)),
-              years_braces = list(c(2011, 2016), c(2016, 2021))
+  years_lines = list(c(2011, 2016), c(2016, 2021)),
+  years_braces = list(c(2011, 2016), c(2016, 2021))
 )
 ```
 As we can see, the lineplot doesn't look optimal yet. However, we can provide the predefined plotsettings-list to get the anticipated result:
 
 ```{r}
 p1 <- plot_lineplot(dat_plot,
-              years_lines = list(c(2011, 2016), c(2016, 2021)),
-              years_braces = list(c(2011, 2016), c(2016, 2021)),
-              plot_settings = lineplot_4x4
-              )
+  years_lines = list(c(2011, 2016), c(2016, 2021)),
+  years_braces = list(c(2011, 2016), c(2016, 2021)),
+  plot_settings = lineplot_4x4
+)
 p1
 ```
 
@@ -85,17 +84,20 @@ When we have cleaned our data, we can plot a tablebarplot by providing variables
 ```{r}
 dat_plot <- subset(dat_plot$plot_tablebar, grouping_var == 0)
 
-bartable_1 <- plot_tablebar(dat = dat_plot,
-              bar_est = "est_Trend_CompCrossDiffWhole_20162021",
-              bar_header = "Wert",
-              columns_headers = list("Land", "Wert"),
-              columns_table = c("state_var", "est_noTrend_noComp_2016"),
-              y_axis = "state_var",
-              plot_settings = plotsettings_tablebarplot(axis_x_lims = c(-30, 30),
-                                                        columns_alignment = c(0, 0.5),
-                                                        columns_width = c(0.2, 0.1, 0.7),
-                                                        default_list = barplot_plot_frame)
-              )
+bartable_1 <- plot_tablebar(
+  dat = dat_plot,
+  bar_est = "est_Trend_CompCrossDiffWhole_20162021",
+  bar_header = "Wert",
+  columns_headers = list("Land", "Wert"),
+  columns_table = c("state_var", "est_noTrend_noComp_2016"),
+  y_axis = "state_var",
+  plot_settings = plotsettings_tablebarplot(
+    axis_x_lims = c(-30, 30),
+    columns_alignment = c(0, 0.5),
+    columns_width = c(0.2, 0.1, 0.7),
+    default_list = barplot_plot_frame
+  )
+)
 ```
 Note that we have to change the column alignment here, so the column values are aligned correctly, and that we have to change the column width, if we don't want all columns to have the same size.   
 
@@ -104,19 +106,20 @@ Note that we have to change the column alignment here, so the column values are 
 Currently, `eatPlot` only supports the generation of a table with the desired number of columns, and one barplot on the right side of the table. For very complex plots, different plots have to be combined to achieve the desired output. 
 
 ```{r}
-bartable_2 <- plot_tablebar(dat = dat_plot,
-              bar_est = "est_Trend_CompCrossDiffWithin_20162021",
-              bar_header = "Wert",
-              columns_headers = list("Wert"),
-              columns_table = c("est_noTrend_noComp_2021"),
-              y_axis = "state_var",
-              plot_settings = plotsettings_tablebarplot(axis_x_lims = c(-20, 20),
-                                                        columns_alignment = 0.5,
-                                                        columns_width = c(0.2, 0.8),
-                                                        default_list = barplot_plot_frame)
-              )
-
-
+bartable_2 <- plot_tablebar(
+  dat = dat_plot,
+  bar_est = "est_Trend_CompCrossDiffWithin_20162021",
+  bar_header = "Wert",
+  columns_headers = list("Wert"),
+  columns_table = c("est_noTrend_noComp_2021"),
+  y_axis = "state_var",
+  plot_settings = plotsettings_tablebarplot(
+    axis_x_lims = c(-20, 20),
+    columns_alignment = 0.5,
+    columns_width = c(0.2, 0.8),
+    default_list = barplot_plot_frame
+  )
+)
 ```
 Sometimes the alignment of the columns can be a bit tricky, than you have to play around with the `columns_alignment`, `columns_width` and `columns_nudge` settings.
 

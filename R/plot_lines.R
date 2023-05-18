@@ -7,12 +7,11 @@
 #' @return ggplot2 object
 #' @export
 #'
-#' @examples #tbd
+#' @examples # tbd
 plot_lines <- function(data_plot_lines,
                        line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                        line_sig = "sig_Trend_CompCrossDiffWithin",
-                       plot_settings = plotsettings_lineplot()){
-
+                       plot_settings = plotsettings_lineplot()) {
   sapply(c(unlist(line_values)), check_column, dat = data_plot_lines)
 
 
@@ -22,18 +21,17 @@ plot_lines <- function(data_plot_lines,
   data_plot_lines <- fill_column(data_plot_lines, column_name = est_y, filling = NA)
   data_plot_lines <- fill_column(data_plot_lines, column_name = est_y_end, filling = NA)
 
-    ggplot2::geom_segment(
-      data = data_plot_lines,
-      ggplot2::aes(
-        x = .data$year_start,
-        xend = .data$year_end,
-        y = .data$est_y,
-        yend = .data$est_y_end,
-        colour = .data$grouping_var,
-        linetype = .data$line_sig,
-        group = .data$years_Trend
-      ),
-      linewidth = plot_settings$line_width
-
+  ggplot2::geom_segment(
+    data = data_plot_lines,
+    ggplot2::aes(
+      x = .data$year_start,
+      xend = .data$year_end,
+      y = .data$est_y,
+      yend = .data$est_y_end,
+      colour = .data$grouping_var,
+      linetype = .data$line_sig,
+      group = .data$years_Trend
+    ),
+    linewidth = plot_settings$line_width
   )
 }
