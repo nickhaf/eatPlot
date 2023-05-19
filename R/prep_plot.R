@@ -72,7 +72,7 @@ prep_plot <- function(dat,
   dat <- filter_subgroups(dat, grouping_vars, grouping_vars_groups)
 
   ## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
-#  dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_vars, state_var, group_var))]
+  dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_vars, state_var, group_var))]
 
   colnames(dat) <- gsub("\\.", "_", colnames(dat))
   colnames(dat) <- gsub("sig_", "p_", colnames(dat))
@@ -96,6 +96,12 @@ prep_plot <- function(dat,
     "years_Trend",
     "year"
   )
+
+  if (!is.null(grouping_vars)) {
+    sub_groups <- unique(dat$grouping_var)[!is.na(unique(dat$grouping_var))]
+  } else {
+    sub_groups <- NULL
+  }
 
   dat <- clean_data(
     dat = dat,
