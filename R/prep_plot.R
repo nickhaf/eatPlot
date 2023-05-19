@@ -129,43 +129,14 @@ prep_plot <- function(dat,
   )
 
   # Build noTrend dataframe -------------------------------------------------
-  noTrend_merged <- prepare_noTrend(list_building_blocks, merging_columns)
-  noTrend_data_merged <- noTrend_merged$noTrend_merged
+  noTrend_data_merged <- merge_Comp_noComp(list_building_blocks, trend = FALSE)
 
 
   # Prepare the trend-data.frame --------------------------------------------
   if (any(grepl("trend", colnames(dat)))) {
-    comp_wholeGroup <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "wholeGroup", ]
-    comp_wholeGroup <- add_suffix(comp_wholeGroup, merging_columns = merging_columns, suffix = "CrossDiffWhole")
-    comp_state <- list_building_blocks[["Trend_Comp"]][list_building_blocks[["Trend_Comp"]]$compare_2 == "BL" | list_building_blocks[["Trend_Comp"]]$compare_1 == "_groupingVar", ]
-    comp_state <- add_suffix(comp_state, merging_columns = merging_columns, suffix = "CrossDiffWithin")
-    comp_groups <- list_building_blocks[["Trend_Comp"]][grepl("__groupingVar", list_building_blocks[["Trend_Comp"]]$compare_1) & list_building_blocks[["Trend_Comp"]]$compare_2 == "_groupingVar", ]
-
-    comp_groups <- add_suffix(comp_groups, merging_columns = merging_columns, suffix = "GroupDiff")
-
-    comp_within_whole <- merge_trend_data(
-      trend_data_1 = comp_state,
-      trend_data_2 = comp_wholeGroup,
-      suffixes = c("", ""),
-      all.x = TRUE
-    )
-
-    comp_within_whole <- merge_trend_data(
-      trend_data_1 = comp_within_whole,
-      trend_data_2 = comp_groups,
-      suffixes = c("", ""),
-      all = TRUE
-    )
 
 
-    ## Add data without comparison:
-    Trend_data_merged <- merge_trend_data(
-      trend_data_1 = comp_within_whole,
-      trend_data_2 = list_building_blocks[["Trend_noComp"]],
-      suffixes = c("", ""),
-      all = TRUE
-    )
-
+    Trend_data_merged <- merge_Comp_noComp(list_building_blocks, trend = TRUE)
 
 
     # Merge to final data frame -----------------------------------------------

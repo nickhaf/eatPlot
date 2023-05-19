@@ -1,20 +1,29 @@
-prepare_noTrend <- function(list_building_blocks, merging_columns) {
-  comp_noTrend <- prepare_comp_noTrend(list_building_blocks$noTrend_Comp)
+merge_Comp_noComp <- function(list_building_blocks, trend = FALSE) {
 
-  noTrend_data_merged <- merge_2(
-    comp_noTrend,
-    list_building_blocks[["noTrend_noComp"]],
-    by = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
+  if(trend == FALSE){
+    year_columns <- "year"
+    dat_noComp <- list_building_blocks$noTrend_noComp
+    dat_comp <- list_building_blocks$noTrend_Comp
+  }else{
+    year_columns <- c("year_start", "year_end", "years_Trend")
+    dat_noComp <- list_building_blocks$Trend_noComp
+    dat_comp <- list_building_blocks$Trend_Comp
+    dat_comp <- rename_columns(dat_comp, "compare_2_Trend_Comp", "compare_2_Comp")
+    }
+
+  comp_dat <- prepare_comp(dat_comp, year_columns)
+
+  Comp_noComp <- merge_2(
+    dat_1 = comp_dat,
+    dat_2 = dat_noComp,
+    by = c("depVar", "competence_var", "grouping_var", "state_var", year_columns),
     all = TRUE
   )
 
-  return(list(
-    "noTrend_merged" = noTrend_data_merged,
-    "comp_within_whole_noTrend" = comp_noTrend
-  ))
+  return(Comp_noComp)
 }
 
-prepare_comp_noTrend <- function(dat) {
+prepare_comp <- function(dat, year_columns) {
   comp_trend <- data.frame()
 
   for (comp in c("crossDiff", "groupDiff")) { # unique(dat$comparison)) {
@@ -29,12 +38,12 @@ prepare_comp_noTrend <- function(dat) {
     dat_comp$grouping_var <- gsub("\\.vs\\..*", "", dat_comp$grouping_var)
 
     ## Compare against state: (change _within to _sameGroup)
-    comp_wide <- reshape_dat_comp_wide(dat_comp, comp)
+    comp_wide <- reshape_dat_comp_wide(dat_comp, comp, year_columns)
 
     comp_trend <- merge_2(
       comp_wide,
       comp_trend,
-      by = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
+      by = c("depVar", "competence_var", "grouping_var", "state_var", year_columns),
       all = TRUE
     )
   }
@@ -42,14 +51,14 @@ prepare_comp_noTrend <- function(dat) {
   return(comp_trend)
 }
 
-reshape_dat_comp_wide <- function(dat_comp, comp) {
+reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
   if (nrow(dat_comp) > 0) {
     dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
     dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 
     dat_comp_wide <- reshape(dat_comp,
       direction = "wide",
-      idvar = c("depVar", "competence_var", "grouping_var", "state_var", "year"),
+      idvar = c("depVar", "competence_var", "grouping_var", "state_var", year_columns),
       timevar = c("compare_2_Comp"),
       sep = "_"
     )
