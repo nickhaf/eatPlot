@@ -25,7 +25,23 @@ test_that("NAs are filled up correctly", {
     info_to = c(NA, NA, NA, "b")
   )
   expect_equal(fill_up_na(df_na, info_to = "info_to", filling_groups = c("a", "b"))$info_to, c("a", "b", NA, "b"))
+
+
+  df_realistic <- data.frame(
+    group_var = c(
+      "Hamburg_zweiteGen-ohneSPF.vs.zweiteGen-ohneSPF",
+      "TR_BUNDESLAND=Baden-Wuerttemberg____ersteGen-alle.vs.zweiteGen-alle.VS.all.group=1____einET-alle.vs.zweiteGen-alle"
+    ),
+    grouping_var = c(NA, NA)
+  )
+
+  expect_equal(
+    fill_up_na(df_realistic, info_to = "grouping_var", filling_groups = c("zweiteGen-ohneSPF", "ersteGen-alle", "einET-alle"))$grouping_var,
+    c("zweiteGen-ohneSPF", "ersteGen-alle")
+  )
 })
+
+
 
 test_that("NoGroup and wholeGroup are filled up correctly", {
   df_raw <- data.frame(

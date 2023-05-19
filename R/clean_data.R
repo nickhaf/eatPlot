@@ -31,12 +31,7 @@ clean_data <- function(dat,
       filling_groups = all_states
     )
   }
-  if (!is.null(sub_groups)) {
-    dat <- fill_up_na(dat,
-      info_to = "grouping_var",
-      filling_groups = sub_groups
-    )
-  }
+
 
   # Select relevant rows
   dat <- dat[dat$parameter == parameter, ]

@@ -65,13 +65,14 @@ prep_plot <- function(dat,
   dat <- fill_column(dat, group_var)
   dat <- construct_grouping_var(dat, grouping_vars, group_var = "group_var")
 
+
   dat <- fill_column(dat, competence_var)
   dat <- fill_column(dat, state_var)
 
   dat <- filter_subgroups(dat, grouping_vars, grouping_vars_groups)
 
   ## remove the old columns, but only after all columns have been build, in case one old column is needed 2x.
-  dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_vars, state_var, group_var))]
+#  dat <- dat[, -which(colnames(dat) %in% c(competence_var, grouping_vars, state_var, group_var))]
 
   colnames(dat) <- gsub("\\.", "_", colnames(dat))
   colnames(dat) <- gsub("sig_", "p_", colnames(dat))
@@ -83,11 +84,7 @@ prep_plot <- function(dat,
     }
   }
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
-  if (!is.null(grouping_vars)) {
-    sub_groups <- unique(dat$grouping_var)[!is.na(unique(dat$grouping_var))]
-  } else {
-    sub_groups <- NULL
-  }
+
 
   merging_columns <- c(
     "state_var",
@@ -340,19 +337,26 @@ prep_plot <- function(dat,
 
 filter_subgroups <- function(dat, grouping_vars, grouping_vars_groups){
   if (!is.null(grouping_vars_groups)) {
-    if (any(!grouping_vars_groups %in% unlist(dat[, grouping_vars]))){
-    stop(paste0("One or more of your grouping_vars_groups are not found in your grouping_var column '", grouping_vars, "'."))
+    if (any(!unique(grouping_vars_groups) %in% unlist(dat[, grouping_vars]))){
+    stop(paste0("One or more of your grouping_vars_groups are not found in your grouping_vars columns."))
   }
 
   if(any(grouping_vars_groups %in% dat[, grouping_vars[1]])){
-    dat <- dat[is.na(dat$grouping_var) | dat[, grouping_vars[1]] %in% grouping_vars_groups, ]
+    grouping_var_1 <- is.na(dat$grouping_var) | dat[, grouping_vars[1]] %in% grouping_vars_groups
+  }else{
+    grouping_var_1 <- rep(FALSE, nrow(dat))
   }
 
   if(!is.na(grouping_vars[2])){
     if(any(grouping_vars_groups %in% dat[, grouping_vars[2]])){
-      dat <- dat[is.na(dat$grouping_var) | dat[, grouping_vars[1]] %in% grouping_vars_groups | dat[,grouping_vars[2]] %in% grouping_vars_groups, ]
+     grouping_var_2 <- is.na(dat$grouping_var) | dat[,grouping_vars[2]] %in% grouping_vars_groups
     }
+  }else{
+    grouping_var_2 <- rep(FALSE, nrow(dat))
   }
+
+    dat <- dat[grouping_var_1 | grouping_var_2, ]
+
   }
   return(dat)
 }

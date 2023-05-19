@@ -64,8 +64,7 @@ prepare_comp_noTrend <- function(dat) {
     dat_comp_state <- dat_comp[dat_comp$grouping_var != "noGroup" & dat_comp$state_var != "wholeGroup" & dat_comp$compare_2_Comp != "wholeGroup" & !is.na(dat_comp$compare_2_Comp), ]
     dat_comp_wide_state <- reshape_dat_comp_wide(dat_comp_state, comp)
 
-
-    browser()
+    ## Irgendwo fliegt die wholeGroup raus --> wo?
     dat_comp_whole <- dat_comp[grepl("wholeGroup", dat_comp$compare_2), ]
     dat_comp_wide_whole <- reshape_dat_comp_wide(dat_comp_whole, comp)
 
