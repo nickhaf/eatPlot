@@ -27,8 +27,8 @@ library(eatPlot)
 plot_dat <- prep_plot(
   dat = trend_books,
   competence = "GL",
-  grouping_var = "KBuecher_imp3",
-  grouping_var_groups = c("0", "1")
+  grouping_vars = "KBuecher_imp3",
+  grouping_vars_groups = c("0", "1")
 )
 
 ## Remove wholeGroup, as we don't want to plot it

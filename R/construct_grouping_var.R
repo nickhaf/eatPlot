@@ -24,14 +24,16 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
 
   dat <- paste_grouping_vars(dat, grouping_vars, group_var)
 
+
   dat <- fill_up_na(dat,
     info_from = "group_var",
     info_to = "grouping_var",
     filling_groups = unique(dat[!is.na(dat$grouping_var), "grouping_var"])
   )
 
-
+  if (length(grouping_vars) == 2) {
   dat <- fill_grouping_na(dat, grouping_vars)
+  }
 
   dat$grouping_var <- gsub("\\.vs\\..*", "", dat$grouping_var)
 
