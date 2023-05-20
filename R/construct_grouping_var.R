@@ -37,17 +37,7 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
   dat <- fill_grouping_na(dat, grouping_vars)
   }
 
-  dat$grouping_var <- gsub("\\.vs\\..*", "", dat$grouping_var)
-
-  message("Your provdided two grouping_vars. The merged grouping_var will be sorted alphabetically, which might result in an unwanted factor order. If you want another factor order, please use construct_grouping_var() to construct your grouping_var yourself.")
-
-  dat$grouping_var <- as.factor(dat$grouping_var)
-
-#  dat <- fill_column(dat, grouping_var)
-
-
-
-
+  levels(dat$grouping_var) <- gsub("\\.vs\\..*", "", levels(dat$grouping_var))
 
   return(dat)
 
@@ -68,6 +58,10 @@ paste_grouping_vars <- function(dat, grouping_vars, group_var) {
   } else if (length(grouping_vars) > 2) {
     stop("You can only provide two grouping vars at maximum.")
   } else if (length(grouping_vars) == 2) {
+
+    message("Your provdided two grouping_vars. The merged grouping_var will be sorted alphabetically, which might result in an unwanted factor order. If you want another factor order, please use construct_grouping_var() to construct your grouping_var yourself.")
+
+
     dat$grouping_var <- dat[, grouping_vars[1]]
     grep_groups <- paste0(unique(dat[!is.na(dat[, grouping_vars[1]]), grouping_vars[1]]), collapse = "|")
 
@@ -92,6 +86,9 @@ paste_grouping_vars <- function(dat, grouping_vars, group_var) {
         }
       }
     }
+
+    dat$grouping_var <- as.factor(dat$grouping_var)
+
   }
   return(dat)
 }
