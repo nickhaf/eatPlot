@@ -109,7 +109,7 @@ dat_bar[dat_bar$state_var == "wholeGroup", grep("sig_", colnames(dat_bar))] <- F
 
 dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
 for (i in c("2011", "2016", "2021")) {
-  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
+  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i), sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
 }
 
 dat_bar$state_var <- gsub("wholeGroup", "Deutschland", dat_bar$state_var)
@@ -120,8 +120,8 @@ dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
 p_bar_1 <- plot_tablebar(
   dat = dat_bar_1,
   bar_label = "est_noTrend_noComp_2021_percent",
-  bar_label_sig = "sig_noTrend_CompCrossDiffWhole_2021",
-  bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+  bar_label_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021",
+  bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
   bar_header = "**Mindeststandard nicht erreicht**",
   columns_headers = list("**Land**"),
   columns_table = list("state_var"),
@@ -144,9 +144,8 @@ dat_bar_2 <- subset(dat_bar, depVar == "regErreicht")
 
 p_bar_2 <- plot_tablebar(
   dat = dat_bar_2,
-  bar_label = "est_noTrend_noComp_2021_percent",
-  bar_label_sig = "sig_noTrend_CompCrossDiffWhole_2021",
-  bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+  bar_label_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021",
+  bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
   bar_header = "**Regelstandard erreicht oder übertroffen**",
   bar_est = "est_noTrend_noComp_2021_percent",
   y_axis = "state_var",
@@ -168,8 +167,8 @@ dat_bar_3 <- subset(dat_bar, depVar == "optErreicht")
 p_bar_3 <- plot_tablebar(
   dat = dat_bar_3,
   bar_label = "est_noTrend_noComp_2021_percent",
-  bar_label_sig = "sig_noTrend_CompCrossDiffWhole_2021",
-  bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+  bar_label_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021",
+  bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
   bar_header = "**Optimalstandard<br>erreicht**",
   bar_est = "est_noTrend_noComp_2021_percent",
   y_axis = "state_var",
@@ -268,7 +267,7 @@ p_bar_1 <- plot_tablebar(
     NULL,
     NULL,
     NULL,
-    "sig_Trend_CompCrossDiffWhole_20112016",
+    "sig_Trend_Comp_crossDiff_wholeGroup_20112016",
     NULL
   ),
   y_axis = "y_axis_new",
@@ -312,7 +311,7 @@ p_bar_2 <- plot_tablebar(
   columns_table_sig_high = list(
     NULL,
     NULL,
-    "sig_Trend_CompCrossDiffWhole_20162021",
+    "sig_Trend_Comp_crossDiff_wholeGroup_20162021",
     NULL
   ),
   y_axis = "y_axis_new",

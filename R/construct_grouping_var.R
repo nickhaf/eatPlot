@@ -22,10 +22,15 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
   # - Wenn 2: pasten, auffüllen, verbleibende NAs aus grouping_vars auffüllen:
   # - Immer nur die erste grouping_var nehmen bei den Vergleichen
 
+  if (is.null(grouping_vars)) {
+    message("Are you sure your data isn't grouped? If it is, but you didn't provide any grouping_vars, this might lead to duplicated rows in the prepared data.frames.")
+    dat$grouping_var <- factor(rep("noGroup", nrow(dat)))
+    return(dat)
+  }
+
   dat$group_var <- gsub("all.group=1____", "", dat$group_var)
 
   dat <- paste_grouping_vars(dat, grouping_vars, group_var)
-
 
   dat <- fill_up_na(dat,
     info_from = "group_var",
@@ -41,16 +46,14 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
 
   return(dat)
 
-  stop("Your first grouping_var has to be found in the group_var-column of your data.")
+  #stop("Your first grouping_var has to be found in the group_var-column of your data.")
 }
 
 
 
 
 paste_grouping_vars <- function(dat, grouping_vars, group_var) {
-  if (is.null(grouping_vars)) {
-    message("Are you sure your data isn't grouped? If it is, but you didn't provide any grouping_vars, this might lead to duplicated rows in the prepared data.frames.")
-  } else if (length(grouping_vars) == 1) {
+if (length(grouping_vars) == 1) {
     dat <- check_factor(dat, grouping_vars, "grouping_var")
     dat <- fill_column(dat, grouping_vars)
     dat <- rename_columns(dat, "grouping_vars", "grouping_var")
@@ -86,9 +89,6 @@ paste_grouping_vars <- function(dat, grouping_vars, group_var) {
         }
       }
     }
-
-    dat$grouping_var <- as.factor(dat$grouping_var)
-
   }
   return(dat)
 }
@@ -115,5 +115,7 @@ fill_grouping_na <- function(dat, grouping_vars) {
         )
       )
     )
+  dat$grouping_var <- factor(dat$grouping_var)
+
   return(dat)
 }

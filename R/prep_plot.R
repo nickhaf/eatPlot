@@ -7,7 +7,7 @@
 #'
 #' @param dat Input data.frame stemming from `eatRep`.
 #' @param competence Character string containing the competence that should be plotted.
-#' @param grouping_vars Character string containing maximal two column names in `dat` that should be used to distinguish between subgroups. If two columns are provided, they will be merged internally into one.
+#' @param grouping_vars Character vector containing maximal two column names in `dat` that should be used to distinguish between subgroups. If two columns are provided, they will be merged internally into one.
 #' @param states Character vector of the states that should be plotted.
 #' @param state_var Character string containing the column name in `dat` that should be used to distinguish between groups that should be plotted seperatly. Normally, this should be the states ("Bundesländer"). Therfore, defaults to `"TR_BUNDESLAND"`.
 #' @param group_var Character string containing the column name in `dat` that contains the different group memberships in one string. Defaults to `"group"`.
@@ -97,11 +97,7 @@ prep_plot <- function(dat,
     "year"
   )
 
-  if (!is.null(grouping_vars)) {
-    sub_groups <- unique(dat$grouping_var)[!is.na(unique(dat$grouping_var))]
-  } else {
-    sub_groups <- NULL
-  }
+  sub_groups <- unique(dat$grouping_var)[!is.na(unique(dat$grouping_var))]
 
   dat <- clean_data(
     dat = dat,
