@@ -17,7 +17,7 @@ plot_points(
 
 \item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_CompCrossDiffWhole"}.}
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroupSameGroup"}.}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 

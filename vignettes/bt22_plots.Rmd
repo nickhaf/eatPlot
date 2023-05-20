@@ -38,13 +38,10 @@ plot_dat <- filter_rows(plot_dat,
   remove = TRUE
 )
 
-## Hier stimmt jetzt einiges nicht mehr. Falsche Spalten? -> irgendwas stimmt beim mergen nicht
+## Signifikanzen stiummen noch nicht. Label sind auch noch vertauscht. 
 
 p_line_states <- plot_lineplot(
   plot_dat = plot_dat,
-  point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup", 
-  line_sig = "sig_Trend_Comp_crossDiff_wholeGroupSameGroup",
-  label_sig_high = "sig_Trend_Comp_crossDiff_wholeGroup",
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
   plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
@@ -66,8 +63,8 @@ plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "l
 ## Than we can prepare it with the according function:
 plot_dat_test <- prep_plot(
   dat = plot_dat_kb,
-  grouping_var = "KBuecher_imp3",
-  grouping_var_groups = c("0", "1"),
+  grouping_vars = "KBuecher_imp3",
+  grouping_vars_groups = c("0", "1", "0.vs.1"),
   states = "wholeGroup"
 )
 
@@ -75,7 +72,9 @@ plot_dat_test <- prep_plot(
 p_line_ger <- plot_lineplot(
   plot_dat = plot_dat_test,
   seperate_plot_var = "competence_var",
+  point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
   label_sig_high = NULL,
+  line_sig = "sig_Trend_Comp_crossDiff_wholeGroup",
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
   background_lines = FALSE,

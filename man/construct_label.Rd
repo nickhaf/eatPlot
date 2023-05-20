@@ -28,7 +28,7 @@ construct_label(
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
 
-\item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'.}
+\item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Defaults to \code{sig_Trend_Comp_crossDiff_wholeGroupSameGroup}.}
 
 \item{label_sig_high_extra_column}{Logical indicating whether the superscript for significances should be added directly into the label (necessary for lineplots), or should be written into an extra column with the ending '_sig_superscript' (necessary for tables).}
 

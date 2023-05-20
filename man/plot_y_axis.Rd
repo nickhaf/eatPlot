@@ -16,5 +16,5 @@ plot_y_axis(plot_dat)
 Plot a y-axis plot. Can be merged with other plots for a customisable y-axis.
 }
 \examples{
-#tbd
+# tbd
 }

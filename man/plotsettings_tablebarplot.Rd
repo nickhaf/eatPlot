@@ -102,9 +102,10 @@ plot_settings$font_size
 
 ## Colours can be defined like so:
 plotsettings_tablebarplot(
-  bar_fill_colour = c("blue",
-                      grDevices::rgb(10, 13, 82, maxColorValue = 255)
-                      )
+  bar_fill_colour = c(
+    "blue",
+    grDevices::rgb(10, 13, 82, maxColorValue = 255)
+  )
 )
 
 ## Or, to get better control over the colour assignment
@@ -112,11 +113,13 @@ plotsettings_tablebarplot(
 ## defined in the bar_sig-argument of plot_tablebar()
 ## (as these groups are used to distinguish between different bar colours):
 plotsettings_tablebarplot(
- bar_fill_colour = c(fill_group_1 = "blue",
-                     fill_group_2 = grDevices::rgb(
-                       10, 13, 82, maxColorValue = 255)
-                     )
+  bar_fill_colour = c(
+    fill_group_1 = "blue",
+    fill_group_2 = grDevices::rgb(
+      10, 13, 82,
+      maxColorValue = 255
+    )
+  )
 )
-
 
 }

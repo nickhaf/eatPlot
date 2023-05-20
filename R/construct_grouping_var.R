@@ -22,6 +22,8 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
   # - Wenn 2: pasten, auffüllen, verbleibende NAs aus grouping_vars auffüllen:
   # - Immer nur die erste grouping_var nehmen bei den Vergleichen
 
+  dat$group_var <- gsub("all.group=1____", "", dat$group_var)
+
   dat <- paste_grouping_vars(dat, grouping_vars, group_var)
 
 

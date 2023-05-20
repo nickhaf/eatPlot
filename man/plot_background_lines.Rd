@@ -20,5 +20,5 @@ ggplot2 object.
 Plot background lines.
 }
 \examples{
-#tbd
+# tbd
 }

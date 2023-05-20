@@ -3,6 +3,7 @@
 export(clean_data)
 export(combine_plots)
 export(construct_directional_sig)
+export(construct_grouping_var)
 export(construct_label)
 export(construct_percent)
 export(filter_plot_dat)

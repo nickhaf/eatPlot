@@ -44,15 +44,17 @@ clean_data <- function(dat,
   dat$grouping_var <- recode_to_factor(dat$grouping_var)
 
   dat[is.na(dat$state_var) & (
-    grepl("wholeGroup", dat$group_var) |
+    grepl("^wholeGroup$", dat$group_var) |
       grepl(
         pattern = paste0(
           "^",
-          paste0(sub_groups, collapse = "|"),
-          "$"
+          sub_groups,
+          "$",
+          collapse = "|"
         ),
         dat$group_var
-      )
+      ) |
+      grepl(paste0("^", sub_groups, "\\.vs\\.", collapse = "|"), dat$group_var)
   ), "state_var"] <- "wholeGroup"
 
   if (!is.null(states)) {

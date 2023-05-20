@@ -20,5 +20,5 @@ Dataframe with an added column with a name that ends with \verb{_directional_sig
 Calculate the significance descriptions for the 'Mindeststandards'
 }
 \examples{
-#tbd
+# tbd
 }
