@@ -232,9 +232,6 @@ get_comparisons <- function(dat, states, sub_groups) {
 
   dat$group_var <- replace_VS(dat$group_var)
 
-
-
-
   dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.VS\\."), function(x) {
     x[[1]]
   })
@@ -243,31 +240,34 @@ get_comparisons <- function(dat, states, sub_groups) {
   })
 
   for (i in c("compare_1", "compare_2")) {
+    if (!is.null(sub_groups)) {
     for (j in seq_along(sub_groups)) {
       group_j <- sub_groups[j]
-      dat[, i] <- gsub(group_j, paste0("grouping_var_", j), dat[, i])
+      dat[, i] <- gsub(
+        pattern = paste0(
+          paste0("_", group_j),
+          paste0("*", group_j),
+          collapse = "|"
+          ),
+       replacement = paste0(
+          "_grouping_var_",
+          letters[j]),
+        x = dat[, i])
     }
-
+}
     dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
-
-    if (!is.null(sub_groups)) {
-      dat[, i] <- gsub(paste0(sub_groups, collapse = "|"), "_groupingVar", dat[, i])
-    }
     dat[, i] <- gsub("__|___", "_", dat[, i])
 
     dat[is.na(dat[, i]), i] <- "no_comp"
   }
 
-  dat$compare_1_dummy <- gsub("BL_|BL__", "", dat$compare_1)
+    ## Check if comparison is one of group in state vs. the group in wholeGroup
 
-  ## Check if comparison is one of group in state vs. the group in wholeGroup
-
-  dat$compare_2 <- ifelse(dat$compare_1_dummy == dat$compare_2 & !is.na(dat$compare_1) & !is.na(dat$compare_2) & dat$compare_1 != "noGroup" & dat$compare_2 != "noGroup",
+  dat$compare_2 <- ifelse(dat$grouping_var == dat$compare_2 & !is.na(dat$grouping_var) & !is.na(dat$compare_2) & dat$grouping_var != "no_comp" & dat$compare_2 != "no_comp",
     "wholeGroupSameGroup",
     dat$compare_2
   )
 
-  dat <- remove_columns(dat, "compare_1_dummy")
   return(dat)
 }
 

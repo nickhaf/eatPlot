@@ -38,8 +38,13 @@ plot_dat <- filter_rows(plot_dat,
   remove = TRUE
 )
 
+## Hier stimmt jetzt einiges nicht mehr. Falsche Spalten? -> irgendwas stimmt beim mergen nicht
+
 p_line_states <- plot_lineplot(
   plot_dat = plot_dat,
+  point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup", 
+  line_sig = "sig_Trend_Comp_crossDiff_wholeGroupSameGroup",
+  label_sig_high = "sig_Trend_Comp_crossDiff_wholeGroup",
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
   plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)

@@ -295,21 +295,6 @@ prep_plot <- function(dat,
     plot_dat[["plot_points"]] <- plot_dat[["plot_lines"]]
   }
 
-
-  plot_dat[["plot_points"]] <- merge_2(
-    plot_dat[["plot_points"]],
-    list_building_blocks[["noTrend_noComp"]],
-    by = c(
-      "grouping_var",
-      "state_var",
-      "year",
-      "competence_var",
-      "depVar"
-    ),
-    all.x = TRUE
-  )
-
-  ## Mergen doch außerhalb?
   plot_dat[["plot_points"]] <- merge_2(
     plot_dat[["plot_points"]],
     noTrend_data_merged,
@@ -320,7 +305,7 @@ prep_plot <- function(dat,
       "competence_var",
       "depVar"
     ),
-    all.x = TRUE
+    all = TRUE
   )
 
   # if(any(grouping_var) != noGroup ){
