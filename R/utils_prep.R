@@ -11,8 +11,11 @@ prepare_comp <- function(dat, year_columns) {
     ## Bei GroupDiff: Je nach Antwort von Sebastian ein BL oder eine wholeGroup vor Term hinterm Vs.
 
     ## Problem bei crossDiff_of_groupDiff: Es gibt einmal eine grouping_var aohne vs. einET und einmal v.s. zwei ET -> Die grouping_var nimmta ber bisher nur die erste comparison --> compare_1 aufnehmen in reshaping? --> Problem ist hier, dass teilweise group und grouping_var Spalte noch nicht übereinstimmen
-#if(comp == "crossDiff_of_groupDiff"){browser()}
+#if(comp == "trendDiff_cross"){browser()}
+
     dat_comp <- dat[!is.na(dat$comparison) & dat$comparison == comp, ]
+
+    # View(dat_comp[dat_comp$state_var == "Berlin", ])
 
     ## Compare against state: (change _within to _sameGroup)
     comp_wide <- reshape_dat_comp_wide(dat_comp, comp, year_columns)
@@ -30,7 +33,20 @@ prepare_comp <- function(dat, year_columns) {
 
 reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
   if (nrow(dat_comp) > 0) {
-    dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
+
+    if("compare_1_Trend_Comp" %in% colnames(dat_comp)){
+      dat_comp <- rename_columns(dat_comp, "compare_1_Trend_Comp", "compare_1_Comp")
+      dat_comp <- rename_columns(dat_comp, "compare_2_Trend_Comp", "compare_2_Comp")
+    }
+
+    ## Build an unique identifier for the column names of the comparisons
+    if(any(grepl("\\.vs\\.", dat_comp$compare_1_Comp))){
+    dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_1_Comp, ".VS.", dat_comp$compare_2_Comp)
+    }else{
+      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
+
+    }
+
     dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 
     dat_comp_wide <- stats::reshape(dat_comp,
