@@ -2,14 +2,16 @@
 prepare_comp <- function(dat, year_columns) {
   comp_trend <- data.frame()
 
-  for (comp in c("crossDiff", "groupDiff")) { # unique(dat$comparison)) {
+  for (comp in c("crossDiff", "groupDiff", "crossDiff_of_groupDiff", "trendDiff_group", "trendDiff_cross")) { # unique(dat$comparison)) {
 
-    if (!comp %in% c("crossDiff", "groupDiff")) {
+    if (!comp %in% c("crossDiff", "groupDiff", "crossDiff_of_groupDiff", "trendDiff_group", "trendDiff_cross")) {
       stop(paste0("The comparison '", comp, "' has not been implemented yet. Please contact the package author."))
     }
 
     ## Bei GroupDiff: Je nach Antwort von Sebastian ein BL oder eine wholeGroup vor Term hinterm Vs.
 
+    ## Problem bei crossDiff_of_groupDiff: Es gibt einmal eine grouping_var aohne vs. einET und einmal v.s. zwei ET -> Die grouping_var nimmta ber bisher nur die erste comparison --> compare_1 aufnehmen in reshaping? --> Problem ist hier, dass teilweise group und grouping_var Spalte noch nicht übereinstimmen
+#if(comp == "crossDiff_of_groupDiff"){browser()}
     dat_comp <- dat[!is.na(dat$comparison) & dat$comparison == comp, ]
 
     ## Compare against state: (change _within to _sameGroup)
