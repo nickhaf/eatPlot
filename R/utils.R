@@ -224,8 +224,9 @@ insert_first_number <- function(char_string, insertion) {
 ## Problem: sub_groups mit vs-grouping_var
 
 get_comparisons <- function(dat, states, sub_groups) {
+  if(!is.null(sub_groups)){
   sub_groups <- unique(unlist(strsplit(levels(sub_groups), split = "\\.vs\\.")))
-
+}
   dat$group_var <- gsub("TR_BUNDESLAND=", "", dat$group_var)
 
   comparisons_log <- grepl("\\.vs\\.", dat$group_var)

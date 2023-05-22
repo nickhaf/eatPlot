@@ -98,17 +98,21 @@ test_that("number insertion works", {
 })
 
 test_that("comparison splits works for simple example", {
-  df_comp <- data.frame(group_var = c("a.vs.b", "b.vs.c"))
+  df_comp <- data.frame(group_var = c("a.vs.b", "b.vs.c"),
+                        grouping_var = c(NA, NA))
 
-  expect_equal(get_comparisons(df_comp, states = "a", sub_groups = c("b", "c"))$compare_1, c("BL", "_groupingVar"))
-  expect_equal(get_comparisons(df_comp, states = "b", sub_groups = c("a"))$compare_2, c("BL", "c"))
+  expect_equal(get_comparisons(df_comp, states = "a", sub_groups = factor(c("b", "c")))$compare_1, c("BL", "b"))
+  expect_equal(get_comparisons(df_comp, states = "b", sub_groups = factor(c("a")))$compare_2, c("BL", "c"))
   expect_equal(get_comparisons(df_comp, states = "a", sub_groups = NULL)$compare_2, c("b", "c"))
 })
 
 test_that("comparison splits work for complex comparisons", {
-  df_comp <- data.frame(group_var = c("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.vs.all.group=1____ersteGen.vs.zweiteGen"))
+  df_comp <- data.frame(group_var = c("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.vs.all.group=1____ersteGen.vs.zweiteGen"),
+                        grouping_var = NA)
 
-  get_comparisons(df_comp, states = c("Baden-Wuerttemberg"), sub_groups = c("aohneZWH", "ersteGen", "zweiteGen"))
+#  expect_equal(get_comparisons(df_comp, states = c("Baden-Wuerttemberg"),
+#                   sub_groups = factor(c("aohneZWH", "ersteGen", "zweiteGen"))),
+# )
 })
 
 

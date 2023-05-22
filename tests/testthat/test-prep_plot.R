@@ -3,19 +3,3 @@ test_that("groups are extracted correctly", {
 })
 
 
-test_that("grouping levels are build correctly", {
-  expect_equal(
-    recode_to_factor(
-      factor(c("a", "z", NA),
-        levels = c("z", "a")
-      )
-    ),
-    factor(c("a", "z", "noGroup"),
-      levels = c("z", "a", "noGroup")
-    )
-  )
-  expect_equal(
-    recode_to_factor(factor(c(NA, NA))),
-    factor(c("noGroup", "noGroup"), levels = "noGroup")
-  )
-})

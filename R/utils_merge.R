@@ -30,7 +30,7 @@ merge_trend_point <- function(trend_data, point_data) {
     point_data,
     by.x = c("state_var", "year_start", "grouping_var", "depVar", "competence_var"),
     by.y = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
-    all = TRUE,
+    all.x = TRUE,
     sort = FALSE
   )
 
@@ -40,7 +40,7 @@ merge_trend_point <- function(trend_data, point_data) {
     point_data,
     by.x = c("state_var", "year_end", "grouping_var", "depVar", "competence_var"),
     by.y = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
-    all = TRUE,
+    all.x = TRUE,
     sort = FALSE
   )
 

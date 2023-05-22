@@ -41,8 +41,6 @@ clean_data <- function(dat,
 
   dat <- dat[, !colnames(dat) %in% c("modus", "parameter")]
 
-  dat$grouping_var <- recode_to_factor(dat$grouping_var)
-
   dat[is.na(dat$state_var) & (
     grepl("^wholeGroup$", dat$group_var) |
       grepl(
@@ -79,11 +77,4 @@ fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
   return(dat)
 }
 
-recode_to_factor <- function(vec) {
-  vec <- as.factor(vec)
-  levels(vec) <- c(levels(vec), "noGroup")
-  vec[is.na(vec)] <- "noGroup"
-  vec <- droplevels(vec)
 
-  return(vec)
-}

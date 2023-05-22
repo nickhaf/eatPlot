@@ -144,6 +144,7 @@ dat_bar_2 <- subset(dat_bar, depVar == "regErreicht")
 
 p_bar_2 <- plot_tablebar(
   dat = dat_bar_2,
+  bar_label = "est_noTrend_noComp_2021_percent",
   bar_label_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021",
   bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
   bar_header = "**Regelstandard erreicht oder übertroffen**",

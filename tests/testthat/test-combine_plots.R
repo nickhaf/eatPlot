@@ -7,7 +7,7 @@ test_that("example mindeststandard short version", {
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
   for (i in c("2011", "2016", "2021")) {
-    dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
+    dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i), sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
   }
 
   # Plot 1 ------------------------------------------------------------------
@@ -17,7 +17,7 @@ test_that("example mindeststandard short version", {
     dat = dat_bar_1,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
@@ -42,7 +42,7 @@ test_that("example mindeststandard short version", {
     dat = dat_bar_2,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
     bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -65,7 +65,7 @@ test_that("example mindeststandard short version", {
     dat = dat_bar_3,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
     bar_header = "Optimalstandard erreicht (MSA)",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -154,7 +154,7 @@ test_that("Example barplot long format is plotted correctly", {
       NULL,
       NULL,
       NULL,
-      "sig_Trend_CompCrossDiffWhole_20112016",
+      "sig_Trend_Comp_crossDiff_wholeGroup_20112016",
       NULL
     ),
     y_axis = "y_axis_new",
@@ -198,7 +198,7 @@ test_that("Example barplot long format is plotted correctly", {
     columns_table_sig_high = list(
       NULL,
       NULL,
-      "sig_Trend_CompCrossDiffWhole_20162021",
+      "sig_Trend_Comp_crossDiff_wholeGroup_20162021",
       NULL
     ),
     y_axis = "y_axis_new",

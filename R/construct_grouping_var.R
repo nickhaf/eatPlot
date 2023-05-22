@@ -44,6 +44,8 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
 
   levels(dat$grouping_var) <- gsub("\\.vs\\..*", "", levels(dat$grouping_var))
 
+  dat$grouping_var <- recode_to_factor(dat$grouping_var)
+
   return(dat)
 
   #stop("Your first grouping_var has to be found in the group_var-column of your data.")
@@ -118,4 +120,14 @@ fill_grouping_na <- function(dat, grouping_vars) {
   dat$grouping_var <- factor(dat$grouping_var)
 
   return(dat)
+}
+
+
+recode_to_factor <- function(vec) {
+  vec <- as.factor(vec)
+  levels(vec) <- c(levels(vec), "noGroup")
+  vec[is.na(vec)] <- "noGroup"
+  vec <- droplevels(vec)
+
+  return(vec)
 }

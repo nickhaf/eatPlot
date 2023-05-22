@@ -224,7 +224,6 @@ prep_plot <- function(dat,
 
     id_vars <- c("grouping_var", "state_var", "competence_var", "depVar")#, colnames(noTrend_data_merged)[grep("compare_", colnames(noTrend_data_merged))])
 
-
     noTrend_data_merged_wide <- stats::reshape(noTrend_data_merged,
       direction = "wide",
       timevar = "year",
