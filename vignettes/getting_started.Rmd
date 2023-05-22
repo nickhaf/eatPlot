@@ -27,7 +27,7 @@ The first step is the data preperation. This is handeled by the function `prep_p
 ```{r}
 dat_plot <- prep_plot(trend_books,
   competence = "GL",
-  grouping_var = "KBuecher_imp3"
+  grouping_vars = "KBuecher_imp3"
 )
 ```
 The only thing that needs to be done in this step is to define the columns in your data set (here named "trend_books"), if they differ from the defaults, so the function knows which on is which.
@@ -86,7 +86,7 @@ dat_plot <- subset(dat_plot$plot_tablebar, grouping_var == 0)
 
 bartable_1 <- plot_tablebar(
   dat = dat_plot,
-  bar_est = "est_Trend_CompCrossDiffWhole_20162021",
+  bar_est = "est_Trend_Comp_crossDiff_wholeGroup_20162021",
   bar_header = "Wert",
   columns_headers = list("Land", "Wert"),
   columns_table = c("state_var", "est_noTrend_noComp_2016"),
@@ -108,7 +108,7 @@ Currently, `eatPlot` only supports the generation of a table with the desired nu
 ```{r}
 bartable_2 <- plot_tablebar(
   dat = dat_plot,
-  bar_est = "est_Trend_CompCrossDiffWithin_20162021",
+  bar_est = "est_Trend_Comp_crossDiff_wholeGroupSameGroup_20162021",
   bar_header = "Wert",
   columns_headers = list("Wert"),
   columns_table = c("est_noTrend_noComp_2021"),

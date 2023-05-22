@@ -31,7 +31,7 @@ prep_plot(
 
 \item{group_var}{Character string containing the column name in \code{dat} that contains the different group memberships in one string. Defaults to \code{"group"}.}
 
-\item{grouping_vars}{Character string containing maximal two column names in \code{dat} that should be used to distinguish between subgroups. If two columns are provided, they will be merged internally into one.}
+\item{grouping_vars}{Character vector containing maximal two column names in \code{dat} that should be used to distinguish between subgroups. If two columns are provided, they will be merged internally into one.}
 
 \item{grouping_vars_groups}{Character vector containing the groups from \code{grouping_var} you want to plot. Defaults to \code{NULL}, in which case all groups are prepared.}
 

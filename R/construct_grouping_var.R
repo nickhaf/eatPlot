@@ -1,12 +1,13 @@
 #' Merge two grouping var columns into one.
 #'
-#' @param dat
-#' @param grouping_vars
+#' @param dat Data frame with a `group` column.
+#' @inheritParams prep_plot
+#' @param group_var Name of the `group` column in your data. Defaults to `group`.
 #'
-#' @return
+#' @return Data frame with a new `grouping_var` column, constructed from the provided `grouping_vars` and the `group_var` column.
 #' @export
 #'
-#' @examples
+#' @examples #tbd
 construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
   ### Hier weiter:
   # Erst NAs auffüllen: grouping_var konstruieren und NAs auffüllen, aber welche Reihenfolge? Erst NAs auffüllen, weil sonst einige Felder nicht mehr NAs sind wenn das constructed wird. Aufpassen beim Auffüllen: Gruppe muss vor dem .vs. stehen!

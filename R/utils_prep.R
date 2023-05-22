@@ -31,7 +31,7 @@ reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
     dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
     dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 
-    dat_comp_wide <- reshape(dat_comp,
+    dat_comp_wide <- stats::reshape(dat_comp,
       direction = "wide",
       idvar = c("depVar", "competence_var", "grouping_var", "state_var", year_columns),
       timevar = c("compare_2_Comp"),

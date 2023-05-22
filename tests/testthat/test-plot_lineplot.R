@@ -266,8 +266,6 @@ test_that("adjusted means states", {
   )
 
   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
-  ## Testweise einige PUnkte auf n.s. setzen
-
 
   p_line <- plot_lineplot(
     plot_dat = plot_dat_test,
