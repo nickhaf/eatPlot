@@ -108,6 +108,8 @@ prep_plot <- function(dat,
     parameter = parameter
   )
 
+  dat$comparison <- gsub("_", "", dat$comparison)
+
   if (any(!is.na(dat$comparison))) {
     dat <- get_comparisons(dat,
       states = all_states[all_states != "wholeGroup"],
