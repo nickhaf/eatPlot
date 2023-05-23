@@ -54,17 +54,17 @@ construct_label <- function(dat,
 
   dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
 
-  if(label_sig_high_extra_column == FALSE){
-  dat[, new_name] <- paste0(
-    dat$label_est,
-    dat$label_sig,
-    dat$label_se
-  )
-  }else{
-  ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column
-  if (any(dat$label_sig != "")) {
-    dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
-  }
+  if (label_sig_high_extra_column == FALSE) {
+    dat[, new_name] <- paste0(
+      dat$label_est,
+      dat$label_sig,
+      dat$label_se
+    )
+  } else {
+    ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column
+    if (any(dat$label_sig != "")) {
+      dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
+    }
     dat[, new_name] <- paste0(
       dat$label_est,
       dat$label_se

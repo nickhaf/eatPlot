@@ -1,4 +1,3 @@
-
 lineplot_2x3 <- plotsettings_lineplot(
   axis_x_background_width_x = 0.075,
   brace_label_nudge_x = 0.11,

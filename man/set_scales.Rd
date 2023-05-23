@@ -16,5 +16,5 @@ ggplot2 plot settings
 Set the colours, pointshapes and linetypes for lineplot.
 }
 \examples{
-#tbd
+# tbd
 }

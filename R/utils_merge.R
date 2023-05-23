@@ -24,23 +24,23 @@ merge_trend_point <- function(trend_data, point_data) {
   trend_data <- trend_data[, !colnames(trend_data) %in% c("modus", "comparison", "parameter", "group_var", "keyword")]
   point_data <- point_data[, !colnames(point_data) %in% c("modus", "comparison", "parameter", "group_var", "keyword")]
 
+  trend_data <- remove_columns(trend_data, "group_var")
+
   trend_start <- merge_2(trend_data,
     point_data,
     by.x = c("state_var", "year_start", "grouping_var", "depVar", "competence_var"),
     by.y = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
     all.x = TRUE,
-    all.y = FALSE,
     sort = FALSE
   )
 
   colnames(trend_start) <- gsub("_noTrend", "_noTrendStart", colnames(trend_start))
 
-  trend <- merge(trend_start,
+  trend <- merge_2(trend_start,
     point_data,
     by.x = c("state_var", "year_end", "grouping_var", "depVar", "competence_var"),
     by.y = c("state_var", "year", "grouping_var", "depVar", "competence_var"),
     all.x = TRUE,
-    all.y = FALSE,
     sort = FALSE
   )
 

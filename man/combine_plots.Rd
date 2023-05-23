@@ -16,5 +16,5 @@ Patchwork plot.
 Combine different ggplots
 }
 \examples{
-#tbd
+# tbd
 }

@@ -16,7 +16,7 @@ plot_lines(
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
-\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_CompWithin"}.}
+\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_noComp"}, which will show the significance of the difference between two time points.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
@@ -30,5 +30,5 @@ Adds a layer with trend lines to a ggplot.
 Wrapper for \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.
 }
 \examples{
-#tbd
+# tbd
 }

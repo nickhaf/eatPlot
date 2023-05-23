@@ -164,4 +164,3 @@ test_that("year columns are extracted correctly", {
 test_that("Trend data frame is build correctly", {
   expect_equal(nrow(prep_trend_long(dat = data.frame(), filtered_list = list(), dat_name = "x")[[1]]), 0)
 })
-

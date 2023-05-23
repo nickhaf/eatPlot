@@ -16,7 +16,6 @@
 #'
 #' @examples # tbd
 prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging_columns) {
-
   filtered_list <- list()
   remove_columns <- c("group_var", "comparison")
   merging_columns <- c(merging_columns, remove_columns)
@@ -54,7 +53,8 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging
     exclude_cols <- get_year_cols(vec = colnames(data_clean), years_colnames)
 
     data_trend_comp <- data_clean[!is.na(data_clean$comparison), ]
-    filtered_list <- prep_trend_long(data_trend_comp,
+    filtered_list <- prep_trend_long(
+      data_trend_comp,
       filtered_list,
       "Trend_Comp",
       remove_cols = exclude_cols
@@ -119,7 +119,7 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging
   # Add significances -------------------------------------------------------
   filtered_list <- add_sig_col(filtered_list, sig_niveau = sig_niveau)
 
-  filtered_list <- lapply(filtered_list, remove_columns, remove_columns)
+  # filtered_list <- lapply(filtered_list, remove_columns, remove_columns)
 
   return(filtered_list)
 }

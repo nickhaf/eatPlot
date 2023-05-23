@@ -24,5 +24,5 @@ The plot_dat list with rows filtered as specified.
 Filter specified rows from plot_dat objects.
 }
 \examples{
-#tbd
+# tbd
 }

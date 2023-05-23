@@ -8,12 +8,12 @@
 #' @return List of data.frames.
 #' @export
 #'
-#' @examples #tbd
+#' @examples # tbd
 filter_rows <- function(plot_dat, column_name, subsetter, remove = FALSE) {
   for (i in c("plot_points", "plot_lines", "plot_braces")) {
-    if(remove == FALSE){
+    if (remove == FALSE) {
       plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] == subsetter, ]
-    }else{
+    } else {
       plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] != subsetter, ]
     }
   }

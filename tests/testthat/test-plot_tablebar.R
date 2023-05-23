@@ -10,41 +10,39 @@ test_that("column x coords are calced correctly", {
       left = c(-10, -20, -25, -40),
       middle = c(0.0, -15.0, -22.5, -32.5),
       right = c(10, -10, -20, -25)
-
     )
   )
 
 
-## Only Columns
-expect_equal(
-  calc_column_coords(
-    plot_borders = c(0, 0),
-    columns_table = c("col_1", "col_2", "col_3"),
-    plot_settings = plotsettings_tablebarplot(columns_width = c(0.3, 0.3, 0.4))
-  ),
-  data.frame(
-    column = c("col_3", "col_2", "col_1"),
-    left = c(0.6, 0.3, 0),
-    middle = c(0.8, 0.45, 0.15),
-    right = c(1.0, 0.6, 0.3)
-
+  ## Only Columns
+  expect_equal(
+    calc_column_coords(
+      plot_borders = c(0, 0),
+      columns_table = c("col_1", "col_2", "col_3"),
+      plot_settings = plotsettings_tablebarplot(columns_width = c(0.3, 0.3, 0.4))
+    ),
+    data.frame(
+      column = c("col_3", "col_2", "col_1"),
+      left = c(0.6, 0.3, 0),
+      middle = c(0.8, 0.45, 0.15),
+      right = c(1.0, 0.6, 0.3)
+    )
   )
-)
 
-## Only Bar
-expect_equal(
-calc_column_coords(
-  plot_borders = c(-10, 10),
-  columns_table = NULL,
-  plot_settings = plotsettings_tablebarplot(columns_width = c(1)                                        )
-  ),
-data.frame(
-  column = c("bar"),
-  left = c(-10),
-  middle = c(0),
-  right = c(10)
-)
-)
+  ## Only Bar
+  expect_equal(
+    calc_column_coords(
+      plot_borders = c(-10, 10),
+      columns_table = NULL,
+      plot_settings = plotsettings_tablebarplot(columns_width = c(1))
+    ),
+    data.frame(
+      column = c("bar"),
+      left = c(-10),
+      middle = c(0),
+      right = c(10)
+    )
+  )
 })
 
 test_that("column length is checked correctly", {
@@ -52,8 +50,10 @@ test_that("column length is checked correctly", {
   expect_equal(check_length(column_set, leng = 2), list("a", "b"))
 
   expect_error(check_length(column_set, 3))
-  expect_equal(check_length("a", 3, fill = "a")
-  , c("a", "a", "a"))
+  expect_equal(
+    check_length("a", 3, fill = "a"),
+    c("a", "a", "a")
+  )
 })
 
 test_that("continous barplot looks the same", {

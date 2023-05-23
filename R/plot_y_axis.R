@@ -5,7 +5,7 @@
 #' @return [ggplot2] plot that can be used as a y-axis.
 #' @export
 #'
-#' @examples #tbd
+#' @examples # tbd
 plot_y_axis <- function(plot_dat) {
   range_est <- range(plot_dat[["plot_points"]]$point_values, na.rm = TRUE)
   coords <- calc_coords(range_est)
@@ -28,14 +28,17 @@ plot_y_axis <- function(plot_dat) {
         yend = .data$yend
       )
     ),
-    ggplot2::scale_x_continuous(limits = c(min(plot_dat[["plot_points"]]$year),
-                                           min(plot_dat[["plot_points"]]$year) + 1),
-                                expand = c(0, 0)
-                                ),
+    ggplot2::scale_x_continuous(
+      limits = c(
+        min(plot_dat[["plot_points"]]$year),
+        min(plot_dat[["plot_points"]]$year) + 1
+      ),
+      expand = c(0, 0)
+    ),
     set_y_coords(plot_dat),
     ## Use same coordinate system as the braces, so the plots can be aligned.
     set_cartesian_coords(coords),
-  theme_y_axis()
+    theme_y_axis()
   )
 }
 

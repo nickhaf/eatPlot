@@ -1,4 +1,3 @@
-
 test_that("y limits are set correctly", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
@@ -35,7 +34,7 @@ test_that("x-position of brace label is calculated correctly", {
     state_var = rep("Berlin", 4),
     year_start = c(2011, 2011, 2015, 2015),
     year_end = c(2020, 2020, 2020, 2020),
-    grouping_var = factor(c(0, 1, 0, 1)),
+    grouping_vars = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
     sig_1 = c(TRUE, FALSE, FALSE, TRUE),
@@ -45,7 +44,7 @@ test_that("x-position of brace label is calculated correctly", {
     years_Trend = c("20112020", "20112020", "2152020", "20152020"),
     competence_var = "a"
   )
-range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
+  range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
 
   expect_equal(calc_brace_label_x(year_start = 0, year_end = 10, range_total = range_years, brace_indent_pos = 0.25), 2.5)
   expect_equal(
@@ -89,7 +88,7 @@ test_that("double brace is drawn", {
 
 test_that("brace label is drawn", {
   test_label <- data.frame(
-    grouping_var = rep(0, 2),
+    grouping_vars = rep(0, 2),
     overlap = c(FALSE, TRUE),
     label_pos_x = c(1, 2),
     label_pos_y = c(1, 1),
@@ -167,8 +166,8 @@ test_that("significances are displayed correctly in the labels", {
 test_that("Example brace plot is still the same", {
   plot_dat <- prep_plot(
     dat = trend_books,
-    grouping_var = "KBuecher_imp3",
-    grouping_var_groups = c("1", "0"),
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("1", "0"),
     competence = "GL"
   )
 
@@ -182,7 +181,7 @@ test_that("Example brace plot is still the same", {
         y_range = c(397, 552),
         label_est = "est_Trend_noComp",
         label_se = "se_Trend_noComp",
-        label_sig_high = "sig_Trend_CompCrossDiffWhole",
+        label_sig_high = "sig_Trend_Comp_crossDiff_wholeGroup",
         label_sig_bold = "sig_Trend_noComp"
       ) +
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))

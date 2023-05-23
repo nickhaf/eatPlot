@@ -31,12 +31,7 @@ clean_data <- function(dat,
       filling_groups = all_states
     )
   }
-  if (!is.null(sub_groups)) {
-    dat <- fill_up_na(dat,
-      info_to = "grouping_var",
-      filling_groups = sub_groups
-    )
-  }
+
 
   # Select relevant rows
   dat <- dat[dat$parameter == parameter, ]
@@ -46,18 +41,18 @@ clean_data <- function(dat,
 
   dat <- dat[, !colnames(dat) %in% c("modus", "parameter")]
 
-  dat$grouping_var <- recode_to_factor(dat$grouping_var)
-
   dat[is.na(dat$state_var) & (
-    grepl("wholeGroup", dat$group_var) |
+    grepl("^wholeGroup$", dat$group_var) |
       grepl(
         pattern = paste0(
           "^",
-          paste0(sub_groups, collapse = "|"),
-          "$"
+          sub_groups,
+          "$",
+          collapse = "|"
         ),
         dat$group_var
-      )
+      ) |
+      grepl(paste0("^", sub_groups, "\\.vs\\.", collapse = "|"), dat$group_var)
   ), "state_var"] <- "wholeGroup"
 
   if (!is.null(states)) {
@@ -66,7 +61,7 @@ clean_data <- function(dat,
 
   dat$state_var <- gsub("ue", "\u00fc", dat$state_var)
 
-# dat <- dat[, grep("depVar|est_|p_|se_|competence_var|grouping_var|state_var|group_var|comparison", colnames(dat))]
+  # dat <- dat[, grep("depVar|est_|p_|se_|competence_var|grouping_var|state_var|group_var|comparison", colnames(dat))]
 
   return(dat)
 }
@@ -82,11 +77,4 @@ fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
   return(dat)
 }
 
-recode_to_factor <- function(vec) {
-  vec <- as.factor(vec)
-  levels(vec) <- c(levels(vec), "noGroup")
-  vec[is.na(vec)] <- "noGroup"
-  vec <- droplevels(vec)
 
-  return(vec)
-}

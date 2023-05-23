@@ -1,5 +1,14 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9009
+* `grouping_vars` - argument in `prep_plot()` now takes up to two grouping_vars. 
+* Renamed arguments in `prep_plot()`: `grouping_var` and `grouping_var_groups` to `grouping_vars` and `grouping_vars_groups`.
+* Comparison columns are now named differently. 
+* New comparisons are prepared: : c("crossDiff", "groupDiff", "crossDiffofgroupDiff", "trendDiffgroup", "trendDiffcross"). Nested comparisons of the type 'group_a.vs.group_b.VS.group_b.vs.group_c' are currently not included. 
+* Removed default setting for `label_sig_high` argument in `plot_lineplot()`. 
+* Added the argument `title_superscript` in `plot_lineplot()` for specifying superscripts for the plot titles. 
+* Added the argument `comparisons` in `plot_lineplot()` for specifying wanted comparisons. 
+
 # eatPlot 0.0.0.9008
 * Added argument `plotsettings_tablebarplot(bar_border_lines = TRUE)` for striped border lines in barplots.
 * Added alignent option `2` for tablebars. This will right align columns in the middle of the column, usefull for numeric columns. 

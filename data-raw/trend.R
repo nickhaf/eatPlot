@@ -8,7 +8,7 @@ rand_num <- sample(1:100, 16)
 unique_states <- unique(trend_books$TR_BUNDESLAND)[!is.na(unique(trend_books$TR_BUNDESLAND))]
 
 for (i in c("group", "TR_BUNDESLAND")) {
-  for (j in length(unique_states):1) { #this way, so Sachsen-Anhalt is gsubed first
+  for (j in length(unique_states):1) { # this way, so Sachsen-Anhalt is gsubed first
     state <- unique_states[j]
     trend_books[, i] <- gsub(state, paste0("Land-", rand_num[j]), trend_books[, i])
   }

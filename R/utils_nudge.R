@@ -1,4 +1,3 @@
-
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
   output_format <- match.arg(output_format)
@@ -129,8 +128,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
 
   ## Wenn in plot_settings ein named vector angegeben wurde mit "+" oder "-", dann das nutzen, sonst versuchen selber zu berechnen:
 
-  if(!is.null(plot_settings$point_label_nudge_direction)){
-
+  if (!is.null(plot_settings$point_label_nudge_direction)) {
     ## Checks
     stopifnot(all(names(plot_settings$point_label_nudge_direction) %in% levels(plot_points_dat$grouping_var)))
 
@@ -142,27 +140,26 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
     )
 
     res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
+  } else {
+    nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$years_Trend), function(year_df) {
+      res_frame <- data.frame(
+        nudge_y = ifelse(
+          year_df$point_values == min(year_df$point_values) & length(year_df$point_values) > 1,
+          nudge_val * -1,
+          nudge_val
+        ),
+        years_Trend = year_df$years_Trend,
+        year = year_df$year,
+        grouping_var = year_df$grouping_var
+      )
+      ## If duplicated estimate values exist:
+      dup_nudge <- duplicated(year_df$point_values == min(year_df$point_values))
+      res_frame[dup_nudge, "nudge_y"] <- res_frame[dup_nudge, "nudge_y"] * -1
+      return(res_frame)
+    })
 
-}else{
-  nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$years_Trend), function(year_df) {
-    res_frame <- data.frame(
-      nudge_y = ifelse(
-        year_df$point_values == min(year_df$point_values) & length(year_df$point_values) > 1,
-        nudge_val * -1,
-        nudge_val
-      ),
-      years_Trend = year_df$years_Trend,
-      year = year_df$year,
-      grouping_var = year_df$grouping_var
-    )
-    ## If duplicated estimate values exist:
-    dup_nudge <- duplicated(year_df$point_values == min(year_df$point_values))
-    res_frame[dup_nudge, "nudge_y"] <- res_frame[dup_nudge, "nudge_y"] * -1
-    return(res_frame)
-  })
-
-  res_frame <- data.frame(do.call("rbind", nudge_neg))
-}
+    res_frame <- data.frame(do.call("rbind", nudge_neg))
+  }
 
   out <- merge(plot_points_dat, res_frame,
     by = c("years_Trend", "year", "grouping_var"),
@@ -179,22 +176,21 @@ calc_pos <- function(coords_min, range_coords, width) {
 
 
 calc_brace_label_y <- function(dat, upper_label_y, range_coords, gap_label) {
-
-for(i in unique(dat$years_Trend)){
-  dat_trend <- dat[dat$years_Trend == i, ]
-  dat_trend$grouping_var <- droplevels(dat_trend$grouping_var)
-  for (j in seq_along(levels(dat_trend$grouping_var))) {
-    lvl <- levels(dat_trend$grouping_var)[j]
-    dat_lvl <- dat[dat$years_Trend == i & dat$grouping_var == lvl, ]
-    dat[dat$years_Trend == i & dat$grouping_var == lvl, "label_pos_y"] <- upper_label_y - (range_coords * gap_label * (j - 1))
+  for (i in unique(dat$years_Trend)) {
+    dat_trend <- dat[dat$years_Trend == i, ]
+    dat_trend$grouping_var <- droplevels(dat_trend$grouping_var)
+    for (j in seq_along(levels(dat_trend$grouping_var))) {
+      lvl <- levels(dat_trend$grouping_var)[j]
+      dat_lvl <- dat[dat$years_Trend == i & dat$grouping_var == lvl, ]
+      dat[dat$years_Trend == i & dat$grouping_var == lvl, "label_pos_y"] <- upper_label_y - (range_coords * gap_label * (j - 1))
+    }
   }
-}
   return(dat$label_pos_y)
 }
 
 
-nudge_by_level <- function(df, plot_settings, nudge_val){
-  for(i in levels(df$grouping_var)){
+nudge_by_level <- function(df, plot_settings, nudge_val) {
+  for (i in levels(df$grouping_var)) {
     df[df$grouping_var == i, "nudge_y"] <- nudge_val * as.numeric(paste0(plot_settings$point_label_nudge_direction[[i]], "1"))
   }
   return(df)

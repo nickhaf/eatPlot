@@ -7,7 +7,6 @@
 #'
 #' @examples # tbd
 set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings_lineplot()) {
-
   plot_dat$plot_points <- fill_column(plot_dat$plot_points, point_values, filling = NA)
 
 
@@ -17,7 +16,7 @@ set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings
   list(
     set_y_coords(plot_dat),
     ggplot2::scale_x_continuous(
-      #position = "top",
+      # position = "top",
       breaks = unique(plot_dat[["plot_points"]]$year),
       expand = c(plot_settings$axis_x_background_width_x, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
@@ -31,19 +30,21 @@ calc_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 
   coords <- c(
     ## Lower y limit
     plyr::round_any(range_vec[1] - (range_vec[1] * nudge_param_lower),
-                    accuracy = 10,
-                    f = floor) - range_est * nudge_param_lower,
+      accuracy = 10,
+      f = floor
+    ) - range_est * nudge_param_lower,
     ## upper y limit
     plyr::round_any(range_vec[2] + (range_vec[2] * nudge_param_upper),
-                    accuracy = 10,
-                    f = ceiling) + range_est * nudge_param_upper
+      accuracy = 10,
+      f = ceiling
+    ) + range_est * nudge_param_upper
   )
   return(coords)
 }
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat){
+set_y_coords <- function(plot_dat) {
   ggplot2::scale_y_continuous(
     breaks = seq(
       from = round(min(plot_dat[["plot_points"]]$point_values, na.rm = TRUE) - 10, -1),
@@ -54,9 +55,9 @@ set_y_coords <- function(plot_dat){
   )
 }
 
-set_cartesian_coords <- function(coords){
-ggplot2::coord_cartesian(
-  clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
-  ylim = coords
-)
+set_cartesian_coords <- function(coords) {
+  ggplot2::coord_cartesian(
+    clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
+    ylim = coords
+  )
 }

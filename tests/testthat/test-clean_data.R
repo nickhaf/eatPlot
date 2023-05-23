@@ -25,24 +25,40 @@ test_that("NAs are filled up correctly", {
     info_to = c(NA, NA, NA, "b")
   )
   expect_equal(fill_up_na(df_na, info_to = "info_to", filling_groups = c("a", "b"))$info_to, c("a", "b", NA, "b"))
+
+
+  df_realistic <- data.frame(
+    group_var = c(
+      "Hamburg_zweiteGen-ohneSPF.vs.zweiteGen-ohneSPF",
+      "TR_BUNDESLAND=Baden-Wuerttemberg____ersteGen-alle.vs.zweiteGen-alle.VS.all.group=1____einET-alle.vs.zweiteGen-alle"
+    ),
+    grouping_var = c(NA, NA)
+  )
+
+  expect_equal(
+    fill_up_na(df_realistic, info_to = "grouping_var", filling_groups = c("zweiteGen-ohneSPF", "ersteGen-alle", "einET-alle"))$grouping_var,
+    c("zweiteGen-ohneSPF", "ersteGen-alle")
+  )
 })
+
+
 
 test_that("NoGroup and wholeGroup are filled up correctly", {
   df_raw <- data.frame(
-    group_var = c("a_wholeGroup.vs.xy", "wholeGroup_xy", NA, "a.vs.a"),
-    state_var = c(NA, NA, NA, "b"),
-    competence_var = rep("a", 4),
-    grouping_var = factor(c(rep(NA, 3), "z")),
-    parameter = rep("mean", 4)
+    group_var = c("Berlin_0.vs.Brandenburg", "wholeGroup", NA, "Berlin_1.vs.1", "0.vs.1"),
+    state_var = c(NA, NA, NA, "b", NA),
+    competence_var = rep("a", 5),
+    grouping_var = factor(c(rep(NA, 3), "1", NA)),
+    parameter = rep("mean", 5)
   )
 
   df_cleaned <- clean_data(
     df_raw,
-    all_states = "a",
-    sub_groups = "xy",
+    all_states = c("Berlin", "Brandenburg"),
+    sub_groups = c("1", "0"),
     competence = "a"
   )
 
-  expect_equal(df_cleaned$state_var, c("a", "wholeGroup", NA, "b"))
-  expect_equal(df_cleaned$grouping_var, factor(c("xy", "xy", "noGroup", "z"), levels = c("z", "xy", "noGroup")))
+  expect_equal(df_cleaned$state_var, c("Berlin", "wholeGroup", NA, "b", "wholeGroup"))
 })
+

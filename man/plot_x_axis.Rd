@@ -20,5 +20,5 @@ A blue stripe on top of ggplot2 plot which can be used as x-axis.
 Plot the x-Axis.
 }
 \examples{
-#tbd
+# tbd
 }

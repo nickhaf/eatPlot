@@ -1,4 +1,3 @@
-
 test_that("example mindeststandard short version", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
@@ -7,9 +6,9 @@ test_that("example mindeststandard short version", {
 
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
-for(i in c("2011", "2016", "2021")){
-  dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_CompCrossDiffWhole_", i), sig_column = paste0("sig_noTrend_CompCrossDiffWhole_", i))
-}
+  for (i in c("2011", "2016", "2021")) {
+    dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i), sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
+  }
 
   # Plot 1 ------------------------------------------------------------------
   dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
@@ -18,7 +17,7 @@ for(i in c("2011", "2016", "2021")){
     dat = dat_bar_1,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
     columns_headers = list("Land"),
     columns_table = list("state_var"),
@@ -43,7 +42,7 @@ for(i in c("2011", "2016", "2021")){
     dat = dat_bar_2,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
     bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -66,7 +65,7 @@ for(i in c("2011", "2016", "2021")){
     dat = dat_bar_3,
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
-    bar_sig = "sig_noTrend_CompCrossDiffWhole_2021_directional_sig",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
     bar_header = "Optimalstandard erreicht (MSA)",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -82,7 +81,7 @@ for(i in c("2011", "2016", "2021")){
   vdiffr::expect_doppelganger("Mindeststandards", minsta_plot)
 
 
-  #save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
+  # save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
 })
 
 test_that("Example barplot long format is plotted correctly", {
@@ -94,14 +93,16 @@ test_that("Example barplot long format is plotted correctly", {
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
   dat_bar <- construct_label(dat_bar,
-                             new_name = "se_Trend_noComp_20112016_percent_label",
-                             label_se = "se_Trend_noComp_20112016_percent",
-                             round_se = 1)
+    new_name = "se_Trend_noComp_20112016_percent_label",
+    label_se = "se_Trend_noComp_20112016_percent",
+    round_se = 1
+  )
 
   dat_bar <- construct_label(dat_bar,
-                             label_se = "se_Trend_noComp_20162021_percent",
-                             new_name = "se_Trend_noComp_20162021_percent",
-                             round_se = 1)
+    label_se = "se_Trend_noComp_20162021_percent",
+    new_name = "se_Trend_noComp_20162021_percent",
+    round_se = 1
+  )
 
 
   dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht", dat_bar$depVar)
@@ -153,7 +154,7 @@ test_that("Example barplot long format is plotted correctly", {
       NULL,
       NULL,
       NULL,
-      "sig_Trend_CompCrossDiffWhole_20112016",
+      "sig_Trend_Comp_crossDiff_wholeGroup_20112016",
       NULL
     ),
     y_axis = "y_axis_new",
@@ -197,7 +198,7 @@ test_that("Example barplot long format is plotted correctly", {
     columns_table_sig_high = list(
       NULL,
       NULL,
-      "sig_Trend_CompCrossDiffWhole_20162021",
+      "sig_Trend_Comp_crossDiff_wholeGroup_20162021",
       NULL
     ),
     y_axis = "y_axis_new",
@@ -215,5 +216,5 @@ test_that("Example barplot long format is plotted correctly", {
 
   vdiffr::expect_doppelganger("MinStand_trend", c_plot)
 
-  #save_plot(c_plot, filename = "../Kap3_2022_MSA_trend_v02.pdf")
+  # save_plot(c_plot, filename = "../Kap3_2022_MSA_trend_v02.pdf")
 })

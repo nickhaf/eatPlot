@@ -35,7 +35,6 @@ test_that("calc_brace_coords works for wide format", {
   expect_equal(test_braces$lower_y, rep(343, 4))
   expect_equal(test_braces$year_start, c(2011, 2011, 2012, 2012))
   expect_equal(test_braces$label_pos_y, rep(c(334.5, 320.9), 2))
-
 })
 
 
@@ -55,25 +54,28 @@ test_that("labels are calculated correctly for multiple groups", {
 
 
 test_that("Point nudge is calculated correctly", {
-    df <- data.frame(year = c(2011, 2011, 2012, 2012, 2012, 2012, 2030, 2030),
-                     point_values = c(1, 2, 2, 1, 1, 2, 1, 1),
-                     years_Trend = c(1, 1, 1, 1, 2, 2, 2, 2),
-                     grouping_var = c(1, 0, 1, 0, 1, 0, 1, 0)
-    )
+  df <- data.frame(
+    year = c(2011, 2011, 2012, 2012, 2012, 2012, 2030, 2030),
+    point_values = c(1, 2, 2, 1, 1, 2, 1, 1),
+    years_Trend = c(1, 1, 1, 1, 2, 2, 2, 2),
+    grouping_var = c(1, 0, 1, 0, 1, 0, 1, 0)
+  )
 
   expect_equal(calc_y_nudge(df,
-                            y_range = c(1, 2),
-                            plot_settings = plotsettings_lineplot(point_label_nudge_y = 0.18)
-                            )$nudge_y, c(0.18, -0.18, -0.18, 0.18, 0.18, -0.18, 0.18, -0.18)
-               )
+    y_range = c(1, 2),
+    plot_settings = plotsettings_lineplot(point_label_nudge_y = 0.18)
+  )$nudge_y, c(0.18, -0.18, -0.18, 0.18, 0.18, -0.18, 0.18, -0.18))
 })
 
 
 test_that("", {
   df <- data.frame(grouping_var = as.factor(c("a", "b", "c")))
-expect_equal(nudge_by_level(df, plot_settings = plotsettings_lineplot(point_label_nudge_direction = list("a" = "-",
-                                                                                   "b" = "-",
-                                                                                   "c" = "+")),
-                            nudge_val = 0.1
-               )$nudge_y, c(-0.1, -0.1, 0.1))
+  expect_equal(nudge_by_level(df,
+    plot_settings = plotsettings_lineplot(point_label_nudge_direction = list(
+      "a" = "-",
+      "b" = "-",
+      "c" = "+"
+    )),
+    nudge_val = 0.1
+  )$nudge_y, c(-0.1, -0.1, 0.1))
 })
