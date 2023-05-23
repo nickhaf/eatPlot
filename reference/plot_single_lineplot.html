@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@
 
 
 <dt>point_sig</dt>
-<dd><p>Character string of the column name containing significance values for <code>point_values</code>. Defaults to <code>"sig_noTrend_CompCrossDiffWhole"</code>.</p></dd>
+<dd><p>Character string of the column name containing significance values for <code>point_values</code>. Defaults to <code>"sig_noTrend_Comp_crossDiff_wholeGroup"</code>.</p></dd>
 
 
 <dt>line_values</dt>
@@ -98,7 +98,7 @@
 
 
 <dt>line_sig</dt>
-<dd><p>Character string of the column name containing significance values for <code>line_values</code>. Defaults to <code>"sig_Trend_CompWithin"</code>.</p></dd>
+<dd><p>Character string of the column name containing significance values for <code>line_values</code>. Defaults to <code>"sig_Trend_noComp"</code>, which will show the significance of the difference between two time points.</p></dd>
 
 
 <dt>label_est</dt>
@@ -110,11 +110,11 @@
 
 
 <dt>label_sig_high</dt>
-<dd><p>Character string of the column name containing significance values for <code>label_est</code>. Significant values will be marked by a raised 'a'.</p></dd>
+<dd><p>Character string of the column name containing significance values for <code>label_est</code>. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to <code>NULL</code>, as this parameter is not always provided.</p></dd>
 
 
 <dt>label_sig_bold</dt>
-<dd><p>Character string of the column name containing significance values for <code>label_est</code>. Significant values will be marked as bold.</p></dd>
+<dd><p>Character string of the column name containing significance values for <code>label_est</code>. Significant values will be marked as bold. Defaults to <code>"sig_Trend_noComp"</code>.</p></dd>
 
 
 <dt>background_lines</dt>

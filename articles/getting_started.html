@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,10 +93,10 @@ right in!</p>
 <p>The first step is the data preperation. This is handeled by the
 function <code><a href="../reference/prep_plot.html">prep_plot()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dat_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span><span class="va">trend_books</span>, </span>
-<span>                      competence <span class="op">=</span> <span class="st">"GL"</span>,</span>
-<span>                      grouping_var <span class="op">=</span> <span class="st">"KBuecher_imp3"</span></span>
-<span>                      <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dat_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span><span class="va">trend_books</span>,</span>
+<span>  competence <span class="op">=</span> <span class="st">"GL"</span>,</span>
+<span>  grouping_vars <span class="op">=</span> <span class="st">"KBuecher_imp3"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The only thing that needs to be done in this step is to define the
 columns in your data set (here named “trend_books”), if they differ from
 the defaults, so the function knows which on is which.</p>
@@ -142,54 +142,20 @@ function. Input data is the list of data.frames prepated by
 <code><a href="../reference/prep_plot.html">prep_plot()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span><span class="va">dat_plot</span>,</span>
-<span>              years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>              years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span></code></pre></div>
+<span>  years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting_started_files/figure-html/unnamed-chunk-3-1.png" width="700">
 As we can see, the lineplot doesn’t look optimal yet. However, we can
 provide the predefined plotsettings-list to get the anticipated
 result:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span><span class="va">dat_plot</span>,</span>
-<span>              years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>              years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>              plot_settings <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
-<span>              <span class="op">)</span></span>
-<span><span class="va">p1</span></span>
-<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span>
-<span><span class="co">#&gt; Removed 2 rows containing missing values (`geom_segment()`).</span></span></code></pre></div>
+<span>  years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  plot_settings <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">p1</span></span></code></pre></div>
 <p><img src="getting_started_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>The plots might still look a bit distorted, as they are optimized for
 the saved pdf file. You can save the plot by using
@@ -215,17 +181,20 @@ the headers, and default settings (if needed).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_plot</span><span class="op">$</span><span class="va">plot_tablebar</span>, <span class="va">grouping_var</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">bartable_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">dat_plot</span>,</span>
-<span>              bar_est <span class="op">=</span> <span class="st">"est_Trend_CompCrossDiffWhole_20162021"</span>,</span>
-<span>              bar_header <span class="op">=</span> <span class="st">"Wert"</span>,</span>
-<span>              columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Land"</span>, <span class="st">"Wert"</span><span class="op">)</span>,</span>
-<span>              columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"state_var"</span>, <span class="st">"est_noTrend_noComp_2016"</span><span class="op">)</span>,</span>
-<span>              y_axis <span class="op">=</span> <span class="st">"state_var"</span>,</span>
-<span>              plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">30</span>, <span class="fl">30</span><span class="op">)</span>,</span>
-<span>                                                        columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>                                                        columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
-<span>                                                        default_list <span class="op">=</span> <span class="va">barplot_plot_frame</span><span class="op">)</span></span>
-<span>              <span class="op">)</span></span></code></pre></div>
+<span><span class="va">bartable_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span></span>
+<span>  dat <span class="op">=</span> <span class="va">dat_plot</span>,</span>
+<span>  bar_est <span class="op">=</span> <span class="st">"est_Trend_Comp_crossDiff_wholeGroup_20162021"</span>,</span>
+<span>  bar_header <span class="op">=</span> <span class="st">"Wert"</span>,</span>
+<span>  columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Land"</span>, <span class="st">"Wert"</span><span class="op">)</span>,</span>
+<span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"state_var"</span>, <span class="st">"est_noTrend_noComp_2016"</span><span class="op">)</span>,</span>
+<span>  y_axis <span class="op">=</span> <span class="st">"state_var"</span>,</span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
+<span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">30</span>, <span class="fl">30</span><span class="op">)</span>,</span>
+<span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>    default_list <span class="op">=</span> <span class="va">barplot_plot_frame</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Note that we have to change the column alignment here, so the column
 values are aligned correctly, and that we have to change the column
 width, if we don’t want all columns to have the same size.</p>
@@ -238,24 +207,28 @@ table with the desired number of columns, and one barplot on the right
 side of the table. For very complex plots, different plots have to be
 combined to achieve the desired output.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bartable_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">dat_plot</span>,</span>
-<span>              bar_est <span class="op">=</span> <span class="st">"est_Trend_CompCrossDiffWithin_20162021"</span>,</span>
-<span>              bar_header <span class="op">=</span> <span class="st">"Wert"</span>,</span>
-<span>              columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Wert"</span><span class="op">)</span>,</span>
-<span>              columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"est_noTrend_noComp_2021"</span><span class="op">)</span>,</span>
-<span>              y_axis <span class="op">=</span> <span class="st">"state_var"</span>,</span>
-<span>              plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
-<span>                                                        columns_alignment <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>                                                        columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.8</span><span class="op">)</span>,</span>
-<span>                                                        default_list <span class="op">=</span> <span class="va">barplot_plot_frame</span><span class="op">)</span></span>
-<span>              <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bartable_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebar.html">plot_tablebar</a></span><span class="op">(</span></span>
+<span>  dat <span class="op">=</span> <span class="va">dat_plot</span>,</span>
+<span>  bar_est <span class="op">=</span> <span class="st">"est_Trend_Comp_crossDiff_wholeGroupSameGroup_20162021"</span>,</span>
+<span>  bar_header <span class="op">=</span> <span class="st">"Wert"</span>,</span>
+<span>  columns_headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Wert"</span><span class="op">)</span>,</span>
+<span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"est_noTrend_noComp_2021"</span><span class="op">)</span>,</span>
+<span>  y_axis <span class="op">=</span> <span class="st">"state_var"</span>,</span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
+<span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>    columns_alignment <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.8</span><span class="op">)</span>,</span>
+<span>    default_list <span class="op">=</span> <span class="va">barplot_plot_frame</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Sometimes the alignment of the columns can be a bit tricky, than you
 have to play around with the <code>columns_alignment</code>,
 <code>columns_width</code> and <code>columns_nudge</code> settings.</p>
 <p>The two plots can be combined into one by
 <code><a href="../reference/combine_plots.html">combine_plots()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">bartable_1</span>, <span class="va">bartable_2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">bartable_1</span>, <span class="va">bartable_2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values (`geom_rect()`).</span></span></code></pre></div>
 <p><img src="getting_started_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
