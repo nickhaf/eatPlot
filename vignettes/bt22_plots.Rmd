@@ -39,8 +39,6 @@ plot_dat <- filter_rows(plot_dat,
   remove = TRUE
 )
 
-## Signifikanzen stiummen noch nicht. Label sind auch noch vertauscht. 
-
 p_line_states <- plot_lineplot(
   plot_dat = plot_dat,
   title_superscripts = list("Land-17" = "a",
