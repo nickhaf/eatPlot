@@ -72,9 +72,7 @@ plot_dat_test <- prep_plot(
 p_line_ger <- plot_lineplot(
   plot_dat = plot_dat_test,
   seperate_plot_var = "competence_var",
-  point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
   label_sig_high = NULL,
-  line_sig = "sig_Trend_Comp_crossDiff_wholeGroup",
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
   background_lines = FALSE,

@@ -2,18 +2,18 @@
 % Please edit documentation in R/plot_lineplot.R
 \name{plot_lineplot}
 \alias{plot_lineplot}
-\title{Title}
+\title{Plot a lineplot.}
 \usage{
 plot_lineplot(
   plot_dat,
   seperate_plot_var = "state_var",
   point_values = "est_noTrend_noComp",
-  point_sig = "sig_noTrend_Comp_crossDiff_wholeGroupSameGroup",
+  point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
   line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-  line_sig = "sig_Trend_Comp_crossDiff_wholeGroupSameGroup",
+  line_sig = "sig_Trend_noComp",
   label_est = "est_Trend_noComp",
   label_se = "se_Trend_noComp",
-  label_sig_high = "sig_Trend_Comp_crossDiff_wholeGroupSameGroup",
+  label_sig_high = NULL,
   label_sig_bold = "sig_Trend_noComp",
   line_se = NULL,
   years_lines = NULL,
@@ -29,19 +29,19 @@ plot_lineplot(
 
 \item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroupSameGroup"}.}
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroup"}.}
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
-\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_Comp_crossDiff_wholeGroupSameGroup"}.}
+\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_noComp"}, which will show the significance of the difference between two time points.}
 
 \item{label_est}{Character string of the column name containing the brace labels.}
 
 \item{label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
 
-\item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Defaults to \code{sig_Trend_Comp_crossDiff_wholeGroupSameGroup}.}
+\item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
 
-\item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold.}
+\item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}
 
 \item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
 
@@ -57,7 +57,7 @@ plot_lineplot(
 \link{ggplot2} object.
 }
 \description{
-Title
+Plot a lineplot.
 }
 \examples{
 # tbd

@@ -1,16 +1,16 @@
-#' Title
+#' Plot a lineplot.
 #'
 #' @param plot_dat Input is a list prepared by [prep_plot()].`
 #' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
 #' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroupSameGroup"`.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroup"`.
 #' @param line_values Character vector with two elements. Column names in `plot_dat[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
 #' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
-#' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_Comp_crossDiff_wholeGroupSameGroup"`.
+#' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_noComp"`, which will show the significance of the difference between two time points.
 #' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
-#' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Defaults to `sig_Trend_Comp_crossDiff_wholeGroupSameGroup`.
-#' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold.
+#' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
+#' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background.
@@ -22,12 +22,12 @@
 plot_lineplot <- function(plot_dat,
                           seperate_plot_var = "state_var",
                           point_values = "est_noTrend_noComp",
-                          point_sig = "sig_noTrend_Comp_crossDiff_wholeGroupSameGroup",
+                          point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
                           line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-                          line_sig = "sig_Trend_Comp_crossDiff_wholeGroupSameGroup",
+                          line_sig = "sig_Trend_noComp",
                           label_est = "est_Trend_noComp",
                           label_se = "se_Trend_noComp",
-                          label_sig_high = "sig_Trend_Comp_crossDiff_wholeGroupSameGroup",
+                          label_sig_high = NULL,
                           label_sig_bold = "sig_Trend_noComp",
                           line_se = NULL,
                           years_lines = NULL,
