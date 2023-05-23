@@ -9,7 +9,7 @@ test_that("minsta_plot_trend works", {
 })
 
 test_that("mean_noTrend_plot works", {
-  vdiffr::expect_doppelganger("mean_noTrend", suppressWarnings(mean_noTrend))
+  suppressWarnings(vdiffr::expect_doppelganger("mean_noTrend", mean_noTrend))
 })
 
 test_that("p_line_states works", {
