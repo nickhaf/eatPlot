@@ -211,7 +211,7 @@ dat_bar_mean_sd <- merge(dat_bar_mean,
 
 dat_bar_mean_sd <- dat_bar_mean_sd[dat_bar_mean_sd$grouping_var == "noGroup", ]
 
-plot_tablebar(dat_bar_mean_sd,
+mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
               bar_est = "est_noTrend_Comp_crossDiff_wholeGroup_2021_mean", 
               bar_header = "Differenz", 
               bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean",
@@ -230,6 +230,10 @@ plot_tablebar(dat_bar_mean_sd,
             )
 
 
+```
+
+```{r, eval = FALSE}
+save_plot(mean_noTrend, filename = "../Kap4_2022_noTrend.pdf", height = 226.2 / 3)
 ```
 
 
