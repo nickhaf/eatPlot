@@ -90,8 +90,7 @@ prep_data_blocks <- function(data_clean, sig_niveau, states, sub_groups, merging
   if (nrow(data_wholeGroup) != 0) {
     filtered_list[["noTrend_noComp_wholeGroup"]] <- prep_long(data_wholeGroup,
       include_pattern = c("est_|^p_|se_|es_"),
-      remove_pattern = "trend" # ,
-      # suffix = "_noTrend"
+      remove_pattern = "trend"
     )
     filtered_list[["noTrend_noComp_wholeGroup"]] <- add_suffix(filtered_list[["noTrend_noComp_wholeGroup"]],
       merging_columns = merging_columns,
