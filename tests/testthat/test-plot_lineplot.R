@@ -315,3 +315,14 @@ test_that("adjusted means for whole group", {
   vdiffr::expect_doppelganger("lineplot_4x4_adjusted_ger", p_line_deutschland)
   # save_plot(p_line_deutschland, filename = "../adjusted_means_ger.pdf", height = 226.2 / 2 + 10)
 })
+
+
+test_that("title can get a raised letter", {
+  title  <-  "c"
+  title_raised_letter <- list("a" = "b", "c" = "d")
+  title_raised_letter_0 <- NULL
+
+  expect_equal(plot_title(title, title_raised_letter)$title, bquote("c"^"d"))
+  expect_equal(plot_title(title, title_raised_letter_0)$title, "c")
+
+  })

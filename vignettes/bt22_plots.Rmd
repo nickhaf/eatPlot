@@ -42,6 +42,8 @@ plot_dat <- filter_rows(plot_dat,
 
 p_line_states <- plot_lineplot(
   plot_dat = plot_dat,
+  title_letter_high = list("Land-17" = "a",
+                           "Land-45" = "3"),
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
   plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
