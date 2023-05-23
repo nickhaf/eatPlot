@@ -26,6 +26,7 @@ library(eatPlot)
 ## Prepare the data with 'KBuecher_imp3' as grouping_var
 plot_dat <- prep_plot(
   dat = trend_books,
+  comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
   competence = "GL",
   grouping_vars = "KBuecher_imp3",
   grouping_vars_groups = c("0", "1")

@@ -6,6 +6,7 @@
 #' `r lifecycle::badge("experimental")`
 #'
 #' @param dat Input data.frame stemming from `eatRep`.
+#' @param comparisons Character vector for filtering specific comparisons. Defaults to `NULL`, in which case all comparisons will be prepared.
 #' @param competence Character string containing the competence that should be plotted.
 #' @param grouping_vars Character vector containing maximal two column names in `dat` that should be used to distinguish between subgroups. If two columns are provided, they will be merged internally into one.
 #' @param states Character vector of the states that should be plotted.
@@ -26,6 +27,7 @@
 #'
 #' @examples # tbd
 prep_plot <- function(dat,
+                      comparisons = NULL,
                       competence_var = "kb",
                       competence = NULL,
                       states = NULL,
@@ -60,6 +62,10 @@ prep_plot <- function(dat,
 
   ## Check if columns are in data:
   sapply(c(grouping_vars, state_var, competence_var, group_var, "comparison"), check_column, dat = dat)
+
+  if(!is.null(comparisons)){
+  dat <- dat[dat$comparison %in% comparisons | is.na(dat$comparison), ]
+}
 
   ## Build grouping_var
   dat <- fill_column(dat, group_var)
