@@ -11,7 +11,7 @@
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
-#' @param title_superscript Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to `NULL`.
+#' @param title_superscripts Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to `NULL`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background.
@@ -31,14 +31,14 @@ plot_lineplot <- function(plot_dat,
                           label_sig_high = NULL,
                           label_sig_bold = "sig_Trend_noComp",
                           line_se = NULL,
-                          title_superscript = NULL,
+                          title_superscripts = NULL,
                           years_lines = NULL,
                           years_braces = NULL,
                           background_lines = TRUE,
                           plot_settings = plotsettings_lineplot()) {
   stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
   stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
-  stopifnot(inherits(title_superscript, "list") | is.null(title_superscript))
+  stopifnot(inherits(title_superscripts, "list") | is.null(title_superscripts))
 
   check_plotsettings_lineplot(plot_settings)
 
@@ -91,7 +91,7 @@ plot_lineplot <- function(plot_dat,
         background_lines = background_lines,
         plot_settings = plot_settings
       ) +
-     plot_title(i, title_superscript) +
+     plot_title(i, title_superscripts) +
           set_plot_coords(plot_dat,
         point_values = point_values,
         plot_settings = plot_settings
