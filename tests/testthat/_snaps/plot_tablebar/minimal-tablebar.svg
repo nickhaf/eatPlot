@@ -55,8 +55,6 @@
 <rect x='302.02' y='251.25' width='158.27' height='44.58' style='stroke-width: 0.43; stroke: #0000FF; stroke-linecap: square; stroke-linejoin: miter;' />
 <rect x='302.02' y='362.70' width='197.84' height='44.58' style='stroke-width: 0.43; stroke: #FFFF00; stroke-linecap: square; stroke-linejoin: miter;' />
 <rect x='302.02' y='474.14' width='303.36' height='44.58' style='stroke-width: 0.43; stroke: #00FF00; stroke-linecap: square; stroke-linejoin: miter;' />
-<text x='483.25' y='52.70' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>a</text>
-<text x='490.37' y='52.70' style='font-size: 8.54px; font-family: sans;' textLength='26.10px' lengthAdjust='spacingAndGlyphs'>barplot</text>
 <text x='483.25' y='24.83' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>a</text>
 <text x='490.37' y='24.83' style='font-size: 8.54px; font-family: sans;' textLength='26.10px' lengthAdjust='spacingAndGlyphs'>barplot</text>
 <text x='218.13' y='164.14' style='font-size: 8.54px; font-weight: bold; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
