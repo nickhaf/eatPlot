@@ -1,7 +1,8 @@
 ## code to prepare `barplot_table_plot_pattern` dataset goes here
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", "white", "white", "gray94", "gray94", "gray94"), 8), rep("gray87", 3)),
-  bar_border_lines = TRUE,
+  bar_background_lines = "border",
+  bar_background_lines_linetype = "dotted",
   bar_fill_colour = c(
     grDevices::rgb(33, 89, 104, maxColorValue = 255),
     grDevices::rgb(49, 133, 156, maxColorValue = 255),
@@ -26,7 +27,7 @@ usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 barplot_plot_frame <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", "gray94"), 8), "gray87"),
-  bar_border_lines = FALSE,
+  bar_background_lines = "none",
   bar_fill_colour = c("lightblue"),
   bar_frame_linetype = c("above" = "solid", "below" = "longdash", "no_sig" = "blank"),
   bar_label_nudge_x = -0.2,
@@ -39,5 +40,11 @@ barplot_plot_frame <- plotsettings_tablebarplot(
   headers_background_width_x = 1,
   default_list = barplot_table_plot_pattern
 )
+
+
+
+usethis::use_data(barplot_plot_frame, overwrite = TRUE)
+
+
 
 usethis::use_data(barplot_plot_frame, overwrite = TRUE)

@@ -12,7 +12,7 @@
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
 #' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
-#' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets behind the column values.
+#' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to `1`.
 #' @param columns_round List of numerics, for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
 #' @param y_axis Character string of the columnname used as y-axis.
@@ -136,13 +136,20 @@ plot_tablebar <- function(dat,
       dat,
       new_name = new_colnames[i],
       label_est = columns_table[[i]],
-      label_se = columns_table_se[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
       label_sig_high = columns_table_sig_high[[i]],
       label_sig_high_extra_column = TRUE,
       round_est = columns_round[[i]],
       plot_settings = plot_settings
     )
+
+    if(!is.null(columns_table_se[[i]])){
+    dat <- construct_label(
+      dat,
+      new_name = new_colnames[i],
+      label_se = columns_table_se[[i]]
+    )
+    }
   }
 
   if (!is.null(bar_label)) {
@@ -276,18 +283,6 @@ plot_tablebar <- function(dat,
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggtext::geom_richtext(
-          data = data.frame(),
-          ggplot2::aes(
-            x = mean(plot_borders, na.rm = TRUE),
-            y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y
-          ),
-          label = bar_header,
-          size = plot_settings$font_size,
-          label.padding = grid::unit(rep(0, 4), "pt"),
-          fill = NA,
-          label.color = NA
-        ) +
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
@@ -597,27 +592,32 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
 
 
 add_vlines <- function(plot_settings, plot_borders) {
+  scale_breaks <- unique(c(
+    seq(0, plot_borders[1], by = -10),
+    seq(0, plot_borders[2], by = 10)
+  ))
   c(
-    if (plot_settings$bar_border_lines == TRUE) {
-      c(
+    if (plot_settings$bar_background_lines == "border") {
+
         ggplot2::annotate(
           "segment",
-          x = plot_borders[1],
-          xend = plot_borders[1],
+          x = range(scale_breaks),
+          xend = range(scale_breaks),
           y = 0.5,
           yend = Inf,
           colour = "darkgrey",
-          linetype = "dotted"
-        ),
-        ggplot2::annotate(
-          "segment",
-          x = plot_borders[2],
-          xend = plot_borders[2],
-          y = 0.5,
-          yend = Inf,
-          colour = "darkgrey",
-          linetype = "dotted"
+          linetype = plot_settings$bar_background_lines_linetype
         )
+
+    }else if(plot_settings$bar_background_lines == "scale_breaks"){
+      ggplot2::annotate(
+        "segment",
+        x = scale_breaks,
+        xend = scale_breaks,
+        y = 0.5,
+        yend = Inf,
+        colour = "darkgrey",
+        linetype = plot_settings$bar_background_lines_linetype
       )
     },
     ggplot2::annotate(

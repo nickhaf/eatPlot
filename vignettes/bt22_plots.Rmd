@@ -189,6 +189,50 @@ save_plot(minsta_plot, filename = "../Kap3_2022_MSA-v02.pdf", height = 226.2 / 3
 ```
 
 
+## Chapter 4: No Trend
+```{r}
+dat_bar_mean <- prep_plot(trend_books,
+  competence = "lesen",
+  grouping_vars = "KBuecher_imp3",
+  parameter = "mean"
+)[["plot_tablebar"]]
+
+dat_bar_sd <- prep_plot(trend_books,
+  competence = "lesen",
+  grouping_vars = "KBuecher_imp3",
+  parameter = "sd"
+)[["plot_tablebar"]]
+
+dat_bar_mean_sd <- merge(dat_bar_mean, 
+                         dat_bar_sd, 
+                         by = c("state_var", "grouping_var"), 
+                         suffix = c("_mean", "_sd")
+                         )
+
+dat_bar_mean_sd <- dat_bar_mean_sd[dat_bar_mean_sd$grouping_var == "noGroup", ]
+
+plot_tablebar(dat_bar_mean_sd,
+              bar_est = "est_noTrend_Comp_crossDiff_wholeGroup_2021_mean", 
+              bar_header = "Differenz", 
+              bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean",
+              columns_table = list("state_var",
+                                   "est_noTrend_noComp_2021_mean",
+                                   "se_noTrend_noComp_2021_mean",
+                                   "est_noTrend_noComp_2021_sd",
+                                   "se_noTrend_noComp_2021_sd"
+                                   ),
+              columns_headers = list("Bundesland", "M", "SE", "M", "SE"), 
+              columns_table_se = list(NULL, NULL, "se_noTrend_noComp_2021_mean", NULL, "se_noTrend_noComp_2021_sd" ),
+              y_axis = "state_var",
+              plot_settings = plotsettings_tablebarplot(background_stripes_colour = c(rep(c("white", "gray94"), 8), "gray87"),
+                                                        bar_background_lines = "scale_breaks",
+                                                        default_list = barplot_table_plot_pattern)
+            )
+
+
+```
+
+
 ## Chapter 4: Mindeststandards Trend
 ```{r chpt_3_MinStand_trend}
 dat_bar <- prep_plot(min_stand,
@@ -331,4 +375,5 @@ minsta_plot_trend
 ```{r, eval = FALSE}
 save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend-v04.pdf")
 ```
+
 

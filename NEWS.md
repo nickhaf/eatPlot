@@ -11,7 +11,7 @@
 * Standardized the column names in `plot_data$plot_tablebar`, so `_noTrend` always is written before `Comp`.
 
 # eatPlot 0.0.0.9008
-* Added argument `plotsettings_tablebarplot(bar_border_lines = TRUE)` for striped border lines in barplots.
+* Added argument `plotsettings_tablebarplot(bar_background_lines = TRUE)` for striped border lines in barplots.
 * Added alignent option `2` for tablebars. This will right align columns in the middle of the column, usefull for numeric columns. 
 * Columns with linebreaks are adjusted automatically now, so they don't flow over the upper line borders any more. 
 
