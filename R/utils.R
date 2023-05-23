@@ -148,9 +148,11 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
       varying = colnames(data)[col_pos]
     )
     data_long$id <- NULL
-  } else {
+  } else { ## In this case, there is no trend:
+    colnames(data)[col_pos] <- paste0(colnames(data)[col_pos], "_noTrend")
     data_long <- data
     data_long$time <- "noTrend"
+
   }
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]

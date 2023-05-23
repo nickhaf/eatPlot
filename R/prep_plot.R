@@ -128,8 +128,6 @@ prep_plot <- function(dat,
 
   }
 
-
-
   list_building_blocks <- prep_data_blocks(
     data_clean = dat,
     sig_niveau = sig_niveau,
@@ -228,22 +226,20 @@ prep_plot <- function(dat,
 
 
 # plot_bar ----------------------------------------------------------------
-  # compare columns sind irgendwie weg
     if (nrow(noTrend_data_merged) != 0) {
-    # # earlier merging might lead to NAs in the comparison columns. As they might be needed as ID for reshaping, NAs are substituted
-    # compare_cols <- colnames(noTrend_data_merged)[grep("compare_", colnames(noTrend_data_merged))]
-    # for (i in compare_cols) {
-    #   noTrend_data_merged[is.na(noTrend_data_merged[, i]), i] <- "no_comp"
-    # }
-
     id_vars <- c("grouping_var", "state_var", "competence_var", "depVar")#, colnames(noTrend_data_merged)[grep("compare_", colnames(noTrend_data_merged))])
 
+    if(all(noTrend_data_merged$year == "noTrend")){
+      noTrend_data_merged_wide <- noTrend_data_merged
+    }else{
     noTrend_data_merged_wide <- stats::reshape(noTrend_data_merged,
       direction = "wide",
       timevar = "year",
       idvar = id_vars,
       sep = "_"
     )
+    }
+
   } else {
     noTrend_data_merged_wide <- data.frame()
   }
@@ -256,7 +252,8 @@ prep_plot <- function(dat,
     # }
 
     id_vars <- c("grouping_var", "state_var", "competence_var", "depVar")#, colnames(Trend_data_merged)[grep("compare_", colnames(Trend_data_merged))])
-    Trend_data_merged_wide <- stats::reshape(Trend_data_merged,
+    Trend_data_merged_wide <- stats::reshape(
+      Trend_data_merged,
       direction = "wide",
       timevar = "years_Trend",
       idvar = id_vars,

@@ -8,6 +8,7 @@
 * Removed default setting for `label_sig_high` argument in `plot_lineplot()`. 
 * Added the argument `title_superscript` in `plot_lineplot()` for specifying superscripts for the plot titles. 
 * Added the argument `comparisons` in `plot_lineplot()` for specifying wanted comparisons. 
+* Standardized the column names in `plot_data$plot_tablebar`, so `_noTrend` always is written before `Comp`.
 
 # eatPlot 0.0.0.9008
 * Added argument `plotsettings_tablebarplot(bar_border_lines = TRUE)` for striped border lines in barplots.
