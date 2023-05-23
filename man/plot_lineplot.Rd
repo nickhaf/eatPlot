@@ -16,7 +16,7 @@ plot_lineplot(
   label_sig_high = NULL,
   label_sig_bold = "sig_Trend_noComp",
   line_se = NULL,
-  title_superscript = NULL,
+  title_superscripts = NULL,
   years_lines = NULL,
   years_braces = NULL,
   background_lines = TRUE,
@@ -46,7 +46,7 @@ plot_lineplot(
 
 \item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
 
-\item{title_superscript}{Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to \code{NULL}.}
+\item{title_superscripts}{Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to \code{NULL}.}
 
 \item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
 

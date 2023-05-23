@@ -6,6 +6,7 @@
 \usage{
 prep_plot(
   dat,
+  comparisons = NULL,
   competence_var = "kb",
   competence = NULL,
   states = NULL,
@@ -20,6 +21,8 @@ prep_plot(
 }
 \arguments{
 \item{dat}{Input data.frame stemming from \code{eatRep}.}
+
+\item{comparisons}{Character vector for filtering specific comparisons. Defaults to \code{NULL}, in which case all comparisons will be prepared.}
 
 \item{competence_var}{Character string containing the column name in \code{dat} that contains the different competences. Defaults to \code{"kb"}.}
 
