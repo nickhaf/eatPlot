@@ -56,7 +56,7 @@ plot_lineplot <- function(plot_dat,
   plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
 
   states <- unique(plot_dat[[1]]$state_var)
-  tiles <- unique(plot_dat[[1]][, seperate_plot_var]) # Hier die Level nehmen
+  tiles <- unique(plot_dat$plot_lines[, seperate_plot_var]) # Hier die Level nehmen
 
   plot_list <- list()
   if (!is.null(point_values)) {
