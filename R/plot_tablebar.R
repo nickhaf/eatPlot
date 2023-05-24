@@ -70,7 +70,7 @@ plot_tablebar <- function(dat,
     }
   })
 
-  if(!is.numeric(dat[, bar_est]) | is.null(bar_est)){
+  if (!is.numeric(dat[, bar_est]) | is.null(bar_est)) {
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
 
@@ -93,7 +93,7 @@ plot_tablebar <- function(dat,
   if (length(plot_settings$background_stripes_colour) < nrow(dat)) {
     plot_settings$background_stripes_colour <- fill_up(plot_settings$background_stripes_colour, leng = nrow(dat), fill = "white")
   }
-  if (length(plot_settings$background_stripes_colour) > nrow(dat)){
+  if (length(plot_settings$background_stripes_colour) > nrow(dat)) {
     plot_settings$background_stripes_colour <- plot_settings$background_stripes_colour[1:nrow(dat)]
   }
 
@@ -150,12 +150,12 @@ plot_tablebar <- function(dat,
       plot_settings = plot_settings
     )
 
-    if(!is.null(columns_table_se[[i]])){
-    dat <- construct_label(
-      dat,
-      new_name = new_colnames[i],
-      label_se = columns_table_se[[i]]
-    )
+    if (!is.null(columns_table_se[[i]])) {
+      dat <- construct_label(
+        dat,
+        new_name = new_colnames[i],
+        label_se = columns_table_se[[i]]
+      )
     }
   }
 
@@ -220,7 +220,7 @@ plot_tablebar <- function(dat,
       breaks = dat$background_colour,
       values = dat$background_colour
     ) +
-    add_vlines(plot_settings, plot_borders) +
+    add_vlines(plot_settings, plot_borders, dat$y_axis) +
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
       limits = c(NA, max(column_x_coords$right)),
@@ -255,7 +255,7 @@ plot_tablebar <- function(dat,
 
 
   if (!is.null(bar_est)) {
-    if(is.null(bar_sig)){
+    if (is.null(bar_sig)) {
       res_plot <- res_plot +
         ggnewscale::new_scale_fill() +
         ggplot2::geom_rect(
@@ -627,42 +627,56 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
 }
 
 
-add_vlines <- function(plot_settings, plot_borders) {
+add_vlines <- function(plot_settings, plot_borders, y_axis) {
   scale_breaks <- unique(c(
     seq(0, plot_borders[1], by = -10),
     seq(0, plot_borders[2], by = 10)
   ))
-  c(
+
+
+  if (is.null(plot_settings$bar_background_lines_spanners)) {
+    plot_settings$bar_background_lines_spanners <- list(c(max(y_axis), 0.5))
+    line_spanners <- FALSE
+  }else{
+    line_spanners <- TRUE
+  }
+
+  lapply(plot_settings$bar_background_lines_spanners, function(y) {
+    if (line_spanners == TRUE) {
+    y_1 <- y_axis[y[1]]
+    y_2 <- y_axis[y[2]]
+    }else{
+      y_1 <- y[1]
+      y_2 <- y[2]
+    }
+
     if (plot_settings$bar_background_lines == "border") {
+      x_intercepts <- range(scale_breaks)
+    } else if (plot_settings$bar_background_lines == "scale_breaks") {
+      x_intercepts <- scale_breaks
+    } else {
+      x_intercepts <- 0
+    }
 
-        ggplot2::annotate(
-          "segment",
-          x = range(scale_breaks),
-          xend = range(scale_breaks),
-          y = 0.5,
-          yend = Inf,
-          colour = "darkgrey",
-          linetype = plot_settings$bar_background_lines_linetype
-        )
-
-    }else if(plot_settings$bar_background_lines == "scale_breaks"){
+    ## Rows müssen gedreht werden, sodass die erste row die 1 ist
+    c(
       ggplot2::annotate(
         "segment",
-        x = scale_breaks,
-        xend = scale_breaks,
-        y = 0.5,
-        yend = Inf,
+        x = x_intercepts,
+        xend = x_intercepts,
+        y = y_1 + 0.2,
+        yend = y_2 - 0.2,
         colour = "darkgrey",
         linetype = plot_settings$bar_background_lines_linetype
+      ),
+      ggplot2::annotate(
+        "segment",
+        x = 0,
+        xend = 0,
+        y = y_1 + 0.2,
+        yend = y_2 - 0.2,
+        colour = "darkgrey"
       )
-    },
-    ggplot2::annotate(
-      "segment",
-      x = 0,
-      xend = 0,
-      y = 0.5,
-      yend = Inf,
-      colour = "darkgrey"
     )
-  )
+  })
 }

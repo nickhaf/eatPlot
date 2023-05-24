@@ -94,3 +94,38 @@ test_that("continous barplot looks the same", {
   # wenn nicht benannt, dann benennen der Farbsettings
   vdiffr::expect_doppelganger("Minimal_tablebar", p_bar)
 })
+
+
+test_that("Vlines are plotted correctly", {
+plot_settings_test <-list(bar_background_lines_spanners = list(c(1, 4), c(5,9)),
+                          bar_background_lines = "scale_breaks",
+                          bar_background_lines_linetype = "solid"
+                          )
+
+df_test <- data.frame(x = c(0:10),
+                      y = 1:11
+                      )
+
+vdiffr::expect_doppelganger("row spanners",
+                            ggplot2::ggplot(df_test, ggplot2::aes(x, y)) +
+                              ggplot2::coord_cartesian(ylim=c(0, 11)) +
+                              add_vlines(plot_settings_test, plot_borders = c(0, 10), y_axis = 11:1 # has to be inverted
+                                         )
+)
+
+
+plot_settings_test_2 <-list(bar_background_lines_spanners = NULL,
+                          bar_background_lines = "border",
+                          bar_background_lines_linetype = "dashed"
+)
+
+
+
+vdiffr::expect_doppelganger("row spanners",
+                            ggplot2::ggplot(df_test, ggplot2::aes(x, y)) +
+                              ggplot2::coord_cartesian(ylim=c(0, 11)) +
+                              add_vlines(plot_settings_test_2, plot_borders = c(0, 10), y_axis = 11:1 # has to be inverted
+                              )
+)
+
+})
