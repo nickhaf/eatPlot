@@ -635,7 +635,7 @@ add_vlines <- function(plot_settings, plot_borders, y_axis) {
 
 
   if (is.null(plot_settings$bar_background_lines_spanners)) {
-    plot_settings$bar_background_lines_spanners <- list(c(max(y_axis), 0.5))
+    plot_settings$bar_background_lines_spanners <- list(c(max(y_axis) + 0.3, 0.7))
     line_spanners <- FALSE
   }else{
     line_spanners <- TRUE
@@ -658,7 +658,6 @@ add_vlines <- function(plot_settings, plot_borders, y_axis) {
       x_intercepts <- 0
     }
 
-    ## Rows müssen gedreht werden, sodass die erste row die 1 ist
     c(
       ggplot2::annotate(
         "segment",

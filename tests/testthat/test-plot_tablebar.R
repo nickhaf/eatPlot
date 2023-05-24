@@ -121,7 +121,7 @@ plot_settings_test_2 <-list(bar_background_lines_spanners = NULL,
 
 
 
-vdiffr::expect_doppelganger("row spanners",
+vdiffr::expect_doppelganger("background lines without row spanners",
                             ggplot2::ggplot(df_test, ggplot2::aes(x, y)) +
                               ggplot2::coord_cartesian(ylim=c(0, 11)) +
                               add_vlines(plot_settings_test_2, plot_borders = c(0, 10), y_axis = 11:1 # has to be inverted
