@@ -1,5 +1,11 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9010
+* The argument `columns_table_se` can now be used for specifying which columns should be plotted as (SE) (with brackets).
+* There now is an example for Chapter 4 plots without trend.
+* It is now possible to define different types of background lines in `plotsettings_tablebarplot()`, using the argument `bar_background_lines`. 
+
+
 # eatPlot 0.0.0.9009
 * `grouping_vars` - argument in `prep_plot()` now takes up to two grouping_vars. 
 * Renamed arguments in `prep_plot()`: `grouping_var` and `grouping_var_groups` to `grouping_vars` and `grouping_vars_groups`.

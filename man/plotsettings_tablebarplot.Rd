@@ -8,6 +8,7 @@ plotsettings_tablebarplot(
   axis_x_lims = NULL,
   background_stripes_colour = NULL,
   bar_background_lines = NULL,
+  bar_background_lines_linetype = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
   bar_label_nudge_x = NULL,
@@ -38,7 +39,9 @@ plotsettings_tablebarplot(
 
 \item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background. Defaults to \code{NULL}.}
 
-\item{bar_background_lines}{Logical indicating whether the barplot should receive dotted lines on its borders.}
+\item{bar_background_lines}{Character string of either \code{c("borders", "scale_breaks", "none")}, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.}
+
+\item{bar_background_lines_linetype}{Character string indicating the linetype for the background lines of the barplot.}
 
 \item{bar_fill_colour}{Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in \code{bar_fill}. If no names are provided for the vector, the order of the factor levels of \code{bar_fill} will be used for determining the colour assignment.}
 

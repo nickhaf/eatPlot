@@ -50,7 +50,7 @@ plot_tablebar(
 
 \item{columns_table_sig_high}{List of character strings of the columns that contain the significances for plotting significant values with a raised a.}
 
-\item{columns_table_se}{List of character strings of the columns that contain standard errors, which will be plotted in brackets behind the column values.}
+\item{columns_table_se}{List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to \code{1}.}
 
 \item{y_axis}{Character string of the columnname used as y-axis.}
 
