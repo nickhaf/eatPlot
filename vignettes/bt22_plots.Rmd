@@ -213,7 +213,7 @@ dat_bar_mean_sd <- dat_bar_mean_sd[dat_bar_mean_sd$grouping_var == "noGroup", ]
 
 mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
               bar_est = "est_noTrend_Comp_crossDiff_wholeGroup_2021_mean", 
-              bar_header = "Differenz", 
+              bar_header = "**Abweichung vom Mittelwert <br> für Deutschland**", 
               bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean",
               columns_table = list("state_var",
                                    "est_noTrend_noComp_2021_mean",
@@ -221,11 +221,13 @@ mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
                                    "est_noTrend_noComp_2021_sd",
                                    "se_noTrend_noComp_2021_sd"
                                    ),
-              columns_headers = list("Bundesland", "M", "SE", "M", "SE"), 
+              columns_headers = list("**Land**", "***M***", "***(SE)***", "***SD***", "***(SE)***"), 
               columns_table_se = list(NULL, NULL, "se_noTrend_noComp_2021_mean", NULL, "se_noTrend_noComp_2021_sd" ),
               y_axis = "state_var",
               plot_settings = plotsettings_tablebarplot(background_stripes_colour = c(rep(c("white", "gray94"), 8), "gray87"),
                                                         bar_background_lines = "scale_breaks",
+                                                        columns_alignment = c(0, 0.5, 0.5, 0.5, 0.5),
+                                                        headers_background_width_y = 1,
                                                         default_list = barplot_table_plot_pattern)
             )
 

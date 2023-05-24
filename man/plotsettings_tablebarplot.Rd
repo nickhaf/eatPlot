@@ -24,7 +24,7 @@ plotsettings_tablebarplot(
   columns_width = NULL,
   headers_alignment = NULL,
   headers_background_colour = NULL,
-  headers_background_width_x = NULL,
+  headers_background_width_y = NULL,
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
   font_size = NULL,
@@ -72,7 +72,7 @@ plotsettings_tablebarplot(
 
 \item{headers_background_colour}{Colour of the background of the headers.}
 
-\item{headers_background_width_x}{Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to \code{0}.}
+\item{headers_background_width_y}{Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to \code{0}.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 

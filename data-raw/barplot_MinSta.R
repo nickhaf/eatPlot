@@ -16,7 +16,7 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   columns_table_sig_high_letter = "b",
   columns_table_sig_high_letter_nudge_x = 0.04,
   headers_background_colour = "lightblue",
-  headers_background_width_x = 0.5,
+  headers_background_width_y = 0.5,
   font_size = 2,
   pattern_spacing = 0.01,
   pattern_width = 0.4
@@ -37,7 +37,7 @@ barplot_plot_frame <- plotsettings_tablebarplot(
   bar_sig_type = "frame",
   bar_width = 0.4,
   font_size = 2,
-  headers_background_width_x = 1,
+  headers_background_width_y = 1,
   default_list = barplot_table_plot_pattern
 )
 
