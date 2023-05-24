@@ -14,7 +14,7 @@ plotsettings_tablebarplot(
   bar_frame_linetype = NULL,
   bar_label_nudge_x = NULL,
   bar_label_size = NULL,
-  bar_line_size = NULL,
+  bar_line_width = NULL,
   bar_pattern_fill_colour = NULL,
   bar_pattern_spacing = NULL,
   bar_pattern_type = NULL,
@@ -54,7 +54,7 @@ plotsettings_tablebarplot(
 
 \item{bar_label_size}{Numeric for the font size of the bar labels.}
 
-\item{bar_line_size}{Numeric for the line-size around the bar.}
+\item{bar_line_width}{Numeric for the line-size around the bar.}
 
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to \code{white}.}
 

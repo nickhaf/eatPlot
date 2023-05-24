@@ -274,7 +274,7 @@ plot_tablebar <- function(dat,
             fill = .data$bar_fill
           ),
           colour = "black",
-          linewidth = plot_settings$bar_line_size
+          linewidth = plot_settings$bar_line_width
         ) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggtext::geom_richtext(
@@ -355,7 +355,7 @@ plot_tablebar <- function(dat,
             linetype = .data$bar_sig,
           ),
           colour = "black",
-          linewidth = plot_settings$bar_line_size
+          linewidth = plot_settings$bar_line_width
         ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +

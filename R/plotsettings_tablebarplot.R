@@ -16,7 +16,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_frame_linetype",
         "bar_label_nudge_x",
         "bar_label_size",
-        "bar_line_size",
+        "bar_line_width",
         "bar_pattern_fill_colour",
         "bar_pattern_type",
         "bar_sig_type",
@@ -42,12 +42,12 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(settings_list$bar_background_lines %in% c("border", "scale_breaks", "none"))
   stopifnot(is.character(settings_list$bar_background_lines_linetype))
-  stopifnot(is.numeric(settings_list$bar_background_lines_spanners) | is.null(settings_list$bar_background_lines_spanners))
+  stopifnot(is.numeric(unlist(settings_list$bar_background_lines_spanners)) | is.null(settings_list$bar_background_lines_spanners))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
   stopifnot(is.character(settings_list$bar_frame_linetype))
   stopifnot(is.numeric(settings_list$bar_label_nudge_x))
   stopifnot(is.numeric(settings_list$bar_label_size))
-  stopifnot(is.numeric(settings_list$bar_line_size))
+  stopifnot(is.numeric(settings_list$bar_line_width))
   stopifnot(all(is_colour(settings_list$bar_pattern_fill_colour)))
   stopifnot(is.character(settings_list$bar_pattern_type))
   stopifnot(settings_list$bar_sig_type %in% c("pattern", "frame"))
@@ -80,7 +80,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebar()`. Defaults to `solid`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
-#' @param bar_line_size Numeric for the line-size around the bar.
+#' @param bar_line_width Numeric for the line-size around the bar.
 #' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to `white`.
 #' @param bar_pattern_spacing Numeric for the gap between patterns.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
@@ -142,7 +142,7 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       bar_frame_linetype = NULL,
                                       bar_label_nudge_x = NULL,
                                       bar_label_size = NULL,
-                                      bar_line_size = NULL,
+                                      bar_line_width = NULL,
                                       bar_pattern_fill_colour = NULL,
                                       bar_pattern_spacing = NULL,
                                       bar_pattern_type = NULL,
@@ -173,7 +173,7 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
       "bar_frame_linetype" = "solid",
       "bar_label_size" = 2,
       "bar_label_nudge_x" = 0,
-      "bar_line_size" = 0.5,
+      "bar_line_width" = 0.5,
       "bar_pattern_fill_colour" = "white",
       "bar_pattern_type" = "none",
       "bar_sig_type" = "frame",
