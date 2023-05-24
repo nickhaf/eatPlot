@@ -6,6 +6,7 @@
 * It is now possible to define different types of background lines in `plotsettings_tablebarplot()`, using the argument `bar_background_lines`.
 * It is now possible to let background lines only span the rows specified in the `bar_background_lines_spanners` argument of the `plotsettings_tablebarplot()` function. 
 * Added border line on top of bar plots.
+* Added templates for chapter 3 - french and chapter 4 - noTrend analyses.
 
 # eatPlot 0.0.0.9009
 * `grouping_vars` - argument in `prep_plot()` now takes up to two grouping_vars. 
