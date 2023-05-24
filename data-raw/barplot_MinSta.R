@@ -51,6 +51,7 @@ barplot_plot_frz <- plotsettings_tablebarplot(
   background_stripes_colour = "white",
   bar_background_lines = "scale_breaks",
   bar_background_lines_spanners = list(c(1, 3), c(4, 6)),
+  bar_line_width = 0.1,
   default_list = barplot_table_plot_pattern
 )
 

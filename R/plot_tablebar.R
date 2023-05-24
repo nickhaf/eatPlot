@@ -83,7 +83,9 @@ plot_tablebar <- function(dat,
 
 
   if (is.null(plot_settings$headers_alignment)) {
-    plot_settings$headers_alignment <- plot_settings$columns_alignment
+    plot_settings$headers_alignment <- ifelse(plot_settings$columns_alignment == 2,
+                                              0.5,
+                                              plot_settings$columns_alignment)
   }
 
   plot_settings$columns_alignment <- check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1])
@@ -228,9 +230,9 @@ plot_tablebar <- function(dat,
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
       limits = c(NA, max(column_x_coords$right)),
-      expand = ggplot2::expansion(mult = c(0.025, 0.025))
+      expand = ggplot2::expansion(mult = c(0.01, 0.01))
     ) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0.1))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,

@@ -377,9 +377,9 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     ),
     y_axis = "y_axis",
     plot_settings = plotsettings_tablebarplot(
-      axis_x_lims = c(-20, 20), 
-        columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5),
-  columns_width = c(0.1, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2),
+      axis_x_lims = c(-20, 20),
+        columns_alignment = c(0, 0, 2, 2, 2, 2, 0.5),
+  columns_width = c(0.15, 0.3, 0.075, 0.075, 0.075, 0.075, 0.075, 0.175),
       default_list = barplot_plot_frz
     )
   )
@@ -401,8 +401,9 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     ),
     y_axis = "y_axis",
     plot_settings = plotsettings_tablebarplot(
-        columns_alignment = c(0.5, 0.5),
-  columns_width = c(0.175, 0.175, 0.65),
+            axis_x_lims = c(-20, 22), # set higher than necessary so the last y-axis tick doesn't disappear into the left border
+        columns_alignment = c(2, 0.5),
+  columns_width = c(0.25, 0.25, 0.5),
       default_list = barplot_plot_frz
     )
   )
