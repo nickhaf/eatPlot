@@ -236,7 +236,7 @@ plot_tablebar <- function(dat,
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
-        ymin = max(.data$y_axis) + 0.5, ymax = Inf
+        ymin = max(.data$y_axis) + 0.5, ymax = max_y
       ),
       colour = NA,
       fill = plot_settings$headers_background_colour

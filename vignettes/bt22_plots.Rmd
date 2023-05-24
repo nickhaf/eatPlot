@@ -312,7 +312,7 @@ save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v04.pdf")
 
 
 ## Chapter 3: Frz
-```{r}
+```{r chpt_2_frz}
 dat_bar <- prep_plot(min_stand,
   competence = "lesen",
   parameter = "1"
@@ -485,8 +485,7 @@ mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
   )
 )
 
-
-
+mean_noTrend
 ```
 
 ```{r, eval = FALSE}

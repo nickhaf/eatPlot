@@ -19,3 +19,7 @@ test_that("p_line_states works", {
 test_that("p_line_ger works", {
   vdiffr::expect_doppelganger("p_line_ger", p_line_ger)
 })
+
+test_that("frz minsta works", {
+  vdiffr::expect_doppelganger("frz_minsta", plot_land_17)
+})
