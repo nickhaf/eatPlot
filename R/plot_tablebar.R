@@ -203,6 +203,10 @@ plot_tablebar <- function(dat,
 
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
+  max_y <- max(dat$y_axis) + 1.25 + plot_settings$headers_nudge_y + plot_settings$headers_background_width_y
+  if(!is.null(column_spanners) == TRUE){
+    max_y <- max_y + 1.25
+  }
 
   res_plot <- ggplot2::ggplot(
     data = dat,
@@ -226,7 +230,7 @@ plot_tablebar <- function(dat,
       limits = c(NA, max(column_x_coords$right)),
       expand = ggplot2::expansion(mult = c(0.025, 0.025))
     ) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$headers_background_width_y))) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
@@ -235,10 +239,12 @@ plot_tablebar <- function(dat,
       colour = NA,
       fill = plot_settings$headers_background_colour
     ) +
-    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     theme_table() +
     # capped axis line
     ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1) +
+    ## Horizontal background lines around header box:
+    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
+    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max_y, yend = max_y, linewidth = 0.1) +
     if (!is.null(bar_label)) {
       ggtext::geom_richtext(
         ggplot2::aes(
@@ -666,7 +672,8 @@ add_vlines <- function(plot_settings, plot_borders, y_axis) {
         y = y_1 + 0.2,
         yend = y_2 - 0.2,
         colour = "darkgrey",
-        linetype = plot_settings$bar_background_lines_linetype
+        linetype = plot_settings$bar_background_lines_linetype,
+        linewidth = 0.1
       ),
       ggplot2::annotate(
         "segment",
@@ -674,7 +681,8 @@ add_vlines <- function(plot_settings, plot_borders, y_axis) {
         xend = 0,
         y = y_1 + 0.2,
         yend = y_2 - 0.2,
-        colour = "darkgrey"
+        colour = "darkgrey",
+        linewidth = 0.1
       )
     )
   })
