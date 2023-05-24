@@ -207,7 +207,7 @@ test_that("Example barplot long format is plotted correctly", {
       columns_width = c(0.12, 0.12, 0.12, 0.12, 0.52),
       columns_nudge_x = c(-2, -2, -2, -2),
       headers_alignment = c(0.5, 0.5, 0.5, 0.5),
-      pattern_spacing = 0.0125,
+      bar_pattern_spacing = 0.0125,
       default_list = barplot_table_plot_pattern
     )
   )

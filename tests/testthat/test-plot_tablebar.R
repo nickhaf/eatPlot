@@ -86,8 +86,8 @@ test_that("continous barplot looks the same", {
       bar_pattern_type = c("stripe", "none"),
       bar_sig_type = "pattern",
       columns_width = c(0.3, 0.2, 0.5),
-      pattern_width = 0.5,
-      pattern_spacing = 0.1
+      bar_pattern_width = 0.5,
+      bar_pattern_spacing = 0.1
     )
   )
 

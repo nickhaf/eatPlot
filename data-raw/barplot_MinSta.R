@@ -18,8 +18,8 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   headers_background_colour = "lightblue",
   headers_background_width_y = 0.5,
   font_size = 2,
-  pattern_spacing = 0.01,
-  pattern_width = 0.4
+  bar_pattern_spacing = 0.01,
+  bar_pattern_width = 0.4
 )
 
 usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)

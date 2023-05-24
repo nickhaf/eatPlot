@@ -279,8 +279,8 @@ plot_tablebar <- function(dat,
           pattern_colour = NA,
           pattern_fill = plot_settings$bar_pattern_fill_colour,
           pattern_angle = -45,
-          pattern_density = plot_settings$pattern_width,
-          pattern_spacing = plot_settings$pattern_spacing,
+          pattern_density = plot_settings$bar_pattern_width,
+          bar_pattern_spacing = plot_settings$bar_pattern_spacing,
           pattern_key_scale_factor = 0.6 # legend adjustment
         ) +
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +

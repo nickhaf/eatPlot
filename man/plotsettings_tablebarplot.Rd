@@ -29,8 +29,8 @@ plotsettings_tablebarplot(
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
   font_size = NULL,
-  pattern_spacing = NULL,
-  pattern_width = NULL,
+  bar_pattern_spacing = NULL,
+  bar_pattern_width = NULL,
   default_list = NULL
 )
 }
@@ -83,9 +83,9 @@ plotsettings_tablebarplot(
 
 \item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{3}.}
 
-\item{pattern_spacing}{Numeric for the gap between patterns.}
+\item{bar_pattern_spacing}{Numeric for the gap between patterns.}
 
-\item{pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{pattern_width} parameter will increase the thickness of the white stripes.}
+\item{bar_pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{bar_pattern_width} parameter will increase the thickness of the white stripes.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }
