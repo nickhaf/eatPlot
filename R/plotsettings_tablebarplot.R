@@ -79,7 +79,9 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_size Numeric for the line-size around the bar.
 #' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to `white`.
+#' @param bar_pattern_spacing Numeric for the gap between patterns.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
+#' @param bar_pattern_width Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the `bar_pattern_width` parameter will increase the thickness of the white stripes.
 #' @param bar_sig_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").
 #' @param bar_width Numeric between `0` and `1` specifying the width of the bar. Defaults to `0.4`.
 #' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `0.5`.
@@ -93,8 +95,6 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
-#' @param bar_pattern_spacing Numeric for the gap between patterns.
-#' @param bar_pattern_width Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the `bar_pattern_width` parameter will increase the thickness of the white stripes.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
 #' @return A named list with settings for a table/barplot.
@@ -140,7 +140,9 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       bar_label_size = NULL,
                                       bar_line_size = NULL,
                                       bar_pattern_fill_colour = NULL,
+                                      bar_pattern_spacing = NULL,
                                       bar_pattern_type = NULL,
+                                      bar_pattern_width = NULL,
                                       bar_sig_type = NULL,
                                       bar_width = NULL,
                                       columns_alignment = NULL,
@@ -154,8 +156,6 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       headers_nudge_x = NULL,
                                       headers_nudge_y = NULL,
                                       font_size = NULL,
-                                      bar_pattern_spacing = NULL,
-                                      bar_pattern_width = NULL,
                                       default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {

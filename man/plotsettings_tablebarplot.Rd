@@ -15,7 +15,9 @@ plotsettings_tablebarplot(
   bar_label_size = NULL,
   bar_line_size = NULL,
   bar_pattern_fill_colour = NULL,
+  bar_pattern_spacing = NULL,
   bar_pattern_type = NULL,
+  bar_pattern_width = NULL,
   bar_sig_type = NULL,
   bar_width = NULL,
   columns_alignment = NULL,
@@ -29,8 +31,6 @@ plotsettings_tablebarplot(
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
   font_size = NULL,
-  bar_pattern_spacing = NULL,
-  bar_pattern_width = NULL,
   default_list = NULL
 )
 }
@@ -55,7 +55,11 @@ plotsettings_tablebarplot(
 
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to \code{white}.}
 
+\item{bar_pattern_spacing}{Numeric for the gap between patterns.}
+
 \item{bar_pattern_type}{Named vector with the pattern types for the barpattern.}
+
+\item{bar_pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{bar_pattern_width} parameter will increase the thickness of the white stripes.}
 
 \item{bar_sig_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").}
 
@@ -82,10 +86,6 @@ plotsettings_tablebarplot(
 \item{headers_nudge_y}{Numeric to nudge the column_headers in y direction. Defaults to \code{0}.}
 
 \item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{3}.}
-
-\item{bar_pattern_spacing}{Numeric for the gap between patterns.}
-
-\item{bar_pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{bar_pattern_width} parameter will increase the thickness of the white stripes.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }
