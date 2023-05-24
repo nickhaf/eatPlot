@@ -70,6 +70,10 @@ plot_tablebar <- function(dat,
     }
   })
 
+  if(!is.numeric(dat[, bar_est]) | is.null(bar_est)){
+    stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
+  }
+
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
 
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
@@ -280,7 +284,7 @@ plot_tablebar <- function(dat,
           pattern_fill = plot_settings$bar_pattern_fill_colour,
           pattern_angle = -45,
           pattern_density = plot_settings$bar_pattern_width,
-          bar_pattern_spacing = plot_settings$bar_pattern_spacing,
+          pattern_spacing = plot_settings$bar_pattern_spacing,
           pattern_key_scale_factor = 0.6 # legend adjustment
         ) +
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
