@@ -3,7 +3,7 @@
 # eatPlot 0.0.0.9010
 * The argument `columns_table_se` can now be used for specifying which columns should be plotted as (SE) (with brackets).
 * There now is an example for Chapter 4 plots without trend.
-* It is now possible to define different types of background lines in `plotsettings_tablebarplot()`, using the argument `bar_background_lines`. 
+* It is now possible to define different types of background lines in `plotsettings_tablebarplot()`, using the argument `bar_background_lines`.
 
 
 # eatPlot 0.0.0.9009

@@ -255,7 +255,36 @@ plot_tablebar <- function(dat,
 
 
   if (!is.null(bar_est)) {
-    if (plot_settings$bar_sig_type == "pattern") {
+    if(is.null(bar_sig)){
+      res_plot <- res_plot +
+        ggnewscale::new_scale_fill() +
+        ggplot2::geom_rect(
+          data = dat,
+          ggplot2::aes(
+            xmin = .data$x_min,
+            xmax = .data$bar_est,
+            ymin = .data$y_axis - plot_settings$bar_width / 2,
+            ymax = .data$y_axis + plot_settings$bar_width / 2,
+            fill = .data$bar_fill
+          ),
+          colour = "black",
+          linewidth = plot_settings$bar_line_size
+        ) +
+        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
+        ggtext::geom_richtext(
+          data = data.frame(),
+          ggplot2::aes(
+            x = mean(plot_borders, na.rm = TRUE),
+            y = max(dat$y_axis, na.rm = TRUE) + 1.25 + plot_settings$headers_nudge_y,
+            label = bar_header
+          ),
+          size = plot_settings$font_size,
+          label.padding = grid::unit(rep(0, 4), "pt"),
+          fill = NA,
+          label.color = NA
+        ) +
+        NULL
+    } else if (plot_settings$bar_sig_type == "pattern") {
       ## ggpattern can't deal with NAs, therefore convert them to FALSE (not significant):
 
       for (i in c(columns_table_sig_bold, columns_table_sig_high, bar_label_sig, "bar_sig")) {
