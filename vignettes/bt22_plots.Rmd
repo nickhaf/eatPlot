@@ -123,8 +123,7 @@ p_bar_1 <- plot_tablebar(
   bar_label = "est_noTrend_noComp_2021_percent",
   bar_label_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021",
   bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
-  bar_header = "**Mindeststandard nicht erreicht**",
-  columns_headers = list("**Land**"),
+  columns_headers = list("**Land**", "**Mindeststandard nicht erreicht**"),
   columns_table = list("state_var"),
   bar_est = "est_noTrend_noComp_2021_percent",
   y_axis = "state_var",
@@ -133,7 +132,7 @@ p_bar_1 <- plot_tablebar(
     bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
     columns_alignment = 0,
     columns_width = c(0.45, 0.55),
-    headers_alignment = 0,
+    headers_alignment = c(0, 0),
     default_list = barplot_plot_frame
   )
 )
