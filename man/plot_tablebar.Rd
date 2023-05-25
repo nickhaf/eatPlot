@@ -11,14 +11,13 @@ plot_tablebar(
   bar_label_sig = NULL,
   bar_sig = NULL,
   bar_fill = NULL,
-  bar_header = NULL,
-  columns_headers = NULL,
   columns_round = 0,
   column_spanners = NULL,
   columns_table = NULL,
   columns_table_sig_bold = NULL,
   columns_table_sig_high = NULL,
   columns_table_se = NULL,
+  headers = NULL,
   y_axis = NULL,
   plot_settings = plotsettings_tablebarplot()
 )
@@ -36,10 +35,6 @@ plot_tablebar(
 
 \item{bar_fill}{Character string for the column that groups the bar filling colours into different groups.}
 
-\item{bar_header}{Character string for the header of the bars.}
-
-\item{columns_headers}{Character vector containing the headers of the ploted table columns.}
-
 \item{columns_round}{List of numerics, for rounding the column values. Insert \code{NULL} or \code{0} for no rounding/character columns.}
 
 \item{column_spanners}{Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.}
@@ -51,6 +46,8 @@ plot_tablebar(
 \item{columns_table_sig_high}{List of character strings of the columns that contain the significances for plotting significant values with a raised a.}
 
 \item{columns_table_se}{List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to \code{1}.}
+
+\item{headers}{Character vector containing the headers of the ploted table columns, including the bar table.}
 
 \item{y_axis}{Character string of the columnname used as y-axis.}
 

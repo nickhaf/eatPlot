@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9011
+* The bar header argument was merged with the columns_headers argument in `plot_tablebar`, which is now named `headers`. The bar header now behaves like the other column headers, and can be aligned by the `headers_alignment` - Argument in `plotsettings_tablebarplot()`. 
+
 # eatPlot 0.0.0.9010
 * The argument `columns_table_se` can now be used for specifying which columns should be plotted as (SE) (with brackets).
 * There now is an example for Chapter 4 plots without trend.

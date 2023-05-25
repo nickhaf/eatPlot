@@ -71,9 +71,8 @@ test_that("continous barplot looks the same", {
     dat = test_data,
     bar_label = NULL,
     bar_sig = "bar_sig",
-    bar_header = "a barplot",
     bar_fill = "bar_fill",
-    columns_headers = list("est_1", "est_2"),
+    headers = list("est_1", "est_2", "a barplot"),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
     columns_table_sig_high = list("bar_sig", "bar_sig"),
@@ -109,7 +108,7 @@ df_test <- data.frame(x = c(0:10),
 vdiffr::expect_doppelganger("row spanners",
                             ggplot2::ggplot(df_test, ggplot2::aes(x, y)) +
                               ggplot2::coord_cartesian(ylim=c(0, 11)) +
-                              add_vlines(plot_settings_test, plot_borders = c(0, 10), y_axis = 11:1 # has to be inverted
+                              add_vlines(plot_settings_test, bar_est = "x", plot_borders = c(0, 10), y_axis = 11:1 # has to be inverted
                                          )
 )
 
@@ -124,7 +123,7 @@ plot_settings_test_2 <-list(bar_background_lines_spanners = NULL,
 vdiffr::expect_doppelganger("background lines without row spanners",
                             ggplot2::ggplot(df_test, ggplot2::aes(x, y)) +
                               ggplot2::coord_cartesian(ylim=c(0, 11)) +
-                              add_vlines(plot_settings_test_2, plot_borders = c(0, 10), y_axis = 11:1 # has to be inverted
+                              add_vlines(plot_settings_test_2, plot_borders = c(0, 10), bar_est = "x", y_axis = 11:1 # has to be inverted
                               )
 )
 

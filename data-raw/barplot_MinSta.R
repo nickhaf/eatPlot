@@ -32,7 +32,7 @@ barplot_plot_frame <- plotsettings_tablebarplot(
   bar_frame_linetype = c("above" = "solid", "below" = "longdash", "no_sig" = "blank"),
   bar_label_nudge_x = -0.2,
   bar_label_size = 1.75,
-  bar_line_width = 0.35,
+  bar_line_width = 0.25,
   bar_pattern_fill_colour = c("yellow"),
   bar_sig_type = "frame",
   bar_width = 0.4,
@@ -52,6 +52,7 @@ barplot_plot_frz <- plotsettings_tablebarplot(
   bar_background_lines = "scale_breaks",
   bar_background_lines_spanners = list(c(1, 3), c(4, 6)),
   bar_line_width = 0.1,
+  bar_width = 0.5,
   default_list = barplot_table_plot_pattern
 )
 
