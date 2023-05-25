@@ -58,21 +58,21 @@
 <rect x='300.27' y='257.55' width='162.93' height='43.68' style='stroke-width: 0.43; stroke: #0000FF; stroke-linecap: square; stroke-linejoin: miter;' />
 <rect x='300.27' y='366.75' width='203.66' height='43.68' style='stroke-width: 0.43; stroke: #FFFF00; stroke-linecap: square; stroke-linejoin: miter;' />
 <rect x='300.27' y='475.95' width='312.28' height='43.68' style='stroke-width: 0.43; stroke: #00FF00; stroke-linecap: square; stroke-linejoin: miter;' />
-<text x='487.32' y='35.75' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>a</text>
-<text x='494.44' y='35.75' style='font-size: 8.54px; font-family: sans;' textLength='26.10px' lengthAdjust='spacingAndGlyphs'>barplot</text>
 <text x='214.06' y='172.25' style='font-size: 8.54px; font-weight: bold; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
 <text x='214.06' y='281.44' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>10</text>
 <text x='216.43' y='390.64' style='font-size: 8.54px; font-weight: bold; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>8</text>
 <text x='216.43' y='499.84' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>4</text>
 <text x='216.91' y='170.49' style='font-size: 6.83px; font-family: sans;' textLength='3.80px' lengthAdjust='spacingAndGlyphs'>a</text>
 <text x='216.91' y='388.88' style='font-size: 6.83px; font-family: sans;' textLength='3.80px' lengthAdjust='spacingAndGlyphs'>a</text>
-<text x='208.36' y='35.75' style='font-size: 8.54px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>est_2</text>
 <text x='10.40' y='172.25' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
 <text x='10.40' y='281.44' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
 <text x='10.40' y='390.64' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>15</text>
 <text x='10.40' y='499.84' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>23</text>
 <text x='13.24' y='170.49' style='font-size: 6.83px; font-family: sans;' textLength='3.80px' lengthAdjust='spacingAndGlyphs'>a</text>
 <text x='13.24' y='388.88' style='font-size: 6.83px; font-family: sans;' textLength='3.80px' lengthAdjust='spacingAndGlyphs'>a</text>
+<text x='487.32' y='35.75' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>a</text>
+<text x='494.44' y='35.75' style='font-size: 8.54px; font-family: sans;' textLength='26.10px' lengthAdjust='spacingAndGlyphs'>barplot</text>
+<text x='208.36' y='35.75' style='font-size: 8.54px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>est_2</text>
 <text x='4.70' y='35.75' style='font-size: 8.54px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>est_1</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>

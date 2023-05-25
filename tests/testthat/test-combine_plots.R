@@ -18,8 +18,7 @@ test_that("example mindeststandard short version", {
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
-    bar_header = "Mindeststandard nicht erreicht (MSA)",
-    headers = list("Land"),
+    headers = list("Land", "Mindeststandard nicht erreicht (MSA)"),
     columns_table = list("state_var"),
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -28,7 +27,7 @@ test_that("example mindeststandard short version", {
       bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
       columns_alignment = 0,
       columns_width = c(0.3, 0.7),
-      headers_alignment = 0,
+      headers_alignment = c(0, 0.5),
       default_list = barplot_plot_frame
     )
   )
@@ -43,8 +42,8 @@ test_that("example mindeststandard short version", {
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
-    bar_header = "Regelstandard erreicht oder übertroffen (MSA)",
     bar_est = "est_noTrend_noComp_2021_percent",
+    headers = list("Regelstandard erreicht oder übertroffen (MSA)"),
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       columns_alignment = 0,
@@ -66,7 +65,7 @@ test_that("example mindeststandard short version", {
     bar_label = "est_noTrend_noComp_2021_percent",
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
-    bar_header = "Optimalstandard erreicht (MSA)",
+    headers = "Optimalstandard erreicht (MSA)",
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -124,9 +123,8 @@ test_that("Example barplot long format is plotted correctly", {
     bar_est = "est_Trend_noComp_20112016_percent",
     bar_label = NULL,
     bar_sig = "sig_Trend_noComp_20112016",
-    bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
+    headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*", " "),
     column_spanners = list(
       "**2011**" = 3,
       "**2016**" = 4,
@@ -162,7 +160,7 @@ test_that("Example barplot long format is plotted correctly", {
       columns_alignment = c(0, 0, 1, 1, 1, 1),
       columns_width = c(0.175, 0.35, 0.075, 0.075, 0.075, 0.075, 0.175),
       columns_nudge_x = c(0, 0, -2, -2, -2, -1),
-      headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5),
+      headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0),
       default_list = barplot_table_plot_pattern
     )
   )
@@ -174,9 +172,8 @@ test_that("Example barplot long format is plotted correctly", {
     bar_est = "est_Trend_noComp_20162021_percent",
     bar_label = NULL,
     bar_sig = "sig_Trend_noComp_20162021",
-    bar_header = " ",
     bar_fill = "depVar",
-    headers = list("%", "%", "%", "*(SE)*"),
+    headers = list("%", "%", "%", "*(SE)*", NULL),
     column_spanners = list(
       "**2016**" = 1,
       "**2021**" = 2,
@@ -206,7 +203,7 @@ test_that("Example barplot long format is plotted correctly", {
       columns_alignment = c(1, 1, 1, 1),
       columns_width = c(0.12, 0.12, 0.12, 0.12, 0.52),
       columns_nudge_x = c(-2, -2, -2, -2),
-      headers_alignment = c(0.5, 0.5, 0.5, 0.5),
+      headers_alignment = c(0.5, 0.5, 0.5, 0.5, 0),
       bar_pattern_spacing = 0.0125,
       default_list = barplot_table_plot_pattern
     )

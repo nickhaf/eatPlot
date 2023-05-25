@@ -41,8 +41,8 @@ plot_tablebar <- function(dat,
     dat <- dat$plot_tablebar
   }
 
-  if (!inherits(headers, "list") & !is.null(headers)) {
-    stop("headers has to be a list or NULL.")
+  if (!inherits(headers, "list") & !is.character(headers) & !is.null(headers)) {
+    stop("headers has to be a list, or a vector, or NULL.")
   }
 
   # Check columns -----------------------------------------------------------
@@ -79,11 +79,12 @@ plot_tablebar <- function(dat,
 
   columns_table_se <- check_length(columns_table_se, length(columns_table))
 
-
   if (is.null(plot_settings$headers_alignment)) {
     plot_settings$headers_alignment <- ifelse(plot_settings$columns_alignment == 2,
                                               0.5,
                                               plot_settings$columns_alignment)
+
+    plot_settings$headers_alignment <- c(plot_settings$headers_alignment, rep(0.5, n_table_cols - length(plot_settings$headers_alignment)))
   }
 
   plot_settings$columns_alignment <- check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1])
@@ -418,6 +419,7 @@ build_columns_3 <- function(df,
 
   column_x_coords_cols <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
 
+  columns_alignment<- plot_settings$columns_alignment
   x_range <- diff(range(plot_borders))
   c(
     lapply(1:length(cols), function(i) {
@@ -430,7 +432,7 @@ build_columns_3 <- function(df,
         x_axis_i <- column_x_coords_cols$right[i]
       } else if (rev(plot_settings$columns_alignment)[i] == 2) { ## right align, but in the middle of the table:
         x_axis_i <- (column_x_coords_cols$middle[i] + column_x_coords_cols$right[i]) / 2
-        plot_settings$columns_alignment[length(plot_settings$columns_alignment) - i + 1] <- 1
+        columns_alignment[length(columns_alignment) - i + 1] <- 1
       }
 
 
@@ -450,7 +452,7 @@ build_columns_3 <- function(df,
           label.padding = grid::unit(rep(0, 4), "pt"),
           fill = NA,
           label.color = NA,
-          hjust = rev(plot_settings$columns_alignment)[i],
+          hjust = rev(columns_alignment)[i],
           nudge_x = rev(plot_settings$columns_nudge_x)[i]
         ),
         add_superscript(df,

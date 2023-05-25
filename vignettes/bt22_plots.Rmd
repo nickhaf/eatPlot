@@ -123,7 +123,7 @@ p_bar_1 <- plot_tablebar(
   bar_label = "est_noTrend_noComp_2021_percent",
   bar_label_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021",
   bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
-  headers = list("**Land**"),#, "**Mindeststandard nicht erreicht**"),
+  headers = list("**Land**", "**Mindeststandard nicht erreicht**"),
   columns_table = list("state_var"),
   bar_est = "est_noTrend_noComp_2021_percent",
   y_axis = "state_var",
@@ -352,7 +352,6 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
 
   p_bar_1 <- plot_tablebar(
     dat = dat_bar_1,
-    bar_header = NULL,
     bar_est = "est_Trend_noComp_20112016_percent",
     bar_fill = "depVar",
     columns_table = c(
@@ -364,7 +363,7 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
       "est_Trend_noComp_20112016_percent",
       "se_Trend_noComp_20112016_percent"
     ),
-    headers = list(NULL, NULL, "%", "%", "%", "+/-", "(SE)"),
+    headers = list(NULL, NULL, "%", "%", "%", "+/-", "(SE)", " "),
     columns_round = list(NULL, NULL, 1, 1, 1, 1, NULL),
     columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_Trend_noComp_20112016_percent" ),
     column_spanners = list(
@@ -377,7 +376,7 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     y_axis = "y_axis",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(-20, 20),
-        columns_alignment = c(0, 0, 2, 2, 2, 2, 0.5),
+      columns_alignment = c(0, 0, 2, 2, 2, 2, 0.5),
   columns_width = c(0.15, 0.3, 0.075, 0.075, 0.075, 0.075, 0.075, 0.175),
       default_list = barplot_plot_frz
     )
@@ -385,14 +384,13 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
   
   p_bar_2 <- plot_tablebar(
     dat = dat_bar_1,
-    bar_header = NULL,
     bar_est = "est_Trend_noComp_20162021_percent",
     bar_fill = "depVar",
     columns_table = c(
       "est_Trend_noComp_20162021_percent",
       "se_Trend_noComp_20162021_percent"
     ),
-    headers = list("+/-", "(SE)"),
+    headers = list("+/-", "(SE)", NULL),
     columns_round = list(1, NULL),
     columns_table_se = list(NULL, "se_Trend_noComp_20162021_percent"),
     column_spanners = list(
@@ -460,7 +458,6 @@ dat_bar_mean_sd <- dat_bar_mean_sd[dat_bar_mean_sd$grouping_var == "noGroup", ]
 ## ... and plot:
 mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
   bar_est = "est_noTrend_Comp_crossDiff_wholeGroup_2021_mean",
-  bar_header = "**Abweichung vom Mittelwert <br> für Deutschland**", # <br> for linebreak, ** for bold
   bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean",
   columns_table = list(
     "state_var",
@@ -469,7 +466,12 @@ mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
     "est_noTrend_noComp_2021_sd",
     "se_noTrend_noComp_2021_sd"
   ),
-  headers = list("**Land**", "***M***", "***(SE)***", "***SD***", "***(SE)***"), # *** for bold and italic
+  headers = list("**Land**", # ** for bold
+                 "***M***", # *** for bold and italic,
+                 "***(SE)***", 
+                 "***SD***", 
+                 "***(SE)***",  
+                 "**Abweichung vom Mittelwert <br> für Deutschland**"), # <br> for linebreak, 
   columns_table_sig_bold = list(NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean", NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_sd", NULL), 
   columns_table_se = list(NULL, NULL, "se_noTrend_noComp_2021_mean", NULL, "se_noTrend_noComp_2021_sd"),
   y_axis = "state_var",
@@ -480,6 +482,7 @@ mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
     bar_pattern_width = 0.5, # Increase the size of the white stripes. 
     columns_alignment = c(0, 0.5, 0.5, 0.5, 0.5),
     columns_width = c(0.2, 0.1, 0.1, 0.1, 0.1, 0.4),
+    headers_alignment = c(0, 0.5, 0.5, 0.5, 0.5, 0.5),
     headers_background_width_y = 1, # Increase the header background width, so the linebreak doesn't run over plot borders
     default_list = barplot_table_plot_pattern
   )

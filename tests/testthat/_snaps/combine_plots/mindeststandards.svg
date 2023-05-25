@@ -110,10 +110,6 @@
 <rect x='78.29' y='487.30' width='70.26' height='11.64' style='stroke-width: 0.75; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #31859C;' />
 <rect x='78.29' y='516.40' width='97.92' height='11.64' style='stroke-width: 0.75; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #31859C;' />
 <rect x='78.29' y='545.50' width='85.22' height='11.64' style='stroke-width: 0.75; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #31859C;' />
-<text x='119.72' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='42.08px' lengthAdjust='spacingAndGlyphs'>Mindeststandard</text>
-<text x='163.38' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='12.02px' lengthAdjust='spacingAndGlyphs'>nicht</text>
-<text x='176.98' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='18.98px' lengthAdjust='spacingAndGlyphs'>erreicht</text>
-<text x='197.54' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='16.13px' lengthAdjust='spacingAndGlyphs'>(MSA)</text>
 <text x='2.53' y='87.06' style='font-size: 5.69px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>Land-17</text>
 <text x='2.53' y='116.16' style='font-size: 5.69px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>Land-21</text>
 <text x='2.53' y='145.26' style='font-size: 5.69px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>Land-28</text>
@@ -131,6 +127,10 @@
 <text x='2.53' y='494.48' style='font-size: 5.69px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>Land-88</text>
 <text x='2.53' y='523.59' style='font-size: 5.69px; font-family: sans;' textLength='20.89px' lengthAdjust='spacingAndGlyphs'>Land-93</text>
 <text x='2.53' y='552.69' style='font-size: 5.69px; font-family: sans;' textLength='30.69px' lengthAdjust='spacingAndGlyphs'>wholeGroup</text>
+<text x='119.72' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='42.08px' lengthAdjust='spacingAndGlyphs'>Mindeststandard</text>
+<text x='163.38' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='12.02px' lengthAdjust='spacingAndGlyphs'>nicht</text>
+<text x='176.98' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='18.98px' lengthAdjust='spacingAndGlyphs'>erreicht</text>
+<text x='197.54' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='16.13px' lengthAdjust='spacingAndGlyphs'>(MSA)</text>
 <text x='2.53' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>Land</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -233,11 +233,11 @@
 <rect x='261.01' y='487.30' width='266.10' height='11.64' style='stroke-width: 0.75; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #4BACC6;' />
 <rect x='261.01' y='516.40' width='238.90' height='11.64' style='stroke-width: 0.75; stroke-dasharray: 7.00,3.00; stroke-linecap: butt; stroke-linejoin: miter; fill: #4BACC6;' />
 <rect x='261.01' y='545.50' width='261.11' height='11.64' style='stroke-width: 0.75; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #4BACC6;' />
-<text x='372.33' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='37.02px' lengthAdjust='spacingAndGlyphs'>Regelstandard</text>
-<text x='410.93' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='18.98px' lengthAdjust='spacingAndGlyphs'>erreicht</text>
-<text x='431.49' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='11.39px' lengthAdjust='spacingAndGlyphs'>oder</text>
-<text x='444.46' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='27.52px' lengthAdjust='spacingAndGlyphs'>übertroffen</text>
-<text x='473.56' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='16.13px' lengthAdjust='spacingAndGlyphs'>(MSA)</text>
+<text x='261.01' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='37.02px' lengthAdjust='spacingAndGlyphs'>Regelstandard</text>
+<text x='299.61' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='18.98px' lengthAdjust='spacingAndGlyphs'>erreicht</text>
+<text x='320.17' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='11.39px' lengthAdjust='spacingAndGlyphs'>oder</text>
+<text x='333.14' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='27.52px' lengthAdjust='spacingAndGlyphs'>übertroffen</text>
+<text x='362.25' y='50.68' style='font-size: 5.69px; font-family: sans;' textLength='16.13px' lengthAdjust='spacingAndGlyphs'>(MSA)</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='261.01,571.52 261.01,568.78 ' style='stroke-width: 0.21; stroke: #333333; stroke-linecap: butt;' />
