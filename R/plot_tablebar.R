@@ -6,7 +6,7 @@
 #' @param bar_sig Character string for the column that should be used for marking the bars as significant.
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.
 #' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
-#' @param columns_headers Character vector containing the headers of the ploted table columns.
+#' @param headers Character vector containing the headers of the ploted table columns, including the bar table.
 #' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
@@ -26,13 +26,13 @@ plot_tablebar <- function(dat,
                           bar_label_sig = NULL,
                           bar_sig = NULL,
                           bar_fill = NULL,
-                          columns_headers = NULL,
                           columns_round = 0,
                           column_spanners = NULL,
                           columns_table = NULL,
                           columns_table_sig_bold = NULL,
                           columns_table_sig_high = NULL,
                           columns_table_se = NULL,
+                          headers = NULL,
                           y_axis = NULL,
                           plot_settings = plotsettings_tablebarplot()) {
   ## Namen der Einstellungslisten checken: Taucht so in der entsprechenden Spalte auf? Kann man auch über die Reihenfolge gehen? eventl. in der scale_manual mit breaks arbeiten (oder so ähnlich) und dann nur Warnung ausgeben.
@@ -41,8 +41,8 @@ plot_tablebar <- function(dat,
     dat <- dat$plot_tablebar
   }
 
-  if (!inherits(columns_headers, "list") & !is.null(columns_headers)) {
-    stop("Columns_headers has to be a list or NULL.")
+  if (!inherits(headers, "list") & !is.null(headers)) {
+    stop("headers has to be a list or NULL.")
   }
 
   # Check columns -----------------------------------------------------------
@@ -51,14 +51,19 @@ plot_tablebar <- function(dat,
     stop("Please provide a y-axis.")
   }
 
+  if (!is.numeric(dat[, bar_est]) & !is.null(bar_est)) {
+    stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
+  }
+
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
   dat <- fill_column(dat, column_name = y_axis, filling = NA)
 
   if(!is.null(bar_est)){n_table_cols <- length(columns_table)+1}else{n_table_cols <- length(columns_table) }
-  columns_headers <- check_length(columns_headers, n_table_cols, fill = " ")
-  columns_headers <- lapply(columns_headers, function(x) {
+
+  headers <- check_length(headers, n_table_cols, fill = " ")
+  headers <- lapply(headers, function(x) {
     if (is.null(x)) {
       " "
     } else {
@@ -66,9 +71,6 @@ plot_tablebar <- function(dat,
     }
   })
 
-  if (!is.numeric(dat[, bar_est]) | is.null(bar_est)) {
-    stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
-  }
 
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
 
@@ -222,7 +224,7 @@ plot_tablebar <- function(dat,
       breaks = dat$background_colour,
       values = dat$background_colour
     ) +
-    add_vlines(plot_settings, plot_borders, dat$y_axis) +
+    add_vlines(plot_settings, plot_borders, dat$y_axis, bar_est) +
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
       limits = c(NA, max(column_x_coords$right)),
@@ -238,8 +240,7 @@ plot_tablebar <- function(dat,
       fill = plot_settings$headers_background_colour
     ) +
     theme_table() +
-    # capped axis line
-    ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1) +
+  plot_capped_x_axis(scale_breaks) +
     ## Horizontal background lines around header box:
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max_y, yend = max_y, linewidth = 0.1) +
@@ -344,7 +345,7 @@ plot_tablebar <- function(dat,
       build_columns_3(dat,
         cols = rev(new_colnames),
         column_x_coords = column_x_coords,
-        columns_headers = rev(columns_headers),
+        headers = rev(headers),
         plot_borders = plot_borders,
         plot_settings = plot_settings
       ) +
@@ -397,6 +398,10 @@ plot_tablebar <- function(dat,
     NULL
   }
 
+  column_x_coords_headers <- column_x_coords[!is.na(column_x_coords$column), ]
+
+  res_plot <- res_plot +
+  plot_column_headers(column_x_coords_headers, headers, y_axis = dat$y_axis, plot_settings)
   return(res_plot)
 }
 
@@ -405,14 +410,13 @@ plot_tablebar <- function(dat,
 build_columns_3 <- function(df,
                             cols,
                             column_x_coords,
-                            columns_headers,
+                            headers,
                             plot_borders,
                             plot_settings = plotsettings_tablebarplot()) {
 
   # n_cols <- if(!is.null(bar_est)){length(cols) + 1}else{length(cols)}
 
   column_x_coords_cols <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
-  column_x_coords_headers <- column_x_coords[!is.na(column_x_coords$column), ]
 
   x_range <- diff(range(plot_borders))
   c(
@@ -455,32 +459,33 @@ build_columns_3 <- function(df,
           i,
           x_range = x_range,
           plot_settings
-        ),
-        plot_column_headers(column_x_coords_headers, columns_headers, y_axis = df$y_axis, plot_settings)
+        )
       )
     })
   )
 }
 
 
-plot_column_headers <- function(column_x_coords_headers, columns_headers, y_axis, plot_settings){
+plot_column_headers <- function(column_x_coords_headers, headers, y_axis, plot_settings){
   lapply(1:nrow(column_x_coords_headers), function(i) {
     if (rev(plot_settings$headers_alignment)[i] == 0) {
       x_axis_i_header <- column_x_coords_headers$left[i]
     } else if (rev(plot_settings$headers_alignment)[i] == 0.5) {
       x_axis_i_header <- column_x_coords_headers$middle[i]
-    } else {
+    } else if(rev(plot_settings$headers_alignment)[i] == 1) {
+      x_axis_i_header <- column_x_coords_headers$right[i]
+    } else{
       x_axis_i_header <- column_x_coords_headers$middle[i]
     }
 
-    if (!is.null(columns_headers)) {
+    if (!is.null(headers)) {
       ggtext::geom_richtext(
         data = data.frame(),
         ggplot2::aes(
           x = x_axis_i_header,
           y = max(y_axis) + 1.25 + rev(plot_settings$headers_nudge_y)[1]
         ),
-        label = columns_headers[[i]],
+        label = rev(headers)[[i]],
         size = plot_settings$font_size,
         label.padding = grid::unit(rep(0, 4), "pt"),
         fill = NA,
@@ -607,7 +612,8 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
 }
 
 
-add_vlines <- function(plot_settings, plot_borders, y_axis) {
+add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
+  if(!is.null(bar_est)){
   scale_breaks <- unique(c(
     seq(0, plot_borders[1], by = -10),
     seq(0, plot_borders[2], by = 10)
@@ -660,4 +666,12 @@ add_vlines <- function(plot_settings, plot_borders, y_axis) {
       )
     )
   })
+  }
+}
+
+# capped axis line
+plot_capped_x_axis <- function(scale_breaks){
+  if(!is.null(scale_breaks)){
+    ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1)
+  }
 }

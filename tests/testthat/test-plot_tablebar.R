@@ -73,7 +73,7 @@ test_that("continous barplot looks the same", {
     bar_sig = "bar_sig",
     bar_header = "a barplot",
     bar_fill = "bar_fill",
-    columns_headers = list("est_1", "est_2"),
+    headers = list("est_1", "est_2"),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
     columns_table_sig_high = list("bar_sig", "bar_sig"),

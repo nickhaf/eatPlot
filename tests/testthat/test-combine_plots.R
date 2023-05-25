@@ -19,7 +19,7 @@ test_that("example mindeststandard short version", {
     bar_label_sig = "sig_noTrend_noComp_2021",
     bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
     bar_header = "Mindeststandard nicht erreicht (MSA)",
-    columns_headers = list("Land"),
+    headers = list("Land"),
     columns_table = list("state_var"),
     bar_est = "est_noTrend_noComp_2021_percent",
     y_axis = "state_var",
@@ -126,7 +126,7 @@ test_that("Example barplot long format is plotted correctly", {
     bar_sig = "sig_Trend_noComp_20112016",
     bar_header = " ", # Zu column headers dazu
     bar_fill = "depVar",
-    columns_headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
+    headers = list("Land", "(MSA)", "%", "%", "%", "*(SE)*"),
     column_spanners = list(
       "**2011**" = 3,
       "**2016**" = 4,
@@ -176,7 +176,7 @@ test_that("Example barplot long format is plotted correctly", {
     bar_sig = "sig_Trend_noComp_20162021",
     bar_header = " ",
     bar_fill = "depVar",
-    columns_headers = list("%", "%", "%", "*(SE)*"),
+    headers = list("%", "%", "%", "*(SE)*"),
     column_spanners = list(
       "**2016**" = 1,
       "**2021**" = 2,

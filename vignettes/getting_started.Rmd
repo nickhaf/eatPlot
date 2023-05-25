@@ -88,7 +88,7 @@ bartable_1 <- plot_tablebar(
   dat = dat_plot,
   bar_est = "est_Trend_Comp_crossDiff_wholeGroup_20162021",
   bar_header = "Wert",
-  columns_headers = list("Land", "Wert"),
+  headers = list("Land", "Wert"),
   columns_table = c("state_var", "est_noTrend_noComp_2016"),
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(
@@ -110,7 +110,7 @@ bartable_2 <- plot_tablebar(
   dat = dat_plot,
   bar_est = "est_Trend_Comp_crossDiff_wholeGroupSameGroup_20162021",
   bar_header = "Wert",
-  columns_headers = list("Wert"),
+  headers = list("Wert"),
   columns_table = c("est_noTrend_noComp_2021"),
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(

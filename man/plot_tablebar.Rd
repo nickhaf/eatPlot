@@ -12,7 +12,7 @@ plot_tablebar(
   bar_sig = NULL,
   bar_fill = NULL,
   bar_header = NULL,
-  columns_headers = NULL,
+  headers = NULL,
   columns_round = 0,
   column_spanners = NULL,
   columns_table = NULL,
@@ -38,7 +38,7 @@ plot_tablebar(
 
 \item{bar_header}{Character string for the header of the bars.}
 
-\item{columns_headers}{Character vector containing the headers of the ploted table columns.}
+\item{headers}{Character vector containing the headers of the ploted table columns.}
 
 \item{columns_round}{List of numerics, for rounding the column values. Insert \code{NULL} or \code{0} for no rounding/character columns.}
 
