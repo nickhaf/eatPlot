@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,14 +57,18 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotsettings_tablebarplot</span><span class="op">(</span></span>
 <span>  axis_x_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_stripes_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bar_border_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_background_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_background_lines_linetype <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_background_lines_spanners <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_fill_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_frame_linetype <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bar_line_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_line_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_pattern_fill_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_pattern_spacing <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_pattern_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_pattern_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_sig_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_alignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -74,12 +78,10 @@
 <span>  columns_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_alignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_background_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  headers_background_width_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  headers_background_width_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  font_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  pattern_spacing <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  pattern_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  default_list <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -94,8 +96,16 @@
 <dd><p>Named vector containing the two colours that should be used for the striped background. Defaults to <code>NULL</code>.</p></dd>
 
 
-<dt>bar_border_lines</dt>
-<dd><p>Logical indicating whether the barplot should receive dotted lines on its borders.</p></dd>
+<dt>bar_background_lines</dt>
+<dd><p>Character string of either <code>c("borders", "scale_breaks", "none")</code>, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.</p></dd>
+
+
+<dt>bar_background_lines_linetype</dt>
+<dd><p>Character string indicating the linetype for the background lines of the barplot.</p></dd>
+
+
+<dt>bar_background_lines_spanners</dt>
+<dd><p>List containing of numeric vectors of two elements for indicating over which rows the background_lines in the barplot should span. Each vector contains the start and end row for the background line. Defaults to <code>NULL</code>, in which case The background_lines will be drawn from top to bottom.</p></dd>
 
 
 <dt>bar_fill_colour</dt>
@@ -114,7 +124,7 @@
 <dd><p>Numeric for the font size of the bar labels.</p></dd>
 
 
-<dt>bar_line_size</dt>
+<dt>bar_line_width</dt>
 <dd><p>Numeric for the line-size around the bar.</p></dd>
 
 
@@ -122,8 +132,16 @@
 <dd><p>Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in <code>bar_pattern_fill</code>. Defaults to <code>white</code>.</p></dd>
 
 
+<dt>bar_pattern_spacing</dt>
+<dd><p>Numeric for the gap between patterns.</p></dd>
+
+
 <dt>bar_pattern_type</dt>
 <dd><p>Named vector with the pattern types for the barpattern.</p></dd>
+
+
+<dt>bar_pattern_width</dt>
+<dd><p>Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the <code>bar_pattern_width</code> parameter will increase the thickness of the white stripes.</p></dd>
 
 
 <dt>bar_sig_type</dt>
@@ -162,7 +180,7 @@
 <dd><p>Colour of the background of the headers.</p></dd>
 
 
-<dt>headers_background_width_x</dt>
+<dt>headers_background_width_y</dt>
 <dd><p>Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to <code>0</code>.</p></dd>
 
 
@@ -176,14 +194,6 @@
 
 <dt>font_size</dt>
 <dd><p>Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to <code>3</code>.</p></dd>
-
-
-<dt>pattern_spacing</dt>
-<dd><p>Numeric for the gap between patterns.</p></dd>
-
-
-<dt>pattern_width</dt>
-<dd><p>Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the <code>pattern_width</code> parameter will increase the thickness of the white stripes.</p></dd>
 
 
 <dt>default_list</dt>
@@ -207,8 +217,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_border_lines</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines_linetype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "solid"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines_spanners</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_fill_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
@@ -222,7 +238,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_fill_colour</span>
@@ -258,7 +274,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
@@ -267,10 +283,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pattern_spacing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_spacing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pattern_width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $font_size</span>
@@ -295,8 +311,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_border_lines</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines_linetype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "solid"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines_spanners</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_fill_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "blue"    "#0A0D52"</span>
@@ -310,7 +332,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_fill_colour</span>
@@ -346,7 +368,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
@@ -355,10 +377,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pattern_spacing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_spacing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pattern_width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $font_size</span>
@@ -384,8 +406,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_border_lines</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines_linetype</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "solid"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_background_lines_spanners</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_fill_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fill_group_1 fill_group_2 </span>
@@ -400,7 +428,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_fill_colour</span>
@@ -436,7 +464,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_background_width_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
@@ -445,10 +473,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pattern_spacing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_spacing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pattern_width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $font_size</span>

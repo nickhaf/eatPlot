@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,15 @@
 <h2 class="pkg-version" data-toc-text="development version" id="eatplot-development-version">eatPlot (development version)<a class="anchor" aria-label="anchor" href="#eatplot-development-version"></a></h2>
 </div>
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.0.9010" id="eatplot-0009010">eatPlot 0.0.0.9010<a class="anchor" aria-label="anchor" href="#eatplot-0009010"></a></h2>
+<ul><li>The argument <code>columns_table_se</code> can now be used for specifying which columns should be plotted as (SE) (with brackets).</li>
+<li>There now is an example for Chapter 4 plots without trend.</li>
+<li>It is now possible to define different types of background lines in <code><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot()</a></code>, using the argument <code>bar_background_lines</code>.</li>
+<li>It is now possible to let background lines only span the rows specified in the <code>bar_background_lines_spanners</code> argument of the <code><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot()</a></code> function.</li>
+<li>Added border line on top of bar plots.</li>
+<li>Added templates for chapter 3 - french and chapter 4 - noTrend analyses.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9009" id="eatplot-0009009">eatPlot 0.0.0.9009<a class="anchor" aria-label="anchor" href="#eatplot-0009009"></a></h2>
 <ul><li>
 <code>grouping_vars</code> - argument in <code><a href="../reference/prep_plot.html">prep_plot()</a></code> now takes up to two grouping_vars.</li>
@@ -64,7 +73,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9008" id="eatplot-0009008">eatPlot 0.0.0.9008<a class="anchor" aria-label="anchor" href="#eatplot-0009008"></a></h2>
-<ul><li>Added argument <code>plotsettings_tablebarplot(bar_border_lines = TRUE)</code> for striped border lines in barplots.</li>
+<ul><li>Added argument <code>plotsettings_tablebarplot(bar_background_lines = TRUE)</code> for striped border lines in barplots.</li>
 <li>Added alignent option <code>2</code> for tablebars. This will right align columns in the middle of the column, usefull for numeric columns.</li>
 <li>Columns with linebreaks are adjusted automatically now, so they don’t flow over the upper line borders any more.</li>
 </ul></div>
