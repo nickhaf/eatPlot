@@ -97,3 +97,17 @@
 #'   ...
 #' }
 "barplot_plot_frame"
+
+
+#' BT22 default plot settings.
+#'
+#' Default plot settings for Mindest Standard Französisch.
+#'
+#' @format ## `barplot_plot_frz`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"barplot_plot_frz"
+
