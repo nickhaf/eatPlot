@@ -4,7 +4,14 @@
 \alias{save_plot}
 \title{Wrapper for \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 \usage{
-save_plot(p, filename, width = 160, height = 226.2, device = cairo_pdf, ...)
+save_plot(
+  p,
+  filename,
+  width = 160,
+  height = 226.2,
+  device = grDevices::cairo_pdf,
+  ...
+)
 }
 \arguments{
 \item{p}{Plot that should be saved.}
@@ -18,8 +25,6 @@ save_plot(p, filename, width = 160, height = 226.2, device = cairo_pdf, ...)
 \item{device}{Device for saving the plot. Should be \code{cairo_pdf} for pdfs, so font is displayed correctly.}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
-
-\item{format}{Format of the new plot file. Currently, only PDF is needed.}
 }
 \value{
 A PDF file.
