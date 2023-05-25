@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,14 +61,13 @@
 <span>  bar_label_sig <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_sig <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bar_header <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  columns_headers <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_round <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  column_spanners <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table_sig_bold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table_sig_high <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns_table_se <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  headers <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y_axis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -100,14 +99,6 @@
 <dd><p>Character string for the column that groups the bar filling colours into different groups.</p></dd>
 
 
-<dt>bar_header</dt>
-<dd><p>Character string for the header of the bars.</p></dd>
-
-
-<dt>columns_headers</dt>
-<dd><p>Character vector containing the headers of the ploted table columns.</p></dd>
-
-
 <dt>columns_round</dt>
 <dd><p>List of numerics, for rounding the column values. Insert <code>NULL</code> or <code>0</code> for no rounding/character columns.</p></dd>
 
@@ -130,6 +121,10 @@
 
 <dt>columns_table_se</dt>
 <dd><p>List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to <code>1</code>.</p></dd>
+
+
+<dt>headers</dt>
+<dd><p>Character vector containing the headers of the ploted table columns, including the bar table.</p></dd>
 
 
 <dt>y_axis</dt>
