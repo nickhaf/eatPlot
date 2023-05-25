@@ -21,7 +21,8 @@ library(eatPlot)
 ```
 
 # Lineplots
-## Chapter 4: Kompetenzwerte Bundesländer
+## Chapter 4
+### Kompetenzwerte Bundesländer
 ```{r chpt4_line}
 ## Prepare the data with 'KBuecher_imp3' as grouping_var
 plot_dat <- prep_plot(
@@ -56,7 +57,7 @@ save_plot(p_line_states, filename = "../split_lineplot_2_books-v02.pdf")
 ```
 
 
-## Chapter 4: Kompetenzwerte Deutschland
+### Kompetenzwerte Deutschland
 ```{r chpt_4_ger}
 ## First we extract the wanted competence areas from the data:
 plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
@@ -95,7 +96,8 @@ save_plot(p_line_ger,
 
 
 # Tables/Barplots
-## Chapter 3: Mindeststandards
+## Chapter 3
+### Mindeststandards
 ```{r chpt_3_MinStand}
 dat_bar <- prep_plot(min_stand,
   competence = "lesen",
@@ -185,11 +187,10 @@ minsta_plot
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot, filename = "../Kap3_2022_MSA-v02.pdf", height = 226.2 / 3)
+save_plot(minsta_plot, filename = "../Kap3_2021_MSA-v02.pdf", height = 226.2 / 3)
 ```
 
-
-## Chapter 4: Mindeststandards Trend
+### Mindeststandards Trend
 ```{r chpt_3_MinStand_trend}
 dat_bar <- prep_plot(min_stand,
   competence = "lesen",
@@ -198,17 +199,6 @@ dat_bar <- prep_plot(min_stand,
 
 
 dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
-dat_bar <- construct_label(dat_bar,
-  new_name = "se_Trend_noComp_20112016_percent_label",
-  label_se = "se_Trend_noComp_20112016_percent",
-  round_se = 1
-)
-dat_bar <- construct_label(dat_bar,
-  new_name = "se_Trend_noComp_20162021_percent_label",
-  label_se = "se_Trend_noComp_20162021_percent",
-  round_se = 1
-)
-
 
 dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht (MSA)", dat_bar$depVar)
 dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht (MSA)", dat_bar$depVar)
@@ -251,25 +241,14 @@ p_bar_1 <- plot_tablebar(
     "est_noTrend_noComp_2011_percent",
     "est_noTrend_noComp_2016_percent",
     "est_Trend_noComp_20112016_percent",
-    "se_Trend_noComp_20112016_percent_label"
+    "se_Trend_noComp_20112016_percent"
   ),
   columns_round = list(NULL, NULL, 1, 1, 1, NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_Trend_noComp_20112016_percent"),
   columns_table_sig_bold = list(
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    "sig_Trend_noComp_20112016",
-    NULL
-  ),
+    NULL, NULL, NULL, NULL, "sig_Trend_noComp_20112016", NULL),
   columns_table_sig_high = list(
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    "sig_Trend_Comp_crossDiff_wholeGroup_20112016",
-    NULL
-  ),
+    NULL, NULL, NULL, NULL, "sig_Trend_Comp_crossDiff_wholeGroup_20112016", NULL),
   y_axis = "y_axis_new",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-20, 20),
@@ -300,8 +279,9 @@ p_bar_2 <- plot_tablebar(
     "est_noTrend_noComp_2016_percent",
     "est_noTrend_noComp_2021_percent",
     "est_Trend_noComp_20162021_percent",
-    "se_Trend_noComp_20162021_percent_label"
+    "se_Trend_noComp_20162021_percent"
   ),
+  columns_table_se = list(NULL, NULL, NULL, "se_Trend_noComp_20162021_percent"), 
   columns_table_sig_bold = list(
     NULL,
     NULL,
@@ -319,7 +299,7 @@ p_bar_2 <- plot_tablebar(
     columns_alignment = c(2, 2, 2, 2),
     columns_width = c(0.13, 0.13, 0.13, 0.13, 0.46),
     headers_alignment = c(0.5, 0.5, 0.5, 0.5),
-    pattern_spacing = 0.0125,
+    bar_pattern_spacing = 0.0125,
     default_list = barplot_table_plot_pattern
   )
 )
@@ -329,6 +309,193 @@ minsta_plot_trend
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot_trend, filename = "../Kap3_2022_MSA_trend-v04.pdf")
+save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v04.pdf")
 ```
+
+
+### Mindeststandards Frz
+```{r chpt_2_frz}
+dat_bar <- prep_plot(min_stand,
+  competence = "lesen",
+  parameter = "1"
+)[["plot_tablebar"]]
+
+## Add a second group for illustration (not necessary for real data of course):
+dat_bar_2 <- dat_bar
+dat_bar_2$grouping_var <- rep("Gymnasium", nrow(dat_bar_2))
+dat_bar <- rbind(dat_bar, dat_bar_2)
+
+## Prepare data.frame:
+dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
+dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht (MSA)", dat_bar$depVar)
+dat_bar$depVar <- gsub("regErreicht", "Regelstandard erreicht (MSA)", dat_bar$depVar)
+dat_bar$depVar <- gsub("optErreicht", "Optimalstandard erreicht (MSA)", dat_bar$depVar)
+
+## Order the data.frame:
+dat_bar$y_axis_new <- paste0(dat_bar$state_var, dat_bar$depVar)
+## Dummy-variable needed for sorting:
+dat_bar$depVar_fac <- factor(dat_bar$depVar, levels = c(
+  "Mindeststandard nicht erreicht (MSA)",
+  "Regelstandard erreicht (MSA)",
+  "Optimalstandard erreicht (MSA)"
+))
+dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$grouping_var, dat_bar$depVar_fac), ]
+
+# Plot 1 ------------------------------------------------------------------
+
+# lapply-loop for plotting each state, save result in list. Only for 2 states in this example:
+plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
+
+  dat_bar_1 <- dat_bar[which(dat_bar$state_var == x), ]
+
+  ## Build Land-column, where only the first Land is plotted
+  dat_bar_1$y_axis <- paste0(dat_bar_1$grouping_var, dat_bar_1$depVar)
+  dat_bar_1$grouping_var <- as.character(dat_bar_1$grouping_var)
+  dat_bar_1$grouping_var[duplicated(dat_bar_1$grouping_var)] <- " "
+
+  p_bar_1 <- plot_tablebar(
+    dat = dat_bar_1,
+    bar_header = NULL,
+    bar_est = "est_Trend_noComp_20112016_percent",
+    bar_fill = "depVar",
+    columns_table = c(
+      "grouping_var",
+      "depVar",
+      "est_noTrend_noComp_2011_percent",
+      "est_noTrend_noComp_2016_percent",
+      "est_noTrend_noComp_2021_percent",
+      "est_Trend_noComp_20112016_percent",
+      "se_Trend_noComp_20112016_percent"
+    ),
+    columns_headers = list(NULL, NULL, "%", "%", "%", "+/-", "(SE)"),
+    columns_round = list(NULL, NULL, 1, 1, 1, 1, NULL),
+    columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_Trend_noComp_20112016_percent" ),
+    column_spanners = list(
+      "Leseverstehen" = c(1, 2),
+      "2011" = 3,
+      "2016" = 4,
+      "2021" = 5,
+      "Differenz 2016 - 2011" = c(6, 8)
+    ),
+    y_axis = "y_axis",
+    plot_settings = plotsettings_tablebarplot(
+      axis_x_lims = c(-20, 20),
+        columns_alignment = c(0, 0, 2, 2, 2, 2, 0.5),
+  columns_width = c(0.15, 0.3, 0.075, 0.075, 0.075, 0.075, 0.075, 0.175),
+      default_list = barplot_plot_frz
+    )
+  )
+  
+  p_bar_2 <- plot_tablebar(
+    dat = dat_bar_1,
+    bar_header = NULL,
+    bar_est = "est_Trend_noComp_20162021_percent",
+    bar_fill = "depVar",
+    columns_table = c(
+      "est_Trend_noComp_20162021_percent",
+      "se_Trend_noComp_20162021_percent"
+    ),
+    columns_headers = list("+/-", "(SE)"),
+    columns_round = list(1, NULL),
+    columns_table_se = list(NULL, "se_Trend_noComp_20162021_percent"),
+    column_spanners = list(
+      "Differenz 2021 - 2016" = c(1, 3)
+    ),
+    y_axis = "y_axis",
+    plot_settings = plotsettings_tablebarplot(
+            axis_x_lims = c(-20, 22), # set higher than necessary so the last y-axis tick doesn't disappear into the left border
+        columns_alignment = c(2, 0.5),
+  columns_width = c(0.25, 0.25, 0.5),
+      default_list = barplot_plot_frz
+    )
+  )
+
+  p_bar_c <- combine_plots(list(p_bar_1, p_bar_2))
+  
+  return(p_bar_c)
+})
+
+## Name accordingly
+names(plot_list) <- unique(dat_bar$state_var)[1:2]
+
+## Plot one of the plots by Name:
+plot_land_17 <- plot_list[["Land-17"]] 
+plot_land_17
+
+```
+
+```{r, eval = FALSE}
+## save all plots:
+lapply(names(plot_list), function(p_name){
+  p <- plot_list[[p_name]]
+  save_plot(p, filename = paste0("../Kap_3_Frz_", p_name, ".pdf"), height = 226.2 / 4)
+})
+
+```
+
+
+## Chapter 4
+### Kompetenzwerte no Trend
+```{r chapt_4_noTrend}
+## As we want to plot both mean and sd - Parameters, we prepare the data 2x, once with mean and once with sd as chosen parameter:
+dat_bar_mean <- prep_plot(trend_books,
+  competence = "lesen",
+  grouping_vars = "KBuecher_imp3",
+  parameter = "mean"
+)[["plot_tablebar"]]
+
+dat_bar_sd <- prep_plot(trend_books,
+  competence = "lesen",
+  grouping_vars = "KBuecher_imp3",
+  parameter = "sd"
+)[["plot_tablebar"]]
+
+## ... then we merge:
+dat_bar_mean_sd <- merge(dat_bar_mean,
+  dat_bar_sd,
+  by = c("state_var", "grouping_var"),
+  suffix = c("_mean", "_sd")
+)
+
+## Filter all rows containg the whole state (not subgroups):
+dat_bar_mean_sd <- dat_bar_mean_sd[dat_bar_mean_sd$grouping_var == "noGroup", ]
+
+## ... and plot:
+mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
+  bar_est = "est_noTrend_Comp_crossDiff_wholeGroup_2021_mean",
+  bar_header = "**Abweichung vom Mittelwert <br> für Deutschland**", # <br> for linebreak, ** for bold
+  bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean",
+  columns_table = list(
+    "state_var",
+    "est_noTrend_noComp_2021_mean",
+    "se_noTrend_noComp_2021_mean",
+    "est_noTrend_noComp_2021_sd",
+    "se_noTrend_noComp_2021_sd"
+  ),
+  columns_headers = list("**Land**", "***M***", "***(SE)***", "***SD***", "***(SE)***"), # *** for bold and italic
+  columns_table_sig_bold = list(NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean", NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_sd", NULL), 
+  columns_table_se = list(NULL, NULL, "se_noTrend_noComp_2021_mean", NULL, "se_noTrend_noComp_2021_sd"),
+  y_axis = "state_var",
+  plot_settings = plotsettings_tablebarplot(
+    background_stripes_colour = c(rep(c("white", "gray94"), 8), "gray87"),
+    bar_background_lines = "scale_breaks", # set background lines at scalebreaks
+    bar_background_lines_linetype = "solid",
+    bar_pattern_width = 0.5, # Increase the size of the white stripes. 
+    columns_alignment = c(0, 0.5, 0.5, 0.5, 0.5),
+    columns_width = c(0.2, 0.1, 0.1, 0.1, 0.1, 0.4),
+    headers_background_width_y = 1, # Increase the header background width, so the linebreak doesn't run over plot borders
+    default_list = barplot_table_plot_pattern
+  )
+)
+
+mean_noTrend
+```
+
+```{r, eval = FALSE}
+save_plot(mean_noTrend, filename = "../Kap4_2021_noTrend.pdf", height = 226.2 / 3)
+```
+
+
+
+
 

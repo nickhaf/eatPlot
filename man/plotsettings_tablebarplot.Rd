@@ -7,14 +7,18 @@
 plotsettings_tablebarplot(
   axis_x_lims = NULL,
   background_stripes_colour = NULL,
-  bar_border_lines = NULL,
+  bar_background_lines = NULL,
+  bar_background_lines_linetype = NULL,
+  bar_background_lines_spanners = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
   bar_label_nudge_x = NULL,
   bar_label_size = NULL,
-  bar_line_size = NULL,
+  bar_line_width = NULL,
   bar_pattern_fill_colour = NULL,
+  bar_pattern_spacing = NULL,
   bar_pattern_type = NULL,
+  bar_pattern_width = NULL,
   bar_sig_type = NULL,
   bar_width = NULL,
   columns_alignment = NULL,
@@ -24,12 +28,10 @@ plotsettings_tablebarplot(
   columns_width = NULL,
   headers_alignment = NULL,
   headers_background_colour = NULL,
-  headers_background_width_x = NULL,
+  headers_background_width_y = NULL,
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
   font_size = NULL,
-  pattern_spacing = NULL,
-  pattern_width = NULL,
   default_list = NULL
 )
 }
@@ -38,7 +40,11 @@ plotsettings_tablebarplot(
 
 \item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background. Defaults to \code{NULL}.}
 
-\item{bar_border_lines}{Logical indicating whether the barplot should receive dotted lines on its borders.}
+\item{bar_background_lines}{Character string of either \code{c("borders", "scale_breaks", "none")}, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.}
+
+\item{bar_background_lines_linetype}{Character string indicating the linetype for the background lines of the barplot.}
+
+\item{bar_background_lines_spanners}{List containing of numeric vectors of two elements for indicating over which rows the background_lines in the barplot should span. Each vector contains the start and end row for the background line. Defaults to \code{NULL}, in which case The background_lines will be drawn from top to bottom.}
 
 \item{bar_fill_colour}{Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in \code{bar_fill}. If no names are provided for the vector, the order of the factor levels of \code{bar_fill} will be used for determining the colour assignment.}
 
@@ -48,11 +54,15 @@ plotsettings_tablebarplot(
 
 \item{bar_label_size}{Numeric for the font size of the bar labels.}
 
-\item{bar_line_size}{Numeric for the line-size around the bar.}
+\item{bar_line_width}{Numeric for the line-size around the bar.}
 
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to \code{white}.}
 
+\item{bar_pattern_spacing}{Numeric for the gap between patterns.}
+
 \item{bar_pattern_type}{Named vector with the pattern types for the barpattern.}
+
+\item{bar_pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{bar_pattern_width} parameter will increase the thickness of the white stripes.}
 
 \item{bar_sig_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").}
 
@@ -72,17 +82,13 @@ plotsettings_tablebarplot(
 
 \item{headers_background_colour}{Colour of the background of the headers.}
 
-\item{headers_background_width_x}{Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to \code{0}.}
+\item{headers_background_width_y}{Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to \code{0}.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 
 \item{headers_nudge_y}{Numeric to nudge the column_headers in y direction. Defaults to \code{0}.}
 
 \item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{3}.}
-
-\item{pattern_spacing}{Numeric for the gap between patterns.}
-
-\item{pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{pattern_width} parameter will increase the thickness of the white stripes.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }

@@ -1,5 +1,13 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9010
+* The argument `columns_table_se` can now be used for specifying which columns should be plotted as (SE) (with brackets).
+* There now is an example for Chapter 4 plots without trend.
+* It is now possible to define different types of background lines in `plotsettings_tablebarplot()`, using the argument `bar_background_lines`.
+* It is now possible to let background lines only span the rows specified in the `bar_background_lines_spanners` argument of the `plotsettings_tablebarplot()` function. 
+* Added border line on top of bar plots.
+* Added templates for chapter 3 - french and chapter 4 - noTrend analyses.
+
 # eatPlot 0.0.0.9009
 * `grouping_vars` - argument in `prep_plot()` now takes up to two grouping_vars. 
 * Renamed arguments in `prep_plot()`: `grouping_var` and `grouping_var_groups` to `grouping_vars` and `grouping_vars_groups`.
@@ -11,7 +19,7 @@
 * Standardized the column names in `plot_data$plot_tablebar`, so `_noTrend` always is written before `Comp`.
 
 # eatPlot 0.0.0.9008
-* Added argument `plotsettings_tablebarplot(bar_border_lines = TRUE)` for striped border lines in barplots.
+* Added argument `plotsettings_tablebarplot(bar_background_lines = TRUE)` for striped border lines in barplots.
 * Added alignent option `2` for tablebars. This will right align columns in the middle of the column, usefull for numeric columns. 
 * Columns with linebreaks are adjusted automatically now, so they don't flow over the upper line borders any more. 
 

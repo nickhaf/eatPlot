@@ -12,7 +12,7 @@
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
 #' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
-#' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets behind the column values.
+#' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to `1`.
 #' @param columns_round List of numerics, for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
 #' @param y_axis Character string of the columnname used as y-axis.
@@ -70,6 +70,10 @@ plot_tablebar <- function(dat,
     }
   })
 
+  if (!is.numeric(dat[, bar_est]) | is.null(bar_est)) {
+    stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
+  }
+
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
 
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
@@ -79,15 +83,20 @@ plot_tablebar <- function(dat,
 
 
   if (is.null(plot_settings$headers_alignment)) {
-    plot_settings$headers_alignment <- plot_settings$columns_alignment
+    plot_settings$headers_alignment <- ifelse(plot_settings$columns_alignment == 2,
+                                              0.5,
+                                              plot_settings$columns_alignment)
   }
 
   plot_settings$columns_alignment <- check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1])
   plot_settings$columns_nudge_x <- check_length(plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1])
   plot_settings$headers_alignment <- check_length(plot_settings$headers_alignment, length(columns_table), fill = plot_settings$headers_alignment[1])
   plot_settings$headers_nudge_x <- check_length(plot_settings$headers_nudge_x, length(columns_table), fill = plot_settings$headers_nudge_x[1])
-  if (length(plot_settings$background_stripes_colour) != nrow(dat)) {
+  if (length(plot_settings$background_stripes_colour) < nrow(dat)) {
     plot_settings$background_stripes_colour <- fill_up(plot_settings$background_stripes_colour, leng = nrow(dat), fill = "white")
+  }
+  if (length(plot_settings$background_stripes_colour) > nrow(dat)) {
+    plot_settings$background_stripes_colour <- plot_settings$background_stripes_colour[1:nrow(dat)]
   }
 
   ## Check Column widths
@@ -136,13 +145,20 @@ plot_tablebar <- function(dat,
       dat,
       new_name = new_colnames[i],
       label_est = columns_table[[i]],
-      label_se = columns_table_se[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
       label_sig_high = columns_table_sig_high[[i]],
       label_sig_high_extra_column = TRUE,
       round_est = columns_round[[i]],
       plot_settings = plot_settings
     )
+
+    if (!is.null(columns_table_se[[i]])) {
+      dat <- construct_label(
+        dat,
+        new_name = new_colnames[i],
+        label_se = columns_table_se[[i]]
+      )
+    }
   }
 
   if (!is.null(bar_label)) {
@@ -189,6 +205,10 @@ plot_tablebar <- function(dat,
 
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
+  max_y <- max(dat$y_axis) + 1.25 + plot_settings$headers_nudge_y + plot_settings$headers_background_width_y
+  if(!is.null(column_spanners) == TRUE){
+    max_y <- max_y + 1.25
+  }
 
   res_plot <- ggplot2::ggplot(
     data = dat,
@@ -206,25 +226,27 @@ plot_tablebar <- function(dat,
       breaks = dat$background_colour,
       values = dat$background_colour
     ) +
-    add_vlines(plot_settings, plot_borders) +
+    add_vlines(plot_settings, plot_borders, dat$y_axis) +
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
       limits = c(NA, max(column_x_coords$right)),
-      expand = ggplot2::expansion(mult = c(0.025, 0.025))
+      expand = ggplot2::expansion(mult = c(0.01, 0.01))
     ) +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, plot_settings$headers_background_width_x))) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0.1))) +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
-        ymin = max(.data$y_axis) + 0.5, ymax = Inf
+        ymin = max(.data$y_axis) + 0.5, ymax = max_y
       ),
       colour = NA,
       fill = plot_settings$headers_background_colour
     ) +
-    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     theme_table() +
     # capped axis line
     ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1) +
+    ## Horizontal background lines around header box:
+    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
+    ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max_y, yend = max_y, linewidth = 0.1) +
     if (!is.null(bar_label)) {
       ggtext::geom_richtext(
         ggplot2::aes(
@@ -241,7 +263,36 @@ plot_tablebar <- function(dat,
 
 
   if (!is.null(bar_est)) {
-    if (plot_settings$bar_sig_type == "pattern") {
+    if (is.null(bar_sig)) {
+      res_plot <- res_plot +
+        ggnewscale::new_scale_fill() +
+        ggplot2::geom_rect(
+          data = dat,
+          ggplot2::aes(
+            xmin = .data$x_min,
+            xmax = .data$bar_est,
+            ymin = .data$y_axis - plot_settings$bar_width / 2,
+            ymax = .data$y_axis + plot_settings$bar_width / 2,
+            fill = .data$bar_fill
+          ),
+          colour = "black",
+          linewidth = plot_settings$bar_line_width
+        ) +
+        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
+        ggtext::geom_richtext(
+          data = data.frame(),
+          ggplot2::aes(
+            x = mean(plot_borders, na.rm = TRUE),
+            y = max(dat$y_axis, na.rm = TRUE) + 1.25 + plot_settings$headers_nudge_y,
+            label = bar_header
+          ),
+          size = plot_settings$font_size,
+          label.padding = grid::unit(rep(0, 4), "pt"),
+          fill = NA,
+          label.color = NA
+        ) +
+        NULL
+    } else if (plot_settings$bar_sig_type == "pattern") {
       ## ggpattern can't deal with NAs, therefore convert them to FALSE (not significant):
 
       for (i in c(columns_table_sig_bold, columns_table_sig_high, bar_label_sig, "bar_sig")) {
@@ -269,25 +320,13 @@ plot_tablebar <- function(dat,
           pattern_colour = NA,
           pattern_fill = plot_settings$bar_pattern_fill_colour,
           pattern_angle = -45,
-          pattern_density = plot_settings$pattern_width,
-          pattern_spacing = plot_settings$pattern_spacing,
+          pattern_density = plot_settings$bar_pattern_width,
+          pattern_spacing = plot_settings$bar_pattern_spacing,
           pattern_key_scale_factor = 0.6 # legend adjustment
         ) +
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggtext::geom_richtext(
-          data = data.frame(),
-          ggplot2::aes(
-            x = mean(plot_borders, na.rm = TRUE),
-            y = max(dat$y_axis) + 1 + plot_settings$headers_nudge_y
-          ),
-          label = bar_header,
-          size = plot_settings$font_size,
-          label.padding = grid::unit(rep(0, 4), "pt"),
-          fill = NA,
-          label.color = NA
-        ) +
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
         ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
@@ -318,7 +357,7 @@ plot_tablebar <- function(dat,
             linetype = .data$bar_sig,
           ),
           colour = "black",
-          linewidth = plot_settings$bar_line_size
+          linewidth = plot_settings$bar_line_width
         ) +
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
@@ -596,37 +635,57 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
 }
 
 
-add_vlines <- function(plot_settings, plot_borders) {
-  c(
-    if (plot_settings$bar_border_lines == TRUE) {
-      c(
-        ggplot2::annotate(
-          "segment",
-          x = plot_borders[1],
-          xend = plot_borders[1],
-          y = 0.5,
-          yend = Inf,
-          colour = "darkgrey",
-          linetype = "dotted"
-        ),
-        ggplot2::annotate(
-          "segment",
-          x = plot_borders[2],
-          xend = plot_borders[2],
-          y = 0.5,
-          yend = Inf,
-          colour = "darkgrey",
-          linetype = "dotted"
-        )
+add_vlines <- function(plot_settings, plot_borders, y_axis) {
+  scale_breaks <- unique(c(
+    seq(0, plot_borders[1], by = -10),
+    seq(0, plot_borders[2], by = 10)
+  ))
+
+
+  if (is.null(plot_settings$bar_background_lines_spanners)) {
+    plot_settings$bar_background_lines_spanners <- list(c(max(y_axis) + 0.3, 0.7))
+    line_spanners <- FALSE
+  }else{
+    line_spanners <- TRUE
+  }
+
+  lapply(plot_settings$bar_background_lines_spanners, function(y) {
+    if (line_spanners == TRUE) {
+    y_1 <- y_axis[y[1]]
+    y_2 <- y_axis[y[2]]
+    }else{
+      y_1 <- y[1]
+      y_2 <- y[2]
+    }
+
+    if (plot_settings$bar_background_lines == "border") {
+      x_intercepts <- range(scale_breaks)
+    } else if (plot_settings$bar_background_lines == "scale_breaks") {
+      x_intercepts <- scale_breaks
+    } else {
+      x_intercepts <- 0
+    }
+
+    c(
+      ggplot2::annotate(
+        "segment",
+        x = x_intercepts,
+        xend = x_intercepts,
+        y = y_1 + 0.2,
+        yend = y_2 - 0.2,
+        colour = "darkgrey",
+        linetype = plot_settings$bar_background_lines_linetype,
+        linewidth = 0.1
+      ),
+      ggplot2::annotate(
+        "segment",
+        x = 0,
+        xend = 0,
+        y = y_1 + 0.2,
+        yend = y_2 - 0.2,
+        colour = "darkgrey",
+        linewidth = 0.1
       )
-    },
-    ggplot2::annotate(
-      "segment",
-      x = 0,
-      xend = 0,
-      y = 0.5,
-      yend = Inf,
-      colour = "darkgrey"
     )
-  )
+  })
 }
