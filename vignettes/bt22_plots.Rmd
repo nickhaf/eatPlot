@@ -21,7 +21,8 @@ library(eatPlot)
 ```
 
 # Lineplots
-## Chapter 4: Kompetenzwerte Bundesländer
+## Chapter 4
+### Kompetenzwerte Bundesländer
 ```{r chpt4_line}
 ## Prepare the data with 'KBuecher_imp3' as grouping_var
 plot_dat <- prep_plot(
@@ -56,7 +57,7 @@ save_plot(p_line_states, filename = "../split_lineplot_2_books-v02.pdf")
 ```
 
 
-## Chapter 4: Kompetenzwerte Deutschland
+### Kompetenzwerte Deutschland
 ```{r chpt_4_ger}
 ## First we extract the wanted competence areas from the data:
 plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
@@ -95,7 +96,8 @@ save_plot(p_line_ger,
 
 
 # Tables/Barplots
-## Chapter 3: Mindeststandards
+## Chapter 3
+### Mindeststandards
 ```{r chpt_3_MinStand}
 dat_bar <- prep_plot(min_stand,
   competence = "lesen",
@@ -188,7 +190,7 @@ minsta_plot
 save_plot(minsta_plot, filename = "../Kap3_2021_MSA-v02.pdf", height = 226.2 / 3)
 ```
 
-## Chapter 3: Mindeststandards Trend
+### Mindeststandards Trend
 ```{r chpt_3_MinStand_trend}
 dat_bar <- prep_plot(min_stand,
   competence = "lesen",
@@ -311,7 +313,7 @@ save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v04.pdf")
 ```
 
 
-## Chapter 3: Frz
+### Mindeststandards Frz
 ```{r chpt_2_frz}
 dat_bar <- prep_plot(min_stand,
   competence = "lesen",
@@ -432,8 +434,9 @@ lapply(names(plot_list), function(p_name){
 ```
 
 
-## Chapter 4: No Trend
-```{r}
+## Chapter 4
+### Kompetenzwerte no Trend
+```{r chapt_4_noTrend}
 ## As we want to plot both mean and sd - Parameters, we prepare the data 2x, once with mean and once with sd as chosen parameter:
 dat_bar_mean <- prep_plot(trend_books,
   competence = "lesen",
