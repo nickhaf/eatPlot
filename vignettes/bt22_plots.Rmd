@@ -187,7 +187,7 @@ minsta_plot
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot, filename = "../Kap3_2021_MSA-v02.pdf", height = 226.2 / 3)
+save_plot(minsta_plot, filename = "../Kap_3_MinSta.pdf", height = 226.2 / 3)
 ```
 
 ### Mindeststandards Trend
