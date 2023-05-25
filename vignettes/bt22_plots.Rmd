@@ -148,7 +148,7 @@ p_bar_2 <- plot_tablebar(
   bar_label_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021",
   bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
   bar_est = "est_noTrend_noComp_2021_percent",
-  headers = list("**Regelstandard erreicht oder übertroffen**"),
+  headers = list("**Regelstandard erreicht <br> oder übertroffen**"),
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(
     columns_alignment = 0,
