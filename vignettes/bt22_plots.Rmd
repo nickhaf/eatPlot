@@ -53,7 +53,7 @@ p_line_states
 ```
 
 ```{r, eval = FALSE}
-save_plot(p_line_states, filename = "../split_lineplot_2_books-v02.pdf")
+save_plot(p_line_states, filename = "../split_lineplot_2_books-v03.pdf")
 ```
 
 
@@ -129,7 +129,7 @@ p_bar_1 <- plot_tablebar(
   bar_est = "est_noTrend_noComp_2021_percent",
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(0, 40),
+    axis_x_lims = c(0, 42), # Set a bit higher, so the last number isn't cut off.
     bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
     columns_alignment = 0,
     columns_width = c(0.45, 0.55),
@@ -155,7 +155,7 @@ p_bar_2 <- plot_tablebar(
     columns_alignment = 0,
     headers_alignment = 0,
     columns_width = NULL,
-    axis_x_lims = c(0, 75),
+    axis_x_lims = c(0, 72),
     bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
     default_list = barplot_plot_frame
   )
@@ -187,7 +187,7 @@ minsta_plot
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot, filename = "../Kap3_2021_MSA-v02.pdf", height = 226.2 / 3)
+save_plot(minsta_plot, filename = "../Kap_3_MinSta.pdf", height = 226.2 / 3)
 ```
 
 ### Mindeststandards Trend
