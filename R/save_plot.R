@@ -1,11 +1,12 @@
-#' Wrapper for [ggplot2::ggsave()].
+#' Wrapper for [grDevices::pdf()].
 #'
 #' @param p Plot that should be saved.
 #' @param filename Filepath and -name for the new plot file.
 #' @param width Width of the new plot file in mm. Defaults to `160`.
 #' @param height Height of the new plot file in mm. Defaults to `226.2`
-#' @param device Device for saving the plot. Should be `cairo_pdf` for pdfs, so font is displayed correctly.
-#' @param ... Other arguments passed on to [ggplot2::ggsave()].
+#' @param colormodel Colormodel for saving the plot. See [grDevices::pdf()] for more information. Defaults to "cmyk".
+#' @param format File format for the saved plot. Defaults to `pdf`.
+#' @param ... Further arguments passed to [grDevices::pdf()].
 #'
 #' @return A PDF file.
 #' @export
@@ -25,14 +26,16 @@
 # }
 
 ## pdf for the correct colomodel cmyk:
-save_plot <- function(p, filename, width = 160, height = 226.2, format = "PDF", scaling = 1) {
+save_plot <- function(p, filename, width = 160, height = 226.2, colormodel = "cmyk", format = "PDF",  scaling = 1, ...) {
   width_inch <- width / 25.4
   height_inch <- height / 25.4
 
   grDevices::pdf(file = filename,
                  width = width_inch * scaling,
                  height = height_inch * scaling,
-                 colormodel = "cmyk"
+                 colormodel = colormodel,
+                 format = format,
+                 ...
                  )
   plot(p)
   grDevices::dev.off()
