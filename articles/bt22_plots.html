@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,7 +122,7 @@ handelt.</p>
 <span><span class="va">p_line_states</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt4_line-1.png" width="700"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states</span>, filename <span class="op">=</span> <span class="st">"../split_lineplot_2_books-v03.pdf"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states</span>, filename <span class="op">=</span> <span class="st">"../split_lineplot_2_books-v04.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="kompetenzwerte-deutschland">Kompetenzwerte Deutschland<a class="anchor" aria-label="anchor" href="#kompetenzwerte-deutschland"></a>
@@ -130,6 +130,9 @@ handelt.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## First we extract the wanted competence areas from the data:</span></span>
 <span><span class="va">plot_dat_kb</span> <span class="op">&lt;-</span> <span class="va">trend_books</span><span class="op">[</span><span class="va">trend_books</span><span class="op">$</span><span class="va">kb</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DHW"</span>, <span class="st">"GL"</span>, <span class="st">"GM"</span>, <span class="st">"hoeren"</span>, <span class="st">"lesen"</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co">## We can change the order by converting 'kb' into a factor and ordering the levels:</span></span>
+<span><span class="va">plot_dat_kb</span><span class="op">$</span><span class="va">kb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">plot_dat_kb</span><span class="op">$</span><span class="va">kb</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hoeren"</span>, <span class="st">"lesen"</span>, <span class="st">"GL"</span>, <span class="st">"DHW"</span>,<span class="st">"GM"</span><span class="op">)</span> <span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Than we can prepare it with the according function:</span></span>
 <span><span class="va">plot_dat_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span></span>
@@ -157,7 +160,7 @@ handelt.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## We dont't want a whole A4 page for this plot, but maybe the half:</span></span>
 <span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_ger</span>,</span>
-<span>  filename <span class="op">=</span> <span class="st">"../adjusted_means_ger.pdf"</span>,</span>
+<span>  filename <span class="op">=</span> <span class="st">"../adjusted_means_ger-v02.pdf"</span>,</span>
 <span>  height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
