@@ -5,7 +5,6 @@
 #' @param width Width of the new plot file in mm. Defaults to `160`.
 #' @param height Height of the new plot file in mm. Defaults to `226.2`
 #' @param colormodel Colormodel for saving the plot. See [grDevices::pdf()] for more information. Defaults to "cmyk".
-#' @param format File format for the saved plot. Defaults to `pdf`.
 #' @param scaling Scaling parameter for changing height in widht relationally.
 #' @param ... Further arguments passed to [grDevices::pdf()].
 #'
@@ -27,7 +26,7 @@
 # }
 
 ## pdf for the correct colomodel cmyk:
-save_plot <- function(p, filename, width = 160, height = 226.2, colormodel = "cmyk", format = "PDF",  scaling = 1, ...) {
+save_plot <- function(p, filename, width = 160, height = 226.2, colormodel = "cmyk", scaling = 1, ...) {
   width_inch <- width / 25.4
   height_inch <- height / 25.4
 
@@ -35,7 +34,6 @@ save_plot <- function(p, filename, width = 160, height = 226.2, colormodel = "cm
                  width = width_inch * scaling,
                  height = height_inch * scaling,
                  colormodel = colormodel,
-                 format = format,
                  ...
                  )
   plot(p)

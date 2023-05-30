@@ -10,7 +10,6 @@ save_plot(
   width = 160,
   height = 226.2,
   colormodel = "cmyk",
-  format = "PDF",
   scaling = 1,
   ...
 )
@@ -25,8 +24,6 @@ save_plot(
 \item{height}{Height of the new plot file in mm. Defaults to \code{226.2}}
 
 \item{colormodel}{Colormodel for saving the plot. See \code{\link[grDevices:pdf]{grDevices::pdf()}} for more information. Defaults to "cmyk".}
-
-\item{format}{File format for the saved plot. Defaults to \code{pdf}.}
 
 \item{scaling}{Scaling parameter for changing height in widht relationally.}
 
