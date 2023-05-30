@@ -62,6 +62,9 @@ save_plot(p_line_states, filename = "../split_lineplot_2_books-v03.pdf")
 ## First we extract the wanted competence areas from the data:
 plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
 
+## We can change the order by converting 'kb' into a factor and ordering the levels:
+plot_dat_kb$kb <- factor(plot_dat_kb$kb, levels = c("hoeren", "lesen", "GL", "DHW","GM") )
+
 ## Than we can prepare it with the according function:
 plot_dat_test <- prep_plot(
   dat = plot_dat_kb,
