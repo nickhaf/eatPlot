@@ -72,6 +72,14 @@ plot_tablebar <- function(dat,
   })
 
 
+  # Sub dashes so they are displayed correctly in pdf:
+  for(i in columns_table){
+dat[, i] <- sub_dash(dat[, i])
+  }
+  ## Hier nicht, da öfter ein Minus verwendet wird:
+  # headers <- sub_dash(headers)
+  # names(column_spanners) <- sub_dash(names(column_spanners))
+
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
 
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))

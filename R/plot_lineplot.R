@@ -99,7 +99,7 @@ plot_lineplot <- function(plot_dat,
         background_lines = background_lines,
         plot_settings = plot_settings
       ) +
-     plot_title(i, title_superscripts) +
+     plot_title(sub_dash(i), title_superscripts) +
           set_plot_coords(plot_dat,
         point_values = point_values,
         plot_settings = plot_settings

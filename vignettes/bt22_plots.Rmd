@@ -117,7 +117,6 @@ for (i in c("2011", "2016", "2021")) {
 }
 
 dat_bar$state_var <- gsub("wholeGroup", "Deutschland", dat_bar$state_var)
-dat_bar$state_var <- gsub("-", "\uad", dat_bar$state_var)
 
 # Plot 1 ------------------------------------------------------------------
 dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
@@ -310,7 +309,7 @@ minsta_plot_trend
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v04.pdf")
+save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v05.pdf")
 ```
 
 

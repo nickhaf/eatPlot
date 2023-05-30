@@ -432,5 +432,11 @@ get_plot_coords <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
 }
 
+sub_dash <- function(vec){
+  if(is.character(vec)){
+  vec <- gsub("-", "\uad", vec)
+  }
+  return(vec)
+}
 
 
