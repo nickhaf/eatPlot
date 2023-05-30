@@ -133,7 +133,7 @@
 <line x1='354.97' y1='87.03' x2='521.14' y2='87.03' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='410.69' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='22.77px' lengthAdjust='spacingAndGlyphs'>Differenz</text>
 <text x='435.04' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
-<text x='449.28' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>­</text>
+<text x='449.28' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>-</text>
 <text x='452.76' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2011</text>
 <text x='406.52' y='135.94' style='font-size: 5.69px; font-family: sans;' textLength='11.38px' lengthAdjust='spacingAndGlyphs'>(SE)</text>
 <text x='370.04' y='135.94' style='font-size: 5.69px; font-family: sans;' textLength='6.80px' lengthAdjust='spacingAndGlyphs'>+/-</text>
@@ -218,7 +218,7 @@
 <line x1='529.11' y1='87.03' x2='717.16' y2='87.03' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='595.77' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='22.77px' lengthAdjust='spacingAndGlyphs'>Differenz</text>
 <text x='620.12' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='634.36' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>­</text>
+<text x='634.36' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>-</text>
 <text x='637.84' y='56.70' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='593.70' y='135.94' style='font-size: 5.69px; font-family: sans;' textLength='11.38px' lengthAdjust='spacingAndGlyphs'>(SE)</text>
 <text x='548.50' y='135.94' style='font-size: 5.69px; font-family: sans;' textLength='6.80px' lengthAdjust='spacingAndGlyphs'>+/-</text>

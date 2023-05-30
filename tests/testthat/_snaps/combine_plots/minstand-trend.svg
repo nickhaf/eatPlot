@@ -740,7 +740,7 @@
 <line x1='290.35' y1='28.60' x2='426.28' y2='28.60' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='330.95' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='22.77px' lengthAdjust='spacingAndGlyphs'>Differenz</text>
 <text x='355.30' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
-<text x='369.55' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>­</text>
+<text x='369.55' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>-</text>
 <text x='373.02' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2011</text>
 <text x='331.48' y='37.67' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='11.38px' lengthAdjust='spacingAndGlyphs'>(SE)</text>
 <text x='302.94' y='37.67' style='font-size: 5.69px; font-family: sans;' textLength='5.06px' lengthAdjust='spacingAndGlyphs'>%</text>
@@ -1254,7 +1254,7 @@
 <line x1='502.37' y1='28.60' x2='715.69' y2='28.60' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='581.67' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='22.77px' lengthAdjust='spacingAndGlyphs'>Differenz</text>
 <text x='606.02' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2021</text>
-<text x='620.26' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>­</text>
+<text x='620.26' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='1.89px' lengthAdjust='spacingAndGlyphs'>-</text>
 <text x='623.74' y='24.83' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2016</text>
 <text x='546.43' y='37.67' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='11.38px' lengthAdjust='spacingAndGlyphs'>(SE)</text>
 <text x='515.44' y='37.67' style='font-size: 5.69px; font-family: sans;' textLength='5.06px' lengthAdjust='spacingAndGlyphs'>%</text>
