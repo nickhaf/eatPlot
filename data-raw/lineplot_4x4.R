@@ -15,7 +15,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   brace_span_y = 0.1,
   grouping_colours = c(
     "1" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-    "0" = "black"
+    "0" = "#000000"
   ),
   line_type = c(
     "TRUE" = "solid",

@@ -72,6 +72,14 @@ plot_tablebar <- function(dat,
   })
 
 
+  # Sub dashes so they are displayed correctly in pdf:
+  for(i in columns_table){
+dat[, i] <- sub_dash(dat[, i])
+  }
+  ## Hier nicht, da öfter ein Minus verwendet wird:
+  # headers <- sub_dash(headers)
+  # names(column_spanners) <- sub_dash(names(column_spanners))
+
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
 
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
@@ -250,7 +258,8 @@ plot_tablebar <- function(dat,
         ggplot2::aes(
           x = .data[[bar_label]],
           label = .data$bar_label_text
-        ),
+        ),#
+        colour = "#000000",
         label.padding = grid::unit(rep(0, 4), "pt"),
         fill = NA,
         label.color = NA,
@@ -384,6 +393,7 @@ plot_tablebar <- function(dat,
                 x = header_x,
                 y = max(dat$y_axis) + 1.25 + 1.25 + max(plot_settings$headers_nudge_y)
               ),
+              colour = "#000000",
               label = names(column_spanners)[spanner],
               size = plot_settings$font_size,
               label.padding = grid::unit(rep(0, 4), "pt"),
@@ -448,6 +458,7 @@ build_columns_3 <- function(df,
             y = .data$y_axis,
             label = .data[[column_name]]
           ),
+          colour = "#000000",
           size = plot_settings$font_size,
           label.padding = grid::unit(rep(0, 4), "pt"),
           fill = NA,
@@ -487,6 +498,7 @@ plot_column_headers <- function(column_x_coords_headers, headers, y_axis, plot_s
           x = x_axis_i_header,
           y = max(y_axis) + 1.25 + rev(plot_settings$headers_nudge_y)[1]
         ),
+        colour = "#000000",
         label = rev(headers)[[i]],
         size = plot_settings$font_size,
         label.padding = grid::unit(rep(0, 4), "pt"),
@@ -602,6 +614,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
           y = .data$y_axis,
           label = .data[[paste0(column_name, "_sig_superscript")]]
         ),
+        colour = "#000000",
         size = plot_settings$font_size,
         label.padding = grid::unit(rep(0, 4), "pt"),
         fill = NA,

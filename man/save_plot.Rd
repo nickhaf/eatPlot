@@ -2,14 +2,16 @@
 % Please edit documentation in R/save_plot.R
 \name{save_plot}
 \alias{save_plot}
-\title{Wrapper for \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
+\title{Wrapper for \code{\link[grDevices:pdf]{grDevices::pdf()}}.}
 \usage{
 save_plot(
   p,
   filename,
   width = 160,
   height = 226.2,
-  device = grDevices::cairo_pdf,
+  colormodel = "cmyk",
+  format = "PDF",
+  scaling = 1,
   ...
 )
 }
@@ -22,15 +24,19 @@ save_plot(
 
 \item{height}{Height of the new plot file in mm. Defaults to \code{226.2}}
 
-\item{device}{Device for saving the plot. Should be \code{cairo_pdf} for pdfs, so font is displayed correctly.}
+\item{colormodel}{Colormodel for saving the plot. See \code{\link[grDevices:pdf]{grDevices::pdf()}} for more information. Defaults to "cmyk".}
 
-\item{...}{Other arguments passed on to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
+\item{format}{File format for the saved plot. Defaults to \code{pdf}.}
+
+\item{scaling}{Scaling parameter for changing height in widht relationally.}
+
+\item{...}{Further arguments passed to \code{\link[grDevices:pdf]{grDevices::pdf()}}.}
 }
 \value{
 A PDF file.
 }
 \description{
-Wrapper for \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.
+Wrapper for \code{\link[grDevices:pdf]{grDevices::pdf()}}.
 }
 \examples{
 # tbd

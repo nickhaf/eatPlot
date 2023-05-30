@@ -93,6 +93,7 @@ draw_brace_label <- function(dat, plot_settings = plot_settings()) {
       y = .data$label_pos_y,
       label = .data$brace_label
     ),
+    colour = "#000000",
     size = plot_settings$brace_label_size,
     label.padding = grid::unit(rep(0, 4), "pt"),
     fill = NA,
