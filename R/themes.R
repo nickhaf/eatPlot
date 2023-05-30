@@ -8,7 +8,7 @@ theme_table <- function() {
   ggplot2::theme_classic() %+replace%
     ggplot2::theme(
       strip.background = ggplot2::element_blank(),
-      text = ggplot2::element_text(colour = "red"),
+      text = ggplot2::element_text(colour = "#000000"),
       panel.grid.major = ggplot2::element_blank(),
       panel.border = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_blank(),
