@@ -53,7 +53,7 @@ p_line_states
 ```
 
 ```{r, eval = FALSE}
-save_plot(p_line_states, filename = "../split_lineplot_2_books-v03.pdf")
+save_plot(p_line_states, filename = "../split_lineplot_2_books-v04.pdf")
 ```
 
 
@@ -61,6 +61,9 @@ save_plot(p_line_states, filename = "../split_lineplot_2_books-v03.pdf")
 ```{r chpt_4_ger}
 ## First we extract the wanted competence areas from the data:
 plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
+
+## We can change the order by converting 'kb' into a factor and ordering the levels:
+plot_dat_kb$kb <- factor(plot_dat_kb$kb, levels = c("hoeren", "lesen", "GL", "DHW","GM") )
 
 ## Than we can prepare it with the according function:
 plot_dat_test <- prep_plot(
@@ -89,7 +92,7 @@ p_line_ger
 ```{r, eval = FALSE}
 ## We dont't want a whole A4 page for this plot, but maybe the half:
 save_plot(p_line_ger,
-  filename = "../adjusted_means_ger.pdf",
+  filename = "../adjusted_means_ger-v02.pdf",
   height = 226.2 / 2 + 10
 )
 ```

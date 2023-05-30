@@ -54,12 +54,20 @@ plot_lineplot <- function(plot_dat,
     }
   }
 
+  plot_dat <- lapply(plot_dat, function(x){
+    x$grouping_var <- as.factor(x$grouping_var)
+    x$grouping_var <- droplevels(x$grouping_var)
+    return(x)
+  })
+
+  ### prepare seperate_plot_var
+  plot_dat$plot_lines$seperate_plot_var <- as.factor(plot_dat$plot_lines[, seperate_plot_var])
+
   # filter years ------------------------------------------------------------
-  ## Eigene Funktion:
   plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
 
   states <- unique(plot_dat[[1]]$state_var)
-  tiles <- unique(plot_dat$plot_lines[, seperate_plot_var]) # Hier die Level nehmen
+  tiles <- levels(plot_dat$plot_lines$seperate_plot_var) # Hier die Level nehmen
 
   plot_list <- list()
   if (!is.null(point_values)) {

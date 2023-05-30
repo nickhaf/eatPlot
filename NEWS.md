@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9012
+* In `plot_lineplot()` kann die `seperate_plot_var` jetzt als factor übergeben werden, damit die Reihenfolge der Linienplots der Reihenfolge der `factorlevels` entspricht.
+
 # eatPlot 0.0.0.9011
 * The bar header argument was merged with the columns_headers argument in `plot_tablebar`, which is now named `headers`. The bar header now behaves like the other column headers, and can be aligned by the `headers_alignment` - Argument in `plotsettings_tablebarplot()`. 
 

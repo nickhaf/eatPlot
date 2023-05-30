@@ -36,7 +36,7 @@ clean_data <- function(dat,
   # Select relevant rows
   dat <- dat[dat$parameter == parameter, ]
   if (!is.null(competence)) {
-    dat <- dat[dat$competence_var == competence, ]
+    dat <- dat[dat$competence_var %in% competence, ]
   }
 
   dat <- dat[, !colnames(dat) %in% c("modus", "parameter")]
