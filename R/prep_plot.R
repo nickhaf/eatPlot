@@ -85,8 +85,8 @@ prep_plot <- function(dat,
   colnames(dat) <- gsub("^sig$", "p", colnames(dat))
 
   if (!is.null(competence)) {
-    if (!competence %in% dat$competence_var) {
-      stop("Your competence is not in your competence_var column.")
+    if (any(!competence %in% dat$competence_var)) {
+      stop("Your competence is not in your competence_var column.", call. = FALSE)
     }
   }
   all_states <- unique(dat$state_var)[!is.na(unique(dat$state_var))]
