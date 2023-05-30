@@ -6,6 +6,7 @@
 #' @param height Height of the new plot file in mm. Defaults to `226.2`
 #' @param colormodel Colormodel for saving the plot. See [grDevices::pdf()] for more information. Defaults to "cmyk".
 #' @param format File format for the saved plot. Defaults to `pdf`.
+#' @param scaling Scaling parameter for changing height in widht relationally.
 #' @param ... Further arguments passed to [grDevices::pdf()].
 #'
 #' @return A PDF file.

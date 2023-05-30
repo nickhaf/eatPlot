@@ -28,6 +28,8 @@ save_plot(
 
 \item{format}{File format for the saved plot. Defaults to \code{pdf}.}
 
+\item{scaling}{Scaling parameter for changing height in widht relationally.}
+
 \item{...}{Further arguments passed to \code{\link[grDevices:pdf]{grDevices::pdf()}}.}
 }
 \value{
