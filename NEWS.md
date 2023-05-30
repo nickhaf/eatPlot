@@ -1,6 +1,10 @@
 # eatPlot (development version)
 
 # eatPlot 0.0.0.9012
+* Changed color encoding to CMYK by default in `save_plot()`.
+* Because of this, dashes have to be represented by UTF8 Encoding. This will be done automatically in the plot-functions. As a result, the dashes will not be represented correctly if you look at the plot directly in R, but will be correct in the PDF.
+
+# eatPlot 0.0.0.9012
 * In `plot_lineplot()` kann die `seperate_plot_var` jetzt als factor übergeben werden, damit die Reihenfolge der Linienplots der Reihenfolge der `factorlevels` entspricht.
 
 # eatPlot 0.0.0.9011
