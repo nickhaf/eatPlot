@@ -219,6 +219,13 @@ dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
 ## add a linebreak at the '-':
 dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
+
+column_widths <- list(p1 =  c(0.09, 0.25, 0.04, 0.04, 0.04, 0.04, NA), ## Anteilig berechnen
+                      p2 = c(0.04, 0.04, 0.04, 0.04, NA)
+                      )
+column_widths <- calc_column_width(column_widths = column_widths, plot_ranges = c(60, 40), columns_table_sig_high_letter_nudge_x = 10)
+
+
 # Plot 1 ------------------------------------------------------------------
 ## Only plot the first state respectively:
 dat_bar$state_var[duplicated(dat_bar$state_var)] <- " "
@@ -252,10 +259,12 @@ p_bar_1 <- plot_tablebar(
     NULL, NULL, NULL, NULL, "sig_Trend_Comp_crossDiff_wholeGroup_20112016", NULL),
   y_axis = "y_axis_new",
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-20, 20),
+    axis_x_lims = c(-30, 30),
     columns_alignment = c(0, 0, 2, 2, 2, 2),
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0),
-    columns_width = c(0.15, 0.375, 0.07, 0.07, 0.07, 0.07, 0.225),
+    #columns_width = c(0.15, 0.375, 0.07, 0.07, 0.07, 0.07, 0.225),
+    columns_width = column_widths[[1]],
+    columns_table_sig_high_letter_nudge_x = column_widths[[3]][1], 
     default_list = barplot_table_plot_pattern
   )
 )
@@ -297,7 +306,9 @@ p_bar_2 <- plot_tablebar(
   y_axis = "y_axis_new",
   plot_settings = plotsettings_tablebarplot(
     columns_alignment = c(2, 2, 2, 2),
-    columns_width = c(0.13, 0.13, 0.13, 0.13, 0.46),
+    #columns_width = c(0.13, 0.13, 0.13, 0.13, 0.46),
+    columns_width = column_widths[[2]],
+    columns_table_sig_high_letter_nudge_x = column_widths[[3]][1], 
     headers_alignment = 0.5,
     bar_pattern_spacing = 0.0125,
     default_list = barplot_table_plot_pattern
@@ -309,7 +320,7 @@ minsta_plot_trend
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v05.pdf")
+save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v06.pdf")
 ```
 
 
