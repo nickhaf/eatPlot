@@ -223,7 +223,7 @@ dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 column_widths <- list(p1 =  c(0.09, 0.25, 0.04, 0.04, 0.04, 0.04, NA), ## Anteilig berechnen
                       p2 = c(0.04, 0.04, 0.04, 0.04, NA)
                       )
-column_widths <- calc_column_width(column_widths = column_widths, plot_ranges = c(60, 40), columns_table_sig_high_letter_nudge_x = 10)
+column_widths <- calc_column_width(column_widths = column_widths, plot_ranges = c(60, 40), columns_table_sig_high_letter_nudge_x = 20)
 
 
 # Plot 1 ------------------------------------------------------------------
