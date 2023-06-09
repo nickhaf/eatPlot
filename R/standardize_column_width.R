@@ -1,7 +1,7 @@
 #' Calculate the column widths for plots that should be later combined with [combine_plots()].
 #'
 #' @description
-#' If multiple tables/barplots should be combined, the column widths might be distorted, as the plots need to be scaled on the x-axes of the barplots. Therefore, [standardize_column_width()] can be used to calculate the column_widths that are entered in [plotesettings_tablebarplot()] when defining each plot.
+#' If multiple tables/barplots should be combined, the column widths might be distorted, as the plots need to be scaled on the x-axes of the barplots. Therefore, [standardize_column_width()] can be used to calculate the column_widths that are entered in [plotsettings_tablebarplot()] when defining each plot.
 #'
 #' @param column_widths List of numeric vectors with proportional column widths for the final, combined plot. In the end, all proportions have to sum up to 1. However, if you want to set the width of barplots automatically, you can provide an `NA` for the column containing the barplot. In this case, it's width will be calculated automatically, so the proportions stay the same.
 #' @param plot_ranges Numeric vector containing the ranges of the x-axis for alle barplots. Defaults to `c(0, 0)`.

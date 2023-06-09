@@ -456,7 +456,7 @@ cmyk <- function(C,M,Y,K) {
 
 
 
-  return(rgb(red = r.col,
+  return(grDevices::rgb(red = r.col,
              blue = b.col,
              green = g.col,
              maxColorValue = 255)

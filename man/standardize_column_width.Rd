@@ -15,7 +15,7 @@ standardize_column_width(column_widths, plot_ranges = c(0, 0))
 Returns a list with numeric vectors containing the relative column widths that have to be set in the single plots.
 }
 \description{
-If multiple tables/barplots should be combined, the column widths might be distorted, as the plots need to be scaled on the x-axes of the barplots. Therefore, \code{\link[=standardize_column_width]{standardize_column_width()}} can be used to calculate the column_widths that are entered in \code{\link[=plotesettings_tablebarplot]{plotesettings_tablebarplot()}} when defining each plot.
+If multiple tables/barplots should be combined, the column widths might be distorted, as the plots need to be scaled on the x-axes of the barplots. Therefore, \code{\link[=standardize_column_width]{standardize_column_width()}} can be used to calculate the column_widths that are entered in \code{\link[=plotsettings_tablebarplot]{plotsettings_tablebarplot()}} when defining each plot.
 }
 \examples{
 
