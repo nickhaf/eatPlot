@@ -6,7 +6,19 @@
 #' @return Returns a list with numeric vectors containing the relative column widths that have to be set in the single plots.
 #' @export
 #'
-#' @examples # tbd
+#' @examples
+#'
+#' standardize_column_width(column_widths = list(p1 = c(0.1, 0.2),
+#'                                               p2 = c(0.5, 0.2)),
+#'                          plot_ranges = c(10, 30))
+#'
+#'## NAs will be interpreted as barplots, in wich case the width of the barplots will be
+#'## calclulated automatically, so the x-axes are on the same scale.
+#' standardize_column_width(column_widths = list(p1 = c(0.1, NA),
+#'                                               p2 = c(0.5, NA)),
+#'                          plot_ranges = c(10, 30))
+
+
 standardize_column_width <- function(column_widths, plot_ranges) {
 
   if(length(plot_ranges) != length(column_widths)){

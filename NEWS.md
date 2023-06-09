@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9014
+* Added the function [standardize_column_widths] which can be used to calculate the relative column width for plots that should be combined later. This way, columns that should have the same width can be easily set to the same width. 
+
 # eatPlot 0.0.0.9013
 * Changed color encoding to CMYK by default in `save_plot()`.
 * Because of this, dashes have to be represented by UTF8 Encoding. This will be done automatically in the plot-functions. As a result, the dashes will not be represented correctly if you look at the plot directly in R, but will be correct in the PDF.
