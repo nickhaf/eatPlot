@@ -21,6 +21,7 @@ plot_single_lineplot <- function(plot_dat,
                                  label_sig_bold = "sig_Trend_noComp",
                                  background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {
+
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
     theme_line(plot_settings),

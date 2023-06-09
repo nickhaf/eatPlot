@@ -217,6 +217,11 @@ dat[, i] <- sub_dash(dat[, i])
     max_y <- max_y + 1.25
   }
 
+  plot_settings$bar_fill_colour <- construct_colour_scale(colours = plot_settings$bar_fill_colour,
+                         dat = dat,
+                         colname = "bar_fill")
+
+
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(

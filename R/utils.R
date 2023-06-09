@@ -462,3 +462,12 @@ cmyk <- function(C,M,Y,K) {
              maxColorValue = 255)
          )
 }
+
+# Colours should be displayed in the order they are put in:
+construct_colour_scale <- function(colours, dat, colname){
+  if(is.null(names(colours)) & colname %in% colnames(dat)){
+    names(colours) <- unique(dat[, colname])
+  }
+return(colours)
+  }
+

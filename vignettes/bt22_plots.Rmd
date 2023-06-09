@@ -306,8 +306,7 @@ p_bar_2 <- plot_tablebar(
     columns_alignment = c(2, 2, 2, 2),
     columns_width = column_widths_stand$p2,
     headers_alignment = 0.5,
-    bar_pattern_spacing = 0.014, # spacing und width manuell justieren, damit das Muster die gleiche größe wie in p1 hat
-    bar_pattern_width = 0.75,
+    bar_pattern_spacing = 0.015, # spacing manuell justieren, damit das Muster die gleiche größe wie in p1 hat
     default_list = barplot_table_plot_pattern
   )
 )
