@@ -15,8 +15,8 @@ lineplot_4x4 <- plotsettings_lineplot(
   brace_line_width = 0.5,
   brace_span_y = 0.1,
   grouping_colours = c(
-    "1" = cmyk(0, 0, 0, 100),
-    "0" = cmyk(0, 0, 0, 40)
+   cmyk(0, 0, 0, 100),
+   cmyk(0, 0, 0, 40)
   ),
   line_type = c(
     "TRUE" = "solid",

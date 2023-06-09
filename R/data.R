@@ -111,3 +111,16 @@
 #' }
 "barplot_plot_frz"
 
+
+#' BT22 default plot settings.
+#'
+#' Default plot settings lineplots with three groups.
+#'
+#' @format ## `lineplot_4x4_3groups`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"lineplot_4x4_3groups"
+

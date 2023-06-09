@@ -169,10 +169,9 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
     plot_settings = plotsettings_lineplot(
-      default_list = lineplot_4x4
+      default_list = lineplot_4x4_3groups
     )
   )
-
   vdiffr::expect_doppelganger("lineplot_4x4_3groups", p_line)
 
   #  save_plot(p_line, filename = "../split_lineplot_3_books.pdf")
