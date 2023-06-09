@@ -217,6 +217,11 @@ dat[, i] <- sub_dash(dat[, i])
     max_y <- max_y + 1.25
   }
 
+  plot_settings$bar_fill_colour <- construct_colour_scale(colours = plot_settings$bar_fill_colour,
+                         dat = dat,
+                         colname = "bar_fill")
+
+
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -307,11 +312,12 @@ dat[, i] <- sub_dash(dat[, i])
             xmax = .data$bar_est,
             ymin = .data$y_axis - plot_settings$bar_width / 2,
             ymax = .data$y_axis + plot_settings$bar_width / 2,
-            colour = .data$bar_fill,
+            #colour = .data$bar_fill,
             fill = .data$bar_fill,
             pattern = .data$bar_sig
           ),
-          linewidth = 0.2,
+          colour = "black",
+          linewidth = plot_settings$bar_line_width,
           pattern_colour = NA,
           pattern_fill = plot_settings$bar_pattern_fill_colour,
           pattern_angle = -45,
@@ -620,7 +626,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
         fill = NA,
         label.color = NA,
         hjust = rev(plot_settings$columns_alignment)[i],
-        nudge_x = rev(plot_settings$columns_nudge_x)[i] + x_range * plot_settings$columns_table_sig_high_letter_nudge_x
+        nudge_x = rev(plot_settings$columns_nudge_x)[i] + plot_settings$columns_table_sig_high_letter_nudge_x
       )
     }
   }

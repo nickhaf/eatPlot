@@ -132,7 +132,6 @@ p_bar_1 <- plot_tablebar(
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(0, 42), # Set a bit higher, so the last number isn't cut off.
-    bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
     columns_alignment = 0,
     columns_width = c(0.45, 0.55),
     headers_alignment = c(0, 0),
@@ -157,7 +156,6 @@ p_bar_2 <- plot_tablebar(
     columns_alignment = 0,
     headers_alignment = 0,
     axis_x_lims = c(0, 72),
-    bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
     default_list = barplot_plot_frame
   )
 )
@@ -199,7 +197,6 @@ dat_bar <- prep_plot(min_stand,
   parameter = "1"
 )[["plot_tablebar"]]
 
-
 dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est_|se_", colnames(dat_bar))])
 
 dat_bar$depVar <- gsub("minVerfehlt", "Mindeststandard nicht erreicht (MSA)", dat_bar$depVar)
@@ -218,6 +215,15 @@ dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
 
 ## add a linebreak at the '-':
 dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
+
+# Automatically calculate the column widhts for both plots. 
+# The first column will cover 9 % of the whole (combined) plot, the second 25 % and so on.  
+# The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically. 
+column_widths_stand <- standardize_column_width(
+  column_widths = list(p1 = c(0.09, 0.25, 0.05, 0.05, 0.05, 0.05, NA), 
+                       p2 = c(0.05, 0.05, 0.05, 0.05, NA)), 
+  plot_ranges = c(40, 42) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  )
 
 # Plot 1 ------------------------------------------------------------------
 ## Only plot the first state respectively:
@@ -255,7 +261,7 @@ p_bar_1 <- plot_tablebar(
     axis_x_lims = c(-20, 20),
     columns_alignment = c(0, 0, 2, 2, 2, 2),
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0),
-    columns_width = c(0.15, 0.375, 0.07, 0.07, 0.07, 0.07, 0.225),
+    columns_width = column_widths_stand$p1, # Here we can use the widths calculated by standardize_column_width()
     default_list = barplot_table_plot_pattern
   )
 )
@@ -296,10 +302,11 @@ p_bar_2 <- plot_tablebar(
   ),
   y_axis = "y_axis_new",
   plot_settings = plotsettings_tablebarplot(
+    axis_x_lims = c(-20, 22),
     columns_alignment = c(2, 2, 2, 2),
-    columns_width = c(0.13, 0.13, 0.13, 0.13, 0.46),
+    columns_width = column_widths_stand$p2,
     headers_alignment = 0.5,
-    bar_pattern_spacing = 0.0125,
+    bar_pattern_spacing = 0.015, # spacing manuell justieren, damit das Muster die gleiche größe wie in p1 hat
     default_list = barplot_table_plot_pattern
   )
 )
@@ -309,7 +316,7 @@ minsta_plot_trend
 ```
 
 ```{r, eval = FALSE}
-save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v05.pdf")
+save_plot(minsta_plot_trend, filename = "../Kap3_2021_MSA_trend-v06.pdf")
 ```
 
 
@@ -340,6 +347,14 @@ dat_bar$depVar_fac <- factor(dat_bar$depVar, levels = c(
   "Optimalstandard erreicht (MSA)"
 ))
 dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$grouping_var, dat_bar$depVar_fac), ]
+
+## Calculate the standardized column widths, so all columns that should have the same width have the same width.
+## The first column of the first plot p1 will cover 10 % of the total, combined plot, the second column 25 % and so on.
+## The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically. 
+column_widths_stand <- standardize_column_width(column_widths = list(p1 = c(0.1, 0.25, 0.05, 0.05, 0.05, 0.05, 0.05, NA), 
+                                              p2 = c(0.05, 0.05, NA)), 
+                         plot_ranges = c(40, 42) # Range of the x-axes of both plots set in 'axis_x_lims'.
+                         )
 
 # Plot 1 ------------------------------------------------------------------
 
@@ -380,7 +395,7 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(-20, 20),
       columns_alignment = c(0, 0, 2, 2, 2, 2, 0.5),
-  columns_width = c(0.15, 0.3, 0.075, 0.075, 0.075, 0.075, 0.075, 0.175),
+  columns_width = column_widths_stand$p1,
       default_list = barplot_plot_frz
     )
   )
@@ -403,7 +418,7 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     plot_settings = plotsettings_tablebarplot(
             axis_x_lims = c(-20, 22), # set higher than necessary so the last y-axis tick doesn't disappear into the left border
         columns_alignment = c(2, 0.5),
-  columns_width = c(0.25, 0.25, 0.5),
+  columns_width = column_widths_stand$p2,
       default_list = barplot_plot_frz
     )
   )

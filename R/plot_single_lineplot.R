@@ -21,6 +21,7 @@ plot_single_lineplot <- function(plot_dat,
                                  label_sig_bold = "sig_Trend_noComp",
                                  background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {
+
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
     theme_line(plot_settings),
@@ -38,7 +39,8 @@ plot_single_lineplot <- function(plot_dat,
       plot_background_lines(
         dat = plot_dat[["plot_background_lines"]],
         line_values = line_values,
-        line_se = line_se
+        line_se = line_se,
+        plot_settings = plot_settings
       )
     },
     if (!is.null(line_values)) {
