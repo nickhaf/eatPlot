@@ -220,11 +220,10 @@ dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
 dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
 # Automatically calculate the column widhts for both plots:
-column_widths <- calc_column_width(
+column_widths <- standardize_column_width(
   column_widths = list(p1 = c(0.09, 0.25, 0.05, 0.05, 0.05, 0.05, NA), 
                        p2 = c(0.05, 0.05, 0.05, 0.05, NA)), 
-  plot_ranges = c(60, 40), 
-  columns_table_sig_high_letter_nudge_x = 27.5
+  plot_ranges = c(60, 40)
   )
 
 
