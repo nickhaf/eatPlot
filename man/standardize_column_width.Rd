@@ -2,32 +2,31 @@
 % Please edit documentation in R/standardize_column_width.R
 \name{standardize_column_width}
 \alias{standardize_column_width}
-\title{Calculate the column widths for plots that should be later combined with \link{combine_plots}.}
+\title{Calculate the column widths for plots that should be later combined with \code{\link[=combine_plots]{combine_plots()}}.}
 \usage{
-standardize_column_width(column_widths, plot_ranges)
+standardize_column_width(column_widths, plot_ranges = c(0, 0))
 }
 \arguments{
 \item{column_widths}{List of numeric vectors with proportional column widths regarding the final, combined plot. In the end, all proportions have to sum up to 1. However, if you want to set the width of barplots automatically, you can provide an \code{NA} for the column containing the barplot. In this case, it's width will be calculated automatically, so the proportions stay the same.}
 
-\item{plot_ranges}{Numeric vector containing the ranges of the x-axis for alle barplots.}
+\item{plot_ranges}{Numeric vector containing the ranges of the x-axis for alle barplots. Defaults to \code{c(0, 0)}.}
 }
 \value{
 Returns a list with numeric vectors containing the relative column widths that have to be set in the single plots.
 }
 \description{
-Calculate the column widths for plots that should be later combined with \link{combine_plots}.
+If multiple tables/barplots should be combined, the column widths might be distorted, as the plots need to be scaled on the x-axes of the barplots. Therefore, \code{\link[=standardize_column_width]{standardize_column_width()}} can be used to calculate the column_widths, that are entered in \code{\link[=plotesettings_tablebarplot]{plotesettings_tablebarplot()}} when defining each plot. For this, the total column widths can be provided along with the barplot ranges to calculate the widths that have to be defined for each seperate plot.
 }
 \examples{
 
+## The first column of the left plot will cover 10 \% of the plot width, the second 20 \% and so on:
 standardize_column_width(column_widths = list(p1 = c(0.1, 0.2),
-                                              p2 = c(0.5, 0.2)
-                                              ),
+                                              p2 = c(0.5, 0.2)),
                          plot_ranges = c(10, 30))
 
 ## NAs will be interpreted as barplots, in wich case the width of the barplots will be
 ## calclulated automatically, so the x-axes are on the same scale.
 standardize_column_width(column_widths = list(p1 = c(0.1, NA),
-                                              p2 = c(0.5, NA)
-                                              ),
+                                              p2 = c(0.5, NA)),
                          plot_ranges = c(10, 30))
 }
