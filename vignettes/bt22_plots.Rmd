@@ -219,7 +219,7 @@ dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
 ## add a linebreak at the '-':
 dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
-# Automatically calculate the column widhts for both plots:
+# Automatically calculate the column widhts for both plots. 
 column_widths <- standardize_column_width(
   column_widths = list(p1 = c(0.09, 0.25, 0.05, 0.05, 0.05, 0.05, NA), 
                        p2 = c(0.05, 0.05, 0.05, 0.05, NA)), 
@@ -349,6 +349,12 @@ dat_bar$depVar_fac <- factor(dat_bar$depVar, levels = c(
 ))
 dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$grouping_var, dat_bar$depVar_fac), ]
 
+## Calculate the standardized column widths, so all columns that should have the same width have the same width:
+column_widths_stand <- standardize_column_width(column_widths = list(p1 = c(0.1, 0.25, 0.05, 0.05, 0.05, 0.05, 0.05, NA), 
+                                              p2 = c(0.05, 0.05, NA)), 
+                         plot_ranges = c(40, 42)
+                         )
+
 # Plot 1 ------------------------------------------------------------------
 
 # lapply-loop for plotting each state, save result in list. Only for 2 states in this example:
@@ -388,7 +394,7 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(-20, 20),
       columns_alignment = c(0, 0, 2, 2, 2, 2, 0.5),
-  columns_width = c(0.15, 0.3, 0.075, 0.075, 0.075, 0.075, 0.075, 0.175),
+  columns_width = column_widths_stand$p1,
       default_list = barplot_plot_frz
     )
   )
@@ -411,7 +417,7 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     plot_settings = plotsettings_tablebarplot(
             axis_x_lims = c(-20, 22), # set higher than necessary so the last y-axis tick doesn't disappear into the left border
         columns_alignment = c(2, 0.5),
-  columns_width = c(0.25, 0.25, 0.5),
+  columns_width = column_widths_stand$p2,
       default_list = barplot_plot_frz
     )
   )
