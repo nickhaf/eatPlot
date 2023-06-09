@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -207,7 +207,6 @@ handelt.</p>
 <span>  y_axis <span class="op">=</span> <span class="st">"state_var"</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">42</span><span class="op">)</span>, <span class="co"># Set a bit higher, so the last number isn't cut off.</span></span>
-<span>    bar_fill_colour <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">49</span>, <span class="fl">133</span>, <span class="fl">156</span>, maxColorValue <span class="op">=</span> <span class="fl">255</span><span class="op">)</span>,</span>
 <span>    columns_alignment <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.45</span>, <span class="fl">0.55</span><span class="op">)</span>,</span>
 <span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
@@ -232,7 +231,6 @@ handelt.</p>
 <span>    columns_alignment <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    headers_alignment <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">72</span><span class="op">)</span>,</span>
-<span>    bar_fill_colour <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">75</span>, <span class="fl">172</span>, <span class="fl">198</span>, maxColorValue <span class="op">=</span> <span class="fl">255</span><span class="op">)</span>,</span>
 <span>    default_list <span class="op">=</span> <span class="va">barplot_plot_frame</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -275,7 +273,6 @@ handelt.</p>
 <span><span class="op">)</span><span class="op">[[</span><span class="st">"plot_tablebar"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; Are you sure your data isn't grouped? If it is, but you didn't provide any grouping_vars, this might lead to duplicated rows in the prepared data.frames.</span></span>
 <span></span>
-<span></span>
 <span><span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_percent.html">construct_percent</a></span><span class="op">(</span><span class="va">dat_bar</span>, columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"est_|se_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"minVerfehlt"</span>, <span class="st">"Mindeststandard nicht erreicht (MSA)"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar</span><span class="op">)</span></span>
@@ -294,6 +291,15 @@ handelt.</p>
 <span></span>
 <span><span class="co">## add a linebreak at the '-':</span></span>
 <span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"-&lt;br&gt;"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Automatically calculate the column widhts for both plots. </span></span>
+<span><span class="co"># The first column will cover 9 % of the whole (combined) plot, the second 25 % and so on.  </span></span>
+<span><span class="co"># The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically. </span></span>
+<span><span class="va">column_widths_stand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_column_width.html">standardize_column_width</a></span><span class="op">(</span></span>
+<span>  column_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>p1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.09</span>, <span class="fl">0.25</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="cn">NA</span><span class="op">)</span>, </span>
+<span>                       p2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  plot_ranges <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">42</span><span class="op">)</span> <span class="co"># Range of the x-axes of both plots set in 'axis_x_lims'.</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot 1 ------------------------------------------------------------------</span></span>
 <span><span class="co">## Only plot the first state respectively:</span></span>
@@ -331,7 +337,7 @@ handelt.</p>
 <span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
 <span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>    columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.375</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.225</span><span class="op">)</span>,</span>
+<span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p1</span>, <span class="co"># Here we can use the widths calculated by standardize_column_width()</span></span>
 <span>    default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -378,10 +384,11 @@ handelt.</p>
 <span>  <span class="op">)</span>,</span>
 <span>  y_axis <span class="op">=</span> <span class="st">"y_axis_new"</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
+<span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">22</span><span class="op">)</span>,</span>
 <span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>    columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.13</span>, <span class="fl">0.13</span>, <span class="fl">0.13</span>, <span class="fl">0.13</span>, <span class="fl">0.46</span><span class="op">)</span>,</span>
+<span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p2</span>,</span>
 <span>    headers_alignment <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>    bar_pattern_spacing <span class="op">=</span> <span class="fl">0.0125</span>,</span>
+<span>    bar_pattern_spacing <span class="op">=</span> <span class="fl">0.015</span>, <span class="co"># spacing manuell justieren, damit das Muster die gleiche größe wie in p1 hat</span></span>
 <span>    default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -396,7 +403,7 @@ handelt.</p>
 <span><span class="va">minsta_plot_trend</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand_trend-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot_trend</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2021_MSA_trend-v05.pdf"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot_trend</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2021_MSA_trend-v06.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="mindeststandards-frz">Mindeststandards Frz<a class="anchor" aria-label="anchor" href="#mindeststandards-frz"></a>
@@ -428,6 +435,14 @@ handelt.</p>
 <span>  <span class="st">"Optimalstandard erreicht (MSA)"</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="va">dat_bar</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">grouping_var</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">depVar_fac</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co">## Calculate the standardized column widths, so all columns that should have the same width have the same width.</span></span>
+<span><span class="co">## The first column of the first plot p1 will cover 10 % of the total, combined plot, the second column 25 % and so on.</span></span>
+<span><span class="co">## The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically. </span></span>
+<span><span class="va">column_widths_stand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_column_width.html">standardize_column_width</a></span><span class="op">(</span>column_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>p1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="cn">NA</span><span class="op">)</span>, </span>
+<span>                                              p2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                         plot_ranges <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">42</span><span class="op">)</span> <span class="co"># Range of the x-axes of both plots set in 'axis_x_lims'.</span></span>
+<span>                         <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot 1 ------------------------------------------------------------------</span></span>
 <span></span>
@@ -468,7 +483,7 @@ handelt.</p>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>      axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
 <span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>  columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.3</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.175</span><span class="op">)</span>,</span>
+<span>  columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p1</span>,</span>
 <span>      default_list <span class="op">=</span> <span class="va">barplot_plot_frz</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -491,7 +506,7 @@ handelt.</p>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>            axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">22</span><span class="op">)</span>, <span class="co"># set higher than necessary so the last y-axis tick doesn't disappear into the left border</span></span>
 <span>        columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>  columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p2</span>,</span>
 <span>      default_list <span class="op">=</span> <span class="va">barplot_plot_frz</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>

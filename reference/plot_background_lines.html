@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_background_lines</span><span class="op">(</span><span class="va">dat</span>, <span class="va">line_values</span>, <span class="va">line_se</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_background_lines</span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  <span class="va">line_values</span>,</span>
+<span>  <span class="va">line_se</span>,</span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,6 +74,10 @@
 
 <dt>line_se</dt>
 <dd><p>Character vector of the column name containing the standard errors for the plotted lines. Defaults to <code>NULL</code>, in which case they will be deducted from the line values.</p></dd>
+
+
+<dt>plot_settings</dt>
+<dd><p>Named list constructed with <code><a href="plotsettings_lineplot.html">plotsettings_lineplot()</a></code>. Defaults to a list with all settings set to <code>0</code>. There are several predefined lists with optimized settings for different plots. See <code><a href="plotsettings_lineplot.html">plotsettings_lineplot()</a></code> for an overview.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -76,6 +76,9 @@
     <loc>https://nickhaf.github.io/eatPlot/reference/lineplot_4x4.html</loc>
   </url>
   <url>
+    <loc>https://nickhaf.github.io/eatPlot/reference/lineplot_4x4_3groups.html</loc>
+  </url>
+  <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/min_stand.html</loc>
   </url>
   <url>
@@ -125,6 +128,9 @@
   </url>
   <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/set_scales.html</loc>
+  </url>
+  <url>
+    <loc>https://nickhaf.github.io/eatPlot/reference/standardize_column_width.html</loc>
   </url>
   <url>
     <loc>https://nickhaf.github.io/eatPlot/reference/theme_line.html</loc>
