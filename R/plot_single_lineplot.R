@@ -38,7 +38,8 @@ plot_single_lineplot <- function(plot_dat,
       plot_background_lines(
         dat = plot_dat[["plot_background_lines"]],
         line_values = line_values,
-        line_se = line_se
+        line_se = line_se,
+        plot_settings = plot_settings
       )
     },
     if (!is.null(line_values)) {

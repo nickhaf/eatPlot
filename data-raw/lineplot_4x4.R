@@ -1,12 +1,13 @@
 ## code to prepare `lineplot_4x4` dataset goes here
 
 lineplot_4x4 <- plotsettings_lineplot(
-  axis_x_background_colour = "lightblue",
+  axis_x_background_colour = cmyk(30, 0, 15, 6),
   axis_x_background_width_x = 0.1,
   axis_x_background_width_y = 0.04,
   axis_x_label_centralize = 0.05,
   axis_x_label_nudge_y = 0.02,
   axis_x_label_size = 2,
+  background_line_colour = cmyk(30, 0, 15, 6),
   brace_label_gap_y = 0.08,
   brace_label_nudge_x = 0.155,
   brace_label_nudge_y = 0.05,
@@ -14,8 +15,8 @@ lineplot_4x4 <- plotsettings_lineplot(
   brace_line_width = 0.5,
   brace_span_y = 0.1,
   grouping_colours = c(
-    "1" = grDevices::rgb(166, 166, 166, maxColorValue = 255),
-    "0" = "#000000"
+    "1" = cmyk(0, 0, 0, 100),
+    "0" = cmyk(0, 0, 0, 40)
   ),
   line_type = c(
     "TRUE" = "solid",

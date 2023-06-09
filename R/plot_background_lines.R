@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples # tbd
-plot_background_lines <- function(dat, line_values, line_se) {
+plot_background_lines <- function(dat, line_values, line_se, plot_settings = plotsettings_lineplot()) {
   line_values <- paste0(line_values, "_wholeGroup")
   colnames_se <- if (is.null(line_se)){gsub("est_", "se_", line_values)
     }else{line_se}
@@ -44,10 +44,8 @@ plot_background_lines <- function(dat, line_values, line_se) {
         ymax = .data$y_pos,
         group = .data$years_Trend
       ),
-      fill = grDevices::rgb(147, 205, 221,
-        maxColorValue = 255
-      ),
-      linewidth = 1
+      fill = plot_settings$background_line_colour,
+      linewidth = 0.1
     )
   } else {
     message("Plotting only the lines for the estimates as no SE column was found. Please check if this was not intended.")
@@ -63,9 +61,7 @@ plot_background_lines <- function(dat, line_values, line_se) {
         group = .data$years_Trend
       ),
       linewidth = 1,
-      color = grDevices::rgb(147, 205, 221,
-        maxColorValue = 255
-      )
+      color =  plot_settings$background_line_colour
     )
   }
 }
