@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -582,15 +582,7 @@ handelt.</p>
 <span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_noTrend_noComp_2021_mean"</span>, <span class="cn">NULL</span>, <span class="st">"se_noTrend_noComp_2021_sd"</span><span class="op">)</span>,</span>
 <span>  y_axis <span class="op">=</span> <span class="st">"state_var"</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>    background_stripes_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"gray94"</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span>, <span class="st">"gray87"</span><span class="op">)</span>,</span>
-<span>    bar_background_lines <span class="op">=</span> <span class="st">"scale_breaks"</span>, <span class="co"># set background lines at scalebreaks</span></span>
-<span>    bar_background_lines_linetype <span class="op">=</span> <span class="st">"solid"</span>,</span>
-<span>    bar_pattern_width <span class="op">=</span> <span class="fl">0.5</span>, <span class="co"># Increase the size of the white stripes. </span></span>
-<span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
-<span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    headers_background_width_y <span class="op">=</span> <span class="fl">1</span>, <span class="co"># Increase the header background width, so the linebreak doesn't run over plot borders</span></span>
-<span>    default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
+<span>    default_list <span class="op">=</span> <span class="va">barplot_noTrend</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">pattern</span> is already present.</span></span>

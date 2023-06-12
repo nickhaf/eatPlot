@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,7 @@
 <span>  axis_x_label_centralize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_x_label_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_x_label_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  axis_y_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_line_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_label_gap_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_label_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -110,6 +111,10 @@
 
 <dt>axis_x_label_size</dt>
 <dd><p>Numeric for the font size of the x-axis labels.</p></dd>
+
+
+<dt>axis_y_lims</dt>
+<dd><p>Numeric for the y-axis limits. Defaults to <code>NULL</code>, in which case the limits will be set automatically.</p></dd>
 
 
 <dt>background_line_colour</dt>
@@ -227,6 +232,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_label_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_y_lims</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_line_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "black"</span>
