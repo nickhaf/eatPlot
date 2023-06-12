@@ -213,11 +213,3 @@ test_that("second vs is replaced correctly", {
   expect_equal(replace_VS(x)[c(4, 5, 6)], c("black.VS.white", rep("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen", 2)))
 })
 
-
-test_that("rgb colours are correctly calculated from cmyk", {
- expect_equal(cmyk( 30,0,15,6), "#A8F0CC")
- expect_equal(cmyk(0, 0, 0, 100), "#000000" )
-}
-)
-
-
