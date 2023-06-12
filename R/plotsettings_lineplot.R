@@ -2,7 +2,7 @@
 check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 31
+      length(settings_list) == 32
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -13,6 +13,7 @@ check_plotsettings_lineplot <- function(settings_list) {
         "axis_x_label_centralize",
         "axis_x_label_nudge_y",
         "axis_x_label_size",
+        "axis_y_lims",
         "background_line_colour",
         "brace_label_gap_y",
         "brace_label_nudge_x",
@@ -47,6 +48,7 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$axis_x_label_centralize))
   stopifnot(is.numeric(settings_list$axis_x_label_nudge_y))
   stopifnot(is.numeric(settings_list$axis_x_label_size))
+  stopifnot(is.numeric(settings_list$axis_y_lims) | is.null(settings_list$axis_y_lims))
   stopifnot(is_colour(settings_list$background_line_colour))
   stopifnot(is.numeric(settings_list$brace_label_gap_y))
   stopifnot(is.numeric(settings_list$brace_label_nudge_x))
@@ -81,6 +83,7 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param axis_x_label_centralize Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot.
 #' @param axis_x_label_nudge_y Numeric for shifting the x-axis labels vertically. Increase to lower the x-axis labels.
 #' @param axis_x_label_size Numeric for the font size of the x-axis labels.
+#' @param axis_y_lims Numeric for the y-axis limits. Defaults to `NULL`, in which case the limits will be set automatically.
 #' @param background_line_colour Colour of the background line.
 #' @param brace_label_gap_y Numeric for the size of the vertical gap between brace labels.
 #' @param brace_label_nudge_x Numeric. The brace labels will be shifted along the x-axis by this amount. Increase to shift the labels further to the right.
@@ -115,6 +118,7 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   axis_x_label_centralize = NULL,
                                   axis_x_label_nudge_y = NULL,
                                   axis_x_label_size = NULL,
+                                  axis_y_lims = NULL,
                                   background_line_colour = NULL,
                                   brace_label_gap_y = NULL,
                                   brace_label_nudge_x = NULL,
@@ -150,6 +154,7 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
       "axis_x_label_centralize" = 0,
       "axis_x_label_nudge_y" = 0.02,
       "axis_x_label_size" = 2,
+      "axis_y_lims" = NULL,
       "background_line_colour" = "black",
       "brace_label_gap_y" = 0.08,
       "brace_label_nudge_x" = 0,
