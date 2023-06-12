@@ -1,5 +1,11 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9015
+* Limits of the y-axis in lineplots can no be set manually using the argument `axis_y_lims` in [plotsettings_lineplot()].
+* New [cmyk()] function for setting colour values using cmyk colour coding.
+* Set default cmyk-colours for chapter 3.3 (Frz).
+* New defaul-settings list for mean-barplots without trend. 
+
 # eatPlot 0.0.0.9014
 * Added the function [standardize_column_widths] which can be used to calculate the relative column width for plots that should be combined later. This way, columns that should have the same width can be easily set to the same width. 
 * The calcualtion of the `columns_table_sig_high_letter_nudge_x` argument in [plotsettings_tablebarplot()] was adjusted slightly so it behaves more consistent. 

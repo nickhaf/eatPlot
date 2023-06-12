@@ -124,3 +124,16 @@
 #' }
 "lineplot_4x4_3groups"
 
+
+#' BT22 default plot settings.
+#'
+#' Default plot settings for mean-barplot without trend.
+#'
+#' @format ## `barplot_noTrend`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"barplot_noTrend"
+

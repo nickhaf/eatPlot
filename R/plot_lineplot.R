@@ -70,11 +70,16 @@ plot_lineplot <- function(plot_dat,
   tiles <- levels(plot_dat$plot_lines$seperate_plot_var) # Hier die Level nehmen
 
   plot_list <- list()
+  if(is.null(plot_settings$axis_y_lims)){
   if (!is.null(point_values)) {
     range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
   } else {
     stop("Please provide point-values.")
   }
+  }else{
+    range_est <- plot_settings$axis_y_lims
+  }
+
   position <- 1
 
   for (i in tiles) {

@@ -11,6 +11,7 @@ plotsettings_lineplot(
   axis_x_label_centralize = NULL,
   axis_x_label_nudge_y = NULL,
   axis_x_label_size = NULL,
+  axis_y_lims = NULL,
   background_line_colour = NULL,
   brace_label_gap_y = NULL,
   brace_label_nudge_x = NULL,
@@ -49,6 +50,8 @@ plotsettings_lineplot(
 \item{axis_x_label_nudge_y}{Numeric for shifting the x-axis labels vertically. Increase to lower the x-axis labels.}
 
 \item{axis_x_label_size}{Numeric for the font size of the x-axis labels.}
+
+\item{axis_y_lims}{Numeric for the y-axis limits. Defaults to \code{NULL}, in which case the limits will be set automatically.}
 
 \item{background_line_colour}{Colour of the background line.}
 

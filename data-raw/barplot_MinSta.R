@@ -48,8 +48,8 @@ usethis::use_data(barplot_plot_frame, overwrite = TRUE)
 
 
 barplot_plot_frz <- plotsettings_tablebarplot(
-  headers_background_colour = "white",
-  background_stripes_colour = "white",
+  headers_background_colour = cmyk(40, 0, 20, 8),
+  background_stripes_colour = c(rep("white", 3), rep(cmyk(7, 0, 4, 1), 3)),
   bar_background_lines = "scale_breaks",
   bar_background_lines_spanners = list(c(1, 3), c(4, 6)),
   bar_line_width = 0.1,
