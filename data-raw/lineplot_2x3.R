@@ -6,7 +6,7 @@ lineplot_2x3 <- plotsettings_lineplot(
   point_label_nudge = FALSE,
   point_label_nudge_x = 0.02,
   split_plot_gap_width = 0.02,
-  default_list = lineplot_4x4
+  default_list = lineplot_4x4_3groups
 )
 
 usethis::use_data(lineplot_2x3, overwrite = TRUE)
