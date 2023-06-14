@@ -210,7 +210,7 @@ dat[, i] <- sub_dash(dat[, i])
 
   # Set some nudging parameters ---------------------------------------------
 
-  headers_text_height_y <- 0.7
+  headers_text_height_y <- 0.5
   headers_text_y <- 0.5 + headers_text_height_y
 
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
@@ -218,10 +218,11 @@ dat[, i] <- sub_dash(dat[, i])
   max_y <- max(dat$y_axis) +
     headers_text_y +
     2 * max(plot_settings$headers_nudge_y) +
+    headers_text_height_y +
     plot_settings$headers_background_width_y
   if(!is.null(column_spanners) == TRUE){
     max_y <- max_y +
-      3 * headers_text_height_y +
+      2 * headers_text_height_y +
       2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
       2 * plot_settings$column_spanners_nudge_y # below and above spanner text
   }
