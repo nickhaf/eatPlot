@@ -37,7 +37,7 @@ barplot_plot_frame <- plotsettings_tablebarplot(
   bar_sig_type = "frame",
   bar_width = 0.4,
   font_size = 2,
-  headers_background_width_y = 1,
+  headers_nudge_y = 0.25,
   default_list = barplot_table_plot_pattern
 )
 
