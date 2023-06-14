@@ -255,7 +255,7 @@ p_bar_1 <- plot_tablebar(
   columns_table_sig_bold = list(
     NULL, NULL, NULL, NULL, "sig_Trend_noComp_20112016", NULL),
   columns_table_sig_high = list(
-    NULL, NULL, NULL, NULL, "sig_Trend_Comp_crossDiff_wholeGroup_20112016", NULL),
+    NULL, NULL, NULL, NULL, "sig_Trend_Comp_crossDiff_wholeGroup_20112016", NULL), # ACHTUNG: Hier wird im BT22 trendDiffcross benötigt!
   y_axis = "y_axis_new",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-20, 20),
@@ -297,7 +297,7 @@ p_bar_2 <- plot_tablebar(
   columns_table_sig_high = list(
     NULL,
     NULL,
-    "sig_Trend_Comp_crossDiff_wholeGroup_20162021",
+    "sig_Trend_Comp_crossDiff_wholeGroup_20162021", # ACHTUNG: Hier wird im BT22 trendDiffcross benötigt!
     NULL
   ),
   y_axis = "y_axis_new",
