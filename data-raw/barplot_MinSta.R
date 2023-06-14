@@ -17,7 +17,6 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   columns_table_sig_high_letter = "b",
   columns_table_sig_high_letter_nudge_x = 4.7,
   headers_background_colour = cmyk(40, 0, 20, 8),
-  headers_background_width_y = 0.5,
   font_size = 2,
   bar_pattern_spacing = 0.01,
   bar_pattern_width = 0.4

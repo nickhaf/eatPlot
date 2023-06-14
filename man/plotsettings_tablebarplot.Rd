@@ -21,6 +21,7 @@ plotsettings_tablebarplot(
   bar_pattern_width = NULL,
   bar_sig_type = NULL,
   bar_width = NULL,
+  column_spanners_nudge_y = NULL,
   columns_alignment = NULL,
   columns_nudge_x = NULL,
   columns_table_sig_high_letter = NULL,
@@ -67,6 +68,8 @@ plotsettings_tablebarplot(
 \item{bar_sig_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").}
 
 \item{bar_width}{Numeric between \code{0} and \code{1} specifying the width of the bar. Defaults to \code{0.4}.}
+
+\item{column_spanners_nudge_y}{Numeric to increase or decrease the space between column spanners text and line.}
 
 \item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned). Defaults to \code{0.5}.}
 

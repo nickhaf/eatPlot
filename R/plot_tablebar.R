@@ -208,19 +208,33 @@ dat[, i] <- sub_dash(dat[, i])
   ## Umgang mit Tabellen ohne Plot?
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
+  # Set some nudging parameters ---------------------------------------------
 
+  headers_text_height_y <- 0.7
+  headers_text_y <- 0.5 + headers_text_height_y
 
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
-  max_y <- max(dat$y_axis) + 1.25 + max(plot_settings$headers_nudge_y) + plot_settings$headers_background_width_y
+  max_y <- max(dat$y_axis) +
+    headers_text_y +
+    2 * max(plot_settings$headers_nudge_y) +
+    plot_settings$headers_background_width_y
   if(!is.null(column_spanners) == TRUE){
-    max_y <- max_y + 1.25
+    max_y <- max_y +
+      3 * headers_text_height_y +
+      2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
+      2 * plot_settings$column_spanners_nudge_y # below and above spanner text
   }
 
   plot_settings$bar_fill_colour <- construct_colour_scale(colours = plot_settings$bar_fill_colour,
                          dat = dat,
                          colname = "bar_fill")
 
+
+
+
+
+# Plot --------------------------------------------------------------------
 
   res_plot <- ggplot2::ggplot(
     data = dat,
@@ -386,18 +400,30 @@ dat[, i] <- sub_dash(dat[, i])
           )
 
           annotations <- c(
+            ## Column Spanner line:
             ggplot2::annotate("segment",
               x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
               xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
-              y = max(dat$y_axis) + 1.25 + 0.75 + max(plot_settings$headers_nudge_y),
-              yend = max(dat$y_axis) + 1.25 + 0.75 + max(plot_settings$headers_nudge_y),
+              y = max(dat$y_axis) +
+                headers_text_y +
+                headers_text_height_y +
+                2* max(plot_settings$headers_nudge_y),
+              yend = max(dat$y_axis) +
+                headers_text_y +
+                headers_text_height_y +
+                2* max(plot_settings$headers_nudge_y),
               linewidth = 0.15
             ),
             ggtext::geom_richtext(
               data = data.frame(),
               ggplot2::aes(
                 x = header_x,
-                y = max(dat$y_axis) + 1.25 + 1.25 + max(plot_settings$headers_nudge_y)
+                y = max(dat$y_axis) +
+                  headers_text_y +
+                  2 * headers_text_height_y + # header to column_spanner line, column_spanner line to column_spanner
+                  3 * max(plot_settings$headers_nudge_y) +
+                  # lower border to header, header to column_spanner line, column_spanner line to column_spanner text
+                  plot_settings$column_spanners_nudge_y
               ),
               colour = "#000000",
               label = names(column_spanners)[spanner],
@@ -418,7 +444,11 @@ dat[, i] <- sub_dash(dat[, i])
   column_x_coords_headers <- column_x_coords[!is.na(column_x_coords$column), ]
 
   res_plot <- res_plot +
-  plot_column_headers(column_x_coords_headers, headers, y_axis = dat$y_axis, plot_settings)
+  plot_column_headers(column_x_coords_headers,
+                      headers,
+                      y_axis = dat$y_axis,
+                      headers_text_y,
+                      plot_settings)
   return(res_plot)
 }
 
@@ -485,7 +515,7 @@ build_columns_3 <- function(df,
 }
 
 
-plot_column_headers <- function(column_x_coords_headers, headers, y_axis, plot_settings){
+plot_column_headers <- function(column_x_coords_headers, headers, y_axis, headers_text_y, plot_settings){
   lapply(1:nrow(column_x_coords_headers), function(i) {
     if (rev(plot_settings$headers_alignment)[i] == 0) {
       x_axis_i_header <- column_x_coords_headers$left[i]
@@ -502,7 +532,9 @@ plot_column_headers <- function(column_x_coords_headers, headers, y_axis, plot_s
         data = data.frame(),
         ggplot2::aes(
           x = x_axis_i_header,
-          y = max(y_axis) + 1.25 + rev(plot_settings$headers_nudge_y)[1]
+          y = max(y_axis) +
+            headers_text_y +
+            rev(plot_settings$headers_nudge_y)[1]
         ),
         colour = "#000000",
         label = rev(headers)[[i]],
@@ -693,6 +725,11 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
 # capped axis line
 plot_capped_x_axis <- function(scale_breaks){
   if(!is.null(scale_breaks)){
-    ggplot2::annotate("segment", x = min(scale_breaks), xend = max(scale_breaks), y = 0.4, yend = 0.4, linewidth = 0.1)
+    ggplot2::annotate("segment",
+                      x = min(scale_breaks),
+                      xend = max(scale_breaks),
+                      y = 0.4,
+                      yend = 0.4,
+                      linewidth = 0.1)
   }
 }

@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9016
+* Column header lines are now more consistent in their width.
+
 # eatPlot 0.0.0.9015
 * Limits of the y-axis in lineplots can no be set manually using the argument `axis_y_lims` in [plotsettings_lineplot()].
 * New [cmyk()] function for setting colour values using cmyk colour coding.
