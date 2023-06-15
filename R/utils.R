@@ -24,7 +24,7 @@ is_colour <- function(x) {
 #' @noRd
 #'
 #' @param p_vec Numeric vector of p-values.
-#' @param sig_niveau Significance niveau. All values equal or smaller will be considered significant.
+#' @param sig_niveau Significance niveau. All values smaller will be considered significant.
 #'
 #' @return Logical vector.
 #'
@@ -32,37 +32,40 @@ is_colour <- function(x) {
 calc_sig <- function(p_vec, sig_niveau) {
   res <- ifelse(is.na(p_vec),
                 yes = FALSE,
-    no = ifelse(p_vec <= sig_niveau & !is.na(p_vec),
+    no = ifelse(p_vec < sig_niveau & !is.na(p_vec),
                  yes = TRUE,
                  no = FALSE)
   )
   return(res)
 }
 
-
-filter_strings <- function(identifier, paste_vec, val_vec) {
-  if (any(duplicated(val_vec))) {
-    stop("Duplicated groups. For example, there might be two groups of the same type within the same Bundesland.")
-  } else {
-    res <- sapply(identifier, function(x) {
-      grep(paste0(x, paste_vec), val_vec)
-    },
-    USE.NAMES = FALSE
-    )
-  }
-  return(res)
-}
-
-
-
+#' Remove columns from a data.frame.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param cols Character vector of columns that should be removed.
+#'
+#' @return Data.frame without the columns specified in cols.
+#'
+#' @examples #tbd
 remove_columns <- function(dat, cols) {
   dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
   return(dat)
 }
 
 
-
-## Find the years that can be plotted as trend. Returns all unique consecutive year combinations.
+#' Find all consecutive numbers in a vector. Needed for automatically setting the Trend years.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param vec Numeric vector.
+#'
+#' @return List containing all consecutive number combinations.
+#'
+#' @examples #tbd
 consecutive_numbers <- function(vec) {
   vec_ordered <- vec[order(vec)]
   res <- list()
@@ -82,45 +85,28 @@ consecutive_numbers <- function(vec) {
 }
 
 
-
-# extractor for specific types of rows ------------------------------------
-
-get_group <- function(val_vec, groups, starts_with = "", ends_with = "", log_res = TRUE) {
-  if (log_res == TRUE) {
-    grepl(
-      paste0(
-        paste0(starts_with, groups, ends_with),
-        collapse = "|"
-      ),
-      val_vec
-    )
-  } else {
-    grep(
-      paste0(
-        paste0(starts_with, groups, ends_with),
-        collapse = "|"
-      ),
-      val_vec,
-      value = TRUE
-    )
-  }
-}
-
-get_wholeGroup <- function(val_vec) {
-  grepl("wholeGroup", val_vec)
-}
-
-
-# Extract group membership from group column. Splits String by "." and extracts the first value that is found in the group_vector
-write_group <- function(val_vec, groups) {
-  ## Umwandeln aller "_" in groups in "-"
+#' Extract group membership from group column.
+#'
+#' Splits vec by "." and extracts the first value that is found in groups.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param vec Character vector, usually the group-column in a data.frame returned by [eatRep::report()].
+#' @param groups Character vector of groups that should be extracted from vec.
+#'
+#' @return Returns the first group found in vec.
+#'
+#' @examples #tbd
+write_group <- function(vec, groups) {
+  ## "_" in groups is used as divider, so
   if (any(grepl("_", groups))) {
     stop("Your grouping_var or state_var contains '_', please use '-' instead.")
   }
 
-  val_vec <- gsub("TR_BUNDESLAND=", "", val_vec)
-  val_vec <- gsub("_", "\\.", val_vec)
-  group_vec <- strsplit(val_vec, split = "\\.")
+  vec <- gsub("TR_BUNDESLAND=", "", vec)
+  vec <- gsub("_", "\\.", vec)
+  group_vec <- strsplit(vec, split = "\\.")
 
   res_vec <- unlist(
     lapply(group_vec, function(x) {
