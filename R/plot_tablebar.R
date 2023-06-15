@@ -14,7 +14,7 @@
 #' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to `1`.
 #' @param columns_round List of numerics, for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
-#' @param y_axis Character string of the columnname used as y-axis.
+#' @param y_axis Character string of the columnname used as y-axis. Has to contain unique values.
 #'
 #' @return [ggplot2] object.
 #' @export
@@ -50,10 +50,15 @@ plot_tablebar <- function(dat,
   if (is.null(y_axis)) {
     stop("Please provide a y-axis.")
   }
+  if (any(duplicated(dat[, y_axis]))){
+    stop("Your y-axis has to contain only unique values. Maybe you have to paste state_var and grouping_var into unique values?")
+  }
 
   if (!is.numeric(dat[, bar_est]) & !is.null(bar_est)) {
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
+
+
 
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
@@ -97,6 +102,7 @@ dat[, i] <- sub_dash(dat[, i])
 
   plot_settings$columns_alignment <- check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1])
   plot_settings$columns_nudge_x <- check_length(plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1])
+  plot_settings$columns_nudge_y <- check_length(plot_settings$columns_nudge_y, length(columns_table), fill = plot_settings$columns_nudge_y[1])
   plot_settings$headers_alignment <- check_length(plot_settings$headers_alignment, n_table_cols, fill = plot_settings$headers_alignment[1])
   plot_settings$headers_nudge_x <- check_length(plot_settings$headers_nudge_x, n_table_cols, fill = plot_settings$headers_nudge_x[1])
   if (length(plot_settings$background_stripes_colour) < nrow(dat)) {
@@ -501,7 +507,8 @@ build_columns_3 <- function(df,
           fill = NA,
           label.color = NA,
           hjust = rev(columns_alignment)[i],
-          nudge_x = rev(plot_settings$columns_nudge_x)[i]
+          nudge_x = rev(plot_settings$columns_nudge_x)[i],
+          nudge_y = rev(plot_settings$columns_nudge_y)[i]
         ),
         add_superscript(df,
           column_name,
@@ -659,7 +666,9 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
         fill = NA,
         label.color = NA,
         hjust = rev(plot_settings$columns_alignment)[i],
-        nudge_x = rev(plot_settings$columns_nudge_x)[i] + plot_settings$columns_table_sig_high_letter_nudge_x
+        nudge_x = rev(plot_settings$columns_nudge_x)[i] + plot_settings$columns_table_sig_high_letter_nudge_x,
+        nudge_y = rev(plot_settings$columns_nudge_y)[i]
+
       )
     }
   }
