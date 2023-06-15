@@ -52,7 +52,7 @@ construct_label <- function(dat,
     ""
   )
 
-  dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")])] <- ""
+  dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")]) | dat[, c("label_est", "label_sig", "label_se")] == "NA"] <- ""
 
   if (label_sig_high_extra_column == FALSE) {
     dat[, new_name] <- paste0(
