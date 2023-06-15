@@ -34,15 +34,6 @@ test_that("consecutive numbers are correct", {
 })
 
 
-test_that("get_group() filters the correct rows", {
-  expect_true(unique(get_group(c("a", "b"), "c")) == FALSE)
-  expect_equal(get_group(c("a", "b", "c"), c("a", "b")), c(TRUE, TRUE, FALSE))
-  expect_equal(get_group(c("ab", "ac", "cb", "cc"), "c", starts_with = "^"), c(FALSE, FALSE, TRUE, TRUE))
-  expect_equal(get_group(c("ab", "ac", "cb", "cc"), "c", ends_with = "$"), c(FALSE, TRUE, FALSE, TRUE))
-  expect_equal(get_group(c("ab", "ac", "cb", "cc"), c("b", "c"), ends_with = "$"), c(TRUE, TRUE, TRUE, TRUE))
-})
-
-
 test_that("reshaping to long format works", {
   df_wide <- data.frame(
     "est.1" = 1:2,

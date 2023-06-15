@@ -86,29 +86,6 @@ consecutive_numbers <- function(vec) {
 
 
 
-# extractor for specific types of rows ------------------------------------
-
-get_group <- function(val_vec, groups, starts_with = "", ends_with = "", log_res = TRUE) {
-  if (log_res == TRUE) {
-    grepl(
-      paste0(
-        paste0(starts_with, groups, ends_with),
-        collapse = "|"
-      ),
-      val_vec
-    )
-  } else {
-    grep(
-      paste0(
-        paste0(starts_with, groups, ends_with),
-        collapse = "|"
-      ),
-      val_vec,
-      value = TRUE
-    )
-  }
-}
-
 get_wholeGroup <- function(val_vec) {
   grepl("wholeGroup", val_vec)
 }
