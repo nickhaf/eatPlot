@@ -39,14 +39,33 @@ calc_sig <- function(p_vec, sig_niveau) {
   return(res)
 }
 
+#' Remove columns from a data.frame.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param cols Character vector of columns that should be removed.
+#'
+#' @return Data.frame without the columns specified in cols.
+#'
+#' @examples #tbd
 remove_columns <- function(dat, cols) {
   dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
   return(dat)
 }
 
 
-
-## Find the years that can be plotted as trend. Returns all unique consecutive year combinations.
+#' Find all consecutive numbers in a vector. Needed for automatically setting the Trend years.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param vec Numeric vector.
+#'
+#' @return List containing all consecutive number combinations.
+#'
+#' @examples #tbd
 consecutive_numbers <- function(vec) {
   vec_ordered <- vec[order(vec)]
   res <- list()
