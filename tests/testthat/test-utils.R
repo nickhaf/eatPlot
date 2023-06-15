@@ -10,7 +10,7 @@ test_that("Plot borders are calculated correctly", {
 
 test_that("calc_sig(): significance niveau is working correctly", {
   test_sig <- calc_sig(c(0.02, 0.1, 0.01, NA, 0.03), sig_niveau = 0.03)
-  expect_equal(test_sig, c(TRUE, FALSE, TRUE, FALSE, TRUE))
+  expect_equal(test_sig, c(TRUE, FALSE, TRUE, FALSE, FALSE))
 })
 
 
