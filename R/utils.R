@@ -6,9 +6,7 @@
 #'
 #' @return Logical.
 #'
-#' @examples \dontrun{
-#' eatplot:::is_colour("black")
-#' }
+#' @examples is_colour("black")
 is_colour <- function(x) {
   vapply(x, function(X) {
     tryCatch(is.matrix(grDevices::col2rgb(X)),
@@ -21,6 +19,9 @@ is_colour <- function(x) {
 }
 
 #' Calculate if a p-value is significant.
+#'
+#' @keywords internal
+#' @noRd
 #'
 #' @param p_vec Numeric vector of p-values.
 #' @param sig_niveau Significance niveau. All values equal or smaller will be considered significant.
