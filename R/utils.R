@@ -1,3 +1,14 @@
+#' Check if character string is a colour.
+#'
+#' @keywords internal
+#' @noRd
+#' @param x Character string.
+#'
+#' @return Logical.
+#'
+#' @examples \dontrun{
+#' eatplot:::is_colour("black")
+#' }
 is_colour <- function(x) {
   vapply(x, function(X) {
     tryCatch(is.matrix(grDevices::col2rgb(X)),
@@ -9,12 +20,21 @@ is_colour <- function(x) {
   )
 }
 
-
+#' Calculate if a p-value is significant.
+#'
+#' @param p_vec Numeric vector of p-values.
+#' @param sig_niveau Significance niveau. All values equal or smaller will be considered significant.
+#'
+#' @return Logical vector.
+#'
+#' @examples calc_sig(c(0.05, 0.01, 0.1), 0.05)
 calc_sig <- function(p_vec, sig_niveau) {
-  res <- ifelse(is.na(p_vec), FALSE, # NA
-    ifelse(p_vec < sig_niveau & !is.na(p_vec), TRUE, FALSE)
+  res <- ifelse(is.na(p_vec),
+                yes = FALSE,
+    no = ifelse(p_vec <= sig_niveau & !is.na(p_vec),
+                 yes = TRUE,
+                 no = FALSE)
   )
-
   return(res)
 }
 
