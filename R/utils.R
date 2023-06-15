@@ -84,12 +84,16 @@ consecutive_numbers <- function(vec) {
   return(res)
 }
 
-get_wholeGroup <- function(val_vec) {
-  grepl("wholeGroup", val_vec)
-}
-
-
 # Extract group membership from group column. Splits String by "." and extracts the first value that is found in the group_vector
+#' Title
+#'
+#' @param val_vec
+#' @param groups
+#'
+#' @return
+#' @export
+#'
+#' @examples
 write_group <- function(val_vec, groups) {
   ## Umwandeln aller "_" in groups in "-"
   if (any(grepl("_", groups))) {
