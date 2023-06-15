@@ -84,8 +84,6 @@ consecutive_numbers <- function(vec) {
   return(res)
 }
 
-
-
 get_wholeGroup <- function(val_vec) {
   grepl("wholeGroup", val_vec)
 }
