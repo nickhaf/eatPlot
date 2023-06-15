@@ -14,7 +14,7 @@
 #' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to `1`.
 #' @param columns_round List of numerics, for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
-#' @param y_axis Character string of the columnname used as y-axis.
+#' @param y_axis Character string of the columnname used as y-axis. Has to contain unique values.
 #'
 #' @return [ggplot2] object.
 #' @export
@@ -50,10 +50,15 @@ plot_tablebar <- function(dat,
   if (is.null(y_axis)) {
     stop("Please provide a y-axis.")
   }
+  if (any(duplicated(dat[, y_axis]))){
+    stop("Your y-axis has to contain only unique values. Maybe you have to paste state_var and grouping_var into unique values?")
+  }
 
   if (!is.numeric(dat[, bar_est]) & !is.null(bar_est)) {
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
+
+
 
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
