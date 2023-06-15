@@ -39,22 +39,6 @@ calc_sig <- function(p_vec, sig_niveau) {
   return(res)
 }
 
-
-filter_strings <- function(identifier, paste_vec, val_vec) {
-  if (any(duplicated(val_vec))) {
-    stop("Duplicated groups. For example, there might be two groups of the same type within the same Bundesland.")
-  } else {
-    res <- sapply(identifier, function(x) {
-      grep(paste0(x, paste_vec), val_vec)
-    },
-    USE.NAMES = FALSE
-    )
-  }
-  return(res)
-}
-
-
-
 remove_columns <- function(dat, cols) {
   dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
   return(dat)
