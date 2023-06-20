@@ -377,14 +377,6 @@ calc_overlap <- function(year_start, year_end) {
   return(overlap)
 }
 
-
-
-## Function for checking which arguments are in the colnames, and returning those which are not
-check_missing_colnames <- function(x, colnames_vec) {
-  names(x[!x %in% colnames_vec])
-}
-
-
 get_min_max <- function(dat) {
   min_max_trend <- by(dat, dat$years_Trend, function(x) {
     data.frame(
