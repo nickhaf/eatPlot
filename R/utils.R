@@ -377,6 +377,17 @@ calc_overlap <- function(year_start, year_end) {
   return(overlap)
 }
 
+
+#' Get smallest and largest year of each Trend.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame with a `year` and a `years_Trend` column.
+#'
+#' @return Data.frame with minimal and maximal year for each Trend.
+#'
+#' @examples #tbd
 get_min_max <- function(dat) {
   min_max_trend <- by(dat, dat$years_Trend, function(x) {
     data.frame(
