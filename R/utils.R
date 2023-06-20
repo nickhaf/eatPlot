@@ -402,6 +402,17 @@ get_min_max <- function(dat) {
   return(min_max_dat)
 }
 
+#' Check if column is part of data.frame.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param column Character string of a column name that should be checked.
+#'
+#' @return Error if column is not part of `dat`.
+#'
+#' @examples #tbd
 check_column <- function(dat, column) {
   if (!is.null(column)) {
     if (!(column %in% colnames(dat))) {
