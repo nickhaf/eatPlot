@@ -251,7 +251,14 @@ calc_plot_borders <- function(x, accuracy = 10) {
 }
 
 
-
+#' Insert a character string in front of the first number in a character string.
+#'
+#' @param char_string Character string that gets the insertion.
+#' @param insertion Character to insert before the first number in `char_string`.
+#'
+#' @return A character string with an insertion in front of the first number.
+#'
+#' @examples insert_first_number("test2013b", "\\.")
 insert_first_number <- function(char_string, insertion) {
   string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))
 
