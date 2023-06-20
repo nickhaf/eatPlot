@@ -192,6 +192,17 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 }
 
 ## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
+#' Split Trend column in two seperate year columns.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Input data.frame.
+#' @param year_col Trend column with two years in it.
+#'
+#' @return The data.frame with a `year_start` and a `year_end` column, derived from the `year_col`.
+#'
+#' @examples #tbd
 split_years <- function(dat, year_col = "year") {
   years <- regmatches(dat[, year_col], gregexpr("[[:digit:]]+", dat[, year_col]))
 
