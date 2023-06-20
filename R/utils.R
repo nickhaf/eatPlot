@@ -253,6 +253,9 @@ calc_plot_borders <- function(x, accuracy = 10) {
 
 #' Insert a character string in front of the first number in a character string.
 #'
+#' @keywords internal
+#' @noRd
+#'
 #' @param char_string Character string that gets the insertion.
 #' @param insertion Character to insert before the first number in `char_string`.
 #'
@@ -353,12 +356,25 @@ replace_VS <- function(x) {
 
 # Overlap occurs, when one start point lies between a start and end point, or an end point lies between a start and an end point
 
+#' Calculate, if year columns are overlapping.
+#'
+#' They overlap, if one of the start or end years lies between another start and end year.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param year_start Numeric vector.
+#' @param year_end Numeric vector.
+#'
+#' @return Logical vector the same length as `year_start` with a `TRUE` if the respective year is overlapping.
+#'
+#' @examples calc_overlap(c(2010, 2012, 2013), c(2015, 2016, 2015))
 calc_overlap <- function(year_start, year_end) {
-  years <- c()
+  overlap <- c()
   for (i in 1:length(year_start)) {
-    years[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
+    overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
   }
-  return(years)
+  return(overlap)
 }
 
 
