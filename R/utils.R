@@ -220,6 +220,17 @@ split_years <- function(dat, year_col = "year") {
 }
 
 
+#' Calculate the x-axis range for bar-plots.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param x Numeric vector that is plotted on the x-axis.
+#' @param accuracy Numeric for rounding the borders. Defaults to `10`, so the plot borders will be divisible by `10`.
+#'
+#' @return Numeric vector with the min and max values of the x axis.
+#'
+#' @examples #tbd
 calc_plot_borders <- function(x, accuracy = 10) {
   min_x <- min(x, na.rm = TRUE)
   max_x <- max(x, na.rm = TRUE)
