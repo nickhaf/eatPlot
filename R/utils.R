@@ -422,14 +422,26 @@ check_column <- function(dat, column) {
 }
 
 
-## Add a new column that is derived from an old one. Takes characters as input.
+#' Add a new column that is derived from an old one.
+#'
+#' Copy a column or insert a new `NA` column.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param old Character string of column name in dat.
+#' @param new Character string of new column.
+#'
+#' @return Data.frame with a new column, either copyed or `NA`.
+#'
+#' @examples
 build_column <- function(dat, old, new) {
   check_column(dat, old)
   if (is.null(old)) {
     dat[, new] <- NA
     return(dat)
   } else {
-    # colnames(dat)[colnames(dat) == old] <- new
     dat[, new] <- dat[, old]
 
     return(dat)
