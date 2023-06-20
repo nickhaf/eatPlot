@@ -124,8 +124,21 @@ write_group <- function(vec, groups) {
 }
 
 
-# Helper functions for reshaping to long format ---------------------------
+#' Reshape prepared data to long format.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param data Dataframe that should be reshaped.
+#' @param include_pattern Character string of patterns in column names with values that should be reshaped into long format.
+#' @param remove_pattern Character string of patterns in column names that should be removed before reshaping. E.g., all trend columns.
+#' @param suffix Character string to put at the end of all new (reshaped) columns.
+#'
+#' @return Data.frame in long format.
+#'
+#' @examples #tbd
 prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "") {
+
   ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
     cols_removed <- grep(remove_pattern,
@@ -145,7 +158,6 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 
   ## before the first number of the year columns, insert ".". Needed by reshape() for automatically building the new columns.
   year_cols <- unlist(sapply(colnames(data)[col_pos], insert_first_number, "\\."))
-
 
   if (!is.null(year_cols)) {
     colnames(data)[col_pos] <- year_cols
@@ -169,7 +181,10 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
     new_names = paste0(new_colnames, suffix)
   )
 
-  data_long <- rename_columns(data_long, old_names = paste0("time", suffix), new_names = "year")
+  data_long <- rename_columns(data_long,
+                              old_names = paste0("time", suffix),
+                              new_names = "year")
+
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
 
