@@ -31,10 +31,11 @@ is_colour <- function(x) {
 #' @examples calc_sig(c(0.05, 0.01, 0.1), 0.05)
 calc_sig <- function(p_vec, sig_niveau) {
   res <- ifelse(is.na(p_vec),
-                yes = FALSE,
+    yes = FALSE,
     no = ifelse(p_vec < sig_niveau & !is.na(p_vec),
-                 yes = TRUE,
-                 no = FALSE)
+      yes = TRUE,
+      no = FALSE
+    )
   )
   return(res)
 }
@@ -49,7 +50,7 @@ calc_sig <- function(p_vec, sig_niveau) {
 #'
 #' @return Data.frame without the columns specified in cols.
 #'
-#' @examples #tbd
+#' @examples # tbd
 remove_columns <- function(dat, cols) {
   dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
   return(dat)
@@ -65,7 +66,7 @@ remove_columns <- function(dat, cols) {
 #'
 #' @return List containing all consecutive number combinations.
 #'
-#' @examples #tbd
+#' @examples # tbd
 consecutive_numbers <- function(vec) {
   vec_ordered <- vec[order(vec)]
   res <- list()
@@ -97,7 +98,7 @@ consecutive_numbers <- function(vec) {
 #'
 #' @return Returns the first group found in vec.
 #'
-#' @examples #tbd
+#' @examples # tbd
 write_group <- function(vec, groups) {
   ## "_" in groups is used as divider, so
   if (any(grepl("_", groups))) {
@@ -136,9 +137,8 @@ write_group <- function(vec, groups) {
 #'
 #' @return Data.frame in long format.
 #'
-#' @examples #tbd
+#' @examples # tbd
 prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "") {
-
   ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
     cols_removed <- grep(remove_pattern,
@@ -171,7 +171,6 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
     colnames(data)[col_pos] <- paste0(colnames(data)[col_pos], "_noTrend")
     data_long <- data
     data_long$time <- "noTrend"
-
   }
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
@@ -182,8 +181,9 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   )
 
   data_long <- rename_columns(data_long,
-                              old_names = paste0("time", suffix),
-                              new_names = "year")
+    old_names = paste0("time", suffix),
+    new_names = "year"
+  )
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
@@ -202,7 +202,7 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 #'
 #' @return The data.frame with a `year_start` and a `year_end` column, derived from the `year_col`.
 #'
-#' @examples #tbd
+#' @examples # tbd
 split_years <- function(dat, year_col = "year") {
   years <- regmatches(dat[, year_col], gregexpr("[[:digit:]]+", dat[, year_col]))
 
@@ -230,7 +230,7 @@ split_years <- function(dat, year_col = "year") {
 #'
 #' @return Numeric vector with the min and max values of the x axis.
 #'
-#' @examples #tbd
+#' @examples # tbd
 calc_plot_borders <- function(x, accuracy = 10) {
   min_x <- min(x, na.rm = TRUE)
   max_x <- max(x, na.rm = TRUE)
@@ -280,9 +280,9 @@ insert_first_number <- function(char_string, insertion) {
 ## Problem: sub_groups mit vs-grouping_var
 
 get_comparisons <- function(dat, states, sub_groups) {
-  if(!is.null(sub_groups)){
-  sub_groups <- unique(unlist(strsplit(levels(sub_groups), split = "\\.vs\\.")))
-}
+  if (!is.null(sub_groups)) {
+    sub_groups <- unique(unlist(strsplit(levels(sub_groups), split = "\\.vs\\.")))
+  }
   dat$group_var <- gsub("TR_BUNDESLAND=", "", dat$group_var)
 
   comparisons_log <- grepl("\\.vs\\.", dat$group_var)
@@ -298,27 +298,29 @@ get_comparisons <- function(dat, states, sub_groups) {
 
   for (i in c("compare_1", "compare_2")) {
     if (!is.null(sub_groups)) {
-    for (j in seq_along(sub_groups)) {
-      group_j <- sub_groups[j]
-      dat[, i] <- gsub(
-        pattern = paste0(
-          paste0("_", group_j),
-          paste0("*", group_j),
-          collapse = "|"
+      for (j in seq_along(sub_groups)) {
+        group_j <- sub_groups[j]
+        dat[, i] <- gsub(
+          pattern = paste0(
+            paste0("_", group_j),
+            paste0("*", group_j),
+            collapse = "|"
           ),
-       replacement = paste0(
-          "_grouping_var_",
-          letters[j]),
-        x = dat[, i])
+          replacement = paste0(
+            "_grouping_var_",
+            letters[j]
+          ),
+          x = dat[, i]
+        )
+      }
     }
-}
     dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
     dat[, i] <- gsub("__|___", "_", dat[, i])
 
     dat[is.na(dat[, i]), i] <- "no_comp"
   }
 
-    ## Check if comparison is one of group in state vs. the group in wholeGroup
+  ## Check if comparison is one of group in state vs. the group in wholeGroup
 
   dat$compare_2 <- ifelse(dat$grouping_var == dat$compare_2 & !is.na(dat$grouping_var) & !is.na(dat$compare_2) & dat$grouping_var != "no_comp" & dat$compare_2 != "no_comp",
     "wholeGroupSameGroup",
@@ -352,10 +354,6 @@ replace_VS <- function(x) {
   return(x)
 }
 
-
-
-# Overlap occurs, when one start point lies between a start and end point, or an end point lies between a start and an end point
-
 #' Calculate, if year columns are overlapping.
 #'
 #' They overlap, if one of the start or end years lies between another start and end year.
@@ -387,7 +385,7 @@ calc_overlap <- function(year_start, year_end) {
 #'
 #' @return Data.frame with minimal and maximal year for each Trend.
 #'
-#' @examples #tbd
+#' @examples # tbd
 get_min_max <- function(dat) {
   min_max_trend <- by(dat, dat$years_Trend, function(x) {
     data.frame(
@@ -412,7 +410,7 @@ get_min_max <- function(dat) {
 #'
 #' @return Error if column is not part of `dat`.
 #'
-#' @examples #tbd
+#' @examples # tbd
 check_column <- function(dat, column) {
   if (!is.null(column)) {
     if (!(column %in% colnames(dat))) {
@@ -420,7 +418,6 @@ check_column <- function(dat, column) {
     }
   }
 }
-
 
 #' Add a new column that is derived from an old one.
 #'
@@ -449,12 +446,21 @@ build_column <- function(dat, old, new) {
 }
 
 
-
-
-## Add a new column that is derived from an old one. Takes an object as input.
+#' Build new column with predefined values.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param df Data.frame.
+#' @param column_name Character string of the column name.
+#' @param filling Character string that will fill the column if it is not part of `df` originally.
+#'
+#' @return Data.frame with a new column.
+#'
+#' @examples #tbd
 fill_column <- function(df, column_name, filling = NA) {
   if (is.null(column_name)) {
-    df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
+    return(df)
   } else if (column_name %in% colnames(df)) {
     df[[deparse(substitute(column_name))]] <- df[[column_name]]
   } else if ((!column_name %in% colnames(df))) {
@@ -464,6 +470,19 @@ fill_column <- function(df, column_name, filling = NA) {
   return(df)
 }
 
+
+#' Replace NAs in a data.frame with specified values.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param df Data.frame.
+#' @param column_name Character string of a column in `df`.
+#' @param filling Character string or numeric for replacing `NAs`.
+#'
+#' @return Data.frame with altered column.
+#'
+#' @examples #tbd
 fill_na <- function(df, column_name, filling) {
   if (is.null(column_name)) {
     return(df)
@@ -519,18 +538,17 @@ get_plot_coords <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
 }
 
-sub_dash <- function(vec){
-  if(is.character(vec)){
-  vec <- gsub("-", "\uad", vec)
+sub_dash <- function(vec) {
+  if (is.character(vec)) {
+    vec <- gsub("-", "\uad", vec)
   }
   return(vec)
 }
 
 # Colours should be displayed in the order they are put in:
-construct_colour_scale <- function(colours, dat, colname){
-  if(is.null(names(colours)) & colname %in% colnames(dat)){
+construct_colour_scale <- function(colours, dat, colname) {
+  if (is.null(names(colours)) & colname %in% colnames(dat)) {
     names(colours) <- unique(dat[, colname])
   }
-return(colours)
-  }
-
+  return(colours)
+}
