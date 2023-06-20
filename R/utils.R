@@ -400,7 +400,7 @@ get_min_max <- function(dat) {
   return(min_max_dat)
 }
 
-#' Check if column is part of data.frame.
+#' Check if column is part of data.frame and return error if not.
 #'
 #' @keywords internal
 #' @noRd
@@ -416,6 +416,27 @@ check_column <- function(dat, column) {
     if (!(column %in% colnames(dat))) {
       stop(paste0("Variable '", column, "' not found in data."))
     }
+  }
+}
+
+
+#' Check if column is part of the data.frame and return warning and `NULL` if not.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param column Character string of a column name that should be checked.
+#'
+#' @return The column if it is part of the data, or `NULL` if not.
+#'
+#' @examples #tbd
+check_column_warn <- function(dat, column) {
+  if (column %in% colnames(dat)) {
+    return(column)
+  } else {
+    warning(paste0("The column '", column, "' was not found in data and will not be considered for the plot."))
+    return(NULL)
   }
 }
 
@@ -492,14 +513,7 @@ fill_na <- function(df, column_name, filling) {
   }
 }
 
-check_columns <- function(dat, column) {
-  if (column %in% colnames(dat)) {
-    return(column)
-  } else {
-    warning(paste0("The column '", column, "' was not found in data and will not be considered for the plot."))
-    return(NULL)
-  }
-}
+
 
 check_factor <- function(dat, column, variable_type) {
   if (!is.factor(dat[, column]) & !is.null(column)) {
