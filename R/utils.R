@@ -422,12 +422,6 @@ check_column <- function(dat, column) {
 }
 
 
-fill_null <- function(dat, column_name, filling) {
-  dat[[column_name]] <- rep(filling, nrow(dat))
-  return(dat)
-}
-
-
 ## Add a new column that is derived from an old one. Takes characters as input.
 build_column <- function(dat, old, new) {
   check_column(dat, old)
