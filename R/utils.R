@@ -453,7 +453,7 @@ check_column_warn <- function(dat, column) {
 #'
 #' @return Data.frame with a new column, either copyed or `NA`.
 #'
-#' @examples
+#' @examples #tbd
 build_column <- function(dat, old, new) {
   check_column(dat, old)
   if (is.null(old)) {
@@ -515,6 +515,18 @@ fill_na <- function(df, column_name, filling) {
 
 
 
+#' Check if data.frame column is a factor and shape into factor if not.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param column Character string for a column name in `dat`.
+#' @param variable_type Character string of the function argument this column was given to (necessary for message).
+#'
+#' @return Data.frame with the column as factor.
+#'
+#' @examples #tbd
 check_factor <- function(dat, column, variable_type) {
   if (!is.factor(dat[, column]) & !is.null(column)) {
     message("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.")
