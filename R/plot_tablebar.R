@@ -215,7 +215,6 @@ dat[, i] <- sub_dash(dat[, i])
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
   # Set some nudging parameters ---------------------------------------------
-
   if(!is.null(column_spanners) == TRUE){
     headers_text_height_y <- 0.5
   }else{
