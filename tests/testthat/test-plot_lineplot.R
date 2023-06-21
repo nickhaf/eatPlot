@@ -328,3 +328,18 @@ test_that("title can get a raised letter", {
   expect_equal(plot_title(title, title_raised_letter_0)$title, "c")
 
   })
+
+test_that("line distance can be overwritten to be equal, even though the distance is actually different", {
+
+  dat <- list(
+    plot_lines = data.frame("year_start" = c(2011, 2012, 2014, NA),
+                   "year_end" = c(2012, 2014, 2022, NA)
+                   ),
+    plot_points = data.frame("year" = c(2011, 2012, 2014, 2022, NA)),
+    plot_background_lines = data.frame("year_start" = c(2011, 2012, 2014, NA),
+                            "year_end" = c(2012, 2014, 2022, NA)
+    )
+  )
+
+
+})
