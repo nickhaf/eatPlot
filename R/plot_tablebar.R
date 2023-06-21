@@ -215,20 +215,27 @@ dat[, i] <- sub_dash(dat[, i])
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
   # Set some nudging parameters ---------------------------------------------
+  if(!is.null(column_spanners) == TRUE){
+    headers_text_height_y <- 0.5
+  }else{
+  headers_text_height_y <- 1 # space above and belower header
+  }
 
-  headers_text_height_y <- 0.5 # height above or below plot
-  headers_text_y <- 0.5 + headers_text_height_y # Start y value of text
+  headers_text_y <- 0.5 + headers_text_height_y # space from last line to first text
+  spanner_y <- 0.5
 
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
   max_y <- max(dat$y_axis) +
     headers_text_y +
-    2 * max(plot_settings$headers_nudge_y) +
+    max(plot_settings$headers_nudge_y) +
     headers_text_height_y +
+    0.2 + # space to upper border is a bit smaller otherwise
     plot_settings$headers_background_width_y
   if(!is.null(column_spanners) == TRUE){
     max_y <- max_y +
-      2 * headers_text_height_y +
+     headers_text_height_y +
+      spanner_y +
       2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
       2 * plot_settings$column_spanners_nudge_y # below and above spanner text
   }
@@ -413,11 +420,11 @@ dat[, i] <- sub_dash(dat[, i])
               xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
               y = max(dat$y_axis) +
                 headers_text_y +
-                headers_text_height_y +
+                spanner_y +
                 2* max(plot_settings$headers_nudge_y),
               yend = max(dat$y_axis) +
                 headers_text_y +
-                headers_text_height_y +
+                spanner_y +
                 2* max(plot_settings$headers_nudge_y),
               linewidth = 0.15
             ),
@@ -427,7 +434,8 @@ dat[, i] <- sub_dash(dat[, i])
                 x = header_x,
                 y = max(dat$y_axis) +
                   headers_text_y +
-                  2 * headers_text_height_y + # header to column_spanner line, column_spanner line to column_spanner
+                  spanner_y + #header to column_spanner line,
+                  spanner_y + # column_spanner line to column_spanner text
                   3 * max(plot_settings$headers_nudge_y) +
                   # lower border to header, header to column_spanner line, column_spanner line to column_spanner text
                   plot_settings$column_spanners_nudge_y
@@ -742,4 +750,9 @@ plot_capped_x_axis <- function(scale_breaks){
                       yend = 0.4,
                       linewidth = 0.1)
   }
+}
+
+check_linebreak <- function(vec){
+ logical_break <- any(sapply(vec, function(vec){grepl("<br>", vec)}))
+ return(logical_break)
 }

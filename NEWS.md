@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9017
+* Changed defaults for y position of column headers. 
+
 # eatPlot 0.0.0.9016
 * Column header lines are now more consistent in their width.
 
