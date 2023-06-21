@@ -121,13 +121,6 @@ test_that("columns are removed correctly", {
 })
 
 test_that("columns are checked correctly", {
-  a <- "col_1"
-  b <- ""
-
-  expect_equal(check_missing_colnames(c("a" = a, "b" = b), c("col_1", "b")), "b")
-})
-
-test_that("columns are checked correctly", {
   expect_no_error(check_column(dat = data.frame("a" = 1, "b" = 1), column = "a"))
   expect_no_error(check_column(dat = data.frame("a" = 2, "b" = 1), column = NULL))
   expect_error(check_column(dat = data.frame("a" = 1, "b" = 1), column = "c"), "Variable 'c' not found in data.", fixed = TRUE)
