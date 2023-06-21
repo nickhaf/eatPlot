@@ -216,8 +216,8 @@ dat[, i] <- sub_dash(dat[, i])
 
   # Set some nudging parameters ---------------------------------------------
 
-  headers_text_height_y <- 0.5
-  headers_text_y <- 0.5 + headers_text_height_y
+  headers_text_height_y <- 0.5 # height above or below plot
+  headers_text_y <- 0.5 + headers_text_height_y # Start y value of text
 
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 

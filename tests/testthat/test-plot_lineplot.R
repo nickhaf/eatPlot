@@ -1,6 +1,9 @@
 test_that("settings do something", {
+  trend_books_2 <- trend_books
+  colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
+
   plot_dat_test <- prep_plot(
-    dat = trend_books,
+    dat = trend_books_2,
     competence = "GL",
     grouping_vars = "KBuecher_imp3",
     grouping_vars_groups = c("1", "0", "0.vs.1")
@@ -14,8 +17,8 @@ test_that("settings do something", {
     plot_dat = plot_dat_test,
     label_est = "est_Trend_noComp",
     point_values = "est_noTrend_noComp",
-    years_lines = list(c(2011, 2016), c(2016, 2021)),
-    years_braces = list(c(2011, 2016), c(2016, 2021)),
+    years_lines = list(c(2011, 2016), c(2016, 2023)),
+    years_braces = list(c(2011, 2016), c(2016, 2023)),
     background_lines = FALSE,
     plot_settings = plotsettings_lineplot(
       axis_x_background_colour = "red",
