@@ -31,10 +31,11 @@ is_colour <- function(x) {
 #' @examples calc_sig(c(0.05, 0.01, 0.1), 0.05)
 calc_sig <- function(p_vec, sig_niveau) {
   res <- ifelse(is.na(p_vec),
-                yes = FALSE,
+    yes = FALSE,
     no = ifelse(p_vec < sig_niveau & !is.na(p_vec),
-                 yes = TRUE,
-                 no = FALSE)
+      yes = TRUE,
+      no = FALSE
+    )
   )
   return(res)
 }
@@ -49,7 +50,7 @@ calc_sig <- function(p_vec, sig_niveau) {
 #'
 #' @return Data.frame without the columns specified in cols.
 #'
-#' @examples #tbd
+#' @examples # tbd
 remove_columns <- function(dat, cols) {
   dat <- dat[, !(colnames(dat) %in% cols), drop = FALSE]
   return(dat)
@@ -65,7 +66,7 @@ remove_columns <- function(dat, cols) {
 #'
 #' @return List containing all consecutive number combinations.
 #'
-#' @examples #tbd
+#' @examples # tbd
 consecutive_numbers <- function(vec) {
   vec_ordered <- vec[order(vec)]
   res <- list()
@@ -97,7 +98,7 @@ consecutive_numbers <- function(vec) {
 #'
 #' @return Returns the first group found in vec.
 #'
-#' @examples #tbd
+#' @examples # tbd
 write_group <- function(vec, groups) {
   ## "_" in groups is used as divider, so
   if (any(grepl("_", groups))) {
@@ -124,7 +125,19 @@ write_group <- function(vec, groups) {
 }
 
 
-# Helper functions for reshaping to long format ---------------------------
+#' Reshape prepared data to long format.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param data Dataframe that should be reshaped.
+#' @param include_pattern Character string of patterns in column names with values that should be reshaped into long format.
+#' @param remove_pattern Character string of patterns in column names that should be removed before reshaping. E.g., all trend columns.
+#' @param suffix Character string to put at the end of all new (reshaped) columns.
+#'
+#' @return Data.frame in long format.
+#'
+#' @examples # tbd
 prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "") {
   ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
@@ -146,7 +159,6 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   ## before the first number of the year columns, insert ".". Needed by reshape() for automatically building the new columns.
   year_cols <- unlist(sapply(colnames(data)[col_pos], insert_first_number, "\\."))
 
-
   if (!is.null(year_cols)) {
     colnames(data)[col_pos] <- year_cols
 
@@ -159,7 +171,6 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
     colnames(data)[col_pos] <- paste0(colnames(data)[col_pos], "_noTrend")
     data_long <- data
     data_long$time <- "noTrend"
-
   }
   # put suffix on all new columns containing the values:
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
@@ -169,7 +180,11 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
     new_names = paste0(new_colnames, suffix)
   )
 
-  data_long <- rename_columns(data_long, old_names = paste0("time", suffix), new_names = "year")
+  data_long <- rename_columns(data_long,
+    old_names = paste0("time", suffix),
+    new_names = "year"
+  )
+
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
   colnames(data_long) <- gsub("trend", "_trend", colnames(data_long))
 
@@ -177,6 +192,17 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
 }
 
 ## Split the time column with the two comparisons years into two columns, so start- and endyear both have a seperate column
+#' Split Trend column in two seperate year columns.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Input data.frame.
+#' @param year_col Trend column with two years in it.
+#'
+#' @return The data.frame with a `year_start` and a `year_end` column, derived from the `year_col`.
+#'
+#' @examples # tbd
 split_years <- function(dat, year_col = "year") {
   years <- regmatches(dat[, year_col], gregexpr("[[:digit:]]+", dat[, year_col]))
 
@@ -194,6 +220,17 @@ split_years <- function(dat, year_col = "year") {
 }
 
 
+#' Calculate the x-axis range for bar-plots.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param x Numeric vector that is plotted on the x-axis.
+#' @param accuracy Numeric for rounding the borders. Defaults to `10`, so the plot borders will be divisible by `10`.
+#'
+#' @return Numeric vector with the min and max values of the x axis.
+#'
+#' @examples # tbd
 calc_plot_borders <- function(x, accuracy = 10) {
   min_x <- min(x, na.rm = TRUE)
   max_x <- max(x, na.rm = TRUE)
@@ -214,7 +251,17 @@ calc_plot_borders <- function(x, accuracy = 10) {
 }
 
 
-
+#' Insert a character string in front of the first number in a character string.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param char_string Character string that gets the insertion.
+#' @param insertion Character to insert before the first number in `char_string`.
+#'
+#' @return A character string with an insertion in front of the first number.
+#'
+#' @examples insert_first_number("test2013b", "\\.")
 insert_first_number <- function(char_string, insertion) {
   string_number <- unique(unlist(regmatches(char_string, gregexpr("[[:digit:]]+", char_string))))
 
@@ -233,9 +280,9 @@ insert_first_number <- function(char_string, insertion) {
 ## Problem: sub_groups mit vs-grouping_var
 
 get_comparisons <- function(dat, states, sub_groups) {
-  if(!is.null(sub_groups)){
-  sub_groups <- unique(unlist(strsplit(levels(sub_groups), split = "\\.vs\\.")))
-}
+  if (!is.null(sub_groups)) {
+    sub_groups <- unique(unlist(strsplit(levels(sub_groups), split = "\\.vs\\.")))
+  }
   dat$group_var <- gsub("TR_BUNDESLAND=", "", dat$group_var)
 
   comparisons_log <- grepl("\\.vs\\.", dat$group_var)
@@ -251,27 +298,29 @@ get_comparisons <- function(dat, states, sub_groups) {
 
   for (i in c("compare_1", "compare_2")) {
     if (!is.null(sub_groups)) {
-    for (j in seq_along(sub_groups)) {
-      group_j <- sub_groups[j]
-      dat[, i] <- gsub(
-        pattern = paste0(
-          paste0("_", group_j),
-          paste0("*", group_j),
-          collapse = "|"
+      for (j in seq_along(sub_groups)) {
+        group_j <- sub_groups[j]
+        dat[, i] <- gsub(
+          pattern = paste0(
+            paste0("_", group_j),
+            paste0("*", group_j),
+            collapse = "|"
           ),
-       replacement = paste0(
-          "_grouping_var_",
-          letters[j]),
-        x = dat[, i])
+          replacement = paste0(
+            "_grouping_var_",
+            letters[j]
+          ),
+          x = dat[, i]
+        )
+      }
     }
-}
     dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
     dat[, i] <- gsub("__|___", "_", dat[, i])
 
     dat[is.na(dat[, i]), i] <- "no_comp"
   }
 
-    ## Check if comparison is one of group in state vs. the group in wholeGroup
+  ## Check if comparison is one of group in state vs. the group in wholeGroup
 
   dat$compare_2 <- ifelse(dat$grouping_var == dat$compare_2 & !is.na(dat$grouping_var) & !is.na(dat$compare_2) & dat$grouping_var != "no_comp" & dat$compare_2 != "no_comp",
     "wholeGroupSameGroup",
@@ -305,26 +354,38 @@ replace_VS <- function(x) {
   return(x)
 }
 
-
-
-# Overlap occurs, when one start point lies between a start and end point, or an end point lies between a start and an end point
-
+#' Calculate, if year columns are overlapping.
+#'
+#' They overlap, if one of the start or end years lies between another start and end year.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param year_start Numeric vector.
+#' @param year_end Numeric vector.
+#'
+#' @return Logical vector the same length as `year_start` with a `TRUE` if the respective year is overlapping.
+#'
+#' @examples calc_overlap(c(2010, 2012, 2013), c(2015, 2016, 2015))
 calc_overlap <- function(year_start, year_end) {
-  years <- c()
+  overlap <- c()
   for (i in 1:length(year_start)) {
-    years[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
+    overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
   }
-  return(years)
+  return(overlap)
 }
 
 
-
-## Function for checking which arguments are in the colnames, and returning those which are not
-check_missing_colnames <- function(x, colnames_vec) {
-  names(x[!x %in% colnames_vec])
-}
-
-
+#' Get smallest and largest year of each Trend.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame with a `year` and a `years_Trend` column.
+#'
+#' @return Data.frame with minimal and maximal year for each Trend.
+#'
+#' @examples # tbd
 get_min_max <- function(dat) {
   min_max_trend <- by(dat, dat$years_Trend, function(x) {
     data.frame(
@@ -339,6 +400,17 @@ get_min_max <- function(dat) {
   return(min_max_dat)
 }
 
+#' Check if column is part of data.frame and return error if not.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param column Character string of a column name that should be checked.
+#'
+#' @return Error if column is not part of `dat`.
+#'
+#' @examples # tbd
 check_column <- function(dat, column) {
   if (!is.null(column)) {
     if (!(column %in% colnames(dat))) {
@@ -348,20 +420,46 @@ check_column <- function(dat, column) {
 }
 
 
-fill_null <- function(dat, column_name, filling) {
-  dat[[column_name]] <- rep(filling, nrow(dat))
-  return(dat)
+#' Check if column is part of the data.frame and return warning and `NULL` if not.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param column Character string of a column name that should be checked.
+#'
+#' @return The column if it is part of the data, or `NULL` if not.
+#'
+#' @examples #tbd
+check_column_warn <- function(dat, column) {
+  if (column %in% colnames(dat)) {
+    return(column)
+  } else {
+    warning(paste0("The column '", column, "' was not found in data and will not be considered for the plot."))
+    return(NULL)
+  }
 }
 
-
-## Add a new column that is derived from an old one. Takes characters as input.
+#' Add a new column that is derived from an old one.
+#'
+#' Copy a column or insert a new `NA` column.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param old Character string of column name in dat.
+#' @param new Character string of new column.
+#'
+#' @return Data.frame with a new column, either copyed or `NA`.
+#'
+#' @examples #tbd
 build_column <- function(dat, old, new) {
   check_column(dat, old)
   if (is.null(old)) {
     dat[, new] <- NA
     return(dat)
   } else {
-    # colnames(dat)[colnames(dat) == old] <- new
     dat[, new] <- dat[, old]
 
     return(dat)
@@ -369,13 +467,22 @@ build_column <- function(dat, old, new) {
 }
 
 
-
-
-## Add a new column that is derived from an old one. Takes an object as input.
+#' Build new column with predefined values.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param df Data.frame.
+#' @param column_name Character string of the column name.
+#' @param filling Character string that will fill the column if it is not part of `df` originally.
+#'
+#' @return Data.frame with a new column.
+#'
+#' @examples #tbd
 fill_column <- function(df, column_name, filling = NA) {
   if (is.null(column_name)) {
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
-  } else if (column_name %in% colnames(df)) {
+      } else if (column_name %in% colnames(df)) {
     df[[deparse(substitute(column_name))]] <- df[[column_name]]
   } else if ((!column_name %in% colnames(df))) {
     warning(paste0("Your column '", column_name, "' is not part of your data. Trying to set it automatically."))
@@ -384,6 +491,19 @@ fill_column <- function(df, column_name, filling = NA) {
   return(df)
 }
 
+
+#' Replace NAs in a data.frame with specified values.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param df Data.frame.
+#' @param column_name Character string of a column in `df`.
+#' @param filling Character string or numeric for replacing `NAs`.
+#'
+#' @return Data.frame with altered column.
+#'
+#' @examples #tbd
 fill_na <- function(df, column_name, filling) {
   if (is.null(column_name)) {
     return(df)
@@ -393,15 +513,20 @@ fill_na <- function(df, column_name, filling) {
   }
 }
 
-check_columns <- function(dat, column) {
-  if (column %in% colnames(dat)) {
-    return(column)
-  } else {
-    warning(paste0("The column '", column, "' was not found in data and will not be considered for the plot."))
-    return(NULL)
-  }
-}
 
+
+#' Check if data.frame column is a factor and shape into factor if not.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat Data.frame.
+#' @param column Character string for a column name in `dat`.
+#' @param variable_type Character string of the function argument this column was given to (necessary for message).
+#'
+#' @return Data.frame with the column as factor.
+#'
+#' @examples #tbd
 check_factor <- function(dat, column, variable_type) {
   if (!is.factor(dat[, column]) & !is.null(column)) {
     message("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.")
@@ -439,18 +564,17 @@ get_plot_coords <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
 }
 
-sub_dash <- function(vec){
-  if(is.character(vec)){
-  vec <- gsub("-", "\uad", vec)
+sub_dash <- function(vec) {
+  if (is.character(vec)) {
+    vec <- gsub("-", "\uad", vec)
   }
   return(vec)
 }
 
 # Colours should be displayed in the order they are put in:
-construct_colour_scale <- function(colours, dat, colname){
-  if(is.null(names(colours)) & colname %in% colnames(dat)){
+construct_colour_scale <- function(colours, dat, colname) {
+  if (is.null(names(colours)) & colname %in% colnames(dat)) {
     names(colours) <- unique(dat[, colname])
   }
-return(colours)
-  }
-
+  return(colours)
+}
