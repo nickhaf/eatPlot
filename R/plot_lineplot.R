@@ -205,29 +205,28 @@ plot_title <- function(title, title_raised_letter) {
 }
 
 
-## nehmen einer Jahreszahl und gsubben dieser.
-
 distort_line_distance <- function(plot_dat) {
-  ## To plot the values with equal distance, a new y-axis is needed:
 
+   ## To plot the values with equal distance, a new y-axis is needed:
   plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))
 
   sub_years <- extract_gsub_values(plot_dat)
 
-  ## lapply schleife für background_lines, braces
-
-  for (i in c("plot_lines", "plot_braces", "plot_background_lines")) {
+  loop_objects <- names(dat)[names(dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
+  for (i in loop_objects) {
     plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
     plot_dat[[i]]$year_end_axis <- plot_dat[[i]]$year_end
 
     for (j in seq_along(sub_years$year)) {
-      plot_dat[[i]]$year_start_axis <- gsub(sub_years$year[i], sub_years$year_axis[i], plot_dat[[i]]$year_start_axis)
-      plot_dat[[i]]$year_end_axis <- gsub(sub_years$year[i], sub_years$year_axis[i], plot_dat[[i]]$year_end_axis)
+      plot_dat[[i]]$year_start_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_start_axis)
+      plot_dat[[i]]$year_end_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_end_axis)
     }
 
     plot_dat[[i]]$year_start_axis <- as.numeric(plot_dat[[i]]$year_start_axis)
     plot_dat[[i]]$year_end_axis <- as.numeric(plot_dat[[i]]$year_end_axis)
   }
+
+  return(plot_dat)
 }
 
 extract_gsub_values <- function(plot_dat) {
