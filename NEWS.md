@@ -1,7 +1,7 @@
 # eatPlot (development version)
 
 # eatPlot 0.0.0.9018
-* Trend lines with differing year ranges can now be plotted with equal length (in split and non-split plots). Use the `equal_line_length`-argument in [plotsettings_lineplot()] with care, as the distances between the timepoints might be distorted by this approach (however, it is necessary for the BT22).
+* Trend lines with differing year ranges can now be plotted with equal length (in split and non-split plots). Use the `equal_trend_line_length`-argument in [plotsettings_lineplot()] with care, as the distances between the timepoints might be distorted by this approach (however, it is necessary for the BT22).
 
 # eatPlot 0.0.0.9017
 * Changed defaults for y position of column headers. 

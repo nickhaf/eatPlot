@@ -211,7 +211,7 @@ plot_title <- function(title, title_raised_letter) {
 
 equalize_line_length <- function(plot_dat, plot_settings) {
   ## To plot the values with equal distance, a new y-axis is needed:
-  if(plot_settings$equal_line_length == TRUE){
+  if(plot_settings$equal_trend_line_length == TRUE){
   plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))
   sub_years <- extract_gsub_values(plot_dat)
   }else{
@@ -224,7 +224,7 @@ equalize_line_length <- function(plot_dat, plot_settings) {
     plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
     plot_dat[[i]]$year_end_axis <- plot_dat[[i]]$year_end
 
-  if(plot_settings$equal_line_length == TRUE){
+  if(plot_settings$equal_trend_line_length == TRUE){
     for (j in seq_along(sub_years$year)) {
       plot_dat[[i]]$year_start_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_start_axis)
       plot_dat[[i]]$year_end_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_end_axis)

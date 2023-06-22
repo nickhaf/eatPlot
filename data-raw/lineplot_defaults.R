@@ -14,7 +14,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   brace_label_size = 2,
   brace_line_width = 0.5,
   brace_span_y = 0.1,
-  equal_line_length = TRUE,
+  equal_trend_line_length = TRUE,
   grouping_colours = c(
    cmyk(0, 0, 0, 100),
    cmyk(0, 0, 0, 40)

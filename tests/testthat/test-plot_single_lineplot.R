@@ -278,7 +278,7 @@ test_that("split lineplot with no groups is plotted correctly with equal line le
         point_values = "point_values",
         plot_settings = plotsettings_lineplot(
           split_plot = TRUE,
-          equal_line_length = TRUE,
+          equal_trend_line_length = TRUE,
           axis_x_label_centralize = 0.05,
           point_label_nudge_x = 0.02
         )
@@ -354,7 +354,7 @@ test_that("split lineplot with no groups is plotted correctly with relational li
                            point_values = "point_values",
                            plot_settings = plotsettings_lineplot(
                              split_plot = TRUE,
-                             equal_line_length = FALSE,
+                             equal_trend_line_length = FALSE,
                              axis_x_label_centralize = 0.02,
                              point_label_nudge_x = 0.02
                            )

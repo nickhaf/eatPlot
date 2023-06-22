@@ -173,7 +173,7 @@ test_that("Example brace plot is still the same", {
 
   plot_dat <- filter_plot_years(plot_dat)
 
-  plot_dat <- equalize_line_length(plot_dat, plot_settings = plotsettings_lineplot(equal_line_length = FALSE))
+  plot_dat <- equalize_line_length(plot_dat, plot_settings = plotsettings_lineplot(equal_trend_line_length = FALSE))
 
 
   vdiffr::expect_doppelganger(

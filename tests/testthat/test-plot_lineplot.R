@@ -209,7 +209,7 @@ colnames(books_3) <- gsub("2021","2030", colnames(books_3))
     years_braces = list(c(2011, 2016), c(2016, 2030)),
     plot_settings = plotsettings_lineplot(
       split_plot = FALSE,
-      equal_line_length = FALSE,
+      equal_trend_line_length = FALSE,
       default_list = lineplot_4x4_3groups
     )
   )
@@ -225,7 +225,7 @@ colnames(books_3) <- gsub("2021","2030", colnames(books_3))
     years_braces = list(c(2011, 2016), c(2016, 2030)),
     plot_settings = plotsettings_lineplot(
       split_plot = TRUE,
-      equal_line_length = FALSE,
+      equal_trend_line_length = FALSE,
       default_list = lineplot_4x4_3groups
     )
   )
@@ -400,7 +400,7 @@ test_that("line distance can be overwritten to be equal, even though the distanc
 
   expect_equal(
     equalize_line_length(dat,
-      plot_settings = plotsettings_lineplot(equal_line_length = TRUE)
+      plot_settings = plotsettings_lineplot(equal_trend_line_length = TRUE)
     )$plot_points,
     data.frame(
       year = c(2011, 2012, 2014, 2022, NA),
@@ -410,7 +410,7 @@ test_that("line distance can be overwritten to be equal, even though the distanc
 
   expect_equal(
     equalize_line_length(dat,
-      plot_settings = plotsettings_lineplot(equal_line_length = FALSE)
+      plot_settings = plotsettings_lineplot(equal_trend_line_length = FALSE)
     )$plot_points,
     data.frame(
       year = c(2011, 2012, 2014, 2022, NA),
@@ -421,7 +421,7 @@ test_that("line distance can be overwritten to be equal, even though the distanc
 
   expect_equal(
     equalize_line_length(dat,
-      plot_settings = plotsettings_lineplot(equal_line_length = TRUE)
+      plot_settings = plotsettings_lineplot(equal_trend_line_length = TRUE)
     )$plot_lines,
     data.frame(
       year_start = c(2011, 2012, 2014, NA),
