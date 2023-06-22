@@ -390,8 +390,8 @@ get_min_max <- function(dat) {
   min_max_trend <- by(dat, dat$years_Trend, function(x) {
     data.frame(
       years_Trend = unique(x$years_Trend),
-      minimum = min(x$year),
-      maximum = max(x$year)
+      minimum = min(x$year_axis),
+      maximum = max(x$year_axis)
     )
   })
 

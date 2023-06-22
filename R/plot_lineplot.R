@@ -54,7 +54,11 @@ plot_lineplot <- function(plot_dat,
     }
   }
 
-  plot_dat <- lapply(plot_dat, function(x){
+  if (is.null(years_lines)) {
+    years_lines <- consecutive_numbers(c(plot_dat[["plot_lines"]]$year_start, plot_dat[["plot_lines"]]$year_end))
+  }
+
+  plot_dat <- lapply(plot_dat, function(x) {
     x$grouping_var <- as.factor(x$grouping_var)
     x$grouping_var <- droplevels(x$grouping_var)
     return(x)
@@ -66,19 +70,23 @@ plot_lineplot <- function(plot_dat,
   # filter years ------------------------------------------------------------
   plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
 
+  plot_dat <- equalize_line_length(plot_dat, plot_settings)
+
+
   states <- unique(plot_dat[[1]]$state_var)
   tiles <- levels(plot_dat$plot_lines$seperate_plot_var) # Hier die Level nehmen
 
   plot_list <- list()
-  if(is.null(plot_settings$axis_y_lims)){
-  if (!is.null(point_values)) {
-    range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+  if (is.null(plot_settings$axis_y_lims)) {
+    if (!is.null(point_values)) {
+      range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+    } else {
+      stop("Please provide point-values.")
+    }
   } else {
-    stop("Please provide point-values.")
-  }
-  }else{
     range_est <- plot_settings$axis_y_lims
   }
+
 
   position <- 1
 
@@ -104,8 +112,8 @@ plot_lineplot <- function(plot_dat,
         background_lines = background_lines,
         plot_settings = plot_settings
       ) +
-     plot_title(sub_dash(i), title_superscripts) +
-          set_plot_coords(plot_dat,
+      plot_title(sub_dash(i), title_superscripts) +
+      set_plot_coords(plot_dat,
         point_values = point_values,
         plot_settings = plot_settings
       )
@@ -167,12 +175,6 @@ filter_years <- function(dat, year_list) {
 
 
 filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL) {
-  if (is.null(years_lines)) {
-    lineplot_years <- consecutive_numbers(c(plot_dat[["plot_lines"]]$year_start, plot_dat[["plot_lines"]]$year_end))
-  } else {
-    lineplot_years <- years_lines
-  }
-
   if (is.null(years_braces)) {
     ## Draw braces from last year to every other year
     plot_years <- unique(c(plot_dat[["plot_braces"]]$year_start, plot_dat[["plot_braces"]]$year_end))
@@ -183,25 +185,61 @@ filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL)
     braceplot_years <- years_braces
   }
 
-  plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][filter_years(plot_dat[["plot_lines"]], lineplot_years), ]
+  plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][filter_years(plot_dat[["plot_lines"]], years_lines), ]
   plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][filter_years(plot_dat[["plot_braces"]], braceplot_years), ]
-  plot_dat[["plot_background_lines"]] <- plot_dat[["plot_background_lines"]][filter_years(plot_dat[["plot_background_lines"]], lineplot_years), ]
+  plot_dat[["plot_background_lines"]] <- plot_dat[["plot_background_lines"]][filter_years(plot_dat[["plot_background_lines"]], years_lines), ]
   plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$years_Trend %in% c(unique(plot_dat$plot_lines$years_Trend), unique(plot_dat$plot_braces$years_Trend)), ]
 
   return(plot_dat)
 }
 
 
-plot_title <- function(title, title_raised_letter){
-  if(!is.null(title_raised_letter)){
-   pos <- which(title == names(title_raised_letter))
-   if(length(pos) == 0){
-     ggplot2::labs(title = title)
-   }else{
-   superscript <- title_raised_letter[[pos]]
-   ggplot2::labs(title = bquote(.(title)^.(superscript)))
-   }
-  }else{
+plot_title <- function(title, title_raised_letter) {
+  if (!is.null(title_raised_letter)) {
+    pos <- which(title == names(title_raised_letter))
+    if (length(pos) == 0) {
+      ggplot2::labs(title = title)
+    } else {
+      superscript <- title_raised_letter[[pos]]
+      ggplot2::labs(title = bquote(.(title)^.(superscript)))
+    }
+  } else {
     ggplot2::labs(title = title)
   }
+}
+
+
+equalize_line_length <- function(plot_dat, plot_settings) {
+  ## To plot the values with equal distance, a new y-axis is needed:
+  if(plot_settings$equal_trend_line_length == TRUE){
+  plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))
+  sub_years <- extract_gsub_values(plot_dat)
+  }else{
+    plot_dat$plot_points$year_axis <- plot_dat$plot_points$year
+}
+
+  loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
+
+  for (i in loop_objects) {
+    plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
+    plot_dat[[i]]$year_end_axis <- plot_dat[[i]]$year_end
+
+  if(plot_settings$equal_trend_line_length == TRUE){
+    for (j in seq_along(sub_years$year)) {
+      plot_dat[[i]]$year_start_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_start_axis)
+      plot_dat[[i]]$year_end_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_end_axis)
+    }
+
+    plot_dat[[i]]$year_start_axis <- as.numeric(plot_dat[[i]]$year_start_axis)
+    plot_dat[[i]]$year_end_axis <- as.numeric(plot_dat[[i]]$year_end_axis)
+  }
+  }
+
+  return(plot_dat)
+}
+
+extract_gsub_values <- function(plot_dat) {
+  sub_years <- plot_dat$plot_points[plot_dat$plot_points$year != plot_dat$plot_points$year_axis, c("year", "year_axis")]
+  sub_years <- na.omit(sub_years)
+  return(sub_years)
 }

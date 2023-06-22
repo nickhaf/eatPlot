@@ -21,7 +21,6 @@ plot_single_lineplot <- function(plot_dat,
                                  label_sig_bold = "sig_Trend_noComp",
                                  background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {
-
   # Assemble a single lineplot (one "tile" in the whole lineplot).
   list(
     theme_line(plot_settings),
@@ -65,7 +64,11 @@ plot_single_lineplot <- function(plot_dat,
       plot_settings = plot_settings
     ),
     if (plot_settings$split_plot == TRUE) {
-      ggplot2::facet_wrap(~years_Trend, scales = "free_x")
+      if (plot_settings$equal_trend_line_length == TRUE) {
+        ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
+      } else {
+        ggplot2::facet_grid(. ~ years_Trend, scales = "free_x", space = "free_x")
+      }
     }
   )
 }

@@ -1,8 +1,8 @@
 test_that("y limits are set correctly", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2015, 2015),
-    year_end = c(2020, 2020, 2020, 2020),
+    year_start_axis = c(2011, 2011, 2015, 2015),
+    year_end_axis = c(2020, 2020, 2020, 2020),
     grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
@@ -32,8 +32,8 @@ test_that("y limits are set correctly", {
 test_that("x-position of brace label is calculated correctly", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2015, 2015),
-    year_end = c(2020, 2020, 2020, 2020),
+    year_start_axis = c(2011, 2011, 2015, 2015),
+    year_end_axis = c(2020, 2020, 2020, 2020),
     grouping_vars = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
@@ -46,11 +46,11 @@ test_that("x-position of brace label is calculated correctly", {
   )
   range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
 
-  expect_equal(calc_brace_label_x(year_start = 0, year_end = 10, range_total = range_years, brace_indent_pos = 0.25), 2.5)
+  expect_equal(calc_brace_label_x(year_start_axis = 0, year_end_axis = 10, range_total = range_years, brace_indent_pos = 0.25), 2.5)
   expect_equal(
-    ifelse(df$year_start == min(df$year_start),
-      calc_brace_label_x(df$year_start, df$year_end, range_years, 0.25),
-      calc_brace_label_x(df$year_start, df$year_end, range_years, 0.5)
+    ifelse(df$year_start_axis == min(df$year_start_axis),
+      calc_brace_label_x(df$year_start_axis, df$year_end_axis, range_years, 0.25),
+      calc_brace_label_x(df$year_start_axis, df$year_end_axis, range_years, 0.5)
     ),
     c(2013.25, 2013.25, 2017.5, 2017.5)
   )
@@ -61,8 +61,8 @@ test_that("single brace is drawn", {
     overlap = FALSE,
     upper_y = 280,
     lower_y = 250,
-    year_start = c(2015),
-    year_end = c(2016),
+    year_start_axis = c(2015),
+    year_end_axis = c(2016),
     mid = 0.25,
     competence_var = "a"
   )
@@ -76,8 +76,8 @@ test_that("single brace is drawn", {
 
 test_that("double brace is drawn", {
   test_brace_double <- data.frame(
-    year_start = c(2011, 2015),
-    year_end = c(2020, 2020),
+    year_start_axis = c(2011, 2015),
+    year_end_axis = c(2020, 2020),
     upper_y = c(360, 324),
     lower_y = c(324, 306),
     mid = c(0.25, 0.5)
@@ -106,8 +106,8 @@ test_that("brace label is drawn", {
 test_that("braces are plotted correctly", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2015, 2015),
-    year_end = c(2020, 2020, 2020, 2020),
+    year_start_axis = c(2011, 2011, 2015, 2015),
+    year_end_axis = c(2020, 2020, 2020, 2020),
     grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
@@ -137,8 +137,8 @@ test_that("braces are plotted correctly", {
 test_that("significances are displayed correctly in the labels", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2015, 2015),
-    year_end = c(2020, 2020, 2020, 2020),
+    year_start_axis = c(2011, 2011, 2015, 2015),
+    year_end_axis = c(2020, 2020, 2020, 2020),
     grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
@@ -173,6 +173,8 @@ test_that("Example brace plot is still the same", {
 
   plot_dat <- filter_plot_years(plot_dat)
 
+  plot_dat <- equalize_line_length(plot_dat, plot_settings = plotsettings_lineplot(equal_trend_line_length = FALSE))
+
 
   vdiffr::expect_doppelganger(
     "Brace plot trend_books",
@@ -192,8 +194,8 @@ test_that("Example brace plot is still the same", {
 test_that("Adjacent braces", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2015, 2015),
-    year_end = c(2015, 2015, 2023, 2023),
+    year_start_axis = c(2011, 2011, 2015, 2015),
+    year_end_axis = c(2015, 2015, 2023, 2023),
     grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
@@ -224,8 +226,8 @@ test_that("Adjacent braces", {
 test_that("Overlapping braces are looking good", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2013, 2013),
-    year_end = c(2015, 2015, 2023, 2023),
+    year_start_axis = c(2011, 2011, 2013, 2013),
+    year_end_axis = c(2015, 2015, 2023, 2023),
     grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
@@ -256,8 +258,8 @@ test_that("Overlapping braces are looking good", {
 test_that("Braces can be facet wrapped", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
-    year_start = c(2011, 2011, 2013, 2013),
-    year_end = c(2015, 2015, 2023, 2023),
+    year_start_axis = c(2011, 2011, 2013, 2013),
+    year_end_axis = c(2015, 2015, 2023, 2023),
     grouping_var = factor(c(0, 1, 0, 1)),
     est = c(1:4),
     se = c(1:4),
@@ -282,6 +284,6 @@ test_that("Braces can be facet wrapped", {
         plot_settings = plotsettings_lineplot(split_plot = TRUE)
       ) +
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")) +
-      ggplot2::facet_wrap(~years_Trend, scales = "free_x")
+      ggplot2::facet_grid (.~ years_Trend, scales = "free_x")
   )
 })

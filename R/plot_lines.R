@@ -24,8 +24,8 @@ plot_lines <- function(data_plot_lines,
   ggplot2::geom_segment(
     data = data_plot_lines,
     ggplot2::aes(
-      x = .data$year_start,
-      xend = .data$year_end,
+      x = .data$year_start_axis,
+      xend = .data$year_end_axis,
       y = .data$est_y,
       yend = .data$est_y_end,
       colour = .data$grouping_var,

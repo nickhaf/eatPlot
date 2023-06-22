@@ -41,10 +41,10 @@
 <text x='332.03' y='221.93' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>210</text>
 <text x='332.03' y='204.25' text-anchor='middle' style='font-size: 5.69px; fill: #00BFC4; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>215</text>
 <rect x='2.74' y='25.50' width='358.63' height='37.48' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
-<text x='51.64' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='312.47' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>2</text>
-<text x='51.64' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='312.47' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='51.64' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2010</text>
+<text x='312.47' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2011</text>
+<text x='51.64' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2010</text>
+<text x='312.47' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2011</text>
 <polyline points='377.67,410.03 377.68,410.34 377.71,410.94 377.79,411.55 377.90,412.15 378.04,412.76 378.23,413.36 378.45,413.95 378.71,414.54 379.00,415.13 379.33,415.71 379.69,416.29 380.09,416.86 380.52,417.43 380.99,417.98 381.49,418.53 382.02,419.07 382.59,419.60 383.18,420.12 383.81,420.64 384.47,421.14 385.16,421.63 385.88,422.11 386.63,422.57 387.41,423.03 388.21,423.47 389.04,423.89 389.90,424.31 390.78,424.71 391.69,425.09 392.61,425.46 393.56,425.82 394.53,426.16 395.52,426.48 396.53,426.78 397.56,427.07 398.61,427.35 399.67,427.60 400.74,427.84 401.83,428.06 402.94,428.26 404.05,428.45 405.18,428.61 406.31,428.76 407.46,428.89 408.61,429.00 409.76,429.09 410.92,429.16 412.09,429.21 413.26,429.25 414.43,429.26 489.69,429.27 490.86,429.29 492.03,429.33 493.19,429.39 494.35,429.48 495.51,429.58 496.65,429.70 497.79,429.83 498.92,429.99 500.04,430.16 501.15,430.36 502.25,430.57 503.33,430.80 504.40,431.04 505.45,431.31 506.49,431.59 507.51,431.89 508.51,432.20 509.49,432.53 510.45,432.88 511.39,433.24 512.31,433.62 513.20,434.01 514.07,434.42 514.91,434.84 515.73,435.27 516.52,435.72 517.28,436.18 518.02,436.65 518.72,437.14 519.40,437.63 520.04,438.14 520.66,438.66 521.24,439.18 521.79,439.72 522.30,440.26 522.79,440.81 523.24,441.38 523.65,441.94 524.03,442.52 524.38,443.10 524.69,443.68 524.96,444.27 525.20,444.87 525.40,445.46 525.57,446.07 525.70,446.67 525.79,447.27 525.85,447.88 525.87,448.49 525.87,448.49 525.87,448.18 525.91,447.58 525.98,446.97 526.09,446.37 526.24,445.76 526.42,445.16 526.64,444.57 526.90,443.98 527.19,443.39 527.52,442.81 527.88,442.23 528.28,441.66 528.71,441.09 529.18,440.54 529.68,439.99 530.21,439.45 530.78,438.92 531.38,438.40 532.01,437.88 532.67,437.38 533.36,436.89 534.08,436.41 534.83,435.95 535.60,435.49 536.41,435.05 537.24,434.63 538.09,434.21 538.98,433.81 539.88,433.43 540.81,433.06 541.76,432.70 542.73,432.36 543.72,432.04 544.73,431.74 545.76,431.45 546.80,431.17 547.86,430.92 548.94,430.68 550.03,430.46 551.13,430.26 552.25,430.07 553.37,429.91 554.51,429.76 555.65,429.63 556.80,429.52 557.96,429.43 559.12,429.36 560.28,429.31 561.45,429.28 562.62,429.26 637.89,429.25 639.06,429.23 640.22,429.19 641.39,429.13 642.55,429.04 643.70,428.94 644.85,428.83 645.99,428.69 647.12,428.53 648.24,428.36 649.35,428.16 650.44,427.95 651.53,427.72 652.59,427.48 653.65,427.21 654.68,426.93 655.70,426.63 656.70,426.32 657.69,425.99 658.65,425.64 659.58,425.28 660.50,424.90 661.39,424.51 662.26,424.10 663.10,423.68 663.92,423.25 664.71,422.80 665.48,422.34 666.21,421.87 666.92,421.38 667.59,420.89 668.24,420.38 668.85,419.87 669.43,419.34 669.98,418.80 670.50,418.26 670.98,417.71 671.43,417.15 671.85,416.58 672.23,416.00 672.57,415.42 672.88,414.84 673.16,414.25 673.40,413.65 673.60,413.06 673.76,412.46 673.89,411.85 673.99,411.25 674.04,410.64 674.06,410.03 674.06,410.03 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <text x='511.00' y='469.08' style='font-size: 5.69px; font-family: sans;' textLength='6.33px' lengthAdjust='spacingAndGlyphs'>30</text>
 <text x='518.91' y='469.08' style='font-size: 5.69px; font-family: sans;' textLength='6.95px' lengthAdjust='spacingAndGlyphs'>(3)</text>
@@ -64,8 +64,26 @@
 <text x='685.92' y='186.57' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>220</text>
 <text x='685.92' y='168.89' text-anchor='middle' style='font-size: 5.69px; fill: #00BFC4; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>225</text>
 <rect x='361.37' y='25.50' width='358.63' height='37.48' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
-<text x='703.70' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>3</text>
-<text x='703.70' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>3</text>
-<text x='361.37' y='2.64' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='34.63px' lengthAdjust='spacingAndGlyphs'>splitlineplot</text>
+<text x='703.70' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2020</text>
+<text x='703.70' y='46.20' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2020</text>
+</g>
+<defs>
+  <clipPath id='cpMi43NHwzNjEuMzd8Ni4yN3w2LjI3'>
+    <rect x='2.74' y='6.27' width='358.63' height='0.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMi43NHwzNjEuMzd8Ni4yN3w2LjI3)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<defs>
+  <clipPath id='cpMzYxLjM3fDcyMC4wMHw2LjI3fDYuMjc='>
+    <rect x='361.37' y='6.27' width='358.63' height='0.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMzYxLjM3fDcyMC4wMHw2LjI3fDYuMjc=)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<text x='361.37' y='2.64' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='85.23px' lengthAdjust='spacingAndGlyphs'>splitlineplot equal distances</text>
 </g>
 </svg>

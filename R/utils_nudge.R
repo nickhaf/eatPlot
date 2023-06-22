@@ -1,12 +1,12 @@
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
   output_format <- match.arg(output_format)
-  sapply(c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "years_Trend"), check_column_warn, dat = dat)
-  dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start", "year_end", "brace_label", "years_Trend")]
-  dat$overlap <- calc_overlap(dat$year_start, dat$year_end)
+  sapply(c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend"), check_column_warn, dat = dat)
+  dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend")]
+  dat$overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
 
   range_coords <- diff(range(coords))
-  range_years <- diff(range(c(dat$year_start, dat$year_end), na.rm = TRUE))
+  range_years <- diff(range(c(dat$year_start_axis, dat$year_end_axis), na.rm = TRUE))
   ## Starting point for the highest brace label
   start_label <- plot_settings$brace_label_nudge_y
 
@@ -18,13 +18,13 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     upper_label_y <- lower_brace_y_b - range_coords * start_label
 
     # Upper brace coordinates:
-    dat$upper_y <- ifelse(dat$year_start == min(dat$year_start),
+    dat$upper_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
       coords[1],
       lower_brace_y_a
     )
 
     # Lower brace coordinates:
-    dat$lower_y <- ifelse(dat$year_start == min(dat$year_start),
+    dat$lower_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
       lower_brace_y_a,
       lower_brace_y_b
     )
@@ -32,15 +32,15 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     # Label
     dat$label_pos_y <- calc_brace_label_y(dat, upper_label_y, range_coords, gap_label = plot_settings$brace_label_gap_y)
 
-    dat$label_pos_x <- ifelse(dat$year_start == min(dat$year_start),
-      calc_brace_label_x(dat$year_start,
-        dat$year_end,
+    dat$label_pos_x <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+      calc_brace_label_x(dat$year_start_axis,
+        dat$year_end_axis,
         range_total = range_years,
         brace_indent_pos = 0.25,
         brace_label_nudge_x = plot_settings$brace_label_nudge_x
       ),
-      calc_brace_label_x(dat$year_start,
-        dat$year_end,
+      calc_brace_label_x(dat$year_start_axis,
+        dat$year_end_axis,
         range_total = range_years,
         brace_indent_pos = 0.5,
         brace_label_nudge_x = plot_settings$brace_label_nudge_x
@@ -48,7 +48,7 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     )
 
     # indent the first brace
-    dat$mid <- ifelse(dat$year_start == min(dat$year_start), 0.25, 0.5)
+    dat$mid <- ifelse(dat$year_start_axis == min(dat$year_start_axis), 0.25, 0.5)
   } else {
     lower_brace_y <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
     upper_label_y <- lower_brace_y - range_coords * start_label
@@ -56,8 +56,8 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     dat$upper_y <- coords[1]
     dat$lower_y <- lower_brace_y
 
-    dat$label_pos_x <- calc_brace_label_x(dat$year_start,
-      dat$year_end,
+    dat$label_pos_x <- calc_brace_label_x(dat$year_start_axis,
+      dat$year_end_axis,
       range_total = range_years,
       brace_indent_pos = 0.5,
       brace_label_nudge_x = plot_settings$brace_label_nudge_x
@@ -76,12 +76,12 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     dat_long <- stats::reshape(
       dat,
       idvar = c("grouping_var", "years_Trend", "competence_var"),
-      varying = c("upper_y", "year_end", "lower_y", "year_start"),
-      v.names = c("year", "value"),
+      varying = c("upper_y", "year_end_axis", "lower_y", "year_start_axis"),
+      v.names = c("year_axis", "value"),
       direction = "long"
     )
 
-    dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year", "value", "brace_label", "years_Trend")])
+    dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year_axis", "value", "brace_label", "years_Trend")])
     dat$brace_y <- dat$value
     dat <- build_column(dat, old = "value", new = "brace_y")
   }
@@ -89,18 +89,18 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
   return(dat)
 }
 
-calc_brace_label_x <- function(year_start,
-                               year_end,
+calc_brace_label_x <- function(year_start_axis,
+                               year_end_axis,
                                range_total,
                                brace_indent_pos,
                                brace_label_nudge_x = 0) {
-  range_est <- year_end - year_start
-  year_start + range_est * brace_indent_pos + (range_total * brace_label_nudge_x)
+  range_est <- year_end_axis - year_start_axis
+  year_start_axis + range_est * brace_indent_pos + (range_total * brace_label_nudge_x)
 }
 
 # Plot_points -------------------------------------------------------------
 calc_x_nudge <- function(dat, nudge_x) {
-  range_years <- diff(range(dat$year))
+  range_years <- diff(range(dat$year_axis))
   min_max_trend <- get_min_max(dat)
 
   dat <- merge(dat, min_max_trend,
@@ -109,11 +109,11 @@ calc_x_nudge <- function(dat, nudge_x) {
     all.y = FALSE
   )
 
-  dat$x_coords <- ifelse(dat$year == dat$minimum,
-    yes = dat$year + range_years * nudge_x,
-    no = ifelse(dat$year == dat$maximum,
-      yes = dat$year - range_years * nudge_x,
-      no = dat$year
+  dat$x_coords <- ifelse(dat$year_axis == dat$minimum,
+    yes = dat$year_axis + range_years * nudge_x,
+    no = ifelse(dat$year_axis == dat$maximum,
+      yes = dat$year_axis - range_years * nudge_x,
+      no = dat$year_axis
     )
   )
   return(dat)
@@ -124,7 +124,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
   range_est <- diff(y_range)
   nudge_val <- range_est * plot_settings$point_label_nudge_y
 
-  # The smallest value in each year is nudged lower, the bigger ones are nudged higher. For facetted plots, the trend has to be taken into account as well.
+  # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher. For facetted plots, the trend has to be taken into account as well.
 
   ## Wenn in plot_settings ein named vector angegeben wurde mit "+" oder "-", dann das nutzen, sonst versuchen selber zu berechnen:
 
@@ -135,13 +135,13 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
 
     res_frame_1 <- data.frame(
       years_Trend = plot_points_dat$years_Trend,
-      year = plot_points_dat$year,
+      year_axis = plot_points_dat$year_axis,
       grouping_var = plot_points_dat$grouping_var
     )
 
     res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
   } else {
-    nudge_neg <- by(plot_points_dat, list(plot_points_dat$year, plot_points_dat$years_Trend), function(year_df) {
+    nudge_neg <- by(plot_points_dat, list(plot_points_dat$year_axis, plot_points_dat$years_Trend), function(year_df) {
       res_frame <- data.frame(
         nudge_y = ifelse(
           year_df$point_values == min(year_df$point_values) & length(year_df$point_values) > 1,
@@ -149,7 +149,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
           nudge_val
         ),
         years_Trend = year_df$years_Trend,
-        year = year_df$year,
+        year_axis = year_df$year_axis,
         grouping_var = year_df$grouping_var
       )
       ## If duplicated estimate values exist:
@@ -162,7 +162,7 @@ calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_
   }
 
   out <- merge(plot_points_dat, res_frame,
-    by = c("years_Trend", "year", "grouping_var"),
+    by = c("years_Trend", "year_axis", "grouping_var"),
     all.x = TRUE, all.y = FALSE
   )
   return(out)
