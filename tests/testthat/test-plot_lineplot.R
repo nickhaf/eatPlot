@@ -320,38 +320,70 @@ test_that("adjusted means for whole group", {
 
 
 test_that("title can get a raised letter", {
-  title  <-  "c"
+  title <- "c"
   title_raised_letter <- list("a" = "b", "c" = "d")
   title_raised_letter_0 <- NULL
 
   expect_equal(plot_title(title, title_raised_letter)$title, bquote("c"^"d"))
   expect_equal(plot_title(title, title_raised_letter_0)$title, "c")
-
-  })
+})
 
 test_that("line distance can be overwritten to be equal, even though the distance is actually different", {
-
   dat <- list(
-    plot_lines = data.frame("year_start" = c(2011, 2012, 2014, NA),
-                   "year_end" = c(2012, 2014, 2022, NA)
-                   ),
+    plot_lines = data.frame(
+      "year_start" = c(2011, 2012, 2014, NA),
+      "year_end" = c(2012, 2014, 2022, NA)
+    ),
     plot_points = data.frame("year" = c(2011, 2012, 2014, 2022, NA)),
-    plot_background_lines = data.frame("year_start" = c(2011, 2012, 2014, NA),
-                                       "year_end" = c(2012, 2014, 2022, NA)
+    plot_background_lines = data.frame(
+      "year_start" = c(2011, 2012, 2014, NA),
+      "year_end" = c(2012, 2014, 2022, NA)
     ),
     plot_extra = "test"
   )
 
-expect_equal(distort_line_distance(dat)$plot_points,
-             data.frame(year = c(2011, 2012, 2014, 2022, NA),
-                        year_axis = c(1:4, NA))
-)
+  expect_equal(
+    distort_line_distance(dat,
+      plot_settings = plotsettings_lineplot(equal_line_length = TRUE)
+    )$plot_points,
+    data.frame(
+      year = c(2011, 2012, 2014, 2022, NA),
+      year_axis = c(1:4, NA)
+    )
+  )
 
-expect_equal(distort_line_distance(dat)$plot_lines,
-             data.frame(year_start = c(2011, 2012, 2014, NA),
-                        year_end = c(2012, 2014, 2022, NA),
-                        year_start_axis = c(1:3, NA),
-                        year_end_axis = c(2:4, NA)
-                        )
-)
+  expect_equal(
+    distort_line_distance(dat,
+      plot_settings = plotsettings_lineplot(equal_line_length = FALSE)
+    )$plot_points,
+    data.frame(
+      year = c(2011, 2012, 2014, 2022, NA),
+      year_axis = c(2011, 2012, 2014, 2022, NA)
+    )
+  )
+
+
+  expect_equal(
+    distort_line_distance(dat,
+      plot_settings = plotsettings_lineplot(equal_line_length = TRUE)
+    )$plot_lines,
+    data.frame(
+      year_start = c(2011, 2012, 2014, NA),
+      year_end = c(2012, 2014, 2022, NA),
+      year_start_axis = c(1:3, NA),
+      year_end_axis = c(2:4, NA)
+    )
+  )
+
+  expect_equal(
+    distort_line_distance(dat,
+      plot_settings = plotsettings_lineplot()
+    )$plot_lines,
+    data.frame(
+      year_start = c(2011, 2012, 2014, NA),
+      year_end = c(2012, 2014, 2022, NA),
+      year_start_axis = c(2011, 2012, 2014, NA),
+      year_end_axis = c(2012, 2014, 2022, NA)
+    )
+  )
 })

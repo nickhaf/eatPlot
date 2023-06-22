@@ -70,7 +70,8 @@ plot_lineplot <- function(plot_dat,
   # filter years ------------------------------------------------------------
   plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
 
-  plot_dat <- distort_line_distance(plot_dat)
+  plot_dat <- distort_line_distance(plot_dat, plot_settings)
+
 
   states <- unique(plot_dat[[1]]$state_var)
   tiles <- levels(plot_dat$plot_lines$seperate_plot_var) # Hier die Level nehmen
@@ -208,17 +209,22 @@ plot_title <- function(title, title_raised_letter) {
 }
 
 
-distort_line_distance <- function(plot_dat) {
+distort_line_distance <- function(plot_dat, plot_settings) {
   ## To plot the values with equal distance, a new y-axis is needed:
+  if(plot_settings$equal_line_length == TRUE){
   plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))
-
   sub_years <- extract_gsub_values(plot_dat)
+  }else{
+    plot_dat$plot_points$year_axis <- plot_dat$plot_points$year
+}
 
   loop_objects <- names(dat)[names(dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
+
   for (i in loop_objects) {
     plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
     plot_dat[[i]]$year_end_axis <- plot_dat[[i]]$year_end
 
+  if(plot_settings$equal_line_length == TRUE){
     for (j in seq_along(sub_years$year)) {
       plot_dat[[i]]$year_start_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_start_axis)
       plot_dat[[i]]$year_end_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_end_axis)
@@ -226,6 +232,7 @@ distort_line_distance <- function(plot_dat) {
 
     plot_dat[[i]]$year_start_axis <- as.numeric(plot_dat[[i]]$year_start_axis)
     plot_dat[[i]]$year_end_axis <- as.numeric(plot_dat[[i]]$year_end_axis)
+  }
   }
 
   return(plot_dat)
