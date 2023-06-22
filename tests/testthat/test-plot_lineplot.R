@@ -180,6 +180,62 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
   #  save_plot(p_line, filename = "../split_lineplot_3_books.pdf")
 })
 
+
+test_that("lineplot chpt. 4 with 3 groups, no split and unequal trend length", {
+  trend_books_2 <- trend_books[trend_books$KBuecher_imp3 == "0" & !is.na(trend_books$KBuecher_imp3) & trend_books$parameter == "mean", ]
+  trend_books_2$KBuecher_imp3 <- rep("Drei", nrow(trend_books_2))
+  trend_books_2[, 9:ncol(trend_books_2)] <- trend_books_2[, 9:ncol(trend_books_2)] + 15
+
+  books_3 <- rbind(trend_books, trend_books_2)
+  books_3$KBuecher_imp3 <- as.factor(books_3$KBuecher_imp3)
+colnames(books_3) <- gsub("2021","2030", colnames(books_3))
+
+  plot_dat_3 <- prep_plot(
+    dat = books_3,
+    grouping_vars_groups = c("0", "1", "Drei"),
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3"
+  )
+
+  plot_dat_3 <- filter_rows(plot_dat_3, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  ## Testweise einige PUnkte auf n.s. setzen
+
+  p_line_no_split <- plot_lineplot(
+    plot_dat = plot_dat_3,
+    point_sig = "sig_noTrend_noComp",
+    line_sig = "sig_Trend_noComp",
+    label_sig_high = "sig_noTrendEnd_noComp",
+    years_lines = list(c(2011, 2016), c(2016, 2030)),
+    years_braces = list(c(2011, 2016), c(2016, 2030)),
+    plot_settings = plotsettings_lineplot(
+      split_plot = FALSE,
+      equal_line_length = FALSE,
+      default_list = lineplot_4x4_3groups
+    )
+  )
+  vdiffr::expect_doppelganger("lineplot_4x4_3groups unequal trend_length, no split", p_line_no_split)
+  #  save_plot(p_line_no_split, filename = "../relatinal_trend_distance_noSplit.pdf")
+
+  p_line_split <- plot_lineplot(
+    plot_dat = plot_dat_3,
+    point_sig = "sig_noTrend_noComp",
+    line_sig = "sig_Trend_noComp",
+    label_sig_high = "sig_noTrendEnd_noComp",
+    years_lines = list(c(2011, 2016), c(2016, 2030)),
+    years_braces = list(c(2011, 2016), c(2016, 2030)),
+    plot_settings = plotsettings_lineplot(
+      split_plot = TRUE,
+      equal_line_length = FALSE,
+      default_list = lineplot_4x4_3groups
+    )
+  )
+  vdiffr::expect_doppelganger("lineplot_4x4_3groups unequal trend_length, with split", p_line_split)
+  #  save_plot(p_line_split, filename = "../relatinal_trend_distance_Split.pdf")
+
+
+})
+
+
 test_that("competence_vars can be used as tiles", {
   trend_books_2 <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
   trend_books_2$KBuecher_imp3 <- factor(trend_books_2$KBuecher_imp3, levels = c("1", "0", "0.vs.1"))

@@ -290,13 +290,13 @@ test_that("split lineplot with no groups is plotted correctly with equal line le
 test_that("split lineplot with no groups is plotted correctly with relational line length", {
   test_plot_split <- list(
     plot_points = data.frame(
-      state_var = rep("a", 3),
-      grouping_var = factor(c("group1", "group1", "group1", "group2", "group2", "group2"), levels = c("group1", "group2")),
-      year = rep(c(2010, 2011, 2020), 2),
-      year_axis = rep(c(1, 2, 11), 2),
-      point_values = c(200, 210, 220, 205, 215, 225),
-      sig_noTrend_noComp = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
-      years_Trend = c(12, 12, 23, 12, 12, 23),
+      state_var = "a",
+      grouping_var = factor(rep(c("group1", "group2"), 4), levels = c("group1", "group2")),
+      year = c(rep(c(2010, 2011), 2), rep(c(2011, 2020), 2)),
+      year_axis = c(rep(c(1, 2), 2), rep(c(2, 11), 2)),
+      point_values = c(200, 210, 212, 220, 205, 220, 215, 225),
+      sig_noTrend_noComp = c(TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE),
+      years_Trend = c(12, 12, 12, 12, 23, 23, 23,  23),
       competence_var = "a"
     ),
     plot_lines = data.frame(
@@ -355,7 +355,7 @@ test_that("split lineplot with no groups is plotted correctly with relational li
                            plot_settings = plotsettings_lineplot(
                              split_plot = TRUE,
                              equal_line_length = FALSE,
-                             axis_x_label_centralize = 0.05,
+                             axis_x_label_centralize = 0.02,
                              point_label_nudge_x = 0.02
                            )
       )
