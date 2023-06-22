@@ -116,7 +116,8 @@ for (i in c("2011", "2016", "2021")) {
   dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i), sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
 }
 
-dat_bar$state_var <- gsub("wholeGroup", "Deutschland", dat_bar$state_var)
+## Replace wholeGroup with Deutschland
+dat_bar <- gsub_plot_dat(dat_bar, search_for = "wholeGroup", replace_with = "Deutschland")
 
 # Plot 1 ------------------------------------------------------------------
 dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
