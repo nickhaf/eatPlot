@@ -24,9 +24,9 @@ test_that("lines can be facetted", {
   df <- data.frame(
     grouping_var = c(1, 1),
     year_start = c(1, 2),
-    year_end = c(2, 3),
+    year_end = c(2, 10),
     year_start_axis = c(1, 2),
-    year_end_axis = c(2, 3),
+    year_end_axis = c(2, 20),
     est_noTrendStart_noComp = c(10, 15),
     est_noTrendEnd_noComp = c(15, 20),
     years_Trend = c(12, 23),

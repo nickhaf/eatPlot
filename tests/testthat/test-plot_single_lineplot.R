@@ -139,12 +139,12 @@ test_that("single_lineplot with two groups is plotted correctly", {
   )
 })
 
-test_that("split lineplot with no groups is plotted correctly", {
+test_that("split lineplot with no groups is plotted correctly with equal line length", {
   test_plot_split <- list(
     plot_points = data.frame(
       state_var = rep("a", 3),
       grouping_var = factor(c("group1", "group1", "group1", "group2", "group2", "group2"), levels = c("group1", "group2")),
-      year = rep(c(1, 2, 3), 2),
+      year = rep(c(2010, 2011, 2020), 2),
       year_axis = rep(c(1, 2, 3), 2),
       point_values = c(200, 210, 220, 205, 215, 225),
       sig_noTrend_noComp = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE),
@@ -156,8 +156,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       grouping_var = factor(c("group1", "group2", "group1", "group2"), levels = c("group1", "group2")),
       year_start_axis = c(1, 1, 2, 2),
       year_end_axis = c(2, 2, 3, 3),
-      year_start = c(1, 1, 2, 2),
-      year_end = c(2, 2, 3, 3),
+      year_start = c(2010, 2010, 2011, 2011),
+      year_end = c(2011, 2011, 2020, 2020),
       est_noTrendStart_noComp = c(200, 205, 210, 215),
       est_noTrendEnd_noComp = c(210, 215, 220, 225),
       sig_trend = c(TRUE, FALSE, FALSE, TRUE),
@@ -169,8 +169,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       grouping_var = factor(rep("noGroup", 2), levels = "noGroup"),
       year_start_axis = c(1, 2),
       year_end_axis = c(2, 3),
-      year_start = c(1, 2),
-      year_end = c(2, 3),
+      year_start = c(2010, 2011),
+      year_end = c(2011, 2020),
       est_noTrendStart_noComp_wholeGroup = c(190, 225),
       est_noTrendEnd_noComp_wholeGroup = c(225, 230),
       sig_trend = c(TRUE, FALSE),
@@ -182,8 +182,8 @@ test_that("split lineplot with no groups is plotted correctly", {
       grouping_var = factor(c("group1", "group2", "group1", "group2"), levels = c("group1", "group2")),
       year_start_axis = c(1, 1, 2, 2),
       year_end_axis = c(2, 2, 3, 3),
-      year_start = c(1, 1, 2, 2),
-      year_end = c(2, 2, 3, 3),
+      year_start = c(2010, 2010, 2011, 2011),
+      year_end = c(2011, 2011, 2020, 2020),
       est_label = c(10, 20, 30, 40),
       se_label = c(1, 2, 3, 4),
       sig_label_1 = c(TRUE, FALSE, FALSE, TRUE),
@@ -194,7 +194,7 @@ test_that("split lineplot with no groups is plotted correctly", {
   )
 
   vdiffr::expect_doppelganger(
-    "splitlineplot",
+    "splitlineplot equal distances",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_split,
         y_range = c(180, 230),
@@ -206,9 +206,12 @@ test_that("split lineplot with no groups is plotted correctly", {
         point_values = "point_values",
         plot_settings = plotsettings_lineplot(
           split_plot = TRUE,
+          equal_line_length = TRUE,
           axis_x_label_centralize = 0.05,
           point_label_nudge_x = 0.02
         )
       )
   )
+
+
 })
