@@ -12,10 +12,10 @@ plot_y_axis <- function(plot_dat) {
 
   df_y <- data.frame(
     years_Trend = "20112016",
-    x = min(plot_dat[["plot_points"]]$year),
+    x = min(plot_dat[["plot_points"]]$year_axis),
     y = round(range_est[1] - 10, -1),
     yend = round(range_est[2], -1),
-    xmax = max(plot_dat[["plot_points"]]$year)
+    xmax = max(plot_dat[["plot_points"]]$year_axis)
   )
 
   list(
@@ -30,8 +30,8 @@ plot_y_axis <- function(plot_dat) {
     ),
     ggplot2::scale_x_continuous(
       limits = c(
-        min(plot_dat[["plot_points"]]$year),
-        min(plot_dat[["plot_points"]]$year) + 1
+        min(plot_dat[["plot_points"]]$year_axis),
+        min(plot_dat[["plot_points"]]$year_axis) + 1
       ),
       expand = c(0, 0)
     ),
