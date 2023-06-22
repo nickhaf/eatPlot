@@ -100,7 +100,7 @@ calc_brace_label_x <- function(year_start,
 
 # Plot_points -------------------------------------------------------------
 calc_x_nudge <- function(dat, nudge_x) {
-  range_years <- diff(range(dat$year))
+  range_years <- diff(range(dat$year_axis))
   min_max_trend <- get_min_max(dat)
 
   dat <- merge(dat, min_max_trend,
@@ -110,10 +110,10 @@ calc_x_nudge <- function(dat, nudge_x) {
   )
 
   dat$x_coords <- ifelse(dat$year == dat$minimum,
-    yes = dat$year + range_years * nudge_x,
-    no = ifelse(dat$year == dat$maximum,
-      yes = dat$year - range_years * nudge_x,
-      no = dat$year
+    yes = dat$year_axis + range_years * nudge_x,
+    no = ifelse(dat$year_axis == dat$maximum,
+      yes = dat$year_axis - range_years * nudge_x,
+      no = dat$year_axis
     )
   )
   return(dat)
