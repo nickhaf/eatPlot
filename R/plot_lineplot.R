@@ -70,6 +70,8 @@ plot_lineplot <- function(plot_dat,
   # filter years ------------------------------------------------------------
   plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
 
+  plot_dat <- distort_line_distance(plot_dat)
+
   states <- unique(plot_dat[[1]]$state_var)
   tiles <- levels(plot_dat$plot_lines$seperate_plot_var) # Hier die Level nehmen
 
@@ -83,6 +85,7 @@ plot_lineplot <- function(plot_dat,
   } else {
     range_est <- plot_settings$axis_y_lims
   }
+
 
   position <- 1
 

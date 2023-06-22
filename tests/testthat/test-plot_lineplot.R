@@ -354,6 +354,4 @@ expect_equal(distort_line_distance(dat)$plot_lines,
                         year_end_axis = c(2:4, NA)
                         )
 )
-
-
 })
