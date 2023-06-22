@@ -2,6 +2,8 @@ df_backgroundlines <- data.frame(
   TR_BUNDESLAND = rep("wholeGroup", 2),
   year_start = c(2011, 2013),
   year_end = c(2013, 2016),
+  year_start_axis = c(2011, 2013),
+  year_end_axis = c(2013, 2016),
   est_noTrendStart_noComp_wholeGroup = c(10:11),
   est_noTrendEnd_noComp_wholeGroup = c(11:12),
   se_noTrendStart_noComp_wholeGroup = c(0.5, 1.2),

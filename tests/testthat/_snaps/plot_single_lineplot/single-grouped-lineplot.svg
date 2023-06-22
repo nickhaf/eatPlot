@@ -30,8 +30,8 @@
 <text x='557.58' y='500.24' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='6.33px' lengthAdjust='spacingAndGlyphs'>40</text>
 <text x='563.91' y='498.67' style='font-size: 4.55px; font-family: sans;' textLength='2.53px' lengthAdjust='spacingAndGlyphs'>a</text>
 <text x='568.02' y='500.24' style='font-size: 5.69px; font-family: sans;' textLength='6.95px' lengthAdjust='spacingAndGlyphs'>(4)</text>
-<line x1='237.70' y1='299.94' x2='462.55' y2='188.25' style='stroke-width: 2.13; stroke-linecap: butt;' />
-<line x1='462.55' y1='188.25' x2='687.40' y2='172.29' style='stroke-width: 2.13; stroke-linecap: butt;' />
+<line x1='35.34' y1='299.94' x2='57.83' y2='188.25' style='stroke-width: 2.13; stroke-linecap: butt;' />
+<line x1='57.83' y1='188.25' x2='80.31' y2='172.29' style='stroke-width: 2.13; stroke-linecap: butt;' />
 <line x1='35.34' y1='268.03' x2='57.83' y2='236.11' style='stroke-width: 2.13; stroke: #F8766D; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
 <line x1='35.34' y1='252.07' x2='57.83' y2='220.16' style='stroke-width: 2.13; stroke: #00BFC4; stroke-linecap: butt;' />
 <line x1='57.83' y1='236.11' x2='80.31' y2='204.20' style='stroke-width: 2.13; stroke: #F8766D; stroke-linecap: butt;' />

@@ -22,6 +22,8 @@ plot_background_lines <- function(dat,
 
     colnames(dat) <- gsub("_start", ".Start", colnames(dat))
     colnames(dat) <- gsub("_end", ".End", colnames(dat))
+    colnames(dat) <- gsub("year.Start_axis", "year_axis.Start", colnames(dat))
+    colnames(dat) <- gsub("year.End_axis", "year_axis.End", colnames(dat))
 
     est_col <- gsub("\\..*", "", line_values[1])
     se_col <- gsub("\\..*", "", colnames_se[1])
@@ -30,7 +32,7 @@ plot_background_lines <- function(dat,
     dat_long <- stats::reshape(
       dat,
       direction = "long",
-      varying = c(line_values, colnames_se, "year.Start", "year.End"),
+      varying = c(line_values, colnames_se, "year.Start", "year.End", "year_axis.Start", "year_axis.End"),
       sep = "."
     )
 
@@ -42,7 +44,7 @@ plot_background_lines <- function(dat,
     ggplot2::geom_ribbon(
       data = dat_long,
       ggplot2::aes(
-        x = .data$year,
+        x = .data$year_axis,
         ymin = .data$y_neg,
         ymax = .data$y_pos,
         group = .data$years_Trend
@@ -57,8 +59,8 @@ plot_background_lines <- function(dat,
     ggplot2::geom_segment(
       data = dat,
       ggplot2::aes(
-        x = .data$year_start,
-        xend = .data$year_end,
+        x = .data$year_start_axis,
+        xend = .data$year_end_axis,
         y = .data[[line_values[1]]],
         yend = .data[[line_values[2]]],
         group = .data$years_Trend
