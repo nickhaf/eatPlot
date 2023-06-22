@@ -206,8 +206,7 @@ plot_title <- function(title, title_raised_letter) {
 
 
 distort_line_distance <- function(plot_dat) {
-
-   ## To plot the values with equal distance, a new y-axis is needed:
+  ## To plot the values with equal distance, a new y-axis is needed:
   plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))
 
   sub_years <- extract_gsub_values(plot_dat)
