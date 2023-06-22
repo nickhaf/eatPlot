@@ -65,9 +65,9 @@ plot_single_lineplot <- function(plot_dat,
     ),
     if (plot_settings$split_plot == TRUE) {
       if (plot_settings$equal_line_length == TRUE) {
-        ggplot2::facet_grid(. ~ years_Trend, scales = "free_x", space = "free_x")
-      } else {
         ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
+      } else {
+        ggplot2::facet_grid(. ~ years_Trend, scales = "free_x", space = "free_x")
       }
     }
   )

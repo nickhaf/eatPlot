@@ -36,9 +36,9 @@
 <text x='361.37' y='238.07' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>210</text>
 <text x='687.40' y='206.16' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>220</text>
 <rect x='2.74' y='25.50' width='717.26' height='35.23' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
-<text x='35.34' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='361.37' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>2</text>
-<text x='687.40' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>3</text>
+<text x='35.34' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2010</text>
+<text x='361.37' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2011</text>
+<text x='687.40' y='45.07' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2020</text>
 <text x='361.37' y='2.64' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='42.42px' lengthAdjust='spacingAndGlyphs'>single lineplot</text>
 </g>
 </svg>
