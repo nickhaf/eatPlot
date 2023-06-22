@@ -282,6 +282,6 @@ test_that("Braces can be facet wrapped", {
         plot_settings = plotsettings_lineplot(split_plot = TRUE)
       ) +
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc")) +
-      ggplot2::facet_wrap(~years_Trend, scales = "free_x")
+      ggplot2::facet_grid (.~ years_Trend, scales = "free_x")
   )
 })
