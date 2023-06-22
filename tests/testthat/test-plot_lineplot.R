@@ -188,7 +188,7 @@ test_that("lineplot chpt. 4 with 3 groups, no split and unequal trend length", {
 
   books_3 <- rbind(trend_books, trend_books_2)
   books_3$KBuecher_imp3 <- as.factor(books_3$KBuecher_imp3)
-colnames(books_3) <- gsub("2021","2030", colnames(books_3))
+colnames(books_3) <- gsub("2021","2022", colnames(books_3))
 
   plot_dat_3 <- prep_plot(
     dat = books_3,
@@ -205,8 +205,8 @@ colnames(books_3) <- gsub("2021","2030", colnames(books_3))
     point_sig = "sig_noTrend_noComp",
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
-    years_lines = list(c(2011, 2016), c(2016, 2030)),
-    years_braces = list(c(2011, 2016), c(2016, 2030)),
+    years_lines = list(c(2011, 2016), c(2016, 2022)),
+    years_braces = list(c(2011, 2016), c(2016, 2022)),
     plot_settings = plotsettings_lineplot(
       split_plot = FALSE,
       equal_trend_line_length = FALSE,
@@ -221,8 +221,8 @@ colnames(books_3) <- gsub("2021","2030", colnames(books_3))
     point_sig = "sig_noTrend_noComp",
     line_sig = "sig_Trend_noComp",
     label_sig_high = "sig_noTrendEnd_noComp",
-    years_lines = list(c(2011, 2016), c(2016, 2030)),
-    years_braces = list(c(2011, 2016), c(2016, 2030)),
+    years_lines = list(c(2011, 2016), c(2016, 2022)),
+    years_braces = list(c(2011, 2016), c(2016, 2022)),
     plot_settings = plotsettings_lineplot(
       split_plot = TRUE,
       equal_trend_line_length = FALSE,
