@@ -93,7 +93,7 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param brace_label_size Numeric fontsize of the bracelabels.
 #' @param brace_line_width Numeric for the thickness of the brace.
 #' @param brace_span_y Numeric for the width of the brace on the y-axis.
-#' @param equal_line_length Logical. If true, all trend lines will have the same length, even if the actual distance between the year is differently. E.g., the distance between the years of the trends 2010 - 2011 and 2011 - 2020 would be equal, even though the first trend only takes 1 year, and the second one 9 years. Please use with care, as it will distort the y-axis and results in misleading line lengths. Defaults to `FALSE`.
+#' @param equal_line_length Logical. If true, all trend lines will have the same length, even if the actual distance between the year is differently. E.g., the distance between the years of the trends 2010 - 2011 and 2011 - 2020 would be equal, even though the first trend only takes 1 year, and the second one 9 years. Please use with care, as it will distort the x-axis and results in misleading line lengths. Defaults to `FALSE`.
 #' @param grouping_colours Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.
 #' @param line_type Named vector containing the linetypes for the plots. The names must be either `"TRUE"` or `"FALSE"`, as the linetpyes represent significances. See [ggplot2::scale_linetype].
 #' @param line_width Numeric for the thicknes of the plotted lines.
