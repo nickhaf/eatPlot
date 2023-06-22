@@ -70,7 +70,7 @@ plot_lineplot <- function(plot_dat,
   # filter years ------------------------------------------------------------
   plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
 
-  plot_dat <- distort_line_distance(plot_dat, plot_settings)
+  plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
 
   states <- unique(plot_dat[[1]]$state_var)
@@ -209,7 +209,7 @@ plot_title <- function(title, title_raised_letter) {
 }
 
 
-distort_line_distance <- function(plot_dat, plot_settings) {
+equalize_line_length <- function(plot_dat, plot_settings) {
   ## To plot the values with equal distance, a new y-axis is needed:
   if(plot_settings$equal_line_length == TRUE){
   plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))

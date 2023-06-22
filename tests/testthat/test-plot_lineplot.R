@@ -343,7 +343,7 @@ test_that("line distance can be overwritten to be equal, even though the distanc
   )
 
   expect_equal(
-    distort_line_distance(dat,
+    equalize_line_length(dat,
       plot_settings = plotsettings_lineplot(equal_line_length = TRUE)
     )$plot_points,
     data.frame(
@@ -353,7 +353,7 @@ test_that("line distance can be overwritten to be equal, even though the distanc
   )
 
   expect_equal(
-    distort_line_distance(dat,
+    equalize_line_length(dat,
       plot_settings = plotsettings_lineplot(equal_line_length = FALSE)
     )$plot_points,
     data.frame(
@@ -364,7 +364,7 @@ test_that("line distance can be overwritten to be equal, even though the distanc
 
 
   expect_equal(
-    distort_line_distance(dat,
+    equalize_line_length(dat,
       plot_settings = plotsettings_lineplot(equal_line_length = TRUE)
     )$plot_lines,
     data.frame(
@@ -376,7 +376,7 @@ test_that("line distance can be overwritten to be equal, even though the distanc
   )
 
   expect_equal(
-    distort_line_distance(dat,
+    equalize_line_length(dat,
       plot_settings = plotsettings_lineplot()
     )$plot_lines,
     data.frame(
