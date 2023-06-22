@@ -95,7 +95,7 @@
 <polyline points='37.39,292.27 40.13,292.27 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='37.39,177.35 40.13,177.35 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='37.39,62.42 40.13,62.42 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<text x='339.74' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='48.92px' lengthAdjust='spacingAndGlyphs'>year_start</text>
+<text x='339.74' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='74.61px' lengthAdjust='spacingAndGlyphs'>year_start_axis</text>
 <text transform='translate(13.05,292.27) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='26.30px' lengthAdjust='spacingAndGlyphs'>est_y</text>
 <rect x='650.30' y='210.98' width='50.64' height='49.89' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='650.30' y='219.69' style='font-size: 11.00px; font-family: sans;' textLength='37.30px' lengthAdjust='spacingAndGlyphs'>line_sig</text>

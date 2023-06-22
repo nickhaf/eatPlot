@@ -218,7 +218,7 @@ equalize_line_length <- function(plot_dat, plot_settings) {
     plot_dat$plot_points$year_axis <- plot_dat$plot_points$year
 }
 
-  loop_objects <- names(dat)[names(dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
+  loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
 
   for (i in loop_objects) {
     plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
