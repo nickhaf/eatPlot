@@ -25,14 +25,14 @@ plot_points <- function(data_plot_points,
   if (plot_settings$split_plot == TRUE) {
     data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = plot_settings$point_label_nudge_x)
   } else {
-    data_plot_points_nudge$x_coords <- data_plot_points_nudge$year + diff(range(data_plot_points$year)) * plot_settings$point_label_nudge_x
+    data_plot_points_nudge$x_coords <- data_plot_points_nudge$year_axis + diff(range(data_plot_points$year_axis)) * plot_settings$point_label_nudge_x
   }
 
   list(
     ggplot2::geom_point(
       data = data_plot_points_nudge,
       ggplot2::aes(
-        x = .data$year,
+        x = .data$year_axis,
         y = .data$point_values,
         colour = .data$grouping_var,
         shape = .data$point_sig,
