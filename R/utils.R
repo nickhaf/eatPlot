@@ -536,8 +536,9 @@ check_factor <- function(dat, column, variable_type) {
 }
 
 rename_columns <- function(dat, old_names, new_names) {
+  if(is.data.frame(dat)){
   colnames(dat)[colnames(dat) %in% old_names] <- new_names
-
+  }
   return(dat)
 }
 
