@@ -535,6 +535,18 @@ check_factor <- function(dat, column, variable_type) {
   return(dat)
 }
 
+#' rename columns
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param dat dataframe
+#' @param old_names character string of the column that should be renamed
+#' @param new_names character string of the new column
+#'
+#' @return dataframe
+#'
+#' @examples #tbd
 rename_columns <- function(dat, old_names, new_names) {
   colnames(dat)[colnames(dat) %in% old_names] <- new_names
 
