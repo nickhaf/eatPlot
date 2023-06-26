@@ -48,7 +48,7 @@ plot_braces <- function(dat,
   c(
     draw_braces(dat, plot_settings),
     draw_brace_label(dat, plot_settings),
-    set_cartesian_coords(coords)
+    set_cartesian_coords(c(min(dat$label_pos_y) - diff(range(coords)) * 0.02, max(coords))) # a bit smaller, so the labels don't get cut off
   )
 }
 

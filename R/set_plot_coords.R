@@ -44,17 +44,7 @@ calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_
 
 
 # Utils -------------------------------------------------------------------
-## Needs to calculate ALL of the yrange, so from the top of the blue border to the last brace label.
 set_y_coords <- function(plot_dat, point_values) {
-#
-#   coords <- calc_y_value_coords() #calc_y_value_coords calculates the difference between the min and max plotted point.
-#   coords_total <- calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
-#
-#
-#
-#
-#
-#
 
   ggplot2::scale_y_continuous(
     breaks = seq(
@@ -68,7 +58,7 @@ set_y_coords <- function(plot_dat, point_values) {
 
 set_cartesian_coords <- function(coords) {
   ggplot2::coord_cartesian(
-    clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
+    #clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
     ylim = coords
   )
 }

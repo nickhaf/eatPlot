@@ -172,7 +172,7 @@ plot_lineplot <- function(plot_dat,
     widths_setting <- 1 / plot_settings$n_cols
   }
 
-  margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_dat[["plot_braces"]]$grouping_var)) - 1) # more brace labels need more space
+  # margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_dat[["plot_braces"]]$grouping_var)) - 1) # more brace labels need more space
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list, ncol = plot_settings$n_cols, widths = widths_setting) &
@@ -181,7 +181,7 @@ plot_lineplot <- function(plot_dat,
         c(
           plot_settings$margin_top,
           plot_settings$margin_right,
-          margin_bottom,
+          plot_settings$margin_bottom,
           plot_settings$margin_left
         ),
         "npc"
