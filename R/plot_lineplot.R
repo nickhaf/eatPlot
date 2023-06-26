@@ -120,7 +120,7 @@ plot_lineplot <- function(plot_dat,
         plot_settings = plot_settings
       )
 
-        # The wholeGroup plot gets a box drawn around it.
+    # The wholeGroup plot gets a box drawn around it.
     if (i == box_seperate_var) {
       # ## Draw box by coordinates:
       # draw_box <- function(coords){
@@ -145,10 +145,11 @@ plot_lineplot <- function(plot_dat,
 
 
       p_state <- p_state +
-        ggplot2::theme(plot.background = ggplot2::element_rect(color = "black",
-                                                               linewidth = 1,
-                                                               fill = NA)
-                       )
+        ggplot2::theme(plot.background = ggplot2::element_rect(
+          color = "black",
+          linewidth = 1,
+          fill = NA
+        ))
     }
 
     plot_list[[i]] <- p_state
@@ -238,12 +239,12 @@ plot_title <- function(title, title_raised_letter) {
 
 equalize_line_length <- function(plot_dat, plot_settings) {
   ## To plot the values with equal distance, a new y-axis is needed:
-  if(plot_settings$equal_trend_line_length == TRUE){
-  plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))
-  sub_years <- extract_gsub_values(plot_dat)
-  }else{
+  if (plot_settings$equal_trend_line_length == TRUE) {
+    plot_dat$plot_points$year_axis <- as.numeric(factor(plot_dat$plot_points$year))
+    sub_years <- extract_gsub_values(plot_dat)
+  } else {
     plot_dat$plot_points$year_axis <- plot_dat$plot_points$year
-}
+  }
 
   loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
 
@@ -251,15 +252,15 @@ equalize_line_length <- function(plot_dat, plot_settings) {
     plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
     plot_dat[[i]]$year_end_axis <- plot_dat[[i]]$year_end
 
-  if(plot_settings$equal_trend_line_length == TRUE){
-    for (j in seq_along(sub_years$year)) {
-      plot_dat[[i]]$year_start_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_start_axis)
-      plot_dat[[i]]$year_end_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_end_axis)
-    }
+    if (plot_settings$equal_trend_line_length == TRUE) {
+      for (j in seq_along(sub_years$year)) {
+        plot_dat[[i]]$year_start_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_start_axis)
+        plot_dat[[i]]$year_end_axis <- gsub(sub_years$year[j], sub_years$year_axis[j], plot_dat[[i]]$year_end_axis)
+      }
 
-    plot_dat[[i]]$year_start_axis <- as.numeric(plot_dat[[i]]$year_start_axis)
-    plot_dat[[i]]$year_end_axis <- as.numeric(plot_dat[[i]]$year_end_axis)
-  }
+      plot_dat[[i]]$year_start_axis <- as.numeric(plot_dat[[i]]$year_start_axis)
+      plot_dat[[i]]$year_end_axis <- as.numeric(plot_dat[[i]]$year_end_axis)
+    }
   }
 
   return(plot_dat)

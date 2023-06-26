@@ -17,7 +17,7 @@ plot_points <- function(data_plot_points,
   data_plot_points <- fill_column(data_plot_points, column_name = point_values, filling = NA)
   data_plot_points <- fill_column(data_plot_points, column_name = point_sig, filling = FALSE)
 
-## fill_na
+  ## fill_na
 
   data_plot_points <- data_plot_points[!is.na(data_plot_points$point_values), ]
   data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range, plot_settings = plot_settings)

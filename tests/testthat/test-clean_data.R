@@ -61,4 +61,3 @@ test_that("NoGroup and wholeGroup are filled up correctly", {
 
   expect_equal(df_cleaned$state_var, c("Berlin", "wholeGroup", NA, "b", "wholeGroup"))
 })
-

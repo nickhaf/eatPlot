@@ -40,10 +40,9 @@ test_that("grouping_vars are deducted from group-columns", {
     parameter = rep("mean", 5)
   )
 
-df_grouping_var <- construct_grouping_var(df_raw, grouping_vars = "my_groups", group_var = "group")
+  df_grouping_var <- construct_grouping_var(df_raw, grouping_vars = "my_groups", group_var = "group")
 
-expect_equal(df_grouping_var$grouping_var, factor(c("0", "noGroup", "noGroup", "1", "0"), levels = c("0", "1", "noGroup")))
-
+  expect_equal(df_grouping_var$grouping_var, factor(c("0", "noGroup", "noGroup", "1", "0"), levels = c("0", "1", "noGroup")))
 })
 
 
@@ -54,8 +53,9 @@ test_that("remaining NAs are filled up", {
     grouping_var = c(NA, NA, NA, NA, "a")
   )
 
-  expect_equal(fill_grouping_na(df, grouping_vars = c("group_1", "group_2"))$grouping_var,
-               factor(c("a", "a", NA, NA, "a"))
+  expect_equal(
+    fill_grouping_na(df, grouping_vars = c("group_1", "group_2"))$grouping_var,
+    factor(c("a", "a", NA, NA, "a"))
   )
 })
 
@@ -63,11 +63,11 @@ test_that("correct recoding to factor", {
   expect_equal(
     recode_to_factor(
       factor(c("a", "z", NA),
-             levels = c("z", "a")
+        levels = c("z", "a")
       )
     ),
     factor(c("a", "z", "noGroup"),
-           levels = c("z", "a", "noGroup")
+      levels = c("z", "a", "noGroup")
     )
   )
   expect_equal(
@@ -75,4 +75,3 @@ test_that("correct recoding to factor", {
     factor(c("noGroup", "noGroup"), levels = "noGroup")
   )
 })
-

@@ -14,7 +14,7 @@ set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings
 
   range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
   coords <- calc_y_value_coords(range_est)
-  y_lims <-  calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
+  y_lims <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
 
   list(
     set_y_coords(plot_dat, y_lims),
@@ -48,7 +48,6 @@ calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_
 
 # Utils -------------------------------------------------------------------
 set_y_coords <- function(plot_dat, y_lims) {
-
   ggplot2::scale_y_continuous(
     breaks = seq(
       from = round(min(y_lims, na.rm = TRUE) - 10, -1),
@@ -61,7 +60,7 @@ set_y_coords <- function(plot_dat, y_lims) {
 
 set_cartesian_coords <- function(y_lim) {
   ggplot2::coord_cartesian(
-    #clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
+    # clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
     ylim = y_lim
   )
 }

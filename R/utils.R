@@ -430,7 +430,7 @@ check_column <- function(dat, column) {
 #'
 #' @return The column if it is part of the data, or `NULL` if not.
 #'
-#' @examples #tbd
+#' @examples # tbd
 check_column_warn <- function(dat, column) {
   if (column %in% colnames(dat)) {
     return(column)
@@ -453,7 +453,7 @@ check_column_warn <- function(dat, column) {
 #'
 #' @return Data.frame with a new column, either copyed or `NA`.
 #'
-#' @examples #tbd
+#' @examples # tbd
 build_column <- function(dat, old, new) {
   check_column(dat, old)
   if (is.null(old)) {
@@ -478,11 +478,11 @@ build_column <- function(dat, old, new) {
 #'
 #' @return Data.frame with a new column.
 #'
-#' @examples #tbd
+#' @examples # tbd
 fill_column <- function(df, column_name, filling = NA) {
   if (is.null(column_name)) {
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
-      } else if (column_name %in% colnames(df)) {
+  } else if (column_name %in% colnames(df)) {
     df[[deparse(substitute(column_name))]] <- df[[column_name]]
   } else if ((!column_name %in% colnames(df))) {
     warning(paste0("Your column '", column_name, "' is not part of your data. Trying to set it automatically."))
@@ -503,7 +503,7 @@ fill_column <- function(df, column_name, filling = NA) {
 #'
 #' @return Data.frame with altered column.
 #'
-#' @examples #tbd
+#' @examples # tbd
 fill_na <- function(df, column_name, filling) {
   if (is.null(column_name)) {
     return(df)
@@ -526,7 +526,7 @@ fill_na <- function(df, column_name, filling) {
 #'
 #' @return Data.frame with the column as factor.
 #'
-#' @examples #tbd
+#' @examples # tbd
 check_factor <- function(dat, column, variable_type) {
   if (!is.factor(dat[, column]) & !is.null(column)) {
     message("Your ", variable_type, " '", column, "' is not a factor. It will be sorted alphabetically, which might result in an unwanted factor order.")
