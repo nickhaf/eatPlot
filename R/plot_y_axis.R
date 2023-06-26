@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples # tbd
-plot_y_axis <- function(plot_dat, point_values) {
+plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tablebarplot()) {
   range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
   coords <- calc_y_value_coords(range_est)
 
@@ -17,6 +17,8 @@ plot_y_axis <- function(plot_dat, point_values) {
     yend = round(range_est[2], -1),
     xmax = max(plot_dat[["plot_points"]]$year_axis)
   )
+
+  y_lims <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
 
   ## Macht nicht so viel sinn, die Linie wird manuell geplotted, die Ticks nicht.
 
@@ -38,9 +40,9 @@ plot_y_axis <- function(plot_dat, point_values) {
       ),
       expand = c(0, 0)
     ),
-    set_y_coords(plot_dat, point_values = point_values),
+    set_y_coords(plot_dat, y_lims = y_lims),
     ## Use same coordinate system as the braces, so the plots can be aligned.
-    set_cartesian_coords(coords), ## the results of calc_brace_coords are needed here.
+    set_cartesian_coords(y_lims),
     theme_y_axis()
   )
 }

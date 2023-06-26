@@ -83,7 +83,8 @@ test_that("double brace is drawn", {
     lower_y = c(324, 306),
     mid = c(0.25, 0.5)
   )
-  vdiffr::expect_doppelganger("double brace", ggplot2::ggplot() +
+  vdiffr::expect_doppelganger("double brace",
+                              ggplot2::ggplot() +
     draw_braces(test_brace_double, plot_settings = plotsettings_lineplot(split_plot = FALSE)))
 })
 

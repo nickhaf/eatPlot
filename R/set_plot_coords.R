@@ -9,12 +9,15 @@
 set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings_lineplot()) {
   plot_dat$plot_points <- fill_column(plot_dat$plot_points, point_values, filling = NA)
 
-
   min_year <- min(plot_dat[["plot_points"]]$year, na.rm = TRUE)
   max_year <- max(plot_dat[["plot_points"]]$year, na.rm = TRUE)
 
+  range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+  coords <- calc_y_value_coords(range_est)
+  y_lims <-  calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
+
   list(
-    set_y_coords(plot_dat, point_values),
+    set_y_coords(plot_dat, y_lims),
     ggplot2::scale_x_continuous(
       # position = "top",
       breaks = unique(plot_dat[["plot_points"]]$year),
@@ -44,21 +47,21 @@ calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat, point_values) {
+set_y_coords <- function(plot_dat, y_lims) {
 
   ggplot2::scale_y_continuous(
     breaks = seq(
-      from = round(min(plot_dat[["plot_points"]][, point_values], na.rm = TRUE) - 10, -1),
-      to = round(max(plot_dat[["plot_points"]][, point_values], na.rm = TRUE), -1),
+      from = round(min(y_lims, na.rm = TRUE) - 10, -1),
+      to = round(max(y_lims, na.rm = TRUE), -1),
       by = 20
     ),
     expand = c(0, 0)
   )
 }
 
-set_cartesian_coords <- function(coords) {
+set_cartesian_coords <- function(y_lim) {
   ggplot2::coord_cartesian(
     #clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
-    ylim = coords
+    ylim = y_lim
   )
 }

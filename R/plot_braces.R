@@ -24,6 +24,7 @@ plot_braces <- function(dat,
   dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
   dat <- fill_column(dat, column_name = label_sig_bold, filling = FALSE)
 
+
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.
   dat <- construct_label(dat,
@@ -39,6 +40,9 @@ plot_braces <- function(dat,
 
   # Calculate brace coordinates ---------------------------------------------
   coords <- calc_y_value_coords(y_range)
+  y_lims <- calc_plot_lims_y(dat, coords, plot_settings = plot_settings)
+
+
   if (plot_settings$split_plot == TRUE) {
     dat <- calc_brace_coords(dat, coords, output_format = "long", plot_settings = plot_settings)
   } else {
@@ -48,7 +52,7 @@ plot_braces <- function(dat,
   c(
     draw_braces(dat, plot_settings),
     draw_brace_label(dat, plot_settings),
-    set_cartesian_coords(c(min(dat$label_pos_y) - diff(range(coords)) * 0.06, max(coords))) # a bit smaller, so the labels don't get cut off
+    set_cartesian_coords(y_lims)
   )
 }
 
