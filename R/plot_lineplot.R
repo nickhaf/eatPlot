@@ -35,6 +35,7 @@ plot_lineplot <- function(plot_dat,
                           years_lines = NULL,
                           years_braces = NULL,
                           background_lines = TRUE,
+                          box_state = "wholeGroup",
                           plot_settings = plotsettings_lineplot()) {
   stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
   stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
@@ -118,11 +119,36 @@ plot_lineplot <- function(plot_dat,
         plot_settings = plot_settings
       )
 
-    ## The wholeGroup plot gets a box drawn around it.
-    # if (i == "wholeGroup") {
-    #   p_state <- p_state +
-    #     ggplot2::theme(plot.background = ggplot2::element_rect(color = "black", linewidth = 0.5, fill = NA))
-    # }
+        # The wholeGroup plot gets a box drawn around it.
+    if (i == box_state) {
+      # ## Draw box by coordinates:
+      # draw_box <- function(coords){
+      #
+      #   ## use these functions to get the plot measures
+      #   ## calc_brace_coords
+      #   # plot_x_axis
+      #
+      #   ggplot2::layer_scales(p_state)$y$range$range
+      #   ## Or: get coordinates from build plot:
+      #
+      #   p_state +
+      #   ggplot2::annotate(
+      #     geom = "rect",
+      #     xmin = -Inf,
+      #     xmax = Inf,
+      #     ymin =  ggplot2::layer_scales(p_state)$y$range$range[1], # - y_range * 0.1
+      #     ymax =   ggplot2::layer_scales(p_state)$y$range$range[2], # + y_range * 0.1
+      #     colour = "black",
+      #     fill = NA
+      #   )
+
+
+      p_state <- p_state +
+        ggplot2::theme(plot.background = ggplot2::element_rect(color = "black",
+                                                               linewidth = 1,
+                                                               fill = NA)
+                       )
+    }
 
     plot_list[[i]] <- p_state
     position <- position + 1

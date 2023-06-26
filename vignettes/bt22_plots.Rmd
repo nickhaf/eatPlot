@@ -46,6 +46,7 @@ p_line_states <- plot_lineplot(
                            "Land-45" = "3"),
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
+  box_state = "Land-17", 
   plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
 )
 
@@ -53,7 +54,7 @@ p_line_states
 ```
 
 ```{r, eval = FALSE}
-save_plot(p_line_states, filename = "../split_lineplot_2_books-v04.pdf")
+save_plot(p_line_states, filename = "../split_lineplot_2_books-v04_box.pdf")
 ```
 
 
