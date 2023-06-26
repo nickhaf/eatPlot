@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,7 +122,7 @@ handelt.</p>
 <span><span class="va">p_line_states</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt4_line-1.png" width="700"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states</span>, filename <span class="op">=</span> <span class="st">"../split_lineplot_2_books-v04.pdf"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states</span>, filename <span class="op">=</span> <span class="st">"../split_lineplot_2_books-v04_y_axis.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="kompetenzwerte-deutschland">Kompetenzwerte Deutschland<a class="anchor" aria-label="anchor" href="#kompetenzwerte-deutschland"></a>
@@ -191,7 +191,8 @@ handelt.</p>
 <span>  <span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_directional_sig.html">construct_directional_sig</a></span><span class="op">(</span><span class="va">dat_bar</span>, est_column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"est_noTrend_Comp_crossDiff_wholeGroup_"</span>, <span class="va">i</span><span class="op">)</span>, sig_column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sig_noTrend_Comp_crossDiff_wholeGroup_"</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"wholeGroup"</span>, <span class="st">"Deutschland"</span>, <span class="va">dat_bar</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
+<span><span class="co">## Replace wholeGroup with Deutschland</span></span>
+<span><span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gsub_plot_dat.html">gsub_plot_dat</a></span><span class="op">(</span><span class="va">dat_bar</span>, search_for <span class="op">=</span> <span class="st">"wholeGroup"</span>, replace_with <span class="op">=</span> <span class="st">"Deutschland"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot 1 ------------------------------------------------------------------</span></span>
 <span><span class="va">dat_bar_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_bar</span>, <span class="va">depVar</span> <span class="op">==</span> <span class="st">"minVerfehlt"</span><span class="op">)</span></span>
