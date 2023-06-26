@@ -24,10 +24,10 @@ lineplot_4x4 <- plotsettings_lineplot(
     "FALSE" = "dashed"
   ),
   line_width = 0.7,
-  margin_bottom = 0.025,
+  margin_bottom = 0,
   margin_left = 0.01,
   margin_right = 0.01,
-  margin_top = 0.02,
+  margin_top = 0.01,
   n_cols = 4,
   point_label_nudge = FALSE,
   point_label_nudge_direction = NULL,
