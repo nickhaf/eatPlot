@@ -188,7 +188,7 @@ test_that("lineplot chpt. 4 with 3 groups, no split and unequal trend length", {
 
   books_3 <- rbind(trend_books, trend_books_2)
   books_3$KBuecher_imp3 <- as.factor(books_3$KBuecher_imp3)
-colnames(books_3) <- gsub("2021","2022", colnames(books_3))
+  colnames(books_3) <- gsub("2021", "2022", colnames(books_3))
 
   plot_dat_3 <- prep_plot(
     dat = books_3,
@@ -231,8 +231,6 @@ colnames(books_3) <- gsub("2021","2022", colnames(books_3))
   )
   vdiffr::expect_doppelganger("lineplot_4x4_3groups unequal trend_length, with split", p_line_split)
   #  save_plot(p_line_split, filename = "../relatinal_trend_distance_Split.pdf")
-
-
 })
 
 

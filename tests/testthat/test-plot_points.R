@@ -37,7 +37,6 @@ test_that("Pointplot can be facetted", {
         point_sig = "sig_noTrend_noComp",
         y_range = c(100, 107)
       ) +
-      ggplot2::facet_grid (.~ years_Trend, scales = "free_x")
-
+      ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
   )
 })

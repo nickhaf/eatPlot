@@ -42,13 +42,17 @@ plot_dat <- filter_rows(plot_dat,
 
 p_line_states <- plot_lineplot(
   plot_dat = plot_dat,
-  title_superscripts = list("Land-17" = "a",
-                           "Land-45" = "3"),
+  title_superscripts = list(
+    "Land-17" = "a",
+    "Land-45" = "3"
+  ),
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
-  box_seperate_var = "Land-17", 
-  plot_settings = plotsettings_lineplot(y_axis = TRUE, 
-                                        default_list = lineplot_4x4)
+  box_seperate_var = "Land-17",
+  plot_settings = plotsettings_lineplot(
+    y_axis = TRUE,
+    default_list = lineplot_4x4
+  )
 )
 
 p_line_states
@@ -65,7 +69,7 @@ save_plot(p_line_states, filename = "../split_lineplot_2_books-test.pdf")
 plot_dat_kb <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
 
 ## We can change the order by converting 'kb' into a factor and ordering the levels:
-plot_dat_kb$kb <- factor(plot_dat_kb$kb, levels = c("hoeren", "lesen", "GL", "DHW","GM") )
+plot_dat_kb$kb <- factor(plot_dat_kb$kb, levels = c("hoeren", "lesen", "GL", "DHW", "GM"))
 
 ## Than we can prepare it with the according function:
 plot_dat_test <- prep_plot(
@@ -219,14 +223,16 @@ dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$depVar_fac), ]
 ## add a linebreak at the '-':
 dat_bar$state_var <- gsub("-", "-<br>", dat_bar$state_var)
 
-# Automatically calculate the column widhts for both plots. 
-# The first column will cover 9 % of the whole (combined) plot, the second 25 % and so on.  
-# The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically. 
+# Automatically calculate the column widhts for both plots.
+# The first column will cover 9 % of the whole (combined) plot, the second 25 % and so on.
+# The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically.
 column_widths_stand <- standardize_column_width(
-  column_widths = list(p1 = c(0.09, 0.25, 0.05, 0.05, 0.05, 0.05, NA), 
-                       p2 = c(0.05, 0.05, 0.05, 0.05, NA)), 
+  column_widths = list(
+    p1 = c(0.09, 0.25, 0.05, 0.05, 0.05, 0.05, NA),
+    p2 = c(0.05, 0.05, 0.05, 0.05, NA)
+  ),
   plot_ranges = c(40, 42) # Range of the x-axes of both plots set in 'axis_x_lims'.
-  )
+)
 
 # Plot 1 ------------------------------------------------------------------
 ## Only plot the first state respectively:
@@ -256,9 +262,11 @@ p_bar_1 <- plot_tablebar(
   columns_round = list(NULL, NULL, 1, 1, 1, NULL),
   columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_Trend_noComp_20112016_percent"),
   columns_table_sig_bold = list(
-    NULL, NULL, NULL, NULL, "sig_Trend_noComp_20112016", NULL),
+    NULL, NULL, NULL, NULL, "sig_Trend_noComp_20112016", NULL
+  ),
   columns_table_sig_high = list(
-    NULL, NULL, NULL, NULL, "sig_Trend_Comp_crossDiff_wholeGroup_20112016", NULL), # ACHTUNG: Hier wird im BT22 trendDiffcross benötigt!
+    NULL, NULL, NULL, NULL, "sig_Trend_Comp_crossDiff_wholeGroup_20112016", NULL
+  ), # ACHTUNG: Hier wird im BT22 trendDiffcross benötigt!
   y_axis = "y_axis_new",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-20, 20),
@@ -290,7 +298,7 @@ p_bar_2 <- plot_tablebar(
     "est_Trend_noComp_20162021_percent",
     "se_Trend_noComp_20162021_percent"
   ),
-  columns_table_se = list(NULL, NULL, NULL, "se_Trend_noComp_20162021_percent"), 
+  columns_table_se = list(NULL, NULL, NULL, "se_Trend_noComp_20162021_percent"),
   columns_table_sig_bold = list(
     NULL,
     NULL,
@@ -353,17 +361,19 @@ dat_bar <- dat_bar[order(dat_bar$state_var, dat_bar$grouping_var, dat_bar$depVar
 
 ## Calculate the standardized column widths, so all columns that should have the same width have the same width.
 ## The first column of the first plot p1 will cover 10 % of the total, combined plot, the second column 25 % and so on.
-## The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically. 
-column_widths_stand <- standardize_column_width(column_widths = list(p1 = c(0.1, 0.25, 0.05, 0.05, 0.05, 0.05, 0.05, NA), 
-                                              p2 = c(0.05, 0.05, NA)), 
-                         plot_ranges = c(40, 42) # Range of the x-axes of both plots set in 'axis_x_lims'.
-                         )
+## The NAs indicates that in this column a barplot should be plotted, its width will be calculated automatically.
+column_widths_stand <- standardize_column_width(
+  column_widths = list(
+    p1 = c(0.1, 0.25, 0.05, 0.05, 0.05, 0.05, 0.05, NA),
+    p2 = c(0.05, 0.05, NA)
+  ),
+  plot_ranges = c(40, 42) # Range of the x-axes of both plots set in 'axis_x_lims'.
+)
 
 # Plot 1 ------------------------------------------------------------------
 
 # lapply-loop for plotting each state, save result in list. Only for 2 states in this example:
 plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
-
   dat_bar_1 <- dat_bar[which(dat_bar$state_var == x), ]
 
   ## Build Land-column, where only the first Land is plotted
@@ -386,7 +396,7 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     ),
     headers = list(NULL, NULL, "%", "%", "%", "+/-", "(SE)", " "),
     columns_round = list(NULL, NULL, 1, 1, 1, 1, NULL),
-    columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_Trend_noComp_20112016_percent" ),
+    columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_Trend_noComp_20112016_percent"),
     column_spanners = list(
       "Leseverstehen" = c(1, 2),
       "2011" = 3,
@@ -398,11 +408,11 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(-20, 20),
       columns_alignment = c(0, 0, 2, 2, 2, 2, 0.5),
-  columns_width = column_widths_stand$p1,
+      columns_width = column_widths_stand$p1,
       default_list = barplot_plot_frz
     )
   )
-  
+
   p_bar_2 <- plot_tablebar(
     dat = dat_bar_1,
     bar_est = "est_Trend_noComp_20162021_percent",
@@ -419,15 +429,15 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
     ),
     y_axis = "y_axis",
     plot_settings = plotsettings_tablebarplot(
-            axis_x_lims = c(-20, 22), # set higher than necessary so the last y-axis tick doesn't disappear into the left border
-        columns_alignment = c(2, 0.5),
-  columns_width = column_widths_stand$p2,
+      axis_x_lims = c(-20, 22), # set higher than necessary so the last y-axis tick doesn't disappear into the left border
+      columns_alignment = c(2, 0.5),
+      columns_width = column_widths_stand$p2,
       default_list = barplot_plot_frz
     )
   )
 
   p_bar_c <- combine_plots(list(p_bar_1, p_bar_2))
-  
+
   return(p_bar_c)
 })
 
@@ -435,18 +445,16 @@ plot_list <- lapply(unique(dat_bar$state_var)[1:2], function(x) {
 names(plot_list) <- unique(dat_bar$state_var)[1:2]
 
 ## Plot one of the plots by Name:
-plot_land_17 <- plot_list[["Land-17"]] 
+plot_land_17 <- plot_list[["Land-17"]]
 plot_land_17
-
 ```
 
 ```{r, eval = FALSE}
 ## save all plots:
-lapply(names(plot_list), function(p_name){
+lapply(names(plot_list), function(p_name) {
   p <- plot_list[[p_name]]
   save_plot(p, filename = paste0("../Kap_3_Frz_", p_name, ".pdf"), height = 226.2 / 4)
 })
-
 ```
 
 
@@ -487,13 +495,15 @@ mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
     "est_noTrend_noComp_2021_sd",
     "se_noTrend_noComp_2021_sd"
   ),
-  headers = list("**Land**", # ** for bold
-                 "***M***", # *** for bold and italic,
-                 "***(SE)***", 
-                 "***SD***", 
-                 "***(SE)***",  
-                 "**Abweichung vom Mittelwert <br> für Deutschland**"), # <br> for linebreak, 
-  columns_table_sig_bold = list(NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean", NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_sd", NULL), 
+  headers = list(
+    "**Land**", # ** for bold
+    "***M***", # *** for bold and italic,
+    "***(SE)***",
+    "***SD***",
+    "***(SE)***",
+    "**Abweichung vom Mittelwert <br> für Deutschland**"
+  ), # <br> for linebreak,
+  columns_table_sig_bold = list(NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_mean", NULL, "sig_noTrend_Comp_crossDiff_wholeGroup_2021_sd", NULL),
   columns_table_se = list(NULL, NULL, "se_noTrend_noComp_2021_mean", NULL, "se_noTrend_noComp_2021_sd"),
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(

@@ -53,11 +53,14 @@ test_that("x axis can be built on facetted plot with relational distances", {
     ) +
       ggplot2::geom_point() +
       plot_x_axis(test_df,
-                  y_range = c(3, 4),
-                  plot_settings = plotsettings_lineplot(split_plot = TRUE,
-                                                        axis_x_label_centralize = 0.05)) +
-      ggplot2::facet_grid (.~ years_Trend, scales = "free_x", space = "free_x")
-    )
+        y_range = c(3, 4),
+        plot_settings = plotsettings_lineplot(
+          split_plot = TRUE,
+          axis_x_label_centralize = 0.05
+        )
+      ) +
+      ggplot2::facet_grid(. ~ years_Trend, scales = "free_x", space = "free_x")
+  )
 })
 
 
@@ -77,9 +80,12 @@ test_that("x axis can be built on facetted plot with equal distances", {
     ) +
       ggplot2::geom_point() +
       plot_x_axis(test_df,
-                  y_range = c(3, 4),
-                  plot_settings = plotsettings_lineplot(split_plot = TRUE,
-                                                        axis_x_label_centralize = 0.05)) +
-      ggplot2::facet_grid (.~ years_Trend, scales = "free_x")
-    )
+        y_range = c(3, 4),
+        plot_settings = plotsettings_lineplot(
+          split_plot = TRUE,
+          axis_x_label_centralize = 0.05
+        )
+      ) +
+      ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
+  )
 })

@@ -49,10 +49,9 @@ test_that("standardization of column widths works for 3 plots", {
       plot_ranges = c(10, 20, 10)
     ),
     list(
-      p1 = c(2/3, 1/3),
+      p1 = c(2 / 3, 1 / 3),
       p2 = c(0.5, 0.5),
-      p3 = c(2/3, 1/3)
+      p3 = c(2 / 3, 1 / 3)
     )
   )
 })
-

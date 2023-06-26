@@ -16,8 +16,8 @@ lineplot_4x4 <- plotsettings_lineplot(
   brace_span_y = 0.1,
   equal_trend_line_length = TRUE,
   grouping_colours = c(
-   cmyk(0, 0, 0, 100),
-   cmyk(0, 0, 0, 40)
+    cmyk(0, 0, 0, 100),
+    cmyk(0, 0, 0, 40)
   ),
   line_type = c(
     "TRUE" = "solid",
@@ -49,9 +49,10 @@ usethis::use_data(lineplot_4x4, overwrite = TRUE)
 
 
 lineplot_4x4_3groups <- plotsettings_lineplot(
-  grouping_colours = c(cmyk(0, 0, 0, 100),
-                       cmyk(0, 0, 0, 40),
-                       cmyk(0, 0, 0, 20)
+  grouping_colours = c(
+    cmyk(0, 0, 0, 100),
+    cmyk(0, 0, 0, 40),
+    cmyk(0, 0, 0, 20)
   ),
   default_list = lineplot_4x4
 )
@@ -72,4 +73,3 @@ lineplot_2x3 <- plotsettings_lineplot(
 )
 
 usethis::use_data(lineplot_2x3, overwrite = TRUE)
-
