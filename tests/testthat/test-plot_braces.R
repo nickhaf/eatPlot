@@ -23,7 +23,7 @@ test_that("y limits are set correctly", {
       label_sig_bold = "sig_2",
       plot_settings = plotsettings_lineplot(split_plot = TRUE)
     )
-  coords <- calc_coords(c(400, 503))
+  coords <- calc_y_value_coords(c(400, 503))
 
   expect_equal(test_p$coordinates$limits$y, coords)
 })

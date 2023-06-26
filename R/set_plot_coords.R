@@ -25,7 +25,7 @@ set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings
 
 
 ## Calc coordinate system borders.
-calc_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
+calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
   range_est <- diff(range_vec)
   coords <- c(
     ## Lower y limit
@@ -44,7 +44,18 @@ calc_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 
 
 
 # Utils -------------------------------------------------------------------
+## Needs to calculate ALL of the yrange, so from the top of the blue border to the last brace label.
 set_y_coords <- function(plot_dat, point_values) {
+#
+#   coords <- calc_y_value_coords() #calc_y_value_coords calculates the difference between the min and max plotted point.
+#   coords_total <- calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
+#
+#
+#
+#
+#
+#
+
   ggplot2::scale_y_continuous(
     breaks = seq(
       from = round(min(plot_dat[["plot_points"]][, point_values], na.rm = TRUE) - 10, -1),

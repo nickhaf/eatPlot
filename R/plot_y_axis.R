@@ -8,7 +8,7 @@
 #' @examples # tbd
 plot_y_axis <- function(plot_dat, point_values) {
   range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
-  coords <- calc_coords(range_est)
+  coords <- calc_y_value_coords(range_est)
 
   df_y <- data.frame(
     years_Trend = "20112016",
