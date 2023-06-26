@@ -14,7 +14,7 @@ set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings
   max_year <- max(plot_dat[["plot_points"]]$year, na.rm = TRUE)
 
   list(
-    set_y_coords(plot_dat),
+    set_y_coords(plot_dat, point_values),
     ggplot2::scale_x_continuous(
       # position = "top",
       breaks = unique(plot_dat[["plot_points"]]$year),
@@ -44,11 +44,11 @@ calc_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat) {
+set_y_coords <- function(plot_dat, point_values) {
   ggplot2::scale_y_continuous(
     breaks = seq(
-      from = round(min(plot_dat[["plot_points"]]$point_values, na.rm = TRUE) - 10, -1),
-      to = round(max(plot_dat[["plot_points"]]$point_values, na.rm = TRUE), -1),
+      from = round(min(plot_dat[["plot_points"]][, point_values], na.rm = TRUE) - 10, -1),
+      to = round(max(plot_dat[["plot_points"]][, point_values], na.rm = TRUE), -1),
       by = 20
     ),
     expand = c(0, 0)

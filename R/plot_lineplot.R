@@ -157,7 +157,7 @@ plot_lineplot <- function(plot_dat,
   # Add y axis --------------------------------------------------------------
   if (plot_settings$y_axis == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
-      plot_y_axis(plot_dat)
+      plot_y_axis(plot_dat, point_values = point_values)
 
     positions_y_axis <- calc_y_positions(states, plot_settings$n_cols)
 
