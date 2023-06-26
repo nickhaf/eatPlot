@@ -20,6 +20,7 @@ plot_lineplot(
   years_lines = NULL,
   years_braces = NULL,
   background_lines = TRUE,
+  box_seperate_var = "wholeGroup",
   plot_settings = plotsettings_lineplot()
 )
 }
@@ -53,6 +54,8 @@ plot_lineplot(
 \item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
 \item{background_lines}{Logical, indicating whether the whole group trend should be plotted in the background.}
+
+\item{box_seperate_var}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }

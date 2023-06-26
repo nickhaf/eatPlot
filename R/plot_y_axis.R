@@ -6,9 +6,9 @@
 #' @export
 #'
 #' @examples # tbd
-plot_y_axis <- function(plot_dat) {
-  range_est <- range(plot_dat[["plot_points"]]$point_values, na.rm = TRUE)
-  coords <- calc_coords(range_est)
+plot_y_axis <- function(plot_dat, point_values) {
+  range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+  coords <- calc_y_value_coords(range_est)
 
   df_y <- data.frame(
     years_Trend = "20112016",
@@ -18,6 +18,8 @@ plot_y_axis <- function(plot_dat) {
     xmax = max(plot_dat[["plot_points"]]$year_axis)
   )
 
+  ## Macht nicht so viel sinn, die Linie wird manuell geplotted, die Ticks nicht.
+
   list(
     ggplot2::geom_segment(
       data = df_y,
@@ -26,7 +28,8 @@ plot_y_axis <- function(plot_dat) {
         xend = .data$x,
         y = .data$y,
         yend = .data$yend
-      )
+      ),
+      linewidth = 0.2
     ),
     ggplot2::scale_x_continuous(
       limits = c(
@@ -35,7 +38,7 @@ plot_y_axis <- function(plot_dat) {
       ),
       expand = c(0, 0)
     ),
-    set_y_coords(plot_dat),
+    set_y_coords(plot_dat, point_values = point_values),
     ## Use same coordinate system as the braces, so the plots can be aligned.
     set_cartesian_coords(coords),
     theme_y_axis()

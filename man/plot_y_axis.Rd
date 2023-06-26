@@ -4,10 +4,12 @@
 \alias{plot_y_axis}
 \title{Plot a y-axis plot. Can be merged with other plots for a customisable y-axis.}
 \usage{
-plot_y_axis(plot_dat)
+plot_y_axis(plot_dat, point_values)
 }
 \arguments{
 \item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
+
+\item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 }
 \value{
 \link{ggplot2} plot that can be used as a y-axis.

@@ -38,7 +38,7 @@ plot_braces <- function(dat,
 
 
   # Calculate brace coordinates ---------------------------------------------
-  coords <- calc_coords(y_range)
+  coords <- calc_y_value_coords(y_range)
   if (plot_settings$split_plot == TRUE) {
     dat <- calc_brace_coords(dat, coords, output_format = "long", plot_settings = plot_settings)
   } else {
