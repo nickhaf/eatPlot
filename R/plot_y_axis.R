@@ -40,7 +40,7 @@ plot_y_axis <- function(plot_dat, point_values) {
     ),
     set_y_coords(plot_dat, point_values = point_values),
     ## Use same coordinate system as the braces, so the plots can be aligned.
-    set_cartesian_coords(coords),
+    set_cartesian_coords(coords), ## the results of calc_brace_coords are needed here.
     theme_y_axis()
   )
 }
