@@ -15,6 +15,7 @@
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background.
+#' @param box_seperate_var Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
 #' @export
@@ -35,7 +36,7 @@ plot_lineplot <- function(plot_dat,
                           years_lines = NULL,
                           years_braces = NULL,
                           background_lines = TRUE,
-                          box_state = "wholeGroup",
+                          box_seperate_var = "wholeGroup",
                           plot_settings = plotsettings_lineplot()) {
   stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
   stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
@@ -120,7 +121,7 @@ plot_lineplot <- function(plot_dat,
       )
 
         # The wholeGroup plot gets a box drawn around it.
-    if (i == box_state) {
+    if (i == box_seperate_var) {
       # ## Draw box by coordinates:
       # draw_box <- function(coords){
       #
@@ -266,6 +267,6 @@ equalize_line_length <- function(plot_dat, plot_settings) {
 
 extract_gsub_values <- function(plot_dat) {
   sub_years <- plot_dat$plot_points[plot_dat$plot_points$year != plot_dat$plot_points$year_axis, c("year", "year_axis")]
-  sub_years <- na.omit(sub_years)
+  sub_years <- stats::na.omit(sub_years)
   return(sub_years)
 }

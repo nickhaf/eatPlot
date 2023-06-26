@@ -20,6 +20,7 @@ plot_lineplot(
   years_lines = NULL,
   years_braces = NULL,
   background_lines = TRUE,
+  box_seperate_var = "wholeGroup",
   plot_settings = plotsettings_lineplot()
 )
 }
