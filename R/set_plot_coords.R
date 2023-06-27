@@ -19,9 +19,9 @@ set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings
   list(
     set_y_coords(plot_dat, coords, y_lim),
     ggplot2::scale_x_continuous(
-      # position = "top",
+  #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
       breaks = unique(plot_dat[["plot_points"]]$year),
-      expand = c(plot_settings$axis_x_background_width_x, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
+      expand = c(plot_settings$axis_x_background_width_x, 0) #ggplot2::expansion(c(plot_settings$axis_x_background_width_x, plot_settings$axis_x_background_width_x)) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
   )
 }
