@@ -122,28 +122,6 @@ plot_lineplot <- function(plot_dat,
 
     # The wholeGroup plot gets a box drawn around it.
     if (i == box_seperate_var) {
-      # ## Draw box by coordinates:
-      # draw_box <- function(coords){
-      #
-      #   ## use these functions to get the plot measures
-      #   ## calc_brace_coords
-      #   # plot_x_axis
-      #
-      #   ggplot2::layer_scales(p_state)$y$range$range
-      #   ## Or: get coordinates from build plot:
-      #
-      #   p_state +
-      #   ggplot2::annotate(
-      #     geom = "rect",
-      #     xmin = -Inf,
-      #     xmax = Inf,
-      #     ymin =  ggplot2::layer_scales(p_state)$y$range$range[1], # - y_range * 0.1
-      #     ymax =   ggplot2::layer_scales(p_state)$y$range$range[2], # + y_range * 0.1
-      #     colour = "black",
-      #     fill = NA
-      #   )
-
-
       p_state <- p_state +
         ggplot2::theme(plot.background = ggplot2::element_rect(
           color = "black",
