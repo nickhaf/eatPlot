@@ -30,11 +30,17 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #'
 #' @examples # tbd
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
+
+
+# Checks ------------------------------------------------------------------
   output_format <- match.arg(output_format)
   sapply(c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend"),
     check_column_warn,
     dat = dat
   )
+
+
+# Prepare dat -------------------------------------------------------------
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend")]
   dat$overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
 
@@ -49,17 +55,27 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     )
   )
 
-  ## Starting point for the highest brace label
+# Actual coordinates calculation ------------------------------------------
   brace_label_nudge_y <- plot_settings$brace_label_nudge_y
-  starting_points <- calc_brace_starting_points(overlap = any(dat$overlap), coords, range_coords, brace_label_nudge_y, plot_settings)
-
-  dat <- calc_brace_coords_y(dat, coords, starting_points)
-  dat <- calc_brace_label_coords(dat, starting_points, range_coords, range_years, plot_settings)
+  starting_points <- calc_brace_starting_points(overlap = any(dat$overlap),
+                                                coords = coords,
+                                                range_coords = range_coords,
+                                                brace_label_nudge_y = brace_label_nudge_y,
+                                                plot_settings = plot_settings)
+  dat <- calc_brace_coords_y(dat,
+                             coords = coords,
+                             starting_points = starting_points)
+  dat <- calc_brace_label_coords(dat,
+                                 starting_points = starting_points,
+                                 range_coords = range_coords,
+                                 range_years = range_years,
+                                 plot_settings = plot_settings)
   dat <- calc_brace_indent(dat, overlap = any(dat$overlap))
 
+
+# Change Format if needed -------------------------------------------------
   if (output_format == "long") {
     ## Long oder wide format argument
-
     dat_long <- stats::reshape(
       dat,
       idvar = c("grouping_var", "years_Trend", "competence_var"),
@@ -104,7 +120,9 @@ calc_brace_starting_points <- function(overlap, coords, range_coords, brace_labe
 
 
 calc_brace_coords_y <- function(dat, coords, starting_points) {
+
   if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
+
     # Upper brace coordinates:
     dat$upper_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
       coords[1],
@@ -116,6 +134,7 @@ calc_brace_coords_y <- function(dat, coords, starting_points) {
       starting_points$lower_brace_y_a,
       starting_points$lower_brace_y_b
     )
+
   } else {
     dat$upper_y <- coords[1]
     dat$lower_y <- starting_points$lower_brace_y
@@ -129,7 +148,8 @@ calc_brace_label_x <- function(year_start_axis,
                                brace_indent_pos,
                                brace_label_nudge_x = 0) {
   range_est <- year_end_axis - year_start_axis
-  year_start_axis + range_est * brace_indent_pos + (range_total * brace_label_nudge_x)
+  x_coord_label <- year_start_axis + range_est * brace_indent_pos + (range_total * brace_label_nudge_x)
+  return(x_coord_label)
 }
 
 # Plot_points -------------------------------------------------------------
