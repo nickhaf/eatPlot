@@ -22,10 +22,12 @@ plot_x_axis <- function(data_plot_points, y_range, plot_settings = plotsettings_
 
   if (plot_settings$split_plot == TRUE) {
     dat_coords <- calc_x_nudge(dat_coords,
-      nudge_x = plot_settings$axis_x_label_centralize
+      nudge_x = plot_settings$axis_x_label_centralize,
+      split_plot = plot_settings$split_plot
     )
   } else {
-    dat_coords$x_coords <- dat_coords$year_axis
+    ## Don't have to be centralized in this case, looks good without
+   dat_coords$x_coords <- dat_coords$year_axis
   }
 
   res_list <- list(

@@ -111,7 +111,7 @@ calc_brace_label_x <- function(year_start_axis,
 }
 
 # Plot_points -------------------------------------------------------------
-calc_x_nudge <- function(dat, nudge_x) {
+calc_x_nudge <- function(dat, nudge_x, split_plot) {
   range_years <- diff(range(dat$year_axis))
   min_max_trend <- get_min_max(dat)
 
@@ -121,13 +121,23 @@ calc_x_nudge <- function(dat, nudge_x) {
     all.y = FALSE
   )
 
-  dat$x_coords <- ifelse(dat$year_axis == dat$minimum,
+  if(split_plot == TRUE){
+  dat$x_coords <- ifelse(dat$year == dat$minimum,
     yes = dat$year_axis + range_years * nudge_x,
-    no = ifelse(dat$year_axis == dat$maximum,
+    no = ifelse(dat$year == dat$maximum,
       yes = dat$year_axis - range_years * nudge_x,
       no = dat$year_axis
     )
   )
+  }else{
+    dat$x_coords <- ifelse(dat$year == min(dat$year, na.rm = TRUE),
+                           yes = dat$year_axis + range_years * nudge_x,
+                           no = ifelse(dat$year == max(dat$year, na.rm = TRUE),
+                                       yes = dat$year_axis - range_years * nudge_x,
+                                       no = dat$year_axis
+                           )
+    )
+  }
   return(dat)
 }
 
