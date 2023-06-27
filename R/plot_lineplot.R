@@ -119,8 +119,14 @@ plot_lineplot <- function(plot_dat,
       set_plot_coords(plot_dat,
         point_values = point_values,
         plot_settings = plot_settings
+      ) +
+      ggplot2::theme(plot.margin = ggplot2::unit(c(
+        plot_settings$margin_top,
+        plot_settings$margin_right,
+        plot_settings$margin_bottom,
+        plot_settings$margin_left
+      ), "npc")
       )
-
 
     plot_list[[i]] <- p_state
     position <- position + 1
@@ -147,7 +153,7 @@ plot_lineplot <- function(plot_dat,
 
 
   # Adjust plot margins according to position ------------------------------
- plot_list <- set_plot_margins(plot_list, plot_settings)
+ #plot_list <- set_plot_margins(plot_list, plot_settings)
 
   # The wholeGroup plot gets a box drawn around it.
   for(plot_names in names(plot_list)){
@@ -167,15 +173,20 @@ plot_lineplot <- function(plot_dat,
   patchwork::wrap_plots(plot_list,
                         ncol = plot_settings$n_cols,
                         widths = widths_setting
-                        )  + patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin()))#&
-  # ggplot2::theme(
-  #   plot.margin = ggplot2::unit(
-  #     c(
-  #       0, 0, 0, 0
-  #     ),
-  #     "npc"
-  #   ) # t, r, b, l
-  # )
+                        )  +
+    # ggplot2::theme(
+    #   plot.margin = ggplot2::unit(
+    #     c(
+    #       plot_settings$margin_top,
+    #       plot_settings$margin_right,
+    #       plot_settings$margin_bottom,
+    #       plot_settings$margin_left
+    #     ),
+    #     "npc"
+    #   ) # t, r, b, l
+    #) +
+     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0, 0.0017, 0, 0, "npc"))) # keep small margin, so the box isn't cut off
+
 }
 
 
@@ -274,7 +285,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
       if (j == 1) {
         plot_list[[j]] <- plot_list[[j]] +
           ggplot2::theme(plot.margin = ggplot2::unit(c(
-            0,
+            plot_settings$margin_top,
             plot_settings$margin_right,
             0,
             0
@@ -286,20 +297,18 @@ set_plot_margins <- function(plot_list, plot_settings) {
       if (j > 1 & j < plot_settings$n_cols) {
         plot_list[[j]] <- plot_list[[j]] +
           ggplot2::theme(plot.margin = ggplot2::unit(c(
-            0,
+            plot_settings$margin_top,
             plot_settings$margin_right,
             0,
             plot_settings$margin_left
           ), "npc"))
       }
 
-
-
       # Upper right -------------------------------------------------------------
       if (j == plot_settings$n_cols) {
         plot_list[[j]] <- plot_list[[j]] +
           ggplot2::theme(plot.margin = ggplot2::unit(c(
-            0,
+            plot_settings$margin_top,
             0,
             0,
             plot_settings$margin_left
@@ -315,7 +324,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
     if (j == 1) {
       plot_list[[j]] <- plot_list[[j]] +
         ggplot2::theme(plot.margin = ggplot2::unit(c(
-          0,
+          plot_settings$margin_top,
           plot_settings$margin_right,
           plot_settings$margin_bottom,
           0
@@ -326,7 +335,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
     if (j > 1 & j < plot_settings$n_cols) {
       plot_list[[j]] <- plot_list[[j]] +
         ggplot2::theme(plot.margin = ggplot2::unit(c(
-          0,
+          plot_settings$margin_top,
           plot_settings$margin_right,
           plot_settings$margin_bottom,
           plot_settings$margin_left
@@ -339,7 +348,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
     if (j == plot_settings$n_cols) {
       plot_list[[j]] <- plot_list[[j]] +
         ggplot2::theme(plot.margin = ggplot2::unit(c(
-          0,
+          plot_settings$margin_top,
           0,
           plot_settings$margin_bottom,
           plot_settings$margin_left
@@ -353,7 +362,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
           plot_settings$margin_top,
           plot_settings$margin_right,
           plot_settings$margin_bottom,
-          0
+          plot_settings$margin_left
         ), "npc"))
     }
 
@@ -374,7 +383,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
       plot_list[[j]] <- plot_list[[j]] +
         ggplot2::theme(plot.margin = ggplot2::unit(c(
           plot_settings$margin_top,
-          0,
+          plot_settings$margin_right,
           plot_settings$margin_bottom,
           plot_settings$margin_left
         ), "npc"))
@@ -388,7 +397,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
           plot_settings$margin_top,
           plot_settings$margin_right,
           0,
-          0
+          plot_settings$margin_left
         ), "npc"))
     }
 
@@ -411,7 +420,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
       plot_list[[j]] <- plot_list[[j]] +
         ggplot2::theme(plot.margin = ggplot2::unit(c(
           plot_settings$margin_top,
-          0,
+          plot_settings$margin_right,
           0,
           plot_settings$margin_left
         ), "npc"))
