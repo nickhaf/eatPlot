@@ -9,72 +9,32 @@
 plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tablebarplot()) {
   range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
   coords <- calc_y_value_coords(range_est)
-
-  df_y <- data.frame(
-    years_Trend = "20112016",
-    x = min(plot_dat[["plot_points"]]$year_axis),
-    y = round(range_est[1] - 10, -1),
-    yend = round(range_est[2], -1),
-    xmax = max(plot_dat[["plot_points"]]$year_axis)
-  )
-
   y_lim <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
 
-  y_axis_ticks <- seq(round(range_est[1] - 10, -1), round(range_est[2], -1), by = 10)
-
-  y_axis_dat <- data.frame(
-    x_axis_coords = 0,
-    y_axis_coords = y_axis_ticks,
-    y_axis_labels = y_axis_ticks
-  )
-
-  draw_axis_y(y_axis_dat, range_est, coords, y_lim)
-}
+  list(
+    # Y-Line ------------------------------------------------------------------
+    ggplot2::annotate("segment",
+                      x = 0,
+                      xend = 0,
+                      y = round(range_est[1] - 10, -1) - diff(range_est) * 0.00345,
+                      yend = round(range_est[2], -1) + diff(range_est) * 0.00345
+    ),
+    ggplot2::scale_x_continuous(
+      limits = c(
+        0,1
+      ),
+      expand = c(0, 0)
+    ),
+    set_y_coords(plot_dat, range_est, y_lim),
+    ## Use same coordinate system as the braces, so the plots can be aligned.
+    set_cartesian_coords(y_lim),
+    theme_y_axis()
+  )}
 
 
 
 # Utils -------------------------------------------------------------------
-draw_axis_y <- function(dat_axis_y, range_est, coords, y_lim){
-  list(
-# Y-Line ------------------------------------------------------------------
-    ggplot2::annotate("segment",
-                      x = 0,
-                      xend = 0,
-                      y = round(range_est[1] - 10, -1),
-                      yend = round(range_est[2], -1)
-    ),
 
-# Axis ticks --------------------------------------------------------------
-    ggplot2::annotate("segment",
-                      x = 0 - 0.05,
-                      xend = 0 + 0.05,
-                      y = dat_axis_y$y_axis_labels,
-                      yend = dat_axis_y$y_axis_labels
-    ),
-
-# Axis labels -------------------------------------------------------------
-    ggplot2::geom_text(
-      data = dat_axis_y,
-      mapping = ggplot2::aes(
-        x = x_axis_coords -0.3,
-        y = y_axis_coords,
-        label = y_axis_labels
-      )
-    ),
-
-# Scales -------------------------------------------------------------------
-    ggplot2::scale_x_continuous(
-      limits = c(
-        -1, 0.5
-      ),
-      expand = c(0, 0)
-    ),
-    set_y_coords(plot_dat, coords),
-    ## Use same coordinate system as the braces, so the plots can be aligned.
-    set_cartesian_coords(y_lim),
-    theme_y_axis()
-  )
-}
 
 calc_y_positions <- function(states, n_cols) {
   n_rows <- ceiling(length(states) / n_cols)
