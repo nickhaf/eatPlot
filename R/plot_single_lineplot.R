@@ -2,6 +2,7 @@
 #'
 #' @inheritParams plot_lineplot
 #' @inheritParams plotsettings_lineplot
+#' @param x_range Numeric vector with two elements, indicating the min and max for the x axis.
 #' @param y_range Numeric vector with two elements, indicating the min and max for the y axis.
 #'
 #' @return ggplot2 Object.
@@ -9,6 +10,7 @@
 #'
 #' @examples # tbd
 plot_single_lineplot <- function(plot_dat,
+                                 x_range = NULL,
                                  y_range = NULL,
                                  point_values = "est_noTrend_noComp",
                                  point_sig = "sig_noTrend_noComp",
@@ -69,6 +71,12 @@ plot_single_lineplot <- function(plot_dat,
       } else {
         ggplot2::facet_grid(. ~ years_Trend, scales = "free_x", space = "free_x")
       }
-    }
+    },
+    set_plot_coords(
+      plot_dat,
+      x_range = x_range,
+      y_range = y_range,
+      plot_settings = plot_settings
+    )
   )
 }

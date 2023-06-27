@@ -101,6 +101,7 @@ plot_lineplot <- function(plot_dat,
     p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
         plot_dat = plot_dat_tile,
+        x_range = range(plot_dat$plot_points$year),
         y_range = range_est,
         point_values = point_values,
         point_sig = point_sig,
@@ -115,11 +116,6 @@ plot_lineplot <- function(plot_dat,
         plot_settings = plot_settings
       ) +
       plot_title(sub_dash(i), title_superscripts) +
-      ## Needs to be set here for now. Move to single lineplot together with total plot range.
-      set_plot_coords(plot_dat,
-        point_values = point_values,
-        plot_settings = plot_settings
-      ) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
         plot_settings$margin_top,
         plot_settings$margin_right,

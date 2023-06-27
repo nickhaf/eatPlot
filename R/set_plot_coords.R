@@ -1,20 +1,17 @@
 #' Set the x- and y-coordinates for a plot.
 #'
-#' @inheritParams plot_lineplot
+#' @inheritParams plot_single_lineplot
 #'
 #' @return [ggplot2] object.
 #' @export
 #'
 #' @examples # tbd
-set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings_lineplot()) {
-  plot_dat$plot_points <- fill_column(plot_dat$plot_points, point_values, filling = NA)
+set_plot_coords <- function(plot_dat, x_range, y_range, plot_settings = plotsettings_lineplot()) {
 
-  min_year <- min(plot_dat[["plot_points"]]$year, na.rm = TRUE)
-  max_year <- max(plot_dat[["plot_points"]]$year, na.rm = TRUE)
-
-  range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
-  coords <- calc_y_value_coords(range_est)
-  y_lim <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
+  coords <- calc_y_value_coords(y_range)
+  y_lim <- calc_plot_lims_y(plot_dat$plot_braces,
+                            coords,
+                            plot_settings = plot_settings)
 
   list(
     set_y_coords(plot_dat, coords, y_lim),
