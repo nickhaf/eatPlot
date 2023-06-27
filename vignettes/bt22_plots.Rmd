@@ -57,7 +57,7 @@ p_line_states
 ```
 
 ```{r, eval = FALSE}
-save_plot(p_line_states, filename = "../no_white_space_y_axis.pdf")
+save_plot(p_line_states, filename = "../split_plot_example.pdf")
 ```
 
 
@@ -102,7 +102,7 @@ save_plot(p_line_ger,
 ```
 
 ### Kompetenzwerte mit Gesamtdeutschland 
-```{r chpt4_line}
+```{r chpt4_line germany}
 ## Prepare the data with 'KBuecher_imp3' as grouping_var
 plot_dat <- prep_plot(
   dat = trend_books,
@@ -116,7 +116,7 @@ plot_dat <- gsub_plot_dat(plot_dat,
                           search_for = "wholeGroup", 
                           replace_with = "Deutschland")
 
-p_line_states <- plot_lineplot(
+p_line_states_de <- plot_lineplot(
   plot_dat = plot_dat,
   seperate_plot_var_order = unique(plot_dat$plot_lines$state_var), # here we can sort the plot
   seperate_plot_var_box = "Deutschland", 
@@ -131,8 +131,13 @@ p_line_states <- plot_lineplot(
   )
 )
 
-p_line_states
+p_line_states_de
 ```
+
+```{r, eval = FALSE}
+save_plot(p_line_states_de, filename = "../split_plot_de.pdf")
+```
+
 
 
 # Tables/Barplots

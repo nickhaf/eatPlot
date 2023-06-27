@@ -91,7 +91,7 @@ plot_lineplot <- function(plot_dat,
   if(!is.null(seperate_plot_var_order)){
   tiles <- seperate_plot_var_order
   }else{
-  tiles <- levels(plot_dat$plot_lines$seperate_plot_var) # Hier die Level nehmen
+  tiles <- unique(plot_dat$plot_lines$seperate_plot_var)
 }
 
   plot_list <- list()
