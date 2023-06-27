@@ -2,6 +2,9 @@
 
 # eatPlot 0.0.0.9019
 * New function [gsub_plot_dat()] for replacing character strings in the prepared data. Mainly intended for replacing "wholeGroup" with "Deutschland", but other use cases are possible as well.
+* It is now possible to draw a box around tiles in `plot_lineplot()`.
+* Improved the y-axis plotting in `plot_lineplot()`.
+* Changed the underlying architechture of the lineplot-scales. 
 
 # eatPlot 0.0.0.9018
 * Trend lines with differing year ranges can now be plotted with equal length (in split and non-split plots). Use the `equal_trend_line_length`-argument in [plotsettings_lineplot()] with care, as the distances between the timepoints might be distorted by this approach (however, it is necessary for the BT22).
