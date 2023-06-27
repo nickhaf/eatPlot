@@ -115,6 +115,7 @@ plot_lineplot <- function(plot_dat,
         plot_settings = plot_settings
       ) +
       plot_title(sub_dash(i), title_superscripts) +
+      ## Needs to be set here for now. Move to single lineplot together with total plot range.
       set_plot_coords(plot_dat,
         point_values = point_values,
         plot_settings = plot_settings

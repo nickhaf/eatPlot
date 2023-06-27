@@ -27,7 +27,7 @@ plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tab
     ),
     set_y_coords(plot_dat, range_est, y_lim),
     ## Use same coordinate system as the braces, so the plots can be aligned.
-    set_cartesian_coords(y_lim),
+    #set_cartesian_coords(y_lim),
     theme_y_axis()
   )}
 

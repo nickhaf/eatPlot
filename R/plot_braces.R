@@ -51,8 +51,8 @@ plot_braces <- function(dat,
 
   c(
     draw_braces(dat, plot_settings),
-    draw_brace_label(dat, plot_settings),
-    set_cartesian_coords(y_lims)
+    draw_brace_label(dat, plot_settings)#,
+    #set_cartesian_coords(y_lims)
   )
 }
 
