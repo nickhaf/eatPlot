@@ -137,7 +137,16 @@ plot_lineplot <- function(plot_dat,
   # Add y axis --------------------------------------------------------------
   if (plot_settings$y_axis == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
-      plot_y_axis(plot_dat, point_values = point_values, plot_settings = plot_settings)
+      plot_y_axis(plot_dat,
+                  point_values = point_values,
+                  plot_settings = plot_settings) +
+      ggplot2::theme(plot.margin = ggplot2::unit(c(
+        plot_settings$margin_top,
+        0,
+        plot_settings$margin_bottom,
+        0
+      ), "npc")
+      )
 
     positions_y_axis <- calc_y_positions(states, plot_settings$n_cols)
 
@@ -185,7 +194,7 @@ plot_lineplot <- function(plot_dat,
     #     "npc"
     #   ) # t, r, b, l
     #) +
-     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0, 0.0017, 0, 0, "npc"))) # keep small margin, so the box isn't cut off
+     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 
 }
 

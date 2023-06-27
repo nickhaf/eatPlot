@@ -7,7 +7,9 @@
 #' @export
 #'
 #' @examples # tbd
-plot_x_axis <- function(data_plot_points, y_range, plot_settings = plotsettings_lineplot()) {
+plot_x_axis <- function(data_plot_points,
+                        y_range,
+                        plot_settings = plotsettings_lineplot()) {
   coords <- calc_y_value_coords(y_range)
   y_max <- coords[2]
 
