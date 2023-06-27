@@ -20,5 +20,5 @@ Data frame with a new \code{grouping_var} column, constructed from the provided 
 Merge two grouping var columns into one.
 }
 \examples{
-#tbd
+# tbd
 }

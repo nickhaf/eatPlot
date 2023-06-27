@@ -57,7 +57,7 @@ p_line_states
 ```
 
 ```{r, eval = FALSE}
-save_plot(p_line_states, filename = "../split_lineplot_2_books-test.pdf")
+save_plot(p_line_states, filename = "../no_white_space_y_axis.pdf")
 ```
 
 

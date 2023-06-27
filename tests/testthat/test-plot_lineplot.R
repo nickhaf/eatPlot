@@ -716,7 +716,7 @@ test_that("Unsplit lineplot with box, unequal year-distances and y-axis looks go
   )
   save_plot(p_line_states, filename = "../testplot_1.pdf")
 
-  vdiffr::expect_doppelganger("unsplit lineplot with unequal distances, box and y-axis", {
+  vdiffr::expect_doppelganger("unsplit lineplot, unequal distances, box, y-axis", {
     p_line_states
   })
 
