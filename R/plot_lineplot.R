@@ -23,6 +23,7 @@
 #' @examples # tbd
 plot_lineplot <- function(plot_dat,
                           seperate_plot_var = "state_var",
+                          seperate_plot_var_order = NULL,
                           point_values = "est_noTrend_noComp",
                           point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
                           line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
@@ -76,7 +77,12 @@ plot_lineplot <- function(plot_dat,
 
 
   states <- unique(plot_dat[[1]]$state_var)
+
+  if(!is.null(seperate_plot_var_order)){
+  tiles <- seperate_plot_var_order
+  }else{
   tiles <- levels(plot_dat$plot_lines$seperate_plot_var) # Hier die Level nehmen
+}
 
   plot_list <- list()
   if (is.null(plot_settings$axis_y_lims)) {
