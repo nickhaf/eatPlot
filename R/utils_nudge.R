@@ -16,8 +16,11 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 
 # Plot_braces -------------------------------------------------------------
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
+
   output_format <- match.arg(output_format)
-  sapply(c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend"), check_column_warn, dat = dat)
+  sapply(c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend"),
+         check_column_warn,
+         dat = dat)
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend")]
   dat$overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
 
@@ -31,9 +34,6 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
   dat <- calc_brace_coords_y(dat, coords, starting_points)
   dat <- calc_brace_label_coords(dat, starting_points, range_coords, range_years, plot_settings)
   dat <- calc_brace_indent(dat, overlap = any(dat$overlap))
-
-
-
 
   if (output_format == "long") {
     ## Long oder wide format argument

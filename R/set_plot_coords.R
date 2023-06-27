@@ -27,7 +27,18 @@ set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings
 }
 
 
-## Calc coordinate system borders.
+#' Calculate the plot-space between first brace and upper x-axis.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param range_vec Numeric vector containing the minimum and maximum of the plotted values.
+#' @param nudge_param_upper Numeric for increasing/decreasing the distance between highest plotted value and upper x-axis.
+#' @param nudge_param_lower Numeric for increasing/decreasing the distance between lowest plotted value and first brace.
+#'
+#' @return Numeric vector containing the y-range between brace and upper x-axis.
+#'
+#' @examples calc_y_value_coords(c(0, 30))
 calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
   range_est <- diff(range_vec)
   coords <- c(
