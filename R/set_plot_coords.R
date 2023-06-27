@@ -17,7 +17,7 @@ set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings
   y_lims <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
 
   list(
-    set_y_coords(plot_dat, y_lims),
+    set_y_coords(plot_dat, coords),
     ggplot2::scale_x_continuous(
       # position = "top",
       breaks = unique(plot_dat[["plot_points"]]$year),
@@ -47,11 +47,11 @@ calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat, y_lims) {
+set_y_coords <- function(plot_dat, coords) {
   ggplot2::scale_y_continuous(
     breaks = seq(
-      from = round(min(y_lims, na.rm = TRUE) - 10, -1),
-      to = round(max(y_lims, na.rm = TRUE), -1),
+      from = round(min(coords, na.rm = TRUE) - 10, -1),
+      to = round(max(coords, na.rm = TRUE), -1),
       by = 20
     ),
     expand = c(0, 0)

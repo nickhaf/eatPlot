@@ -18,7 +18,7 @@ plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tab
     xmax = max(plot_dat[["plot_points"]]$year_axis)
   )
 
-  y_lims <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
+  y_lim <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
 
   y_axis_ticks <- seq(round(range_est[1] - 10, -1), round(range_est[2], -1), by = 10)
 
@@ -28,45 +28,54 @@ plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tab
     y_axis_labels = y_axis_ticks
   )
 
+  draw_axis_y(y_axis_dat, range_est, coords, y_lim)
+}
 
-  ## Macht nicht so viel sinn, die Linie wird manuell geplotted, die Ticks nicht.
+
+
+# Utils -------------------------------------------------------------------
+draw_axis_y <- function(dat_axis_y, range_est, coords, y_lim){
   list(
+# Y-Line ------------------------------------------------------------------
     ggplot2::annotate("segment",
-      x = 0,
-      xend = 0,
-      y = round(range_est[1] - 10, -1),
-      yend = round(range_est[2], -1)
+                      x = 0,
+                      xend = 0,
+                      y = round(range_est[1] - 10, -1),
+                      yend = round(range_est[2], -1)
     ),
+
+# Axis ticks --------------------------------------------------------------
     ggplot2::annotate("segment",
-      x = 0 - 0.05,
-      xend = 0 + 0.05,
-      y = y_axis_ticks,
-      yend = y_axis_ticks
+                      x = 0 - 0.05,
+                      xend = 0 + 0.05,
+                      y = dat_axis_y$y_axis_labels,
+                      yend = dat_axis_y$y_axis_labels
     ),
-    ggplot2::geom_label(
-      y_axis_dat,
-      ggplot2::aes(
-        x = x_axis_coords,
-        y = y_axis_ticks - 0.3,
+
+# Axis labels -------------------------------------------------------------
+    ggplot2::geom_text(
+      data = dat_axis_y,
+      mapping = ggplot2::aes(
+        x = x_axis_coords -0.3,
+        y = y_axis_coords,
         label = y_axis_labels
       )
     ),
-    # ggplot2::scale_x_continuous(
-    #   limits = c(
-    #     min(plot_dat[["plot_points"]]$year_axis),
-    #     min(plot_dat[["plot_points"]]$year_axis) + 1
-    #   ),
-    #  expand = c(0, 0)
-    # ),
-    set_y_coords(plot_dat, y_lims = y_lims),
+
+# Scales -------------------------------------------------------------------
+    ggplot2::scale_x_continuous(
+      limits = c(
+        -1, 0.5
+      ),
+      expand = c(0, 0)
+    ),
+    set_y_coords(plot_dat, coords),
     ## Use same coordinate system as the braces, so the plots can be aligned.
-    set_cartesian_coords(y_lims),
+    set_cartesian_coords(y_lim),
     theme_y_axis()
   )
 }
 
-
-# Utils -------------------------------------------------------------------
 calc_y_positions <- function(states, n_cols) {
   n_rows <- ceiling(length(states) / n_cols)
   n_cols <- n_cols + 1 # One column added for the y_axis.
