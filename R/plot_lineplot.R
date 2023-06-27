@@ -244,6 +244,7 @@ filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL)
 
 plot_title <- function(title, title_raised_letter) {
   if (!is.null(title_raised_letter)) {
+    names(title_raised_letter) <- sapply(names(title_raised_letter), sub_dash)
     pos <- which(title == names(title_raised_letter))
     if (length(pos) == 0) {
       ggplot2::labs(title = title)
