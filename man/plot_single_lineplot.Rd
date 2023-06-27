@@ -6,6 +6,7 @@
 \usage{
 plot_single_lineplot(
   plot_dat,
+  x_range = NULL,
   y_range = NULL,
   point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_noComp",
@@ -22,6 +23,8 @@ plot_single_lineplot(
 }
 \arguments{
 \item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
+
+\item{x_range}{Numeric vector with two elements, indicating the min and max for the x axis.}
 
 \item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 

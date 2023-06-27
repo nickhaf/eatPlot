@@ -6,14 +6,17 @@
 \usage{
 set_plot_coords(
   plot_dat,
-  point_values,
+  x_range,
+  y_range,
   plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{
 \item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 
-\item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
+\item{x_range}{Numeric vector with two elements, indicating the min and max for the x axis.}
+
+\item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
