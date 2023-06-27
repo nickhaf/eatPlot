@@ -6,7 +6,7 @@
 
 # eatPlot 0.0.0.9019
 * New function [gsub_plot_dat()] for replacing character strings in the prepared data. Mainly intended for replacing "wholeGroup" with "Deutschland", but other use cases are possible as well.
-* It is now possible to draw a box around tiles in [plot_lineplot()] by defining the wanted tiles in the `box_seperate_var`-Argument. 
+* It is now possible to draw a box around tiles in [plot_lineplot()] by defining the wanted tiles in the `seperate_plot_var_box`-Argument. 
 * Improved the y-axis plotting in [plot_lineplot()].
 * Changed the underlying architechture of the lineplot-scales. 
 

@@ -490,7 +490,7 @@ test_that("Split lineplot with box looks good", {
     ),
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
-    box_seperate_var = c("Land-93"),
+    seperate_plot_var_box = c("Land-93"),
     plot_settings = plotsettings_lineplot(
       equal_trend_line_length = FALSE,
       default_list = lineplot_4x4
@@ -528,7 +528,7 @@ test_that("Not Split lineplot with box looks good", {
     ),
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
-    box_seperate_var = c("Land-93"),
+    seperate_plot_var_box = c("Land-93"),
     plot_settings = plotsettings_lineplot(
       equal_trend_line_length = FALSE,
       split_plot = FALSE,
@@ -572,7 +572,7 @@ test_that("Split lineplot with box and unequal year-distances looks good", {
     ),
     years_lines = list(c(2011, 2016), c(2016, 2023)),
     years_braces = list(c(2011, 2016), c(2016, 2023)),
-    box_seperate_var = c("Land-93"),
+    seperate_plot_var_box = c("Land-93"),
     plot_settings = plotsettings_lineplot(
       equal_trend_line_length = FALSE,
       split_plot = TRUE,
@@ -616,7 +616,7 @@ test_that("Unsplit lineplot with box and unequal year-distances looks good", {
     ),
     years_lines = list(c(2011, 2016), c(2016, 2023)),
     years_braces = list(c(2011, 2016), c(2016, 2023)),
-    box_seperate_var = c("Land-93"),
+    seperate_plot_var_box = c("Land-93"),
     plot_settings = plotsettings_lineplot(
       equal_trend_line_length = FALSE,
       split_plot = FALSE,
@@ -661,7 +661,7 @@ test_that("Split lineplot with box, unequal year-distances and y-axis looks good
     ),
     years_lines = list(c(2011, 2016), c(2016, 2023)),
     years_braces = list(c(2011, 2016), c(2016, 2023)),
-    box_seperate_var = c("Land-93"),
+    seperate_plot_var_box = c("Land-93"),
     plot_settings = plotsettings_lineplot(
       equal_trend_line_length = FALSE,
       y_axis = TRUE,
@@ -706,7 +706,7 @@ test_that("Unsplit lineplot with box, unequal year-distances and y-axis looks go
     ),
     years_lines = list(c(2011, 2016), c(2016, 2023)),
     years_braces = list(c(2011, 2016), c(2016, 2023)),
-    box_seperate_var = c("Land-93"),
+    seperate_plot_var_box = c("Land-93"),
     plot_settings = plotsettings_lineplot(
       equal_trend_line_length = FALSE,
       y_axis = TRUE,
