@@ -15,6 +15,20 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 }
 
 # Plot_braces -------------------------------------------------------------
+#' Calculate the coordinates for the braces and their labels.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @inheritParams plot_lineplot()
+#'
+#' @param dat Data.frame, normally `plot_dat$plot_braces`.
+#' @param coords Numeric vector with minimum and maximum value of the y-range between brace and upper x-axis. Can be calculated by [calc_y_value_coords()].
+#' @param output_format One of `c("wide", "long")`. Different output format needed for different plots.
+#'
+#' @return Data.frame containing the coordinates for plotting braces and their labels.
+#'
+#' @examples #tbd
 calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
 
   output_format <- match.arg(output_format)
