@@ -2,16 +2,14 @@
 #'
 #' @inheritParams plot_lineplot
 #' @inheritParams plotsettings_lineplot
-#' @param x_range Numeric vector with two elements, indicating the min and max for the x axis.
-#' @param y_range Numeric vector with two elements, indicating the min and max for the y axis.
+#' @param plot_lims List obtained by [calc_plot_lims()], containing different coordinate values.
 #'
 #' @return ggplot2 Object.
 #' @export
 #'
 #' @examples # tbd
 plot_single_lineplot <- function(plot_dat,
-                                 x_range = NULL,
-                                 y_range = NULL,
+                                 plot_lims = NULL,
                                  point_values = "est_noTrend_noComp",
                                  point_sig = "sig_noTrend_noComp",
                                  line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
@@ -29,7 +27,7 @@ plot_single_lineplot <- function(plot_dat,
     set_scales(plot_settings),
     plot_braces(
       plot_dat[["plot_braces"]],
-      y_range = y_range,
+      plot_lims = plot_lims,
       label_est = label_est,
       label_se = label_se,
       label_sig_high = label_sig_high,
@@ -57,12 +55,12 @@ plot_single_lineplot <- function(plot_dat,
         data_plot_points = plot_dat[["plot_points"]],
         point_values = point_values,
         point_sig = point_sig,
-        y_range = y_range,
+        plot_lims = plot_lims,
         plot_settings = plot_settings
       )
     },
     plot_x_axis(plot_dat[["plot_points"]],
-      y_range = y_range,
+      plot_lims = plot_lims,
       plot_settings = plot_settings
     ),
     if (plot_settings$split_plot == TRUE) {
@@ -74,8 +72,7 @@ plot_single_lineplot <- function(plot_dat,
     },
     set_plot_coords(
       plot_dat,
-      x_range = x_range,
-      y_range = y_range,
+      plot_lims = plot_lims,
       plot_settings = plot_settings
     )
   )

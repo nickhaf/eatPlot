@@ -6,16 +6,14 @@
 #' @export
 #'
 #' @examples # tbd
-set_plot_coords <- function(plot_dat, x_range, y_range, plot_settings = plotsettings_lineplot()) {
+set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plotsettings_lineplot()) {
 
-  coords <- calc_y_value_coords(y_range)
-  y_lims_total <- calc_plot_lims_y(plot_dat$plot_braces,
-                            coords,
-                            plot_settings = plot_settings)
-  y_coords <- calc_y_value_space(coords, range_y = y_range, plot_settings)
+  y_coords <- calc_y_value_space(plot_lims$coords,
+                                 range_y = plot_lims$y_range,
+                                 plot_settings)
 
   list(
-    set_y_coords(plot_dat, y_coords, y_lims_total),
+    set_y_coords(plot_dat, y_coords, plot_lims),
     ggplot2::scale_x_continuous(
   #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
       breaks = unique(plot_dat[["plot_points"]]$year),
@@ -25,28 +23,28 @@ set_plot_coords <- function(plot_dat, x_range, y_range, plot_settings = plotsett
 }
 
 
-#' Calculate the plot-space between first brace and upper x-axis.
+#' Calculate the plot-space between first brace and top of the plot.
 #'
 #' @keywords internal
 #' @noRd
 #'
-#' @param range_vec Numeric vector containing the minimum and maximum of the plotted values.
+#' @param y_range Numeric vector containing the minimum and maximum of the plotted values.
 #' @param nudge_param_upper Numeric for increasing/decreasing the distance between highest plotted value and upper x-axis.
 #' @param nudge_param_lower Numeric for increasing/decreasing the distance between lowest plotted value and first brace.
 #'
 #' @return Numeric vector containing the y-range between brace and upper x-axis.
 #'
 #' @examples calc_y_value_coords(c(0, 30))
-calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
-  range_est <- diff(range_vec)
+calc_y_value_coords <- function(y_range, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
+  range_est <- diff(y_range)
   coords <- c(
     ## Lower y limit
-    plyr::round_any(range_vec[1] - (range_vec[1] * nudge_param_lower),
+    plyr::round_any(y_range[1] - (y_range[1] * nudge_param_lower),
       accuracy = 10,
       f = floor
     ) - range_est * nudge_param_lower,
     ## upper y limit
-    plyr::round_any(range_vec[2] + (range_vec[2] * nudge_param_upper),
+    plyr::round_any(y_range[2] + (y_range[2] * nudge_param_upper),
       accuracy = 10,
       f = ceiling
     ) + range_est * nudge_param_upper
@@ -68,14 +66,14 @@ calc_y_value_space <- function(coords, range_y, plot_settings){
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat, y_coords, y_lims_total) {
+set_y_coords <- function(plot_dat, y_coords, plot_lims) {
   ggplot2::scale_y_continuous(
     breaks = seq_over(
       from = y_coords[1],
       to = y_coords[2],
       by = 20
     ),
-    limits = y_lims_total,
+    limits = plot_lims$y_lims_total,
     expand = c(0, 0)
   )
 }

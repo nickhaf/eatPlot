@@ -10,7 +10,7 @@
 #'
 #' @examples ##
 plot_braces <- function(dat,
-                        y_range,
+                        plot_lims,
                         label_est = NULL,
                         label_se = NULL,
                         label_sig_high = NULL,
@@ -39,19 +39,14 @@ plot_braces <- function(dat,
 
 
   # Calculate brace coordinates ---------------------------------------------
-  coords <- calc_y_value_coords(y_range)
-  y_lims_total <- calc_plot_lims_y(dat,
-                             coords,
-                             plot_settings = plot_settings)
-
   if (plot_settings$split_plot == TRUE) {
     dat <- calc_brace_coords(dat,
-                             coords,
+                             plot_lims$coords,
                              output_format = "long",
                              plot_settings = plot_settings)
   } else {
     dat <- calc_brace_coords(dat,
-                             coords,
+                             plot_lims$coords,
                              plot_settings = plot_settings)
   }
 

@@ -12,7 +12,7 @@
 plot_points <- function(data_plot_points,
                         point_values = "est_noTrend_noComp",
                         point_sig = "sig_noTrend_noComp",
-                        y_range,
+                        plot_lims,
                         plot_settings = plotsettings_lineplot()) {
   data_plot_points <- fill_column(data_plot_points, column_name = point_values, filling = NA)
   data_plot_points <- fill_column(data_plot_points, column_name = point_sig, filling = FALSE)
@@ -20,7 +20,9 @@ plot_points <- function(data_plot_points,
   ## fill_na
 
   data_plot_points <- data_plot_points[!is.na(data_plot_points$point_values), ]
-  data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range, plot_settings = plot_settings)
+  data_plot_points_nudge <- calc_y_nudge(data_plot_points,
+                                         plot_lims$y_range,
+                                         plot_settings = plot_settings)
 
     data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge,
                                            nudge_x = plot_settings$point_label_nudge_x,

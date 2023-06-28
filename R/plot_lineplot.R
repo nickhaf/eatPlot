@@ -110,8 +110,7 @@ plot_lineplot <- function(plot_dat,
     p_state <- ggplot2::ggplot() +
       plot_single_lineplot(
         plot_dat = plot_dat_tile,
-        x_range = range(plot_dat$plot_points$year),
-        y_range = range_est,
+        plot_lims = plot_lims,
         point_values = point_values,
         point_sig = point_sig,
         line_values = line_values,
@@ -141,8 +140,9 @@ plot_lineplot <- function(plot_dat,
   # Add y axis --------------------------------------------------------------
   if (plot_settings$axis_y == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
-      plot_y_axis(plot_dat,
-        point_values = point_values,
+      plot_y_axis(
+        plot_dat,
+        plot_lims = plot_lims,
         plot_settings = plot_settings
       ) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
@@ -472,25 +472,29 @@ check_middle_middle <- function(j, n_cols, n_rows) {
 calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
   if (is.null(plot_settings$axis_y_lims)) {
     if (!is.null(point_values)) {
-      range_y <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+      y_range <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
       coords <- calc_y_value_coords(y_range)
     } else {
       stop("Please provide point-values.")
     }
   } else {
-    range_y <- plot_settings$axis_y_lims
+    y_range <- plot_settings$axis_y_lims
     coords <- calc_y_value_coords(y_range, nudge_param_lower = 0) # In this case, the brace starts at the lowest provided value.
   }
 
-  y_lims_total <- calc_plot_lims_y(plot_dat$plot_braces,
+  y_lims_total <- calc_plot_lims_y(
+    plot_dat$plot_braces,
     coords,
     plot_settings = plot_settings
   )
 
+  x_range <- range(plot_dat$plot_points$year)
+
   coord_list <- list(
-    range_y = range_y,
+    x_range = x_range,
+    y_range = y_range,
     y_lims_total = y_lims_total,
     coords = coords
   )
-  return(coords_list)
+  return(coord_list)
 }
