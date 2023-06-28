@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_y_axis</span><span class="op">(</span><span class="va">plot_dat</span>, <span class="va">point_values</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_y_axis</span><span class="op">(</span><span class="va">plot_dat</span>, <span class="va">plot_lims</span>, plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,8 +63,12 @@
 <dd><p>Input is a list prepared by <code><a href="prep_plot.html">prep_plot()</a></code>.`</p></dd>
 
 
-<dt>point_values</dt>
-<dd><p>Character string of the column name in <code>plot_dat[["plot_points"]]</code> containing the y-values for the plotted points. Defaults to <code>est_noTrend_noComp</code>.</p></dd>
+<dt>plot_lims</dt>
+<dd><p>List obtained by <code><a href="calc_plot_lims.html">calc_plot_lims()</a></code>, containing different coordinate values.</p></dd>
+
+
+<dt>plot_settings</dt>
+<dd><p>Named list constructed with <code><a href="plotsettings_lineplot.html">plotsettings_lineplot()</a></code>. Defaults to a list with all settings set to <code>0</code>. There are several predefined lists with optimized settings for different plots. See <code><a href="plotsettings_lineplot.html">plotsettings_lineplot()</a></code> for an overview.</p></dd>
 
 </dl></div>
     <div class="section level2">

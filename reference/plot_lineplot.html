@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_lineplot</span><span class="op">(</span></span>
 <span>  <span class="va">plot_dat</span>,</span>
 <span>  seperate_plot_var <span class="op">=</span> <span class="st">"state_var"</span>,</span>
+<span>  seperate_plot_var_order <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  seperate_plot_var_box <span class="op">=</span> <span class="st">"wholeGroup"</span>,</span>
 <span>  point_values <span class="op">=</span> <span class="st">"est_noTrend_noComp"</span>,</span>
 <span>  point_sig <span class="op">=</span> <span class="st">"sig_noTrend_Comp_crossDiff_wholeGroup"</span>,</span>
 <span>  line_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"est_noTrendStart_noComp"</span>, <span class="st">"est_noTrendEnd_noComp"</span><span class="op">)</span>,</span>
@@ -70,7 +72,6 @@
 <span>  years_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  years_braces <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_lines <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  box_seperate_var <span class="op">=</span> <span class="st">"wholeGroup"</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -83,6 +84,14 @@
 
 <dt>seperate_plot_var</dt>
 <dd><p>Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to <code>state_var</code>.</p></dd>
+
+
+<dt>seperate_plot_var_order</dt>
+<dd><p>Character vector containing all unique elements in the <code>seperate_plot_var</code> column. The lineplot-tiles will be ordered according to the order of this vector.</p></dd>
+
+
+<dt>seperate_plot_var_box</dt>
+<dd><p>Character vector, containing strings from the <code>seperate_plot_var</code>-column, that should get a box drawn around them.</p></dd>
 
 
 <dt>point_values</dt>
@@ -135,10 +144,6 @@
 
 <dt>background_lines</dt>
 <dd><p>Logical, indicating whether the whole group trend should be plotted in the background.</p></dd>
-
-
-<dt>box_seperate_var</dt>
-<dd><p>Character vector, containing strings from the <code>seperate_plot_var</code>-column, that should get a box drawn around them.</p></dd>
 
 
 <dt>plot_settings</dt>

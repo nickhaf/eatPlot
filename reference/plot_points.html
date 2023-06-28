@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
 <span>  <span class="va">data_plot_points</span>,</span>
 <span>  point_values <span class="op">=</span> <span class="st">"est_noTrend_noComp"</span>,</span>
 <span>  point_sig <span class="op">=</span> <span class="st">"sig_noTrend_noComp"</span>,</span>
-<span>  <span class="va">y_range</span>,</span>
+<span>  <span class="va">plot_lims</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -77,8 +77,8 @@
 <dd><p>Character string of the column name containing significance values for <code>point_values</code>. Defaults to <code>"sig_noTrend_Comp_crossDiff_wholeGroup"</code>.</p></dd>
 
 
-<dt>y_range</dt>
-<dd><p>Numeric vector with two elements, indicating the min and max for the y axis.</p></dd>
+<dt>plot_lims</dt>
+<dd><p>List obtained by <code><a href="calc_plot_lims.html">calc_plot_lims()</a></code>, containing different coordinate values.</p></dd>
 
 
 <dt>plot_settings</dt>

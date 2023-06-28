@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,8 +51,18 @@
 <h2 class="pkg-version" data-toc-text="development version" id="eatplot-development-version">eatPlot (development version)<a class="anchor" aria-label="anchor" href="#eatplot-development-version"></a></h2>
 </div>
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.0.9020" id="eatplot-0009020">eatPlot 0.0.0.9020<a class="anchor" aria-label="anchor" href="#eatplot-0009020"></a></h2>
+<ul><li>Removed most of the white space around the final line-plot. Some is still needed for drawing the box.</li>
+<li>Adjusted distance between single plot-tiles in lineplot.</li>
+<li>It is now possible to set the y-axis of lineplots manually by using the argument <code>axis_y_lims</code> and <code>axis_y_tick_distance</code> in [plotsettings_lineplot()].</li>
+<li>Renamed <code>y_axis</code> in [plotsettings_lineplot()] to <code>axis_y</code>.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9019" id="eatplot-0009019">eatPlot 0.0.0.9019<a class="anchor" aria-label="anchor" href="#eatplot-0009019"></a></h2>
 <ul><li>New function [gsub_plot_dat()] for replacing character strings in the prepared data. Mainly intended for replacing “wholeGroup” with “Deutschland”, but other use cases are possible as well.</li>
+<li>It is now possible to draw a box around tiles in [plot_lineplot()] by defining the wanted tiles in the <code>seperate_plot_var_box</code>-Argument.</li>
+<li>Improved the y-axis plotting in [plot_lineplot()].</li>
+<li>Changed the underlying architechture of the lineplot-scales.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9018" id="eatplot-0009018">eatPlot 0.0.0.9018<a class="anchor" aria-label="anchor" href="#eatplot-0009018"></a></h2>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_braces</span><span class="op">(</span></span>
 <span>  <span class="va">dat</span>,</span>
-<span>  <span class="va">y_range</span>,</span>
+<span>  <span class="va">plot_lims</span>,</span>
 <span>  label_est <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label_se <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label_sig_high <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -71,8 +71,8 @@
 <dd><p>Prepared Trend data.</p></dd>
 
 
-<dt>y_range</dt>
-<dd><p>Numeric vector with two elements, indicating the min and max for the y axis.</p></dd>
+<dt>plot_lims</dt>
+<dd><p>List obtained by <code><a href="calc_plot_lims.html">calc_plot_lims()</a></code>, containing different coordinate values.</p></dd>
 
 
 <dt>label_est</dt>

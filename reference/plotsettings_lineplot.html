@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9020</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,8 @@
 <span>  axis_x_label_centralize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_x_label_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_x_label_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  axis_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  axis_y_tick_distance <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_y_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_line_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_label_gap_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -87,7 +89,6 @@
 <span>  point_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split_plot <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split_plot_gap_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y_axis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  default_list <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -112,6 +113,14 @@
 
 <dt>axis_x_label_size</dt>
 <dd><p>Numeric for the font size of the x-axis labels.</p></dd>
+
+
+<dt>axis_y</dt>
+<dd><p>Logical, indicating whether a y-axis should be plotted to the left of each row or not.</p></dd>
+
+
+<dt>axis_y_tick_distance</dt>
+<dd><p>Numeric, for which distance should lie between tick marks. The first tick will start at the lower end of <code>axis_y_lims</code> or be calculated automatically. The following ticks will be added in distances defined by <code>axis_y_tick_distance</code>. Defaults to <code>20</code>.</p></dd>
 
 
 <dt>axis_y_lims</dt>
@@ -202,10 +211,6 @@
 <dd><p>Numeric for the width of the gap in a split plot in npc.</p></dd>
 
 
-<dt>y_axis</dt>
-<dd><p>Logical, indicating whether a y-axis should be plotted to the left of each row or not.</p></dd>
-
-
 <dt>default_list</dt>
 <dd><p>Named list with predefined settings. Defaults to a list with all settings set to <code>0</code>.</p></dd>
 
@@ -237,6 +242,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_label_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_y_tick_distance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_y_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
@@ -315,9 +326,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $split_plot_gap_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $y_axis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
