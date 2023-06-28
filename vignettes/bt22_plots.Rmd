@@ -60,6 +60,46 @@ p_line_states
 save_plot(p_line_states, filename = "../split_plot_example.pdf")
 ```
 
+### Kompetencewerte Bundesländer with y-axis
+```{r chpt4_line}
+## Prepare the data with 'KBuecher_imp3' as grouping_var
+plot_dat <- prep_plot(
+  dat = trend_books,
+  comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+  competence = "GL",
+  grouping_vars = "KBuecher_imp3",
+  grouping_vars_groups = c("0", "1")
+)
+
+# Remove wholeGroup, as we don't want to plot it
+plot_dat <- filter_rows(plot_dat,
+  column_name = "state_var",
+  subsetter = "wholeGroup",
+  remove = TRUE
+)
+
+p_line_states_y <- plot_lineplot(
+  plot_dat = plot_dat,
+  title_superscripts = list(
+    "Land-17" = "a",
+    "Land-45" = "3"
+  ),
+  years_lines = list(c(2011, 2016), c(2016, 2021)),
+  years_braces = list(c(2011, 2016), c(2016, 2021)),
+  plot_settings = plotsettings_lineplot(
+    axis_y = TRUE, 
+    axis_y_lims = c(320, 590), 
+    default_list = lineplot_4x4
+  )
+)
+
+p_line_states_y
+```
+
+```{r, eval = FALSE}
+save_plot(p_line_states, filename = "../split_plot_example.pdf")
+```
+
 
 ### Kompetenzwerte Deutschland
 ```{r chpt_4_ger}

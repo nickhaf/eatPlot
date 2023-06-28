@@ -757,7 +757,7 @@ test_that("Unsplit lineplot with box, unequal year-distances and manual y-axis l
     plot_settings = plotsettings_lineplot(
       equal_trend_line_length = FALSE,
       axis_y = TRUE,
-     # axis_y_lims = c(400, 550),
+      axis_y_lims = c(380, 550),
       split_plot = FALSE,
       default_list = lineplot_4x4
     )
