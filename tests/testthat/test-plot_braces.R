@@ -16,7 +16,10 @@ test_that("y limits are set correctly", {
 
   test_p <- ggplot2::ggplot() +
     plot_braces(df,
-      y_range = c(400, 503),
+      plot_lims = list(
+        coords = calc_y_value_coords(y_range = c(400, 503)),
+        y_range = c(400, 503)
+      ),
       label_est = "est",
       label_se = "se",
       label_sig_high = "sig_1",
@@ -71,7 +74,9 @@ test_that("single brace is drawn", {
   vdiffr::expect_doppelganger(
     "single brace",
     ggplot2::ggplot() +
-      draw_braces(test_brace, plot_settings = plotsettings_lineplot(split_plot = FALSE))
+      draw_braces(test_brace,
+        plot_settings = plotsettings_lineplot(split_plot = FALSE)
+      )
   )
 })
 
@@ -127,7 +132,10 @@ test_that("braces are plotted correctly", {
     "Brace plot",
     ggplot2::ggplot() +
       plot_braces(df,
-        y_range = c(400, 503),
+        plot_lims = list(
+          coords = calc_y_value_coords(y_range = c(400, 503)),
+          y_range = c(400, 503)
+        ),
         label_est = "est",
         label_se = "se",
         label_sig_high = "sig_1",
@@ -156,7 +164,10 @@ test_that("significances are displayed correctly in the labels", {
 
   plot_brace_build <- ggplot2::ggplot_build(ggplot2::ggplot() +
     plot_braces(df,
-      y_range = c(400, 503),
+      plot_lims = list(
+        coords = calc_y_value_coords(y_range = c(400, 503)),
+        y_range = c(400, 503)
+      ),
       label_est = "est",
       label_se = "se",
       label_sig_high = "sig_2",
@@ -184,7 +195,10 @@ test_that("Example brace plot is still the same", {
     "Brace plot trend_books",
     ggplot2::ggplot() +
       plot_braces(plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$state_var == "Land-45" & !is.na(plot_dat[["plot_braces"]]$state_var), ],
-        y_range = c(397, 552),
+        plot_lims = list(
+          coords = calc_y_value_coords(y_range = c(397, 552)),
+          y_range = c(397, 552)
+        ),
         label_est = "est_Trend_noComp",
         label_se = "se_Trend_noComp",
         label_sig_high = "sig_Trend_Comp_crossDiff_wholeGroup",
@@ -215,7 +229,10 @@ test_that("Adjacent braces", {
     "Adjacent braces",
     ggplot2::ggplot() +
       plot_braces(df,
-        y_range = c(400, 503),
+        plot_lims = list(
+          coords = calc_y_value_coords(y_range = c(400, 503)),
+          y_range = c(400, 503)
+        ),
         label_est = "est",
         label_se = "se",
         label_sig_high = "sig_2",
@@ -245,7 +262,10 @@ test_that("Overlapping braces are looking good", {
 
   p_braces <- ggplot2::ggplot() +
     plot_braces(df,
-      y_range = c(400, 503),
+      plot_lims = list(
+        coords = calc_y_value_coords(y_range = c(400, 503)),
+        y_range = c(400, 503)
+      ),
       label_est = "est",
       label_se = "se",
       label_sig_high = "sig_2",
@@ -280,7 +300,10 @@ test_that("Braces can be facet wrapped", {
     "Facetted braces",
     ggplot2::ggplot() +
       plot_braces(df,
-        y_range = c(400, 503),
+        plot_lims = list(
+          coords = calc_y_value_coords(y_range = c(400, 503)),
+          y_range = c(400, 503)
+        ),
         label_est = "est",
         label_se = "se",
         label_sig_high = "sig_2",

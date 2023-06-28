@@ -6,9 +6,17 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
   range_years <- diff(range(c(dat$year_start_axis, dat$year_end_axis), na.rm = TRUE))
 
   brace_label_nudge_y <- plot_settings$brace_label_nudge_y
-  starting_points <- calc_brace_starting_points(overlap = any(dat$overlap), coords, range_coords, brace_label_nudge_y, plot_settings)
+  starting_points <- calc_brace_starting_points(overlap = any(dat$overlap),
+                                                coords,
+                                                range_coords,
+                                                brace_label_nudge_y,
+                                                plot_settings)
 
-  y_label <- calc_brace_label_coords(dat, starting_points, range_coords, range_years, plot_settings)$label_pos_y
+  y_label <- calc_brace_label_coords(dat,
+                                     starting_points,
+                                     range_coords,
+                                     range_years,
+                                     plot_settings)$label_pos_y
 
   y_lims_total <- c(min(y_label) - diff(range(coords)) * 0.06, max(coords)) # a bit smaller, so the labels don't get cut off
 
