@@ -7,6 +7,8 @@
 plot_lineplot(
   plot_dat,
   seperate_plot_var = "state_var",
+  seperate_plot_var_order = NULL,
+  seperate_plot_var_box = "wholeGroup",
   point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
   line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
@@ -20,7 +22,6 @@ plot_lineplot(
   years_lines = NULL,
   years_braces = NULL,
   background_lines = TRUE,
-  box_seperate_var = "wholeGroup",
   plot_settings = plotsettings_lineplot()
 )
 }
@@ -28,6 +29,10 @@ plot_lineplot(
 \item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 
 \item{seperate_plot_var}{Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to \code{state_var}.}
+
+\item{seperate_plot_var_order}{Character vector containing all unique elements in the \code{seperate_plot_var} column. The lineplot-tiles will be ordered according to the order of this vector.}
+
+\item{seperate_plot_var_box}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 
 \item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
 
@@ -54,8 +59,6 @@ plot_lineplot(
 \item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
 \item{background_lines}{Logical, indicating whether the whole group trend should be plotted in the background.}
-
-\item{box_seperate_var}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }

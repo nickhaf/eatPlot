@@ -12,7 +12,6 @@
 #' @export
 #'
 #' @examples # tbd
-
 ## Cario.pdf device for correct dash representation:
 # save_plot <- function(p, filename, width = 160, height = 226.2, device = grDevices::cairo_pdf, ...) {
 #   ggplot2::ggsave(filename,
@@ -24,18 +23,18 @@
 #     colormodel = "cmyk"
 #   )
 # }
-
 ## pdf for the correct colomodel cmyk:
 save_plot <- function(p, filename, width = 160, height = 226.2, colormodel = "cmyk", scaling = 1, ...) {
   width_inch <- width / 25.4
   height_inch <- height / 25.4
 
-  grDevices::pdf(file = filename,
-                 width = width_inch * scaling,
-                 height = height_inch * scaling,
-                 colormodel = colormodel,
-                 ...
-                 )
+  grDevices::pdf(
+    file = filename,
+    width = width_inch * scaling,
+    height = height_inch * scaling,
+    colormodel = colormodel,
+    ...
+  )
   plot(p)
   grDevices::dev.off()
 }

@@ -57,7 +57,7 @@ test_that("single_lineplot with one grouping_var is plotted correctly (same dist
     ggplot2::ggplot() +
       plot_single_lineplot(
         test_plot,
-        y_range = c(180, 240),
+        plot_lims = calc_plot_lims(test_plot, "point_values", plot_settings = plotsettings_lineplot()),
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -129,7 +129,7 @@ test_that("single_lineplot with one grouping_var is plotted correctly (different
     ggplot2::ggplot() +
       plot_single_lineplot(
         test_plot,
-        y_range = c(180, 240),
+        plot_lims = calc_plot_lims(test_plot, "point_values", plot_settings = plotsettings_lineplot()),
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -199,7 +199,8 @@ test_that("single_lineplot with two groups is plotted correctly", {
     "single grouped lineplot",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_2,
-        y_range = c(180, 240),
+                           plot_lims = calc_plot_lims(test_plot_2, "point_values", plot_settings = plotsettings_lineplot()),
+
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -269,7 +270,8 @@ test_that("split lineplot with no groups is plotted correctly with equal line le
     "splitlineplot equal distances",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_split,
-        y_range = c(180, 230),
+                           plot_lims = calc_plot_lims(test_plot_split, "point_values", plot_settings = plotsettings_lineplot()),
+
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -296,7 +298,7 @@ test_that("split lineplot with no groups is plotted correctly with relational li
       year_axis = c(rep(c(1, 2), 2), rep(c(2, 11), 2)),
       point_values = c(200, 210, 212, 220, 205, 220, 215, 225),
       sig_noTrend_noComp = c(TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE),
-      years_Trend = c(12, 12, 12, 12, 23, 23, 23,  23),
+      years_Trend = c(12, 12, 12, 12, 23, 23, 23, 23),
       competence_var = "a"
     ),
     plot_lines = data.frame(
@@ -345,19 +347,21 @@ test_that("split lineplot with no groups is plotted correctly with relational li
     "splitlineplot relational distances",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_split,
-                           y_range = c(180, 230),
-                           line_sig = "sig_trend",
-                           label_est = "est_label",
-                           label_se = "se_label",
-                           label_sig_high = "sig_label_1",
-                           label_sig_bold = "sig_label_2",
-                           point_values = "point_values",
-                           plot_settings = plotsettings_lineplot(
-                             split_plot = TRUE,
-                             equal_trend_line_length = FALSE,
-                             axis_x_label_centralize = 0.02,
-                             point_label_nudge_x = 0.02
-                           )
+                           plot_lims = calc_plot_lims(test_plot_split,
+                                                      "point_values",
+                                                      plot_settings = plotsettings_lineplot()),
+        line_sig = "sig_trend",
+        label_est = "est_label",
+        label_se = "se_label",
+        label_sig_high = "sig_label_1",
+        label_sig_bold = "sig_label_2",
+        point_values = "point_values",
+        plot_settings = plotsettings_lineplot(
+          split_plot = TRUE,
+          equal_trend_line_length = FALSE,
+          axis_x_label_centralize = 0.02,
+          point_label_nudge_x = 0.02
+        )
       )
   )
 })

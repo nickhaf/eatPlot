@@ -12,21 +12,22 @@
 plot_points <- function(data_plot_points,
                         point_values = "est_noTrend_noComp",
                         point_sig = "sig_noTrend_noComp",
-                        y_range,
+                        plot_lims,
                         plot_settings = plotsettings_lineplot()) {
   data_plot_points <- fill_column(data_plot_points, column_name = point_values, filling = NA)
   data_plot_points <- fill_column(data_plot_points, column_name = point_sig, filling = FALSE)
 
-## fill_na
+  ## fill_na
 
   data_plot_points <- data_plot_points[!is.na(data_plot_points$point_values), ]
-  data_plot_points_nudge <- calc_y_nudge(data_plot_points, y_range, plot_settings = plot_settings)
+  data_plot_points_nudge <- calc_y_nudge(data_plot_points,
+                                         plot_lims$y_range,
+                                         plot_settings = plot_settings)
 
-  if (plot_settings$split_plot == TRUE) {
-    data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge, nudge_x = plot_settings$point_label_nudge_x)
-  } else {
-    data_plot_points_nudge$x_coords <- data_plot_points_nudge$year_axis + diff(range(data_plot_points$year_axis)) * plot_settings$point_label_nudge_x
-  }
+    data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge,
+                                           nudge_x = plot_settings$point_label_nudge_x,
+                                           split_plot = plot_settings$split_plot)
+
 
   list(
     ggplot2::geom_point(

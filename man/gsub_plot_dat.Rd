@@ -24,11 +24,17 @@ Depending on input data.frame or list with the subbed character strings.
 \code{\link[=gsub]{gsub()}} for lists and data.frames.
 }
 \examples{
-  plot_dat <- list(dat_1 = data.frame(col_1 = c("wholeGroup", "notwholeGroup"),
-                                      col_2 = c("wholeGroup", NA),
-                                      col_3 = c(1, 2)),
-                   dat_2 = data.frame(col_1 = c("wholeGroup", "notwholeGroup"),
-                                      col_2 = c("wholeGroup", NA),
-                                      col_3 = c(TRUE, FALSE)))
+plot_dat <- list(
+  dat_1 = data.frame(
+    col_1 = c("wholeGroup", "notwholeGroup"),
+    col_2 = c("wholeGroup", NA),
+    col_3 = c(1, 2)
+  ),
+  dat_2 = data.frame(
+    col_1 = c("wholeGroup", "notwholeGroup"),
+    col_2 = c("wholeGroup", NA),
+    col_3 = c(TRUE, FALSE)
+  )
+)
 gsub_plot_dat(plot_dat)
 }

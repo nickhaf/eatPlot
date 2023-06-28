@@ -1,3 +1,25 @@
+test_that("checks for middle-left tiles work", {
+expect_false(check_middle_left(j = 1, n_cols = 4, n_rows = 4))
+expect_false(check_middle_left(j = 3, n_cols = 4, n_rows = 4))
+expect_false(check_middle_left(j = 4, n_cols = 4, n_rows = 4))
+expect_false(check_middle_left(j = 6, n_cols = 4, n_rows = 4))
+expect_false(check_middle_left(j = 13, n_cols = 4, n_rows = 4))
+expect_true(check_middle_left(j = 5, n_cols = 4, n_rows = 4))
+expect_true(check_middle_left(j = 9, n_cols = 4, n_rows = 4))
+  })
+
+test_that("checks for middle-middle tiles work", {
+  expect_false(check_middle_middle(j = 1, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_middle(j = 3, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_middle(j = 4, n_cols = 4, n_rows = 4))
+  expect_true(check_middle_middle(j = 6, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_middle(j = 13, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_middle(j = 5, n_cols = 4, n_rows = 4))
+  expect_true(check_middle_middle(j = 10, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_middle(j = 15, n_cols = 4, n_rows = 4))
+
+})
+
 test_that("settings do something", {
   trend_books_2 <- trend_books
   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
@@ -48,7 +70,7 @@ test_that("settings do something", {
       point_size = 1,
       split_plot = TRUE,
       split_plot_gap_width = 0.01,
-      y_axis = FALSE
+      axis_y = FALSE
     )
   )
 
@@ -188,7 +210,7 @@ test_that("lineplot chpt. 4 with 3 groups, no split and unequal trend length", {
 
   books_3 <- rbind(trend_books, trend_books_2)
   books_3$KBuecher_imp3 <- as.factor(books_3$KBuecher_imp3)
-colnames(books_3) <- gsub("2021","2022", colnames(books_3))
+  colnames(books_3) <- gsub("2021", "2022", colnames(books_3))
 
   plot_dat_3 <- prep_plot(
     dat = books_3,
@@ -231,8 +253,6 @@ colnames(books_3) <- gsub("2021","2022", colnames(books_3))
   )
   vdiffr::expect_doppelganger("lineplot_4x4_3groups unequal trend_length, with split", p_line_split)
   #  save_plot(p_line_split, filename = "../relatinal_trend_distance_Split.pdf")
-
-
 })
 
 
@@ -304,6 +324,7 @@ test_that("competence_vars with 3 groups", {
     label_sig_high = NULL,
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
+    seperate_plot_var_box = "Englisch Leseverstehen",
     plot_settings = plotsettings_lineplot(
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
       default_list = lineplot_2x3
@@ -312,7 +333,7 @@ test_that("competence_vars with 3 groups", {
 
   vdiffr::expect_doppelganger("lineplot_4x4_kb_tiles_3groups", p_line)
 
-  # save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 1.5) #2 + 10)
+  # save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 2)
 })
 
 test_that("adjusted means states", {
@@ -442,4 +463,309 @@ test_that("line distance can be overwritten to be equal, even though the distanc
       year_end_axis = c(2012, 2014, 2022, NA)
     )
   )
+})
+
+
+
+test_that("Split lineplot with box looks good", {
+  plot_dat <- prep_plot(
+    dat = trend_books,
+    comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("0", "1")
+  )
+
+  ## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat,
+                          column_name = "state_var",
+                          subsetter = "wholeGroup",
+                          remove = TRUE
+  )
+
+  p_line_states <- plot_lineplot(
+    plot_dat = plot_dat,
+    title_superscripts = list(
+      "Land-17" = "a",
+      "Land-45" = "3"
+    ),
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
+    seperate_plot_var_box = c("Land-93"),
+    plot_settings = plotsettings_lineplot(
+      equal_trend_line_length = FALSE,
+      default_list = lineplot_4x4
+    )
+  )
+
+vdiffr::expect_doppelganger("split_lineplot with box", {
+  p_line_states
+})
+
+})
+
+
+test_that("Not Split lineplot with box looks good", {
+  plot_dat <- prep_plot(
+    dat = trend_books,
+    comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("0", "1")
+  )
+
+  ## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat,
+                          column_name = "state_var",
+                          subsetter = "wholeGroup",
+                          remove = TRUE
+  )
+
+  p_line_states <- plot_lineplot(
+    plot_dat = plot_dat,
+    title_superscripts = list(
+      "Land-17" = "a",
+      "Land-45" = "3"
+    ),
+    years_lines = list(c(2011, 2016), c(2016, 2021)),
+    years_braces = list(c(2011, 2016), c(2016, 2021)),
+    seperate_plot_var_box = c("Land-93"),
+    plot_settings = plotsettings_lineplot(
+      equal_trend_line_length = FALSE,
+      split_plot = FALSE,
+      default_list = lineplot_4x4
+    )
+  )
+
+  vdiffr::expect_doppelganger("unsplit lineplot with box", {
+    p_line_states
+  })
+
+})
+
+
+test_that("Split lineplot with box and unequal year-distances looks good", {
+
+  trend_books_2 <- trend_books
+  colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
+
+
+  plot_dat <- prep_plot(
+    dat = trend_books_2,
+    comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("0", "1")
+  )
+
+  ## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat,
+                          column_name = "state_var",
+                          subsetter = "wholeGroup",
+                          remove = TRUE
+  )
+
+  p_line_states <- plot_lineplot(
+    plot_dat = plot_dat,
+    title_superscripts = list(
+      "Land-17" = "a",
+      "Land-45" = "3"
+    ),
+    years_lines = list(c(2011, 2016), c(2016, 2023)),
+    years_braces = list(c(2011, 2016), c(2016, 2023)),
+    seperate_plot_var_box = c("Land-93"),
+    plot_settings = plotsettings_lineplot(
+      equal_trend_line_length = FALSE,
+      split_plot = TRUE,
+      default_list = lineplot_4x4
+    )
+  )
+  save_plot(p_line_states, filename = "../testplot_1.pdf")
+
+  vdiffr::expect_doppelganger("split_lineplot with unequal distances and box", {
+    p_line_states
+  })
+
+})
+
+test_that("Unsplit lineplot with box and unequal year-distances looks good", {
+
+  trend_books_2 <- trend_books
+  colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
+
+
+  plot_dat <- prep_plot(
+    dat = trend_books_2,
+    comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("0", "1")
+  )
+
+  ## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat,
+                          column_name = "state_var",
+                          subsetter = "wholeGroup",
+                          remove = TRUE
+  )
+
+  p_line_states <- plot_lineplot(
+    plot_dat = plot_dat,
+    title_superscripts = list(
+      "Land-17" = "a",
+      "Land-45" = "3"
+    ),
+    years_lines = list(c(2011, 2016), c(2016, 2023)),
+    years_braces = list(c(2011, 2016), c(2016, 2023)),
+    seperate_plot_var_box = c("Land-93"),
+    plot_settings = plotsettings_lineplot(
+      equal_trend_line_length = FALSE,
+      split_plot = FALSE,
+      default_list = lineplot_4x4
+    )
+  )
+  #save_plot(p_line_states, filename = "../testplot_1.pdf")
+
+  vdiffr::expect_doppelganger("unsplit lineplot with unequal distances and box", {
+    p_line_states
+  })
+
+})
+
+
+test_that("Split lineplot with box, unequal year-distances and y-axis looks good", {
+
+  trend_books_2 <- trend_books
+  colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
+
+
+  plot_dat <- prep_plot(
+    dat = trend_books_2,
+    comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("0", "1")
+  )
+
+  ## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat,
+                          column_name = "state_var",
+                          subsetter = "wholeGroup",
+                          remove = TRUE
+  )
+
+  p_line_states <- plot_lineplot(
+    plot_dat = plot_dat,
+    title_superscripts = list(
+      "Land-17" = "a",
+      "Land-45" = "3"
+    ),
+    years_lines = list(c(2011, 2016), c(2016, 2023)),
+    years_braces = list(c(2011, 2016), c(2016, 2023)),
+    seperate_plot_var_box = c("Land-93"),
+    plot_settings = plotsettings_lineplot(
+      equal_trend_line_length = FALSE,
+      axis_y = TRUE,
+      split_plot = TRUE,
+      default_list = lineplot_4x4
+    )
+  )
+ # save_plot(p_line_states, filename = "../testplot_2.pdf")
+
+  vdiffr::expect_doppelganger("split_lineplot with unequal distances, box and y-axis", {
+    p_line_states
+  })
+
+})
+
+test_that("Unsplit lineplot with box, unequal year-distances and y-axis looks good", {
+
+  trend_books_2 <- trend_books
+  colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
+
+
+  plot_dat <- prep_plot(
+    dat = trend_books_2,
+    comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("0", "1")
+  )
+
+  ## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat,
+                          column_name = "state_var",
+                          subsetter = "wholeGroup",
+                          remove = TRUE
+  )
+
+  p_line_states <- plot_lineplot(
+    plot_dat = plot_dat,
+    title_superscripts = list(
+      "Land-17" = "a",
+      "Land-45" = "3"
+    ),
+    years_lines = list(c(2011, 2016), c(2016, 2023)),
+    years_braces = list(c(2011, 2016), c(2016, 2023)),
+    seperate_plot_var_box = c("Land-93"),
+    plot_settings = plotsettings_lineplot(
+      equal_trend_line_length = FALSE,
+      axis_y = TRUE,
+      split_plot = FALSE,
+      default_list = lineplot_4x4
+    )
+  )
+  # save_plot(p_line_states, filename = "../testplot_1.pdf")
+
+  vdiffr::expect_doppelganger("unsplit lineplot, unequal distances, box, y-axis", {
+    p_line_states
+  })
+
+})
+
+
+test_that("Unsplit lineplot with box, unequal year-distances and manual y-axis looks good", {
+
+  trend_books_2 <- trend_books
+  colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
+
+
+  plot_dat <- prep_plot(
+    dat = trend_books_2,
+    comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("0", "1")
+  )
+
+  ## Remove wholeGroup, as we don't want to plot it
+  plot_dat <- filter_rows(plot_dat,
+                          column_name = "state_var",
+                          subsetter = "wholeGroup",
+                          remove = TRUE
+  )
+
+  p_line_states <- plot_lineplot(
+    plot_dat = plot_dat,
+    title_superscripts = list(
+      "Land-17" = "a",
+      "Land-45" = "3"
+    ),
+    years_lines = list(c(2011, 2016), c(2016, 2023)),
+    years_braces = list(c(2011, 2016), c(2016, 2023)),
+    seperate_plot_var_box = c("Land-93"),
+    plot_settings = plotsettings_lineplot(
+      equal_trend_line_length = FALSE,
+      axis_y = TRUE,
+      axis_y_lims = c(380, 550),
+      split_plot = FALSE,
+      default_list = lineplot_4x4
+    )
+  )
+  # save_plot(p_line_states, filename = "../testplot_1.pdf")
+
+  vdiffr::expect_doppelganger("unsplit lineplot, unequal distances, box, manual y-axis", {
+    p_line_states
+  })
+
 })

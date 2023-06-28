@@ -11,6 +11,8 @@ plotsettings_lineplot(
   axis_x_label_centralize = NULL,
   axis_x_label_nudge_y = NULL,
   axis_x_label_size = NULL,
+  axis_y = NULL,
+  axis_y_tick_distance = NULL,
   axis_y_lims = NULL,
   background_line_colour = NULL,
   brace_label_gap_y = NULL,
@@ -37,7 +39,6 @@ plotsettings_lineplot(
   point_size = NULL,
   split_plot = NULL,
   split_plot_gap_width = NULL,
-  y_axis = NULL,
   default_list = NULL
 )
 }
@@ -51,6 +52,10 @@ plotsettings_lineplot(
 \item{axis_x_label_nudge_y}{Numeric for shifting the x-axis labels vertically. Increase to lower the x-axis labels.}
 
 \item{axis_x_label_size}{Numeric for the font size of the x-axis labels.}
+
+\item{axis_y}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
+
+\item{axis_y_tick_distance}{Numeric, for which distance should lie between tick marks. The first tick will start at the lower end of \code{axis_y_lims} or be calculated automatically. The following ticks will be added in distances defined by \code{axis_y_tick_distance}. Defaults to \code{20}.}
 
 \item{axis_y_lims}{Numeric for the y-axis limits. Defaults to \code{NULL}, in which case the limits will be set automatically.}
 
@@ -95,8 +100,6 @@ plotsettings_lineplot(
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 
 \item{split_plot_gap_width}{Numeric for the width of the gap in a split plot in npc.}
-
-\item{y_axis}{Logical, indicating whether a y-axis should be plotted to the left of each row or not.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }

@@ -1,40 +1,50 @@
 #' Set the x- and y-coordinates for a plot.
 #'
-#' @inheritParams plot_lineplot
+#' @inheritParams plot_single_lineplot
 #'
 #' @return [ggplot2] object.
 #' @export
 #'
 #' @examples # tbd
-set_plot_coords <- function(plot_dat, point_values, plot_settings = plotsettings_lineplot()) {
-  plot_dat$plot_points <- fill_column(plot_dat$plot_points, point_values, filling = NA)
+set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plotsettings_lineplot()) {
 
-
-  min_year <- min(plot_dat[["plot_points"]]$year, na.rm = TRUE)
-  max_year <- max(plot_dat[["plot_points"]]$year, na.rm = TRUE)
+  y_coords <- calc_y_value_space(plot_lims$coords,
+                                 range_y = plot_lims$y_range,
+                                 plot_settings)
 
   list(
-    set_y_coords(plot_dat, point_values),
+    set_y_coords(plot_dat, y_coords, plot_lims, plot_settings),
     ggplot2::scale_x_continuous(
-      # position = "top",
+  #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
       breaks = unique(plot_dat[["plot_points"]]$year),
-      expand = c(plot_settings$axis_x_background_width_x, 0) ## Increase, so the left and right side of the blue x-axis background gets bigger.
+      expand = c(plot_settings$axis_x_background_width_x, 0) #ggplot2::expansion(c(plot_settings$axis_x_background_width_x, plot_settings$axis_x_background_width_x)) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
   )
 }
 
 
-## Calc coordinate system borders.
-calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
-  range_est <- diff(range_vec)
+#' Calculate the plot-space between first brace and top of the plot.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param y_range Numeric vector containing the minimum and maximum of the plotted values.
+#' @param nudge_param_upper Numeric for increasing/decreasing the distance between highest plotted value and upper x-axis.
+#' @param nudge_param_lower Numeric for increasing/decreasing the distance between lowest plotted value and first brace.
+#'
+#' @return Numeric vector containing the y-range between brace and upper x-axis.
+#'
+#' @examples calc_y_value_coords(c(0, 30))
+calc_y_value_coords <- function(y_range, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
+  range_est <- diff(y_range)
   coords <- c(
     ## Lower y limit
-    plyr::round_any(range_vec[1] - (range_vec[1] * nudge_param_lower),
+    plyr::round_any(y_range[1] - (y_range[1] * nudge_param_lower),
       accuracy = 10,
       f = floor
     ) - range_est * nudge_param_lower,
     ## upper y limit
-    plyr::round_any(range_vec[2] + (range_vec[2] * nudge_param_upper),
+    plyr::round_any(y_range[2] + (y_range[2] * nudge_param_upper),
       accuracy = 10,
       f = ceiling
     ) + range_est * nudge_param_upper
@@ -43,32 +53,58 @@ calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_
 }
 
 
-# Utils -------------------------------------------------------------------
-## Needs to calculate ALL of the yrange, so from the top of the blue border to the last brace label.
-set_y_coords <- function(plot_dat, point_values) {
-#
-#   coords <- calc_y_value_coords() #calc_y_value_coords calculates the difference between the min and max plotted point.
-#   coords_total <- calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
-#
-#
-#
-#
-#
-#
+calc_y_value_space <- function(coords, range_y, plot_settings){
+  x_axis_start_y <- coords[2] - (coords[2] * plot_settings$axis_x_background_width_y)
+  brace_start_y <- coords[1]
+  y_axis_start <- round(brace_start_y, -1)
+  y_axis_end <- calc_y_value_coords(range_y, 0, 0)[2]
 
+  y_coords <- c(y_axis_start, y_axis_end)
+
+  return(y_coords)
+}
+
+
+# Utils -------------------------------------------------------------------
+set_y_coords <- function(plot_dat, y_coords, plot_lims, plot_settings) {
   ggplot2::scale_y_continuous(
-    breaks = seq(
-      from = round(min(plot_dat[["plot_points"]][, point_values], na.rm = TRUE) - 10, -1),
-      to = round(max(plot_dat[["plot_points"]][, point_values], na.rm = TRUE), -1),
-      by = 20
+    breaks = seq_over(
+      from = y_coords[1],
+      to = y_coords[2],
+      by = plot_settings$axis_y_tick_distance
     ),
+    limits = plot_lims$y_lims_total,
     expand = c(0, 0)
   )
 }
 
-set_cartesian_coords <- function(coords) {
+set_cartesian_coords <- function(y_lims_total) {
   ggplot2::coord_cartesian(
-    clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
-    ylim = coords
+    # clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
+    ylim = y_lims_total
   )
 }
+
+#' Sequencing function that also includes the first value of the sequence that is larger than the stopping parameter.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param from Start value.
+#' @param to End value.
+#' @param by Step size.
+#'
+#' @return Sequenced vector.
+#'
+#' @examples #seq_over(10, 40, 20)
+seq_over <- function(from, to, by){
+
+  res_vec <- from
+  i <- from
+  while(i < to){
+    i <- i + by
+res_vec[length(res_vec) + 1] <- i
+  }
+  return(res_vec)
+}
+

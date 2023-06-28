@@ -76,5 +76,3 @@ fill_up_na <- function(dat, info_from = "group_var", info_to, filling_groups) {
 
   return(dat)
 }
-
-

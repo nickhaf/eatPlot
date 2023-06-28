@@ -1,7 +1,16 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9020
+* Removed most of the white space around the final line-plot. Some is still needed for drawing the box. 
+* Adjusted distance between single plot-tiles in lineplot.
+* It is now possible to set the y-axis of lineplots manually by using the argument `axis_y_lims` and `axis_y_tick_distance` in [plotsettings_lineplot()]. 
+* Renamed `y_axis` in [plotsettings_lineplot()] to `axis_y`. 
+
 # eatPlot 0.0.0.9019
 * New function [gsub_plot_dat()] for replacing character strings in the prepared data. Mainly intended for replacing "wholeGroup" with "Deutschland", but other use cases are possible as well.
+* It is now possible to draw a box around tiles in [plot_lineplot()] by defining the wanted tiles in the `seperate_plot_var_box`-Argument. 
+* Improved the y-axis plotting in [plot_lineplot()].
+* Changed the underlying architechture of the lineplot-scales. 
 
 # eatPlot 0.0.0.9018
 * Trend lines with differing year ranges can now be plotted with equal length (in split and non-split plots). Use the `equal_trend_line_length`-argument in [plotsettings_lineplot()] with care, as the distances between the timepoints might be distorted by this approach (however, it is necessary for the BT22).

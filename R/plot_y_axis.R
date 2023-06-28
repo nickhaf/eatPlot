@@ -1,52 +1,45 @@
 #' Plot a y-axis plot. Can be merged with other plots for a customisable y-axis.
 #'
-#' @inheritParams plot_lineplot
+#' @inheritParams plot_single_lineplot
 #'
 #' @return [ggplot2] plot that can be used as a y-axis.
 #' @export
 #'
 #' @examples # tbd
-plot_y_axis <- function(plot_dat, point_values) {
-  range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
-  coords <- calc_y_value_coords(range_est)
+plot_y_axis <- function(plot_dat, plot_lims, plot_settings = plotsettings_lineplot()) {
 
-  df_y <- data.frame(
-    years_Trend = "20112016",
-    x = min(plot_dat[["plot_points"]]$year_axis),
-    y = round(range_est[1] - 10, -1),
-    yend = round(range_est[2], -1),
-    xmax = max(plot_dat[["plot_points"]]$year_axis)
-  )
+  y_coords <- calc_y_value_space(plot_lims$coords, plot_lims$y_range, plot_settings)
 
-  ## Macht nicht so viel sinn, die Linie wird manuell geplotted, die Ticks nicht.
+  y_coords[2] <- max(seq_over(
+    from = y_coords[1],
+    to = y_coords[2],
+    by = plot_settings$axis_y_tick_distance
+  ))
 
   list(
-    ggplot2::geom_segment(
-      data = df_y,
-      ggplot2::aes(
-        x = .data$x,
-        xend = .data$x,
-        y = .data$y,
-        yend = .data$yend
-      ),
-      linewidth = 0.2
+    # Y-Line ------------------------------------------------------------------
+    ggplot2::annotate("segment",
+                      x = 0,
+                      xend = 0,
+                      y = y_coords[1] - diff(y_coords) * 0.002425, # Without this, the axis tick will be plotted a bit over the y-line.
+                      yend = y_coords[2] + diff(y_coords) * 0.002425
     ),
     ggplot2::scale_x_continuous(
       limits = c(
-        min(plot_dat[["plot_points"]]$year_axis),
-        min(plot_dat[["plot_points"]]$year_axis) + 1
+        0,1
       ),
       expand = c(0, 0)
     ),
-    set_y_coords(plot_dat, point_values = point_values),
+    set_y_coords(plot_dat, y_coords, plot_lims, plot_settings),
     ## Use same coordinate system as the braces, so the plots can be aligned.
-    set_cartesian_coords(coords),
     theme_y_axis()
-  )
-}
+  )}
+
 
 
 # Utils -------------------------------------------------------------------
+
+
 calc_y_positions <- function(states, n_cols) {
   n_rows <- ceiling(length(states) / n_cols)
   n_cols <- n_cols + 1 # One column added for the y_axis.

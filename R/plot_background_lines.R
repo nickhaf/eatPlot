@@ -12,8 +12,11 @@ plot_background_lines <- function(dat,
                                   line_se,
                                   plot_settings = plotsettings_lineplot()) {
   line_values <- paste0(line_values, "_wholeGroup")
-  colnames_se <- if (is.null(line_se)){gsub("est_", "se_", line_values)
-    }else{line_se}
+  colnames_se <- if (is.null(line_se)) {
+    gsub("est_", "se_", line_values)
+  } else {
+    line_se
+  }
 
   if (all(colnames_se %in% colnames(dat))) {
     colnames(dat) <- .trimNames(colnames(dat))
@@ -66,7 +69,7 @@ plot_background_lines <- function(dat,
         group = .data$years_Trend
       ),
       linewidth = 1,
-      color =  plot_settings$background_line_colour
+      color = plot_settings$background_line_colour
     )
   }
 }

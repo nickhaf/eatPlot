@@ -2,7 +2,7 @@
 check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 33
+      length(settings_list) == 34
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -13,6 +13,8 @@ check_plotsettings_lineplot <- function(settings_list) {
         "axis_x_label_centralize",
         "axis_x_label_nudge_y",
         "axis_x_label_size",
+        "axis_y",
+        "axis_y_tick_distance",
         "axis_y_lims",
         "background_line_colour",
         "brace_label_gap_y",
@@ -38,8 +40,7 @@ check_plotsettings_lineplot <- function(settings_list) {
         "point_shapes",
         "point_size",
         "split_plot",
-        "split_plot_gap_width",
-        "y_axis"
+        "split_plot_gap_width"
       )
   )
 
@@ -49,6 +50,8 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$axis_x_label_centralize))
   stopifnot(is.numeric(settings_list$axis_x_label_nudge_y))
   stopifnot(is.numeric(settings_list$axis_x_label_size))
+  stopifnot(is.logical(settings_list$axis_y))
+  stopifnot(is.numeric(settings_list$axis_y_tick_distance) | is.null(settings_list$axis_y_tick_distance))
   stopifnot(is.numeric(settings_list$axis_y_lims) | is.null(settings_list$axis_y_lims))
   stopifnot(is_colour(settings_list$background_line_colour))
   stopifnot(is.numeric(settings_list$brace_label_gap_y))
@@ -74,7 +77,7 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$point_size))
   stopifnot(is.logical(settings_list$split_plot))
   stopifnot(is.numeric(settings_list$split_plot_gap_width))
-  stopifnot(is.logical(settings_list$y_axis))
+
 }
 
 
@@ -85,6 +88,8 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param axis_x_label_centralize Numeric. The x-axis labels will be nudged into the center by this amount, if the plot is a split lineplot.
 #' @param axis_x_label_nudge_y Numeric for shifting the x-axis labels vertically. Increase to lower the x-axis labels.
 #' @param axis_x_label_size Numeric for the font size of the x-axis labels.
+#' @param axis_y Logical, indicating whether a y-axis should be plotted to the left of each row or not.
+#' @param axis_y_tick_distance Numeric, for which distance should lie between tick marks. The first tick will start at the lower end of `axis_y_lims` or be calculated automatically. The following ticks will be added in distances defined by `axis_y_tick_distance`. Defaults to `20`.
 #' @param axis_y_lims Numeric for the y-axis limits. Defaults to `NULL`, in which case the limits will be set automatically.
 #' @param background_line_colour Colour of the background line.
 #' @param brace_label_gap_y Numeric for the size of the vertical gap between brace labels.
@@ -107,7 +112,6 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param point_size Numeric for the size of plotted points.
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
 #' @param split_plot_gap_width Numeric for the width of the gap in a split plot in npc.
-#' @param y_axis Logical, indicating whether a y-axis should be plotted to the left of each row or not.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
 #' @return A named list with settings for the lineplots.
@@ -121,6 +125,8 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   axis_x_label_centralize = NULL,
                                   axis_x_label_nudge_y = NULL,
                                   axis_x_label_size = NULL,
+                                  axis_y = NULL,
+                                  axis_y_tick_distance = NULL,
                                   axis_y_lims = NULL,
                                   background_line_colour = NULL,
                                   brace_label_gap_y = NULL,
@@ -147,7 +153,6 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   point_size = NULL,
                                   split_plot = NULL,
                                   split_plot_gap_width = NULL,
-                                  y_axis = NULL,
                                   default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
@@ -158,6 +163,8 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
       "axis_x_label_centralize" = 0,
       "axis_x_label_nudge_y" = 0.02,
       "axis_x_label_size" = 2,
+      "axis_y" = FALSE,
+      "axis_y_tick_distance" = 20,
       "axis_y_lims" = NULL,
       "background_line_colour" = "black",
       "brace_label_gap_y" = 0.08,
@@ -183,8 +190,7 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
       "point_shapes" = NULL,
       "point_size" = 1,
       "split_plot" = FALSE,
-      "split_plot_gap_width" = 0,
-      "y_axis" = FALSE
+      "split_plot_gap_width" = 0
     )
   } else {
     plot_settings <- default_list

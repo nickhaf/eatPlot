@@ -11,11 +11,10 @@
 filter_plot_dat <- function(plot_dat,
                             filter_statement,
                             list_elements = c("plot_lines", "plot_points", "plot_background_lines", "plot_braces")) {
-
-
-  c(plot_dat[!(names(plot_dat) %in% list_elements)],
+  c(
+    plot_dat[!(names(plot_dat) %in% list_elements)],
     lapply(plot_dat[list_elements], function(dat) {
-    dat[eval(parse(text = filter_statement)), ]
-  })
+      dat[eval(parse(text = filter_statement)), ]
+    })
   )
 }

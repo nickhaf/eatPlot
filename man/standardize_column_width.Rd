@@ -20,13 +20,21 @@ If multiple tables/barplots should be combined, the column widths might be disto
 \examples{
 
 ## The first column of the left plot will cover 10 \% of the plot width, the second 20 \% and so on:
-standardize_column_width(column_widths = list(p1 = c(0.1, 0.2),
-                                              p2 = c(0.5, 0.2)),
-                         plot_ranges = c(10, 30))
+standardize_column_width(
+  column_widths = list(
+    p1 = c(0.1, 0.2),
+    p2 = c(0.5, 0.2)
+  ),
+  plot_ranges = c(10, 30)
+)
 
 ## NAs will be interpreted as barplots, in wich case the width of the barplots will be
 ## calclulated automatically, so the x-axes are on the same scale.
-standardize_column_width(column_widths = list(p1 = c(0.1, NA),
-                                              p2 = c(0.5, NA)),
-                         plot_ranges = c(10, 30))
+standardize_column_width(
+  column_widths = list(
+    p1 = c(0.1, NA),
+    p2 = c(0.5, NA)
+  ),
+  plot_ranges = c(10, 30)
+)
 }

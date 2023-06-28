@@ -34,7 +34,7 @@ theme_y_axis <- function() {
   theme_line() %+replace%
     ggplot2::theme(
       axis.text.y = ggplot2::element_text(colour = "black", size = 6),
-      text = ggplot2::element_text(colour = "black"),
+      text = ggplot2::element_text(colour = "black", size = 4),
       axis.ticks.y = ggplot2::element_line(linewidth = 0.2),
       axis.text.x = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_blank()

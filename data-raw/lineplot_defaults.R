@@ -16,18 +16,18 @@ lineplot_4x4 <- plotsettings_lineplot(
   brace_span_y = 0.1,
   equal_trend_line_length = TRUE,
   grouping_colours = c(
-   cmyk(0, 0, 0, 100),
-   cmyk(0, 0, 0, 40)
+    cmyk(0, 0, 0, 100),
+    cmyk(0, 0, 0, 40)
   ),
   line_type = c(
     "TRUE" = "solid",
     "FALSE" = "dashed"
   ),
   line_width = 0.7,
-  margin_bottom = 0.025,
-  margin_left = 0.01,
+  margin_bottom = 0,
+  margin_left = 0.004, ## has to be slightly smaller, because somehow the plot margin goes wider here.
   margin_right = 0.01,
-  margin_top = 0.02,
+  margin_top = 0.01,
   n_cols = 4,
   point_label_nudge = FALSE,
   point_label_nudge_direction = NULL,
@@ -41,7 +41,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   point_size = 1.7,
   split_plot = TRUE,
   split_plot_gap_width = 0.03,
-  y_axis = FALSE
+  axis_y = FALSE
 )
 
 usethis::use_data(lineplot_4x4, overwrite = TRUE)
@@ -49,9 +49,10 @@ usethis::use_data(lineplot_4x4, overwrite = TRUE)
 
 
 lineplot_4x4_3groups <- plotsettings_lineplot(
-  grouping_colours = c(cmyk(0, 0, 0, 100),
-                       cmyk(0, 0, 0, 40),
-                       cmyk(0, 0, 0, 20)
+  grouping_colours = c(
+    cmyk(0, 0, 0, 100),
+    cmyk(0, 0, 0, 40),
+    cmyk(0, 0, 0, 20)
   ),
   default_list = lineplot_4x4
 )
@@ -64,7 +65,7 @@ lineplot_2x3 <- plotsettings_lineplot(
   axis_x_background_width_x = 0.075,
   brace_label_nudge_x = 0.11,
   n_cols = 3,
-  margin_bottom = 0.085,
+  margin_top = 0.0175,
   point_label_nudge = FALSE,
   point_label_nudge_x = 0.02,
   split_plot_gap_width = 0.02,
@@ -72,4 +73,3 @@ lineplot_2x3 <- plotsettings_lineplot(
 )
 
 usethis::use_data(lineplot_2x3, overwrite = TRUE)
-

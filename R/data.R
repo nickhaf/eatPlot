@@ -136,4 +136,3 @@
 #'   ...
 #' }
 "barplot_noTrend"
-

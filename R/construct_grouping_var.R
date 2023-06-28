@@ -7,7 +7,7 @@
 #' @return Data frame with a new `grouping_var` column, constructed from the provided `grouping_vars` and the `group_var` column.
 #' @export
 #'
-#' @examples #tbd
+#' @examples # tbd
 construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
   ### Hier weiter:
   # Erst NAs auffüllen: grouping_var konstruieren und NAs auffüllen, aber welche Reihenfolge? Erst NAs auffüllen, weil sonst einige Felder nicht mehr NAs sind wenn das constructed wird. Aufpassen beim Auffüllen: Gruppe muss vor dem .vs. stehen!
@@ -40,7 +40,7 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
   )
 
   if (length(grouping_vars) == 2) {
-  dat <- fill_grouping_na(dat, grouping_vars)
+    dat <- fill_grouping_na(dat, grouping_vars)
   }
 
   levels(dat$grouping_var) <- gsub("\\.vs\\..*", "", levels(dat$grouping_var))
@@ -49,14 +49,14 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
 
   return(dat)
 
-  #stop("Your first grouping_var has to be found in the group_var-column of your data.")
+  # stop("Your first grouping_var has to be found in the group_var-column of your data.")
 }
 
 
 
 
 paste_grouping_vars <- function(dat, grouping_vars, group_var) {
-if (length(grouping_vars) == 1) {
+  if (length(grouping_vars) == 1) {
     dat <- check_factor(dat, grouping_vars, "grouping_var")
     dat <- fill_column(dat, grouping_vars)
     dat <- rename_columns(dat, "grouping_vars", "grouping_var")
@@ -64,7 +64,6 @@ if (length(grouping_vars) == 1) {
   } else if (length(grouping_vars) > 2) {
     stop("You can only provide two grouping vars at maximum.")
   } else if (length(grouping_vars) == 2) {
-
     message("Your provdided two grouping_vars. The merged grouping_var will be sorted alphabetically, which might result in an unwanted factor order. If you want another factor order, please use construct_grouping_var() to construct your grouping_var yourself.")
 
 

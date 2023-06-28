@@ -1,4 +1,3 @@
-
 prepare_comp <- function(dat, year_columns) {
   comp_trend <- data.frame()
 
@@ -29,20 +28,19 @@ prepare_comp <- function(dat, year_columns) {
 
 reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
   if (nrow(dat_comp) > 0) {
-    if("compare_1_Trend_Comp" %in% colnames(dat_comp)){
+    if ("compare_1_Trend_Comp" %in% colnames(dat_comp)) {
       dat_comp <- rename_columns(dat_comp, "compare_1_Trend_Comp", "compare_1_Comp")
       dat_comp <- rename_columns(dat_comp, "compare_2_Trend_Comp", "compare_2_Comp")
-    }else if("compare_1_noTrend_Comp" %in% colnames(dat_comp)){
+    } else if ("compare_1_noTrend_Comp" %in% colnames(dat_comp)) {
       dat_comp <- rename_columns(dat_comp, "compare_1_noTrend_Comp", "compare_1_Comp")
       dat_comp <- rename_columns(dat_comp, "compare_2_noTrend_Comp", "compare_2_Comp")
     }
 
     ## Build an unique identifier for the column names of the comparisons
-    if(any(grepl("\\.vs\\.", dat_comp$compare_1_Comp))){
-    dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_1_Comp, ".VS.", dat_comp$compare_2_Comp)
-    }else{
-      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp) ##müsste wholeGroup drin stehen
-
+    if (any(grepl("\\.vs\\.", dat_comp$compare_1_Comp))) {
+      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_1_Comp, ".VS.", dat_comp$compare_2_Comp)
+    } else {
+      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp) ## müsste wholeGroup drin stehen
     }
 
     dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))

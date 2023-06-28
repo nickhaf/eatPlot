@@ -4,9 +4,9 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   bar_background_lines = "border",
   bar_background_lines_linetype = "dotted",
   bar_fill_colour = c(
-   cmyk(85, 0, 43, 17),
-   cmyk(40, 0, 20, 8),
-   cmyk(20, 0, 10, 4)
+    cmyk(85, 0, 43, 17),
+    cmyk(40, 0, 20, 8),
+    cmyk(20, 0, 10, 4)
   ),
   bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
   bar_line_width = 0.1,

@@ -16,8 +16,7 @@ test_that("lineplot is still the same", {
     plot_lines(df_lines,
       line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
       line_sig = "sig_Trend_CompCrossDiffWithin"
-    )
-    )
+    ))
 })
 
 test_that("lines can be facetted", {
@@ -40,7 +39,6 @@ test_that("lines can be facetted", {
         line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
         line_sig = "sig_trend"
       ) +
-      ggplot2::facet_grid (.~ years_Trend, scales = "free_x")
-
+      ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
   )
 })

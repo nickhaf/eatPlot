@@ -6,14 +6,14 @@
 \usage{
 set_plot_coords(
   plot_dat,
-  point_values,
+  plot_lims = plot_lims,
   plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{
 \item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 
-\item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
+\item{plot_lims}{List obtained by \code{\link[=calc_plot_lims]{calc_plot_lims()}}, containing different coordinate values.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
