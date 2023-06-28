@@ -324,6 +324,7 @@ test_that("competence_vars with 3 groups", {
     label_sig_high = NULL,
     years_lines = list(c(2011, 2016), c(2016, 2021)),
     years_braces = list(c(2011, 2016), c(2016, 2021)),
+    seperate_plot_var_box = "Englisch Leseverstehen",
     plot_settings = plotsettings_lineplot(
       point_label_nudge_direction = list("1" = "+", "Drei" = "+", "0" = "-"),
       default_list = lineplot_2x3
@@ -332,7 +333,7 @@ test_that("competence_vars with 3 groups", {
 
   vdiffr::expect_doppelganger("lineplot_4x4_kb_tiles_3groups", p_line)
 
-  # save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 1.5) #2 + 10)
+  # save_plot(p_line, filename = "../split_lineplot_kb_long.pdf", height = 226.2 / 2)
 })
 
 test_that("adjusted means states", {

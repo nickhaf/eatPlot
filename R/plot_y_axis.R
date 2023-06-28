@@ -7,6 +7,7 @@
 #'
 #' @examples # tbd
 plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tablebarplot()) {
+
   range_y <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
   coords <- calc_y_value_coords(range_y)
   y_lim <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
