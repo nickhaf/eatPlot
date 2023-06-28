@@ -10,7 +10,7 @@ plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tab
 
   range_y <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
   coords <- calc_y_value_coords(range_y)
-  y_lim <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
+  y_lims_total <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
 
 
   y_coords <- calc_y_value_space(coords, range_y, plot_settings)
@@ -35,9 +35,8 @@ plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tab
       ),
       expand = c(0, 0)
     ),
-    set_y_coords(plot_dat, y_coords, y_lim),
+    set_y_coords(plot_dat, y_coords, y_lims_total),
     ## Use same coordinate system as the braces, so the plots can be aligned.
-    #set_cartesian_coords(y_lim),
     theme_y_axis()
   )}
 

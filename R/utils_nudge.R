@@ -10,9 +10,9 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 
   y_label <- calc_brace_label_coords(dat, starting_points, range_coords, range_years, plot_settings)$label_pos_y
 
-  y_lims <- c(min(y_label) - diff(range(coords)) * 0.06, max(coords)) # a bit smaller, so the labels don't get cut off
+  y_lims_total <- c(min(y_label) - diff(range(coords)) * 0.06, max(coords)) # a bit smaller, so the labels don't get cut off
 
-  return(y_lims)
+  return(y_lims_total)
 }
 
 # Plot_braces -------------------------------------------------------------

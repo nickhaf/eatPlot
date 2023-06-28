@@ -40,7 +40,7 @@ plot_braces <- function(dat,
 
   # Calculate brace coordinates ---------------------------------------------
   coords <- calc_y_value_coords(y_range)
-  y_lims <- calc_plot_lims_y(dat,
+  y_lims_total <- calc_plot_lims_y(dat,
                              coords,
                              plot_settings = plot_settings)
 
@@ -58,7 +58,6 @@ plot_braces <- function(dat,
   c(
     draw_braces(dat, plot_settings),
     draw_brace_label(dat, plot_settings)#,
-    #set_cartesian_coords(y_lims)
   )
 }
 

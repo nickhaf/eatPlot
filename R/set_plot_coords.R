@@ -9,13 +9,13 @@
 set_plot_coords <- function(plot_dat, x_range, y_range, plot_settings = plotsettings_lineplot()) {
 
   coords <- calc_y_value_coords(y_range)
-  y_lim <- calc_plot_lims_y(plot_dat$plot_braces,
+  y_lims_total <- calc_plot_lims_y(plot_dat$plot_braces,
                             coords,
                             plot_settings = plot_settings)
   y_coords <- calc_y_value_space(coords, range_y = y_range, plot_settings)
 
   list(
-    set_y_coords(plot_dat, y_coords, y_lim),
+    set_y_coords(plot_dat, y_coords, y_lims_total),
     ggplot2::scale_x_continuous(
   #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
       breaks = unique(plot_dat[["plot_points"]]$year),
@@ -68,22 +68,22 @@ calc_y_value_space <- function(coords, range_y, plot_settings){
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat, y_coords, y_lim) {
+set_y_coords <- function(plot_dat, y_coords, y_lims_total) {
   ggplot2::scale_y_continuous(
     breaks = seq_over(
       from = y_coords[1],
       to = y_coords[2],
       by = 20
     ),
-    limits = y_lim,
+    limits = y_lims_total,
     expand = c(0, 0)
   )
 }
 
-set_cartesian_coords <- function(y_lim) {
+set_cartesian_coords <- function(y_lims_total) {
   ggplot2::coord_cartesian(
     # clip = "off", # Clip Coordinate system. Necessary, so the brace can be drawn under the x-axis.
-    ylim = y_lim
+    ylim = y_lims_total
   )
 }
 
