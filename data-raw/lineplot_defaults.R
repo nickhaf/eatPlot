@@ -41,7 +41,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   point_size = 1.7,
   split_plot = TRUE,
   split_plot_gap_width = 0.03,
-  y_axis = FALSE
+  axis_y = FALSE
 )
 
 usethis::use_data(lineplot_4x4, overwrite = TRUE)

@@ -147,7 +147,7 @@ plot_lineplot <- function(plot_dat,
   names(plot_list) <- tiles
 
   # Add y axis --------------------------------------------------------------
-  if (plot_settings$y_axis == TRUE) {
+  if (plot_settings$axis_y == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
       plot_y_axis(plot_dat,
                   point_values = point_values,
