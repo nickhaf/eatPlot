@@ -7,17 +7,26 @@
 #'
 #' @examples # tbd
 plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tablebarplot()) {
-  range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
-  coords <- calc_y_value_coords(range_est)
+  range_y <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+  coords <- calc_y_value_coords(range_y)
   y_lim <- calc_plot_lims_y(plot_dat$plot_braces, coords, plot_settings = plot_settings)
+
+
+  y_coords <- calc_y_value_space(coords, range_y, plot_settings)
+
+  y_coords[2] <- max(seq_over(
+    from = y_coords[1],
+    to = y_coords[2],
+    by = 20
+  ))
 
   list(
     # Y-Line ------------------------------------------------------------------
     ggplot2::annotate("segment",
                       x = 0,
                       xend = 0,
-                      y = round(range_est[1] - 10, -1) - diff(range_est) * 0.00345,
-                      yend = round(range_est[2], -1) + diff(range_est) * 0.00345
+                      y = y_coords[1] - diff(y_coords) * 0.002425, # Without this, the axis tick will be plotted a bit over the y-line.
+                      yend = y_coords[2] + diff(y_coords) * 0.002425
     ),
     ggplot2::scale_x_continuous(
       limits = c(
@@ -25,7 +34,7 @@ plot_y_axis <- function(plot_dat, point_values, plot_settings = plotsettings_tab
       ),
       expand = c(0, 0)
     ),
-    set_y_coords(plot_dat, range_est, y_lim),
+    set_y_coords(plot_dat, y_coords, y_lim),
     ## Use same coordinate system as the braces, so the plots can be aligned.
     #set_cartesian_coords(y_lim),
     theme_y_axis()

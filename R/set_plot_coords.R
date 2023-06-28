@@ -12,9 +12,10 @@ set_plot_coords <- function(plot_dat, x_range, y_range, plot_settings = plotsett
   y_lim <- calc_plot_lims_y(plot_dat$plot_braces,
                             coords,
                             plot_settings = plot_settings)
+  y_coords <- calc_y_value_space(coords, range_y = y_range, plot_settings)
 
   list(
-    set_y_coords(plot_dat, coords, y_lim),
+    set_y_coords(plot_dat, y_coords, y_lim),
     ggplot2::scale_x_continuous(
   #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
       breaks = unique(plot_dat[["plot_points"]]$year),
@@ -54,12 +55,24 @@ calc_y_value_coords <- function(range_vec, nudge_param_upper = 0.1, nudge_param_
 }
 
 
+calc_y_value_space <- function(coords, range_y, plot_settings){
+  x_axis_start_y <- coords[2] - (coords[2] * plot_settings$axis_x_background_width_y)
+  brace_start_y <- coords[1]
+  y_axis_start <- round(brace_start_y, -1)
+  y_axis_end <- calc_y_value_coords(range_y, 0, 0)[2]
+
+  y_coords <- c(y_axis_start, y_axis_end)
+
+  return(y_coords)
+}
+
+
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat, range_est, y_lim) {
+set_y_coords <- function(plot_dat, y_coords, y_lim) {
   ggplot2::scale_y_continuous(
-    breaks = seq(
-      from = round(min(range_est, na.rm = TRUE) - 10, -1),
-      to = round(max(range_est, na.rm = TRUE), -1),
+    breaks = seq_over(
+      from = y_coords[1],
+      to = y_coords[2],
       by = 20
     ),
     limits = y_lim,
@@ -73,3 +86,24 @@ set_cartesian_coords <- function(y_lim) {
     ylim = y_lim
   )
 }
+
+#' Sequencing function that also includes the first value of the sequence that is larger than the stopping parameter.
+#'
+#' @param from Start value.
+#' @param to End value.
+#' @param by Step size.
+#'
+#' @return Sequencd vector.
+#'
+#' @examples seq_over(10, 40, 20)
+seq_over <- function(from, to, by){
+
+  res_vec <- from
+  i <- from
+  while(i < to){
+    i <- i + by
+res_vec[length(res_vec) + 1] <- i
+  }
+  return(res_vec)
+}
+

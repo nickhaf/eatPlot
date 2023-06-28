@@ -1,4 +1,5 @@
 calc_plot_lims_y <- function(dat, coords, plot_settings) {
+
   dat$overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
 
   range_coords <- diff(range(coords))
