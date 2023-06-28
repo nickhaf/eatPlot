@@ -3,6 +3,7 @@
 # eatPlot 0.0.0.9020
 * Removed most of the white space around the final line-plot. Some is still needed for drawing the box. 
 * Adjusted distance between single plot-tiles in lineplot.
+* It is now possible to set the y-axis of lineplots manually. 
 
 # eatPlot 0.0.0.9019
 * New function [gsub_plot_dat()] for replacing character strings in the prepared data. Mainly intended for replacing "wholeGroup" with "Deutschland", but other use cases are possible as well.
