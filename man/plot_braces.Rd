@@ -6,7 +6,7 @@
 \usage{
 plot_braces(
   dat,
-  y_range,
+  plot_lims,
   label_est = NULL,
   label_se = NULL,
   label_sig_high = NULL,
@@ -17,7 +17,7 @@ plot_braces(
 \arguments{
 \item{dat}{Prepared Trend data.}
 
-\item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
+\item{plot_lims}{List obtained by \code{\link[=calc_plot_lims]{calc_plot_lims()}}, containing different coordinate values.}
 
 \item{label_est}{Character string of the column name containing the brace labels.}
 

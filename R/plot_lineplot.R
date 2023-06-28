@@ -461,14 +461,13 @@ check_middle_middle <- function(j, n_cols, n_rows) {
 
 #' Calculate different plot limit values.
 #'
-#' @param plot_dat Plot_dat object, put out bei [prep_plot()].
-#' @param point_values Character string of the column name of the column used for value axis.
+#' @inheritParams plot_lineplot
 #'
 #' @return List containing the following elements:
 #' * `range_y`: Minimum and maximum of the values in `point_values`.
 #' * `y_lims_total`: Minimum and maximum value of the plot.
 #' * `coords`: Y-value of the first brace start, and heighest y-value of the plot.
-#' @examples
+#' @examples #tbd
 calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
   if (is.null(plot_settings$axis_y_lims)) {
     if (!is.null(point_values)) {

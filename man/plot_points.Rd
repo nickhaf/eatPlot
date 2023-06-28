@@ -8,7 +8,7 @@ plot_points(
   data_plot_points,
   point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_noComp",
-  y_range,
+  plot_lims,
   plot_settings = plotsettings_lineplot()
 )
 }
@@ -19,7 +19,7 @@ plot_points(
 
 \item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroup"}.}
 
-\item{y_range}{Numeric vector with two elements, indicating the min and max for the y axis.}
+\item{plot_lims}{List obtained by \code{\link[=calc_plot_lims]{calc_plot_lims()}}, containing different coordinate values.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }

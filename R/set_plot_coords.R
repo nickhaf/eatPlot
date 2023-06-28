@@ -87,13 +87,16 @@ set_cartesian_coords <- function(y_lims_total) {
 
 #' Sequencing function that also includes the first value of the sequence that is larger than the stopping parameter.
 #'
+#' @keywords internal
+#' @noRd
+#'
 #' @param from Start value.
 #' @param to End value.
 #' @param by Step size.
 #'
-#' @return Sequencd vector.
+#' @return Sequenced vector.
 #'
-#' @examples seq_over(10, 40, 20)
+#' @examples #seq_over(10, 40, 20)
 seq_over <- function(from, to, by){
 
   res_vec <- from

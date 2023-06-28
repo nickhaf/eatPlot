@@ -1,6 +1,6 @@
 #' Plot a y-axis plot. Can be merged with other plots for a customisable y-axis.
 #'
-#' @inheritParams plot_lineplot
+#' @inheritParams plot_single_lineplot
 #'
 #' @return [ggplot2] plot that can be used as a y-axis.
 #' @export
