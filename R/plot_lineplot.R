@@ -71,11 +71,11 @@ plot_lineplot <- function(plot_dat,
   ### prepare seperate_plot_var
   plot_dat$plot_lines$seperate_plot_var <- plot_dat$plot_lines[, seperate_plot_var]
 
-  if(!is.null(seperate_plot_var_order)){
-    if(!all(plot_dat$plot_lines$seperate_plot_var %in% seperate_plot_var_order)){
+  if (!is.null(seperate_plot_var_order)) {
+    if (!all(plot_dat$plot_lines$seperate_plot_var %in% seperate_plot_var_order)) {
       stop("Please provide all unique elements in the seperate_plot_var-column of your data in the seperate_plot_var_order - argument.")
     }
-    if(any(!(seperate_plot_var_order %in% plot_dat$plot_lines$seperate_plot_var))){
+    if (any(!(seperate_plot_var_order %in% plot_dat$plot_lines$seperate_plot_var))) {
       stop("At least one element in seperate_plot_var_order is not part of your seperate_plot_var - column.")
     }
   }
@@ -88,23 +88,16 @@ plot_lineplot <- function(plot_dat,
 
   states <- unique(plot_dat[[1]]$state_var)
 
-  if(!is.null(seperate_plot_var_order)){
-  tiles <- seperate_plot_var_order
-  }else{
-  tiles <- unique(plot_dat$plot_lines$seperate_plot_var)
-}
-
-  plot_list <- list()
-  if (is.null(plot_settings$axis_y_lims)) {
-    if (!is.null(point_values)) {
-      range_est <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
-    } else {
-      stop("Please provide point-values.")
-    }
+  if (!is.null(seperate_plot_var_order)) {
+    tiles <- seperate_plot_var_order
   } else {
-    range_est <- plot_settings$axis_y_lims
+    tiles <- unique(plot_dat$plot_lines$seperate_plot_var)
   }
 
+  plot_list <- list()
+
+
+  plot_lims <- calc_plot_lims(plot_dat, point_values, plot_settings)
 
   position <- 1
 
@@ -137,8 +130,7 @@ plot_lineplot <- function(plot_dat,
         plot_settings$margin_right,
         plot_settings$margin_bottom,
         plot_settings$margin_left
-      ), "npc")
-      )
+      ), "npc"))
 
     plot_list[[i]] <- p_state
     position <- position + 1
@@ -150,15 +142,15 @@ plot_lineplot <- function(plot_dat,
   if (plot_settings$axis_y == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
       plot_y_axis(plot_dat,
-                  point_values = point_values,
-                  plot_settings = plot_settings) +
+        point_values = point_values,
+        plot_settings = plot_settings
+      ) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
         plot_settings$margin_top,
         0,
         plot_settings$margin_bottom,
         0
-      ), "npc")
-      )
+      ), "npc"))
 
     positions_y_axis <- calc_y_positions(states, plot_settings$n_cols)
 
@@ -174,27 +166,27 @@ plot_lineplot <- function(plot_dat,
 
 
   # Adjust plot margins according to position ------------------------------
- #plot_list <- set_plot_margins(plot_list, plot_settings)
+  # plot_list <- set_plot_margins(plot_list, plot_settings)
 
   # The wholeGroup plot gets a box drawn around it.
-  for(plot_names in names(plot_list)){
-  if (plot_names %in% seperate_plot_var_box) {
-    plot_list[[plot_names]] <- plot_list[[plot_names]] +
-      ggplot2::theme(plot.background = ggplot2::element_rect(
-        color = "black",
-        linewidth = 1,
-        fill = NA
-      ))
+  for (plot_names in names(plot_list)) {
+    if (plot_names %in% seperate_plot_var_box) {
+      plot_list[[plot_names]] <- plot_list[[plot_names]] +
+        ggplot2::theme(plot.background = ggplot2::element_rect(
+          color = "black",
+          linewidth = 1,
+          fill = NA
+        ))
+    }
   }
-}
 
   # margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_dat[["plot_braces"]]$grouping_var)) - 1) # more brace labels need more space
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list,
-                        ncol = plot_settings$n_cols,
-                        widths = widths_setting
-                        )  +
+    ncol = plot_settings$n_cols,
+    widths = widths_setting
+  ) +
     # ggplot2::theme(
     #   plot.margin = ggplot2::unit(
     #     c(
@@ -205,9 +197,8 @@ plot_lineplot <- function(plot_dat,
     #     ),
     #     "npc"
     #   ) # t, r, b, l
-    #) +
-     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
-
+    # ) +
+    patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 }
 
 
@@ -299,9 +290,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
   n_rows <- ceiling(length(plot_list) / plot_settings$n_cols)
 
   for (j in 1:length(plot_list)) {
-
-
-# Only one row ------------------------------------------------------------
+    # Only one row ------------------------------------------------------------
     if (n_rows == 1) {
       # upper left --------------------------------------------------------------
       if (j == 1) {
@@ -341,7 +330,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
 
 
 
-# multiple rows -----------------------------------------------------------
+    # multiple rows -----------------------------------------------------------
     # upper left --------------------------------------------------------------
     if (j == 1) {
       plot_list[[j]] <- plot_list[[j]] +
@@ -425,7 +414,7 @@ set_plot_margins <- function(plot_list, plot_settings) {
 
 
     # Bottom middle -----------------------------------------------------------
-    if(j > ((length(plot_list) - plot_settings$n_cols) + 1) & j < length(plot_list)){
+    if (j > ((length(plot_list) - plot_settings$n_cols) + 1) & j < length(plot_list)) {
       plot_list[[j]] <- plot_list[[j]] +
         ggplot2::theme(plot.margin = ggplot2::unit(c(
           plot_settings$margin_top,
@@ -455,15 +444,53 @@ set_plot_margins <- function(plot_list, plot_settings) {
 
 ## If y_axis: abstand nach rechts etwas kleiner
 
-check_middle_left <- function(j, n_cols, n_rows){
-    j > 1 &
+check_middle_left <- function(j, n_cols, n_rows) {
+  j > 1 &
     ceiling(j / n_cols) < n_rows & # not in last row
     (j - 1) %% n_cols == 0 # one after the last column
 }
 
-check_middle_middle <- function(j, n_cols, n_rows){
-    ceiling(j / n_cols) < n_rows &
+check_middle_middle <- function(j, n_cols, n_rows) {
+  ceiling(j / n_cols) < n_rows &
     ceiling(j / n_cols) > 1 & # not in first row
     (j - 1) %% n_cols != 0 & # not first column
     j %% n_cols != 0 # not last column
+}
+
+
+
+#' Calculate different plot limit values.
+#'
+#' @param plot_dat Plot_dat object, put out bei [prep_plot()].
+#' @param point_values Character string of the column name of the column used for value axis.
+#'
+#' @return List containing the following elements:
+#' * `range_y`: Minimum and maximum of the values in `point_values`.
+#' * `y_lims_total`: Minimum and maximum value of the plot.
+#' * `coords`: Y-value of the first brace start, and heighest y-value of the plot.
+#' @examples
+calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
+  if (is.null(plot_settings$axis_y_lims)) {
+    if (!is.null(point_values)) {
+      range_y <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+      coords <- calc_y_value_coords(y_range)
+    } else {
+      stop("Please provide point-values.")
+    }
+  } else {
+    range_y <- plot_settings$axis_y_lims
+    coords <- calc_y_value_coords(y_range, nudge_param_lower = 0) # In this case, the brace starts at the lowest provided value.
+  }
+
+  y_lims_total <- calc_plot_lims_y(plot_dat$plot_braces,
+    coords,
+    plot_settings = plot_settings
+  )
+
+  coord_list <- list(
+    range_y = range_y,
+    y_lims_total = y_lims_total,
+    coords = coords
+  )
+  return(coords_list)
 }
