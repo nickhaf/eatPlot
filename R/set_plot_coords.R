@@ -13,7 +13,7 @@ set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plo
                                  plot_settings)
 
   list(
-    set_y_coords(plot_dat, y_coords, plot_lims),
+    set_y_coords(plot_dat, y_coords, plot_lims, plot_settings),
     ggplot2::scale_x_continuous(
   #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
       breaks = unique(plot_dat[["plot_points"]]$year),
@@ -66,12 +66,12 @@ calc_y_value_space <- function(coords, range_y, plot_settings){
 
 
 # Utils -------------------------------------------------------------------
-set_y_coords <- function(plot_dat, y_coords, plot_lims) {
+set_y_coords <- function(plot_dat, y_coords, plot_lims, plot_settings) {
   ggplot2::scale_y_continuous(
     breaks = seq_over(
       from = y_coords[1],
       to = y_coords[2],
-      by = 20
+      by = plot_settings$axis_y_tick_distance
     ),
     limits = plot_lims$y_lims_total,
     expand = c(0, 0)

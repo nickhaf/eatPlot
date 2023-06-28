@@ -6,14 +6,14 @@
 #' @export
 #'
 #' @examples # tbd
-plot_y_axis <- function(plot_dat, plot_lims, plot_settings = plotsettings_tablebarplot()) {
+plot_y_axis <- function(plot_dat, plot_lims, plot_settings = plotsettings_lineplot()) {
 
   y_coords <- calc_y_value_space(plot_lims$coords, plot_lims$y_range, plot_settings)
 
   y_coords[2] <- max(seq_over(
     from = y_coords[1],
     to = y_coords[2],
-    by = 20
+    by = plot_settings$axis_y_tick_distance
   ))
 
   list(
@@ -30,7 +30,7 @@ plot_y_axis <- function(plot_dat, plot_lims, plot_settings = plotsettings_tableb
       ),
       expand = c(0, 0)
     ),
-    set_y_coords(plot_dat, y_coords, plot_lims),
+    set_y_coords(plot_dat, y_coords, plot_lims, plot_settings),
     ## Use same coordinate system as the braces, so the plots can be aligned.
     theme_y_axis()
   )}

@@ -61,7 +61,7 @@ save_plot(p_line_states, filename = "../split_plot_example.pdf")
 ```
 
 ### Kompetencewerte Bundesländer with y-axis
-```{r chpt4_line}
+```{r chpt4_line y-axis}
 ## Prepare the data with 'KBuecher_imp3' as grouping_var
 plot_dat <- prep_plot(
   dat = trend_books,
@@ -88,7 +88,8 @@ p_line_states_y <- plot_lineplot(
   years_braces = list(c(2011, 2016), c(2016, 2021)),
   plot_settings = plotsettings_lineplot(
     axis_y = TRUE, 
-    axis_y_lims = c(320, 590), 
+    axis_y_tick_distance = 50, # default is 20 
+    axis_y_lims = c(340, 550), # If the second value is not reached by adding a multiple of axis_y_tick_distance to the first value, the next highest value that can be reached will be taken. 
     default_list = lineplot_4x4
   )
 )
@@ -97,7 +98,7 @@ p_line_states_y
 ```
 
 ```{r, eval = FALSE}
-save_plot(p_line_states, filename = "../split_plot_example.pdf")
+save_plot(p_line_states_y, filename = "../split_plot_example_y.pdf")
 ```
 
 
