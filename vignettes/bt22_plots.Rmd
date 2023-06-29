@@ -311,6 +311,10 @@ column_widths_stand <- standardize_column_width(
   plot_ranges = c(40, 42) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 
+## Calculate the relative pattern_spacing, so they are equal across both plots. 
+#bar_pattern_spacing_stand <- standardize_pattern_spacing(plot_ranges = list(c(-20, 20), c(-20, 22)))
+
+
 # Plot 1 ------------------------------------------------------------------
 ## Only plot the first state respectively:
 dat_bar$state_var[duplicated(dat_bar$state_var)] <- " "
@@ -349,6 +353,7 @@ p_bar_1 <- plot_tablebar(
     axis_x_lims = c(-20, 20),
     columns_alignment = c(0, 0, 2, 2, 2, 2),
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0),
+    bar_pattern_spacing = 0.0150, # calculated with standardize_pattern_spacing() down below
     columns_width = column_widths_stand$p1, # Here we can use the widths calculated by standardize_column_width()
     default_list = barplot_table_plot_pattern
   )
@@ -394,10 +399,13 @@ p_bar_2 <- plot_tablebar(
     columns_alignment = c(2, 2, 2, 2),
     columns_width = column_widths_stand$p2,
     headers_alignment = 0.5,
-    bar_pattern_spacing = 0.015, # spacing manuell justieren, damit das Muster die gleiche größe wie in p1 hat
+    bar_pattern_spacing = 0.0301, # calculated with standardize_pattern_spacing() down below
     default_list = barplot_table_plot_pattern
   )
 )
+
+bar_pattern_spacing_stand <- standardize_pattern_spacing(list(p_bar_1, p_bar_2))
+
 
 minsta_plot_trend <- combine_plots(list(p_bar_1, p_bar_2))
 minsta_plot_trend
@@ -584,6 +592,7 @@ mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
   columns_table_se = list(NULL, NULL, "se_noTrend_noComp_2021_mean", NULL, "se_noTrend_noComp_2021_sd"),
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(
+    bar_pattern_spacing = 0.02, 
     default_list = barplot_noTrend
   )
 )
