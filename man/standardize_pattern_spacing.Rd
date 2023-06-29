@@ -2,24 +2,20 @@
 % Please edit documentation in R/standardize_pattern_spacing.R
 \name{standardize_pattern_spacing}
 \alias{standardize_pattern_spacing}
-\title{Calculate the pattern spacing, so it is equal within a plot.}
+\title{Calculate the pattern spacing, so it is equal within a plot. Currently works only for two combined plots!}
 \usage{
-standardize_pattern_spacing(plot_list, pattern_spacing = 0.01)
+standardize_pattern_spacing(plot_list, pattern_spacing = 0.015)
 }
 \arguments{
 \item{plot_list}{List of plots that will be combined by \code{\link[=combine_plots]{combine_plots()}}.}
 
-\item{pattern_spacing}{Pattern spacing that will be taken as default for a whole plot. Defaults to \code{0.1}.}
+\item{pattern_spacing}{Pattern spacing that will be taken as default for a whole plot. Defaults to \code{0.015}.}
 }
 \value{
-Returns a list containing two numeric vectors:
-\itemize{
-\item spacing_plot_list: The bar_pattern_spacing values for the current plots.
-\item spacing_single_plot: The bar_pattern_spacing value for a single plot with the same width.
-}
+Returns a numeric vector containing the pattern spacings for the plots.
 }
 \description{
-Calculate the pattern spacing, so it is equal within a plot.
+This function takes a pattern spacing, that is for example used for single plots, and calculates the relative pattern_spacings needed for combined plots.
 }
 \examples{
 # 1) Build the plots p1, p2.

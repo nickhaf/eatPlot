@@ -1,5 +1,9 @@
 #' Calculate the pattern spacing, so it is equal within a plot. Currently works only for two combined plots!
 #'
+#' @description
+#' This function takes a pattern spacing, that is for example used for single plots, and calculates the relative pattern_spacings needed for combined plots.
+#'
+#'
 #' @param plot_list List of plots that will be combined by [combine_plots()].
 #' @param pattern_spacing Pattern spacing that will be taken as default for a whole plot. Defaults to `0.015`.
 #'
@@ -34,6 +38,8 @@ spacing_p1 <- (2 * pattern_spacing) - spacing_p2
 #                  spacing_single_plot = spacing_single_plot)
 
 res_list <- round(c(spacing_p1, spacing_p2), 4)
+
+message("Next Step: Update the bar_pattern_spacing values in your respective plots with the output values.")
 
 return(res_list)
 }
