@@ -4,7 +4,7 @@
 \alias{standardize_pattern_spacing}
 \title{Calculate the pattern spacing, so it is equal within a plot.}
 \usage{
-standardize_pattern_spacing(plot_list, y_range, pattern_spacing = 0.01)
+standardize_pattern_spacing(plot_list, pattern_spacing = 0.01)
 }
 \arguments{
 \item{plot_list}{List of plots that will be combined by \code{\link[=combine_plots]{combine_plots()}}.}
