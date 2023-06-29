@@ -1,18 +1,16 @@
-#' Calculate the pattern spacing, so it is equal within a plot.
+#' Calculate the pattern spacing, so it is equal within a plot. Currently works only for two combined plots!
 #'
 #' @param plot_list List of plots that will be combined by [combine_plots()].
-#' @param pattern_spacing Pattern spacing that will be taken as default for a whole plot. Defaults to `0.1`.
+#' @param pattern_spacing Pattern spacing that will be taken as default for a whole plot. Defaults to `0.02`.
 #'
-#' @return Returns a list containing two numeric vectors:
-#' * spacing_plot_list: The bar_pattern_spacing values for the current plots.
-#' * spacing_single_plot: The bar_pattern_spacing value for a single plot with the same width.
+#' @return Returns a numeric vector containing the pattern spacings for the plots.
 #' @export
 #'
 #' @examples
 #' # 1) Build the plots p1, p2.
 #' # 2) standardize_pattern_spacing(list(p1, p2))
 #' # 3) Build p1 and p2 new, but with the pattern spacings calculated in step 2.
-standardize_pattern_spacing <- function(plot_list, pattern_spacing = 0.01) {
+standardize_pattern_spacing <- function(plot_list, pattern_spacing = 0.02) {
 
 coordinates <- vapply(plot_list, function(plot) {
     get_plot_coords(plot)
@@ -26,11 +24,16 @@ coordinates <- vapply(plot_list, function(plot) {
 
 # final_spacing <- round((pattern_spacing - (plot_widths * pattern_spacing)), 4)
 
-final_spacing <- round(pattern_spacing * (1/plot_widths), 4)
-spacing_single_plot <- sum(final_spacing)/length(plot_list)
+spacing_p2 <- length(plot_list) * plot_widths[1] * pattern_spacing
+spacing_p1 <- 2 * pattern_spacing - spacing_p2
 
-res_list <- list(spacing_plot_list = final_spacing,
-                 spacing_single_plot = spacing_single_plot)
+#final_spacing <- round(pattern_spacing * (1/plot_widths), 4)
+#spacing_single_plot <- sum(final_spacing)/length(plot_list)
+
+# res_list <- list(spacing_plot_list = final_spacing,
+#                  spacing_single_plot = spacing_single_plot)
+
+res_list <- round(c(spacing_p1, spacing_p2), 4)
 
 return(res_list)
 }

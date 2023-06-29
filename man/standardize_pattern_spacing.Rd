@@ -12,7 +12,11 @@ standardize_pattern_spacing(plot_list, pattern_spacing = 0.01)
 \item{pattern_spacing}{Pattern spacing that will be taken as default for a whole plot. Defaults to \code{0.1}.}
 }
 \value{
-Returns a numeric vector containing the pattern spacings that have to be given into the plot functions.
+Returns a list containing two numeric vectors:
+\itemize{
+\item spacing_plot_list: The bar_pattern_spacing values for the current plots.
+\item spacing_single_plot: The bar_pattern_spacing value for a single plot with the same width.
+}
 }
 \description{
 Calculate the pattern spacing, so it is equal within a plot.
