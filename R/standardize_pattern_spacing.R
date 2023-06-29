@@ -3,7 +3,9 @@
 #' @param plot_list List of plots that will be combined by [combine_plots()].
 #' @param pattern_spacing Pattern spacing that will be taken as default for a whole plot. Defaults to `0.1`.
 #'
-#' @return Returns a numeric vector containing the pattern spacings that have to be given into the plot functions.
+#' @return Returns a list containing two numeric vectors:
+#' * spacing_plot_list: The bar_pattern_spacing values for the current plots.
+#' * spacing_single_plot: The bar_pattern_spacing value for a single plot with the same width.
 #' @export
 #'
 #' @examples
