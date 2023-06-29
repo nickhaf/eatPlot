@@ -3,9 +3,9 @@
 lineplot_4x4 <- plotsettings_lineplot(
   axis_x_background_colour = cmyk(30, 0, 15, 6),
   axis_x_background_width_x = 0.1,
-  axis_x_background_width_y = 0.04,
+  axis_x_background_width_y = 0.1, #0.04,
   axis_x_label_centralize = 0.05,
-  axis_x_label_nudge_y = 0.02,
+  axis_x_label_nudge_y = 0.05, #0.02,
   axis_x_label_size = 2,
   background_line_colour = cmyk(30, 0, 15, 6),
   brace_label_gap_y = 0.08,
@@ -32,7 +32,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   point_label_nudge = FALSE,
   point_label_nudge_direction = NULL,
   point_label_nudge_x = 0.02,
-  point_label_nudge_y = 0.18,
+  point_label_nudge_y = 0.1,
   point_label_size = 2,
   point_shapes = c(
     "TRUE" = 17,
