@@ -22,7 +22,7 @@ plot_x_axis <- function(data_plot_points,
   dat_coords <- data_plot_points[, c("year", "year_axis", "years_Trend")]
 
   dat_coords$x_labels <- as.character(dat_coords$year)
-  dat_coords$y_coords <- y_max - plot_lims$y_range_diff * plot_settings$axis_x_label_nudge_y
+  dat_coords$y_coords <- y_max - (plot_lims$coords_diff * plot_settings$axis_x_label_nudge_y)
 
 
   # calc x-axis  ------------------------------------------------------------
@@ -43,7 +43,7 @@ plot_x_axis <- function(data_plot_points,
       geom = "rect",
       xmin = -Inf,
       xmax = Inf,
-      ymin = y_max - (plot_lims$y_range_diff * plot_settings$axis_x_background_width_y), # Increase, so the x-axis background reaches lower.
+      ymin = y_max - (plot_lims$coords_diff * plot_settings$axis_x_background_width_y), # Increase, so the x-axis background reaches lower.
       ymax = y_max,
       fill = plot_settings$axis_x_background_colour
     ),

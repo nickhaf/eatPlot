@@ -3,7 +3,7 @@
 lineplot_4x4 <- plotsettings_lineplot(
   axis_x_background_colour = cmyk(30, 0, 15, 6),
   axis_x_background_width_x = 0.1,
-  axis_x_background_width_y = 0.12,
+  axis_x_background_width_y = 0.1,
   axis_x_label_centralize = 0.05,
   axis_x_label_size = 2,
   background_line_colour = cmyk(30, 0, 15, 6),
