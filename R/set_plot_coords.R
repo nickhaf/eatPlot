@@ -36,19 +36,21 @@ set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plo
 #'
 #' @examples calc_y_value_coords(c(0, 30))
 calc_y_value_coords <- function(y_range,
-                                nudge_param_upper = 0.1,
+                                nudge_param_upper = 0.15,
                                 nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
+  y_range_diff <- diff(y_range)
+
   coords <- c(
     ## Lower y limit
-    plyr::round_any(y_range[1] - range_est * nudge_param_lower,
+    plyr::round_any(y_range[1] - y_range_diff * nudge_param_lower,
       accuracy = 10,
       f = floor
-    ) - range_est * nudge_param_lower,
+    ) - y_range_diff * nudge_param_lower,
     ## upper y limit
-    plyr::round_any(y_range[2] + range_est * nudge_param_upper, # + range_est * point_label_nudge_y (und wenn axis gesetzt, dann von da aus) + kleiner Wert, der für die Schrifthöhe kontrolliert + range_est * nudge_axis_background
+    plyr::round_any(y_range[2] + y_range_diff * nudge_param_upper, # + y_range_diff * point_label_nudge_y (und wenn axis gesetzt, dann von da aus) + kleiner Wert, der für die Schrifthöhe kontrolliert + y_range_diff * nudge_axis_background
       accuracy = 10,
       f = ceiling
-    ) + range_est * nudge_param_upper
+    ) + y_range_diff * nudge_param_upper
   )
   return(coords)
 }

@@ -487,7 +487,7 @@ calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
     plot_settings = plot_settings
   )
 
-  y_lims_total_range <- diff(range(y_limes_total))
+  y_range_diff <- diff(range(y_range))
 
   x_range <- range(plot_dat$plot_points$year)
 
@@ -495,7 +495,7 @@ calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
     x_range = x_range,
     y_range = y_range,
     y_lims_total = y_lims_total,
-    y_lims_total_range = y_lims_total_ranges,
+    y_range_diff = y_range_diff,
     coords = coords
   )
   return(coord_list)

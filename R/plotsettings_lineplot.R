@@ -48,7 +48,7 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$axis_x_background_width_x))
   stopifnot(is.numeric(settings_list$axis_x_background_width_y))
   stopifnot(is.numeric(settings_list$axis_x_label_centralize))
-  stopifnot(is.numeric(settings_list$axis_x_label_nudge_y))
+  stopifnot(is.numeric(settings_list$axis_x_label_nudge_y) | is.null(settings_list$axis_x_label_nudge_y))
   stopifnot(is.numeric(settings_list$axis_x_label_size))
   stopifnot(is.logical(settings_list$axis_y))
   stopifnot(is.numeric(settings_list$axis_y_tick_distance) | is.null(settings_list$axis_y_tick_distance))
@@ -161,7 +161,7 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
       "axis_x_background_width_x" = 0,
       "axis_x_background_width_y" = 0.04,
       "axis_x_label_centralize" = 0,
-      "axis_x_label_nudge_y" = 0.02,
+      "axis_x_label_nudge_y" = NULL,
       "axis_x_label_size" = 2,
       "axis_y" = FALSE,
       "axis_y_tick_distance" = 20,
