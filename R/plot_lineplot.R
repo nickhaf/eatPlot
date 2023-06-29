@@ -478,7 +478,7 @@ calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
     }
   } else {
     y_range <- plot_settings$axis_y_lims
-    coords <- calc_y_value_coords(y_range, nudge_param_lower = 0) # In this case, the brace starts at the lowest provided value.
+    coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.075) # In this case, the brace starts at the lowest provided value, and the upper value is reduced. .
   }
 
   y_lims_total <- calc_plot_lims_y(
