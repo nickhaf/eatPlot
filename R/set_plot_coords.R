@@ -36,8 +36,8 @@ set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plo
 #'
 #' @examples calc_y_value_coords(c(0, 30))
 calc_y_value_coords <- function(y_range,
-                                nudge_param_upper = 0.2,
-                                nudge_param_lower = 0.15) { # nudge_param increases the distance between lowest/highest point and braces/x axis
+                                nudge_param_upper = 0.4,
+                                nudge_param_lower = 0.3) { # nudge_param increases the distance between lowest/highest point and braces/x axis
   y_range_diff <- diff(y_range)
 
   coords <- c(

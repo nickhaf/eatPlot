@@ -202,9 +202,10 @@ calc_brace_indent <- function(dat, overlap) {
   return(dat)
 }
 
-calc_y_nudge <- function(plot_points_dat, y_range, plot_settings = plotsettings_lineplot()) {
-  range_est <- diff(y_range)
-  nudge_val <- range_est * plot_settings$point_label_nudge_y
+calc_y_nudge <- function(plot_points_dat,
+                         plot_lims,
+                         plot_settings = plotsettings_lineplot()) {
+  nudge_val <- plot_lims$coords_diff * plot_settings$point_label_nudge_y
 
   # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher. For facetted plots, the trend has to be taken into account as well.
 
