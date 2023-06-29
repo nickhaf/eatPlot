@@ -4,12 +4,12 @@
 \alias{standardize_pattern_spacing}
 \title{Calculate the pattern spacing, so it is equal within a plot.}
 \usage{
-standardize_pattern_spacing(plot_list, pattern_spacing = 0.01)
+standardize_pattern_spacing(plot_list, y_range, pattern_spacing = 0.01)
 }
 \arguments{
 \item{plot_list}{List of plots that will be combined by \code{\link[=combine_plots]{combine_plots()}}.}
 
-\item{pattern_spacing}{Pattern spacing that will be taken as default for a whole plot. Defaults to 0.1.}
+\item{pattern_spacing}{Pattern spacing that will be taken as default for a whole plot. Defaults to \code{0.1}.}
 }
 \value{
 Returns a numeric vector containing the pattern spacings that have to be given into the plot functions.
