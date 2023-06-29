@@ -8,7 +8,7 @@
 #' @examples # tbd
 combine_plots <- function(plot_list) {
   coordinates <- vapply(plot_list, function(plot) {
-    get_range_of_xcoords(plot)
+    get_x_range(plot)
   }, FUN.VALUE = numeric(1))
 
   sum_coords <- sum(coordinates)
