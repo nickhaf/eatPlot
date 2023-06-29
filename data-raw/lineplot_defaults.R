@@ -31,7 +31,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   point_label_nudge = FALSE,
   point_label_nudge_direction = NULL,
   point_label_nudge_x = 0.02,
-  point_label_nudge_y = 0.1,
+  point_label_nudge_y = 0.075,
   point_label_size = 2,
   point_shapes = c(
     "TRUE" = 17,
