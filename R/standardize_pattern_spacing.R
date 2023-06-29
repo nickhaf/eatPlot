@@ -10,7 +10,7 @@
 #' # 1) Build the plots p1, p2.
 #' # 2) standardize_pattern_spacing(list(p1, p2))
 #' # 3) Build p1 and p2 new, but with the pattern spacings calculated in step 2.
-standardize_pattern_spacing <- function(plot_list, y_range, pattern_spacing = 0.01, pattern_width = 0.4) {
+standardize_pattern_spacing <- function(plot_list, y_range, pattern_spacing = 0.01) {
 
   coordinates <- vapply(plot_list, function(plot) {
     get_plot_coords(plot)
@@ -22,14 +22,9 @@ standardize_pattern_spacing <- function(plot_list, y_range, pattern_spacing = 0.
     coord_range / sum_coords
   }, FUN.VALUE = numeric(1))
 
-final_spacing <- round((pattern_spacing - (plot_widths * pattern_spacing)), 4)
-final_width <- round((pattern_width - (plot_widths * pattern_width)), 4)
+# final_spacing <- round((pattern_spacing - (plot_widths * pattern_spacing)), 4)
 
-#final_spacing <- round(pattern_spacing * (1/plot_widths), 4)
-#final_width <- round(pattern_width * (1/plot_widths), 4)
+final_spacing <- round(pattern_spacing * (1/plot_widths), 4)
 
-list_res <- list(spacing = final_spacing,
-                 width = final_width)
-
-return(list_res)
+return(final_spacing)
 }
