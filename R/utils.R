@@ -580,7 +580,7 @@ merge_2 <- function(dat_1, dat_2, ...) {
 #' @keywords internal
 #' @noRd
 #'
-#' @param plot [ggplot]-plot from which to extract the range of the x-axis coordinates.
+#' @param plot A [ggplot]-plot from which to extract the range of the x-axis coordinates.
 #'
 #' @return Numeric value of the range of the x-axis coordinates of the given `plot`.
 #'
