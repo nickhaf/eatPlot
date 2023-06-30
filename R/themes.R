@@ -18,9 +18,9 @@ theme_table <- function() {
       axis.text.y = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_text(size = 5),
       axis.ticks.y = ggplot2::element_blank(),
-      # plot.margin = ggplot2::unit(c(0, -0.1, 0, 0), "cm"),
       plot.caption = ggplot2::element_text(hjust = 0),
-      legend.position = "none" # "bottom"
+      legend.position = "none", # "bottom",
+      plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm")
     )
 }
 
