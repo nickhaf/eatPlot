@@ -15,7 +15,8 @@ test_that("simple pointplot", {
       plot_points(df,
         point_sig = "sig_noTrend_noComp",
         point_values = "est_point",
-        plot_lims = list(y_range = c(100, 107))
+        plot_lims = list(y_range = c(100, 107),
+                         coords_diff = 7)
       )
   )
 })
@@ -37,7 +38,8 @@ test_that("Pointplot can be facetted", {
       plot_points(df,
         point_values = "est_point",
         point_sig = "sig_noTrend_noComp",
-        plot_lims = list(y_range = c(100, 107))
+        plot_lims = list(y_range = c(100, 107),
+                         coords_diff = 7)
       ) +
       ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
   )
