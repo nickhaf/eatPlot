@@ -62,7 +62,7 @@ test_that("Point nudge is calculated correctly", {
   )
 
   expect_equal(calc_y_nudge(df,
-    y_range = c(1, 2),
+    plot_lims = list(coords_diff = 1),
     plot_settings = plotsettings_lineplot(point_label_nudge_y = 0.18)
   )$nudge_y, c(0.18, -0.18, -0.18, 0.18, 0.18, -0.18, 0.18, -0.18))
 })

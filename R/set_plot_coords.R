@@ -35,19 +35,16 @@ set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plo
 #' @return Numeric vector containing the y-range between brace and upper x-axis.
 #'
 #' @examples calc_y_value_coords(c(0, 30))
-calc_y_value_coords <- function(y_range, nudge_param_upper = 0.1, nudge_param_lower = 0.075) { # nudge_param increases the distance between lowest/highest point and braces/x axis
-  range_est <- diff(y_range)
+calc_y_value_coords <- function(y_range,
+                                nudge_param_upper = 0.45,
+                                nudge_param_lower = 0.3) { # nudge_param increases the distance between lowest/highest point and braces/x axis
+  y_range_diff <- diff(y_range)
+
   coords <- c(
     ## Lower y limit
-    plyr::round_any(y_range[1] - (y_range[1] * nudge_param_lower),
-      accuracy = 10,
-      f = floor
-    ) - range_est * nudge_param_lower,
-    ## upper y limit
-    plyr::round_any(y_range[2] + (y_range[2] * nudge_param_upper),
-      accuracy = 10,
-      f = ceiling
-    ) + range_est * nudge_param_upper
+    y_range[1] - y_range_diff * nudge_param_lower,
+    # ## upper y limit
+    y_range[2] + y_range_diff * nudge_param_upper
   )
   return(coords)
 }

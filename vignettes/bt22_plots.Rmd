@@ -60,7 +60,7 @@ p_line_states
 save_plot(p_line_states, filename = "../split_plot_example.pdf")
 ```
 
-### Kompetencewerte Bundesländer with y-axis
+### Kompetenzewerte Bundesländer with y-axis
 ```{r chpt4_line y-axis}
 ## Prepare the data with 'KBuecher_imp3' as grouping_var
 plot_dat <- prep_plot(

@@ -57,7 +57,7 @@ test_that("single_lineplot with one grouping_var is plotted correctly (same dist
     ggplot2::ggplot() +
       plot_single_lineplot(
         test_plot,
-        plot_lims = calc_plot_lims(test_plot, "point_values", plot_settings = plotsettings_lineplot()),
+        plot_lims = calc_plot_lims(test_plot, "point_values", c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"), plot_settings = plotsettings_lineplot()),
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -129,7 +129,11 @@ test_that("single_lineplot with one grouping_var is plotted correctly (different
     ggplot2::ggplot() +
       plot_single_lineplot(
         test_plot,
-        plot_lims = calc_plot_lims(test_plot, "point_values", plot_settings = plotsettings_lineplot()),
+        plot_lims = calc_plot_lims(test_plot,
+          "point_values",
+          c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+          plot_settings = plotsettings_lineplot()
+        ),
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -199,8 +203,11 @@ test_that("single_lineplot with two groups is plotted correctly", {
     "single grouped lineplot",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_2,
-                           plot_lims = calc_plot_lims(test_plot_2, "point_values", plot_settings = plotsettings_lineplot()),
-
+        plot_lims = calc_plot_lims(test_plot_2,
+          "point_values",
+          c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+          plot_settings = plotsettings_lineplot()
+        ),
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -270,8 +277,7 @@ test_that("split lineplot with no groups is plotted correctly with equal line le
     "splitlineplot equal distances",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_split,
-                           plot_lims = calc_plot_lims(test_plot_split, "point_values", plot_settings = plotsettings_lineplot()),
-
+        plot_lims = calc_plot_lims(test_plot_split, "point_values", c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"), plot_settings = plotsettings_lineplot()),
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",
@@ -347,9 +353,11 @@ test_that("split lineplot with no groups is plotted correctly with relational li
     "splitlineplot relational distances",
     ggplot2::ggplot() +
       plot_single_lineplot(test_plot_split,
-                           plot_lims = calc_plot_lims(test_plot_split,
-                                                      "point_values",
-                                                      plot_settings = plotsettings_lineplot()),
+        plot_lims = calc_plot_lims(test_plot_split,
+          "point_values",
+          c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+          plot_settings = plotsettings_lineplot()
+        ),
         line_sig = "sig_trend",
         label_est = "est_label",
         label_se = "se_label",

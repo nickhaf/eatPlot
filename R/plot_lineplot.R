@@ -96,8 +96,7 @@ plot_lineplot <- function(plot_dat,
 
   plot_list <- list()
 
-
-  plot_lims <- calc_plot_lims(plot_dat, point_values, plot_settings)
+  plot_lims <- calc_plot_lims(plot_dat, point_values, line_values, plot_settings)
 
   position <- 1
 
@@ -468,17 +467,26 @@ check_middle_middle <- function(j, n_cols, n_rows) {
 #' * `y_lims_total`: Minimum and maximum value of the plot.
 #' * `coords`: Y-value of the first brace start, and heighest y-value of the plot.
 #' @examples #tbd
-calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
+calc_plot_lims <- function(plot_dat, point_values, line_values, plot_settings) {
   if (is.null(plot_settings$axis_y_lims)) {
     if (!is.null(point_values)) {
+      if(!is.null(plot_dat$plot_background_lines)){
+        y_range <- range(c(plot_dat[["plot_points"]][, point_values], plot_dat[["plot_background_lines"]][, paste0(line_values, "_wholeGroup")]), na.rm = TRUE)
+      }else{
       y_range <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+      }
+
       coords <- calc_y_value_coords(y_range)
     } else {
       stop("Please provide point-values.")
     }
   } else {
-    y_range <- plot_settings$axis_y_lims
-    coords <- calc_y_value_coords(y_range, nudge_param_lower = 0) # In this case, the brace starts at the lowest provided value.
+    y_range <- range(seq_over(
+      from = plot_settings$axis_y_lims[1],
+      to = plot_settings$axis_y_lims[2],
+      by = plot_settings$axis_y_tick_distance
+    ))
+    coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   }
 
   y_lims_total <- calc_plot_lims_y(
@@ -487,12 +495,17 @@ calc_plot_lims <- function(plot_dat, point_values, plot_settings) {
     plot_settings = plot_settings
   )
 
+  y_range_diff <- diff(range(y_range))
+  coords_diff <- diff(coords)
+
   x_range <- range(plot_dat$plot_points$year)
 
   coord_list <- list(
     x_range = x_range,
     y_range = y_range,
     y_lims_total = y_lims_total,
+    y_range_diff = y_range_diff,
+    coords_diff = coords_diff,
     coords = coords
   )
   return(coord_list)
