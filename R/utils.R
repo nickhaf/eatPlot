@@ -587,7 +587,7 @@ merge_2 <- function(dat_1, dat_2, ...) {
 #' @examples
 #' example_plot <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
 #' get_x_range(example_plot)
-get_plot_coords <- function(plot) {
+get_x_range <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
 }
 
