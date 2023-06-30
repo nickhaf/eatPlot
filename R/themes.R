@@ -20,7 +20,7 @@ theme_table <- function() {
       axis.ticks.y = ggplot2::element_blank(),
       plot.caption = ggplot2::element_text(hjust = 0),
       legend.position = "none", # "bottom",
-      plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm")
+      plot.margin = ggplot2::unit(c(0, 0, 0, -0.10), "cm")
     )
 }
 
