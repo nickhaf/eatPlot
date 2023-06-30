@@ -471,7 +471,7 @@ calc_plot_lims <- function(plot_dat, point_values, line_values, plot_settings) {
   if (is.null(plot_settings$axis_y_lims)) {
     if (!is.null(point_values)) {
       if(!is.null(plot_dat$plot_background_lines)){
-        y_range <- range(c(plot_dat[["plot_points"]][, point_values], plot_dat[["plot_background_lines"]][, line_values]), na.rm = TRUE)
+        y_range <- range(c(plot_dat[["plot_points"]][, point_values], plot_dat[["plot_background_lines"]][, paste0(line_values, "_wholeGroup")]), na.rm = TRUE)
       }else{
       y_range <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
       }

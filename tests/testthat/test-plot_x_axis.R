@@ -15,7 +15,8 @@ test_that("x axis can be built on plot with relationaal distance x-axis", {
       ggplot2::geom_point() +
       plot_x_axis(test_df,
                   plot_lims = list(
-       coords = calc_y_value_coords(c(3, 10)))
+       coords = calc_y_value_coords(c(3, 10)),
+       coords_diff = 7)
       )
   )
 })
@@ -37,7 +38,8 @@ test_that("x axis can be built on plot with same distance x-axis", {
       ggplot2::geom_point() +
       plot_x_axis(test_df,
                   plot_lims = list(
-                    coords = calc_y_value_coords(c(3, 10))))
+                    coords = calc_y_value_coords(c(3, 10)),
+                  coords_diff = 7))
   )
 })
 
@@ -59,7 +61,8 @@ test_that("x axis can be built on facetted plot with relational distances", {
       ggplot2::geom_point() +
       plot_x_axis(test_df,
                   plot_lims = list(
-                    coords = calc_y_value_coords(c(3, 10))),
+                    coords = calc_y_value_coords(c(3, 10)),
+                    coords_diff = 7),
         plot_settings = plotsettings_lineplot(
           split_plot = TRUE,
           axis_x_label_centralize = 0.05
@@ -87,7 +90,8 @@ test_that("x axis can be built on facetted plot with equal distances", {
       ggplot2::geom_point() +
       plot_x_axis(test_df,
                   plot_lims = list(
-                    coords = calc_y_value_coords(c(3, 10))),
+                    coords = calc_y_value_coords(c(3, 10)),
+                    coords_diff = 7),
         plot_settings = plotsettings_lineplot(
           split_plot = TRUE,
           axis_x_label_centralize = 0.05
