@@ -575,7 +575,19 @@ merge_2 <- function(dat_1, dat_2, ...) {
   dat_merged <- merge(dat_1, dat_2, ...)
 }
 
-get_plot_coords <- function(plot) {
+#' Takes a [ggplot]-plot as input and extracts the range of the x-axis coordinates.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param plot A [ggplot]-plot from which to extract the range of the x-axis coordinates.
+#'
+#' @return Numeric value of the range of the x-axis coordinates of the given `plot`.
+#'
+#' @examples
+#' example_plot <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
+#' get_x_range(example_plot)
+get_x_range <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
 }
 

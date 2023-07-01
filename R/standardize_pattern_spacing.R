@@ -17,7 +17,7 @@
 standardize_pattern_spacing <- function(plot_list, pattern_spacing = 0.015) {
 
 coordinates <- vapply(plot_list, function(plot) {
-    get_plot_coords(plot)
+    get_x_range(plot)
   }, FUN.VALUE = numeric(1))
 
   sum_coords <- sum(coordinates)
