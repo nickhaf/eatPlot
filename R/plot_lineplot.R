@@ -173,7 +173,7 @@ plot_lineplot <- function(plot_dat,
       plot_list[[plot_names]] <- plot_list[[plot_names]] +
         ggplot2::theme(plot.background = ggplot2::element_rect(
           color = "black",
-          linewidth = 1,
+          linewidth = plot_settings$seperate_plot_var_box_linewidth,
           fill = NA
         ))
     }

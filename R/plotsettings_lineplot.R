@@ -2,7 +2,7 @@
 check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 34
+      length(settings_list) == 35
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -39,6 +39,7 @@ check_plotsettings_lineplot <- function(settings_list) {
         "point_label_size",
         "point_shapes",
         "point_size",
+        "seperate_plot_var_box_linewidth",
         "split_plot",
         "split_plot_gap_width"
       )
@@ -75,6 +76,7 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$point_label_size))
   stopifnot(is.numeric(settings_list$point_shapes) | is.null(settings_list$point_shapes))
   stopifnot(is.numeric(settings_list$point_size))
+  stopifnot(is.numeric(settings_list$seperate_plot_var_box_linewidth))
   stopifnot(is.logical(settings_list$split_plot))
   stopifnot(is.numeric(settings_list$split_plot_gap_width))
 
@@ -110,6 +112,7 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param point_label_size Numeric for the fontsize of the pointlabels.
 #' @param point_shapes Named numeric vector for the shape of the points. The vectornames must be either `"TRUE"` or `"FALSE"`, as the point-shapes refer to significances. See [ggplot2::scale_shape].
 #' @param point_size Numeric for the size of plotted points.
+#' @param seperate_plot_var_box_linewidth Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).
 #' @param split_plot Logical, indicating whether the different trends should be split or not.
 #' @param split_plot_gap_width Numeric for the width of the gap in a split plot in npc.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
@@ -151,6 +154,7 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   point_label_nudge_x = NULL,
                                   point_label_nudge_y = NULL,
                                   point_size = NULL,
+                                  seperate_plot_var_box_linewidth = NULL,
                                   split_plot = NULL,
                                   split_plot_gap_width = NULL,
                                   default_list = NULL) {
@@ -189,6 +193,7 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
       "point_label_size" = 2,
       "point_shapes" = NULL,
       "point_size" = 1,
+      "seperate_plot_var_box_linewidth" = 0.5,
       "split_plot" = FALSE,
       "split_plot_gap_width" = 0
     )

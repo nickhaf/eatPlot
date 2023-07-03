@@ -157,6 +157,12 @@ plot_dat <- gsub_plot_dat(plot_dat,
                           search_for = "wholeGroup", 
                           replace_with = "Deutschland")
 
+# Remove one country, so with Deutschland plotted, we still have a 4x4 matrix (just necessary for this example).
+plot_dat <- filter_rows(plot_dat, 
+                        column_name = "state_var", 
+                        subsetter = "Land-17",
+                        remove = TRUE)
+
 p_line_states_de <- plot_lineplot(
   plot_dat = plot_dat,
   seperate_plot_var_order = unique(plot_dat$plot_lines$state_var), # here we can sort the plot
@@ -168,6 +174,7 @@ p_line_states_de <- plot_lineplot(
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
   plot_settings = plotsettings_lineplot(
+    seperate_plot_var_box_linewidth = 0.5, 
     default_list = lineplot_4x4
   )
 )
