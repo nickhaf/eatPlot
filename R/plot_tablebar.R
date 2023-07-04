@@ -605,7 +605,8 @@ set_axis_limits <- function(dat, x_value, plot_settings) {
   return(plot_borders)
 }
 
-check_length <- function(obj, leng, fill = NULL) {
+check_length <- function(obj, leng, fill = NULL, leng_1 = TRUE) {
+  if(leng_1 == TRUE){
   if (is.null(obj) & is.null(fill)) {
     return(NULL)
   } else if (is.null(obj) & !is.null(fill)) {
@@ -618,6 +619,14 @@ check_length <- function(obj, leng, fill = NULL) {
   } else {
     return(obj)
   }
+  }else{
+    if(length(obj) != leng){
+      stop(paste0("The length of ", deparse(substitute(obj)), " should be equal to the amount of columns you are plotting."), call. = FALSE)
+    }else{
+      return(ob)
+    }
+  }
+
 }
 
 fill_up <- function(vec, leng, fill) {
