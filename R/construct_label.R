@@ -21,6 +21,7 @@ construct_label <- function(dat,
                             round_est = 0,
                             round_se = 1,
                             plot_settings = plotsettings_tablebarplot()) {
+
   dat <- fill_column(dat, column_name = label_est, filling = "")
   dat <- fill_column(dat, column_name = label_se, filling = NA)
   dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
@@ -35,17 +36,21 @@ construct_label <- function(dat,
 
   if (is.numeric(dat$label_est) & !is.null(round_est)) {
     dat$label_est <- format(round(dat$label_est, round_est), trim = TRUE)
+    dat$label_est[dat$label_est == "NA"] <- ""
   }
   if (is.numeric(dat$label_se) & !is.null(round_se)) {
     dat$label_se <- format(round(dat$label_se, round_se), trim = TRUE)
+    dat$label_se[dat$label_se == "NA"] <- ""
+
   }
 
-  dat$label_est <- ifelse(dat$label_sig_bold == TRUE,
+  dat$label_est <- ifelse(dat$label_sig_bold == TRUE & dat$label_est != "",
     paste0("**", dat$label_est, "**"),
     dat$label_est
   )
 
-  dat$label_sig <- ifelse(dat$label_sig_high == TRUE, paste0("<sup>", plot_settings$columns_table_sig_high_letter, "</sup>"), "")
+  dat$label_sig <- ifelse(dat$label_sig_high == TRUE & dat$label_est != "",
+                          paste0("<sup>", plot_settings$columns_table_sig_high_letter, "</sup>"), "")
 
   dat$label_se <- ifelse(!is.na(dat$label_se),
     paste0(" (", dat$label_se, ")"),
