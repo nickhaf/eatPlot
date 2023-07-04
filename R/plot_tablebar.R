@@ -90,11 +90,10 @@ plot_tablebar <- function(dat,
   # names(column_spanners) <- sub_dash(names(column_spanners))
 
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
+  columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table), leng_1 = FALSE)
+  columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table), leng_1 = FALSE)
 
-  columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table))
-  columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table))
-
-  columns_table_se <- check_length(columns_table_se, length(columns_table))
+  columns_table_se <- check_length(columns_table_se, length(columns_table), leng_1 = FALSE)
 
   if (is.null(plot_settings$headers_alignment)) {
     plot_settings$headers_alignment <- ifelse(plot_settings$columns_alignment == 2,
@@ -620,10 +619,10 @@ check_length <- function(obj, leng, fill = NULL, leng_1 = TRUE) {
     return(obj)
   }
   }else{
-    if(length(obj) != leng){
+    if(length(obj) != leng & !is.null(obj)){
       stop(paste0("The length of ", deparse(substitute(obj)), " should be equal to the amount of columns you are plotting."), call. = FALSE)
     }else{
-      return(ob)
+      return(obj)
     }
   }
 
