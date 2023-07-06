@@ -186,7 +186,7 @@ test_that("Example brace plot is still the same", {
     competence = "GL"
   )
 
-  plot_dat <- filter_plot_years(plot_dat)
+  plot_dat <- filter_plot_years(plot_dat, plot_settings = plotsettings_lineplot(equal_trend_line_length = FALSE))
 
   plot_dat <- equalize_line_length(plot_dat, plot_settings = plotsettings_lineplot(equal_trend_line_length = FALSE))
 

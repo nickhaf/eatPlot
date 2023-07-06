@@ -81,7 +81,7 @@ plot_lineplot <- function(plot_dat,
   }
 
   # filter years ------------------------------------------------------------
-  plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces)
+  plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces, plot_settings)
 
   plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
@@ -212,13 +212,21 @@ filter_years <- function(dat, year_list) {
 }
 
 
-filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL) {
+filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL, plot_settings) {
   if (is.null(years_braces)) {
-    ## Draw braces from last year to every other year
     plot_years <- unique(c(plot_dat[["plot_braces"]]$year_start, plot_dat[["plot_braces"]]$year_end))
+    plot_years <- plot_years[order(plot_years)]
+    if(plot_settings$split_plot == FALSE){
+    ## Draw braces from last year to every other year
     braceplot_years <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
       c(x, max(plot_years))
     })
+    }else{
+      # Consecutive years, e.g., 2009 - 2015, 2015 - 2022 ...
+      braceplot_years <- lapply(seq_along(plot_years[-which(plot_years == max(plot_years))]), function(x) {
+          c(plot_years[x], plot_years[x+1])
+      })
+    }
   } else {
     braceplot_years <- years_braces
   }
