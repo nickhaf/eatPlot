@@ -125,8 +125,8 @@ p_line_ger <- plot_lineplot(
   label_sig_high = NULL,
   years_lines = list(c(2011, 2016), c(2016, 2021)),
   years_braces = list(c(2011, 2016), c(2016, 2021)),
-  background_lines = FALSE,
   plot_settings = plotsettings_lineplot(
+    background_lines = FALSE,
     default_list = lineplot_2x3
   )
 )

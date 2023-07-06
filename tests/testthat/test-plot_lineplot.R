@@ -1,12 +1,12 @@
 test_that("checks for middle-left tiles work", {
-expect_false(check_middle_left(j = 1, n_cols = 4, n_rows = 4))
-expect_false(check_middle_left(j = 3, n_cols = 4, n_rows = 4))
-expect_false(check_middle_left(j = 4, n_cols = 4, n_rows = 4))
-expect_false(check_middle_left(j = 6, n_cols = 4, n_rows = 4))
-expect_false(check_middle_left(j = 13, n_cols = 4, n_rows = 4))
-expect_true(check_middle_left(j = 5, n_cols = 4, n_rows = 4))
-expect_true(check_middle_left(j = 9, n_cols = 4, n_rows = 4))
-  })
+  expect_false(check_middle_left(j = 1, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_left(j = 3, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_left(j = 4, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_left(j = 6, n_cols = 4, n_rows = 4))
+  expect_false(check_middle_left(j = 13, n_cols = 4, n_rows = 4))
+  expect_true(check_middle_left(j = 5, n_cols = 4, n_rows = 4))
+  expect_true(check_middle_left(j = 9, n_cols = 4, n_rows = 4))
+})
 
 test_that("checks for middle-middle tiles work", {
   expect_false(check_middle_middle(j = 1, n_cols = 4, n_rows = 4))
@@ -17,7 +17,6 @@ test_that("checks for middle-middle tiles work", {
   expect_false(check_middle_middle(j = 5, n_cols = 4, n_rows = 4))
   expect_true(check_middle_middle(j = 10, n_cols = 4, n_rows = 4))
   expect_false(check_middle_middle(j = 15, n_cols = 4, n_rows = 4))
-
 })
 
 test_that("settings do something", {
@@ -41,13 +40,13 @@ test_that("settings do something", {
     point_values = "est_noTrend_noComp",
     years_lines = list(c(2011, 2016), c(2016, 2023)),
     years_braces = list(c(2011, 2016), c(2016, 2023)),
-    background_lines = FALSE,
     plot_settings = plotsettings_lineplot(
       axis_x_background_colour = "red",
       axis_x_background_width_y = 0.08,
       axis_x_label_centralize = 0.15,
       axis_x_label_nudge_y = 0.05,
       axis_x_label_size = 2.4,
+      background_lines = FALSE,
       brace_label_gap_y = 0.15,
       brace_label_nudge_x = 0.3,
       brace_label_nudge_y = 0.08,
@@ -353,8 +352,10 @@ test_that("adjusted means states", {
     label_sig_high = "sig_noTrendEnd_noComp",
     years_lines = list(c(2016, 2021)),
     years_braces = list(c(2016, 2021)),
-    background_lines = FALSE,
-    plot_settings = plotsettings_lineplot(margin_bottom = 0.03, default_list = lineplot_4x4)
+    plot_settings = plotsettings_lineplot(
+      background_lines = FALSE,
+      margin_bottom = 0.03, default_list = lineplot_4x4
+    )
   )
 
   vdiffr::expect_doppelganger("lineplot_4x4_adj_means", p_line)
@@ -387,8 +388,10 @@ test_that("adjusted means for whole group", {
     label_sig_high = "sig_noTrendEnd_noComp",
     years_lines = list(c(2016, 2021)),
     years_braces = list(c(2016, 2021)),
-    background_lines = FALSE,
-    plot_settings = plotsettings_lineplot(default_list = lineplot_2x3)
+    plot_settings = plotsettings_lineplot(
+      background_lines = FALSE,
+      default_list = lineplot_2x3
+    )
   )
 
   vdiffr::expect_doppelganger("lineplot_4x4_adjusted_ger", p_line_deutschland)
@@ -478,9 +481,9 @@ test_that("Split lineplot with box looks good", {
 
   ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat,
-                          column_name = "state_var",
-                          subsetter = "wholeGroup",
-                          remove = TRUE
+    column_name = "state_var",
+    subsetter = "wholeGroup",
+    remove = TRUE
   )
 
   p_line_states <- plot_lineplot(
@@ -498,10 +501,9 @@ test_that("Split lineplot with box looks good", {
     )
   )
 
-vdiffr::expect_doppelganger("split_lineplot with box", {
-  p_line_states
-})
-
+  vdiffr::expect_doppelganger("split_lineplot with box", {
+    p_line_states
+  })
 })
 
 
@@ -516,9 +518,9 @@ test_that("Not Split lineplot with box looks good", {
 
   ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat,
-                          column_name = "state_var",
-                          subsetter = "wholeGroup",
-                          remove = TRUE
+    column_name = "state_var",
+    subsetter = "wholeGroup",
+    remove = TRUE
   )
 
   p_line_states <- plot_lineplot(
@@ -540,12 +542,10 @@ test_that("Not Split lineplot with box looks good", {
   vdiffr::expect_doppelganger("unsplit lineplot with box", {
     p_line_states
   })
-
 })
 
 
 test_that("Split lineplot with box and unequal year-distances looks good", {
-
   trend_books_2 <- trend_books
   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
 
@@ -560,9 +560,9 @@ test_that("Split lineplot with box and unequal year-distances looks good", {
 
   ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat,
-                          column_name = "state_var",
-                          subsetter = "wholeGroup",
-                          remove = TRUE
+    column_name = "state_var",
+    subsetter = "wholeGroup",
+    remove = TRUE
   )
 
   p_line_states <- plot_lineplot(
@@ -585,11 +585,9 @@ test_that("Split lineplot with box and unequal year-distances looks good", {
   vdiffr::expect_doppelganger("split_lineplot with unequal distances and box", {
     p_line_states
   })
-
 })
 
 test_that("Unsplit lineplot with box and unequal year-distances looks good", {
-
   trend_books_2 <- trend_books
   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
 
@@ -604,9 +602,9 @@ test_that("Unsplit lineplot with box and unequal year-distances looks good", {
 
   ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat,
-                          column_name = "state_var",
-                          subsetter = "wholeGroup",
-                          remove = TRUE
+    column_name = "state_var",
+    subsetter = "wholeGroup",
+    remove = TRUE
   )
 
   p_line_states <- plot_lineplot(
@@ -624,17 +622,15 @@ test_that("Unsplit lineplot with box and unequal year-distances looks good", {
       default_list = lineplot_4x4
     )
   )
-  #save_plot(p_line_states, filename = "../testplot_1.pdf")
+  # save_plot(p_line_states, filename = "../testplot_1.pdf")
 
   vdiffr::expect_doppelganger("unsplit lineplot with unequal distances and box", {
     p_line_states
   })
-
 })
 
 
 test_that("Split lineplot with box, unequal year-distances and y-axis looks good", {
-
   trend_books_2 <- trend_books
   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
 
@@ -649,9 +645,9 @@ test_that("Split lineplot with box, unequal year-distances and y-axis looks good
 
   ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat,
-                          column_name = "state_var",
-                          subsetter = "wholeGroup",
-                          remove = TRUE
+    column_name = "state_var",
+    subsetter = "wholeGroup",
+    remove = TRUE
   )
 
   p_line_states <- plot_lineplot(
@@ -670,16 +666,14 @@ test_that("Split lineplot with box, unequal year-distances and y-axis looks good
       default_list = lineplot_4x4
     )
   )
- # save_plot(p_line_states, filename = "../testplot_2.pdf")
+  # save_plot(p_line_states, filename = "../testplot_2.pdf")
 
   vdiffr::expect_doppelganger("split_lineplot with unequal distances, box and y-axis", {
     p_line_states
   })
-
 })
 
 test_that("Unsplit lineplot with box, unequal year-distances and y-axis looks good", {
-
   trend_books_2 <- trend_books
   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
 
@@ -694,9 +688,9 @@ test_that("Unsplit lineplot with box, unequal year-distances and y-axis looks go
 
   ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat,
-                          column_name = "state_var",
-                          subsetter = "wholeGroup",
-                          remove = TRUE
+    column_name = "state_var",
+    subsetter = "wholeGroup",
+    remove = TRUE
   )
 
   p_line_states <- plot_lineplot(
@@ -720,12 +714,10 @@ test_that("Unsplit lineplot with box, unequal year-distances and y-axis looks go
   vdiffr::expect_doppelganger("unsplit lineplot, unequal distances, box, y-axis", {
     p_line_states
   })
-
 })
 
 
 test_that("Unsplit lineplot with box, unequal year-distances and manual y-axis looks good", {
-
   trend_books_2 <- trend_books
   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
 
@@ -740,9 +732,9 @@ test_that("Unsplit lineplot with box, unequal year-distances and manual y-axis l
 
   ## Remove wholeGroup, as we don't want to plot it
   plot_dat <- filter_rows(plot_dat,
-                          column_name = "state_var",
-                          subsetter = "wholeGroup",
-                          remove = TRUE
+    column_name = "state_var",
+    subsetter = "wholeGroup",
+    remove = TRUE
   )
 
   p_line_states <- plot_lineplot(
@@ -767,5 +759,4 @@ test_that("Unsplit lineplot with box, unequal year-distances and manual y-axis l
   vdiffr::expect_doppelganger("unsplit lineplot, unequal distances, box, manual y-axis", {
     p_line_states
   })
-
 })
