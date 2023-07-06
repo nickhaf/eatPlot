@@ -163,10 +163,6 @@ plot_lineplot <- function(plot_dat,
     widths_setting <- 1 / plot_settings$n_cols
   }
 
-
-  # Adjust plot margins according to position ------------------------------
-  # plot_list <- set_plot_margins(plot_list, plot_settings)
-
   # The wholeGroup plot gets a box drawn around it.
   for (plot_names in names(plot_list)) {
     if (plot_names %in% seperate_plot_var_box) {
@@ -179,24 +175,11 @@ plot_lineplot <- function(plot_dat,
     }
   }
 
-  # margin_bottom <- plot_settings$margin_bottom + 0.006 * (length(levels(plot_dat[["plot_braces"]]$grouping_var)) - 1) # more brace labels need more space
-
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list,
     ncol = plot_settings$n_cols,
     widths = widths_setting
   ) +
-    # ggplot2::theme(
-    #   plot.margin = ggplot2::unit(
-    #     c(
-    #       plot_settings$margin_top,
-    #       plot_settings$margin_right,
-    #       plot_settings$margin_bottom,
-    #       plot_settings$margin_left
-    #     ),
-    #     "npc"
-    #   ) # t, r, b, l
-    # ) +
     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 }
 
@@ -294,180 +277,6 @@ extract_gsub_values <- function(plot_dat) {
   sub_years <- stats::na.omit(sub_years)
   return(sub_years)
 }
-
-
-
-set_plot_margins <- function(plot_list, plot_settings) {
-  n_rows <- ceiling(length(plot_list) / plot_settings$n_cols)
-
-  for (j in 1:length(plot_list)) {
-    # Only one row ------------------------------------------------------------
-    if (n_rows == 1) {
-      # upper left --------------------------------------------------------------
-      if (j == 1) {
-        plot_list[[j]] <- plot_list[[j]] +
-          ggplot2::theme(plot.margin = ggplot2::unit(c(
-            plot_settings$margin_top,
-            plot_settings$margin_right,
-            0,
-            0
-          ), "npc"))
-      }
-
-
-      # Middle in upper row -----------------------------------------------------
-      if (j > 1 & j < plot_settings$n_cols) {
-        plot_list[[j]] <- plot_list[[j]] +
-          ggplot2::theme(plot.margin = ggplot2::unit(c(
-            plot_settings$margin_top,
-            plot_settings$margin_right,
-            0,
-            plot_settings$margin_left
-          ), "npc"))
-      }
-
-      # Upper right -------------------------------------------------------------
-      if (j == plot_settings$n_cols) {
-        plot_list[[j]] <- plot_list[[j]] +
-          ggplot2::theme(plot.margin = ggplot2::unit(c(
-            plot_settings$margin_top,
-            0,
-            0,
-            plot_settings$margin_left
-          ), "npc"))
-      }
-      return(plot_list)
-    }
-
-
-
-    # multiple rows -----------------------------------------------------------
-    # upper left --------------------------------------------------------------
-    if (j == 1) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          plot_settings$margin_bottom,
-          0
-        ), "npc"))
-    }
-
-    # Middle in upper row -----------------------------------------------------
-    if (j > 1 & j < plot_settings$n_cols) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          plot_settings$margin_bottom,
-          plot_settings$margin_left
-        ), "npc"))
-    }
-
-
-
-    # Upper right -------------------------------------------------------------
-    if (j == plot_settings$n_cols) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          0,
-          plot_settings$margin_bottom,
-          plot_settings$margin_left
-        ), "npc"))
-    }
-
-    # Middle in left column -------------------------------------------------------------
-    if (check_middle_left(j, plot_settings$n_cols, n_rows)) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          plot_settings$margin_bottom,
-          plot_settings$margin_left
-        ), "npc"))
-    }
-
-
-    # Middle middle columns -----------------------------------------------------------
-    if (check_middle_middle(j, plot_settings$n_cols, n_rows)) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          plot_settings$margin_bottom,
-          plot_settings$margin_top
-        ), "npc"))
-    }
-
-    # Middle right columns ------------------------------------------------------------
-    if (j %% plot_settings$n_cols == 0 & j != plot_settings$n_cols & j != length(plot_list)) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          plot_settings$margin_bottom,
-          plot_settings$margin_left
-        ), "npc"))
-    }
-
-
-    # Bottom left -------------------------------------------------------------
-    if (j == (length(plot_list) - plot_settings$n_cols) + 1) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          0,
-          plot_settings$margin_left
-        ), "npc"))
-    }
-
-
-    # Bottom middle -----------------------------------------------------------
-    if (j > ((length(plot_list) - plot_settings$n_cols) + 1) & j < length(plot_list)) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          0,
-          plot_settings$margin_left
-        ), "npc"))
-    }
-
-
-
-    # Bottom right ------------------------------------------------------------
-    if (j == length(plot_list)) {
-      plot_list[[j]] <- plot_list[[j]] +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(
-          plot_settings$margin_top,
-          plot_settings$margin_right,
-          0,
-          plot_settings$margin_left
-        ), "npc"))
-    }
-  }
-  return(plot_list)
-}
-## Für y-axis bereits bei der Achse setzen
-## Margin einmal für between und einmal für untereinander
-
-## If y_axis: abstand nach rechts etwas kleiner
-
-check_middle_left <- function(j, n_cols, n_rows) {
-  j > 1 &
-    ceiling(j / n_cols) < n_rows & # not in last row
-    (j - 1) %% n_cols == 0 # one after the last column
-}
-
-check_middle_middle <- function(j, n_cols, n_rows) {
-  ceiling(j / n_cols) < n_rows &
-    ceiling(j / n_cols) > 1 & # not in first row
-    (j - 1) %% n_cols != 0 & # not first column
-    j %% n_cols != 0 # not last column
-}
-
 
 
 #' Calculate different plot limit values.
