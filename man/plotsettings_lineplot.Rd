@@ -14,6 +14,7 @@ plotsettings_lineplot(
   axis_y = NULL,
   axis_y_tick_distance = NULL,
   axis_y_lims = NULL,
+  background_lines = NULL,
   background_line_colour = NULL,
   brace_label_gap_y = NULL,
   brace_label_nudge_x = NULL,
@@ -59,6 +60,8 @@ plotsettings_lineplot(
 \item{axis_y_tick_distance}{Numeric, for which distance should lie between tick marks. The first tick will start at the lower end of \code{axis_y_lims} or be calculated automatically. The following ticks will be added in distances defined by \code{axis_y_tick_distance}. Defaults to \code{20}.}
 
 \item{axis_y_lims}{Numeric for the y-axis limits. Defaults to \code{NULL}, in which case the limits will be set automatically.}
+
+\item{background_lines}{Logical, indicating whether the whole group trend should be plotted in the background. Defaults to \code{TRUE}.}
 
 \item{background_line_colour}{Colour of the background line.}
 

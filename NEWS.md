@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9021
+* Moved background_lines argument from [plot_lineplot()] to [plotsettings_lineplot()].
+
 # eatPlot 0.0.0.9020
 * Removed most of the white space around the final plots. For lineplots, some is still needed for drawing a box around. 
 * Adjusted distance between single lineplot-tiles.

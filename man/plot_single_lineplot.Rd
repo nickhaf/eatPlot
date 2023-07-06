@@ -43,7 +43,7 @@ plot_single_lineplot(
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}
 
-\item{background_lines}{Logical, indicating whether the whole group trend should be plotted in the background.}
+\item{background_lines}{Logical, indicating whether the whole group trend should be plotted in the background. Defaults to \code{TRUE}.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }

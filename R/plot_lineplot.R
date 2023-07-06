@@ -16,7 +16,6 @@
 #' @param title_superscripts Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to `NULL`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
-#' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
 #' @export
@@ -38,7 +37,6 @@ plot_lineplot <- function(plot_dat,
                           title_superscripts = NULL,
                           years_lines = NULL,
                           years_braces = NULL,
-                          background_lines = TRUE,
                           plot_settings = plotsettings_lineplot()) {
   stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
   stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
@@ -63,8 +61,10 @@ plot_lineplot <- function(plot_dat,
   }
 
   plot_dat <- lapply(plot_dat, function(x) {
+    if(nrow(plot_dat$plot_background_lines) != 0){
     x$grouping_var <- as.factor(x$grouping_var)
     x$grouping_var <- droplevels(x$grouping_var)
+    }
     return(x)
   })
 
@@ -102,7 +102,7 @@ plot_lineplot <- function(plot_dat,
 
   for (i in tiles) {
     plot_dat_tile <- filter_rows(plot_dat, column_name = seperate_plot_var, subsetter = i)
-    if (seperate_plot_var == "competence_var") {
+    if (seperate_plot_var == "competence_var" & nrow( plot_dat_tile[["plot_background_lines"]]) != 0) {
       plot_dat_tile[["plot_background_lines"]] <- plot_dat_tile[["plot_background_lines"]][plot_dat_tile[["plot_background_lines"]]$competence_var == i, ]
     }
 
@@ -119,7 +119,7 @@ plot_lineplot <- function(plot_dat,
         label_se = label_se,
         label_sig_high = label_sig_high,
         label_sig_bold = label_sig_bold,
-        background_lines = background_lines,
+        background_lines = plot_settings$background_lines,
         plot_settings = plot_settings
       ) +
       plot_title(sub_dash(i), title_superscripts) +
@@ -257,7 +257,11 @@ equalize_line_length <- function(plot_dat, plot_settings) {
     plot_dat$plot_points$year_axis <- plot_dat$plot_points$year
   }
 
+if(plot_settings$background_lines == TRUE){
   loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
+}else{
+  loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces")]
+}
 
   for (i in loop_objects) {
     plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
@@ -470,7 +474,7 @@ check_middle_middle <- function(j, n_cols, n_rows) {
 calc_plot_lims <- function(plot_dat, point_values, line_values, plot_settings) {
   if (is.null(plot_settings$axis_y_lims)) {
     if (!is.null(point_values)) {
-      if(!is.null(plot_dat$plot_background_lines)){
+      if(!is.null(plot_dat$plot_background_lines) & nrow(plot_dat$plot_background_lines) != 0){
         y_range <- range(c(plot_dat[["plot_points"]][, point_values], plot_dat[["plot_background_lines"]][, paste0(line_values, "_wholeGroup")]), na.rm = TRUE)
       }else{
       y_range <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
