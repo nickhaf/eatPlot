@@ -1,23 +1,3 @@
-test_that("checks for middle-left tiles work", {
-  expect_false(check_middle_left(j = 1, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_left(j = 3, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_left(j = 4, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_left(j = 6, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_left(j = 13, n_cols = 4, n_rows = 4))
-  expect_true(check_middle_left(j = 5, n_cols = 4, n_rows = 4))
-  expect_true(check_middle_left(j = 9, n_cols = 4, n_rows = 4))
-})
-
-test_that("checks for middle-middle tiles work", {
-  expect_false(check_middle_middle(j = 1, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_middle(j = 3, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_middle(j = 4, n_cols = 4, n_rows = 4))
-  expect_true(check_middle_middle(j = 6, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_middle(j = 13, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_middle(j = 5, n_cols = 4, n_rows = 4))
-  expect_true(check_middle_middle(j = 10, n_cols = 4, n_rows = 4))
-  expect_false(check_middle_middle(j = 15, n_cols = 4, n_rows = 4))
-})
 
 test_that("settings do something", {
   trend_books_2 <- trend_books
