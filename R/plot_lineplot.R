@@ -151,7 +151,7 @@ plot_lineplot <- function(plot_dat,
         0
       ), "npc"))
 
-    positions_y_axis <- calc_y_positions(states, plot_settings$n_cols)
+    positions_y_axis <- calc_y_positions(tiles, plot_settings$n_cols)
 
     for (i in positions_y_axis) {
       plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
