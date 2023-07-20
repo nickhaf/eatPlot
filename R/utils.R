@@ -591,6 +591,16 @@ get_x_range <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
 }
 
+#' Changes dashes in character vectors for correct plotting: en-dashes will be subbed by "\uad", so they are displayed correctly in the plotted PDF.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param vec Character vector from which all dashes are to be changed.
+#'
+#' @return Character vector subbed by "\uad".
+#'
+#' @examples sub_dash(c("a-b-c", "e-f-d"))
 sub_dash <- function(vec) {
   if (is.character(vec)) {
     vec <- gsub("-", "\uad", vec)
