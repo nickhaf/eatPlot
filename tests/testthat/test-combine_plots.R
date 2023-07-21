@@ -7,7 +7,9 @@ test_that("example mindeststandard short version", {
 
   dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
   for (i in c("2011", "2016", "2021")) {
-    dat_bar <- construct_directional_sig(dat_bar, est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i), sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
+    dat_bar <- construct_directional_sig(dat_bar,
+                                         est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i),
+                                         sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
   }
 
   # Plot 1 ------------------------------------------------------------------

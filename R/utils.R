@@ -297,25 +297,26 @@ get_comparisons <- function(dat, states, sub_groups) {
   })
 
   for (i in c("compare_1", "compare_2")) {
-    if (!is.null(sub_groups)) {
-      for (j in seq_along(sub_groups)) {
-        group_j <- sub_groups[j]
-        dat[, i] <- gsub(
-          pattern = paste0(
-            paste0("_", group_j),
-            paste0("*", group_j),
-            collapse = "|"
-          ),
-          replacement = paste0(
-            "_grouping_var_",
-            letters[j]
-          ),
-          x = dat[, i]
-        )
-      }
-    }
+    # if (!is.null(sub_groups)) {
+    #   for (j in seq_along(sub_groups)) {
+    #     group_j <- sub_groups[j]
+    #     dat[, i] <- gsub(
+    #       pattern = paste0(
+    #         paste0("_", group_j),
+    #         paste0("*", group_j),
+    #         collapse = "|"
+    #       ),
+    #       replacement = paste0(
+    #         "_grouping_var_",
+    #         letters[j]
+    #       ),
+    #       x = dat[, i]
+    #     )
+    #   }
+    # }
     dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
-    dat[, i] <- gsub("__|___", "_", dat[, i])
+    dat[, i] <- gsub("__|___|", "_", dat[, i], fixed = TRUE)
+    dat[, i] <- gsub(".vs.", "vs", dat[, i])
 
     dat[is.na(dat[, i]), i] <- "no_comp"
   }
