@@ -560,7 +560,7 @@ test_that("Split lineplot with box and unequal year-distances looks good", {
       default_list = lineplot_4x4
     )
   )
-  save_plot(p_line_states, filename = "../testplot_1.pdf")
+  # save_plot(p_line_states, filename = "../testplot_1.pdf")
 
   vdiffr::expect_doppelganger("split_lineplot with unequal distances and box", {
     p_line_states
