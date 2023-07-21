@@ -8,7 +8,6 @@ prepare_comp <- function(dat, year_columns) {
     }
 
     dat_comp <- dat[!is.na(dat$comparison) & dat$comparison == comp, ]
-
     comp_wide <- reshape_dat_comp_wide(dat_comp, comp, year_columns)
 
     ## This comparison type is grouping_var independent, and has only one line per country:
@@ -50,6 +49,10 @@ reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
       dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp) ## müsste wholeGroup drin stehen
     }
 
+    # Renaming necessary, so the 0.vs.1 group appears in the column headers
+if(all(dat_comp$comparison == "crossDiffofgroupDiff")){
+  dat_comp$compare_2_Comp <- paste0("crossDiffofgroupDiff_", gsub("_", "", dat_comp$compare_1_Comp),  "_vs", gsub("crossDiffofgroupDiff", "", dat_comp$compare_2_Comp))
+}
     dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 
     dat_comp_wide <- stats::reshape(dat_comp,
