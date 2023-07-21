@@ -7,20 +7,27 @@ prepare_comp <- function(dat, year_columns) {
       stop(paste0("The comparison '", comp, "' has not been implemented yet. Please contact the package author."))
     }
 
-    ## Bei GroupDiff: Je nach Antwort von Sebastian ein BL oder eine wholeGroup vor Term hinterm Vs.
-
-    ## Problem bei crossDiff_of_groupDiff: Es gibt einmal eine grouping_var aohne vs. einET und einmal v.s. zwei ET -> Die grouping_var nimmta ber bisher nur die erste comparison --> compare_1 aufnehmen in reshaping? --> Problem ist hier, dass teilweise group und grouping_var Spalte noch nicht übereinstimmen
-
     dat_comp <- dat[!is.na(dat$comparison) & dat$comparison == comp, ]
 
     comp_wide <- reshape_dat_comp_wide(dat_comp, comp, year_columns)
 
+    ## This comparison type is grouping_var independent, and has only one line per country:
+    if(comp == "crossDiffofgroupDiff"){
+      comp_trend <- merge_2(
+        comp_wide[, !colnames(comp_wide) == "grouping_var"],
+        comp_trend,
+        by = c("depVar", "competence_var", "state_var", year_columns),
+        all.x = FALSE,
+        all.y = TRUE
+      )
+    }else{
     comp_trend <- merge_2(
       comp_wide,
       comp_trend,
       by = c("depVar", "competence_var", "grouping_var", "state_var", year_columns),
       all = TRUE
     )
+    }
   }
 
   return(comp_trend)
