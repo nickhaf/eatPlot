@@ -124,7 +124,7 @@ prep_plot <- function(dat,
 
     ## Currently, only comparisons without nested comparisons are supported:
 
-    dat <- dat[!grepl("\\.vs\\.", dat$compare_1), ]
+    #dat <- dat[!grepl("\\.vs\\.", dat$compare_1), ]
   }
 
   list_building_blocks <- prep_data_blocks(

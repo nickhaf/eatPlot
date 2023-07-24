@@ -42,7 +42,7 @@ clean_data <- function(dat,
   dat <- dat[, !colnames(dat) %in% c("modus", "parameter")]
 
   dat[is.na(dat$state_var) & (
-    grepl("^wholeGroup$", dat$group_var) |
+    grepl("^wholeGroup", dat$group_var) |
       grepl(
         pattern = paste0(
           "^",

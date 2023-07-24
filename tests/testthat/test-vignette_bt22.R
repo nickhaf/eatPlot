@@ -16,8 +16,16 @@ test_that("p_line_states works", {
   vdiffr::expect_doppelganger("p_line_states", p_line_states)
 })
 
+test_that("p_line_states_y works", {
+  vdiffr::expect_doppelganger("p_line_states_y", p_line_states_y)
+})
+
 test_that("p_line_ger works", {
   vdiffr::expect_doppelganger("p_line_ger", p_line_ger)
+})
+
+test_that("p_crossDiff_of_groupDiff works", {
+  vdiffr::expect_doppelganger("p_crossDiff_of_groupDiff", p_crossDiff_of_groupDiff)
 })
 
 test_that("frz minsta works", {

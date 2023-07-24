@@ -29,7 +29,7 @@ construct_grouping_var <- function(dat, grouping_vars, group_var = "group") {
     return(dat)
   }
 
-  dat$group_var <- gsub("all.group=1____", "", dat$group_var)
+  dat$group_var <- gsub("all.group=1____", "wholeGroup", dat$group_var)
 
   dat <- paste_grouping_vars(dat, grouping_vars, group_var)
 
