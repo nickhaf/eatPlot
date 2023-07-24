@@ -61,7 +61,7 @@ save_plot(p_line_states, filename = "../split_plot_example.pdf")
 ```
 
 ### Kompetenzwerte Bundesländer with crossDiff_of_groupDiff
-```{r chpt4_line}
+```{r chpt4_line_crossDiff_of}
 ## Prepare the data with 'KBuecher_imp3' as grouping_var
 plot_dat <- prep_plot(
   dat = trend_books,
@@ -78,7 +78,7 @@ plot_dat <- filter_rows(plot_dat,
   remove = TRUE
 )
 
-p_line_states <- plot_lineplot(
+p_crossDiff_of_groupDiff <- plot_lineplot(
   plot_dat = plot_dat,
   label_sig_high = "sig_Trend_Comp_crossDiffofgroupDiff_BL0vs1_vs_wholeGroup0vs1", ## Richtig?
   title_superscripts = list(
@@ -92,11 +92,11 @@ p_line_states <- plot_lineplot(
   )
 )
 
-p_line_states
+p_crossDiff_of_groupDiff
 ```
 
 ```{r, eval = FALSE}
-save_plot(p_line_states, filename = "../split_plot_example.pdf")
+save_plot(p_crossDiff_of_groupDiff, filename = "../p_crossDiff_of_groupDiff.pdf")
 ```
 
 ### Kompetenzewerte Bundesländer with y-axis
