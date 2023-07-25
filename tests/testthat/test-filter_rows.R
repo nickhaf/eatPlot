@@ -1,5 +1,16 @@
-test_that("filter_rows throws the expected errors", {
+test_list <- list(
+  "a" = data.frame(
+    col_1 = c(1, 2),
+    col_2 = c("a", NA)
+  ),
+  "b" = data.frame(
+    col_1 = c(1, NA),
+    col_2 = c("a", "a")
+  )
+)
 
+
+test_that("filter_rows throws the expected errors", {
   # Test errors
   expect_error(filter_rows(test_list,
                            column_name = "col_2",
@@ -18,17 +29,6 @@ test_that("filter_rows throws the expected errors", {
 })
 
 test_that("filter_rows works for NAs", {
-  test_list <- list(
-    "a" = data.frame(
-      col_1 = c(1, 2),
-      col_2 = c("a", NA)
-    ),
-    "b" = data.frame(
-      col_1 = c(1, NA),
-      col_2 = c("a", "a")
-    )
-  )
-
   ## Build resulting empty data.frame
   res_dat <- data.frame(matrix(ncol = 2, nrow = 0))
   colnames(res_dat) <- c("col_1", "col_2")
