@@ -9,9 +9,7 @@ test_list <- list(
   )
 )
 
-
 test_that("filter_rows throws the expected errors", {
-  # Test errors
   expect_error(filter_rows(test_list,
                            column_name = "col_2",
                            subsetter = "c",
@@ -27,6 +25,8 @@ test_that("filter_rows throws the expected errors", {
                            remove = FALSE
   ), "Your column_name 'col_3' is not part of the sublist 'a' of your plot_dat.")
 })
+
+
 
 test_that("filter_rows works for NAs", {
   ## Build resulting empty data.frame
@@ -60,6 +60,7 @@ test_that("filter_rows works for NAs", {
     col_2 = as.character(NA)
   )
   rownames(res_dat_a) <- as.integer(2)
+
   expect_equal(
     filter_rows(test_list,
                 column_name = "col_2",
@@ -73,7 +74,7 @@ test_that("filter_rows works for NAs", {
       )
     )
 
-  # Nonsense subsetter
+  # Nonsense subsetter remove
   expect_equal(filter_rows(test_list,
                               column_name = "col_2",
                               subsetter = "c",
@@ -82,7 +83,7 @@ test_that("filter_rows works for NAs", {
   ), test_list)
 
 
-  # Nonsens subsetter remove
+  # Nonsens subsetter
   expect_equal(filter_rows(test_list,
                            column_name = "col_2",
                            subsetter = "c",
