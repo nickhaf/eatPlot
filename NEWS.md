@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9023
+* Fixed `NA`-handling in [filter_rows()]. 
+
 # eatPlot 0.0.0.9022
 * Implemented vs.Vs.vs. comparisons, so crossDiff_of_groupDiffs can be plotted now. 
 
