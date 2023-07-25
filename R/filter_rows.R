@@ -1,5 +1,6 @@
 #' Extract or remove rows from prepared data.
 #'
+#' @inheritParams filter_plot_dat
 #' @param plot_dat List of data.frames, output of [prep_plot].
 #' @param column_name Column that the subsetter will be searched in.
 #' @param subsetter Character string of the state you want to extract or remove.
@@ -9,12 +10,12 @@
 #' @export
 #'
 #' @examples # tbd
-filter_rows <- function(plot_dat, column_name, subsetter, remove = FALSE) {
-  for (i in c("plot_points", "plot_lines", "plot_braces")) {
+filter_rows <- function(plot_dat, column_name, subsetter, list_elements = c("plot_points", "plot_lines", "plot_braces"), remove = FALSE) {
+  for (i in list_elements) {
     if (remove == FALSE) {
-      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] == subsetter, ]
+      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] == subsetter | is.na(plot_dat[[i]][, column_name]), ]
     } else {
-      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] != subsetter, ]
+      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] != subsetter | is.na(plot_dat[[i]][, column_name]), ]
     }
   }
   return(plot_dat)
