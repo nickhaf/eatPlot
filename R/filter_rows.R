@@ -11,9 +11,18 @@
 #'
 #' @examples # tbd
 filter_rows <- function(plot_dat, column_name, subsetter, list_elements = c("plot_points", "plot_lines", "plot_braces"), remove = FALSE) {
+
+  if(any(!list_elements %in% names(plot_dat))){
+    stop("Some of your list_elements are not part of plot_dat.", call. = FALSE)
+  }
+
   for (i in list_elements) {
+    if(!column_name %in% colnames(plot_dat[[i]])){
+      stop(paste0("Your column_name '", column_name, "' is not part of the sublist '", i, "' of your plot_dat."), call. = FALSE)
+    }
+
     if (remove == FALSE) {
-      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] == subsetter | is.na(plot_dat[[i]][, column_name]), ]
+      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] == subsetter & !is.na(plot_dat[[i]][, column_name]), ]
     } else {
       plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] != subsetter | is.na(plot_dat[[i]][, column_name]), ]
     }
