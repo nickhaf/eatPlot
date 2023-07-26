@@ -216,7 +216,7 @@ plot_tablebar <- function(dat,
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
   # Set some nudging parameters ---------------------------------------------
-  header_y_coords <- set_header_y_coords(column_spanners)
+  header_y_coords <- set_header_y_coords(column_spanners, dat$y_axis)
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
   max_y <- set_max_y(dat$y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings)
 
@@ -377,15 +377,14 @@ plot_tablebar <- function(dat,
                            spanners = column_spanners,
                            column_x_coords,
                            x_axis_range,
-                           header_y_coords$headers_text_y,
-                           header_y_coords$spanner_y,
+                           header_y_coords,
                            plot_settings) +
       plot_column_spanners(y_axis = dat$y_axis,
                            spanners = column_spanners_2,
                            column_x_coords,
                            x_axis_range,
-                           header_y_coords$headers_text_y + 1, # Second level has to start a bit above.
-                           header_y_coords$spanner_y,
+                           header_y_coords,
+                           spanners_2 = TRUE,
                            plot_settings) +
     NULL
   }
@@ -678,43 +677,42 @@ check_linebreak <- function(vec) {
 #' @return List containing nudging parameters for header y-coordinates.
 #'
 #' @examples #tbd
-set_header_y_coords <- function(column_spanners){
+set_header_y_coords <- function(column_spanners, y_axis){
   res_list <- list()
 
-  if (!is.null(column_spanners) == TRUE) {
-    res_list$headers_text_height_y <- headers_text_height_y <- 0.5
-  } else {
-    res_list$headers_text_height_y <- headers_text_height_y <- 1 # space above and belower header
-  }
+  # if (!is.null(column_spanners) == TRUE) {
+  #   res_list$headers_text_height_y <- 0.5
+  # } else {
+  #   res_list$headers_text_height_y <- 1 # space above and belower header
+  # }
+  # res_list$headers_text_y <- 0.5 + res_list$headers_text_height_y # space from last line to first text
+  #
 
-  res_list$headers_text_y <- 0.5 + res_list$headers_text_height_y # space from last line to first text
-  res_list$spanner_y <- 0.5
+  res_list$header_area_start <- max(y_axis) + 0.5
+  res_list$row_height_headers <- 1
+  res_list$row_height_column_spanners <- 1
+  res_list$row_height_column_spanners_2 <- 1
+
 
   return(res_list)
 }
 
 
 set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings){
-  max_y <- max(y_axis) +
-    header_y_coords$headers_text_y +
+  max_y <- header_y_coords$header_area_start +
+    header_y_coords$row_height_headers +
     max(plot_settings$headers_nudge_y) +
-    header_y_coords$headers_text_height_y +
-    0.2 + # space to upper border is a bit smaller otherwise
-    plot_settings$headers_background_width_y
+    plot_settings$headers_background_width_y #necessary? Should be work automatically.
 
   if (!is.null(column_spanners)) {
     max_y <- max_y +
-      header_y_coords$headers_text_height_y +
-      header_y_coords$spanner_y +
-      2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
-      2 * plot_settings$column_spanners_nudge_y # below and above spanner text
+      header_y_coords$row_height_column_spanners +
+      plot_settings$column_spanners_nudge_y
 
     if(!is.null(column_spanners_2)){
       max_y <- max_y +
-        header_y_coords$headers_text_height_y +
-        header_y_coords$spanner_y +
-        2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
-        2 * plot_settings$column_spanners_nudge_y # below and above spanner text
+        header_y_coords$row_height_column_spanners +
+        plot_settings$column_spanners_nudge_y
     }
   }
   return(max_y)

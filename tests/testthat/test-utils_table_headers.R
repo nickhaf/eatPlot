@@ -21,8 +21,7 @@ test_that("column_headers can be plotted", {
     ggplot2::geom_point() +
     plot_column_headers(column_x_coords_headers = column_x_coords_test,
                         headers = list("col_1", "col_2", "col_3"), # vector okay?
-                        y_axis = c(2, 1),
-                        headers_text_y = 1.5,
+                        header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
                         n_table_cols = 3,
                         plot_settings = plotsettings_tablebarplot()
                         )
@@ -49,8 +48,7 @@ test_that("column spanners can be plotted on first level", {
       ),
       column_x_coords = column_x_coords_test,
       x_axis_range = 20,
-      headers_text_y = 1.5,
-      spanner_y = 0.5,
+      header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
       plot_settings = plotsettings_tablebarplot()
     )
 
@@ -72,8 +70,7 @@ test_that("column spanners can be plotted on second level", {
       ),
       column_x_coords = column_x_coords_test,
       x_axis_range = 20,
-      headers_text_y = 1.5,
-      spanner_y = 0.5,
+      header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
       plot_settings = plotsettings_tablebarplot()
     ) +
     plot_column_spanners(
@@ -84,8 +81,8 @@ test_that("column spanners can be plotted on second level", {
       ),
       column_x_coords = column_x_coords_test,
       x_axis_range = 20,
-      headers_text_y = 2.5,
-      spanner_y = 0.5,
+      header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
+      spanners_2 = TRUE,
       plot_settings = plotsettings_tablebarplot()
     )
 

@@ -16,8 +16,7 @@
 #' @examples # tbd
 plot_column_headers <- function(column_x_coords_headers,
                                 headers,
-                                y_axis,
-                                headers_text_y,
+                                header_y_coords,
                                 n_table_cols,
                                 plot_settings) {
 
@@ -35,8 +34,8 @@ plot_column_headers <- function(column_x_coords_headers,
         data = data.frame(),
         ggplot2::aes(
           x = x_axis_i_header,
-          y = max(y_axis) +
-            headers_text_y +
+          y = header_y_coords$header_area_start +
+            header_y_coords$row_height_headers / 2 +
             rev(plot_settings$headers_nudge_y)[1]
         ),
         colour = "#000000",
@@ -113,8 +112,8 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
 #' @return Can be added to a ggplot to draw column spanners on top of the plot.
 #'
 #' @examples # tbd
-plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range, headers_text_y,
-                                 spanner_y, plot_settings) {
+plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range, header_y_coords, spanners_2 = FALSE, plot_settings) {
+
   if (is.null(spanners)) {
     return(NULL)
   }
@@ -138,32 +137,38 @@ plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range
       na.rm = TRUE
     )
 
+    spanner_line_y <- header_y_coords$header_area_start +
+      header_y_coords$row_height_headers +
+      max(plot_settings$headers_nudge_y)
+
+    spanner_text_y <- spanner_line_y +
+      header_y_coords$row_height_column_spanners / 2
+
+
+    if(spanners_2 == TRUE){
+      spanner_line_y <- header_y_coords$header_area_start +
+        header_y_coords$row_height_headers +
+        header_y_coords$row_height_column_spanners +
+        max(plot_settings$headers_nudge_y)
+
+      spanner_text_y <- spanner_line_y +
+        header_y_coords$row_height_column_spanners_2 / 2
+    }
+
     annotations <- c(
       ## Column Spanner line:
       ggplot2::annotate("segment",
         x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
         xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
-        y = max(y_axis) +
-          headers_text_y +
-          spanner_y +
-          2 * max(plot_settings$headers_nudge_y),
-        yend = max(y_axis) +
-          headers_text_y +
-          spanner_y +
-          2 * max(plot_settings$headers_nudge_y),
+        y = spanner_line_y,
+        yend = spanner_line_y,
         linewidth = 0.15
       ),
       ggtext::geom_richtext(
         data = data.frame(),
         ggplot2::aes(
           x = header_x,
-          y = max(y_axis) +
-            headers_text_y +
-            spanner_y + # header to column_spanner line,
-            spanner_y + # column_spanner line to column_spanner text
-            3 * max(plot_settings$headers_nudge_y) +
-            # lower border to header, header to column_spanner line, column_spanner line to column_spanner text
-            plot_settings$column_spanners_nudge_y
+          y = spanner_text_y
         ),
         colour = "#000000",
         label = names(spanners)[spanner],
