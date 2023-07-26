@@ -3,7 +3,6 @@
 # eatPlot 0.0.0.9024 "better headers"
 * Implemented `headers_font_size` argument in [plotsettings_tablebarplot()]. 
 
-
 # eatPlot 0.0.0.9023
 * Fixed `NA`-handling in [filter_rows()]. 
 
