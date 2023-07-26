@@ -638,7 +638,7 @@ mean_noTrend <- plot_tablebar(dat_bar_mean_sd,
   columns_table_se = list(NULL, NULL, "se_noTrend_noComp_2021_mean", NULL, "se_noTrend_noComp_2021_sd"),
   y_axis = "state_var",
   plot_settings = plotsettings_tablebarplot(
-    default_list = barplot_noTrend
+     default_list = barplot_noTrend
   )
 )
 
