@@ -18,9 +18,17 @@ plot_column_headers <- function(column_x_coords_headers,
                                 headers,
                                 y_axis,
                                 headers_text_y,
+                                n_table_cols,
                                 plot_settings) {
+
+  plot_settings <- check_headers_requirements(plot_settings, n_table_cols)
+
   lapply(1:nrow(column_x_coords_headers), function(i) {
-    x_axis_i_header <- set_headers_alignment(header_pos = i, plot_settings)
+    x_axis_i_header <- set_headers_alignment(
+      header_pos = i,
+      column_x_coords_headers,
+      plot_settings
+    )
 
     if (!is.null(headers)) {
       ggtext::geom_richtext(
@@ -48,15 +56,41 @@ plot_column_headers <- function(column_x_coords_headers,
 ## Utils plot_column_headers() ##
 #################################
 
-set_headers_alignment <- function(header_pos, plot_settings) {
-  if (rev(plot_settings$headers_alignment)[i] == 0) {
-    x_axis_i_header <- column_x_coords_headers$left[i]
-  } else if (rev(plot_settings$headers_alignment)[i] == 0.5) {
-    x_axis_i_header <- column_x_coords_headers$middle[i]
-  } else if (rev(plot_settings$headers_alignment)[i] == 1) {
-    x_axis_i_header <- column_x_coords_headers$right[i]
+check_headers_requirements <- function(plot_settings, n_table_cols) {
+
+  if (is.null(plot_settings$headers_alignment)) {
+    plot_settings$headers_alignment <- ifelse(plot_settings$columns_alignment == 2,
+      0.5,
+      plot_settings$columns_alignment
+    )
+    plot_settings$headers_alignment <- c(plot_settings$headers_alignment,
+                                         rep(0.5, n_table_cols - length(plot_settings$headers_alignment))
+                                         )
+  }
+
+  plot_settings$headers_alignment <- check_length(
+    plot_settings$headers_alignment,
+    n_table_cols,
+    fill = plot_settings$headers_alignment[1]
+  )
+  plot_settings$headers_nudge_x <- check_length(
+    plot_settings$headers_nudge_x,
+    n_table_cols,
+    fill = plot_settings$headers_nudge_x[1])
+
+  return(plot_settings)
+}
+
+
+set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_settings) {
+  if (rev(plot_settings$headers_alignment)[header_pos] == 0) {
+    x_axis_i_header <- column_x_coords_headers$left[header_pos]
+  } else if (rev(plot_settings$headers_alignment)[header_pos] == 0.5) {
+    x_axis_i_header <- column_x_coords_headers$middle[header_pos]
+  } else if (rev(plot_settings$headers_alignment)[header_pos] == 1) {
+    x_axis_i_header <- column_x_coords_headers$right[header_pos]
   } else {
-    x_axis_i_header <- column_x_coords_headers$middle[i]
+    x_axis_i_header <- column_x_coords_headers$middle[header_pos]
   }
   return(x_axis_i_header)
 }

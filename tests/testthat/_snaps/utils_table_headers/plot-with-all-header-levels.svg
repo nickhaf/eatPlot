@@ -74,6 +74,6 @@
 <text x='555.53' y='575.48' text-anchor='middle' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>10</text>
 <text x='634.24' y='575.48' text-anchor='middle' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>20</text>
 <text x='712.94' y='575.48' text-anchor='middle' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>30</text>
-<text x='-0.095' y='9.08' style='font-size: 13.20px; font-family: sans;' textLength='166.58px' lengthAdjust='spacingAndGlyphs'>Column spanners whole plot</text>
+<text x='-0.095' y='9.08' style='font-size: 13.20px; font-family: sans;' textLength='148.95px' lengthAdjust='spacingAndGlyphs'>Plot with all header levels</text>
 </g>
 </svg>

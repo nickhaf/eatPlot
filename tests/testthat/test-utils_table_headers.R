@@ -11,6 +11,30 @@ column_x_coords_test <- data.frame(
   right = c(10, 0, -10)
 )
 
+
+# Column headers ----------------------------------------------------------
+test_that("column_headers can be plotted", {
+  p_col_headers <- ggplot2::ggplot(
+    test_data,
+    ggplot2::aes(x, y)
+  ) +
+    ggplot2::geom_point() +
+    plot_column_headers(column_x_coords_headers = column_x_coords_test,
+                        headers = list("col_1", "col_2", "col_3"), # vector okay?
+                        y_axis = c(2, 1),
+                        headers_text_y = 1.5,
+                        n_table_cols = 3,
+                        plot_settings = plotsettings_tablebarplot()
+                        )
+
+  vdiffr::expect_doppelganger("Plot with column headers", p_col_headers)
+
+})
+
+
+
+
+# Column spanners ---------------------------------------------------------
 test_that("column spanners can be plotted on first level", {
   p_col_spanner_1 <- ggplot2::ggplot(
     test_data,
@@ -91,7 +115,7 @@ p_all_headers <- plot_tablebar(
   plot_settings = plotsettings_tablebarplot(headers_font_size = 3)
 )
 
-  vdiffr::expect_doppelganger("Column spanners whole plot", p_all_headers)
+  vdiffr::expect_doppelganger("Plot with all header levels", p_all_headers)
 
 ## Lower dimension should always be supplied first:
   expect_error(plot_tablebar(

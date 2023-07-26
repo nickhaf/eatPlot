@@ -100,20 +100,11 @@ plot_tablebar <- function(dat,
 
   columns_table_se <- check_length(columns_table_se, length(columns_table), leng_1 = FALSE)
 
-  if (is.null(plot_settings$headers_alignment)) {
-    plot_settings$headers_alignment <- ifelse(plot_settings$columns_alignment == 2,
-      0.5,
-      plot_settings$columns_alignment
-    )
 
-    plot_settings$headers_alignment <- c(plot_settings$headers_alignment, rep(0.5, n_table_cols - length(plot_settings$headers_alignment)))
-  }
 
   plot_settings$columns_alignment <- check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1])
   plot_settings$columns_nudge_x <- check_length(plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1])
   plot_settings$columns_nudge_y <- check_length(plot_settings$columns_nudge_y, length(columns_table), fill = plot_settings$columns_nudge_y[1])
-  plot_settings$headers_alignment <- check_length(plot_settings$headers_alignment, n_table_cols, fill = plot_settings$headers_alignment[1])
-  plot_settings$headers_nudge_x <- check_length(plot_settings$headers_nudge_x, n_table_cols, fill = plot_settings$headers_nudge_x[1])
   if (length(plot_settings$background_stripes_colour) < nrow(dat)) {
     plot_settings$background_stripes_colour <- fill_up(plot_settings$background_stripes_colour, leng = nrow(dat), fill = "white")
   }
@@ -435,6 +426,7 @@ plot_tablebar <- function(dat,
       headers,
       y_axis = dat$y_axis,
       headers_text_y,
+      n_table_cols,
       plot_settings
     )
   return(res_plot)
