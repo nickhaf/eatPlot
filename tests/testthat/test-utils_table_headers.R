@@ -92,7 +92,6 @@ test_that("column spanners can be plotted on second level", {
   vdiffr::expect_doppelganger("Plot with column spanners lvl 1 and 2", p_col_spanner_2)
 })
 
-
 test_that("Column spanners work in whole plot", {
 test_data <- data.frame(
   state_var = 1:4,
@@ -131,4 +130,41 @@ p_all_headers <- plot_tablebar(
 
 })
 
+test_that("Column spanners over multiple lines work in whole plot", {
+  test_data <- data.frame(
+    state_var = 1:4,
+    x_min = rep(0, 4),
+    x_max = c(10, -20, 40, 30),
+    est_1 = c(12, 12, 15, 23),
+    se_1 = c(12, 10, 8, 4),
+    bar_sig = c("TRUE", "FALSE", "TRUE", "FALSE"),
+    bar_fill = c("a", "b", "c", "d")
+  )
+
+  p_all_headers <- plot_tablebar(
+    dat = test_data,
+    headers = list("est_1", "est_2", "a barplot"),
+    column_spanners = list("spanner_2 <br> new line<br> new line<br> new line<br> new line" = c(2,3), "spanner_1" = 1),
+    column_spanners_2 = list("spanner_3<br> new line<br> new line<br> new line<br> new line<br> new line" = 3, "spanner_2" = c(1,2)),
+    columns_table = list("est_1", "se_1"),
+    bar_est = "est_1",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(headers_font_size = 3)
+  )
+
+  vdiffr::expect_doppelganger("Plot with all header levels", p_all_headers)
+
+  ## Lower dimension should always be supplied first:
+  expect_error(plot_tablebar(
+    dat = test_data,
+    headers = list("est_1", "est_2", "a barplot"),
+    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
+    columns_table = list("est_1", "se_1"),
+    bar_est = "est_1",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(headers_font_size = 3)
+  )
+  )
+
+})
 

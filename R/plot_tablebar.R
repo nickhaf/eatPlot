@@ -215,33 +215,27 @@ plot_tablebar <- function(dat,
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
   # Set some nudging parameters ---------------------------------------------
-  if (!is.null(column_spanners) == TRUE) {
-    headers_text_height_y <- 0.5
-  } else {
-    headers_text_height_y <- 1 # space above and belower header
-  }
 
-  headers_text_y <- 0.5 + headers_text_height_y # space from last line to first text
-  spanner_y <- 0.5
-
+  header_y_coords <- set_header_y_coords(column_spanners)
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
 
+
   max_y <- max(dat$y_axis) +
-    headers_text_y +
+    header_y_coords$headers_text_y +
     max(plot_settings$headers_nudge_y) +
-    headers_text_height_y +
+    header_y_coords$headers_text_height_y +
     0.2 + # space to upper border is a bit smaller otherwise
     plot_settings$headers_background_width_y
   if (!is.null(column_spanners)) {
     max_y <- max_y +
-      headers_text_height_y +
-      spanner_y +
+      header_y_coords$headers_text_height_y +
+      header_y_coords$spanner_y +
       2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
       2 * plot_settings$column_spanners_nudge_y # below and above spanner text
     if(!is.null(column_spanners_2)){
       max_y <- max_y +
-        headers_text_height_y +
-        spanner_y +
+        header_y_coords$headers_text_height_y +
+        header_y_coords$spanner_y +
         2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
         2 * plot_settings$column_spanners_nudge_y # below and above spanner text
     }
@@ -406,15 +400,15 @@ plot_tablebar <- function(dat,
                            spanners = column_spanners,
                            column_x_coords,
                            x_axis_range,
-                           headers_text_y,
-                           spanner_y,
+                           header_y_coords$headers_text_y,
+                           header_y_coords$spanner_y,
                            plot_settings) +
       plot_column_spanners(y_axis = dat$y_axis,
                            spanners = column_spanners_2,
                            column_x_coords,
                            x_axis_range,
-                           headers_text_y + 1, # Second level has to start a bit above.
-                           spanner_y,
+                           header_y_coords$headers_text_y + 1, # Second level has to start a bit above.
+                           header_y_coords$spanner_y,
                            plot_settings) +
     NULL
   }
@@ -425,7 +419,7 @@ plot_tablebar <- function(dat,
     plot_column_headers(column_x_coords_headers,
       headers,
       y_axis = dat$y_axis,
-      headers_text_y,
+      header_y_coords$headers_text_y,
       n_table_cols,
       plot_settings
     )
