@@ -126,7 +126,8 @@ plot_tablebar <- function(dat,
   }
 
   if (length(plot_settings$columns_width) != length(columns_total)) {
-    stop("Please provide either NULL or as many elements for plot_settings$columns_width as you have columns you want to plot. If you want to plot a bar, it also needs a width specification.")
+    stop("Please provide either NULL or as many elements for plot_settings$columns_width as you have columns you want to plot.
+         If you want to plot a bar, it also needs a width specification.")
   }
 
   if (sum(plot_settings$columns_width) < 0.98 | sum(plot_settings$columns_width) > 1.2) {
@@ -215,41 +216,17 @@ plot_tablebar <- function(dat,
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
   # Set some nudging parameters ---------------------------------------------
-
   header_y_coords <- set_header_y_coords(column_spanners)
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
+  max_y <- set_max_y(dat$y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings)
 
 
-  max_y <- max(dat$y_axis) +
-    header_y_coords$headers_text_y +
-    max(plot_settings$headers_nudge_y) +
-    header_y_coords$headers_text_height_y +
-    0.2 + # space to upper border is a bit smaller otherwise
-    plot_settings$headers_background_width_y
-  if (!is.null(column_spanners)) {
-    max_y <- max_y +
-      header_y_coords$headers_text_height_y +
-      header_y_coords$spanner_y +
-      2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
-      2 * plot_settings$column_spanners_nudge_y # below and above spanner text
-    if(!is.null(column_spanners_2)){
-      max_y <- max_y +
-        header_y_coords$headers_text_height_y +
-        header_y_coords$spanner_y +
-        2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
-        2 * plot_settings$column_spanners_nudge_y # below and above spanner text
-    }
-  }
-
+# Set colours -------------------------------------------------------------
   plot_settings$bar_fill_colour <- construct_colour_scale(
     colours = plot_settings$bar_fill_colour,
     dat = dat,
     colname = "bar_fill"
   )
-
-
-
-
 
   # Plot --------------------------------------------------------------------
 
@@ -688,4 +665,57 @@ check_linebreak <- function(vec) {
     grepl("<br>", vec)
   }))
   return(logical_break)
+}
+
+# Header coords -----------------------------------------------------------
+#' Define y coords for headers.
+#'
+#' @inheritParams plot_tablebar
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @return List containing nudging parameters for header y-coordinates.
+#'
+#' @examples #tbd
+set_header_y_coords <- function(column_spanners){
+  res_list <- list()
+
+  if (!is.null(column_spanners) == TRUE) {
+    res_list$headers_text_height_y <- headers_text_height_y <- 0.5
+  } else {
+    res_list$headers_text_height_y <- headers_text_height_y <- 1 # space above and belower header
+  }
+
+  res_list$headers_text_y <- 0.5 + res_list$headers_text_height_y # space from last line to first text
+  res_list$spanner_y <- 0.5
+
+  return(res_list)
+}
+
+
+set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings){
+  max_y <- max(y_axis) +
+    header_y_coords$headers_text_y +
+    max(plot_settings$headers_nudge_y) +
+    header_y_coords$headers_text_height_y +
+    0.2 + # space to upper border is a bit smaller otherwise
+    plot_settings$headers_background_width_y
+
+  if (!is.null(column_spanners)) {
+    max_y <- max_y +
+      header_y_coords$headers_text_height_y +
+      header_y_coords$spanner_y +
+      2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
+      2 * plot_settings$column_spanners_nudge_y # below and above spanner text
+
+    if(!is.null(column_spanners_2)){
+      max_y <- max_y +
+        header_y_coords$headers_text_height_y +
+        header_y_coords$spanner_y +
+        2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
+        2 * plot_settings$column_spanners_nudge_y # below and above spanner text
+    }
+  }
+  return(max_y)
 }

@@ -1,29 +1,3 @@
-# Header coords -----------------------------------------------------------
-#' Define y coords for headers.
-#'
-#' @inheritParams plot_tablebar
-#'
-#' @keywords internal
-#' @noRd
-#'
-#' @return List containing nudging parameters for header y-coordinates.
-#'
-#' @examples #tbd
-set_header_y_coords <- function(column_spanners){
-  res_list <- list()
-
-  if (!is.null(column_spanners) == TRUE) {
-    res_list$headers_text_height_y <- headers_text_height_y <- 0.5
-  } else {
-    res_list$headers_text_height_y <- headers_text_height_y <- 1 # space above and belower header
-  }
-
-  res_list$headers_text_y <- 0.5 + res_list$headers_text_height_y # space from last line to first text
-  res_list$spanner_y <- 0.5
-
-  return(res_list)
-}
-
 # Column headers ----------------------------------------------------------
 
 #' Draw column headers.
