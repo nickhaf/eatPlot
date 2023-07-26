@@ -8,6 +8,7 @@
 #' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
 #' @param headers Character vector containing the headers of the ploted table columns, including the bar table.
 #' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
+#' #' @param column_spanners Named list. A second dimension of column spanners. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
 #' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
@@ -28,6 +29,7 @@ plot_tablebar <- function(dat,
                           bar_fill = NULL,
                           columns_round = 0,
                           column_spanners = NULL,
+                          column_spanners_2 = NULL,
                           columns_table = NULL,
                           columns_table_sig_bold = NULL,
                           columns_table_sig_high = NULL,
@@ -45,6 +47,9 @@ plot_tablebar <- function(dat,
     stop("headers has to be a list, or a vector, or NULL.")
   }
 
+  if(is.null(column_spanners) & !is.null(column_spanners_2)){
+    stop("You provided column_spanners_2 but not column_spanners. Please use the lower dimension of column_spanners first.")
+  }
   # Check columns -----------------------------------------------------------
 
   if (is.null(y_axis)) {
@@ -236,12 +241,16 @@ plot_tablebar <- function(dat,
     headers_text_height_y +
     0.2 + # space to upper border is a bit smaller otherwise
     plot_settings$headers_background_width_y
-  if (!is.null(column_spanners) == TRUE) {
+  if (!is.null(column_spanners)) {
     max_y <- max_y +
       headers_text_height_y +
       spanner_y +
       2 * plot_settings$headers_nudge_y + # column_spanner line to text, text to upper border
       2 * plot_settings$column_spanners_nudge_y # below and above spanner text
+    if(!is.null(column_spanners_2)){
+      max_y <- max_y +
+        2 * plot_settings$column_spanners_nudge_y # below and above spanner text
+    }
   }
 
   plot_settings$bar_fill_colour <- construct_colour_scale(
@@ -399,66 +408,76 @@ plot_tablebar <- function(dat,
         plot_borders = plot_borders,
         plot_settings = plot_settings
       ) +
-      if (!is.null(column_spanners)) {
-        unlist(lapply(seq_along(column_spanners), function(spanner) {
-          i <- column_spanners[[spanner]]
+      plot_column_spanners(dat,
+                           spanners = column_spanners,
+                           column_x_coords,
+                           x_axis_range,
+                           headers_text_y,
+                           spanner_y,
+                           plot_settings)
 
-          if (length(i) == 1) {
-            i <- rep(i, 2)
-          }
 
-          min_col <- i[1]
-          max_col <- i[2]
 
-          column_x_coords_rev <- column_x_coords[order(rev(rownames(column_x_coords))), ]
-          header_x <- mean(
-            c(
-              max(column_x_coords_rev[c(min_col, max_col), "right"], na.rm = TRUE),
-              min(column_x_coords_rev[c(min_col, max_col), "left"], na.rm = TRUE)
-            ),
-            na.rm = TRUE
-          )
-
-          annotations <- c(
-            ## Column Spanner line:
-            ggplot2::annotate("segment",
-              x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
-              xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
-              y = max(dat$y_axis) +
-                headers_text_y +
-                spanner_y +
-                2 * max(plot_settings$headers_nudge_y),
-              yend = max(dat$y_axis) +
-                headers_text_y +
-                spanner_y +
-                2 * max(plot_settings$headers_nudge_y),
-              linewidth = 0.15
-            ),
-            ggtext::geom_richtext(
-              data = data.frame(),
-              ggplot2::aes(
-                x = header_x,
-                y = max(dat$y_axis) +
-                  headers_text_y +
-                  spanner_y + # header to column_spanner line,
-                  spanner_y + # column_spanner line to column_spanner text
-                  3 * max(plot_settings$headers_nudge_y) +
-                  # lower border to header, header to column_spanner line, column_spanner line to column_spanner text
-                  plot_settings$column_spanners_nudge_y
-              ),
-              colour = "#000000",
-              label = names(column_spanners)[spanner],
-              size = plot_settings$headers_font_size,
-              label.padding = grid::unit(rep(0, 4), "pt"),
-              fill = NA,
-              label.color = NA,
-              hjust = 0.5
-            )
-          )
-
-          return(annotations)
-        }))
-      }
+      # if (!is.null(column_spanners)) {
+      #   unlist(lapply(seq_along(column_spanners), function(spanner) {
+      #     i <- column_spanners[[spanner]]
+      #
+      #     if (length(i) == 1) {
+      #       i <- rep(i, 2)
+      #     }
+      #
+      #     min_col <- i[1]
+      #     max_col <- i[2]
+      #
+      #     column_x_coords_rev <- column_x_coords[order(rev(rownames(column_x_coords))), ]
+      #     header_x <- mean(
+      #       c(
+      #         max(column_x_coords_rev[c(min_col, max_col), "right"], na.rm = TRUE),
+      #         min(column_x_coords_rev[c(min_col, max_col), "left"], na.rm = TRUE)
+      #       ),
+      #       na.rm = TRUE
+      #     )
+      #
+      #     annotations <- c(
+      #       ## Column Spanner line:
+      #       ggplot2::annotate("segment",
+      #         x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
+      #         xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
+      #         y = max(dat$y_axis) +
+      #           headers_text_y +
+      #           spanner_y +
+      #           2 * max(plot_settings$headers_nudge_y),
+      #         yend = max(dat$y_axis) +
+      #           headers_text_y +
+      #           spanner_y +
+      #           2 * max(plot_settings$headers_nudge_y),
+      #         linewidth = 0.15
+      #       ),
+      #       ggtext::geom_richtext(
+      #         data = data.frame(),
+      #         ggplot2::aes(
+      #           x = header_x,
+      #           y = max(dat$y_axis) +
+      #             headers_text_y +
+      #             spanner_y + # header to column_spanner line,
+      #             spanner_y + # column_spanner line to column_spanner text
+      #             3 * max(plot_settings$headers_nudge_y) +
+      #             # lower border to header, header to column_spanner line, column_spanner line to column_spanner text
+      #             plot_settings$column_spanners_nudge_y
+      #         ),
+      #         colour = "#000000",
+      #         label = names(column_spanners)[spanner],
+      #         size = plot_settings$headers_font_size,
+      #         label.padding = grid::unit(rep(0, 4), "pt"),
+      #         fill = NA,
+      #         label.color = NA,
+      #         hjust = 0.5
+      #       )
+      #     )
+      #
+      #     return(annotations)
+      #   }))
+      # }
     NULL
   }
 
@@ -570,6 +589,7 @@ plot_column_headers <- function(column_x_coords_headers, headers, y_axis, header
     }
   })
 }
+
 
 
 build_background_stripes <- function(dat,
