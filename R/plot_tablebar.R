@@ -682,8 +682,8 @@ set_header_y_coords <- function(y_axis, plot_settings){
 
   res_list$header_area_start <- max(y_axis) + 0.5
   res_list$row_height_headers <- plot_settings$headers_row_height
-  res_list$row_height_column_spanners <- 1
-  res_list$row_height_column_spanners_2 <- 1
+  res_list$row_height_column_spanners <- plot_settings$column_spanners_row_height
+  res_list$row_height_column_spanners_2 <- plot_settings$column_spanners_2_row_height
 
 
   return(res_list)
@@ -705,7 +705,7 @@ set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coord
 
     if(!is.null(column_spanners_2)){
       max_y <- max_y +
-        header_y_coords$row_height_column_spanners +
+        header_y_coords$row_height_column_spanners_2 +
         plot_settings$column_spanners_nudge_y
     }
   }

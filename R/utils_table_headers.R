@@ -147,13 +147,17 @@ plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range
       header_y_coords$row_height_headers +
       max(plot_settings$headers_nudge_y)
 
-    if(spanners_2 == TRUE){
-      spanner_line_y <- spanner_line_y +
-        header_y_coords$row_height_column_spanners_2
-    }
-
     spanner_text_y <- spanner_line_y +
       header_y_coords$row_height_column_spanners / 2 - 0.2 # Nudge a bit down, so the text stands on the line
+
+    if(spanners_2 == TRUE){
+      spanner_line_y <- spanner_line_y +
+        header_y_coords$row_height_column_spanners
+
+      spanner_text_y <- spanner_line_y +
+        header_y_coords$row_height_column_spanners_2 / 2 - 0.2 # Nudge a bit down, so the text stands on the line
+    }
+
 
     annotations <- c(
       ## Column Spanner line:
