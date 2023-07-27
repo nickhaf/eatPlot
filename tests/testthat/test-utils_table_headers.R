@@ -162,6 +162,7 @@ test_that("Column spanners over multiple lines work in whole plot", {
     bar_est = "est_1",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(headers_font_size = 3,
+                                              headers_row_height = 2,
                                               column_spanners_row_height = 3,
                                               column_spanners_2_row_height = 3.5
                                               )
