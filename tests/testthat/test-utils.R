@@ -184,3 +184,12 @@ test_that("second vs is replaced correctly", {
 
   expect_equal(replace_VS(x)[c(4, 5, 6)], c("black.VS.white", rep("TR_BUNDESLAND=Baden-Wuerttemberg____aohneZWH.vs.zweiteGen.VS.all.group=1____ersteGen.vs.zweiteGen", 2)))
 })
+
+
+
+test_that("Linebreaks are counted correctly", {
+
+  test_string <- c("This <br> is <br> a linebreak", "This is not", "This <br> are <br>  more <br>")
+
+  expect_equal(count_words(test_string, "<br>"), 3)
+})

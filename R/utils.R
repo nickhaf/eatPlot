@@ -594,3 +594,23 @@ construct_colour_scale <- function(colours, dat, colname) {
   }
   return(colours)
 }
+
+
+
+#' Get the maximum occurence of a word in a vector of character strings.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param string Vector of character strings.
+#' @param word Character string that is counted.
+#'
+#' @return Maximum occurence of the word that is searched for.
+#'
+#' @examples count_words(c("Test word", "word word, Test word"), "word")
+count_words <- function(string, word){
+max(unlist(lapply(string, function(x){
+  lengths(regmatches(x, gregexpr(word, x)))
+})))
+}
+
