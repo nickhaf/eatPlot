@@ -190,6 +190,8 @@ test_that("second vs is replaced correctly", {
 test_that("Linebreaks are counted correctly", {
 
   test_string <- c("This <br> is <br> a linebreak", "This is not", "This <br> are <br>  more <br>")
+  test_list <- list("This <br> is <br> a linebreak" = c(1,2), "This is not" = c("a", "b"))
 
   expect_equal(count_words(test_string, "<br>"), 3)
+  expect_equal(count_words(test_list, "<br>"), 2)
 })

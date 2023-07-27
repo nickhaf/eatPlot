@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 30
+      length(settings_list) == 31
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -34,6 +34,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "headers_font_size",
         "headers_nudge_x",
         "headers_nudge_y",
+        "headers_row_height",
         "font_size",
         "bar_pattern_spacing",
         "bar_pattern_width"
@@ -68,6 +69,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$headers_font_size))
   stopifnot(is.numeric(settings_list$headers_nudge_x))
   stopifnot(is.numeric(settings_list$headers_nudge_y))
+  stopifnot(is.numeric(settings_list$headers_row_height))
   stopifnot(is.numeric(settings_list$font_size))
   stopifnot(is.numeric(settings_list$bar_pattern_spacing))
   stopifnot(is.numeric(settings_list$bar_pattern_width))
@@ -106,6 +108,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param headers_font_size Numeric for the font size that will be used for the headers. Defaults to `3`.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
+#' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
 #' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
@@ -171,6 +174,7 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       headers_font_size = NULL,
                                       headers_nudge_x = NULL,
                                       headers_nudge_y = NULL,
+                                      headers_row_height = NULL,
                                       font_size = NULL,
                                       default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
@@ -203,6 +207,7 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
       "headers_font_size" = 2,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
+      "headers_row_height" = 1,
       "bar_pattern_spacing" = 0.1,
       "bar_pattern_width" = 0.5,
       "font_size" = 3

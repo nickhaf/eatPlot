@@ -216,7 +216,7 @@ plot_tablebar <- function(dat,
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
   # Set some nudging parameters ---------------------------------------------
-  header_y_coords <- set_header_y_coords(column_spanners, dat$y_axis)
+  header_y_coords <- set_header_y_coords(dat$y_axis, plot_settings)
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
   max_y <- set_max_y(dat$y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings)
 
@@ -378,7 +378,7 @@ plot_tablebar <- function(dat,
                            column_x_coords,
                            x_axis_range,
                            header_y_coords,
-                           plot_settings) +
+                           plot_settings = plot_settings) +
       plot_column_spanners(y_axis = dat$y_axis,
                            spanners = column_spanners_2,
                            column_x_coords,
@@ -392,10 +392,10 @@ plot_tablebar <- function(dat,
   column_x_coords_headers <- column_x_coords[!is.na(column_x_coords$column), ]
 
   res_plot <- res_plot +
-    plot_column_headers(column_x_coords_headers,
+    plot_column_headers(
+      column_x_coords_headers,
       headers,
-      y_axis = dat$y_axis,
-      header_y_coords$headers_text_y,
+      header_y_coords,
       n_table_cols,
       plot_settings
     )
@@ -677,25 +677,19 @@ check_linebreak <- function(vec) {
 #' @return List containing nudging parameters for header y-coordinates.
 #'
 #' @examples #tbd
-set_header_y_coords <- function(column_spanners, y_axis){
+set_header_y_coords <- function(y_axis, plot_settings){
   res_list <- list()
 
-  # if (!is.null(column_spanners) == TRUE) {
-  #   res_list$headers_text_height_y <- 0.5
-  # } else {
-  #   res_list$headers_text_height_y <- 1 # space above and belower header
-  # }
-  # res_list$headers_text_y <- 0.5 + res_list$headers_text_height_y # space from last line to first text
-  #
-
   res_list$header_area_start <- max(y_axis) + 0.5
-  res_list$row_height_headers <- 1
+  res_list$row_height_headers <- plot_settings$headers_row_height
   res_list$row_height_column_spanners <- 1
   res_list$row_height_column_spanners_2 <- 1
 
 
   return(res_list)
 }
+
+
 
 
 set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings){

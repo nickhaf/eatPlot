@@ -22,6 +22,8 @@ plot_column_headers <- function(column_x_coords_headers,
 
   plot_settings <- check_headers_requirements(plot_settings, n_table_cols)
 
+  ## Headers_nudge_y needs to be checked in length!
+
   lapply(1:nrow(column_x_coords_headers), function(i) {
     x_axis_i_header <- set_headers_alignment(
       header_pos = i,
@@ -36,7 +38,7 @@ plot_column_headers <- function(column_x_coords_headers,
           x = x_axis_i_header,
           y = header_y_coords$header_area_start +
             header_y_coords$row_height_headers / 2 +
-            rev(plot_settings$headers_nudge_y)[1]
+            rev(plot_settings$headers_nudge_y)[i]
         ),
         colour = "#000000",
         label = rev(headers)[[i]],
@@ -74,6 +76,10 @@ check_headers_requirements <- function(plot_settings, n_table_cols) {
   )
   plot_settings$headers_nudge_x <- check_length(
     plot_settings$headers_nudge_x,
+    n_table_cols,
+    fill = plot_settings$headers_nudge_x[1])
+  plot_settings$headers_nudge_y <- check_length(
+    plot_settings$headers_nudge_y,
     n_table_cols,
     fill = plot_settings$headers_nudge_x[1])
 

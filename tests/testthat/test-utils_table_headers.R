@@ -14,6 +14,11 @@ column_x_coords_test <- data.frame(
 
 # Column headers ----------------------------------------------------------
 test_that("column_headers can be plotted", {
+  plot_settings_headers <- plotsettings_tablebarplot(
+    headers_nudge_y = c(-1, 0, 1),
+    headers_row_height = 3
+  )
+
   p_col_headers <- ggplot2::ggplot(
     test_data,
     ggplot2::aes(x, y)
@@ -21,10 +26,10 @@ test_that("column_headers can be plotted", {
     ggplot2::geom_point() +
     plot_column_headers(column_x_coords_headers = column_x_coords_test,
                         headers = list("col_1", "col_2", "col_3"), # vector okay?
-                        header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
+                        header_y_coords = set_header_y_coords(y_axis = c(3.5:0.5),
+                                                              plot_settings_headers),
                         n_table_cols = 3,
-                        plot_settings = plotsettings_tablebarplot()
-                        )
+                        plot_settings = plot_settings_headers)
 
   vdiffr::expect_doppelganger("Plot with column headers", p_col_headers)
 
@@ -35,6 +40,10 @@ test_that("column_headers can be plotted", {
 
 # Column spanners ---------------------------------------------------------
 test_that("column spanners can be plotted on first level", {
+
+  plot_settings_spanners <- plotsettings_tablebarplot(
+  )
+
   p_col_spanner_1 <- ggplot2::ggplot(
     test_data,
     ggplot2::aes(x, y)
@@ -48,8 +57,9 @@ test_that("column spanners can be plotted on first level", {
       ),
       column_x_coords = column_x_coords_test,
       x_axis_range = 20,
-      header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
-      plot_settings = plotsettings_tablebarplot()
+      header_y_coords = set_header_y_coords(y_axis = c(3.5:0.5),
+                                            plot_settings_spanners),
+      plot_settings = plot_settings_spanners
     )
 
   vdiffr::expect_doppelganger("Plot with column spanners lvl 1", p_col_spanner_1)
@@ -70,7 +80,7 @@ test_that("column spanners can be plotted on second level", {
       ),
       column_x_coords = column_x_coords_test,
       x_axis_range = 20,
-      header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
+      header_y_coords = set_header_y_coords(y_axis = c(3.5:0.5), plot_settings = plotsettings_tablebarplot()),
       plot_settings = plotsettings_tablebarplot()
     ) +
     plot_column_spanners(
@@ -81,7 +91,7 @@ test_that("column spanners can be plotted on second level", {
       ),
       column_x_coords = column_x_coords_test,
       x_axis_range = 20,
-      header_y_coords = set_header_y_coords(column_spanners = NULL, y_axis = c(3.5:0.5)),
+      header_y_coords = set_header_y_coords(y_axis = c(3.5:0.5), plot_settings = plotsettings_tablebarplot()),
       spanners_2 = TRUE,
       plot_settings = plotsettings_tablebarplot()
     )
@@ -100,6 +110,11 @@ test_data <- data.frame(
   bar_fill = c("a", "b", "c", "d")
 )
 
+plot_settings_full <- plotsettings_tablebarplot(
+  headers_nudge_y = c(-1, 0, 1),
+  headers_row_height = 3
+)
+
 p_all_headers <- plot_tablebar(
   dat = test_data,
   headers = list("est_1", "est_2", "a barplot"),
@@ -108,7 +123,8 @@ p_all_headers <- plot_tablebar(
   columns_table = list("est_1", "se_1"),
   bar_est = "est_1",
   y_axis = "state_var",
-  plot_settings = plotsettings_tablebarplot(headers_font_size = 3)
+  plot_settings = plotsettings_tablebarplot(headers_font_size = 3,
+                                            default_list = plot_settings_full)
 )
 
   vdiffr::expect_doppelganger("Plot with all header levels", p_all_headers)
@@ -165,3 +181,9 @@ test_that("Column spanners over multiple lines work in whole plot", {
 
 })
 
+
+test_that("Header nuging behaves as expected", {
+
+
+
+})
