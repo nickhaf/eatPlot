@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 31
+      length(settings_list) == 33
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -22,6 +22,8 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_sig_type",
         "bar_width",
         "column_spanners_nudge_y",
+        "column_spanners_row_height",
+        "column_spanners_2_row_height",
         "columns_alignment",
         "columns_nudge_x",
         "columns_nudge_y",
@@ -57,6 +59,8 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(settings_list$bar_sig_type %in% c("pattern", "frame"))
   stopifnot(is.numeric(settings_list$bar_width))
   stopifnot(is.numeric(settings_list$column_spanners_nudge_y))
+  stopifnot(is.numeric(settings_list$column_spanners_row_height))
+  stopifnot(is.numeric(settings_list$column_spanners_2_row_height))
   stopifnot(is.numeric(settings_list$columns_alignment))
   stopifnot(is.numeric(settings_list$columns_nudge_x))
   stopifnot(is.numeric(settings_list$columns_nudge_y))
@@ -96,6 +100,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_sig_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").
 #' @param bar_width Numeric between `0` and `1` specifying the width of the bar. Defaults to `0.4`.
 #' @param column_spanners_nudge_y Numeric to increase or decrease the space between column spanners text and line.
+#' @param column_spanners_row_height Numeric for the row height of the row the first level of column spanners is written in. Defaults to `1`.
+#' @param column_spanners_2_row_height Numeric for the row height of the row the second level of column spanners is written in. Defaults to `1`
 #' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `0.5`.
 #' @param columns_nudge_x Numeric vector to nudge the column text in x direction. Defaults to `0`.
 #' @param columns_nudge_y Numeric vector to nudge the column texts in y direction. Defaults to `0`.
@@ -162,6 +168,8 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       bar_sig_type = NULL,
                                       bar_width = NULL,
                                       column_spanners_nudge_y = NULL,
+                                      column_spanners_row_height = NULL,
+                                      column_spanners_2_row_height = NULL,
                                       columns_alignment = NULL,
                                       columns_nudge_x = NULL,
                                       columns_nudge_y = NULL,
@@ -195,6 +203,8 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
       "bar_sig_type" = "frame",
       "bar_width" = 0.4,
       "column_spanners_nudge_y" = 0,
+      "column_spanners_row_height" = 1,
+      "column_spanners_2_row_height" = 1,
       "columns_alignment" = 0.5,
       "columns_nudge_x" = 0,
       "columns_nudge_y" = 0,
