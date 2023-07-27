@@ -101,9 +101,9 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_pattern_width Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the `bar_pattern_width` parameter will increase the thickness of the white stripes.
 #' @param bar_sig_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").
 #' @param bar_width Numeric between `0` and `1` specifying the width of the bar. Defaults to `0.4`.
-#' @param column_spanners_nudge_y Numeric to increase or decrease the space between column spanners text and line. Defaults to `-0.2`.
-#' @param column_spanners_2_nudge_y Numeric to increase or decrease the space between column spanners level 2 text and line. Defaults to `-0.2`.
+#' @param column_spanners_nudge_y Numeric vector to increase or decrease the space between column spanners text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to `-0.2`.
 #' @param column_spanners_row_height Numeric for the row height of the row the first level of column spanners is written in. Defaults to `1`.
+#' @param column_spanners_2_nudge_y Numeric vector to increase or decrease the space between column spanners level 2 text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to `-0.2`.
 #' @param column_spanners_2_row_height Numeric for the row height of the row the second level of column spanners is written in. Defaults to `1`
 #' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `0.5`.
 #' @param columns_nudge_x Numeric vector to nudge the column text in x direction. Defaults to `0`.
