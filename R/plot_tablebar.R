@@ -364,6 +364,10 @@ plot_tablebar <- function(dat,
     }
   }
 
+
+# Column spanners ---------------------------------------------------------
+  plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)
+
   if (any(!is.null(columns_table))) {
     res_plot <- res_plot +
       build_columns_3(dat,
@@ -700,13 +704,11 @@ set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coord
 
   if (!is.null(column_spanners)) {
     max_y <- max_y +
-      header_y_coords$row_height_column_spanners +
-      plot_settings$column_spanners_nudge_y
+      header_y_coords$row_height_column_spanners
 
     if(!is.null(column_spanners_2)){
       max_y <- max_y +
-        header_y_coords$row_height_column_spanners_2 +
-        plot_settings$column_spanners_nudge_y
+        header_y_coords$row_height_column_spanners_2
     }
   }
   return(max_y)

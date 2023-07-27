@@ -104,6 +104,22 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
 
 # Column spanners ---------------------------------------------------------
 
+check_spanners_requirements <- function(column_spanners, column_spanners_2, plot_settings){
+
+  plot_settings$column_spanners_nudge_y <- check_length(plot_settings$column_spanners_nudge_y,
+                                  length(column_spanners),
+                                  fill = plot_settings$column_spanners_nudge_y[1]
+    )
+  if(!is.null(column_spanners_2)){
+    plot_settings$column_spanners_2_nudge_y <- check_length(plot_settings$column_spanners_2_nudge_y,
+                                    length(column_spanners_2),
+                                    fill = plot_settings$column_spanners_2_nudge_y[1]
+      )
+    }
+
+  return(plot_settings)
+}
+
 #' Draw column spanners.
 #'
 #' @keywords internal
@@ -113,7 +129,6 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
 #' @param spanners List of column spanners.
 #' @param column_x_coords Data.frame containing the x coordinates of the table columns.
 #' @param x_axis_range Numeric for the x axis range of the whole table.
-#' @param spanner_y Numeric for nudging the column spanners in y position away from the spanner lines. For 0, the spanning headers will be plotted directly into the spanner line.
 #'
 #' @return Can be added to a ggplot to draw column spanners on top of the plot.
 #'
@@ -148,14 +163,16 @@ plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range
       max(plot_settings$headers_nudge_y)
 
     spanner_text_y <- spanner_line_y +
-      header_y_coords$row_height_column_spanners / 2 - 0.2 # Nudge a bit down, so the text stands on the line
+      (header_y_coords$row_height_column_spanners / 2) +
+      rev(plot_settings$column_spanners_nudge_y)[spanner] # Nudge a bit down, so the text stands on the line
 
     if(spanners_2 == TRUE){
       spanner_line_y <- spanner_line_y +
         header_y_coords$row_height_column_spanners
 
       spanner_text_y <- spanner_line_y +
-        header_y_coords$row_height_column_spanners_2 / 2 - 0.2 # Nudge a bit down, so the text stands on the line
+        (header_y_coords$row_height_column_spanners_2) / 2 +
+        rev(plot_settings$column_spanners_2_nudge_y)[spanner] # Nudge a bit down, so the text stands on the line
     }
 
 
