@@ -698,8 +698,7 @@ set_header_y_coords <- function(y_axis, plot_settings){
 
 set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings){
   max_y <- header_y_coords$header_area_start +
-    header_y_coords$row_height_headers +
-    max(plot_settings$headers_nudge_y)
+    header_y_coords$row_height_headers
 
   if (!is.null(column_spanners)) {
     max_y <- max_y +
