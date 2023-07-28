@@ -7,9 +7,8 @@
 #'
 #' @examples # tbd
 combine_plots <- function(plot_list) {
-  coordinates <- vapply(plot_list, function(plot) {
-    get_x_range(plot)
-  }, FUN.VALUE = numeric(1))
+
+  coordinates <- get_coordinates(plot_list)
 
   sum_coords <- sum(coordinates)
   plot_widths <- vapply(coordinates, function(coord_range) {
@@ -23,3 +22,15 @@ combine_plots <- function(plot_list) {
       axis.ticks.length.y = ggplot2::unit(0, "pt")
     )
 }
+
+
+# Utils -------------------------------------------------------------------
+get_coordinates <- function(plot_list){
+
+ coords <- vapply(plot_list, function(plot) {
+  get_x_range(plot)
+}, FUN.VALUE = numeric(1))
+
+ return(coords)
+}
+
