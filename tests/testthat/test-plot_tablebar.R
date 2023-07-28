@@ -73,6 +73,8 @@ test_that("continous barplot looks the same", {
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
     headers = list("est_1", "est_2", "a barplot"),
+    column_spanners = list("spanner_2" = c(2,3), "spanner_1" = 1),
+    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
     columns_table_sig_high = list("bar_sig", "bar_sig"),
@@ -86,7 +88,8 @@ test_that("continous barplot looks the same", {
       bar_sig_type = "pattern",
       columns_width = c(0.3, 0.2, 0.5),
       bar_pattern_width = 0.5,
-      bar_pattern_spacing = 0.1
+      bar_pattern_spacing = 0.1,
+      headers_font_size = 5
     )
   )
 

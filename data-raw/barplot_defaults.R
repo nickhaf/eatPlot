@@ -25,6 +25,21 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
 usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 
+barplot_noTrend <- plotsettings_tablebarplot(
+  background_stripes_colour = c(rep(c("white", cmyk(7, 0, 4, 1)), 8), cmyk(0, 0, 0, 10)),
+  bar_background_lines = "scale_breaks", # set background lines at scalebreaks
+  bar_background_lines_linetype = "solid",
+  bar_fill_colour = cmyk(60, 0, 30, 12),
+  columns_alignment = c(0, 0.5, 0.5, 0.5, 0.5),
+  columns_width = c(0.2, 0.1, 0.1, 0.1, 0.1, 0.4),
+  headers_alignment = c(0, 0.5, 0.5, 0.5, 0.5, 0.5),
+  headers_background_colour = cmyk(40, 0, 20, 8),
+  default_list = barplot_table_plot_pattern
+)
+
+usethis::use_data(barplot_noTrend, overwrite = TRUE)
+
+
 barplot_plot_frame <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white"), 16), cmyk(0, 0, 0, 15)),
   bar_background_lines = "none",
@@ -40,8 +55,6 @@ barplot_plot_frame <- plotsettings_tablebarplot(
   default_list = barplot_table_plot_pattern
 )
 
-
-
 usethis::use_data(barplot_plot_frame, overwrite = TRUE)
 
 
@@ -56,3 +69,5 @@ barplot_plot_frz <- plotsettings_tablebarplot(
 )
 
 usethis::use_data(barplot_plot_frz, overwrite = TRUE)
+
+

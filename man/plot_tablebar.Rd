@@ -13,6 +13,7 @@ plot_tablebar(
   bar_fill = NULL,
   columns_round = 0,
   column_spanners = NULL,
+  column_spanners_2 = NULL,
   columns_table = NULL,
   columns_table_sig_bold = NULL,
   columns_table_sig_high = NULL,
@@ -38,6 +39,8 @@ plot_tablebar(
 \item{columns_round}{List of numerics, for rounding the column values. Insert \code{NULL} or \code{0} for no rounding/character columns.}
 
 \item{column_spanners}{Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.}
+
+\item{column_spanners_2}{Named list. A second dimension of column spanners. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.}
 
 \item{columns_table}{List of character strings of the columns that should be plotted as table columns in the plot.}
 

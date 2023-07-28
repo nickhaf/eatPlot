@@ -1,5 +1,12 @@
 # eatPlot (development version)
 
+# eatPlot 0.0.0.9024 "better headers"
+* Implemented `column_spanners_2` argument in [plotsettings_tablebarplot()]. This provides a second dimension of column spanners.
+* Implemented `headers_row_height`, `column_spanners_row_height` and `column_spanners_2_row_height` arguments in [plotsettings_tablebarplot()]. This makes it possible to set the width of the row the headers and column_spanners are written in.
+* Implemented `headers_nudge_y`, `column_spanners_nudge_y` and `columns_spanners_2_nudge_y` arguments in [plotsettings_tablebarplot()] to nudge the individual headers and column_spanners along the y-axis. 
+* Removed the `headers_background_widht_y` argument in [plotsettings_tablebarplot()]. 
+* Implemented `headers_font_size` argument in [plotsettings_tablebarplot()]. 
+
 # eatPlot 0.0.0.9023
 * Fixed `NA`-handling in [filter_rows()]. 
 

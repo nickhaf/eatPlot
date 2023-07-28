@@ -22,6 +22,9 @@ plotsettings_tablebarplot(
   bar_sig_type = NULL,
   bar_width = NULL,
   column_spanners_nudge_y = NULL,
+  column_spanners_row_height = NULL,
+  column_spanners_2_nudge_y = NULL,
+  column_spanners_2_row_height = NULL,
   columns_alignment = NULL,
   columns_nudge_x = NULL,
   columns_nudge_y = NULL,
@@ -30,9 +33,10 @@ plotsettings_tablebarplot(
   columns_width = NULL,
   headers_alignment = NULL,
   headers_background_colour = NULL,
-  headers_background_width_y = NULL,
+  headers_font_size = NULL,
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
+  headers_row_height = NULL,
   font_size = NULL,
   default_list = NULL
 )
@@ -70,7 +74,13 @@ plotsettings_tablebarplot(
 
 \item{bar_width}{Numeric between \code{0} and \code{1} specifying the width of the bar. Defaults to \code{0.4}.}
 
-\item{column_spanners_nudge_y}{Numeric to increase or decrease the space between column spanners text and line.}
+\item{column_spanners_nudge_y}{Numeric vector to increase or decrease the space between column spanners text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to \code{-0.2}.}
+
+\item{column_spanners_row_height}{Numeric for the row height of the row the first level of column spanners is written in. Defaults to \code{1}.}
+
+\item{column_spanners_2_nudge_y}{Numeric vector to increase or decrease the space between column spanners level 2 text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to \code{-0.2}.}
+
+\item{column_spanners_2_row_height}{Numeric for the row height of the row the second level of column spanners is written in. Defaults to \code{1}}
 
 \item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned). Defaults to \code{0.5}.}
 
@@ -88,11 +98,13 @@ plotsettings_tablebarplot(
 
 \item{headers_background_colour}{Colour of the background of the headers.}
 
-\item{headers_background_width_y}{Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to \code{0}.}
+\item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{3}.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 
 \item{headers_nudge_y}{Numeric to nudge the column_headers in y direction. Defaults to \code{0}.}
+
+\item{headers_row_height}{Numeric for the row height of the row the headers are written in. Defaults to \code{1}.}
 
 \item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{3}.}
 
