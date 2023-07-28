@@ -33,7 +33,6 @@ plotsettings_tablebarplot(
   columns_width = NULL,
   headers_alignment = NULL,
   headers_background_colour = NULL,
-  headers_background_width_y = NULL,
   headers_font_size = NULL,
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
@@ -98,8 +97,6 @@ plotsettings_tablebarplot(
 \item{headers_alignment}{Numeric vector with one element for each column, determining the text adjustement of the headers. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned). Defaults to \code{NULL}, in which case the alignment of the columns will be adopted.}
 
 \item{headers_background_colour}{Colour of the background of the headers.}
-
-\item{headers_background_width_y}{Numeric for the width of the headers background. The defined value will be added to the top of the plot, to increase the area on the plots upper border. Defaults to \code{0}.}
 
 \item{headers_font_size}{Numeric for the font size that will be used for the headers. Defaults to \code{3}.}
 
