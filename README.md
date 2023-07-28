@@ -24,3 +24,7 @@ You can install the development version of eatPlot from
 # install.packages("devtools")
 devtools::install_github("nickhaf/eatPlot")
 ```
+
+## Articles
+
+See all articles and more information on how to use this package on here: https://nickhaf.github.io/eatPlot/
