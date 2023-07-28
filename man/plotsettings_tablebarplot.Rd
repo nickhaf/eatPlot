@@ -98,7 +98,7 @@ plotsettings_tablebarplot(
 
 \item{headers_background_colour}{Colour of the background of the headers.}
 
-\item{headers_font_size}{Numeric for the font size that will be used for the headers. Defaults to \code{3}.}
+\item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{3}.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 
