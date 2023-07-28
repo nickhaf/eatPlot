@@ -59,9 +59,9 @@ test_that("column_headers can be plotted", {
 test_that("column spanners can be plotted on first level", {
 
   plot_settings_spanners <- plotsettings_tablebarplot(
-    column_spanners_row_height = 3,
+    column_spanners_row_height = 2,
     column_spanners_2_nudge_y = c(0, 0),
-    column_spanners_nudge_y = c(0, 0)
+    column_spanners_nudge_y = c(1, 0)
   )
 
   p_col_spanner_1 <- ggplot2::ggplot(
@@ -131,8 +131,8 @@ test_that("Column spanners work in whole plot", {
 p_all_headers <- plot_tablebar(
   dat = test_data_full,
   headers = list("est_1", "est_2", "a barplot"),
-  column_spanners = list("spanner_2" = c(2,3), "spanner_1" = 1),
-  column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
+  column_spanners = list("spanner_1" = 1, "spanner_2" = c(2,3)),
+  column_spanners_2 = list("spanner_2" = c(1,2) ,"spanner_3" = 3),
   columns_table = list("est_1", "se_1"),
   bar_est = "est_1",
   y_axis = "state_var",
@@ -160,8 +160,8 @@ test_that("Column spanners over multiple lines work in whole plot", {
   p_all_headers <- plot_tablebar(
     dat = test_data_full,
     headers = list("est_1 <br> newline <br> new line", "est_2", "a barplot"),
-    column_spanners = list("spanner_2 <br> new line<br> new line<br> new line<br> new line" = c(2,3), "spanner_1" = 1),
-    column_spanners_2 = list("spanner_3<br> new line<br> new line<br> new line<br> new line<br> new line" = 3, "spanner_2" = c(1,2)),
+    column_spanners = list("spanner_1" = 1, "spanner_2 <br> new line<br> new line<br> new line<br> new line" = c(2,3)),
+    column_spanners_2 = list("spanner_2" = c(1,2), "spanner_3<br> new line<br> new line<br> new line<br> new line<br> new line" = 3),
     columns_table = list("est_1", "se_1"),
     bar_est = "est_1",
     y_axis = "state_var",
@@ -171,7 +171,7 @@ test_that("Column spanners over multiple lines work in whole plot", {
                                               column_spanners_row_height = 2,
                                               column_spanners_nudge_y = c(-0.4, 0),
                                               column_spanners_2_row_height = 4,
-                                              column_spanners_2_nudge_y = c(-1,0)
+                                              column_spanners_2_nudge_y = c(-1, 0)
                                               )
   )
 
