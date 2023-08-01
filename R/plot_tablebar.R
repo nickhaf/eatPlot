@@ -256,13 +256,14 @@ plot_tablebar <- function(dat,
       expand = ggplot2::expansion(mult = c(0.01, 0.01))
     ) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0.1))) +
+    {if(plot_settings$space_right != 0)
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = max(column_x_coords$right), xmax = Inf,
         ymin = -Inf, ymax = Inf
       ),
       fill = "white",
-      colour = "white") +
+      colour = "white")} +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,

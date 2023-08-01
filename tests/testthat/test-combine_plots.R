@@ -217,3 +217,93 @@ test_that("Example barplot long format is plotted correctly", {
 
   # save_plot(c_plot, filename = "../Kap3_2022_MSA_trend_v02.pdf")
 })
+
+
+test_that("White space behaves as expected", {
+  dat_bar <- prep_plot(min_stand,
+                       competence = "lesen",
+                       parameter = "1"
+  )[["plot_tablebar"]]
+
+
+  dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
+  for (i in c("2011", "2016", "2021")) {
+    dat_bar <- construct_directional_sig(dat_bar,
+                                         est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i),
+                                         sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
+  }
+
+  # Plot 1 ------------------------------------------------------------------
+  dat_bar_1 <- subset(dat_bar, depVar == "minVerfehlt")
+
+  p_bar_1 <- plot_tablebar(
+    dat = dat_bar_1,
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
+    headers = list("Land", "Mindeststandard nicht erreicht (MSA)"),
+    columns_table = list("state_var"),
+    bar_est = "est_noTrend_noComp_2021_percent",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      axis_x_lims = c(0, 39),
+      bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
+      columns_alignment = 0,
+      columns_width = c(0.3, 0.7),
+      headers_alignment = c(0, 0.5),
+      space_right = 0.3,
+      default_list = barplot_plot_frame
+    )
+  )
+
+
+  # Plot 2 ------------------------------------------------------------------
+
+  dat_bar_2 <- subset(dat_bar, depVar == "regErreicht")
+
+  p_bar_2 <- plot_tablebar(
+    dat = dat_bar_2,
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
+    bar_est = "est_noTrend_noComp_2021_percent",
+    headers = list("Regelstandard erreicht oder übertroffen (MSA)"),
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      columns_alignment = 0,
+      headers_alignment = 0,
+      columns_width = NULL,
+      axis_x_lims = c(0, 75),
+      space_right = 0.3,
+      bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
+      default_list = barplot_plot_frame
+    )
+  )
+
+
+
+  # Plot 3 ------------------------------------------------------------------
+  dat_bar_3 <- subset(dat_bar, depVar == "optErreicht")
+
+  p_bar_3 <- plot_tablebar(
+    dat = dat_bar_3,
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
+    headers = "Optimalstandard erreicht (MSA)",
+    bar_est = "est_noTrend_noComp_2021_percent",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      axis_x_lims = c(0, 25),
+      default_list = barplot_plot_frame
+    )
+  )
+
+  minsta_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
+
+  # combine plots -----------------------------------------------------------
+  vdiffr::expect_doppelganger("Mindeststandards with white space", minsta_plot)
+
+
+  # save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
+})
