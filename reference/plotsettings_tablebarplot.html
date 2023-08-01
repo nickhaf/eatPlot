@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9024</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9025</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotsettings_tablebarplot</span><span class="op">(</span></span>
 <span>  axis_x_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  background_stripes_border <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_stripes_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_background_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_background_lines_linetype <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -88,6 +89,7 @@
 <span>  headers_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_row_height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  font_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  space_right <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  default_list <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -96,6 +98,10 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>axis_x_lims</dt>
 <dd><p>Numeric vector of length <code>2</code> for the x-axis limits. Will be set automatically, <code>NULL</code> (default).</p></dd>
+
+
+<dt>background_stripes_border</dt>
+<dd><p>Character string of either <code>c("Inf", "background_line_both", "background_line_left", "background_line_right")</code>. The background stripes will either be drawn over the whole plot (<code>"Inf"</code>), from the outer left background_line to the outer right background_line (<code>"background_line_both"</code>), from the outer left background line to the right of the plot (<code>"background_line_left"</code>), or the outer right background line to the left of the plot (<code>"background_line_right</code>).</p></dd>
 
 
 <dt>background_stripes_colour</dt>
@@ -226,6 +232,10 @@
 <dd><p>Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to <code>3</code>.</p></dd>
 
 
+<dt>space_right</dt>
+<dd><p>Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to <code>0</code>.</p></dd>
+
+
 <dt>default_list</dt>
 <dd><p>Named list with predefined settings. Defaults to a list with all settings set to <code>0</code>.</p></dd>
 
@@ -243,6 +253,9 @@
 <span class="r-in"><span><span class="fu">plotsettings_tablebarplot</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_border</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Inf"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
@@ -340,6 +353,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $font_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $space_right</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Arguments will overvrite the respective list element:</span></span></span>
 <span class="r-in"><span><span class="va">plot_settings</span> <span class="op">&lt;-</span> <span class="fu">plotsettings_tablebarplot</span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span></span>
@@ -355,6 +371,9 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_border</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Inf"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
@@ -452,6 +471,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $font_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $space_right</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Or, to get better control over the colour assignment</span></span></span>
 <span class="r-in"><span><span class="co">## we can also directly name the colours with the different groups</span></span></span>
@@ -468,6 +490,9 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_border</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Inf"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_colour</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
@@ -565,6 +590,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $font_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $space_right</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
