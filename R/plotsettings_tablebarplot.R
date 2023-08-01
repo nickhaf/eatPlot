@@ -121,7 +121,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
 #' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
-#' @param space_right Numeric for the width of a white space that will be added on the right of the plotting pane. Defaults to `0`.
+#' @param space_right Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to `0`.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
 #' @return A named list with settings for a table/barplot.

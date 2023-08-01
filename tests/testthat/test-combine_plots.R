@@ -311,7 +311,7 @@ test_that("White space behaves as expected", {
   minsta_plot_space <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
 
   # combine plots -----------------------------------------------------------
-  vdiffr::expect_doppelganger("Mindeststandards with white space", minsta_plot)
+  vdiffr::expect_doppelganger("Mindeststandards with white space", minsta_plot_space)
 
   # save_plot(minsta_plot_space, filename = "../white_space.pdf", height = 226.2 / 3)
 })
