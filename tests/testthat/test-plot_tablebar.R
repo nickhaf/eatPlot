@@ -97,6 +97,49 @@ test_that("continous barplot looks the same", {
   vdiffr::expect_doppelganger("Minimal_tablebar", p_bar)
 })
 
+test_that("continous barplot can have a white space", {
+  test_data <- data.frame(
+    state_var = 1:4,
+    x_min = rep(0, 4),
+    x_max = c(10, -20, 40, 30),
+    est_1 = c(12, 12, 15, 23),
+    se_1 = c(12, 10, 8, 4),
+    bar_sig = c("TRUE", "FALSE", "TRUE", "FALSE"),
+    bar_fill = c("a", "b", "c", "d")
+  )
+
+  p_bar <- plot_tablebar(
+    dat = test_data,
+    bar_label = NULL,
+    bar_sig = "bar_sig",
+    bar_fill = "bar_fill",
+    headers = list("est_1", "est_2", "a barplot"),
+    column_spanners = list("spanner_2" = c(2,3), "spanner_1" = 1),
+    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
+    columns_table = list("est_1", "se_1"),
+    columns_table_sig_bold = list(NULL, "bar_sig"),
+    columns_table_sig_high = list("bar_sig", "bar_sig"),
+    bar_est = "est_1",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      background_stripes_colour = c("white", "lightgrey"),
+      bar_fill_colour = c("red", "blue", "yellow", "green"),
+      bar_pattern_fill_colour = "white",
+      bar_pattern_type = c("stripe", "none"),
+      bar_sig_type = "pattern",
+      columns_width = c(0.3, 0.2, 0.5),
+      bar_pattern_width = 0.5,
+      bar_pattern_spacing = 0.1,
+      headers_font_size = 5,
+      space_right = 0.5
+    )
+  )
+
+  # wenn nicht benannt, dann benennen der Farbsettings
+  vdiffr::expect_doppelganger("Tablebar with white space", p_bar)
+})
+
+
 
 test_that("Vlines are plotted correctly", {
   plot_settings_test <- list(

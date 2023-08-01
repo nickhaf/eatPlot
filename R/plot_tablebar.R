@@ -230,6 +230,9 @@ plot_tablebar <- function(dat,
 
   # Plot --------------------------------------------------------------------
 
+  x_right_lim <- max(column_x_coords$right) +
+    plot_settings$space_right * x_axis_range
+
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -249,13 +252,13 @@ plot_tablebar <- function(dat,
     add_vlines(plot_settings, plot_borders, dat$y_axis, bar_est) +
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
-      limits = c(NA, max(column_x_coords$right) + 10),
+      limits = c(NA, x_right_lim),
       expand = ggplot2::expansion(mult = c(0.01, 0.01))
     ) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0.1))) +
     ggplot2::geom_rect(
       ggplot2::aes(
-        xmin =max(column_x_coords$right), xmax =max(column_x_coords$right) + 10,
+        xmin = max(column_x_coords$right), xmax = Inf,
         ymin = -Inf, ymax = Inf
       ),
       fill = "white",
