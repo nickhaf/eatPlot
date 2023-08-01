@@ -247,6 +247,8 @@ test_that("White space behaves as expected", {
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 39),
+      background_stripes_border = "background_line_right",
+      background_stripes_colour = c(rep(c("white", "grey"),8), "#877234"),
       bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
       columns_alignment = 0,
       columns_width = c(0.3, 0.7),
@@ -271,6 +273,8 @@ test_that("White space behaves as expected", {
     headers = list("Regelstandard erreicht oder übertroffen (MSA)"),
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
+      background_stripes_border = "background_line_both",
+      background_stripes_colour = c(rep(c("white", "grey"),8), "#877234"),
       columns_alignment = 0,
       headers_alignment = 0,
       columns_width = NULL,
@@ -297,6 +301,8 @@ test_that("White space behaves as expected", {
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 25),
+      background_stripes_border = "background_line_both",
+      background_stripes_colour = c(rep(c("white", "grey"),8), "#877234"),
       bar_background_lines = "scale_breaks",
       default_list = barplot_plot_frame
     )
@@ -306,7 +312,6 @@ test_that("White space behaves as expected", {
 
   # combine plots -----------------------------------------------------------
   vdiffr::expect_doppelganger("Mindeststandards with white space", minsta_plot)
-
 
   # save_plot(minsta_plot_space, filename = "../white_space.pdf", height = 226.2 / 3)
 })
