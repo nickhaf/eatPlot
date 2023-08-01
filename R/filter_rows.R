@@ -24,7 +24,9 @@ filter_rows <- function(plot_dat, column_name, subsetter, list_elements = c("plo
     if (remove == FALSE) {
       plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] == subsetter & !is.na(plot_dat[[i]][, column_name]), ]
     } else {
-      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] != subsetter | is.na(plot_dat[[i]][, column_name]), ]
+      ## NA subsetting not working:
+      plot_dat[[i]] <- plot_dat[[i]][!is.na(plot_dat[[i]][, column_name]), ]
+      plot_dat[[i]] <- plot_dat[[i]][plot_dat[[i]][, column_name] != subsetter, ]
     }
   }
   return(plot_dat)
