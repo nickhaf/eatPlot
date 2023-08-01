@@ -240,7 +240,7 @@ plot_tablebar <- function(dat,
       y = .data$y_axis,
     )
   ) +
-    build_background_stripes(dat, columns_table, plot_settings = plot_settings) +
+    build_background_stripes(dat, columns_table, plot_borders, plot_settings = plot_settings) +
     ggplot2::scale_fill_manual(
       breaks = dat$background_colour,
       values = dat$background_colour
@@ -481,6 +481,7 @@ build_columns_3 <- function(df,
 
 build_background_stripes <- function(dat,
                                      columns_table,
+                                     plot_borders,
                                      plot_settings = plotsettings_tablebarplot()) {
   stripes <- c(
     ggplot2::geom_tile(
@@ -497,21 +498,34 @@ build_background_stripes <- function(dat,
   )
 
 
-  if(is.null(columns_table)){
-  stripes <- c(ggplot2::geom_rect(data = dat,
-                                  ggplot2::aes(
-                                    xmin = .data$x_min,
-                                    xmax = Inf,
-                                    ymin = .data$y_axis - 0.5,
-                                    ymax = .data$y_axis + 0.5,
-                                    fill = .data$background_colour,
-                                    colour = .data$background_colour
-                                  )))
-  }
+  if(plot_settings$bar_background_lines != "none"){ ## hier nohc ein Argument zum filtern, soll ja nicht immer passieren
 
-  if(plot_settings$bar_background_lines != "none"){
-    ## get x_intercepts from: add_vlines
+    scale_breaks <- set_scale_breaks(plot_borders)
 
+    if(is.null(columns_table)){
+      stripes <- c(ggplot2::geom_rect(data = dat,
+                                      ggplot2::aes(
+                                        xmin = min(scale_breaks),
+                                        xmax = max(scale_breaks),
+                                        ymin = .data$y_axis - 0.5,
+                                        ymax = .data$y_axis + 0.5,
+                                        fill = .data$background_colour,
+                                        colour = .data$background_colour
+                                      )))
+
+    }else{
+      stripes <- c(ggplot2::geom_rect(data = dat,
+                                      ggplot2::aes(
+                                        xmin = -Inf,
+                                        xmax = max(scale_breaks),
+                                        ymin = .data$y_axis - 0.5,
+                                        ymax = .data$y_axis + 0.5,
+                                        fill = .data$background_colour,
+                                        colour = .data$background_colour
+                                      )))
+    }
+  }else{
+    if(is.null(columns_table)){
     stripes <- c(ggplot2::geom_rect(data = dat,
                                     ggplot2::aes(
                                       xmin = .data$x_min,
@@ -521,7 +535,9 @@ build_background_stripes <- function(dat,
                                       fill = .data$background_colour,
                                       colour = .data$background_colour
                                     )))
+    }
   }
+
   return(stripes)
 }
 

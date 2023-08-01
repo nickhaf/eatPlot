@@ -622,6 +622,9 @@ max(unlist(lapply(string, function(x){
 
 #' Define the scale breaks from plot borders.
 #'
+#' @keywords internal
+#' @noRd
+#'
 #' @param plot_borders Numeric vector containing the outer limits of the plot.
 #'
 #' @return Numeric vector with the scale breaks.
