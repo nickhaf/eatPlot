@@ -28,7 +28,7 @@ is_colour <- function(x) {
 #'
 #' @return Logical vector.
 #'
-#' @examples calc_sig(c(0.05, 0.01, 0.1), 0.05)
+#' @examples calc_sig(c(0.05, 0.01, 0.1, NA), 0.05)
 calc_sig <- function(p_vec, sig_niveau) {
   res <- ifelse(is.na(p_vec),
     yes = FALSE,

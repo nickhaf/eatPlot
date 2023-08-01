@@ -322,6 +322,14 @@ prep_plot <- function(dat,
     x[, order(colnames(x))]
   })
 
+  ## In case NAs were introduced into sig-columns by merging, set them to false:
+  plot_dat <- lapply(plot_dat, function(x) {
+
+    x[is.na(x[, grep("^sig_", colnames(x))]), grep("^sig_", colnames(x))] <- FALSE
+
+    return(x)
+  })
+
   return(plot_dat)
 }
 
