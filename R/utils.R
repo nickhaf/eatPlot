@@ -28,7 +28,7 @@ is_colour <- function(x) {
 #'
 #' @return Logical vector.
 #'
-#' @examples calc_sig(c(0.05, 0.01, 0.1), 0.05)
+#' @examples calc_sig(c(0.05, 0.01, 0.1, NA), 0.05)
 calc_sig <- function(p_vec, sig_niveau) {
   res <- ifelse(is.na(p_vec),
     yes = FALSE,
@@ -619,3 +619,21 @@ max(unlist(lapply(string, function(x){
 })))
 }
 
+
+#' Define the scale breaks from plot borders.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param plot_borders Numeric vector containing the outer limits of the plot.
+#'
+#' @return Numeric vector with the scale breaks.
+#'
+#' @examples set_scale_breaks(c(-100, 50))
+set_scale_breaks <- function(plot_borders){
+  scale_breaks <- unique(c(
+    seq(0, plot_borders[1], by = -10),
+    seq(0, plot_borders[2], by = 10)
+  ))
+  return(scale_breaks)
+}

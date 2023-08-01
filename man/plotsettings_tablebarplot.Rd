@@ -6,6 +6,7 @@
 \usage{
 plotsettings_tablebarplot(
   axis_x_lims = NULL,
+  background_stripes_border = NULL,
   background_stripes_colour = NULL,
   bar_background_lines = NULL,
   bar_background_lines_linetype = NULL,
@@ -38,11 +39,14 @@ plotsettings_tablebarplot(
   headers_nudge_y = NULL,
   headers_row_height = NULL,
   font_size = NULL,
+  space_right = NULL,
   default_list = NULL
 )
 }
 \arguments{
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, \code{NULL} (default).}
+
+\item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), or the outer right background line to the left of the plot (\verb{"background_line_right}).}
 
 \item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background. Defaults to \code{NULL}.}
 
@@ -107,6 +111,8 @@ plotsettings_tablebarplot(
 \item{headers_row_height}{Numeric for the row height of the row the headers are written in. Defaults to \code{1}.}
 
 \item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{3}.}
+
+\item{space_right}{Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to \code{0}.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }

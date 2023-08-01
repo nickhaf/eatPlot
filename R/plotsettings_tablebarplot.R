@@ -2,12 +2,13 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 33
+      length(settings_list) == 35
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
       names(settings_list) %in% c(
         "axis_x_lims",
+        "background_stripes_border",
         "background_stripes_colour",
         "bar_background_lines",
         "bar_background_lines_linetype",
@@ -18,7 +19,9 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_label_size",
         "bar_line_width",
         "bar_pattern_fill_colour",
+        "bar_pattern_spacing",
         "bar_pattern_type",
+        "bar_pattern_width",
         "bar_sig_type",
         "bar_width",
         "column_spanners_nudge_y",
@@ -38,13 +41,13 @@ check_plotsettings_barplot <- function(settings_list) {
         "headers_nudge_y",
         "headers_row_height",
         "font_size",
-        "bar_pattern_spacing",
-        "bar_pattern_width"
+        "space_right"
       )
   )
 
 
   stopifnot(is.numeric(settings_list$axis_x_lims) & length(settings_list$axis_x_lims) == 2 | is.null(settings_list$axis_x_lims))
+  stopifnot(settings_list$background_stripes_border %in% c("Inf", "background_line_both", "background_line_left", "background_line_right"))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(settings_list$bar_background_lines %in% c("border", "scale_breaks", "none"))
   stopifnot(is.character(settings_list$bar_background_lines_linetype))
@@ -77,6 +80,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$font_size))
   stopifnot(is.numeric(settings_list$bar_pattern_spacing))
   stopifnot(is.numeric(settings_list$bar_pattern_width))
+  stopifnot(is.numeric(settings_list$space_right))
 }
 
 
@@ -84,6 +88,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #'
 
 #' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, `NULL` (default).
+#' @param background_stripes_border Character string of either `c("Inf", "background_line_both", "background_line_left", "background_line_right")`. The background stripes will either be drawn over the whole plot (`"Inf"`), from the outer left background_line to the outer right background_line (`"background_line_both"`), from the outer left background line to the right of the plot (`"background_line_left"`), or the outer right background line to the left of the plot (`"background_line_right`).
 #' @param background_stripes_colour Named vector containing the two colours that should be used for the striped background. Defaults to `NULL`.
 #' @param bar_background_lines Character string of either `c("borders", "scale_breaks", "none")`, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.
 #' @param bar_background_lines_linetype Character string indicating the linetype for the background lines of the barplot.
@@ -116,6 +121,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
 #' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
+#' @param space_right Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to `0`.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
 #' @return A named list with settings for a table/barplot.
@@ -152,6 +158,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' )
 #'
 plotsettings_tablebarplot <- function(axis_x_lims = NULL,
+                                      background_stripes_border = NULL,
                                       background_stripes_colour = NULL,
                                       bar_background_lines = NULL,
                                       bar_background_lines_linetype = NULL,
@@ -184,11 +191,13 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
                                       headers_nudge_y = NULL,
                                       headers_row_height = NULL,
                                       font_size = NULL,
+                                      space_right = NULL,
                                       default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
       "axis_x_lims" = NULL,
+      "background_stripes_border" = "Inf",
       "background_stripes_colour" = "white",
       "bar_background_lines" = "none",
       "bar_background_lines_linetype" = "solid",
@@ -220,7 +229,8 @@ plotsettings_tablebarplot <- function(axis_x_lims = NULL,
       "headers_row_height" = 1,
       "bar_pattern_spacing" = 0.1,
       "bar_pattern_width" = 0.5,
-      "font_size" = 3
+      "font_size" = 3,
+      "space_right" = 0
     )
   } else {
     plot_settings <- default_list

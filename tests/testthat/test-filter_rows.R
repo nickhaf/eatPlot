@@ -95,4 +95,13 @@ test_that("filter_rows works for NAs", {
        )
   )
 
+  # Remove NAs
+  expect_false(any(is.na(filter_rows(test_list,
+                           column_name = "col_2",
+                           subsetter = "c",
+                           list_elements = c("a", "b"),
+                           remove = TRUE,
+                           remove_na = TRUE
+  )$a$col_1)))
+
 })

@@ -9,7 +9,8 @@ filter_rows(
   column_name,
   subsetter,
   list_elements = c("plot_points", "plot_lines", "plot_braces"),
-  remove = FALSE
+  remove = FALSE,
+  remove_na = FALSE
 )
 }
 \arguments{
@@ -21,7 +22,9 @@ filter_rows(
 
 \item{list_elements}{Character vector with the names of the list objects you want to filter in. Defaults to \code{c("plot_lines", "plot_points", "plot_background_lines", "plot_braces")}.}
 
-\item{remove}{Logical. If true, the state defined in \code{state} will be removed. Defaults to \code{FALSE}.}
+\item{remove}{Logical. If \code{TRUE}, the state defined in \code{state} will be removed. Defaults to \code{FALSE}.}
+
+\item{remove_na}{Logical. If \code{TRUE}, rows with \code{NAs} in \code{column_name} will be removed.}
 }
 \value{
 List of data.frames.

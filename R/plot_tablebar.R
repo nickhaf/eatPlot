@@ -47,7 +47,7 @@ plot_tablebar <- function(dat,
     stop("headers has to be a list, or a vector, or NULL.")
   }
 
-  if(is.null(column_spanners) & !is.null(column_spanners_2)){
+  if (is.null(column_spanners) & !is.null(column_spanners_2)) {
     stop("You provided column_spanners_2 but not column_spanners. Please use the lower dimension of column_spanners first.")
   }
   # Check columns -----------------------------------------------------------
@@ -221,7 +221,7 @@ plot_tablebar <- function(dat,
   max_y <- set_max_y(dat$y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings)
 
 
-# Set colours -------------------------------------------------------------
+  # Set colours -------------------------------------------------------------
   plot_settings$bar_fill_colour <- construct_colour_scale(
     colours = plot_settings$bar_fill_colour,
     dat = dat,
@@ -230,6 +230,9 @@ plot_tablebar <- function(dat,
 
   # Plot --------------------------------------------------------------------
 
+  x_right_lim <- max(column_x_coords$right) +
+    plot_settings$space_right
+
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -237,7 +240,7 @@ plot_tablebar <- function(dat,
       y = .data$y_axis,
     )
   ) +
-    build_background_stripes(dat, plot_settings = plot_settings) +
+    build_background_stripes(dat, columns_table, plot_borders, plot_settings = plot_settings) +
     ggplot2::scale_fill_manual(
       breaks = dat$background_colour,
       values = dat$background_colour
@@ -249,10 +252,22 @@ plot_tablebar <- function(dat,
     add_vlines(plot_settings, plot_borders, dat$y_axis, bar_est) +
     ggplot2::scale_x_continuous(
       breaks = scale_breaks,
-      limits = c(NA, max(column_x_coords$right)),
+      limits = c(NA, x_right_lim),
       expand = ggplot2::expansion(mult = c(0.01, 0.01))
     ) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0.1))) +
+    {
+      if (plot_settings$space_right != 0) {
+        ggplot2::geom_rect(
+          ggplot2::aes(
+            xmin = max(column_x_coords$right), xmax = Inf,
+            ymin = -Inf, ymax = Inf
+          ),
+          fill = "white",
+          colour = "white"
+        )
+      }
+    } +
     ggplot2::geom_rect(
       ggplot2::aes(
         xmin = -Inf, xmax = Inf,
@@ -365,7 +380,7 @@ plot_tablebar <- function(dat,
   }
 
 
-# Column spanners ---------------------------------------------------------
+  # Column spanners ---------------------------------------------------------
   plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)
 
   if (any(!is.null(columns_table))) {
@@ -377,20 +392,24 @@ plot_tablebar <- function(dat,
         plot_borders = plot_borders,
         plot_settings = plot_settings
       ) +
-      plot_column_spanners(y_axis = dat$y_axis,
-                           spanners = column_spanners,
-                           column_x_coords,
-                           x_axis_range,
-                           header_y_coords,
-                           plot_settings = plot_settings) +
-      plot_column_spanners(y_axis = dat$y_axis,
-                           spanners = column_spanners_2,
-                           column_x_coords,
-                           x_axis_range,
-                           header_y_coords,
-                           spanners_2 = TRUE,
-                           plot_settings) +
-    NULL
+      plot_column_spanners(
+        y_axis = dat$y_axis,
+        spanners = column_spanners,
+        column_x_coords,
+        x_axis_range,
+        header_y_coords,
+        plot_settings = plot_settings
+      ) +
+      plot_column_spanners(
+        y_axis = dat$y_axis,
+        spanners = column_spanners_2,
+        column_x_coords,
+        x_axis_range,
+        header_y_coords,
+        spanners_2 = TRUE,
+        plot_settings
+      ) +
+      NULL
   }
 
   column_x_coords_headers <- column_x_coords[!is.na(column_x_coords$column), ]
@@ -469,20 +488,64 @@ build_columns_3 <- function(df,
 }
 
 build_background_stripes <- function(dat,
+                                     columns_table,
+                                     plot_borders,
                                      plot_settings = plotsettings_tablebarplot()) {
-  stripes <- c(
-    ggplot2::geom_tile(
-      data = dat,
-      ggplot2::aes(
-        x = .data$x_min,
-        y = .data$y_axis,
-        width = Inf,
-        height = 1,
-        fill = .data$background_colour,
-        colour = .data$background_colour,
+
+  scale_breaks <- set_scale_breaks(plot_borders)
+
+  if (plot_settings$background_stripes_border == "Inf") {
+    stripes <- c(
+      ggplot2::geom_tile(
+        data = dat,
+        ggplot2::aes(
+          x = .data$x_min,
+          y = .data$y_axis,
+          width = Inf,
+          height = 1,
+          fill = .data$background_colour,
+          colour = .data$background_colour
+        )
       )
     )
-  )
+  } else if (plot_settings$background_stripes_border == "background_line_both") {
+    stripes <- c(ggplot2::geom_rect(
+      data = dat,
+      ggplot2::aes(
+        xmin = min(scale_breaks),
+        xmax = max(scale_breaks),
+        ymin = .data$y_axis - 0.5,
+        ymax = .data$y_axis + 0.5,
+        fill = .data$background_colour,
+        colour = .data$background_colour
+      )
+    ))
+  } else if (plot_settings$background_stripes_border == "background_line_left") {
+    stripes <- c(ggplot2::geom_rect(
+      data = dat,
+      ggplot2::aes(
+        xmin = min(scale_breaks),
+        xmax = Inf,
+        ymin = .data$y_axis - 0.5,
+        ymax = .data$y_axis + 0.5,
+        fill = .data$background_colour,
+        colour = .data$background_colour
+      )
+    ))
+  } else if (plot_settings$background_stripes_border == "background_line_right") {
+    stripes <- c(ggplot2::geom_rect(
+      data = dat,
+      ggplot2::aes(
+        xmin = -Inf,
+        xmax = max(scale_breaks),
+        ymin = .data$y_axis - 0.5,
+        ymax = .data$y_axis + 0.5,
+        fill = .data$background_colour,
+        colour = .data$background_colour
+      )
+    ))
+  }
+
   return(stripes)
 }
 
@@ -501,27 +564,26 @@ set_axis_limits <- function(dat, x_value, plot_settings) {
 }
 
 check_length <- function(obj, leng, fill = NULL, leng_1 = TRUE) {
-  if(leng_1 == TRUE){
-  if (is.null(obj) & is.null(fill)) {
-    return(NULL)
-  } else if (is.null(obj) & !is.null(fill)) {
-    obj <- rep(fill, leng)
-  } else if (length(obj) != leng & length(obj) > 1) {
-    stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1. Note that your bar chart also is counted as a column if you are plotting one."), call. = FALSE)
-  } else if (length(obj) == 1 & leng > 1) {
-    obj <- fill_up(obj, leng, fill)
-    return(obj)
+  if (leng_1 == TRUE) {
+    if (is.null(obj) & is.null(fill)) {
+      return(NULL)
+    } else if (is.null(obj) & !is.null(fill)) {
+      obj <- rep(fill, leng)
+    } else if (length(obj) != leng & length(obj) > 1) {
+      stop(paste0("The length of ", deparse(substitute(obj)), " should be either equal to the amount of columns you are plotting or equal to 1. Note that your bar chart also is counted as a column if you are plotting one."), call. = FALSE)
+    } else if (length(obj) == 1 & leng > 1) {
+      obj <- fill_up(obj, leng, fill)
+      return(obj)
+    } else {
+      return(obj)
+    }
   } else {
-    return(obj)
-  }
-  }else{
-    if(length(obj) != leng & !is.null(obj)){
+    if (length(obj) != leng & !is.null(obj)) {
       stop(paste0("The length of ", deparse(substitute(obj)), " should be equal to the amount of columns you are plotting."), call. = FALSE)
-    }else{
+    } else {
       return(obj)
     }
   }
-
 }
 
 fill_up <- function(vec, leng, fill) {
@@ -595,11 +657,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
 
 add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
   if (!is.null(bar_est)) {
-    scale_breaks <- unique(c(
-      seq(0, plot_borders[1], by = -10),
-      seq(0, plot_borders[2], by = 10)
-    ))
-
+    scale_breaks <- set_scale_breaks(plot_borders)
 
     if (is.null(plot_settings$bar_background_lines_spanners)) {
       plot_settings$bar_background_lines_spanners <- list(c(max(y_axis) + 0.3, 0.7))
@@ -680,8 +738,8 @@ check_linebreak <- function(vec) {
 #'
 #' @return List containing nudging parameters for header y-coordinates.
 #'
-#' @examples #tbd
-set_header_y_coords <- function(y_axis, plot_settings){
+#' @examples # tbd
+set_header_y_coords <- function(y_axis, plot_settings) {
   res_list <- list()
 
   res_list$header_area_start <- max(y_axis) + 0.5
@@ -696,7 +754,7 @@ set_header_y_coords <- function(y_axis, plot_settings){
 
 
 
-set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings){
+set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings) {
   max_y <- header_y_coords$header_area_start +
     header_y_coords$row_height_headers
 
@@ -704,7 +762,7 @@ set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coord
     max_y <- max_y +
       header_y_coords$row_height_column_spanners
 
-    if(!is.null(column_spanners_2)){
+    if (!is.null(column_spanners_2)) {
       max_y <- max_y +
         header_y_coords$row_height_column_spanners_2
     }
