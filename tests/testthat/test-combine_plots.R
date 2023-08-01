@@ -251,7 +251,8 @@ test_that("White space behaves as expected", {
       columns_alignment = 0,
       columns_width = c(0.3, 0.7),
       headers_alignment = c(0, 0.5),
-      space_right = 0.3,
+      space_right = 10,
+      bar_background_lines = "scale_breaks",
       default_list = barplot_plot_frame
     )
   )
@@ -274,7 +275,8 @@ test_that("White space behaves as expected", {
       headers_alignment = 0,
       columns_width = NULL,
       axis_x_lims = c(0, 75),
-      space_right = 0.3,
+      space_right = 10,
+      bar_background_lines = "scale_breaks",
       bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
       default_list = barplot_plot_frame
     )
@@ -295,15 +297,16 @@ test_that("White space behaves as expected", {
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
       axis_x_lims = c(0, 25),
+      bar_background_lines = "scale_breaks",
       default_list = barplot_plot_frame
     )
   )
 
-  minsta_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
+  minsta_plot_space <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3))
 
   # combine plots -----------------------------------------------------------
   vdiffr::expect_doppelganger("Mindeststandards with white space", minsta_plot)
 
 
-  # save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
+  # save_plot(minsta_plot_space, filename = "../white_space.pdf", height = 226.2 / 3)
 })

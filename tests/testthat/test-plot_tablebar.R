@@ -131,7 +131,7 @@ test_that("continous barplot can have a white space", {
       bar_pattern_width = 0.5,
       bar_pattern_spacing = 0.1,
       headers_font_size = 5,
-      space_right = 0.5
+      space_right = 5
     )
   )
 

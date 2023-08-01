@@ -231,7 +231,7 @@ plot_tablebar <- function(dat,
   # Plot --------------------------------------------------------------------
 
   x_right_lim <- max(column_x_coords$right) +
-    plot_settings$space_right * x_axis_range
+    plot_settings$space_right
 
   res_plot <- ggplot2::ggplot(
     data = dat,
@@ -240,7 +240,7 @@ plot_tablebar <- function(dat,
       y = .data$y_axis,
     )
   ) +
-    build_background_stripes(dat, plot_settings = plot_settings) +
+    build_background_stripes(dat, columns_table, plot_settings = plot_settings) +
     ggplot2::scale_fill_manual(
       breaks = dat$background_colour,
       values = dat$background_colour
@@ -480,6 +480,7 @@ build_columns_3 <- function(df,
 }
 
 build_background_stripes <- function(dat,
+                                     columns_table,
                                      plot_settings = plotsettings_tablebarplot()) {
   stripes <- c(
     ggplot2::geom_tile(
@@ -490,10 +491,37 @@ build_background_stripes <- function(dat,
         width = Inf,
         height = 1,
         fill = .data$background_colour,
-        colour = .data$background_colour,
+        colour = .data$background_colour
       )
     )
   )
+
+
+  if(is.null(columns_table)){
+  stripes <- c(ggplot2::geom_rect(data = dat,
+                                  ggplot2::aes(
+                                    xmin = .data$x_min,
+                                    xmax = Inf,
+                                    ymin = .data$y_axis - 0.5,
+                                    ymax = .data$y_axis + 0.5,
+                                    fill = .data$background_colour,
+                                    colour = .data$background_colour
+                                  )))
+  }
+
+  if(plot_settings$bar_background_lines != "none"){
+    ## get x_intercepts from: add_vlines
+
+    stripes <- c(ggplot2::geom_rect(data = dat,
+                                    ggplot2::aes(
+                                      xmin = .data$x_min,
+                                      xmax = Inf,
+                                      ymin = .data$y_axis - 0.5,
+                                      ymax = .data$y_axis + 0.5,
+                                      fill = .data$background_colour,
+                                      colour = .data$background_colour
+                                    )))
+  }
   return(stripes)
 }
 
