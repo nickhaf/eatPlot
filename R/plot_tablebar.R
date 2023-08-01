@@ -634,11 +634,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
 
 add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
   if (!is.null(bar_est)) {
-    scale_breaks <- unique(c(
-      seq(0, plot_borders[1], by = -10),
-      seq(0, plot_borders[2], by = 10)
-    ))
-
+    scale_breaks <- set_scale_breaks(plot_borders)
 
     if (is.null(plot_settings$bar_background_lines_spanners)) {
       plot_settings$bar_background_lines_spanners <- list(c(max(y_axis) + 0.3, 0.7))
@@ -750,3 +746,6 @@ set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coord
   }
   return(max_y)
 }
+
+
+

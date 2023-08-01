@@ -619,3 +619,18 @@ max(unlist(lapply(string, function(x){
 })))
 }
 
+
+#' Define the scale breaks from plot borders.
+#'
+#' @param plot_borders Numeric vector containing the outer limits of the plot.
+#'
+#' @return Numeric vector with the scale breaks.
+#'
+#' @examples set_scale_breaks(c(-100, 50))
+set_scale_breaks <- function(plot_borders){
+  scale_breaks <- unique(c(
+    seq(0, plot_borders[1], by = -10),
+    seq(0, plot_borders[2], by = 10)
+  ))
+  return(scale_breaks)
+}

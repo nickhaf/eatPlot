@@ -197,3 +197,8 @@ test_that("Linebreaks are counted correctly", {
   expect_equal(count_words(test_string, "<br>"), 3)
   expect_equal(count_words(test_list, "<br>"), 2)
 })
+
+test_that("scale breaks are calculated correctly", {
+  expect_equal(set_scale_breaks(c(-20, 10)), c(0, -10, -20, 10))
+  expect_equal(set_scale_breaks(c(0, 10)), c(0, 10))
+})
