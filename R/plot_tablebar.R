@@ -503,9 +503,9 @@ build_background_stripes <- function(dat,
           y = .data$y_axis,
           width = Inf,
           height = 1,
-          fill = .data$background_colour,
-          colour = .data$background_colour
-        )
+          fill = .data$background_colour
+        ),
+        colour = NA
       )
     )
   } else if (plot_settings$background_stripes_border == "background_line_both") {
@@ -516,9 +516,9 @@ build_background_stripes <- function(dat,
         xmax = max(scale_breaks),
         ymin = .data$y_axis - 0.5,
         ymax = .data$y_axis + 0.5,
-        fill = .data$background_colour,
-        colour = .data$background_colour
-      )
+        fill = .data$background_colour
+      ),
+      colour = NA
     ))
   } else if (plot_settings$background_stripes_border == "background_line_left") {
     stripes <- c(ggplot2::geom_rect(
@@ -528,9 +528,9 @@ build_background_stripes <- function(dat,
         xmax = Inf,
         ymin = .data$y_axis - 0.5,
         ymax = .data$y_axis + 0.5,
-        fill = .data$background_colour,
-        colour = .data$background_colour
-      )
+        fill = .data$background_colour
+      ),
+      colour = NA
     ))
   } else if (plot_settings$background_stripes_border == "background_line_right") {
     stripes <- c(ggplot2::geom_rect(
@@ -540,9 +540,9 @@ build_background_stripes <- function(dat,
         xmax = max(scale_breaks),
         ymin = .data$y_axis - 0.5,
         ymax = .data$y_axis + 0.5,
-        fill = .data$background_colour,
-        colour = .data$background_colour
-      )
+        fill = .data$background_colour
+      ),
+      colour = NA
     ))
   }
 
