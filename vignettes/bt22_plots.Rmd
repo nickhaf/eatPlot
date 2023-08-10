@@ -24,7 +24,7 @@ library(eatPlot)
 ## Chapter 4
 ### Kompetenzwerte Bundesländer
 ```{r chpt4_line}
-## Prepare the data with 'KBuecher_imp3' as grouping_var
+## Prepare the data with 'KBuecher_imp3' as grouping_var 
 plot_dat <- prep_plot(
   dat = trend_books,
   #comparisons = "crossDiff", # filter the needed comparisons to reduce ouput
