@@ -183,7 +183,6 @@ prep_plot <- function(dat,
     trend_data_final <- noTrend_data_merged
     trend_data_wholeGroup <- list_building_blocks[["noTrend_noComp_wholeGroup"]]
   }
-
   # Fill up NAs -------------------------------------------------------------
   ## Fill up NA significances with FALSE (those which emerged through merging)
   for (i in grep("sig_", colnames(trend_data_final))) {
@@ -196,7 +195,6 @@ prep_plot <- function(dat,
   # Build plotlist ----------------------------------------------------------
   plot_dat <- list()
 
-
   # plot lines --------------------------------------------------------------
 
   plot_dat[["plot_lines"]] <- trend_data_final
@@ -207,7 +205,6 @@ prep_plot <- function(dat,
   plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][plot_dat[["plot_lines"]]$grouping_var != "wholeGroup", ]
 
 
-
   # plot braces -------------------------------------------------------------
 
   plot_dat[["plot_braces"]] <- trend_data_final
@@ -215,8 +212,6 @@ prep_plot <- function(dat,
   if (!is.null(grouping_vars) & plot_mean == FALSE) { ## Should the mean group be plotted as well (not only the subgroups)?
     plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][plot_dat[["plot_braces"]]$grouping_var != "noGroup", ]
   }
-
-
 
   # plot background lines ---------------------------------------------------
 
@@ -230,7 +225,8 @@ prep_plot <- function(dat,
     if (all(noTrend_data_merged$year == "noTrend")) {
       noTrend_data_merged_wide <- noTrend_data_merged
     } else {
-      noTrend_data_merged_wide <- stats::reshape(noTrend_data_merged,
+      noTrend_data_merged_wide <- stats::reshape(
+        noTrend_data_merged,
         direction = "wide",
         timevar = "year",
         idvar = id_vars,
