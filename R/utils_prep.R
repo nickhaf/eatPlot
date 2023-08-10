@@ -33,11 +33,8 @@ reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
     }
 
     ## Build an unique identifier for the column names of the comparisons
-    if (any(grepl("\\.vs\\.", dat_comp$compare_1_Comp))) {
-      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_1_Comp, ".VS.", dat_comp$compare_2_Comp)
-    } else {
-      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp) ## müsste wholeGroup drin stehen
-    }
+
+      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
 
  dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 

@@ -80,7 +80,7 @@ plot_dat <- filter_rows(plot_dat,
 
 p_crossDiff_of_groupDiff <- plot_lineplot(
   plot_dat = plot_dat,
-  label_sig_high = "sig_Trend_Comp_crossDiffofgroupDiff_BL0vs1_vs_wholeGroup0vs1", ## Richtig?
+  label_sig_high = "sig_Trend_Comp_crossDiffofgroupDiff_BL-groupingvar_vs_1_VS_wholeGroup-groupingvar_vs_1", 
   title_superscripts = list(
     "Land-17" = "a",
     "Land-45" = "3"
