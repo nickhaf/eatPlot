@@ -1,4 +1,4 @@
-#' Build labels with significances represented in bold or as raised 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels. #with significant values or significant labels? #whats a 'raised a'?
+#' Build labels with significances represented in bold or as raised 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels. #with significant values or significant labels? #whats a 'raised a' - 'superscripted a'?
 #'
 #' @inheritParams plot_lineplot
 #' @param dat Dataframe with the columns that should be merged into labels.
