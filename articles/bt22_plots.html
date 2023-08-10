@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9025</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9026</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,48 +129,9 @@ handelt.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states</span>, filename <span class="op">=</span> <span class="st">"../split_plot_example.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="kompetenzwerte-bundesländer-with-crossdiff_of_groupdiff">Kompetenzwerte Bundesländer with crossDiff_of_groupDiff<a class="anchor" aria-label="anchor" href="#kompetenzwerte-bundesl%C3%A4nder-with-crossdiff_of_groupdiff"></a>
-</h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Prepare the data with 'KBuecher_imp3' as grouping_var</span></span>
-<span><span class="va">plot_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span></span>
-<span>  dat <span class="op">=</span> <span class="va">trend_books</span>,</span>
-<span>  comparisons <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"crossDiff"</span>, <span class="st">"crossDiff_of_groupDiff"</span><span class="op">)</span>, <span class="co"># filter the needed comparisons to reduce ouput</span></span>
-<span>  competence <span class="op">=</span> <span class="st">"GL"</span>,</span>
-<span>  grouping_vars <span class="op">=</span> <span class="st">"KBuecher_imp3"</span>,</span>
-<span>  grouping_vars_groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span>, <span class="st">"0.vs.1"</span><span class="op">)</span> <span class="co"># crossDiff_of_groupDiff is included in the 0.vs.1 grouping_var </span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Remove wholeGroup, as we don't want to plot it</span></span>
-<span><span class="va">plot_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_rows.html">filter_rows</a></span><span class="op">(</span><span class="va">plot_dat</span>,</span>
-<span>  column_name <span class="op">=</span> <span class="st">"state_var"</span>,</span>
-<span>  subsetter <span class="op">=</span> <span class="st">"wholeGroup"</span>,</span>
-<span>  remove <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p_crossDiff_of_groupDiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
-<span>  plot_dat <span class="op">=</span> <span class="va">plot_dat</span>,</span>
-<span>  label_sig_high <span class="op">=</span> <span class="st">"sig_Trend_Comp_crossDiffofgroupDiff_BL0vs1_vs_wholeGroup0vs1"</span>, <span class="co">## Richtig?</span></span>
-<span>  title_superscripts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Land-17"</span> <span class="op">=</span> <span class="st">"a"</span>,</span>
-<span>    <span class="st">"Land-45"</span> <span class="op">=</span> <span class="st">"3"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
-<span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p_crossDiff_of_groupDiff</span></span></code></pre></div>
-<p><img src="bt22_plots_files/figure-html/chpt4_line_crossDiff_of-1.png" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_crossDiff_of_groupDiff</span>, filename <span class="op">=</span> <span class="st">"../p_crossDiff_of_groupDiff.pdf"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
 <h4 id="kompetenzewerte-bundesländer-with-y-axis">Kompetenzewerte Bundesländer with y-axis<a class="anchor" aria-label="anchor" href="#kompetenzewerte-bundesl%C3%A4nder-with-y-axis"></a>
 </h4>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Prepare the data with 'KBuecher_imp3' as grouping_var</span></span>
 <span><span class="va">plot_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span></span>
 <span>  dat <span class="op">=</span> <span class="va">trend_books</span>,</span>
@@ -205,13 +166,13 @@ handelt.</p>
 <span></span>
 <span><span class="va">p_line_states_y</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt4_line%20y-axis-1.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states_y</span>, filename <span class="op">=</span> <span class="st">"../split_plot_example_y.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="kompetenzwerte-deutschland">Kompetenzwerte Deutschland<a class="anchor" aria-label="anchor" href="#kompetenzwerte-deutschland"></a>
 </h4>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## First we extract the wanted competence areas from the data:</span></span>
 <span><span class="va">plot_dat_kb</span> <span class="op">&lt;-</span> <span class="va">trend_books</span><span class="op">[</span><span class="va">trend_books</span><span class="op">$</span><span class="va">kb</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DHW"</span>, <span class="st">"GL"</span>, <span class="st">"GM"</span>, <span class="st">"hoeren"</span>, <span class="st">"lesen"</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
@@ -241,7 +202,7 @@ handelt.</p>
 <span></span>
 <span><span class="va">p_line_ger</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_4_ger-1.png" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## We dont't want a whole A4 page for this plot, but maybe the half:</span></span>
 <span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_ger</span>,</span>
 <span>  filename <span class="op">=</span> <span class="st">"../adjusted_means_ger-v02.pdf"</span>,</span>
@@ -251,7 +212,7 @@ handelt.</p>
 <div class="section level4">
 <h4 id="kompetenzwerte-mit-gesamtdeutschland">Kompetenzwerte mit Gesamtdeutschland<a class="anchor" aria-label="anchor" href="#kompetenzwerte-mit-gesamtdeutschland"></a>
 </h4>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Prepare the data with 'KBuecher_imp3' as grouping_var</span></span>
 <span><span class="va">plot_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span></span>
 <span>  dat <span class="op">=</span> <span class="va">trend_books</span>,</span>
@@ -289,7 +250,7 @@ handelt.</p>
 <span></span>
 <span><span class="va">p_line_states_de</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt4_line%20germany-1.png" width="700"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_line_states_de</span>, filename <span class="op">=</span> <span class="st">"../split_plot_de.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -303,7 +264,7 @@ handelt.</p>
 <div class="section level4">
 <h4 id="mindeststandards">Mindeststandards<a class="anchor" aria-label="anchor" href="#mindeststandards"></a>
 </h4>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span><span class="va">min_stand</span>,</span>
 <span>  competence <span class="op">=</span> <span class="st">"lesen"</span>,</span>
 <span>  parameter <span class="op">=</span> <span class="st">"1"</span></span>
@@ -389,13 +350,13 @@ handelt.</p>
 <span></span>
 <span><span class="va">minsta_plot</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand-1.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot</span>, filename <span class="op">=</span> <span class="st">"../Kap_3_MinSta.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="mindeststandards-trend">Mindeststandards Trend<a class="anchor" aria-label="anchor" href="#mindeststandards-trend"></a>
 </h4>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span><span class="va">min_stand</span>,</span>
 <span>  competence <span class="op">=</span> <span class="st">"lesen"</span>,</span>
 <span>  parameter <span class="op">=</span> <span class="st">"1"</span></span>
@@ -544,13 +505,13 @@ handelt.</p>
 <span><span class="va">minsta_plot_trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_bar_1</span>, <span class="va">p_bar_2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">minsta_plot_trend</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_3_MinStand_trend-1.png" width="700"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">minsta_plot_trend</span>, filename <span class="op">=</span> <span class="st">"../Kap3_2021_MSA_trend-v06.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="mindeststandards-frz">Mindeststandards Frz<a class="anchor" aria-label="anchor" href="#mindeststandards-frz"></a>
 </h4>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span><span class="va">min_stand</span>,</span>
 <span>  competence <span class="op">=</span> <span class="st">"lesen"</span>,</span>
 <span>  parameter <span class="op">=</span> <span class="st">"1"</span></span>
@@ -667,7 +628,7 @@ handelt.</p>
 <span><span class="va">plot_land_17</span> <span class="op">&lt;-</span> <span class="va">plot_list</span><span class="op">[[</span><span class="st">"Land-17"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">plot_land_17</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chpt_2_frz-1.png" width="700"></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## save all plots:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">p_name</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">plot_list</span><span class="op">[[</span><span class="va">p_name</span><span class="op">]</span><span class="op">]</span></span>
@@ -681,7 +642,7 @@ handelt.</p>
 <div class="section level4">
 <h4 id="kompetenzwerte-no-trend">Kompetenzwerte no Trend<a class="anchor" aria-label="anchor" href="#kompetenzwerte-no-trend"></a>
 </h4>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## As we want to plot both mean and sd - Parameters, we prepare the data 2x, once with mean and once with sd as chosen parameter:</span></span>
 <span><span class="va">dat_bar_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span><span class="va">trend_books</span>,</span>
 <span>  competence <span class="op">=</span> <span class="st">"lesen"</span>,</span>
@@ -742,7 +703,7 @@ handelt.</p>
 <span><span class="co">#&gt; Warning: Removed 1 rows containing missing values</span></span>
 <span><span class="co">#&gt; (`geom_rect_pattern()`).</span></span></code></pre></div>
 <p><img src="bt22_plots_files/figure-html/chapt_4_noTrend-1.png" width="700"></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">mean_noTrend</span>, filename <span class="op">=</span> <span class="st">"../Kap4_2021_noTrend.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
