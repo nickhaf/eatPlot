@@ -1,5 +1,9 @@
 # eatPlot (development version)
 
+## eatPlot 0.0.0.9026 "complex group comparisons"
+* Comparisons of the type group_1.vs.group_2.VS.wholeGroup-group_1.vs.group_2 always compare this group comparison in states vs wholeGroup. 
+Therefore, the naming of the respective columns could be adapted, and the output complexity reduced. 
+
 ## eatPlot 0.0.0.9025 "white spaces"
 * Implemented the possiblity to plot white spaces next to plots, so they can be sperated by a white space. Use `space_right` in `plotsettings_tablebarplot()` to set the width, and controll the background_stripes borders with `background_stripes_border`. 
 

@@ -284,6 +284,14 @@ get_comparisons <- function(dat, states, sub_groups) {
 
   dat$group_var <- replace_VS(dat$group_var)
 
+  ## if .vs. in the string, delete the second comparison part, it is redundant, as the next comparison is always of these groups against these groups in the wholeGroup
+  dat$group_var_2 <- dat$group_var
+  dat$group_var <- ifelse(grepl("\\.vs\\.", dat$group_var),
+                          gsub("\\.VS\\..*", "", dat$group_var),
+                          dat$group_var)
+
+dat$group_var <- gsub("\\.vs\\.", "\\.VS\\.", dat$group_var)
+
   dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.VS\\."), function(x) {
     x[[1]]
   })
@@ -291,10 +299,15 @@ get_comparisons <- function(dat, states, sub_groups) {
     x[[2]]
   })
 
+  ## Add better description to compare_2, as it will be used as column header later on.
+  dat$compare_2 <- ifelse(grepl("\\.vs\\.", dat$group_var_2),
+                          paste0("BL-groupingvar_vs_", dat$compare_2, "_VS_wholeGroup-groupingvar_vs_", dat$compare_2),
+                          dat$compare_2)
+  dat$group_var_2 <- NULL
+
   for (i in c("compare_1", "compare_2")) {
     dat[, i] <- gsub(paste0(states, collapse = "|"), "BL", dat[, i])
     dat[, i] <- gsub("__|___|", "_", dat[, i], fixed = TRUE)
-    dat[, i] <- gsub(".vs.", "vs", dat[, i])
 
     dat[is.na(dat[, i]), i] <- "no_comp"
   }

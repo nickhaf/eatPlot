@@ -9,36 +9,14 @@ prepare_comp <- function(dat, year_columns) {
 
     dat_comp <- dat[!is.na(dat$comparison) & dat$comparison == comp, ]
 
-    comp_wide <- reshape_dat_comp_wide(dat_comp, comp, year_columns) # fehlen hier nicht gruppen?
+    comp_wide <- reshape_dat_comp_wide(dat_comp, comp, year_columns)
 
-    if(comp == "crossDiffofgroupDiff"){
-      if(nrow(comp_trend) == 0){
-        # This will occur if only crossDiffofgroupDiff should be calculated. In that case, nothing is merged, and the grouping var is needed for later merging.
-        comp_trend <- merge_2(
-          comp_wide,
-          comp_trend,
-          by = c("depVar", "competence_var", "state_var", year_columns),
-          all.x = FALSE,
-          all.y = TRUE
-        )
-      }else{
-        ## This comparison type is grouping_var independent, and has only one line per country:
-        comp_trend <- merge_2(
-        comp_wide[, !colnames(comp_wide) == "grouping_var"],
-        comp_trend,
-        by = c("depVar", "competence_var", "state_var", year_columns),
-        all.x = FALSE,
-        all.y = TRUE
-      )
-      }
-    }else{
     comp_trend <- merge_2(
       comp_wide,
       comp_trend,
       by = c("depVar", "competence_var", "grouping_var", "state_var", year_columns),
       all = TRUE
     )
-    }
   }
 
   return(comp_trend)
@@ -55,27 +33,10 @@ reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
     }
 
     ## Build an unique identifier for the column names of the comparisons
-    if (any(grepl("\\.vs\\.", dat_comp$compare_1_Comp))) {
-      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_1_Comp, ".VS.", dat_comp$compare_2_Comp)
-    } else {
-      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp) ## müsste wholeGroup drin stehen
-    }
 
-    # Renaming necessary, so the 0.vs.1 group appears in the column headers
-if(all(dat_comp$comparison == "crossDiffofgroupDiff")){
-  dat_comp$compare_2_Comp <- paste0("crossDiffofgroupDiff_", gsub("_", "", dat_comp$compare_1_Comp),  "_vs", gsub("crossDiffofgroupDiff", "", dat_comp$compare_2_Comp))
+      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
 
-  dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
-
-  ## All information in the compare_2_comp-column, don't need grouping_var
-  dat_comp_wide <- stats::reshape(dat_comp,
-                                  direction = "wide",
-                                  idvar = c("depVar", "competence_var", "state_var", year_columns),
-                                  timevar = c("compare_2_Comp"),
-                                  sep = "_")
-
-  }else{
-    dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
+ dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 
     dat_comp_wide <- stats::reshape(dat_comp,
       direction = "wide",
@@ -83,7 +44,6 @@ if(all(dat_comp$comparison == "crossDiffofgroupDiff")){
       timevar = c("compare_2_Comp"),
       sep = "_"
     )
-  }
     return(dat_comp_wide)
   } else {
     return(data.frame())
