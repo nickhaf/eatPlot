@@ -1,60 +1,60 @@
 
-# test_that("settings do something", {
-#   trend_books_2 <- trend_books
-#   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
-#
-#   plot_dat_test <- prep_plot(
-#     dat = trend_books_2,
-#     competence = "GL",
-#     grouping_vars = "KBuecher_imp3",
-#     grouping_vars_groups = c("1", "0", "0.vs.1")
-#   )
-#
-#   plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
-#   plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "0"), ]
-#
-#
-#   p_line <- plot_lineplot(
-#     plot_dat = plot_dat_test,
-#     label_est = "est_Trend_noComp",
-#     point_values = "est_noTrend_noComp",
-#     years_lines = list(c(2011, 2016), c(2016, 2023)),
-#     years_braces = list(c(2011, 2016), c(2016, 2023)),
-#     plot_settings = plotsettings_lineplot(
-#       axis_x_background_colour = "red",
-#       axis_x_background_width_y = 0.08,
-#       axis_x_label_centralize = 0.15,
-#       axis_x_label_nudge_y = 0.05,
-#       axis_x_label_size = 2.4,
-#       background_lines = FALSE,
-#       brace_label_gap_y = 0.15,
-#       brace_label_nudge_x = 0.3,
-#       brace_label_nudge_y = 0.08,
-#       brace_label_size = 3,
-#       brace_line_width = 0.8,
-#       brace_span_y = 0.16,
-#       grouping_colours = c("2" = "blue", "1" = "green"),
-#       line_type = c("TRUE" = "dotted", "FALSE" = "F1"),
-#       line_width = 1,
-#       margin_bottom = 0.05,
-#       margin_left = 0.03,
-#       margin_right = 0.001,
-#       margin_top = 0.005,
-#       n_cols = 6,
-#       point_label_nudge = FALSE,
-#       point_label_nudge_direction = list("0" = "+", "1" = "-"),
-#       point_label_nudge_y = 0.1,
-#       point_label_size = 1,
-#       point_shapes = c("TRUE" = 2, "FALSE" = 10),
-#       point_size = 1,
-#       split_plot = TRUE,
-#       split_plot_gap_width = 0.01,
-#       axis_y = FALSE
-#     )
-#   )
-#
-#   vdiffr::expect_doppelganger("lineplot random settings", p_line)
-# })
+test_that("the lineplot settings do something expected", {
+  trend_books_2 <- trend_books
+  colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))
+
+  plot_dat_test <- prep_plot(
+    dat = trend_books_2,
+    competence = "GL",
+    grouping_vars = "KBuecher_imp3",
+    grouping_vars_groups = c("1", "0", "0.vs.1")
+  )
+
+  plot_dat_test <- filter_rows(plot_dat_test, column_name = "state_var", subsetter = "wholeGroup", remove = TRUE)
+  plot_dat_test$plot_points <- plot_dat_test$plot_points[!(plot_dat_test$plot_points$years_Trend == "20112016" & plot_dat_test$plot_points$grouping_var == "0"), ]
+
+
+  p_line <- plot_lineplot(
+    plot_dat = plot_dat_test,
+    label_est = "est_Trend_noComp",
+    point_values = "est_noTrend_noComp",
+    years_lines = list(c(2011, 2016), c(2016, 2023)),
+    years_braces = list(c(2011, 2016), c(2016, 2023)),
+    plot_settings = plotsettings_lineplot(
+      axis_x_background_colour = "red",
+      axis_x_background_width_y = 0.08,
+      axis_x_label_centralize = 0.15,
+      axis_x_label_nudge_y = 0.05,
+      axis_x_label_size = 2.4,
+      background_lines = FALSE,
+      brace_label_gap_y = 0.15,
+      brace_label_nudge_x = 0.3,
+      brace_label_nudge_y = 0.08,
+      brace_label_size = 3,
+      brace_line_width = 0.8,
+      brace_span_y = 0.16,
+      grouping_colours = c("2" = "blue", "1" = "green"),
+      line_type = c("TRUE" = "dotted", "FALSE" = "F1"),
+      line_width = 1,
+      margin_bottom = 0.05,
+      margin_left = 0.03,
+      margin_right = 0.001,
+      margin_top = 0.005,
+      n_cols = 6,
+      point_label_nudge = FALSE,
+      point_label_nudge_direction = list("0" = "+", "1" = "-"),
+      point_label_nudge_y = 0.1,
+      point_label_size = 1,
+      point_shapes = c("TRUE" = 2, "FALSE" = 10),
+      point_size = 1,
+      split_plot = TRUE,
+      split_plot_gap_width = 0.01,
+      axis_y = FALSE
+    )
+  )
+
+  vdiffr::expect_doppelganger("set random lineplot settings", p_line)
+})
 
 test_that("correct states are extracted", {
   test_plot_2 <- list(
