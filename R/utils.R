@@ -284,6 +284,13 @@ get_comparisons <- function(dat, states, sub_groups) {
 
   dat$group_var <- replace_VS(dat$group_var)
 
+  ## if .vs. in the string, delete the second comparison part, it is redundant, as the next comparison is always of these groups against these groups in the wholeGroup
+  dat$group_var <- ifelse(grepl("\\.vs\\.", dat$group_var),
+                          gsub("\\.VS\\..*", "", dat$group_var),
+                          dat$group_var)
+
+dat$group_var <- gsub("\\.vs\\.", "\\.VS\\.", dat$group_var)
+
   dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.VS\\."), function(x) {
     x[[1]]
   })
