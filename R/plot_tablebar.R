@@ -197,6 +197,10 @@ plot_tablebar <- function(dat,
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
 
+  if(length(plot_settings$bar_nudge_y) != 1 & length(plot_settings$bar_nudge_y) != nrow(dat)){
+    stop(paste0("Your plot_settings$bar_nudge_y argument has either to have the length 1, or has to be as long as your data. Currently, it has the length: ", length(plot_settings$bar_nudge_y), ". Your data has: ", nrow(dat), " rows."), call. = FALSE)
+  }
+
   dat$bar_nudge_y <- plot_settings$bar_nudge_y
 
   if (!is.null(bar_est)) {
@@ -337,7 +341,6 @@ plot_tablebar <- function(dat,
             xmax = .data$bar_est,
             ymin = .data$y_axis - plot_settings$bar_width / 2 + .data$bar_nudge_y,
             ymax = .data$y_axis + plot_settings$bar_width / 2 + .data$bar_nudge_y,
-            # colour = .data$bar_fill,
             fill = .data$bar_fill,
             pattern = .data$bar_sig
           ),
