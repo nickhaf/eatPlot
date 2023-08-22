@@ -197,6 +197,8 @@ plot_tablebar <- function(dat,
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
 
+  dat$bar_nudge_y <- plot_settings$bar_nudge_y
+
   if (!is.null(bar_est)) {
     plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
     scale_breaks <- unique(c(
@@ -306,8 +308,8 @@ plot_tablebar <- function(dat,
           ggplot2::aes(
             xmin = .data$x_min,
             xmax = .data$bar_est,
-            ymin = .data$y_axis - plot_settings$bar_width / 2,
-            ymax = .data$y_axis + plot_settings$bar_width / 2,
+            ymin = .data$y_axis - plot_settings$bar_width / 2 + .data$bar_nudge_y,
+            ymax = .data$y_axis + plot_settings$bar_width / 2 + .data$bar_nudge_y,
             fill = .data$bar_fill
           ),
           colour = "black",
@@ -333,8 +335,8 @@ plot_tablebar <- function(dat,
           ggplot2::aes(
             xmin = .data$x_min,
             xmax = .data$bar_est,
-            ymin = .data$y_axis - plot_settings$bar_width / 2,
-            ymax = .data$y_axis + plot_settings$bar_width / 2,
+            ymin = .data$y_axis - plot_settings$bar_width / 2 + .data$bar_nudge_y,
+            ymax = .data$y_axis + plot_settings$bar_width / 2 + .data$bar_nudge_y,
             # colour = .data$bar_fill,
             fill = .data$bar_fill,
             pattern = .data$bar_sig
@@ -363,8 +365,8 @@ plot_tablebar <- function(dat,
           ggplot2::aes(
             xmin = .data$x_min,
             xmax = .data$bar_est,
-            ymin = .data$y_axis - plot_settings$bar_width / 2,
-            ymax = .data$y_axis + plot_settings$bar_width / 2,
+            ymin = .data$y_axis - plot_settings$bar_width / 2 + .data$bar_nudge_y,
+            ymax = .data$y_axis + plot_settings$bar_width / 2 + .data$bar_nudge_y,
             fill = .data$bar_fill,
             linetype = .data$bar_sig,
           ),
