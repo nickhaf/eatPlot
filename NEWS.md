@@ -1,5 +1,9 @@
 # eatPlot (development version)
 
+## eatPlot 0.0.0.9027 "bar nudge"
+* Using the argument `bar_nudge_y` in `plotsettings_tablebarplot()` it is now possible to nudge the bars in y direction.
+
+
 ## eatPlot 0.0.0.9026 "complex group comparisons"
 * Comparisons of the type group_1.vs.group_2.VS.wholeGroup-group_1.vs.group_2 always compare this group comparison in states vs wholeGroup. 
 Therefore, the naming of the respective columns could be adapted, and the output complexity reduced. 
