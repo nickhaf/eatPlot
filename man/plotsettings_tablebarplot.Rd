@@ -5,6 +5,7 @@
 \title{Set parameters for the barplots.}
 \usage{
 plotsettings_tablebarplot(
+  axis_x_label_size = NULL,
   axis_x_lims = NULL,
   background_stripes_border = NULL,
   background_stripes_colour = NULL,
@@ -45,6 +46,8 @@ plotsettings_tablebarplot(
 )
 }
 \arguments{
+\item{axis_x_label_size}{Numeric for the size of the x axis labels. Defaults to \code{5}.}
+
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, \code{NULL} (default).}
 
 \item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), or the outer right background line to the left of the plot (\verb{"background_line_right}).}

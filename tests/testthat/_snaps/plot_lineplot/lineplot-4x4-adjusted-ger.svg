@@ -21,6 +21,15 @@
 <rect x='0.000000000000064' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
 </g>
 <defs>
+  <clipPath id='cpNi44NHw3MTEuNTh8MzQuNjN8NTc1LjAy'>
+    <rect x='6.84' y='34.63' width='704.73' height='540.39' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNi44NHw3MTEuNTh8MzQuNjN8NTc1LjAy)'>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<defs>
   <clipPath id='cpMS4yMnwyNDAuNDF8MTguMjh8Mjk2LjY1'>
     <rect x='1.22' y='18.28' width='239.18' height='278.37' />
   </clipPath>
