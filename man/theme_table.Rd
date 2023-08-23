@@ -4,7 +4,7 @@
 \alias{theme_table}
 \title{Theme for table plotted with ggplot2.}
 \usage{
-theme_table()
+theme_table(plot_settings)
 }
 \value{
 ggplot2 theme.

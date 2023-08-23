@@ -282,7 +282,7 @@ plot_tablebar <- function(dat,
       colour = NA,
       fill = plot_settings$headers_background_colour
     ) +
-    theme_table() +
+    theme_table(plot_settings) +
     plot_capped_x_axis(scale_breaks) +
     ## Horizontal background lines around header box:
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +

@@ -4,7 +4,7 @@
 #' @export
 #'
 #' @examples # tbd
-theme_table <- function() {
+theme_table <- function(plot_settings) {
   ggplot2::theme_classic() %+replace%
     ggplot2::theme(
       strip.background = ggplot2::element_blank(),
@@ -16,7 +16,7 @@ theme_table <- function() {
       axis.line.y = ggplot2::element_blank(),
       axis.title = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_text(size = 5),
+      axis.text.x = ggplot2::element_text(size = plot_settings$axis_x_label_size),
       axis.ticks.y = ggplot2::element_blank(),
       plot.caption = ggplot2::element_text(hjust = 0),
       legend.position = "none", # "bottom",
