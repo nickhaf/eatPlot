@@ -30,7 +30,7 @@ dat_plot <- prep_plot(trend_books,
   grouping_vars = "KBuecher_imp3"
 )
 ```
-The only thing that needs to be done in this step is to define the columns in your data set (here named "trend_books"), if they differ from the defaults, so the function knows which on is which. (I don't fully understand this sentence)
+The only thing that needs to be done in this step is to define the columns in your data set (here named "trend_books"), if they differ from the defaults. 
 
 The result is a list consisting of different data frames, each data frame containing the prepared data for a different plot type. Normally, you don't have to look at this list, but in some cases you might want to edit the data by hand to fit your purpose.
 
