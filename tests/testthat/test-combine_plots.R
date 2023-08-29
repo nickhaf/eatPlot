@@ -156,7 +156,7 @@ test_that("Plots can be combined even if one doesn't have a barplot", {
     )
   )
 
-res_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3), plot_widths = c(0.2, 0.4, 0.4))
+res_plot <- suppressWarnings(combine_plots(list(p_bar_1, p_bar_2, p_bar_3), plot_widths = c(0.2, 0.4, 0.4)))
 
 vdiffr::expect_doppelganger("Set plot width manually", res_plot)
 
