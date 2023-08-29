@@ -4,10 +4,12 @@
 \alias{combine_plots}
 \title{Combine different ggplots}
 \usage{
-combine_plots(plot_list)
+combine_plots(plot_list, plot_widths = NULL)
 }
 \arguments{
 \item{plot_list}{List of the plots that should be combined.}
+
+\item{plot_widths}{Set the widths of the plots manually. Defaults to \code{NULL}, in which case the width will be calculated so the x axis scales are on the same metric.}
 }
 \value{
 Patchwork plot.

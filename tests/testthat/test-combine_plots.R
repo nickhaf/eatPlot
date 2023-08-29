@@ -150,7 +150,7 @@ test_that("Plots can be combined even if one doesn't have a barplot", {
       columns_alignment = 0,
       headers_alignment = 0,
       columns_width = NULL,
-      axis_x_lims = c(0, 100),
+      axis_x_lims = c(0, 75),
       bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
       default_list = barplot_plot_frame
     )
