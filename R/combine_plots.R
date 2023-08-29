@@ -10,7 +10,7 @@
 combine_plots <- function(plot_list, plot_widths = NULL) {
 
   if(!is.null(plot_widths)){
-    warning("You have provided plot_widths. Please check that the scales of your barplots align, as they will not be set automatically.", call. = FALSE)
+    warning("Careful! You have provided plot_widths. Please check that the scales of your barplots are on the same scale, as they will not be set automatically.", call. = FALSE)
   }
 
   if(is.null(plot_widths)){

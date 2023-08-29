@@ -150,19 +150,17 @@ test_that("Plots can be combined even if one doesn't have a barplot", {
       columns_alignment = 0,
       headers_alignment = 0,
       columns_width = NULL,
-      axis_x_lims = c(0, 75),
+      axis_x_lims = c(0, 100),
       bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
       default_list = barplot_plot_frame
     )
   )
 
-res_plot <- suppressWarnings(combine_plots(list(p_bar_1, p_bar_2, p_bar_3), plot_widths = c(0.2, 0.4, 0.4)))
+  res_plot <- suppressWarnings(combine_plots(list(p_bar_1, p_bar_2, p_bar_3), plot_widths = c(0.2, 0.4, 0.4)))
 
 vdiffr::expect_doppelganger("Set plot width manually", res_plot)
 
-  })
-
-
+})
 
 
 test_that("Example barplot long format is plotted correctly", {
