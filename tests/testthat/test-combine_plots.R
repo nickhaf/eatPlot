@@ -85,6 +85,86 @@ test_that("example mindeststandard short version", {
   # save_plot(minsta_plot, filename = "../Kap3_2022_MSA_v02.pdf", height = 226.2 / 3)
 })
 
+
+
+test_that("Plots can be combined even if one doesn't have a barplot", {
+  dat_bar <- prep_plot(min_stand,
+                       competence = "lesen",
+                       parameter = "1"
+  )[["plot_tablebar"]]
+
+  dat_bar <- construct_percent(dat_bar, columns = colnames(dat_bar)[grep("est", colnames(dat_bar))])
+  for (i in c("2011", "2016", "2021")) {
+    dat_bar <- construct_directional_sig(dat_bar,
+                                         est_column = paste0("est_noTrend_Comp_crossDiff_wholeGroup_", i),
+                                         sig_column = paste0("sig_noTrend_Comp_crossDiff_wholeGroup_", i))
+  }
+
+  dat_bar_2 <- subset(dat_bar, depVar == "regErreicht")
+
+  # Plot 1 ------------------------------------------------------------------
+  p_bar_1 <- plot_tablebar(
+    dat = dat_bar_2,
+    headers = list("Land"),
+    columns_table = list("state_var"),
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      axis_x_lims = c(0,0),
+      bar_fill_colour = grDevices::rgb(49, 133, 156, maxColorValue = 255),
+      default_list = barplot_plot_frame
+    )
+  )
+
+
+
+  # Plot 2 ------------------------------------------------------------------
+
+
+  p_bar_2 <- plot_tablebar(
+    dat = dat_bar_2,
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
+    bar_est = "est_noTrend_noComp_2021_percent",
+    headers = list("Regelstandard erreicht oder übertroffen (MSA)"),
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      columns_alignment = 0,
+      headers_alignment = 0,
+      columns_width = NULL,
+      axis_x_lims = c(0, 75),
+      bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
+      default_list = barplot_plot_frame
+    )
+  )
+
+  p_bar_3 <- plot_tablebar(
+    dat = dat_bar_2,
+    bar_label = "est_noTrend_noComp_2021_percent",
+    bar_label_sig = "sig_noTrend_noComp_2021",
+    bar_sig = "sig_noTrend_Comp_crossDiff_wholeGroup_2021_directional_sig",
+    bar_est = "est_noTrend_noComp_2021_percent",
+    headers = list("Regelstandard erreicht oder übertroffen (MSA)"),
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      columns_alignment = 0,
+      headers_alignment = 0,
+      columns_width = NULL,
+      axis_x_lims = c(0, 75),
+      bar_fill_colour = grDevices::rgb(75, 172, 198, maxColorValue = 255),
+      default_list = barplot_plot_frame
+    )
+  )
+
+res_plot <- combine_plots(list(p_bar_1, p_bar_2, p_bar_3), plot_widths = c(0.2, 0.4, 0.4))
+
+vdiffr::expect_doppelganger("Set plot width manually", res_plot)
+
+  })
+
+
+
+
 test_that("Example barplot long format is plotted correctly", {
   dat_bar <- prep_plot(min_stand,
     competence = "lesen",
