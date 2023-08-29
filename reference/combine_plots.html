@@ -54,13 +54,17 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">combine_plots</span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">combine_plots</span><span class="op">(</span><span class="va">plot_list</span>, plot_widths <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>plot_list</dt>
 <dd><p>List of the plots that should be combined.</p></dd>
+
+
+<dt>plot_widths</dt>
+<dd><p>Set the widths of the plots manually. Defaults to <code>NULL</code>, in which case the width will be calculated so the x axis scales are on the same metric.</p></dd>
 
 </dl></div>
     <div class="section level2">
