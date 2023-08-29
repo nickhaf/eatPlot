@@ -723,6 +723,15 @@ plot_capped_x_axis <- function(scale_breaks) {
       yend = 0.4,
       linewidth = 0.1
     )
+  }else{
+    ## Plot something invisible, so the y axis is the same over all plots:
+    ggplot2::annotate("segment",
+                      x = 0,
+                      xend = 0,
+                      y = 0.4,
+                      yend = 0.4,
+                      linewidth = 0.00000001
+    )
   }
 }
 
