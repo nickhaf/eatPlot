@@ -78,19 +78,19 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nickhaf.github.io/eatPlot/">eatPlot</a></span><span class="op">)</span></span></code></pre></div>
-<p><code>eatPlot</code> takes output dataframes from <code>eatRep</code>
-and facilitates the construction of different <code>ggplot2</code>-plots
-for the data. Main goal is the plotting of BT22 graphs, but in general
-the package can be used for other purposes as well. The packages aim is
-it to make the plotting as easy but flexible as possible, so let’s dive
-right in!</p>
+<p><code>eatPlot</code> takes output data frames from
+<code>eatRep</code> and facilitates the construction of different
+<code>ggplot2</code>-plots for the data. Main goal is the plotting of
+BT22 graphs, but in general the package can be used for other purposes
+as well. The package’s aim is it to make the plotting as easy but
+flexible as possible, so let’s dive right in!</p>
 <div class="section level2">
 <h2 id="basic-workflow">Basic workflow<a class="anchor" aria-label="anchor" href="#basic-workflow"></a>
 </h2>
 <div class="section level3">
 <h3 id="data-preperation">Data preperation<a class="anchor" aria-label="anchor" href="#data-preperation"></a>
 </h3>
-<p>The first step is the data preperation. This is handeled by the
+<p>The first step is the data preparation. This is handled by the
 function <code><a href="../reference/prep_plot.html">prep_plot()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_plot.html">prep_plot</a></span><span class="op">(</span><span class="va">trend_books</span>,</span>
@@ -99,19 +99,19 @@ function <code><a href="../reference/prep_plot.html">prep_plot()</a></code>:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The only thing that needs to be done in this step is to define the
 columns in your data set (here named “trend_books”), if they differ from
-the defaults, so the function knows which on is which.</p>
-<p>The result is a list consisting of different dataframes, each
-dataframe containing the prepared data for a different plot type.
-Normally, you don’t have to look at this list, but in some cases you
-might want to edit the data by hand to fit your purpose.</p>
-<p>This concludes the basic data preperation workflow. Consult
+the defaults.</p>
+<p>The result is a list consisting of different data frames, each data
+frame containing the prepared data for a different plot type. Normally,
+you don’t have to look at this list, but in some cases you might want to
+edit the data by hand to fit your purpose.</p>
+<p>This concludes the basic data preparation workflow. Consult
 <code><a href="../articles/data_preperation.html">vignette("data_preperation")</a></code> or <code><a href="../reference/prep_plot.html">prep_plot()</a></code>
 for further information.</p>
 </div>
 <div class="section level3">
 <h3 id="plotting">Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
 </h3>
-<p>Different predefined plottypes stemming from the BT22 graphs are
+<p>Different predefined plot types stemming from the BT22 graphs are
 available. In general, the <code>eatPlot</code>-functions can also be
 combined to create additional plots, however, the functions have been
 optimized in regards to the BT22-needs. Each plot function consists of
@@ -120,7 +120,7 @@ two parts:</p>
 <li>The function arguments, which mainly specify the data columns that
 should be plotted.</li>
 <li>An additional argument called <code>plot_settings</code>, which
-takes a plotsettings function, used for specifying graphical features
+takes a plot settings function, used for specifying graphical features
 like colours, font sizes etc.</li>
 </ol>
 <div class="section level4">
@@ -137,8 +137,8 @@ altering your own plots.</p>
 <div class="section level4">
 <h4 id="lineplots">Lineplots<a class="anchor" aria-label="anchor" href="#lineplots"></a>
 </h4>
-<p>Lineplots are plotted using the <code><a href="../reference/plot_lineplot.html">plot_lineplot()</a></code>
-function. Input data is the list of data.frames prepated by
+<p>Line plots are plotted using the <code><a href="../reference/plot_lineplot.html">plot_lineplot()</a></code>
+function. Input data is the list of data.frames prepared by
 <code><a href="../reference/prep_plot.html">prep_plot()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span><span class="va">dat_plot</span>,</span>
@@ -146,7 +146,7 @@ function. Input data is the list of data.frames prepated by
 <span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">2016</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2016</span>, <span class="fl">2021</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting_started_files/figure-html/unnamed-chunk-3-1.png" width="700">
-As we can see, the lineplot doesn’t look optimal yet. However, we can
+As we can see, the line plot doesn’t look optimal yet. However, we can
 provide the predefined plotsettings-list to get the anticipated
 result:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -168,13 +168,13 @@ output.</p>
 <div class="section level4">
 <h4 id="tables-and-barplots">Tables and barplots<a class="anchor" aria-label="anchor" href="#tables-and-barplots"></a>
 </h4>
-<p>As often both tables and barplots need to be combined to the same
+<p>As often both tables and bar plots need to be combined to the same
 plot, the function <code><a href="../reference/plot_tablebar.html">plot_tablebar()</a></code> is responsible for both
 operations.</p>
 <p>The function takes either the whole list-object generated by
-<code><a href="../reference/prep_plot.html">prep_plot()</a></code> or the according dataframe
+<code><a href="../reference/prep_plot.html">prep_plot()</a></code> or the according data frame
 <code>plot_tablebar</code>. This way, you can extract and edit the
-<code>plot_tablebar</code> dataframe yourself.</p>
+<code>plot_tablebar</code> data frame yourself.</p>
 <p>When we have cleaned our data, we can plot a tablebarplot by
 providing variables that should be plotted as table columns, as well as
 the headers, and default settings (if needed).</p>
@@ -202,7 +202,7 @@ width, if we don’t want all columns to have the same size.</p>
 <h4 id="combining-tables-and-barplots">Combining tables and barplots<a class="anchor" aria-label="anchor" href="#combining-tables-and-barplots"></a>
 </h4>
 <p>Currently, <code>eatPlot</code> only supports the generation of a
-table with the desired number of columns, and one barplot on the right
+table with the desired number of columns, and one bar plot on the right
 side of the table. For very complex plots, different plots have to be
 combined to achieve the desired output.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -219,7 +219,7 @@ combined to achieve the desired output.</p>
 <span>    default_list <span class="op">=</span> <span class="va">barplot_plot_frame</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Sometimes the alignment of the columns can be a bit tricky, than you
+<p>Sometimes the alignment of the columns can be a bit tricky, then you
 have to play around with the <code>columns_alignment</code>,
 <code>columns_width</code> and <code>columns_nudge</code> settings.</p>
 <p>The two plots can be combined into one by
