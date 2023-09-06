@@ -11,7 +11,7 @@ test_that("calc_brace_coords works for long format", {
 
   coords <- c(360, 530)
 
-  test_braces <- calc_brace_coords(df, coords, output_format = "long")
+  test_braces <- calc_brace_coords(df, coords, plot_settings = plotsettings_lineplot(split_plot = TRUE))
 
   expect_equal(test_braces$brace_y, c(360, 360, 360, 360, 343, 343, 343, 343))
   expect_equal(test_braces$label_pos_y, rep(c(334.5, 320.9), 4))
