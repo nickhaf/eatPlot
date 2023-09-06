@@ -269,7 +269,6 @@ calc_pos <- function(coords_min, range_coords, width) {
 
 
 calc_brace_label_coords <- function(dat, starting_points, range_coords, range_years, plot_settings) {
-
   dat$label_pos_x <- calc_brace_label_x(dat, range_total = range_years, plot_settings)
 
   dat$label_pos_y <- calc_brace_label_y(dat,
@@ -337,6 +336,17 @@ calc_brace_position <- function(dat, overlap) {
         yes = "top",
         no = "bottom"
       )
+
+      # If any bottom brace starts at the first year, the upper needs to go right
+
+      middle_bottom <- ifelse(dat$year_start_axis == min(dat$year_start_axis) & dat$brace_position_y == "bottom",
+        yes = TRUE,
+        no = FALSE
+      )
+
+      if (any(middle_bottom)) {
+        dat[dat$brace_position_y == "top", "brace_position_x"] <- "right"
+      }
     }
   } else {
     dat$brace_position_x <- rep("middle", nrow(dat))
@@ -349,8 +359,7 @@ calc_brace_position <- function(dat, overlap) {
 
 calc_brace_label_x <- function(dat,
                                range_total,
-                               plot_settings){
+                               plot_settings) {
   label_x <- dat$year_start_axis + dat$range * dat$mid + (range_total * plot_settings$brace_label_nudge_x) ## Position ist evtl noch was anderes, z.B. * 0 oder so
   return(label_x)
 }
-
