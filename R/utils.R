@@ -362,7 +362,9 @@ replace_VS <- function(x) {
 calc_overlap <- function(year_start, year_end) {
   overlap <- c()
   for (i in 1:length(year_start)) {
-    overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]))
+    overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i])|
+                      any((year_end[i] > year_start[-i]) & (year_end[i] < year_end[-i]))
+                         )
   }
   return(overlap)
 }

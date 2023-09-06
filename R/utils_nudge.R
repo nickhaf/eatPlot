@@ -48,7 +48,6 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
     dat = dat
   )
 
-
 # Prepare dat -------------------------------------------------------------
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend")]
   dat$overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
@@ -132,18 +131,34 @@ calc_brace_coords_y <- function(dat, coords, starting_points) {
 
   if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
 
+    dat$range <- apply(dat[,c("year_start_axis", "year_end_axis")], 1, function(x){diff(range(x))})
+
+    ## larger brace on top, smaller one below. If equal, just put the one with the smallest start year on top:
+
+    if(all(dat$range == dat$range[1])){
+      dat$upper_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+                            coords[1],
+                            starting_points$lower_brace_y_a
+      )
+
+      # Lower brace coordinates:
+      dat$lower_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+                            starting_points$lower_brace_y_a,
+                            starting_points$lower_brace_y_b
+      )
+    }else{
     # Upper brace coordinates:
-    dat$upper_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+    dat$upper_y <- ifelse(dat$range == max(dat$range),
       coords[1],
       starting_points$lower_brace_y_a
     )
 
     # Lower brace coordinates:
-    dat$lower_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+    dat$lower_y <- ifelse(dat$range == max(dat$range),
       starting_points$lower_brace_y_a,
       starting_points$lower_brace_y_b
     )
-
+}
   } else {
     dat$upper_y <- coords[1]
     dat$lower_y <- starting_points$lower_brace_y

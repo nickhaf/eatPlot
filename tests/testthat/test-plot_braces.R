@@ -32,7 +32,6 @@ test_that("y limits are set correctly", {
   expect_equal(test_p$coordinates$limits$y, coords)
 })
 
-
 test_that("x-position of brace label is calculated correctly", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
@@ -145,7 +144,6 @@ test_that("braces are plotted correctly", {
   )
 })
 
-
 test_that("significances are displayed correctly in the labels", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
@@ -208,7 +206,6 @@ test_that("Example brace plot is still the same", {
   )
 })
 
-
 test_that("Adjacent braces", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
@@ -241,8 +238,6 @@ test_that("Adjacent braces", {
       ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
   )
 })
-
-
 
 test_that("Overlapping braces are looking good", {
   df <- data.frame(
@@ -278,6 +273,42 @@ test_that("Overlapping braces are looking good", {
     p_braces
   )
 })
+
+test_that("Overlapping braces in the other direction", {
+  df <- data.frame(
+    state_var = rep("Berlin", 4),
+    year_start_axis = c(2011, 2011, 2013, 2013),
+    year_end_axis = c(2023, 2023, 2023, 2023),
+    grouping_var = factor(c(0, 1, 0, 1)),
+    est = c(1:4),
+    se = c(1:4),
+    sig_1 = c(TRUE, FALSE, FALSE, TRUE),
+    sig_2 = c(FALSE, TRUE, FALSE, TRUE),
+    est_noTrendStart_noComp = 400:403,
+    est_noTrendEnd_noComp = 500:503,
+    years_Trend = c("20112015", "20112015", "20152023", "20152023"),
+    competence_var = "a"
+  )
+
+  p_braces <- ggplot2::ggplot() +
+    plot_braces(df,
+                plot_lims = list(
+                  coords = calc_y_value_coords(y_range = c(400, 503)),
+                  y_range = c(400, 503)
+                ),
+                label_est = "est",
+                label_se = "se",
+                label_sig_high = "sig_2",
+                label_sig_bold = "sig_1"
+    ) +
+    ggplot2::theme(plot.margin = ggplot2::margin(0.05, 0.03, 0.25, 0.03, "npc"))
+
+  vdiffr::expect_doppelganger(
+    "Overlapping braces in other direction",
+    p_braces
+  )
+})
+
 
 test_that("Braces can be facet wrapped", {
   df <- data.frame(

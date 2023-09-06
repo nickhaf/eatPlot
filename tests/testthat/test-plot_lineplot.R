@@ -181,7 +181,6 @@ test_that("lineplot chpt. 4 with 3 groups is still the same", {
   #  save_plot(p_line, filename = "../split_lineplot_3_books.pdf")
 })
 
-
 test_that("lineplot chpt. 4 with 3 groups, no split and unequal trend length", {
   trend_books_2 <- trend_books[trend_books$KBuecher_imp3 == "0" & !is.na(trend_books$KBuecher_imp3) & trend_books$parameter == "mean", ]
   trend_books_2$KBuecher_imp3 <- rep("Drei", nrow(trend_books_2))
@@ -233,7 +232,6 @@ test_that("lineplot chpt. 4 with 3 groups, no split and unequal trend length", {
   vdiffr::expect_doppelganger("lineplot_4x4_3groups unequal trend_length, with split", p_line_split)
   #  save_plot(p_line_split, filename = "../relatinal_trend_distance_Split.pdf")
 })
-
 
 test_that("competence_vars can be used as tiles", {
   trend_books_2 <- trend_books[trend_books$kb %in% c("DHW", "GL", "GM", "hoeren", "lesen"), ]
@@ -378,7 +376,6 @@ test_that("adjusted means for whole group", {
   # save_plot(p_line_deutschland, filename = "../adjusted_means_ger.pdf", height = 226.2 / 2 + 10)
 })
 
-
 test_that("title can get a raised letter", {
   title <- "c"
   title_raised_letter <- list("a" = "b", "c" = "d")
@@ -448,8 +445,6 @@ test_that("line distance can be overwritten to be equal, even though the distanc
   )
 })
 
-
-
 test_that("Split lineplot with box looks good", {
   plot_dat <- prep_plot(
     dat = trend_books,
@@ -485,7 +480,6 @@ test_that("Split lineplot with box looks good", {
     p_line_states
   })
 })
-
 
 test_that("Not Split lineplot with box looks good", {
   plot_dat <- prep_plot(
@@ -523,7 +517,6 @@ test_that("Not Split lineplot with box looks good", {
     p_line_states
   })
 })
-
 
 test_that("Split lineplot with box and unequal year-distances looks good", {
   trend_books_2 <- trend_books
@@ -608,7 +601,6 @@ test_that("Unsplit lineplot with box and unequal year-distances looks good", {
     p_line_states
   })
 })
-
 
 test_that("Split lineplot with box, unequal year-distances and y-axis looks good", {
   trend_books_2 <- trend_books
@@ -695,7 +687,6 @@ test_that("Unsplit lineplot with box, unequal year-distances and y-axis looks go
     p_line_states
   })
 })
-
 
 test_that("Unsplit lineplot with box, unequal year-distances and manual y-axis looks good", {
   trend_books_2 <- trend_books

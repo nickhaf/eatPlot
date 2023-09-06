@@ -107,17 +107,17 @@ test_that("column renaming works", {
 test_that("brace_position is calculated correctly", {
   expect_equal(
     calc_overlap(year_start = c(1, 1, 2, 2), year_end = c(3, 3, 4, 4)),
-    c(FALSE, FALSE, TRUE, TRUE)
+    c(TRUE, TRUE, TRUE, TRUE)
   )
 
   expect_equal(
     calc_overlap(year_start = c(1, 1, 2, 2), year_end = c(2, 2, 3, 4)),
-    c(FALSE, FALSE, FALSE, FALSE)
+    c(FALSE, FALSE, TRUE, FALSE)
   )
 
-  # expect_equal(calc_overlap(year_start = c(2011, 2011, 2011, 2011),
-  #                           year_end = c(2016, 2016, 2021, 2021)),
-  #              c(TRUE, TRUE, TRUE, TRUE))
+  expect_equal(calc_overlap(year_start = c(2011, 2011, 2011, 2011),
+                            year_end = c(2016, 2016, 2021, 2021)),
+               c(TRUE, TRUE, FALSE, FALSE))
 })
 
 
