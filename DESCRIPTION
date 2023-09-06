@@ -1,6 +1,6 @@
 Package: eatPlot
 Title: Plot eatRep output
-Version: 0.0.0.9028
+Version: 0.0.0.9029
 Authors@R: c(
     person("Nicklas", "Hafiz", email = "hafiznij@hu-berlin.de", role = c("aut", "cre")),
     person("Philipp", "Franikowski", role = c("ctb"))
