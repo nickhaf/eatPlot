@@ -39,7 +39,6 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #' @examples # tbd
 calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot()) {
 
-
 # Checks ------------------------------------------------------------------
   sapply(c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend"),
     check_column_warn,
@@ -66,21 +65,28 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
   )
 
 # Actual coordinates calculation ------------------------------------------
-  brace_label_nudge_y <- plot_settings$brace_label_nudge_y
+
+  ## Calculate the bottom of the plot, from wich on the braces will be drawn:
   starting_points <- calc_brace_starting_points(overlap = overlap,
                                                 coords = coords,
                                                 range_coords = range_coords,
-                                                brace_label_nudge_y = brace_label_nudge_y,
+                                                brace_label_nudge_y = plot_settings$brace_label_nudge_y,
                                                 plot_settings = plot_settings)
+
+  ## Calculate the y coordinates for the braces:
   dat <- calc_brace_coords_y(dat,
                              coords = coords,
                              starting_points = starting_points)
+
+  ## Calculate the coordinates for the brace labels:
   dat <- calc_brace_label_coords(dat,
                                  starting_points = starting_points,
                                  range_coords = range_coords,
                                  range_years = range_years,
                                  plot_settings = plot_settings)
-  dat <- calc_brace_indent(dat, overlap = any(dat$overlap))
+
+  ## Calculate the indetion of the braces.
+  dat <- calc_brace_indent(dat, overlap = overlap)
 
 
 # Change Format if needed -------------------------------------------------
@@ -103,7 +109,7 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
 }
 
 
-calc_brace_starting_points <- function(overlap, coords, range_coords, brace_label_nudge_y, plot_settings) { # any(dat$overlap)
+calc_brace_starting_points <- function(overlap, coords, range_coords, brace_label_nudge_y, plot_settings) {
   if (overlap == TRUE) {
     lower_brace_y_a <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
     lower_brace_y_b <- lower_brace_y_a - range_coords * plot_settings$brace_span_y
@@ -114,18 +120,16 @@ calc_brace_starting_points <- function(overlap, coords, range_coords, brace_labe
       "lower_brace_y_b" = lower_brace_y_b,
       "upper_label_y" = upper_label_y
     )
-    return(res_list)
   } else {
     lower_brace_y <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
     upper_label_y <- lower_brace_y - range_coords * brace_label_nudge_y
-
 
     res_list <- list(
       "lower_brace_y" = lower_brace_y,
       "upper_label_y" = upper_label_y
     )
-    return(res_list)
   }
+  return(res_list)
 }
 
 
@@ -209,9 +213,27 @@ calc_x_nudge <- function(dat, nudge_x, split_plot) {
 }
 
 calc_brace_indent <- function(dat, overlap) {
+
   if (overlap == TRUE) {
-    # indent the first brace
-    dat$mid <- ifelse(dat$year_start_axis == min(dat$year_start_axis), 0.25, 0.5)
+
+    ## If both braces have the same range, indent both of them, the first to the left, the second to the right.
+  if(all(dat$range == dat$range[1])){
+    dat$mid <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+                      yes = 0.25,
+                      no = 0.75)
+
+  }else{
+
+    ## Always indent the larger brace, leave the other one. If it is first, indent left, else right
+    dat$mid <- ifelse(dat$range == max(dat$range),
+                      yes = ifelse(dat$year_start_axis == min(dat$year_start_axis),
+                                   yes = 0.25,
+                                   no = 0.75),
+                      no = 0.5)
+
+  }
+
+
   } else {
     dat$mid <- rep(0.5, nrow(dat))
   }
