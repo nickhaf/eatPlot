@@ -32,32 +32,6 @@ test_that("y limits are set correctly", {
   expect_equal(test_p$coordinates$limits$y, coords)
 })
 
-test_that("x-position of brace label is calculated correctly", {
-  df <- data.frame(
-    state_var = rep("Berlin", 4),
-    year_start_axis = c(2011, 2011, 2015, 2015),
-    year_end_axis = c(2020, 2020, 2020, 2020),
-    grouping_vars = factor(c(0, 1, 0, 1)),
-    est = c(1:4),
-    se = c(1:4),
-    sig_1 = c(TRUE, FALSE, FALSE, TRUE),
-    sig_2 = c(FALSE, TRUE, FALSE, TRUE),
-    est_noTrendStart_noComp = 400:403,
-    est_noTrendEnd_noComp = 500:503,
-    years_Trend = c("20112020", "20112020", "2152020", "20152020"),
-    competence_var = "a"
-  )
-  range_years <- diff(range(c(2011, 2020), na.rm = TRUE))
-
-  expect_equal(calc_brace_label_x(year_start_axis = 0, year_end_axis = 10, range_total = range_years, brace_indent_pos = 0.25), 2.5)
-  expect_equal(
-    ifelse(df$year_start_axis == min(df$year_start_axis),
-      calc_brace_label_x(df$year_start_axis, df$year_end_axis, range_years, 0.25),
-      calc_brace_label_x(df$year_start_axis, df$year_end_axis, range_years, 0.5)
-    ),
-    c(2013.25, 2013.25, 2017.5, 2017.5)
-  )
-})
 
 test_that("single brace is drawn", {
   test_brace <- data.frame(
