@@ -346,7 +346,7 @@ replace_VS <- function(x) {
   return(x)
 }
 
-#' Calculate, if year columns are overlapping.
+#' Calculate, if year columns are overlapping somewhere. In that case, the braces have to be plotted below each other.
 #'
 #' They overlap, if one of the start or end years lies between another start and end year.
 #'
@@ -366,7 +366,7 @@ calc_overlap <- function(year_start, year_end) {
                       any((year_end[i] > year_start[-i]) & (year_end[i] < year_end[-i]))
                          )
   }
-  return(overlap)
+  return(any(overlap))
 }
 
 

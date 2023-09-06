@@ -1,12 +1,12 @@
 calc_plot_lims_y <- function(dat, coords, plot_settings) {
 
-  dat$overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
+  overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
 
   range_coords <- diff(range(coords))
   range_years <- diff(range(c(dat$year_start_axis, dat$year_end_axis), na.rm = TRUE))
 
   brace_label_nudge_y <- plot_settings$brace_label_nudge_y
-  starting_points <- calc_brace_starting_points(overlap = any(dat$overlap),
+  starting_points <- calc_brace_starting_points(overlap = overlap,
                                                 coords,
                                                 range_coords,
                                                 brace_label_nudge_y,
@@ -48,7 +48,11 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
 
 # Prepare dat -------------------------------------------------------------
   dat <- dat[, c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend")]
-  dat$overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
+
+  ## Calculate if any braces overlap. If that's the case, they need to be plotted under each other.
+  ## Do I need the concrete overlap information, or is an any() enough here?
+  overlap <- calc_overlap(year_start = dat$year_start_axis,
+                          year_end = dat$year_end_axis)
 
   range_coords <- diff(range(coords))
   range_years <- diff(
@@ -63,7 +67,7 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
 
 # Actual coordinates calculation ------------------------------------------
   brace_label_nudge_y <- plot_settings$brace_label_nudge_y
-  starting_points <- calc_brace_starting_points(overlap = any(dat$overlap),
+  starting_points <- calc_brace_starting_points(overlap = overlap,
                                                 coords = coords,
                                                 range_coords = range_coords,
                                                 brace_label_nudge_y = brace_label_nudge_y,
@@ -90,7 +94,7 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
       direction = "long"
     )
 
-    dat <- unique(dat_long[, c("grouping_var", "state_var", "overlap", "label_pos_y", "label_pos_x", "year_axis", "value", "brace_label", "years_Trend")])
+    dat <- unique(dat_long[, c("grouping_var", "state_var", "label_pos_y", "label_pos_x", "year_axis", "value", "brace_label", "years_Trend")])
     dat$brace_y <- dat$value
     dat <- build_column(dat, old = "value", new = "brace_y")
   }

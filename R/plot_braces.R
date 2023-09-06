@@ -37,15 +37,17 @@ plot_braces <- function(dat,
     round_se = 1
   )
 
-  # Calculate brace coordinates ---------------------------------------------
-    dat <- calc_brace_coords(dat,
+    # Calculate brace coordinates ---------------------------------------------
+    brace_coordinates <- calc_brace_coords(dat,
                              plot_lims$coords,
                              plot_settings = plot_settings)
 
 
+
+# Draw braces and labels --------------------------------------------------
   c(
-    draw_braces(dat, plot_settings),
-    draw_brace_label(dat, plot_settings)#,
+    draw_braces(brace_coordinates, plot_settings),
+    draw_brace_label(brace_coordinates, plot_settings)#,
   )
 }
 
