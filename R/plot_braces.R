@@ -37,19 +37,11 @@ plot_braces <- function(dat,
     round_se = 1
   )
 
-  browser()
-
   # Calculate brace coordinates ---------------------------------------------
-  if (plot_settings$split_plot == TRUE) {
-    dat <- calc_brace_coords(dat,
-                             plot_lims$coords,
-                             output_format = "long",
-                             plot_settings = plot_settings)
-  } else {
     dat <- calc_brace_coords(dat,
                              plot_lims$coords,
                              plot_settings = plot_settings)
-  }
+
 
   c(
     draw_braces(dat, plot_settings),

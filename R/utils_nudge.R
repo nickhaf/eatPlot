@@ -33,16 +33,14 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #'
 #' @param dat Data.frame, normally `plot_dat$plot_braces`.
 #' @param coords Numeric vector with minimum and maximum value of the y-range between brace and upper x-axis. Can be calculated by [calc_y_value_coords()].
-#' @param output_format One of `c("wide", "long")`. Different output format needed for different plots.
 #'
 #' @return Data.frame containing the coordinates for plotting braces and their labels.
 #'
 #' @examples # tbd
-calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), plot_settings = plotsettings_lineplot()) {
+calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot()) {
 
 
 # Checks ------------------------------------------------------------------
-  output_format <- match.arg(output_format)
   sapply(c("grouping_var", "competence_var", "state_var", "year_start_axis", "year_end_axis", "brace_label", "years_Trend"),
     check_column_warn,
     dat = dat
@@ -82,7 +80,7 @@ calc_brace_coords <- function(dat, coords, output_format = c("wide", "long"), pl
 
 
 # Change Format if needed -------------------------------------------------
-  if (output_format == "long") {
+  if (plot_settings$split_plot == TRUE) {
     ## Long oder wide format argument
     dat_long <- stats::reshape(
       dat,
@@ -128,7 +126,6 @@ calc_brace_starting_points <- function(overlap, coords, range_coords, brace_labe
 
 
 calc_brace_coords_y <- function(dat, coords, starting_points) {
-
   if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
 
     dat$range <- apply(dat[,c("year_start_axis", "year_end_axis")], 1, function(x){diff(range(x))})

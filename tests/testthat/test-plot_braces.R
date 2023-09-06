@@ -66,6 +66,7 @@ test_that("single brace is drawn", {
     lower_y = 250,
     year_start_axis = c(2015),
     year_end_axis = c(2016),
+    years_Trend = c("20152016"),
     mid = 0.25,
     competence_var = "a"
   )
@@ -85,6 +86,7 @@ test_that("double brace is drawn", {
     year_end_axis = c(2020, 2020),
     upper_y = c(360, 324),
     lower_y = c(324, 306),
+    years_Trend = c("20112020", "20152020"),
     mid = c(0.25, 0.5)
   )
   vdiffr::expect_doppelganger(
