@@ -37,22 +37,17 @@ plot_braces <- function(dat,
     round_se = 1
   )
 
-
   # Calculate brace coordinates ---------------------------------------------
-  if (plot_settings$split_plot == TRUE) {
-    dat <- calc_brace_coords(dat,
-                             plot_lims$coords,
-                             output_format = "long",
-                             plot_settings = plot_settings)
-  } else {
-    dat <- calc_brace_coords(dat,
-                             plot_lims$coords,
-                             plot_settings = plot_settings)
-  }
+  brace_coordinates <- calc_brace_coords(dat,
+    plot_lims$coords,
+    plot_settings = plot_settings
+  )
 
+
+  # Draw braces and labels --------------------------------------------------
   c(
-    draw_braces(dat, plot_settings),
-    draw_brace_label(dat, plot_settings)#,
+    draw_braces(brace_coordinates, plot_settings),
+    draw_brace_label(brace_coordinates, plot_settings) # ,
   )
 }
 
@@ -72,8 +67,8 @@ draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
       npoints = 200
     )
   } else {
-    res <- lapply(unique(dat$year_start_axis), function(x) {
-      dat_year <- unique(dat[dat$year_start_axis == x, c("year_start_axis", "year_end_axis", "upper_y", "lower_y", "mid")])
+    res <- lapply(unique(dat$years_Trend), function(x) {
+      dat_year <- unique(dat[dat$years_Trend == x, c("year_start_axis", "year_end_axis", "upper_y", "lower_y", "mid")])
       ggbrace::geom_brace(
         mapping = ggplot2::aes(
           x = c(dat_year$year_start_axis, dat_year$year_end_axis),

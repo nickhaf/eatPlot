@@ -1,5 +1,8 @@
 # eatPlot (development version)
 
+## eatPlot 0.0.0.9029 "Better Braces"
+* Updated the algorithm for calculating the brace position and indention, so the longer trend always gets the longer brace. The braces get indented automatically, depending on their position in the plot. 
+
 ## eatPlot 0.0.0.9028 "x axis label size"
 * Implemented the argument `axis_x_label_size` in `plotsettings_tablebarplot()` for setting the fontsize of x axis labels in barplots. 
 
