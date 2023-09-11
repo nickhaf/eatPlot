@@ -1,13 +1,13 @@
-#' Build labels with significances represented in bold or as raised 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
+#' Build labels with significances represented in bold or as superscript 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
 #'
 #' @inheritParams plot_lineplot
-#' @param dat Dataframe with the columns that should be merged into labels.
-#' @param label_sig_high_extra_column Logical indicating whether the superscript for significances should be added directly into the label (necessary for lineplots), or should be written into an extra column with the ending '_sig_superscript' (necessary for tables).
+#' @param dat Data frame with the columns that should be merged into labels.
+#' @param label_sig_high_extra_column Logical, if set 'FALSE' the superscript for significances is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significances is written into an extra column with the ending '_sig_superscript' (necessary for tables).
 #' @param new_name Character string for the new column that is added to `dat`. Defaults to `'label'`.
 #' @param round_est Rounding of label_est.
 #' @param round_se Rounding of label_se.
 #'
-#' @return The data.frame with an added column for the constructed label.
+#' @return The data frame with an added column for the constructed label.
 #' @export
 #'
 #' @examples # tbd
@@ -70,7 +70,7 @@ construct_label <- function(dat,
       dat$label_se
     )
   } else {
-    ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column
+    ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column.
     if (any(dat$label_sig != "")) {
       dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
     }
