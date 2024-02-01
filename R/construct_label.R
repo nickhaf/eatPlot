@@ -11,6 +11,16 @@
 #' @export
 #'
 #' @examples # tbd
+#' # example data frame
+#' x <- c(0.005, 0.2, 0.05, 0.1, 0.01)
+#' y <- c(1, 0.5, 2, 0.001, 0.1)
+#' dat <- data.frame(x, y)
+#' rownames(dat) <- c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland")
+#' dat
+#'
+#' # function call for tables
+#' construct_label(dat, new_name = "new", label_sig_high_extra_column = TRUE)
+#'
 construct_label <- function(dat,
                             new_name = "label",
                             label_est = NULL,
