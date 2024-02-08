@@ -2,7 +2,7 @@
 % Please edit documentation in R/construct_label.R
 \name{construct_label}
 \alias{construct_label}
-\title{Build labels with significances represented in bold or as superscript 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.}
+\title{Construct labels}
 \usage{
 construct_label(
   dat,
@@ -42,17 +42,20 @@ construct_label(
 The data frame with an added column for the constructed label.
 }
 \description{
-Build labels with significances represented in bold or as superscript 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
+This function creates a new column containing labels with significances represented in bold or as superscript using \code{label_est}, \code{label_se} adds standard errors in brackets, if needed. Main usage is for plotting tables and brace labels.
 }
 \examples{
 # example data frame
 names <-c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland")
 estimate <- c(400, 650, 380, 500, 600)
 se <- c(0.1, 0.45, 1, 0.27, 0.9)
-p_estimate <- c(0.005, 0.2, 0.05, 0.1, 0.01)
+p_estimate <- c(0.6, 0.2, 0.05, 0.04, 0.01)
 dat <- data.frame(names, estimate, se, p_estimate)
 
-# function call for tables
-construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se")
+# tables
+construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", round_se = 2)
+
+# lineplots
+construct_label(dat, label_est = "estimate", label_se = "se", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
 
 }
