@@ -41,3 +41,15 @@ test_that("labels are build correctly", {
     c("1.3400", "2.1221", "3.5600<sup>a</sup>", "10.1500<sup>a</sup>")
   )
 })
+
+
+
+
+
+
+
+
+
+
+
+

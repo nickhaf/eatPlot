@@ -10,16 +10,16 @@
 #' @return The data frame with an added column for the constructed label.
 #' @export
 #'
-#' @examples # tbd
+#' @examples
 #' # example data frame
-#' x <- c(0.005, 0.2, 0.05, 0.1, 0.01)
-#' y <- c(1, 0.5, 2, 0.001, 0.1)
-#' dat <- data.frame(x, y)
-#' rownames(dat) <- c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland")
-#' dat
+#' names <-c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland")
+#' estimate <- c(400, 650, 380, 500, 600)
+#' se <- c(0.1, 0.45, 1, 0.27, 0.9)
+#' p_estimate <- c(0.005, 0.2, 0.05, 0.1, 0.01)
+#' dat <- data.frame(names, estimate, se, p_estimate)
 #'
 #' # function call for tables
-#' construct_label(dat, new_name = "new", label_sig_high_extra_column = TRUE)
+#' construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se")
 #'
 construct_label <- function(dat,
                             new_name = "label",
