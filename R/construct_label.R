@@ -1,4 +1,4 @@
-#' Build labels with significances represented in bold or as superscript 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
+#' This function creates a new column containing labels with significances represented in bold or as superscript using `label_est`, `label_se` adds standard errors in brackets, if needed. Main usage is for plotting tables and brace labels.
 #'
 #' @inheritParams plot_lineplot
 #' @param dat Data frame with the columns that should be merged into labels.
