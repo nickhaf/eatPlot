@@ -20,10 +20,10 @@
 #' p_estimate <- c(0.6, 0.2, 0.05, 0.04, 0.01)
 #' dat <- data.frame(names, estimate, se, p_estimate)
 #'
-#' # tables
+#' # lineplots
 #' construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", round_se = 2)
 #'
-#' # lineplots
+#' # tables
 #' construct_label(dat, label_est = "estimate", label_se = "se", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
 #'
 construct_label <- function(dat,
