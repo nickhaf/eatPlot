@@ -41,3 +41,17 @@ test_that("labels are build correctly", {
     c("1.3400", "2.1221", "3.5600<sup>a</sup>", "10.1500<sup>a</sup>")
   )
 })
+
+test_that("NAs in label_est and label_se are converted to empty strings", {
+  df <- data.frame(
+    label_est = c(20, 35, NA, NA),
+    label_se = c(NA, 2.3, NA, 0.6)
+  )
+  expect_equal(
+    construct_label(df,
+      label_est = "label_est",
+      label_se = "label_se"
+    )$label,
+    c("20 ()", "35 (2.3)", " ()", " (0.6)")
+  )
+})
