@@ -42,6 +42,7 @@ test_that("labels are build correctly", {
   )
 })
 
+
 test_that("NAs are converted to empty strings", {
   df <- data.frame(
     label_est = c(20, 35, NA, NA),
@@ -75,4 +76,3 @@ test_that("NAs are converted to empty strings", {
     c("20<sup>a</sup> ()", "35 (2.3)", " ()", " (0.6)")
   )
 })
-
