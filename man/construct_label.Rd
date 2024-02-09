@@ -2,7 +2,7 @@
 % Please edit documentation in R/construct_label.R
 \name{construct_label}
 \alias{construct_label}
-\title{Build labels with significances represented in bold or as raised 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.}
+\title{Construct labels}
 \usage{
 construct_label(
   dat,
@@ -18,7 +18,7 @@ construct_label(
 )
 }
 \arguments{
-\item{dat}{Dataframe with the columns that should be merged into labels.}
+\item{dat}{Data frame with the columns that should be merged into labels.}
 
 \item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 
@@ -30,7 +30,7 @@ construct_label(
 
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
 
-\item{label_sig_high_extra_column}{Logical indicating whether the superscript for significances should be added directly into the label (necessary for lineplots), or should be written into an extra column with the ending '_sig_superscript' (necessary for tables).}
+\item{label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significances is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significances is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
 
 \item{round_est}{Rounding of label_est.}
 
@@ -39,11 +39,23 @@ construct_label(
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
 \value{
-The data.frame with an added column for the constructed label.
+The data frame with an added column for the constructed label.
 }
 \description{
-Build labels with significances represented in bold or as raised 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
+This function creates a new column containing labels with significances represented in bold or as superscript using \code{label_est}, \code{label_se} adds standard errors in brackets, if needed. Main usage is for plotting tables and brace labels.
 }
 \examples{
-# tbd
+# example data frame
+names <-c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland")
+estimate <- c(400, 650, 380, 500, 600)
+se <- c(0.1, 0.45, 1, 0.27, 0.9)
+p_estimate <- c(0.6, 0.2, 0.05, 0.04, 0.01)
+dat <- data.frame(names, estimate, se, p_estimate)
+
+# tables
+construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", round_se = 2)
+
+# lineplots
+construct_label(dat, label_est = "estimate", label_se = "se", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
+
 }

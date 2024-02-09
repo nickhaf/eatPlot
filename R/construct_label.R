@@ -1,4 +1,6 @@
-#' Build labels with significances represented in bold or as superscript 'a', and, if wanted, standard errors in brackets. Main usage for plotting tables and brace labels.
+#' Construct labels
+#'
+#' This function creates a new column containing labels with significances represented in bold or as superscript using `label_est`, `label_se` adds standard errors in brackets, if needed. Main usage is for plotting tables and brace labels.
 #'
 #' @inheritParams plot_lineplot
 #' @param dat Data frame with the columns that should be merged into labels.
@@ -10,7 +12,20 @@
 #' @return The data frame with an added column for the constructed label.
 #' @export
 #'
-#' @examples # tbd
+#' @examples
+#' # example data frame
+#' names <-c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland")
+#' estimate <- c(400, 650, 380, 500, 600)
+#' se <- c(0.1, 0.45, 1, 0.27, 0.9)
+#' p_estimate <- c(FALSE, FALSE, TRUE, TRUE, FALSE)
+#' dat <- data.frame(names, estimate, se, p_estimate)
+#'
+#' # lineplots
+#' construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", round_se = 2)
+#'
+#' # tables
+#' construct_label(dat, label_est = "estimate", label_se = "se", label_sig_bold = "p_estimate", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
+#'
 construct_label <- function(dat,
                             new_name = "label",
                             label_est = NULL,
