@@ -42,11 +42,13 @@ test_that("labels are build correctly", {
   )
 })
 
-test_that("NAs in label_est and label_se are converted to empty strings", {
+test_that("NAs are converted to empty strings", {
   df <- data.frame(
     label_est = c(20, 35, NA, NA),
-    label_se = c(NA, 2.3, NA, 0.6)
+    label_se = c(NA, 2.3, NA, 0.6),
+    p_est = c(TRUE, FALSE, TRUE, FALSE)
   )
+
   expect_equal(
     construct_label(df,
       label_est = "label_est",
@@ -54,4 +56,23 @@ test_that("NAs in label_est and label_se are converted to empty strings", {
     )$label,
     c("20 ()", "35 (2.3)", " ()", " (0.6)")
   )
+
+  expect_equal(
+    construct_label(df,
+      label_est = "label_est",
+      label_se = "label_se",
+      label_sig_bold = "p_est",
+    )$label,
+    c("**20** ()", "35 (2.3)", " ()", " (0.6)")
+  )
+
+  expect_equal(
+    construct_label(df,
+      label_est = "label_est",
+      label_se = "label_se",
+      label_sig_high = "p_est",
+    )$label,
+    c("20<sup>a</sup> ()", "35 (2.3)", " ()", " (0.6)")
+  )
 })
+
