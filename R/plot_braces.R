@@ -55,7 +55,7 @@ plot_braces <- function(dat,
 # Utils -------------------------------------------------------------------
 draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
   if (plot_settings$split_plot == TRUE) {
-    res <- ggbrace::geom_brace(
+    res <- ggbrace::stat_brace(
       data = unique(dat[, c("years_Trend", "year_axis", "brace_y")]),
       mapping = ggplot2::aes(
         x = .data$year_axis,
@@ -64,12 +64,13 @@ draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
       ),
       rotate = 180,
       linewidth = plot_settings$brace_line_width,
-      npoints = 200
+      npoints = 200,
+      outside = FALSE
     )
   } else {
     res <- lapply(unique(dat$years_Trend), function(x) {
       dat_year <- unique(dat[dat$years_Trend == x, c("year_start_axis", "year_end_axis", "upper_y", "lower_y", "mid")])
-      ggbrace::geom_brace(
+      ggbrace::stat_brace(
         mapping = ggplot2::aes(
           x = c(dat_year$year_start_axis, dat_year$year_end_axis),
           y = c(dat_year$upper_y, dat_year$lower_y),
@@ -77,7 +78,8 @@ draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
         mid = unique(dat_year$mid),
         rotate = 180,
         linewidth = plot_settings$brace_line_width,
-        npoints = 200
+        npoints = 200,
+        outside = FALSE
       )
     })
   }

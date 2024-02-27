@@ -21,7 +21,7 @@ Depends:
     R (>= 2.10)
 LazyData: true
 Imports: 
-    ggbrace,
+    ggbrace (>= 0.1.1),
     ggnewscale,
     ggpattern,
     ggplot2,
@@ -32,6 +32,5 @@ Imports:
     patchwork,
     plyr,
     rlang
-Remotes: NicolasH2/ggbrace
 VignetteBuilder: knitr
 URL: https://nickhaf.github.io/eatPlot/
