@@ -197,7 +197,7 @@ plot_tablebar <- function(dat,
   dat$y_axis <- rev(as.integer(dat$y_axis))
   dat$background_colour <- plot_settings$background_stripes_colour
 
-  if(length(plot_settings$bar_nudge_y) != 1 & length(plot_settings$bar_nudge_y) != nrow(dat)){
+  if (length(plot_settings$bar_nudge_y) != 1 & length(plot_settings$bar_nudge_y) != nrow(dat)) {
     stop(paste0("Your plot_settings$bar_nudge_y argument has either to have the length 1, or has to be as long as your data. Currently, it has the length: ", length(plot_settings$bar_nudge_y), ". Your data has: ", nrow(dat), " rows."), call. = FALSE)
   }
 
@@ -302,7 +302,6 @@ plot_tablebar <- function(dat,
       )
     }
 
-
   if (!is.null(bar_est)) {
     if (is.null(bar_sig)) {
       res_plot <- res_plot +
@@ -330,10 +329,10 @@ plot_tablebar <- function(dat,
         dat <- fill_na(dat, column_name = i, filling = "FALSE")
       }
 
-
       res_plot <- res_plot +
         ggnewscale::new_scale_fill() +
-        ggnewscale::new_scale_colour() +
+        ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
+        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         ggpattern::geom_rect_pattern(
           data = dat,
           ggplot2::aes(
@@ -353,12 +352,6 @@ plot_tablebar <- function(dat,
           pattern_spacing = plot_settings$bar_pattern_spacing,
           pattern_key_scale_factor = 0.6 # legend adjustment
         ) +
-        ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
-        ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
-        ggplot2::scale_colour_manual(values = plot_settings$bar_fill_colour) +
-        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         NULL
     } else if (plot_settings$bar_sig_type == "frame") {
       res_plot <- res_plot +
@@ -383,7 +376,6 @@ plot_tablebar <- function(dat,
       message("`sig_type` must be either \"frame\" or \"pattern\"")
     }
   }
-
 
   # Column spanners ---------------------------------------------------------
   plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)
@@ -496,7 +488,6 @@ build_background_stripes <- function(dat,
                                      columns_table,
                                      plot_borders,
                                      plot_settings = plotsettings_tablebarplot()) {
-
   scale_breaks <- set_scale_breaks(plot_borders)
 
   if (plot_settings$background_stripes_border == "Inf") {
@@ -723,14 +714,14 @@ plot_capped_x_axis <- function(scale_breaks) {
       yend = 0.4,
       linewidth = 0.1
     )
-  }else{
+  } else {
     ## Plot something invisible, so the y axis is the same over all plots:
     ggplot2::annotate("segment",
-                      x = 0,
-                      xend = 0,
-                      y = 0.4,
-                      yend = 0.4,
-                      linewidth = 0.00000001
+      x = 0,
+      xend = 0,
+      y = 0.4,
+      yend = 0.4,
+      linewidth = 0.00000001
     )
   }
 }
