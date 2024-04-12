@@ -87,6 +87,10 @@ theme_line <- function(plot_settings = plotsettings_lineplot()) {
       text = ggplot2::element_text(colour = "#000000"),
       panel.spacing = ggplot2::unit(plot_settings$split_plot_gap_width, "npc"), # Gap in split plot
       plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units = "npc"),
-      plot.title = ggplot2::element_text(size = 7, hjust = 0.5, vjust = 2.5)
+      plot.title = ggplot2::element_text(size = 7,
+                                         hjust = 0.5,
+                                         vjust = 0,
+                                         margin = ggplot2::margin(-3.5, 0, 3.5, 0)
+                                         )
     )
 }
