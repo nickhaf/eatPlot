@@ -93,7 +93,7 @@ consecutive_numbers <- function(vec) {
 #' @keywords internal
 #' @noRd
 #'
-#' @param vec Character vector, usually the group-column in a data.frame returned by [eatRep::report()].
+#' @param vec Character vector, usually the group-column in a data.frame returned by `eatRep::report()`.
 #' @param groups Character vector of groups that should be extracted from vec.
 #'
 #' @return Returns the first group found in vec.
