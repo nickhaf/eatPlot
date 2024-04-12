@@ -163,7 +163,7 @@ plot_lineplot <- function(plot_dat,
     widths_setting <- 1 / plot_settings$n_cols
   }
 
-  # The wholeGroup plot gets a box drawn around it.
+  ## The wholeGroup plot gets a box drawn around it.
   for (plot_names in names(plot_list)) {
     if (plot_names %in% seperate_plot_var_box) {
       plot_list[[plot_names]] <- plot_list[[plot_names]] +
@@ -223,19 +223,20 @@ filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL,
 }
 
 
-plot_title <- function(title, title_raised_letter) {
-  if (!is.null(title_raised_letter)) {
-    names(title_raised_letter) <- sapply(names(title_raised_letter), sub_dash)
-    pos <- which(title == names(title_raised_letter))
+plot_title <- function(title, title_superscript) {
+  if (!is.null(title_superscript)) {
+    names(title_superscript) <- sapply(names(title_superscript), sub_dash)
+    pos <- which(title == names(title_superscript))
     if (length(pos) == 0) {
       ggplot2::labs(title = title)
     } else {
-      superscript <- title_raised_letter[[pos]]
+      superscript <- title_superscript[[pos]]
       ggplot2::labs(title = bquote(.(title)^.(superscript)))
     }
   } else {
     ggplot2::labs(title = title)
   }
+
 }
 
 
