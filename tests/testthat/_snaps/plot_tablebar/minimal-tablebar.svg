@@ -40,10 +40,10 @@
 <line x1='358.18' y1='568.78' x2='712.94' y2='568.78' style='stroke-width: 0.21; stroke-linecap: butt;' />
 <line x1='-0.095' y1='254.75' x2='720.00' y2='254.75' style='stroke-width: 0.21; stroke-linecap: butt;' />
 <line x1='-0.095' y1='24.96' x2='720.00' y2='24.96' style='stroke-width: 0.21; stroke-linecap: butt;' />
-<rect x='358.18' y='277.72' width='141.90' height='30.64' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #FF0000;' />
-<rect x='358.18' y='354.32' width='141.90' height='30.64' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #0000FF;' />
-<rect x='358.18' y='430.91' width='177.38' height='30.64' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #FFFF00;' />
-<rect x='358.18' y='507.51' width='271.98' height='30.64' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #00FF00;' />
+<rect x='358.18' y='277.72' width='141.90' height='30.64' style='stroke-width: 0.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FF0000;' />
+<rect x='358.18' y='354.32' width='141.90' height='30.64' style='stroke-width: 0.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
+<rect x='358.18' y='430.91' width='177.38' height='30.64' style='stroke-width: 0.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFF00;' />
+<rect x='358.18' y='507.51' width='271.98' height='30.64' style='stroke-width: 0.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #00FF00;' />
 <polygon points='393.37,384.96 358.18,384.96 358.18,354.32 362.73,354.32 393.37,384.96 ' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; fill: #FFFFFF;' />
 <polygon points='471.36,384.96 432.37,384.96 401.73,354.32 440.73,354.32 471.36,384.96 ' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; fill: #FFFFFF;' />
 <polygon points='479.72,354.32 500.08,354.32 500.08,374.68 479.72,354.32 ' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; fill: #FFFFFF;' />
@@ -51,10 +51,10 @@
 <polygon points='468.57,538.14 429.57,538.14 398.94,507.51 437.93,507.51 468.57,538.14 ' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; fill: #FFFFFF;' />
 <polygon points='546.56,538.14 507.57,538.14 476.93,507.51 515.92,507.51 546.56,538.14 ' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; fill: #FFFFFF;' />
 <polygon points='624.55,538.14 585.56,538.14 554.92,507.51 593.91,507.51 624.55,538.14 ' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; fill: #FFFFFF;' />
-<rect x='358.18' y='277.72' width='141.90' height='30.64' style='stroke-width: 1.07; stroke-linecap: square; stroke-linejoin: miter;' />
-<rect x='358.18' y='354.32' width='141.90' height='30.64' style='stroke-width: 1.07; stroke-linecap: square; stroke-linejoin: miter;' />
-<rect x='358.18' y='430.91' width='177.38' height='30.64' style='stroke-width: 1.07; stroke-linecap: square; stroke-linejoin: miter;' />
-<rect x='358.18' y='507.51' width='271.98' height='30.64' style='stroke-width: 1.07; stroke-linecap: square; stroke-linejoin: miter;' />
+<rect x='358.18' y='277.72' width='141.90' height='30.64' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='358.18' y='354.32' width='141.90' height='30.64' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='358.18' y='430.91' width='177.38' height='30.64' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='358.18' y='507.51' width='271.98' height='30.64' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter;' />
 <text x='282.48' y='295.09' style='font-size: 8.54px; font-weight: bold; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
 <text x='282.48' y='371.69' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>10</text>
 <text x='284.85' y='448.28' style='font-size: 8.54px; font-weight: bold; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>8</text>

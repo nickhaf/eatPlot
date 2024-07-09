@@ -30,7 +30,7 @@ construct_label(
 
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
 
-\item{label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significances is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significances is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
+\item{label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
 
 \item{round_est}{Rounding of label_est.}
 
@@ -42,20 +42,22 @@ construct_label(
 The data frame with an added column for the constructed label.
 }
 \description{
-This function creates a new column containing labels with significances represented in bold or as superscript using \code{label_est}, \code{label_se} adds standard errors in brackets, if needed. Main usage is for plotting tables and brace labels.
+This function creates a new column or label, merging estimates and standard errors with significant estimates represented in bold or as superscript (via \code{label_est}), and standard errors in brackets, if needed (via \code{label_se}). NAs are converted to empty strings. Main usage is for plotting tables and brace labels.
 }
 \examples{
 # example data frame
-names <-c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland")
-estimate <- c(400, 650, 380, 500, 600)
-se <- c(0.1, 0.45, 1, 0.27, 0.9)
-p_estimate <- c(FALSE, FALSE, TRUE, TRUE, FALSE)
-dat <- data.frame(names, estimate, se, p_estimate)
+dat <- data.frame(
+  names = c("Berlin", "Hamburg", "Hessen", "Niedersachsen", "Saarland"),
+  estimate = c(400, 650, 380, 500, 600),
+  se = c(0.1, 0.45, 1, 0.27, 0.9),
+  p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
+  )
 
 # lineplots
-construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", round_se = 2)
+construct_label(dat, label_est = "estimate", label_se = "se", round_se = 2)
+construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", label_sig_bold = "p_estimate")
 
 # tables
-construct_label(dat, label_est = "estimate", label_se = "se", label_sig_bold = "p_estimate", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
+construct_label(dat, label_est = "estimate", label_se = "se", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
 
 }
