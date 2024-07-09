@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# eatPlot
+# eatPlot <a href="https://nickhaf.github.io/eatPlot/"><img src="man/figures/logo.svg" align="right" height="139" alt="eatPlot website" /></a>
 
 <!-- badges: start -->
 
@@ -24,7 +24,3 @@ You can install the development version of eatPlot from
 # install.packages("devtools")
 devtools::install_github("nickhaf/eatPlot")
 ```
-
-## Articles
-
-See all articles and more information on how to use this package on here: https://nickhaf.github.io/eatPlot/
