@@ -39,40 +39,26 @@ plot_lineplot <- function(eatRep_dat,
                           line_se = NULL,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
+  check_eatRep_dat(eatRep_dat)
+  check_plotsettings_lineplot(plot_settings)
 
 
-check_eatRep_dat(eatRep_dat)
-check_plotsettings_lineplot(plot_settings)
+  # Prep data ---------------------------------------------------------------
+  dat_p <- prep_lineplot(eatRep_dat, line_sig, parameter, years_lines, years_braces)
 
-
-# Prep data ---------------------------------------------------------------
-dat_p <- prep_lineplot(eatRep_dat, line_sig, parameter, years_lines, years_braces)
-
-plot_single_lineplot(dat_p)
-
+  plot_single_lineplot(dat_p)
 
 
 
-  if (!is.null(years_lines)) {
-    if (any(!unique(unlist(years_lines)) %in% plot_dat$plot_points$year)) {
-      stop("Please check your years_lines argument. Are the years included in your data?")
-    }
-  }
-
-  if (!is.null(years_braces)) {
-    if (any(!unique(unlist(years_braces)) %in% plot_dat$plot_points$year)) {
-      stop("Please check your years_braces argument. Are the years included in your data?")
-    }
-  }
 
   if (is.null(years_lines)) {
     years_lines <- consecutive_numbers(c(plot_dat[["plot_lines"]]$year_start, plot_dat[["plot_lines"]]$year_end))
   }
 
   plot_dat <- lapply(plot_dat, function(x) {
-    if(nrow(plot_dat$plot_background_lines) != 0){
-    x$grouping_var <- as.factor(x$grouping_var)
-    x$grouping_var <- droplevels(x$grouping_var)
+    if (nrow(plot_dat$plot_background_lines) != 0) {
+      x$grouping_var <- as.factor(x$grouping_var)
+      x$grouping_var <- droplevels(x$grouping_var)
     }
     return(x)
   })
@@ -111,7 +97,7 @@ plot_single_lineplot(dat_p)
 
   for (i in tiles) {
     plot_dat_tile <- filter_rows(plot_dat, column_name = seperate_plot_var, subsetter = i)
-    if (seperate_plot_var == "competence_var" & nrow( plot_dat_tile[["plot_background_lines"]]) != 0) {
+    if (seperate_plot_var == "competence_var" & nrow(plot_dat_tile[["plot_background_lines"]]) != 0) {
       plot_dat_tile[["plot_background_lines"]] <- plot_dat_tile[["plot_background_lines"]][plot_dat_tile[["plot_background_lines"]]$competence_var == i, ]
     }
 
@@ -208,15 +194,15 @@ filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL,
   if (is.null(years_braces)) {
     plot_years <- unique(c(plot_dat[["plot_braces"]]$year_start, plot_dat[["plot_braces"]]$year_end))
     plot_years <- plot_years[order(plot_years)]
-    if(plot_settings$split_plot == FALSE){
-    ## Draw braces from last year to every other year
-    braceplot_years <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
-      c(x, max(plot_years))
-    })
-    }else{
+    if (plot_settings$split_plot == FALSE) {
+      ## Draw braces from last year to every other year
+      braceplot_years <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
+        c(x, max(plot_years))
+      })
+    } else {
       # Consecutive years, e.g., 2009 - 2015, 2015 - 2022 ...
       braceplot_years <- lapply(seq_along(plot_years[-which(plot_years == max(plot_years))]), function(x) {
-          c(plot_years[x], plot_years[x+1])
+        c(plot_years[x], plot_years[x + 1])
       })
     }
   } else {
@@ -245,7 +231,6 @@ plot_title <- function(title, title_superscript) {
   } else {
     ggplot2::labs(title = title)
   }
-
 }
 
 
@@ -258,11 +243,11 @@ equalize_line_length <- function(plot_dat, plot_settings) {
     plot_dat$plot_points$year_axis <- plot_dat$plot_points$year
   }
 
-if(plot_settings$background_lines == TRUE){
-  loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
-}else{
-  loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces")]
-}
+  if (plot_settings$background_lines == TRUE) {
+    loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces", "plot_background_lines")]
+  } else {
+    loop_objects <- names(plot_dat)[names(plot_dat) %in% c("plot_lines", "plot_braces")]
+  }
 
   for (i in loop_objects) {
     plot_dat[[i]]$year_start_axis <- plot_dat[[i]]$year_start
@@ -297,14 +282,14 @@ extract_gsub_values <- function(plot_dat) {
 #' * `range_y`: Minimum and maximum of the values in `point_values`.
 #' * `y_lims_total`: Minimum and maximum value of the plot.
 #' * `coords`: Y-value of the first brace start, and heighest y-value of the plot.
-#' @examples #tbd
+#' @examples # tbd
 calc_plot_lims <- function(plot_dat, point_values, line_values, plot_settings) {
   if (is.null(plot_settings$axis_y_lims)) {
     if (!is.null(point_values)) {
-      if(!is.null(plot_dat$plot_background_lines) & nrow(plot_dat$plot_background_lines) != 0){
+      if (!is.null(plot_dat$plot_background_lines) & nrow(plot_dat$plot_background_lines) != 0) {
         y_range <- range(c(plot_dat[["plot_points"]][, point_values], plot_dat[["plot_background_lines"]][, paste0(line_values, "_wholeGroup")]), na.rm = TRUE)
-      }else{
-      y_range <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
+      } else {
+        y_range <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
       }
 
       coords <- calc_y_value_coords(y_range)
