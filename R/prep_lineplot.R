@@ -1,4 +1,4 @@
-#' Plot a lineplot.
+#' Prepare lineplot data.
 #'
 #' @param eatRep_dat Object returned by `eatRep`.
 #' @param line_sig Character string. Contains the variable in column `comparison` that is used for plotting significances of the lines.
@@ -12,8 +12,8 @@
 prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines, years_braces) {
   check_eatRep_dat(eatRep_dat)
 
-  years_lines_vec <- vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1))
-  years_braces_vec <- vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1))
+  years_lines_vec <- paste_trend_years(years_lines)
+  years_braces_vec <- paste_trend_years(years_braces)
 
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
@@ -48,8 +48,10 @@ prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines,
 
 
   # Split the data frame by 'id', apply the function, and then combine the results
-  eatRep_dat_merged <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
+  eatRep_dat_merged$trend <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
   rownames(eatRep_dat_merged) <- NULL
+
+check_years(eatRep_dat_merged$trend)
 
   dat_final <- eatRep_dat_merged[eatRep_dat_merged$trend %in% years_lines_vec, ]
   dat_final$line_sig <- ifelse(dat_final$p_comp < 0.05, TRUE, FALSE)
@@ -58,6 +60,10 @@ prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines,
 }
 
 create_trend <- function(df) {
-  df$trend <- paste(df$year[1], df$year[2], sep = "_")
-  return(df)
+  trend <- paste(df$year[1], df$year[2], sep = "_")
+  return(trend)
+}
+
+paste_trend_years <- function(years_list) {
+  vapply(years_list, paste0, collapse = "_", FUN.VALUE = character(1))
 }

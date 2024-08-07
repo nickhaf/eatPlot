@@ -42,48 +42,16 @@ plot_lineplot <- function(eatRep_dat,
 
 
 check_eatRep_dat(eatRep_dat)
+check_plotsettings_lineplot(plot_settings)
+
 
 # Prep data ---------------------------------------------------------------
-prep_lineplot(eatRep_dat, line_sig, parameter, years_lines, years_braces)
+dat_p <- prep_lineplot(eatRep_dat, line_sig, parameter, years_lines, years_braces)
+
+plot_single_lineplot(dat_p)
 
 
 
-
-  ggplot(lineplot_dat,
-         mapping = aes(
-           x = year,
-           y = est,
-           group = id,
-           linetype = linetype
-         )) +
-    ggplot2::geom_line() +
-    geom_point() +
-    ggbrace::stat_brace(aes(group = trend),
-                        linetype = "solid")
-
-
-
-
-eatRep_prep <- prep_lineplot(eatRep_dat)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
-  stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
-  stopifnot(inherits(title_superscripts, "list") | is.null(title_superscripts))
-
-  check_plotsettings_lineplot(plot_settings)
 
   if (!is.null(years_lines)) {
     if (any(!unique(unlist(years_lines)) %in% plot_dat$plot_points$year)) {
