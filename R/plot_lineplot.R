@@ -21,23 +21,64 @@
 #' @export
 #'
 #' @examples # tbd
-plot_lineplot <- function(plot_dat,
+plot_lineplot <- function(eatRep_dat,
+                          parameter = "mean",
+                          line_sig = "trend",
+                          years_lines = NULL,
+                          years_braces = NULL,
                           seperate_plot_var = "state_var",
                           seperate_plot_var_order = NULL,
                           seperate_plot_var_box = "wholeGroup",
                           point_values = "est_noTrend_noComp",
                           point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
                           line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-                          line_sig = "sig_Trend_noComp",
                           label_est = "est_Trend_noComp",
                           label_se = "se_Trend_noComp",
                           label_sig_high = NULL,
                           label_sig_bold = "sig_Trend_noComp",
                           line_se = NULL,
                           title_superscripts = NULL,
-                          years_lines = NULL,
-                          years_braces = NULL,
                           plot_settings = plotsettings_lineplot()) {
+
+
+check_eatRep_dat(eatRep_dat)
+
+# Prep data ---------------------------------------------------------------
+prep_lineplot(eatRep_dat, line_sig, parameter, years_lines, years_braces)
+
+
+
+
+  ggplot(lineplot_dat,
+         mapping = aes(
+           x = year,
+           y = est,
+           group = id,
+           linetype = linetype
+         )) +
+    ggplot2::geom_line() +
+    geom_point() +
+    ggbrace::stat_brace(aes(group = trend),
+                        linetype = "solid")
+
+
+
+
+eatRep_prep <- prep_lineplot(eatRep_dat)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   stopifnot(all(sapply(years_lines, is.numeric)) | is.null(years_lines))
   stopifnot(all(sapply(years_braces, is.numeric)) | is.null(years_braces))
   stopifnot(inherits(title_superscripts, "list") | is.null(title_superscripts))

@@ -5,27 +5,32 @@
 \title{Plot a lineplot.}
 \usage{
 plot_lineplot(
-  plot_dat,
+  eatRep_dat,
+  parameter = "mean",
+  line_sig = "trend",
+  years_lines = NULL,
+  years_braces = NULL,
   seperate_plot_var = "state_var",
   seperate_plot_var_order = NULL,
   seperate_plot_var_box = "wholeGroup",
   point_values = "est_noTrend_noComp",
   point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
   line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-  line_sig = "sig_Trend_noComp",
   label_est = "est_Trend_noComp",
   label_se = "se_Trend_noComp",
   label_sig_high = NULL,
   label_sig_bold = "sig_Trend_noComp",
   line_se = NULL,
   title_superscripts = NULL,
-  years_lines = NULL,
-  years_braces = NULL,
   plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{
-\item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
+\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_noComp"}, which will show the significance of the difference between two time points.}
+
+\item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
+
+\item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
 \item{seperate_plot_var}{Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to \code{state_var}.}
 
@@ -39,8 +44,6 @@ plot_lineplot(
 
 \item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
-\item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_noComp"}, which will show the significance of the difference between two time points.}
-
 \item{label_est}{Character string of the column name containing the brace labels.}
 
 \item{label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
@@ -53,11 +56,9 @@ plot_lineplot(
 
 \item{title_superscripts}{Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to \code{NULL}.}
 
-\item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
-
-\item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
-
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
+
+\item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 }
 \value{
 \link{ggplot2} object.

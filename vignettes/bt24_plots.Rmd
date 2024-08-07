@@ -1,14 +1,15 @@
 
 Update Version!
 
-
 ```{r}
 library(readxl)
 library(tidyverse)
 
-d1 <- readRDS(file = "P:/Methoden/02_R_Pakete/eatRep/Outputstruktur/report2_outputs/01_table_standards_FRZ_crossDiff_groupDiff_trend_noLoop.rds")
+d1 <- readRDS(file = "P:/Methoden/02_R_Pakete/eatRep/Outputstruktur/report2_outputs/03_mig_verschachtelt.rds")
 
+## Verschachtelung nicht so schlimm bis jetzt, auf niedrigster Ebene muss es ja hiermit klappen.
 
+eatRep_dat <- d1[[1]][[1]][[1]]
 
 
 ```
@@ -43,6 +44,9 @@ plot_dat <- merge_data(d1)
 
 
 ```{r plot_lines}
+
+  ## Manual filtering can be done in the group - list element, write vignette
+
 ## acutally, I only need this for significances: 
 plot_line <- plot_dat$comp_estimates %>%
   pivot_longer(cols = starts_with("unit"), 
@@ -298,4 +302,7 @@ First of all, the new format might be great because some variables, like group, 
 - different data frames for different aspects of the plot
 
 ## Open questions about data
-- NAs in group data frame 
+- NAs in group data frame
+- parameter column = 1 in estiamtes
+- Verschachtelte, unbenannte Listen, v.a. im letzten Datensatz
+- Darf ich die Datensätze als Examples hochladen?

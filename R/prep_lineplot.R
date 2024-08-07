@@ -1,0 +1,63 @@
+#' Plot a lineplot.
+#'
+#' @param eatRep_dat Object returned by `eatRep`.
+#' @param line_sig Character string. Contains the variable in column `comparison` that is used for plotting significances of the lines.
+#' @param parameter Character string. Contains the value in column `parameter` that is used for plotting the lines.  Defaults to `"mean"`.
+#' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
+#' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
+#' @return Data prepared for plotting the BT-lineplots.
+#' @export
+#'
+#' @examples # tbd
+prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines, years_braces) {
+  check_eatRep_dat(eatRep_dat)
+
+  years_lines_vec <- vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1))
+  years_braces_vec <- vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1))
+
+  eatRep_dat$plain <- NULL
+  eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
+
+  eatRep_dat$group_estimates <- merge(eatRep_dat$group,
+    eatRep_dat$estimate,
+    by = "id",
+    all.x = TRUE
+  )
+
+  eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
+    eatRep_dat$estimate,
+    by = "id",
+    all.x = TRUE
+  )
+
+  eatRep_dat_long <- tidyr::pivot_longer(
+      eatRep_dat$comp_estimates,
+      cols = starts_with("unit"),
+      names_to = "unit",
+      values_to = "group"
+    )
+
+  eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison == line_sig, c("id", "group", "p")]
+
+  eatRep_dat_merged <- merge(eatRep_dat_long,
+                             eatRep_dat$group_estimates,
+                             by.x = "group",
+                             by.y = "id",
+                             all.x = TRUE,
+                             suffixes = c("_comp", "_point"))
+
+
+  # Split the data frame by 'id', apply the function, and then combine the results
+  eatRep_dat_merged <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
+  rownames(eatRep_dat_merged) <- NULL
+
+  dat_final <- eatRep_dat_merged[eatRep_dat_merged$trend %in% years_lines_vec, ]
+  dat_final$line_sig <- ifelse(dat_final$p_comp < 0.05, TRUE, FALSE)
+
+  return(dat_final)
+}
+
+create_trend <- function(df) {
+  df$trend <- paste(df$year[1], df$year[2], sep = "_")
+  return(df)
+}
