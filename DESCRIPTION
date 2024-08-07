@@ -9,7 +9,7 @@ Description: Functions for plotting eatModel output.
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Suggests: 
     covr,
     knitr,
@@ -32,6 +32,7 @@ Imports:
     lifecycle,
     patchwork,
     plyr,
-    rlang
+    rlang,
+    tidyr
 VignetteBuilder: knitr
 URL: https://nickhaf.github.io/eatPlot/

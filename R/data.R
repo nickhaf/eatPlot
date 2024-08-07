@@ -136,3 +136,17 @@
 #'   ...
 #' }
 "barplot_noTrend"
+
+#' BT24 example data.
+#'
+#' Default plot settings for mean-barplot without trend.
+#'
+#' @format ## `trend_2`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"trend_2"
+
+
+
