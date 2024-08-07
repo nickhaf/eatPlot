@@ -26,7 +26,7 @@ plot_lineplot <- function(eatRep_dat,
                           line_sig = "trend",
                           years_lines = NULL,
                           years_braces = NULL,
-                          seperate_plot_var = "state_var",
+                          facets = "state_var",
                           seperate_plot_var_order = NULL,
                           seperate_plot_var_box = "wholeGroup",
                           point_values = "est_noTrend_noComp",
@@ -44,54 +44,30 @@ plot_lineplot <- function(eatRep_dat,
 
 
   # Prep data ---------------------------------------------------------------
-  dat_p <- prep_lineplot(eatRep_dat, line_sig, parameter, years_lines, years_braces)
+  dat_p <- prep_lineplot(eatRep_dat, line_sig, parameter)
 
-  plot_single_lineplot(dat_p)
+  years_lines = NULL
+  years_lines = list(c(2009, 2015), c(2015, 2022))
+  years_braces = list(c(2009, 2015), c(2015, 2022))
 
+  dat_pf <- filter_years(dat_p, l = years_lines, b = years_braces)
 
-
-
-  if (is.null(years_lines)) {
-    years_lines <- consecutive_numbers(c(plot_dat[["plot_lines"]]$year_start, plot_dat[["plot_lines"]]$year_end))
-  }
-
-  plot_dat <- lapply(plot_dat, function(x) {
-    if (nrow(plot_dat$plot_background_lines) != 0) {
-      x$grouping_var <- as.factor(x$grouping_var)
-      x$grouping_var <- droplevels(x$grouping_var)
-    }
-    return(x)
-  })
-
-  ### prepare seperate_plot_var
-  plot_dat$plot_lines$seperate_plot_var <- plot_dat$plot_lines[, seperate_plot_var]
-
-  if (!is.null(seperate_plot_var_order)) {
-    if (!all(plot_dat$plot_lines$seperate_plot_var %in% seperate_plot_var_order)) {
-      stop("Please provide all unique elements in the seperate_plot_var-column of your data in the seperate_plot_var_order - argument.")
-    }
-    if (any(!(seperate_plot_var_order %in% plot_dat$plot_lines$seperate_plot_var))) {
-      stop("At least one element in seperate_plot_var_order is not part of your seperate_plot_var - column.")
-    }
-  }
-
-  # filter years ------------------------------------------------------------
-  plot_dat <- filter_plot_years(plot_dat, years_lines, years_braces, plot_settings)
-
-  plot_dat <- equalize_line_length(plot_dat, plot_settings)
+  ## Give out warning if seperate plot var is not an ordered factor. In this case, sort alphabetically. Provide guidance on how to achieve that.
 
 
-  states <- unique(plot_dat[[1]]$state_var)
+  # Check: plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
-  if (!is.null(seperate_plot_var_order)) {
-    tiles <- seperate_plot_var_order
-  } else {
-    tiles <- unique(plot_dat$plot_lines$seperate_plot_var)
-  }
+
+  # Calculate plot LImits: plot_lims <- calc_plot_lims(plot_dat, point_values, line_values, plot_settings)
+
+  ## Provide better column name checks: Which variable?
+  ## Just one function, or split up into the different filter functions?
+
+dat_pf[, facets] <- check_facets(dat_pf[, facets])
+
+  plot_single_lineplot(dat_pf)
 
   plot_list <- list()
-
-  plot_lims <- calc_plot_lims(plot_dat, point_values, line_values, plot_settings)
 
   position <- 1
 
@@ -180,14 +156,6 @@ plot_lineplot <- function(eatRep_dat,
 
 
 # Utils -------------------------------------------------------------------
-# Return rows with respective start and end years.
-filter_years <- function(dat, year_list) {
-  # Filter the respective rows
-  year_rows <- unlist(lapply(year_list, function(x) {
-    which(dat$year_start == x[1] & dat$year_end == x[2])
-  }))
-  return(year_rows)
-}
 
 
 filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL, plot_settings) {

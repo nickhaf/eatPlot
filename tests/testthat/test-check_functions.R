@@ -1,6 +1,15 @@
 example_list <- list(plain = 1, comparisons = 2, group = 3, estimate = 4)
 example_list_2 <- list(wrong_name = 1, comparisons = 2, group = 3, estimate = 4)
 
+test_that("facet checks work", {
+  vec_unordered <- c("c", "b", "c", "a")
+  vec_ordered <- factor(c("a", "b", "c", "c"), levels = unique(vec_unordered[order(vec_unordered)]), ordered = TRUE)
+
+  expect_equal(check_facets(vec_unordered), vec_ordered)
+  expect_equal(check_facets(vec_ordered), vec_ordered)
+
+})
+
 test_that("plot data is eatRep output", {
   expect_no_error(check_eatRep_dat(example_list))
   expect_error(check_eatRep_dat(example_list[1:3]),

@@ -7,10 +7,6 @@ test_that("output of data preperation has the expected format", {
   expect_true(checkmate::test_data_frame(preped_dat))
 })
 
-test_that("data preperation filters correct years", {
-  expect_equal(unique(preped_dat$trend), c("2009_2015", "2015_2022"))
-})
-
 test_that("data preperation filters correct parameter", {
   years_lines <- list(c(2009, 2015), c(2015, 2022))
   years_braces <- list(c(2009, 2015), c(2015, 2022))

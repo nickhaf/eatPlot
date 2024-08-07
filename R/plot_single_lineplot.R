@@ -25,16 +25,16 @@ plot_single_lineplot <- function(plot_dat,
 
 
 
-  ggplot(plot_dat,
-         mapping = aes(
+  ggplot2::ggplot(plot_dat,
+         mapping = ggplot2::aes(
            x = year,
            y = est,
            group = id,
            linetype = line_sig
          )) +
     ggplot2::geom_line() +
-    geom_point() +
-    ggbrace::stat_brace(aes(group = trend),
+    ggplot2::geom_point() +
+    ggbrace::stat_brace(ggplot2::aes(group = trend),
                         linetype = "solid")
 
 #
