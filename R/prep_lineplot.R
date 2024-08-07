@@ -12,9 +12,6 @@
 prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines, years_braces) {
   check_eatRep_dat(eatRep_dat)
 
-  years_lines_vec <- paste_trend_years(years_lines)
-  years_braces_vec <- paste_trend_years(years_braces)
-
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
@@ -48,12 +45,10 @@ prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines,
 
 
   # Split the data frame by 'id', apply the function, and then combine the results
-  eatRep_dat_merged <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
-  rownames(eatRep_dat_merged) <- NULL
+  dat_final <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
+  rownames(dat_final) <- NULL
 
-  check_years(eatRep_dat_merged$trend)
 
-  dat_final <- eatRep_dat_merged[eatRep_dat_merged$trend %in% years_lines_vec, ]
   dat_final$line_sig <- ifelse(dat_final$p_comp < 0.05, TRUE, FALSE)
 
   return(dat_final)
