@@ -143,7 +143,7 @@ plot_lineplot <- function(eatRep_dat,
 
 
   calc_brace_label_coords <- function(dat, starting_points, range_coords, range_years, plot_settings) {
-    dat$label_pos_x <- dat$year_start + dat$range * dat$mid + (max(dat$range) * plot_settings$brace_label_nudge_x)
+    dat$label_pos_x <- dat$year_start + dat$range * dat$brace_position_x + (max(dat$range) * plot_settings$brace_label_nudge_x)
 
     label_pos_y <- calc_brace_label_y(dat,
                                           grouping_var_lvls,
@@ -235,27 +235,13 @@ plot_lineplot <- function(eatRep_dat,
     #       }
     #     }
     #  } else {
-    years_braces_df$brace_position_x <- rep("middle", nrow(years_braces_df))
+    years_braces_df$brace_position_x <- rep(0.5, nrow(years_braces_df)) ## If left = 0.25, else 0.75
     years_braces_df$brace_position_y <- rep("middle", nrow(years_braces_df))
 
 
     #  }
 
     return(years_braces_df)
-  }
-
-
-
-
-  calc_brace_indent <- function(dat) {
-    dat$mid <- ifelse(dat$brace_position_x == "left",
-                      yes = 0.25,
-                      no = ifelse(dat$brace_position_x == "right",
-                                  yes = 0.75,
-                                  no = 0.5
-                      )
-    )
-    return(dat)
   }
 
 

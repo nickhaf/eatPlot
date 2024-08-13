@@ -45,11 +45,6 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #'
 #' @examples # tbd
 calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot()) {
-
-
-
-  ## next step: clean this up!
-
   years_braces <- plot_settings_expanded$years_list$years_braces
 
   ## Calculate if any braces overlap. If that's the case, they need to be plotted below each other.
@@ -70,23 +65,16 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
   brace_positions_2 <- calc_brace_coords_y(
     brace_positions,
     coords = coords,
-    starting_points = starting_points)
-
-  ## Why not doing this directly, instead of middle, left, top ...?
-  brace_positions_3 <- calc_brace_indent(brace_positions_2)
+    starting_points = starting_points
+  )
 
   ## Calculate the coordinates for the brace labels:
   dat <- calc_brace_label_coords(
-    brace_positions_3,
+    brace_positions_2,
     starting_points = starting_points,
     range_coords = range_coords,
     plot_settings = plot_settings
   )
-
-
-  ## PUt the above stuff together in a better way!
-  ## Merge starting points and brace_positions_3 ...
-
 
   # Change Format if needed -------------------------------------------------
   # if (plot_settings$split_plot == TRUE) {
@@ -124,10 +112,10 @@ calc_brace_coords_y <- function(dat, coords, starting_points) {
   #     starting_points$lower_brace_y_a,
   #     starting_points$lower_brace_y_b
   #   )
-  #} else {
-    dat$upper_y <- coords[1]
-    dat$lower_y <- starting_points$lower_brace_y
- # }
+  # } else {
+  dat$upper_y <- coords[1]
+  dat$lower_y <- starting_points$lower_brace_y
+  # }
   return(dat)
 }
 
@@ -224,4 +212,3 @@ nudge_by_level <- function(df, plot_settings, nudge_val) {
   }
   return(df)
 }
-
