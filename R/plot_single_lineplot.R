@@ -25,11 +25,15 @@ plot_single_lineplot <- function(plot_dat,
 
   # Assemble a single lineplot (one "tile" in the whole lineplot).
 
-brace_coords$coord_dat %>%
+  ## Pro trend nur 2 versch. Werte jeweils in der Spalte.
+
+  brace_coords$coord_dat_test <- brace_coords$coord_dat %>%
   dplyr::mutate(trend = paste0(.$year_start, .$year_end)) %>%
   tidyr::pivot_longer(cols = c("upper_y", "lower_y"),
-                 values_to = "y")
-
+                 values_to = "y") %>%
+  tidyr::pivot_longer(cols = c("year_start", "year_end"),
+                 values_to = "year",
+                 names_to = "year_type")
 
   ggplot2::ggplot(plot_dat,
          mapping = ggplot2::aes(
@@ -46,12 +50,13 @@ brace_coords$coord_dat %>%
 
     ## Später eventuell ohen coords manuell zu berechnen? Nur wenns Sinn macht.
     ggbrace::stat_brace(
-      data = brace_coords$coord_dat,
+      data = brace_coords$coord_dat_test,
       mapping = ggplot2::aes(
-        x = c(year_start, year_end),
-        y = c(upper_y, lower_y),
-        group = NULL
+        x = year,
+        y = y,
+        group = trend
       ))
+
 
     plot_braces(
             plot_dat,
