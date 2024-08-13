@@ -47,25 +47,12 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot()) {
   years_braces <- plot_settings_expanded$years_list$years_braces
 
-  ## Calculate if any braces overlap. If that's the case, they need to be plotted below each other.
-  overlap <- calc_overlap(
-    df = years_braces
-  )
-
-  starting_points <- calc_brace_starting_points(
-    overlap = overlap,
-    coords = coords,
-    plot_settings = plot_settings
-  )
-
-  ## This gives hints on where the brace will be positioned.
-  brace_positions <- calc_brace_position(plot_settings, overlap)
 
   ## Calculate the y coordinates for the braces and labels:
   brace_coords_y <- calc_brace_coords_y(
-    dat = brace_positions,
     coords = coords,
-    starting_points = starting_points
+    starting_points = starting_points,
+    years_braces
   )
 
 
@@ -88,6 +75,64 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
 
   return(brace_coords)
 }
+
+
+
+calc_brace_coords_y <- function(coords, starting_points, overlap) {
+
+  ## Check if any braces overlap. If that's the case, they have to plotted below each other
+  overlap <- calc_overlap(
+    df = years_braces
+  )
+
+  ## Braces should start some distance below the lower x-axis. Labels below lowest brace
+  starting_points <- calc_brace_starting_points(
+    overlap = overlap,
+    coords = coords,
+    plot_settings = plot_settings
+  )
+
+  ## For each brace, save where it should be indented, and where it's position relative to the other braces is
+  brace_positions <- calc_brace_position(plot_settings, overlap)
+
+  # if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
+  #   ## larger brace on top, smaller one below. If equal, just put the one with the smallest start year on top:
+  #
+  #   dat$upper_y <- ifelse(dat$brace_position_y == "top",
+  #     yes = coords[1],
+  #     no = starting_points$lower_brace_y_a
+  #   )
+  #
+  #   # Lower brace coordinates:
+  #   dat$lower_y <- ifelse(dat$brace_position_y == "top",
+  #     starting_points$lower_brace_y_a,
+  #     starting_points$lower_brace_y_b
+  #   )
+  # } else {
+
+  brace_positions$upper_y <- coords[1]
+  brace_positions$lower_y <- starting_points$lower_brace_y
+
+  # }
+
+
+  range_coords <- diff(range(coords)) ## Take from above!
+
+  # calc brace label y ------------------------------------------------------
+
+  brace_positions$label_pos_x <- brace_positions$year_start + brace_positions$range * brace_positions$brace_position_x + (max(brace_positions$range) * plot_settings$brace_label_nudge_x)
+
+  label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x){
+    starting_points$upper_label_y - (range_coords * gap_label * (x - 1))
+  })
+
+  df <- data.frame(grouping_lvls = grouping_var_lvls,
+                   label_pos_y = label_pos_y)
+
+  return(list(coord_dat = brace_positions, group_labels = df))
+
+}
+
 
 calc_brace_starting_points <- function(overlap, coords, plot_settings) {
 
@@ -113,51 +158,6 @@ calc_brace_starting_points <- function(overlap, coords, plot_settings) {
   )
   #}
   return(res_list)
-}
-
-
-
-
-
-
-
-
-
-calc_brace_coords_y <- function(dat, coords, starting_points) {
-  # if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
-  #   ## larger brace on top, smaller one below. If equal, just put the one with the smallest start year on top:
-  #
-  #   dat$upper_y <- ifelse(dat$brace_position_y == "top",
-  #     yes = coords[1],
-  #     no = starting_points$lower_brace_y_a
-  #   )
-  #
-  #   # Lower brace coordinates:
-  #   dat$lower_y <- ifelse(dat$brace_position_y == "top",
-  #     starting_points$lower_brace_y_a,
-  #     starting_points$lower_brace_y_b
-  #   )
-  # } else {
-  dat$upper_y <- coords[1]
-  dat$lower_y <- starting_points$lower_brace_y
-  # }
-
-
-range_coords <- diff(range(coords)) ## Take from above!
-
-
-# calc brace label y ------------------------------------------------------
-
-dat$label_pos_x <- dat$year_start + dat$range * dat$brace_position_x + (max(dat$range) * plot_settings$brace_label_nudge_x)
-label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x){
-  starting_points$upper_label_y - (range_coords * gap_label * (x - 1))
-      })
-
-df <- data.frame(grouping_lvls = grouping_var_lvls,
-                       label_pos_y = label_pos_y)
-
-    return(list(coord_dat = dat, group_labels = df))
-
 }
 
 
