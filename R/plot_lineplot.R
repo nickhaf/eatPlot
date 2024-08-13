@@ -22,6 +22,7 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatRep_dat,
+                          grouping_var = NULL,
                           parameter = "mean",
                           line_sig = "trend",
                           years_lines = NULL,
@@ -47,8 +48,24 @@ plot_lineplot <- function(eatRep_dat,
   dat_p <- prep_lineplot(eatRep_dat, line_sig, parameter)
 
   years_lines = NULL
+
+  ## Put the years into a designated object for that and put through for the plotting stuf:
   years_lines = list(c(2009, 2015), c(2015, 2022))
   years_braces = list(c(2009, 2015), c(2015, 2022))
+
+  years_lines_df <- data.frame(do.call("rbind", years_lines))
+  years_braces_df <- data.frame(do.call("rbind", years_braces))
+
+  ## calc overlap, coords, brace_coords, calc_brace_position here directly, put together into a coord_list and give into necessary functions.
+
+  colnames(years_lines_df) <- c("year_start", "year_end")
+  colnames(years_braces_df) <- c("year_start", "year_end")
+
+  ## What happens, if no years are provided?
+  plot_settings_expanded <- plot_settings
+  plot_settings_expanded$years_list <- list("years_lines" = years_lines_df,
+                                            "years_braces" = years_braces_df)
+
 
   dat_pf <- filter_years(dat_p, l = years_lines, b = years_braces)
 
@@ -58,7 +75,196 @@ plot_lineplot <- function(eatRep_dat,
   # Check: plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
 
-  # Calculate plot LImits: plot_lims <- calc_plot_lims(plot_dat, point_values, line_values, plot_settings)
+# Coordinates -------------------------------------------------------------
+## Build a list containing all relevant information for setting the plot coordinates, calculating the brace positions etc.
+## Put all the nested functions below each other and cleanup. Which names, which objects are needed ...?
+
+  plot_lims <- calc_plot_lims(plot_dat, plot_settings_expanded)
+  brace_coordinates <- calc_brace_coords(plot_dat,
+                                         plot_lims$coords,
+                                         plot_settings = plot_settings_expanded
+  )
+
+
+  ## Utils:
+  #' Calculate, if year columns are overlapping somewhere. In that case, the braces have to be plotted below each other.
+  #'
+  #' They overlap, if one of the start or end years lies between another start and end year.
+  #'
+  #' @keywords internal
+  #' @noRd
+  #'
+  #' @param year_start Numeric vector.
+  #' @param year_end Numeric vector.
+  #'
+  #' @return Logical vector the same length as `year_start` with a `TRUE` if the respective year is overlapping.
+  #'
+  #' @examples calc_overlap(c(2010, 2012, 2013), c(2015, 2016, 2015))
+  calc_overlap <- function(df) {
+
+    # Convert the list into a data frame
+    overlap <- c()
+    for (i in 1:length(df$year_start)) {
+      overlap[i] <- any((df$year_start[i] > df$year_start[-i]) & (df$year_start[i] < df$year_end[-i])|
+                          any((df$year_end[i] > df$year_start[-i]) & (df$year_end[i] < df$year_end[-i]))
+      )
+    }
+    return(any(overlap))
+  }
+
+## utils_nudge
+
+  calc_brace_starting_points <- function(overlap, coords, plot_settings) {
+
+    range_coords <- diff(range(coords))
+
+    # if (overlap == TRUE) {
+    #   lower_brace_y_a <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
+    #   lower_brace_y_b <- lower_brace_y_a - range_coords * plot_settings$brace_span_y
+    #   upper_label_y <- lower_brace_y_b - range_coords * plot_settings$brace_label_nudge_y
+    #
+    #   res_list <- list(
+    #     "lower_brace_y_a" = lower_brace_y_a,
+    #     "lower_brace_y_b" = lower_brace_y_b,
+    #     "upper_label_y" = upper_label_y
+    #   )
+    # } else {
+    lower_brace_y <- coords[1] - (range_coords * plot_settings$brace_span_y)
+    upper_label_y <- lower_brace_y - range_coords * brace_label_nudge_y
+
+    res_list <- list(
+      "lower_brace_y" = lower_brace_y,
+      "upper_label_y" = upper_label_y
+    )
+    #}
+    return(res_list)
+  }
+
+
+
+  calc_brace_label_coords <- function(dat, starting_points, range_coords, range_years, plot_settings) {
+    dat$label_pos_x <- dat$year_start + dat$range * dat$mid + (max(dat$range) * plot_settings$brace_label_nudge_x)
+
+    label_pos_y <- calc_brace_label_y(dat,
+                                          grouping_var_lvls,
+                                          starting_points$upper_label_y,
+                                          range_coords, ## This should be all in one object in the end
+                                          gap_label = plot_settings$brace_label_gap_y
+    )
+
+    return(list(coord_dat = dat, group_labels = label_pos_y))
+  }
+
+  ## Okay, so now I've to get the levels of the grouping variable into here.
+
+  ## Maybe rename!
+  grouping_var = "mhg"
+
+
+
+  ## Only into factor, if not already a factor:
+
+  grouping_var_lvls <- levels(factor(dat_p[, grouping_var]))
+
+  calc_brace_label_y <- function(dat, grouping_var_lvls, upper_label_y, range_coords, gap_label) {
+
+    label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x){
+      upper_label_y - (range_coords * gap_label * (x - 1))
+    })
+
+    df <- data.frame(grouping_lvls = grouping_var_lvls,
+                     label_pos_y = label_pos_y)
+
+    return(df)
+  }
+
+
+  calc_brace_position <- function(plot_settings, overlap) {
+
+
+    ## Don't do this stuff df wise, only once for all year combinations.
+    ## I only need one coordinate for each possible brace, that's it!
+
+    plot_settings <- plot_settings_expanded
+    years_braces_df <- plot_settings$years_list$years_braces
+    ## Calculate the range between all year combinations:
+    years_braces_df$range <- apply(years_braces_df, 1, function(x) {
+      diff(range(x))
+    })
+
+
+    # if (overlap == TRUE) {
+    #     if (all(dat$range == dat$range[1])) { ## All braces have the same range
+    #
+    #       ## The first brace will get an indention to the left, the second one none
+    #       dat$brace_position_x <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+    #         yes = "left",
+    #         no = "middle"
+    #       )
+    #
+    #       ## The first brace will get plotted on top, the second one on the bottom:
+    #       dat$brace_position_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+    #         yes = "top",
+    #         no = "bottom"
+    #       )
+    #     } else {
+    #       # The smaller brace won't get any indention.
+    #       dat$brace_position_x <- ifelse(dat$range == max(dat$range),
+    #         yes = ifelse(dat$year_start_axis == min(dat$year_start_axis),
+    #           yes = "left",
+    #           no = "right"
+    #         ),
+    #         no = "middle"
+    #       )
+    #
+    #       # The larger brace will be plotted on top
+    #       dat$brace_position_y <- ifelse(dat$range == max(dat$range),
+    #         yes = "top",
+    #         no = "bottom"
+    #       )
+    #
+    #       # If any bottom brace starts at the first year, the upper needs to go right
+    #
+    #       middle_bottom <- ifelse(dat$year_start_axis == min(dat$year_start_axis) & dat$brace_position_y == "bottom",
+    #         yes = TRUE,
+    #         no = FALSE
+    #       )
+    #
+    #       if (any(middle_bottom)) {
+    #         dat[dat$brace_position_y == "top", "brace_position_x"] <- "right"
+    #       }
+    #     }
+    #  } else {
+    years_braces_df$brace_position_x <- rep("middle", nrow(years_braces_df))
+    years_braces_df$brace_position_y <- rep("middle", nrow(years_braces_df))
+
+
+    #  }
+
+    return(years_braces_df)
+  }
+
+
+
+
+  calc_brace_indent <- function(dat) {
+    dat$mid <- ifelse(dat$brace_position_x == "left",
+                      yes = 0.25,
+                      no = ifelse(dat$brace_position_x == "right",
+                                  yes = 0.75,
+                                  no = 0.5
+                      )
+    )
+    return(dat)
+  }
+
+
+  #x_range: value range on x axis
+  # y_range: value range on y axis
+  # coords: value range on y axis + some nuding which size depends on some conditions. Should probably be renamed.
+
+  # Do I need both?
+
 
   ## Provide better column name checks: Which variable?
   ## Just one function, or split up into the different filter functions?
@@ -251,45 +457,49 @@ extract_gsub_values <- function(plot_dat) {
 #' * `y_lims_total`: Minimum and maximum value of the plot.
 #' * `coords`: Y-value of the first brace start, and heighest y-value of the plot.
 #' @examples # tbd
-calc_plot_lims <- function(plot_dat, point_values, line_values, plot_settings) {
-  if (is.null(plot_settings$axis_y_lims)) {
-    if (!is.null(point_values)) {
-      if (!is.null(plot_dat$plot_background_lines) & nrow(plot_dat$plot_background_lines) != 0) {
-        y_range <- range(c(plot_dat[["plot_points"]][, point_values], plot_dat[["plot_background_lines"]][, paste0(line_values, "_wholeGroup")]), na.rm = TRUE)
-      } else {
-        y_range <- range(plot_dat[["plot_points"]][, point_values], na.rm = TRUE)
-      }
+calc_plot_lims <- function(plot_dat, plot_settings) {
 
-      coords <- calc_y_value_coords(y_range)
-    } else {
-      stop("Please provide point-values.")
-    }
-  } else {
-    y_range <- range(seq_over(
-      from = plot_settings$axis_y_lims[1],
-      to = plot_settings$axis_y_lims[2],
-      by = plot_settings$axis_y_tick_distance
-    ))
-    coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
+
+  ## Axis limits can be set manually. If not, calculate by range.
+  if (is.null(plot_settings$axis_y_lims)) {
+
+    y_range <- range(plot_dat$est, na.rm = TRUE)
+
+    ## This increases the coords by a nudging parameter:
+    coords <- calc_y_value_coords(y_range)
+
   }
 
-  y_lims_total <- calc_plot_lims_y(
-    plot_dat$plot_braces,
-    coords,
-    plot_settings = plot_settings
-  )
+  # else {
+  #   y_range <- range(seq_over(
+  #     from = plot_settings$axis_y_lims[1],
+  #     to = plot_settings$axis_y_lims[2],
+  #     by = plot_settings$axis_y_tick_distance
+  #   ))
+  #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
+  # }
 
-  y_range_diff <- diff(range(y_range))
-  coords_diff <- diff(coords)
+  ## And what does this do extra?:
+  # Okay, this seems to calculate the brace positions again (will happen later on too), so the plot limits can be set.
 
-  x_range <- range(plot_dat$plot_points$year)
+  # Better: Calc the brace positions once. Putt the lowest value in here, to define the minimum y value
+#
+#   y_lims_total <- calc_plot_lims_y(
+#     plot_dat$plot_braces,
+#     coords,
+#     plot_settings = plot_settings
+#   )
 
+  ## Why need this? calc if necessary!
+
+  x_range <- range(plot_dat$year)
+
+
+  ## Output an object with the plot coordinate informations:
   coord_list <- list(
     x_range = x_range,
     y_range = y_range,
-    y_lims_total = y_lims_total,
-    y_range_diff = y_range_diff,
-    coords_diff = coords_diff,
+    # y_lims_total = y_lims_total,
     coords = coords
   )
   return(coord_list)
