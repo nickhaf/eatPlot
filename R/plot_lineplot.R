@@ -75,6 +75,15 @@ plot_lineplot <- function(eatRep_dat,
   # Check: plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
 
+
+  grouping_var = "mhg"
+
+  ## Only into factor, if not already a factor:
+
+  grouping_var_lvls <- levels(factor(dat_p[, grouping_var]))
+
+
+
 # Coordinates -------------------------------------------------------------
 ## Build a list containing all relevant information for setting the plot coordinates, calculating the brace positions etc.
 ## Put all the nested functions below each other and cleanup. Which names, which objects are needed ...?
@@ -84,45 +93,6 @@ plot_lineplot <- function(eatRep_dat,
                                          plot_lims$coords,
                                          plot_settings = plot_settings_expanded
   )
-
-
-  ## Utils:
-  #' Calculate, if year columns are overlapping somewhere. In that case, the braces have to be plotted below each other.
-  #'
-  #' They overlap, if one of the start or end years lies between another start and end year.
-  #'
-  #' @keywords internal
-  #' @noRd
-  #'
-  #' @param year_start Numeric vector.
-  #' @param year_end Numeric vector.
-  #'
-  #' @return Logical vector the same length as `year_start` with a `TRUE` if the respective year is overlapping.
-  #'
-  #' @examples calc_overlap(c(2010, 2012, 2013), c(2015, 2016, 2015))
-  calc_overlap <- function(df) {
-
-    # Convert the list into a data frame
-    overlap <- c()
-    for (i in 1:length(df$year_start)) {
-      overlap[i] <- any((df$year_start[i] > df$year_start[-i]) & (df$year_start[i] < df$year_end[-i])|
-                          any((df$year_end[i] > df$year_start[-i]) & (df$year_end[i] < df$year_end[-i]))
-      )
-    }
-    return(any(overlap))
-  }
-
-## utils_nudge
-
-
-
-
-  grouping_var = "mhg"
-
-  ## Only into factor, if not already a factor:
-
-  grouping_var_lvls <- levels(factor(dat_p[, grouping_var]))
-
 
 
   #x_range: value range on x axis

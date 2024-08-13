@@ -346,7 +346,30 @@ replace_VS <- function(x) {
   return(x)
 }
 
+#' Calculate, if year columns are overlapping somewhere. In that case, the braces have to be plotted below each other.
+#'
+#' They overlap, if one of the start or end years lies between another start and end year.
+#'
+#' @keywords internal
+#' @noRd
+#'
+#' @param year_start Numeric vector.
+#' @param year_end Numeric vector.
+#'
+#' @return Logical vector the same length as `year_start` with a `TRUE` if the respective year is overlapping.
+#'
+#' @examples calc_overlap(c(2010, 2012, 2013), c(2015, 2016, 2015))
+calc_overlap <- function(df) {
 
+  # Convert the list into a data frame
+  overlap <- c()
+  for (i in 1:length(df$year_start)) {
+    overlap[i] <- any((df$year_start[i] > df$year_start[-i]) & (df$year_start[i] < df$year_end[-i])|
+                        any((df$year_end[i] > df$year_start[-i]) & (df$year_end[i] < df$year_end[-i]))
+    )
+  }
+  return(any(overlap))
+}
 
 #' Get smallest and largest year of each Trend.
 #'
