@@ -114,135 +114,15 @@ plot_lineplot <- function(eatRep_dat,
 
 ## utils_nudge
 
-  calc_brace_starting_points <- function(overlap, coords, plot_settings) {
-
-    range_coords <- diff(range(coords))
-
-    # if (overlap == TRUE) {
-    #   lower_brace_y_a <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
-    #   lower_brace_y_b <- lower_brace_y_a - range_coords * plot_settings$brace_span_y
-    #   upper_label_y <- lower_brace_y_b - range_coords * plot_settings$brace_label_nudge_y
-    #
-    #   res_list <- list(
-    #     "lower_brace_y_a" = lower_brace_y_a,
-    #     "lower_brace_y_b" = lower_brace_y_b,
-    #     "upper_label_y" = upper_label_y
-    #   )
-    # } else {
-    lower_brace_y <- coords[1] - (range_coords * plot_settings$brace_span_y)
-    upper_label_y <- lower_brace_y - range_coords * brace_label_nudge_y
-
-    res_list <- list(
-      "lower_brace_y" = lower_brace_y,
-      "upper_label_y" = upper_label_y
-    )
-    #}
-    return(res_list)
-  }
 
 
 
-  calc_brace_label_coords <- function(dat, starting_points, range_coords, range_years, plot_settings) {
-    dat$label_pos_x <- dat$year_start + dat$range * dat$brace_position_x + (max(dat$range) * plot_settings$brace_label_nudge_x)
-
-    label_pos_y <- calc_brace_label_y(dat,
-                                          grouping_var_lvls,
-                                          starting_points$upper_label_y,
-                                          range_coords, ## This should be all in one object in the end
-                                          gap_label = plot_settings$brace_label_gap_y
-    )
-
-    return(list(coord_dat = dat, group_labels = label_pos_y))
-  }
-
-  ## Okay, so now I've to get the levels of the grouping variable into here.
-
-  ## Maybe rename!
   grouping_var = "mhg"
-
-
 
   ## Only into factor, if not already a factor:
 
   grouping_var_lvls <- levels(factor(dat_p[, grouping_var]))
 
-  calc_brace_label_y <- function(dat, grouping_var_lvls, upper_label_y, range_coords, gap_label) {
-
-    label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x){
-      upper_label_y - (range_coords * gap_label * (x - 1))
-    })
-
-    df <- data.frame(grouping_lvls = grouping_var_lvls,
-                     label_pos_y = label_pos_y)
-
-    return(df)
-  }
-
-
-  calc_brace_position <- function(plot_settings, overlap) {
-
-
-    ## Don't do this stuff df wise, only once for all year combinations.
-    ## I only need one coordinate for each possible brace, that's it!
-
-    plot_settings <- plot_settings_expanded
-    years_braces_df <- plot_settings$years_list$years_braces
-    ## Calculate the range between all year combinations:
-    years_braces_df$range <- apply(years_braces_df, 1, function(x) {
-      diff(range(x))
-    })
-
-
-    # if (overlap == TRUE) {
-    #     if (all(dat$range == dat$range[1])) { ## All braces have the same range
-    #
-    #       ## The first brace will get an indention to the left, the second one none
-    #       dat$brace_position_x <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
-    #         yes = "left",
-    #         no = "middle"
-    #       )
-    #
-    #       ## The first brace will get plotted on top, the second one on the bottom:
-    #       dat$brace_position_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
-    #         yes = "top",
-    #         no = "bottom"
-    #       )
-    #     } else {
-    #       # The smaller brace won't get any indention.
-    #       dat$brace_position_x <- ifelse(dat$range == max(dat$range),
-    #         yes = ifelse(dat$year_start_axis == min(dat$year_start_axis),
-    #           yes = "left",
-    #           no = "right"
-    #         ),
-    #         no = "middle"
-    #       )
-    #
-    #       # The larger brace will be plotted on top
-    #       dat$brace_position_y <- ifelse(dat$range == max(dat$range),
-    #         yes = "top",
-    #         no = "bottom"
-    #       )
-    #
-    #       # If any bottom brace starts at the first year, the upper needs to go right
-    #
-    #       middle_bottom <- ifelse(dat$year_start_axis == min(dat$year_start_axis) & dat$brace_position_y == "bottom",
-    #         yes = TRUE,
-    #         no = FALSE
-    #       )
-    #
-    #       if (any(middle_bottom)) {
-    #         dat[dat$brace_position_y == "top", "brace_position_x"] <- "right"
-    #       }
-    #     }
-    #  } else {
-    years_braces_df$brace_position_x <- rep(0.5, nrow(years_braces_df)) ## If left = 0.25, else 0.75
-    years_braces_df$brace_position_y <- rep("middle", nrow(years_braces_df))
-
-
-    #  }
-
-    return(years_braces_df)
-  }
 
 
   #x_range: value range on x axis
