@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines, years_braces) {
+prep_lineplot <- function(eatRep_dat, line_sig, brace_label_est, parameter, years_lines, years_braces) {
   check_eatRep_dat(eatRep_dat)
 
   eatRep_dat$plain <- NULL
@@ -34,8 +34,9 @@ prep_lineplot <- function(eatRep_dat, line_sig, parameter = "mean", years_lines,
       values_to = "group"
     )
 
-  eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison == line_sig, c("id", "group", "p")]
+  eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est), c("id", "group", "est", "p")]
 
+  ## By the way! Not done here, still have to deal with the comparisons of comparisons.
   eatRep_dat_merged <- merge(eatRep_dat_long,
                              eatRep_dat$group_estimates,
                              by.x = "group",

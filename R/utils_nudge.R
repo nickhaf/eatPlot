@@ -49,7 +49,7 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #' @return Data.frame containing the coordinates for plotting braces and their labels.
 #'
 #' @examples # tbd
-calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot()) {
+calc_brace_coords <- function(dat, grouping_var_lvls, coords, plot_settings = plotsettings_lineplot()) {
   years_braces <- plot_settings_expanded$years_list$years_braces
 
 
@@ -77,7 +77,7 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
   #   )
   # } else {
   lower_brace_y <- coords[1] - (range_coords * plot_settings$brace_span_y)
-  upper_label_y <- lower_brace_y - range_coords * brace_label_nudge_y
+  upper_label_y <- lower_brace_y - range_coords * plot_settings$brace_label_nudge_y
 
   starting_points <- list(
     "lower_brace_y" = lower_brace_y,
@@ -117,7 +117,7 @@ calc_brace_coords <- function(dat, coords, plot_settings = plotsettings_lineplot
   brace_positions$label_pos_x <- brace_positions$year_start + brace_positions$range * brace_positions$brace_position_x + (max(brace_positions$range) * plot_settings$brace_label_nudge_x)
 
   label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x){
-    starting_points$upper_label_y - (range_coords * gap_label * (x - 1))
+    starting_points$upper_label_y - (range_coords * plot_settings$brace_label_gap_y * (x - 1))
   })
 
   df <- data.frame(grouping_lvls = grouping_var_lvls,

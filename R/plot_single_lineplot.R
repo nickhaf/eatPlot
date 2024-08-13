@@ -9,13 +9,14 @@
 #'
 #' @examples # tbd
 plot_single_lineplot <- function(plot_dat,
-                                 # plot_lims = NULL,
+                                 brace_coords,
+                                 plot_lims = NULL,
                                  # point_values = "est_noTrend_noComp",
                                  # point_sig = "sig_noTrend_noComp",
                                  # line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                                  # line_se = NULL,
                                  # line_sig = "sig_Trend_CompWithin",
-                                 # label_est = "est_Trend_noComp",
+                                 label_est = "trend",
                                  # label_se = "se_Trend_noComp",
                                  # label_sig_high = "sig_Trend_CompCrossDiffWhole",
                                  # label_sig_bold = "sig_Trend_noComp",
@@ -24,30 +25,44 @@ plot_single_lineplot <- function(plot_dat,
 
   # Assemble a single lineplot (one "tile" in the whole lineplot).
 
-  ## Do the coordinates calculations etc. before. Put everything I need as list object togehter with the data, so I don't
-  ## have to copy it everywhere.
-  ## Also alles ein bisschen auseinanderziehen, nicht so verschachteln, aber trotzdem noch kompartimentieren.
-
-
-## Result könnte dann als Liste an den data frame rangehängt werden.
-
-  ## Zuerst muss ich hier noch die Plot Lims berechnen. Wahrscheinlich eine Ebene davor?
+brace_coords$coord_dat %>%
+  dplyr::mutate(trend = paste0(.$year_start, .$year_end)) %>%
+  tidyr::pivot_longer(cols = c("upper_y", "lower_y"),
+                 values_to = "y")
 
 
   ggplot2::ggplot(plot_dat,
          mapping = ggplot2::aes(
            x = year,
-           y = est,
+           y = est_point,
            group = id,
            linetype = line_sig
          )) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
-    ggplot2::coord_cartesian(y=range(plot_dat$est), clip = "off") + #for the range just use the data for the respective axis
+    ggplot2::coord_cartesian(y=range(plot_dat$est_point), clip = "off") + #for the range just use the data for the respective axis
     ggplot2::theme(plot.margin = ggplot2::unit(c(0.25, 0.11, 0.11, 0.11), units="npc")) +
+    theme_line(plot_settings) +
 
-    theme_line(plot_settings)
+    ## Später eventuell ohen coords manuell zu berechnen? Nur wenns Sinn macht.
+    ggbrace::stat_brace(
+      data = brace_coords$coord_dat,
+      mapping = ggplot2::aes(
+        x = c(year_start, year_end),
+        y = c(upper_y, lower_y),
+        group = NULL
+      ))
 
+    plot_braces(
+            plot_dat,
+            brace_coords = brace_coords,
+            plot_lims = plot_lims,
+            label_est = label_est,
+            # label_se = label_se,
+            # label_sig_high = label_sig_high,
+            # label_sig_bold = label_sig_bold,
+            plot_settings = plot_settings
+          )
 #
 #   list(
 #     theme_line(plot_settings),

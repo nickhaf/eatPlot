@@ -27,25 +27,25 @@ plot_lineplot <- function(eatRep_dat,
                           line_sig = "trend",
                           years_lines = NULL,
                           years_braces = NULL,
-                          facets = "state_var",
-                          seperate_plot_var_order = NULL,
-                          seperate_plot_var_box = "wholeGroup",
-                          point_values = "est_noTrend_noComp",
-                          point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
-                          line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-                          label_est = "est_Trend_noComp",
-                          label_se = "se_Trend_noComp",
-                          label_sig_high = NULL,
-                          label_sig_bold = "sig_Trend_noComp",
-                          line_se = NULL,
-                          title_superscripts = NULL,
+                          # facets = "state_var",
+                          # seperate_plot_var_order = NULL,
+                          # seperate_plot_var_box = "wholeGroup",
+                          # point_values = "est_noTrend_noComp",
+                          # point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
+                          # line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+                          brace_label_est = "trend",
+                          # brace_label_se = "se_Trend_noComp",
+                          # brace_label_sig_high = NULL,
+                          # brace_label_sig_bold = "sig_Trend_noComp",
+                          # line_se = NULL,
+                          # title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
 
 
   # Prep data ---------------------------------------------------------------
-  dat_p <- prep_lineplot(eatRep_dat, line_sig, parameter)
+  dat_p <- prep_lineplot(eatRep_dat, line_sig = line_sig, parameter = parameter, brace_label_est = brace_label_est)
 
   years_lines = NULL
 
@@ -69,42 +69,23 @@ plot_lineplot <- function(eatRep_dat,
 
   dat_pf <- filter_years(dat_p, l = years_lines, b = years_braces)
 
-  ## Give out warning if seperate plot var is not an ordered factor. In this case, sort alphabetically. Provide guidance on how to achieve that.
-
-
-  # Check: plot_dat <- equalize_line_length(plot_dat, plot_settings)
-
-
+  #plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
   grouping_var = "mhg"
-
   ## Only into factor, if not already a factor:
-
   grouping_var_lvls <- levels(factor(dat_p[, grouping_var]))
 
 
-
 # Coordinates -------------------------------------------------------------
-## Build a list containing all relevant information for setting the plot coordinates, calculating the brace positions etc.
-## Put all the nested functions below each other and cleanup. Which names, which objects are needed ...?
-
-  plot_lims <- calc_plot_lims(plot_dat, plot_settings_expanded)
-  brace_coordinates <- calc_brace_coords(plot_dat,
+  plot_lims <- calc_plot_lims(dat_pf, plot_settings_expanded)
+  brace_coordinates <- calc_brace_coords(dat_pf,
+                                         grouping_var_lvls,
                                          plot_lims$coords,
                                          plot_settings = plot_settings_expanded
   )
 
 
-  #x_range: value range on x axis
-  # y_range: value range on y axis
-  # coords: value range on y axis + some nuding which size depends on some conditions. Should probably be renamed.
-
-  # Do I need both?
-
-
-  ## Provide better column name checks: Which variable?
-  ## Just one function, or split up into the different filter functions?
-
+  ## Give out warning if seperate plot var is not an ordered factor. In this case, sort alphabetically. Provide guidance on how to achieve that.
 dat_pf[, facets] <- check_facets(dat_pf[, facets])
 
   plot_single_lineplot(dat_pf)
@@ -299,7 +280,7 @@ calc_plot_lims <- function(plot_dat, plot_settings) {
   ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
 
-    y_range <- range(plot_dat$est, na.rm = TRUE)
+    y_range <- range(plot_dat$est_point, na.rm = TRUE)
 
     ## This increases the coords by a nudging parameter:
     coords <- calc_y_value_coords(y_range)
