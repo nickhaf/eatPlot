@@ -1,22 +1,26 @@
-#' Plot braces below plot.
-#'
-#' @param dat Prepared Trend data.
-#' @inheritParams plot_lineplot
-#' @inheritParams plot_single_lineplot
-#' @inheritParams plotsettings_lineplot
-#'
-#' @return ggplot2 object.
-#' @export
-#'
-#' @examples ##
-plot_braces <- function(dat,
-                        brace_coords,
-                        plot_lims,
-                        label_est = NULL,
-                        label_se = NULL,
-                        label_sig_high = NULL,
-                        label_sig_bold = NULL,
-                        plot_settings = plotsettings_lineplot()) {
+prep_brace <- function(plot_dat, brace_coords){
+
+  plot_dat_BL <- plot_dat %>%
+    dplyr::filter(TR_BUNDESLAND == "Berlin")
+
+
+
+  brace_coords$coord_dat_test1 <- brace_coords$coord_dat %>%
+    dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
+    tidyr::pivot_longer(cols = c("upper_y", "lower_y"),
+                        values_to = "y") %>%
+    tidyr::pivot_longer(cols = c("year_start", "year_end"),
+                        values_to = "year",
+                        names_to = "year_type") %>%
+    dplyr::mutate(year = as.character(year))
+
+
+  brace_labels <- merge(plot_dat_BL[, c("id", "est_comp", "mhg", "trend")],
+                        brace_coords$group_labels,
+                        by.x = "mhg",
+                        by.y = "grouping_lvls",
+                        all.x = TRUE)
+
 
   # Construct brace labels --------------------------------------------------
   ## Significances can be shown with bold font or a raised a.
@@ -31,19 +35,19 @@ plot_braces <- function(dat,
   #   round_se = 1
   # )
 
-  dat$label <- 1:nrow(dat)
+  brace_coords$coord_dat_test <- merge(brace_coords$coord_dat_test1,
+                                       brace_labels,
+                                       by = "trend",
+                                       all.x = TRUE) %>%
+    dplyr::mutate(label_pos_x = as.character(label_pos_x))
 
 
-  # Draw braces and labels --------------------------------------------------
-  c(
-    draw_braces(brace_coords$coord_dat, plot_settings),
-    draw_brace_label(brace_coordinates, plot_settings) # ,
-  )
+  return(brace_coords$coord_dat_test)
 }
 
 
-# Utils -------------------------------------------------------------------
-draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
+draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
+
   # if (plot_settings$split_plot == TRUE) {
   #   res <- ggbrace::stat_brace(
   #     data = unique(dat[, c("years_Trend", "year_axis", "brace_y")]),
@@ -58,25 +62,32 @@ draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
   #     outside = FALSE
   #   )
   # } else {
-    res <- lapply(unique(dat$years_Trend), function(x) {
-      dat_year <- unique(dat[dat$years_Trend == x, c("year_start_axis", "year_end_axis", "upper_y", "lower_y", "mid")])
-      ggbrace::stat_brace(
-        mapping = ggplot2::aes(
-          x = c(dat_year$year_start_axis, dat_year$year_end_axis),
-          y = c(dat_year$upper_y, dat_year$lower_y),
-        ))
-    })
+
+  res <- ggbrace::stat_brace(
+    data = brace_coords,
+    mapping = ggplot2::aes(
+      x = year,
+      y = y,
+      group = trend
+    ),
+    mid = brace_coords$brace_position_x,
+    rotate = 180,
+    linewidth = plot_settings$brace_line_width,
+    npoints = 200,
+    outside = FALSE
+  )
+
   #}
   return(res)
 }
 
-draw_brace_label <- function(dat, plot_settings = plot_settings()) {
+draw_brace_label <- function(brace_coords, plot_settings = plot_settings()) {
   ggtext::geom_richtext(
-    data = dat,
+    data = brace_coords,
     mapping = ggplot2::aes(
       x = .data$label_pos_x,
       y = .data$label_pos_y,
-      label = .data$brace_label
+      label = .data$est_comp
     ),
     colour = "#000000",
     size = plot_settings$brace_label_size,

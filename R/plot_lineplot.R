@@ -40,12 +40,14 @@ plot_lineplot <- function(eatRep_dat,
                           # line_se = NULL,
                           # title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
+
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
 
-
-  # Prep data ---------------------------------------------------------------
-  dat_p <- prep_lineplot(eatRep_dat, line_sig = line_sig, parameter = parameter, brace_label_est = brace_label_est)
+  dat_p <- prep_lineplot(eatRep_dat,
+                         line_sig = line_sig,
+                         parameter = parameter,
+                         brace_label_est = brace_label_est)
 
 
   ## Put the years into a designated object for that and put through for the plotting stuf:
@@ -66,28 +68,17 @@ plot_lineplot <- function(eatRep_dat,
                                             "years_braces" = years_braces_df)
 
 
-  dat_pf <- filter_years(dat_p, l = years_lines, b = years_braces)
+  dat_p$dat_final <- filter_years(dat_p$dat_final, l = years_lines, b = years_braces)
 
   #plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
-  grouping_var = "mhg"
-  ## Only into factor, if not already a factor:
-  grouping_var_lvls <- levels(factor(dat_p[, grouping_var]))
 
-
-# Coordinates -------------------------------------------------------------
-  plot_lims <- calc_plot_lims(dat_pf, plot_settings_expanded)
-  brace_coordinates <- calc_brace_coords(dat_pf,
-                                         grouping_var_lvls,
-                                         plot_lims$coords,
-                                         plot_settings = plot_settings_expanded
-  )
 
 
   ## Give out warning if seperate plot var is not an ordered factor. In this case, sort alphabetically. Provide guidance on how to achieve that.
-dat_pf[, facets] <- check_facets(dat_pf[, facets])
+  dat_p[, facets] <- check_facets(dat_p[, facets])
 
-  plot_single_lineplot(dat_pf)
+  plot_single_lineplot(dat_p, plot_settings)
 
   plot_list <- list()
 

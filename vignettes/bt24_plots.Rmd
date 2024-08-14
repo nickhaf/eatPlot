@@ -302,6 +302,7 @@ First of all, the new format might be great because some variables, like group, 
 - different data frames for different aspects of the plot
 
 ## Open questions about data
+- Sind die Werte korrekt? Z.B. Trened sehr groß?
 - NAs in group data frame
 - parameter column = 1 in estiamtes
 - Verschachtelte, unbenannte Listen, v.a. im letzten Datensatz

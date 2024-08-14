@@ -245,53 +245,38 @@ calc_x_nudge <- function(dat, nudge_x, split_plot) {
 
 
 
-calc_y_nudge <- function(plot_points_dat,
-                         plot_lims,
+calc_y_nudge <- function(plot_dat,
                          plot_settings = plotsettings_lineplot()) {
-  nudge_val <- plot_lims$coords_diff * plot_settings$point_label_nudge_y
 
-  # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher. For facetted plots, the trend has to be taken into account as well.
+  coords_diff <- diff(range(plot_dat$plot_lims$coords))
+
+  nudge_val <- coords_diff * plot_settings$point_label_nudge_y
+  nudge_val <- 10
+  # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher.
+  # For facetted plots, the trend has to be taken into account as well.
 
   ## Wenn in plot_settings ein named vector angegeben wurde mit "+" oder "-", dann das nutzen, sonst versuchen selber zu berechnen:
 
-  if (!is.null(plot_settings$point_label_nudge_direction)) {
-    ## Checks
-    stopifnot(all(names(plot_settings$point_label_nudge_direction) %in% levels(plot_points_dat$grouping_var)))
+  # if (!is.null(plot_settings$point_label_nudge_direction)) {
+  #   ## Checks
+  #   stopifnot(all(names(plot_settings$point_label_nudge_direction) %in% levels(plot_points_dat$grouping_var)))
+  #
+  #
+  #   res_frame_1 <- data.frame(
+  #     years_Trend = plot_points_dat$years_Trend,
+  #     year_axis = plot_points_dat$year_axis,
+  #     grouping_var = plot_points_dat$grouping_var
+  #   )
+  #
+  #   res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
+  # } else {
+  plot_dat$dat_final <- plot_dat$dat_final %>%
+    dplyr::group_by(year) %>%
+    dplyr::mutate(nudge_y = ifelse(est_point == min(est_point),
+                                   yes = nudge_val * -1,
+                                   no = nudge_val))
 
-
-    res_frame_1 <- data.frame(
-      years_Trend = plot_points_dat$years_Trend,
-      year_axis = plot_points_dat$year_axis,
-      grouping_var = plot_points_dat$grouping_var
-    )
-
-    res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
-  } else {
-    nudge_neg <- by(plot_points_dat, list(plot_points_dat$year_axis, plot_points_dat$years_Trend), function(year_df) {
-      res_frame <- data.frame(
-        nudge_y = ifelse(
-          year_df$point_values == min(year_df$point_values) & length(year_df$point_values) > 1,
-          nudge_val * -1,
-          nudge_val
-        ),
-        years_Trend = year_df$years_Trend,
-        year_axis = year_df$year_axis,
-        grouping_var = year_df$grouping_var
-      )
-      ## If duplicated estimate values exist:
-      dup_nudge <- duplicated(year_df$point_values == min(year_df$point_values))
-      res_frame[dup_nudge, "nudge_y"] <- res_frame[dup_nudge, "nudge_y"] * -1
-      return(res_frame)
-    })
-
-    res_frame <- data.frame(do.call("rbind", nudge_neg))
-  }
-
-  out <- merge(plot_points_dat, res_frame,
-    by = c("years_Trend", "year_axis", "grouping_var"),
-    all.x = TRUE, all.y = FALSE
-  )
-  return(out)
+  return(plot_dat)
 }
 
 

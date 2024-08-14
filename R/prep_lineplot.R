@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, line_sig, brace_label_est, parameter, years_lines, years_braces) {
+prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, parameter, years_lines, years_braces) {
   check_eatRep_dat(eatRep_dat)
 
   eatRep_dat$plain <- NULL
@@ -51,8 +51,26 @@ prep_lineplot <- function(eatRep_dat, line_sig, brace_label_est, parameter, year
 
 
   dat_final$line_sig <- ifelse(dat_final$p_comp < 0.05, TRUE, FALSE)
+  dat_final$point_sig <- ifelse(dat_final$p_point < 0.05, TRUE, FALSE)
 
-  return(dat_final)
+
+  grouping_var = "mhg"
+  ## Only into factor, if not already a factor:
+  grouping_var_lvls <- levels(factor(dat_final[, grouping_var]))
+
+
+  plot_lims <- calc_plot_lims(dat_pf, plot_settings_expanded)
+  brace_coordinates <- calc_brace_coords(dat_final,
+                                         grouping_var_lvls,
+                                         plot_lims$coords,
+                                         plot_settings = plot_settings_expanded
+  )
+
+  brace_dat <- prep_brace(dat_final, brace_coords = brace_coordinates)
+
+  list_final <- list(dat_final = dat_final, brace_dat = brace_dat, plot_lims = plot_lims)
+
+  return(list_final)
 }
 
 create_trend <- function(df) {
