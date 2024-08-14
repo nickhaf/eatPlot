@@ -25,15 +25,18 @@ plot_single_lineplot <- function(plot_dat,
 
   # Assemble a single lineplot (one "tile" in the whole lineplot).
 
-  ## Pro trend nur 2 versch. Werte jeweils in der Spalte.
 
+  ## Hier noch richtig zusammenbringen, sodass ein sinnvoller datensatz für brace labels und braces entsteht.
   brace_coords$coord_dat_test <- brace_coords$coord_dat %>%
   dplyr::mutate(trend = paste0(.$year_start, .$year_end)) %>%
   tidyr::pivot_longer(cols = c("upper_y", "lower_y"),
                  values_to = "y") %>%
   tidyr::pivot_longer(cols = c("year_start", "year_end"),
                  values_to = "year",
-                 names_to = "year_type")
+                 names_to = "year_type") %>%
+    dplyr::mutate(year = as.character(year))
+
+
 
   ggplot2::ggplot(plot_dat,
          mapping = ggplot2::aes(
@@ -44,18 +47,23 @@ plot_single_lineplot <- function(plot_dat,
          )) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
-    ggplot2::coord_cartesian(y=range(plot_dat$est_point), clip = "off") + #for the range just use the data for the respective axis
+    ggplot2::coord_cartesian(clip = "off") + #for the range just use the data for the respective axis
     ggplot2::theme(plot.margin = ggplot2::unit(c(0.25, 0.11, 0.11, 0.11), units="npc")) +
     theme_line(plot_settings) +
-
-    ## Später eventuell ohen coords manuell zu berechnen? Nur wenns Sinn macht.
     ggbrace::stat_brace(
       data = brace_coords$coord_dat_test,
       mapping = ggplot2::aes(
         x = year,
         y = y,
         group = trend
-      ))
+      ),
+      mid = brace_coords$coord_dat_test$brace_position_x,
+      rotate = 180,
+      linewidth = plot_settings$brace_line_width,
+      npoints = 200,
+      outside = FALSE
+    ) +
+
 
 
     plot_braces(

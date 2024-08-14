@@ -64,13 +64,7 @@ draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
         mapping = ggplot2::aes(
           x = c(dat_year$year_start_axis, dat_year$year_end_axis),
           y = c(dat_year$upper_y, dat_year$lower_y),
-        ),
-        mid = unique(dat_year$mid),
-        rotate = 180,
-        linewidth = plot_settings$brace_line_width,
-        npoints = 200,
-        outside = FALSE
-      )
+        ))
     })
   #}
   return(res)

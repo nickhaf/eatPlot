@@ -47,7 +47,6 @@ plot_lineplot <- function(eatRep_dat,
   # Prep data ---------------------------------------------------------------
   dat_p <- prep_lineplot(eatRep_dat, line_sig = line_sig, parameter = parameter, brace_label_est = brace_label_est)
 
-  years_lines = NULL
 
   ## Put the years into a designated object for that and put through for the plotting stuf:
   years_lines = list(c(2009, 2015), c(2015, 2022))
