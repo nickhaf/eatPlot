@@ -68,6 +68,11 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
 
   brace_dat <- prep_brace(dat_final, brace_coords = brace_coordinates)
 
+  # Add until last brace coord to the plot lims. This is actually done in plot_lims.
+  # Would be easier to just take the min value in the brace_coordinates and maybe add a small nudge value in the end.
+  # This range would then probably be used in plot_single_lineplot()  in ylim of coord_cartesian.
+
+
   list_final <- list(dat_final = dat_final, brace_dat = brace_dat, plot_lims = plot_lims)
 
   return(list_final)

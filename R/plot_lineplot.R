@@ -53,7 +53,6 @@ plot_lineplot <- function(eatRep_dat,
                          parameter = parameter,
                          brace_label_est = brace_label_est)
 
-
   ## Put the years into a designated object for that and put through for the plotting stuf:
   years_lines = list(c(2009, 2015), c(2015, 2022))
   years_braces = list(c(2009, 2015), c(2015, 2022))
