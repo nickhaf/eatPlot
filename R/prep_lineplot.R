@@ -68,10 +68,16 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
 
   brace_dat <- prep_brace(dat_final, brace_coords = brace_coordinates)
 
+
+  # The multiplicator here is not that easy to understand, possiby take something else.
+  plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
+
   # Add until last brace coord to the plot lims. This is actually done in plot_lims.
   # Would be easier to just take the min value in the brace_coordinates and maybe add a small nudge value in the end.
   # This range would then probably be used in plot_single_lineplot()  in ylim of coord_cartesian.
-
+  #Also: As soon as I have the full coordinates of the whole plot nothing should shange about those anymore. So for all nudging
+  ## etc., use this range as multiplicor
+## Best to do one after the other, but togehter.
 
   list_final <- list(dat_final = dat_final, brace_dat = brace_dat, plot_lims = plot_lims)
 
