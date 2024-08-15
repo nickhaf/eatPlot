@@ -2,7 +2,6 @@
 #'
 #' @inheritParams plot_lineplot
 #' @inheritParams plotsettings_lineplot
-#' @param plot_lims List obtained by [calc_plot_lims()], containing different coordinate values.
 #'
 #' @return ggplot2 Object.
 #' @export

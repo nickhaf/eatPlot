@@ -27,7 +27,7 @@ plot_lineplot <- function(eatRep_dat,
                           line_sig = "trend",
                           years_lines = NULL,
                           years_braces = NULL,
-                          # facets = "state_var",
+                          facets = "TR_BUNDESLAND",
                           # seperate_plot_var_order = NULL,
                           # seperate_plot_var_box = "wholeGroup",
                           # point_values = "est_noTrend_noComp",
@@ -38,8 +38,12 @@ plot_lineplot <- function(eatRep_dat,
                           # brace_label_sig_high = NULL,
                           # brace_label_sig_bold = "sig_Trend_noComp",
                           # line_se = NULL,
-                          # title_superscripts = NULL,
+                          title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
+
+  plot_settings = plotsettings_lineplot(
+    default_list = lineplot_4x4
+  )
 
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
@@ -69,6 +73,8 @@ plot_lineplot <- function(eatRep_dat,
 
 
   dat_p$dat_final <- filter_years(dat_p$dat_final, l = years_lines, b = years_braces)
+  dat_p$dat_final <- dat_p$dat_final %>%
+    dplyr::filter(mhg %in% c("ersteGen", "einET"))
 
   #plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
@@ -76,36 +82,25 @@ plot_lineplot <- function(eatRep_dat,
 
 
   ## Give out warning if seperate plot var is not an ordered factor. In this case, sort alphabetically. Provide guidance on how to achieve that.
-  dat_p[, facets] <- check_facets(dat_p[, facets])
+  # dat_p$dat_final[, facets] <- check_facets(dat_p$dat_final[, facets])
+  ## Wie filtere ich dann richtig? da gabs irgendwie ein Problem
 
   plot_single_lineplot(dat_p, plot_settings)
 
   plot_list <- list()
-
   position <- 1
 
-  for (i in tiles) {
-    plot_dat_tile <- filter_rows(plot_dat, column_name = seperate_plot_var, subsetter = i)
-    if (seperate_plot_var == "competence_var" & nrow(plot_dat_tile[["plot_background_lines"]]) != 0) {
-      plot_dat_tile[["plot_background_lines"]] <- plot_dat_tile[["plot_background_lines"]][plot_dat_tile[["plot_background_lines"]]$competence_var == i, ]
-    }
+  facet_values <- unique(dat_p$dat_final[, facets])[!is.na(unique(dat_p$dat_final[, facets]))]
+i = "Berlin"
 
-    p_state <- ggplot2::ggplot() +
-      plot_single_lineplot(
-        plot_dat = plot_dat_tile,
-        plot_lims = plot_lims,
-        point_values = point_values,
-        point_sig = point_sig,
-        line_values = line_values,
-        line_se = line_se,
-        line_sig = line_sig,
-        label_est = label_est,
-        label_se = label_se,
-        label_sig_high = label_sig_high,
-        label_sig_bold = label_sig_bold,
-        background_lines = plot_settings$background_lines,
-        plot_settings = plot_settings
-      ) +
+  for (i in facet_values) {
+
+    dat_p_facet <- dat_p
+    dat_p_facet$dat_final <- dat_p_facet$dat_final[!is.na(dat_p_facet$dat_final[, facets]), ]
+
+    dat_p_facet$dat_final <- dat_p_facet$dat_final[dat_p_facet$dat_final[, facets] == i & !is.na(dat_p_facet$dat_final[, facets]), ]
+
+    p_state <- plot_single_lineplot(dat_p_facet, plot_settings) +
       plot_title(sub_dash(i), title_superscripts) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
         plot_settings$margin_top,
@@ -118,87 +113,57 @@ plot_lineplot <- function(eatRep_dat,
     position <- position + 1
   }
 
-  names(plot_list) <- tiles
+  names(plot_list) <- facet_values
 
-  # Add y axis --------------------------------------------------------------
-  if (plot_settings$axis_y == TRUE) {
-    y_axis_plot <- ggplot2::ggplot() +
-      plot_y_axis(
-        plot_dat,
-        plot_lims = plot_lims,
-        plot_settings = plot_settings
-      ) +
-      ggplot2::theme(plot.margin = ggplot2::unit(c(
-        plot_settings$margin_top,
-        0,
-        plot_settings$margin_bottom,
-        0
-      ), "npc"))
-
-    positions_y_axis <- calc_y_positions(tiles, plot_settings$n_cols)
-
-    for (i in positions_y_axis) {
-      plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
-    }
-
-    widths_setting <- c(0.02, rep(1 - 0.02 / plot_settings$n_cols, times = plot_settings$n_cols))
-    plot_settings$n_cols <- plot_settings$n_cols + 1
-  } else {
-    widths_setting <- 1 / plot_settings$n_cols
-  }
-
-  ## The wholeGroup plot gets a box drawn around it.
-  for (plot_names in names(plot_list)) {
-    if (plot_names %in% seperate_plot_var_box) {
-      plot_list[[plot_names]] <- plot_list[[plot_names]] +
-        ggplot2::theme(plot.background = ggplot2::element_rect(
-          color = "black",
-          linewidth = plot_settings$seperate_plot_var_box_linewidth,
-          fill = NA
-        ))
-    }
-  }
+  # # Add y axis --------------------------------------------------------------
+  # if (plot_settings$axis_y == TRUE) {
+  #   y_axis_plot <- ggplot2::ggplot() +
+  #     plot_y_axis(
+  #       plot_dat,
+  #       plot_lims = plot_lims,
+  #       plot_settings = plot_settings
+  #     ) +
+  #     ggplot2::theme(plot.margin = ggplot2::unit(c(
+  #       plot_settings$margin_top,
+  #       0,
+  #       plot_settings$margin_bottom,
+  #       0
+  #     ), "npc"))
+  #
+  #   positions_y_axis <- calc_y_positions(tiles, plot_settings$n_cols)
+  #
+  #   for (i in positions_y_axis) {
+  #     plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
+  #   }
+  #
+  #   widths_setting <- c(0.02, rep(1 - 0.02 / plot_settings$n_cols, times = plot_settings$n_cols))
+  #   plot_settings$n_cols <- plot_settings$n_cols + 1
+  # } else {
+  #   widths_setting <- 1 / plot_settings$n_cols
+  # }
+  #
+  # ## The wholeGroup plot gets a box drawn around it.
+  # for (plot_names in names(plot_list)) {
+  #   if (plot_names %in% seperate_plot_var_box) {
+  #     plot_list[[plot_names]] <- plot_list[[plot_names]] +
+  #       ggplot2::theme(plot.background = ggplot2::element_rect(
+  #         color = "black",
+  #         linewidth = plot_settings$seperate_plot_var_box_linewidth,
+  #         fill = NA
+  #       ))
+  #   }
+  # }
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list,
-    ncol = plot_settings$n_cols,
-    widths = widths_setting
+    ncol = plot_settings$n_cols#,
+    #widths = widths_setting
   ) +
     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 }
 
 
 # Utils -------------------------------------------------------------------
-
-
-filter_plot_years <- function(plot_dat, years_lines = NULL, years_braces = NULL, plot_settings) {
-  if (is.null(years_braces)) {
-    plot_years <- unique(c(plot_dat[["plot_braces"]]$year_start, plot_dat[["plot_braces"]]$year_end))
-    plot_years <- plot_years[order(plot_years)]
-    if (plot_settings$split_plot == FALSE) {
-      ## Draw braces from last year to every other year
-      braceplot_years <- lapply(plot_years[-which(plot_years == max(plot_years))], function(x) {
-        c(x, max(plot_years))
-      })
-    } else {
-      # Consecutive years, e.g., 2009 - 2015, 2015 - 2022 ...
-      braceplot_years <- lapply(seq_along(plot_years[-which(plot_years == max(plot_years))]), function(x) {
-        c(plot_years[x], plot_years[x + 1])
-      })
-    }
-  } else {
-    braceplot_years <- years_braces
-  }
-
-  plot_dat[["plot_lines"]] <- plot_dat[["plot_lines"]][filter_years(plot_dat[["plot_lines"]], years_lines), ]
-  plot_dat[["plot_braces"]] <- plot_dat[["plot_braces"]][filter_years(plot_dat[["plot_braces"]], braceplot_years), ]
-  plot_dat[["plot_background_lines"]] <- plot_dat[["plot_background_lines"]][filter_years(plot_dat[["plot_background_lines"]], years_lines), ]
-  plot_dat[["plot_points"]] <- plot_dat[["plot_points"]][plot_dat[["plot_points"]]$years_Trend %in% c(unique(plot_dat$plot_lines$years_Trend), unique(plot_dat$plot_braces$years_Trend)), ]
-
-  return(plot_dat)
-}
-
-
 plot_title <- function(title, title_superscript) {
   if (!is.null(title_superscript)) {
     names(title_superscript) <- sapply(names(title_superscript), sub_dash)

@@ -59,7 +59,7 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
   grouping_var_lvls <- levels(factor(dat_final[, grouping_var]))
 
 
-  plot_lims <- calc_plot_lims(dat_pf, plot_settings_expanded)
+  plot_lims <- calc_plot_lims(dat_final, plot_settings_expanded)
   brace_coordinates <- calc_brace_coords(dat_final,
                                          grouping_var_lvls,
                                          plot_lims$coords,
