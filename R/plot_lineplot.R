@@ -25,8 +25,8 @@ plot_lineplot <- function(eatRep_dat,
                           grouping_var = NULL,
                           parameter = "mean",
                           line_sig = "trend",
-                          years_lines = NULL,
-                          years_braces = NULL,
+                          years_lines = list(c(2009, 2015), c(2015, 2022)),
+                          years_braces = list(c(2009, 2015), c(2015, 2022)),
                           facets = "TR_BUNDESLAND",
                           # seperate_plot_var_order = NULL,
                           # seperate_plot_var_box = "wholeGroup",
@@ -41,10 +41,6 @@ plot_lineplot <- function(eatRep_dat,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
 
-  plot_settings = plotsettings_lineplot(
-    default_list = lineplot_4x4
-  )
-
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
 
@@ -53,9 +49,6 @@ plot_lineplot <- function(eatRep_dat,
                          parameter = parameter,
                          brace_label_est = brace_label_est)
 
-  ## Put the years into a designated object for that and put through for the plotting stuf:
-  years_lines = list(c(2009, 2015), c(2015, 2022))
-  years_braces = list(c(2009, 2015), c(2015, 2022))
 
   years_lines_df <- data.frame(do.call("rbind", years_lines))
   years_braces_df <- data.frame(do.call("rbind", years_braces))
