@@ -67,9 +67,8 @@ plot_lineplot <- function(eatRep_dat,
 
 
 
-  dat_p$plot_dat <- filter_years(dat_p$plot_dat, l = years_lines, b = years_braces)
-  dat_p$plot_dat <- dat_p$plot_dat %>%
-    dplyr::filter(mhg %in% c("ersteGen", "einET"))
+  dat_p$plot_dat <- filter_years(dat_p$plot_dat, line_years = years_lines, brace_years = years_braces)
+  dat_p$plot_dat <- subset(dat_p$plot_dat, mhg %in% c("ersteGen", "einET"))
 
   #plot_dat <- equalize_line_length(plot_dat, plot_settings)
 

@@ -89,6 +89,3 @@ create_trend <- function(df) {
   return(df)
 }
 
-paste_trend_years <- function(years_list) {
-  vapply(years_list, paste0, collapse = "_", FUN.VALUE = character(1))
-}
