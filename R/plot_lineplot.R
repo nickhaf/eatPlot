@@ -44,11 +44,6 @@ plot_lineplot <- function(eatRep_dat,
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
 
-  dat_p <- prep_lineplot(eatRep_dat,
-                         line_sig = line_sig,
-                         parameter = parameter,
-                         brace_label_est = brace_label_est)
-
 
   years_lines_df <- data.frame(do.call("rbind", years_lines))
   years_braces_df <- data.frame(do.call("rbind", years_braces))
@@ -58,14 +53,22 @@ plot_lineplot <- function(eatRep_dat,
   colnames(years_lines_df) <- c("year_start", "year_end")
   colnames(years_braces_df) <- c("year_start", "year_end")
 
-  ## What happens, if no years are provided?
+  ## Put it in here, so I don't have to give it into the funciton as arguments every time
   plot_settings_expanded <- plot_settings
   plot_settings_expanded$years_list <- list("years_lines" = years_lines_df,
                                             "years_braces" = years_braces_df)
 
 
-  dat_p$dat_final <- filter_years(dat_p$dat_final, l = years_lines, b = years_braces)
-  dat_p$dat_final <- dat_p$dat_final %>%
+  ## Maybe do preperation not in this function, so the data can be changed afterwards! And also the format for the  table data might be a bit different.
+  dat_p <- prep_lineplot(eatRep_dat,
+                         line_sig = line_sig,
+                         parameter = parameter,
+                         brace_label_est = brace_label_est)
+
+
+
+  dat_p$plot_dat <- filter_years(dat_p$plot_dat, l = years_lines, b = years_braces)
+  dat_p$plot_dat <- dat_p$plot_dat %>%
     dplyr::filter(mhg %in% c("ersteGen", "einET"))
 
   #plot_dat <- equalize_line_length(plot_dat, plot_settings)
@@ -74,7 +77,7 @@ plot_lineplot <- function(eatRep_dat,
 
 
   ## Give out warning if seperate plot var is not an ordered factor. In this case, sort alphabetically. Provide guidance on how to achieve that.
-  # dat_p$dat_final[, facets] <- check_facets(dat_p$dat_final[, facets])
+  # dat_p$plot_dat[, facets] <- check_facets(dat_p$plot_dat[, facets])
   ## Wie filtere ich dann richtig? da gabs irgendwie ein Problem
 
   plot_single_lineplot(dat_p, plot_settings)
@@ -82,15 +85,15 @@ plot_lineplot <- function(eatRep_dat,
   plot_list <- list()
   position <- 1
 
-  facet_values <- unique(dat_p$dat_final[, facets])[!is.na(unique(dat_p$dat_final[, facets]))]
+  facet_values <- unique(dat_p$plot_dat[, facets])[!is.na(unique(dat_p$plot_dat[, facets]))]
 i = "Berlin"
 
   for (i in facet_values) {
 
     dat_p_facet <- dat_p
-    dat_p_facet$dat_final <- dat_p_facet$dat_final[!is.na(dat_p_facet$dat_final[, facets]), ]
+    dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, facets]), ]
 
-    dat_p_facet$dat_final <- dat_p_facet$dat_final[dat_p_facet$dat_final[, facets] == i & !is.na(dat_p_facet$dat_final[, facets]), ]
+    dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, facets] == i & !is.na(dat_p_facet$plot_dat[, facets]), ]
 
     p_state <- plot_single_lineplot(dat_p_facet, plot_settings) +
       plot_title(sub_dash(i), title_superscripts) +

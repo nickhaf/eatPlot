@@ -46,27 +46,27 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
 
 
   # Split the data frame by 'id', apply the function, and then combine the results
-  dat_final <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
-  rownames(dat_final) <- NULL
+  plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
+  rownames(plot_dat) <- NULL
 
 
-  dat_final$line_sig <- ifelse(dat_final$p_comp < 0.05, TRUE, FALSE)
-  dat_final$point_sig <- ifelse(dat_final$p_point < 0.05, TRUE, FALSE)
+  plot_dat$line_sig <- ifelse(plot_dat$p_comp < 0.05, TRUE, FALSE)
+  plot_dat$point_sig <- ifelse(plot_dat$p_point < 0.05, TRUE, FALSE)
 
 
   grouping_var = "mhg"
   ## Only into factor, if not already a factor:
-  grouping_var_lvls <- levels(factor(dat_final[, grouping_var]))
+  grouping_var_lvls <- levels(factor(plot_dat[, grouping_var]))
 
 
-  plot_lims <- calc_plot_lims(dat_final, plot_settings_expanded)
-  brace_coordinates <- calc_brace_coords(dat_final,
+  plot_lims <- calc_plot_lims(plot_dat, plot_settings_expanded)
+  brace_coordinates <- calc_brace_coords(plot_dat,
                                          grouping_var_lvls,
                                          plot_lims$coords,
                                          plot_settings = plot_settings_expanded
   )
 
-  brace_dat <- prep_brace(dat_final, brace_coords = brace_coordinates)
+  brace_dat <- prep_brace(plot_dat, brace_coords = brace_coordinates)
 
 
   # The multiplicator here is not that easy to understand, possiby take something else.
@@ -79,7 +79,7 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
   ## etc., use this range as multiplicor
 ## Best to do one after the other, but togehter.
 
-  list_final <- list(dat_final = dat_final, brace_dat = brace_dat, plot_lims = plot_lims)
+  list_final <- list(plot_dat = plot_dat, brace_dat = brace_dat, plot_lims = plot_lims)
 
   return(list_final)
 }
