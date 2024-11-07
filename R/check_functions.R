@@ -1,14 +1,13 @@
-check_facets <- function(vec) {
+check_facets <- function(dat, facets) {
 
-  if(!checkmate::test_factor(vec, ordered = TRUE)){
-
+  if(!checkmate::test_factor(dat[, facets], ordered = TRUE)){
     message("Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor.")
 
-  ordered_vec <- vec[order(vec)]
-  vec <- factor(ordered_vec, levels = unique(ordered_vec), ordered = TRUE)
+  ordered_dat <- dat[order(dat[, facets]), ]
+  levels(ordered_dat[, facets]) <- factor(unique(ordered_dat[, facets]), levels = unique(ordered_dat[, facets]), ordered = TRUE)
 
   }
-  return(vec)
+  return(ordered_dat)
 
 }
 

@@ -65,9 +65,12 @@ plot_lineplot <- function(eatRep_dat,
 
 
 
+  ## Muss ich hier nicht für braces und Daten gesondert filtern?
   dat_p$plot_dat <- filter_years(dat_p$plot_dat, line_years = years_lines, brace_years = years_braces)
-  dat_p$plot_dat <- subset(dat_p$plot_dat, mhg %in% c("ersteGen", "einET"))
-  dat_p$plot_dat[, facets] <- check_facets(dat_p$plot_dat[, facets])
+
+
+  ## Order directly while also ordering the rows, otherwise the countries get overwritten with the wrong state
+dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
 
   #plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
@@ -76,7 +79,7 @@ plot_lineplot <- function(eatRep_dat,
   plot_list <- list()
   position <- 1
 
-  facet_values <- levels(dat_p$plot_dat[, facets])
+  facet_values <- levels(as.factor(dat_p$plot_dat[, facets]))
 
   for (i in facet_values) {
 
@@ -138,7 +141,8 @@ plot_lineplot <- function(eatRep_dat,
     widths = widths_setting
   ) +
     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
-}
+
+  }
 
 
 # Utils -------------------------------------------------------------------
