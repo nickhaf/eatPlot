@@ -2,7 +2,7 @@ check_facets <- function(vec) {
 
   if(!checkmate::test_factor(vec, ordered = TRUE)){
 
-    message("Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor, see https://campus.datacamp.com/courses/introduction-to-r-for-finance/factors-4?ex=8")
+    message("Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor.")
 
   ordered_vec <- vec[order(vec)]
   vec <- factor(ordered_vec, levels = unique(ordered_vec), ordered = TRUE)

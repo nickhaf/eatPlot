@@ -22,7 +22,6 @@ plot_single_lineplot <- function(plot_dat,
 
 
 
-browser()
   ggplot2::ggplot(plot_dat$plot_dat,
     mapping = ggplot2::aes(
       x = year,

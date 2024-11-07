@@ -6,7 +6,9 @@
 #' @export
 #'
 #' @examples # tbd
-plot_y_axis <- function(plot_dat, plot_lims, plot_settings = plotsettings_lineplot()) {
+plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
+
+  plot_lims <- plot_dat$plot_lims
 
   y_coords <- calc_y_value_space(plot_lims$coords, plot_lims$y_range, plot_settings)
 
@@ -32,16 +34,18 @@ plot_y_axis <- function(plot_dat, plot_lims, plot_settings = plotsettings_linepl
     ),
     set_y_coords(plot_dat, y_coords, plot_lims, plot_settings),
     ## Use same coordinate system as the braces, so the plots can be aligned.
-    theme_y_axis()
-  )}
+    theme_y_axis(plot_settings)
+  )
+
+  }
 
 
 
 # Utils -------------------------------------------------------------------
 
 
-calc_y_positions <- function(states, n_cols) {
-  n_rows <- ceiling(length(states) / n_cols)
+calc_y_positions <- function(facets, n_cols) {
+  n_rows <- ceiling(length(facets) / n_cols)
   n_cols <- n_cols + 1 # One column added for the y_axis.
   n_tiles <- n_rows * n_cols
 
@@ -50,3 +54,4 @@ calc_y_positions <- function(states, n_cols) {
   }))
   return(pos)
 }
+

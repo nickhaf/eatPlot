@@ -1,8 +1,7 @@
 #' Plot a lineplot.
 #'
-#' @param plot_dat Input is a list prepared by [prep_plot()].`
-#' @param seperate_plot_var Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
-#' @param seperate_plot_var_order Character vector containing all unique elements in the `seperate_plot_var` column. The lineplot-tiles will be ordered according to the order of this vector.
+#' @param plot_dat Input is a list prepared by `prep_plot()`.
+#' @param facets Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to `state_var`.
 #' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroup"`.
@@ -28,8 +27,7 @@ plot_lineplot <- function(eatRep_dat,
                           years_lines = list(c(2009, 2015), c(2015, 2022)),
                           years_braces = list(c(2009, 2015), c(2015, 2022)),
                           facets = "TR_BUNDESLAND",
-                          # seperate_plot_var_order = NULL,
-                          # seperate_plot_var_box = "wholeGroup",
+                          seperate_plot_var_box = "wholeGroup",
                           # point_values = "est_noTrend_noComp",
                           # point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
                           # line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
@@ -53,7 +51,7 @@ plot_lineplot <- function(eatRep_dat,
   colnames(years_lines_df) <- c("year_start", "year_end")
   colnames(years_braces_df) <- c("year_start", "year_end")
 
-  ## Put it in here, so I don't have to give it into the funciton as arguments every time
+  ## Put it in here, so I don't have to give it into the function as arguments every time
   plot_settings_expanded <- plot_settings
   plot_settings_expanded$years_list <- list("years_lines" = years_lines_df,
                                             "years_braces" = years_braces_df)
@@ -69,23 +67,16 @@ plot_lineplot <- function(eatRep_dat,
 
   dat_p$plot_dat <- filter_years(dat_p$plot_dat, line_years = years_lines, brace_years = years_braces)
   dat_p$plot_dat <- subset(dat_p$plot_dat, mhg %in% c("ersteGen", "einET"))
+  dat_p$plot_dat[, facets] <- check_facets(dat_p$plot_dat[, facets])
 
   #plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
 
 
-
-  ## Give out warning if seperate plot var is not an ordered factor. In this case, sort alphabetically. Provide guidance on how to achieve that.
-  # dat_p$plot_dat[, facets] <- check_facets(dat_p$plot_dat[, facets])
-  ## Wie filtere ich dann richtig? da gabs irgendwie ein Problem
-
-  plot_single_lineplot(dat_p, plot_settings)
-
   plot_list <- list()
   position <- 1
 
-  facet_values <- unique(dat_p$plot_dat[, facets])[!is.na(unique(dat_p$plot_dat[, facets]))]
-i = "Berlin"
+  facet_values <- levels(dat_p$plot_dat[, facets])
 
   for (i in facet_values) {
 
@@ -109,49 +100,42 @@ i = "Berlin"
 
   names(plot_list) <- facet_values
 
-  # # Add y axis --------------------------------------------------------------
-  # if (plot_settings$axis_y == TRUE) {
-  #   y_axis_plot <- ggplot2::ggplot() +
-  #     plot_y_axis(
-  #       plot_dat,
-  #       plot_lims = plot_lims,
-  #       plot_settings = plot_settings
-  #     ) +
-  #     ggplot2::theme(plot.margin = ggplot2::unit(c(
-  #       plot_settings$margin_top,
-  #       0,
-  #       plot_settings$margin_bottom,
-  #       0
-  #     ), "npc"))
-  #
-  #   positions_y_axis <- calc_y_positions(tiles, plot_settings$n_cols)
-  #
-  #   for (i in positions_y_axis) {
-  #     plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
-  #   }
-  #
-  #   widths_setting <- c(0.02, rep(1 - 0.02 / plot_settings$n_cols, times = plot_settings$n_cols))
-  #   plot_settings$n_cols <- plot_settings$n_cols + 1
-  # } else {
-  #   widths_setting <- 1 / plot_settings$n_cols
-  # }
-  #
-  # ## The wholeGroup plot gets a box drawn around it.
-  # for (plot_names in names(plot_list)) {
-  #   if (plot_names %in% seperate_plot_var_box) {
-  #     plot_list[[plot_names]] <- plot_list[[plot_names]] +
-  #       ggplot2::theme(plot.background = ggplot2::element_rect(
-  #         color = "black",
-  #         linewidth = plot_settings$seperate_plot_var_box_linewidth,
-  #         fill = NA
-  #       ))
-  #   }
-  # }
+  # Add y axis as seperate plot --------------------------------------------------------------
+  if (plot_settings$axis_y == TRUE) {
+    y_axis_plot <- ggplot2::ggplot() +
+      plot_y_axis(
+        dat_p_facet,
+        plot_settings = plot_settings
+      )
+
+    positions_y_axis <- calc_y_positions(facet_values, plot_settings$n_cols)
+
+    for (i in positions_y_axis) {
+      plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
+    }
+
+    widths_setting <- c(0.02, rep(1 - 0.02 / plot_settings$n_cols, times = plot_settings$n_cols))
+    plot_settings$n_cols <- plot_settings$n_cols + 1
+  } else {
+    widths_setting <- 1 / plot_settings$n_cols
+  }
+
+  ## The wholeGroup plot gets a box drawn around it.
+  for (plot_names in names(plot_list)) {
+    if (plot_names %in% seperate_plot_var_box) {
+      plot_list[[plot_names]] <- plot_list[[plot_names]] +
+        ggplot2::theme(plot.background = ggplot2::element_rect(
+          color = "black",
+          linewidth = plot_settings$seperate_plot_var_box_linewidth,
+          fill = NA
+        ))
+    }
+  }
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list,
-    ncol = plot_settings$n_cols#,
-    #widths = widths_setting
+    ncol = plot_settings$n_cols,
+    widths = widths_setting
   ) +
     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 }

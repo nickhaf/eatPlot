@@ -31,15 +31,19 @@ theme_table <- function(plot_settings) {
 #' @export
 #'
 #' @examples # tbd
-theme_y_axis <- function() {
+theme_y_axis <- function(plot_settings = plotsettings_lineplot()) {
   theme_line() %+replace%
     ggplot2::theme(
       axis.text.y = ggplot2::element_text(colour = "black", size = 6),
       text = ggplot2::element_text(colour = "black", size = 4),
       axis.ticks.y = ggplot2::element_line(linewidth = 0.2),
       axis.text.x = ggplot2::element_blank(),
-      axis.line.x = ggplot2::element_blank()
-    )
+      axis.line.x = ggplot2::element_blank(),
+      plot.margin = ggplot2::unit(c(
+      plot_settings$margin_top,
+      0,
+      plot_settings$margin_bottom,
+      0), "npc"))
 }
 
 #' Theme for a table column.
