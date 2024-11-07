@@ -41,7 +41,7 @@ plot_points <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
       ggplot2::aes(
         label = round(.data$est_point, 0)
       ),
-      nudge_y = plot_dat$dat_final$nudge_y,
+      nudge_y = plot_dat$plot_dat$nudge_y,
       size = plot_settings$point_label_size
     )
     # }

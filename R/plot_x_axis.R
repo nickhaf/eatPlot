@@ -19,7 +19,7 @@ plot_x_axis <- function(plot_dat,
 
   coord_diff <- diff(range(plot_dat$plot_lims$coords))
 
-  dat_coords <- unique(plot_dat$dat_final[, c("year", "trend")])
+  dat_coords <- unique(plot_dat$plot_dat[, c("year", "trend")])
 
   dat_coords$x_labels <- as.character(dat_coords$year)
   dat_coords$y_coords <- y_max - (coord_diff * plot_settings$axis_x_label_nudge_y)

@@ -270,7 +270,7 @@ calc_y_nudge <- function(plot_dat,
   #
   #   res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
   # } else {
-  plot_dat$dat_final <- plot_dat$dat_final %>%
+  plot_dat$dat_final <- plot_dat$plot_dat %>%
     dplyr::group_by(year) %>%
     dplyr::mutate(nudge_y = ifelse(est_point == min(est_point),
                                    yes = nudge_val * -1,
