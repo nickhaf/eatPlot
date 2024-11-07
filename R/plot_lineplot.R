@@ -63,14 +63,9 @@ plot_lineplot <- function(eatRep_dat,
                          parameter = parameter,
                          brace_label_est = brace_label_est)
 
-
-
   ## Muss ich hier nicht für braces und Daten gesondert filtern?
   dat_p$plot_dat <- filter_years(dat_p$plot_dat, line_years = years_lines, brace_years = years_braces)
-
-
-  ## Order directly while also ordering the rows, otherwise the countries get overwritten with the wrong state
-dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
+  dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
 
   #plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
