@@ -11,7 +11,7 @@
 #' @examples # tbd
 prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, parameter, years_lines, years_braces) {
   check_eatRep_dat(eatRep_dat)
-
+browser()
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
@@ -34,36 +34,58 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
       values_to = "group"
     )
 
-  eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est), c("id", "group", "est", "p")]
+  line_sig <- "trend_crossDiff"
+
+  #eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est), c("id", "comparison", "group", "est", "p")]
+  ## Wenn keine Komparison angegeben, alle nehemn
+
 
   ## By the way! Not done here, still have to deal with the comparisons of comparisons.
   # trend_crossDiff has another comparison in the group column
 
- eatRep_dat_nested_comps <- eatRep_dat_long %>%
-    filter(comparison == "trend_crossDiff") %>% ## instead, take all that still have a comp in group
+
+  eatRep_dat_nested_comps <- eatRep_dat_long %>%
+    filter(str_detect(group, "comp_")) %>% ## instead, take all that still have a comp in group
     left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
    mutate(id = paste(id, group, sep = "_")) %>%
-   select(-group) %>%
+   dplyr::select(-group) %>%
    pivot_longer(cols = c("unit_1", "unit_2"),
                 names_to = "unit_b",
-                values_to = "group") %>%
-   mutate(unit = paste(unit, unit_b, sep = "_")) %>%
-   select(-unit_b)
-
-eatRep_dat_long_2 <- rbind(eatRep_dat_long %>% filter(comparison != "trend_crossDiff"), eatRep_dat_nested_comps)
-
- ## Es ist ja immer der gleiche Wert, für alle vier Gruppen in diesen Comparisons. Es sollte also reichen, diesen Wert jeweils an jede Gruppe ranzuhängen
+                values_to = "group")
 
 
-  eatRep_dat_merged <- merge(eatRep_dat_long,
-                             eatRep_dat$group_estimates,
-                             by.x = "group",
-                             by.y = "id",
-                             all.x = TRUE,
-                             suffixes = c("_comp", "_point"))
+  eatRep_dat_nested_comps_2 <- eatRep_dat_nested_comps %>%
+    filter(str_detect(group, "comp_")) %>% ## instead, take all that still have a comp in group
+    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
+    mutate(id = paste(id, group, sep = "_")) %>%
+    dplyr::select(-group) %>%
+    pivot_longer(cols = c("unit_1", "unit_2"),
+                 names_to = "unit_c",
+                 values_to = "group")
 
+
+  ## Ziel: In Group sollten nur noch Gruppen stehen. Zuordnung erfolgt über die ID
+
+  ## Actually, needs to be done again. Auf dem Laufwerk müsste ich noch einen Vorschlag dafür haben.
+
+
+
+eatRep_dat_long_bind <- bind_rows(eatRep_dat_long %>% filter(str_detect(group, "comp_", negate = TRUE)),
+                                  eatRep_dat_nested_comps %>% filter(str_detect(group, "comp_", negate = TRUE)),
+                                  eatRep_dat_nested_comps_2)
+eatRep_dat_merged <- merge(eatRep_dat_long_bind,
+                            eatRep_dat$group_estimates,
+                            by.x = "group",
+                            by.y = "id",
+                            all.x = TRUE,
+                            suffixes = c("_comp", "_point"))
+## Muss das alles in einen Dataframe? Oder kann man das für ggplot auch in 2 belassen, und für die Punkte dann einfach eigene Daten nehemn?
+## Eigentlich schon, oder?
 
   # Split the data frame by 'id', apply the function, and then combine the results
+## Funktioniert jetzt nicht mehr, weil ich die id zusammengepastet habe. Ich müßste die wahrscheinlich lassen, und die
+## zuordnende ID für die restlichen comps ranhängen.
+
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
   rownames(plot_dat) <- NULL
 
