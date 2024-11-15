@@ -37,13 +37,13 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
 
   ## By the way! Not done here, still have to deal with the comparisons of comparisons.
   # trend_crossDiff has another comparison in the group column
-
   eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est), c("id", "comparison", "group", "est", "p")]
 
 # nested comparisons ------------------------------------------------------
   # trend_crossDiff has another comparison in the group column
   # Goal: only have groups in the group column.
 
+  ## Make into a function and apply until there is no comp in the group column any more
   eatRep_dat_nested_comps <- eatRep_dat_long %>%
     filter(str_detect(group, "comp_")) %>%
     left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
@@ -52,8 +52,15 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
     pivot_longer(cols = c("unit_1", "unit_2"),
                  names_to = "unit_b",
                  values_to = "group") %>%
-    filter(str_detect(group, "comp_", negate = TRUE)) %>%
+    filter(str_detect(group, "comp_")) %>%
+    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
+    mutate(id = paste(id, group, sep = "_")) %>%
+    dplyr::select(-group) %>%
+    pivot_longer(cols = c("unit_1", "unit_2"),
+                 names_to = "unit_c",
+                 values_to = "group") %>%
     select(id, comparison, group, est, p)
+
 
 
 

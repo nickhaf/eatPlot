@@ -58,6 +58,8 @@ plot_lineplot <- function(eatRep_dat,
 
 
   ## Maybe do preperation not in this function, so the data can be changed afterwards! And also the format for the  table data might be a bit different.
+  line_sig <- "trend_crossDiff_of_groupDiff"
+
   dat_p <- prep_lineplot(eatRep_dat,
                          line_sig = line_sig,
                          parameter = parameter,
