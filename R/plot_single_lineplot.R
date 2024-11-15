@@ -20,7 +20,7 @@ plot_single_lineplot <- function(plot_dat,
                                  plot_settings = plotsettings_lineplot()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
 
-
+browser()
 
   ggplot2::ggplot(plot_dat$plot_dat,
     mapping = ggplot2::aes(
