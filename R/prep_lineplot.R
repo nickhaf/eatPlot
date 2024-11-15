@@ -38,25 +38,27 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
   ## By the way! Not done here, still have to deal with the comparisons of comparisons.
   # trend_crossDiff has another comparison in the group column
 
-  line_sig <- "trend_crossDiff"
   eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est), c("id", "comparison", "group", "est", "p")]
-  ## Wenn keine Komparison angegeben, alle nehemn
 
-  ## By the way! Not done here, still have to deal with the comparisons of comparisons.
+# nested comparisons ------------------------------------------------------
   # trend_crossDiff has another comparison in the group column
-#
-#   eatRep_dat_nested_comps <- eatRep_dat_long %>%
-#     filter(str_detect(group, "comp_")) %>% ## instead, take all that still have a comp in group
-#     left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-#     mutate(id = paste(id, group, sep = "_")) %>%
-#     dplyr::select(-group) %>%
-#     pivot_longer(cols = c("unit_1", "unit_2"),
-#                  names_to = "unit_b",
-#                  values_to = "group")
-#
-# eatRep_dat_long_2 <- rbind(eatRep_dat_long %>% filter(comparison != "trend_crossDiff"), eatRep_dat_nested_comps)
+  # Goal: only have groups in the group column.
 
- ## Es ist ja immer der gleiche Wert, für alle vier Gruppen in diesen Comparisons. Es sollte also reichen, diesen Wert jeweils an jede Gruppe ranzuhängen
+  eatRep_dat_nested_comps <- eatRep_dat_long %>%
+    filter(str_detect(group, "comp_")) %>%
+    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
+    mutate(id = paste(id, group, sep = "_")) %>%
+    dplyr::select(-group) %>%
+    pivot_longer(cols = c("unit_1", "unit_2"),
+                 names_to = "unit_b",
+                 values_to = "group") %>%
+    filter(str_detect(group, "comp_", negate = TRUE)) %>%
+    select(id, comparison, group, est, p)
+
+
+
+eatRep_dat_long <- rbind(eatRep_dat_long %>% filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
+###############
 
 
   eatRep_dat_merged <- merge(eatRep_dat_long,
@@ -65,6 +67,7 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
                              by.y = "id",
                              all.x = TRUE,
                              suffixes = c("_comp", "_point"))
+
 
 
   # Split the data frame by 'id', apply the function, and then combine the results
