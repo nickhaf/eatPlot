@@ -47,7 +47,7 @@ browser()
   eatRep_dat_nested_comps <- eatRep_dat_long %>%
     filter(str_detect(group, "comp_")) %>% ## instead, take all that still have a comp in group
     left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-   mutate(id = paste(id, group, sep = "_")) %>%
+   mutate(id_2 = paste(id, group, sep = "_")) %>%
    dplyr::select(-group) %>%
    pivot_longer(cols = c("unit_1", "unit_2"),
                 names_to = "unit_b",
@@ -57,7 +57,7 @@ browser()
   eatRep_dat_nested_comps_2 <- eatRep_dat_nested_comps %>%
     filter(str_detect(group, "comp_")) %>% ## instead, take all that still have a comp in group
     left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-    mutate(id = paste(id, group, sep = "_")) %>%
+    mutate(id_3 = paste(id_2, group, sep = "_")) %>%
     dplyr::select(-group) %>%
     pivot_longer(cols = c("unit_1", "unit_2"),
                  names_to = "unit_c",
@@ -83,9 +83,8 @@ eatRep_dat_merged <- merge(eatRep_dat_long_bind,
 ## Eigentlich schon, oder?
 
   # Split the data frame by 'id', apply the function, and then combine the results
-## Funktioniert jetzt nicht mehr, weil ich die id zusammengepastet habe. Ich müßste die wahrscheinlich lassen, und die
-## zuordnende ID für die restlichen comps ranhängen.
 
+## Trend ist noch falsch. Sollte schauen, welche years in den comps drin sind, und dann die Jahre rausziehen.
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
   rownames(plot_dat) <- NULL
 
