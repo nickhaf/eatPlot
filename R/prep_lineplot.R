@@ -65,7 +65,6 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
 
   eatRep_dat_long <- rbind(eatRep_dat_long %>% filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
   ###############
-
   eatRep_dat_merged <- merge(eatRep_dat_long,
                              eatRep_dat$group_estimates,
                              by.x = "group",
@@ -95,9 +94,12 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
                                          plot_settings = plot_settings_expanded
   )
 
-
   plot_dat_wide <- as.data.frame(pivot_wider(plot_dat, names_from = "comparison", values_from = c("est_comp", "se_comp", "sig_comp")))
 
+  ######### Hier nohc eine Schleife rum, sodass theoretisch auch andere Comparisons geplottet werden können.
+  plot_dat_wide$point_est <- plot_dat_wide$est_point
+  plot_dat_wide$point_sig <- plot_dat_wide$sig_point
+  ############
   plot_dat_wide$line_sig <- plot_dat_wide[, paste0("sig_comp_", line_sig)]
   plot_dat_wide$brace_label_est <- plot_dat_wide[, paste0("est_comp_", brace_label_est)]
   plot_dat_wide$brace_label_se <- plot_dat_wide[, paste0("se_comp_", brace_label_se)]
@@ -111,16 +113,8 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
   line_dat <- plot_dat_wide
   brace_dat <- prep_brace(plot_dat_wide, brace_coords = brace_coordinates)
 
-
   # The multiplicator here is not that easy to understand, possiby take something else.
   plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
-
-  # Add until last brace coord to the plot lims. This is actually done in plot_lims.
-  # Would be easier to just take the min value in the brace_coordinates and maybe add a small nudge value in the end.
-  # This range would then probably be used in plot_single_lineplot()  in ylim of coord_cartesian.
-  #Also: As soon as I have the full coordinates of the whole plot nothing should shange about those anymore. So for all nudging
-  ## etc., use this range as multiplicor
-  ## Best to do one after the other, but togehter.
 
   list_final <- list(plot_dat = line_dat, brace_dat = brace_dat, plot_lims = plot_lims)
 

@@ -63,7 +63,8 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
     rotate = 180,
     linewidth = plot_settings$brace_line_width,
     npoints = 200,
-    outside = FALSE
+    outside = FALSE,
+    colour = "black"
   )
 
   #}
@@ -78,7 +79,7 @@ draw_brace_label <- function(brace_coords, plot_settings = plot_settings()) {
       y = .data$label_pos_y,
       label = .data$brace_label
     ),
-    colour = "#000000",
+    colour = "black",
     size = plot_settings$brace_label_size,
     label.padding = grid::unit(rep(0, 4), "pt"),
     fill = NA,

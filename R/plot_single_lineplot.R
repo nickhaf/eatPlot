@@ -23,12 +23,12 @@ plot_single_lineplot <- function(plot_dat,
                   mapping = ggplot2::aes(
                     x = year,
                     y = est_point,
-                    group = id
+                    group = id,
+                    colour = .data$mhg
                   )
   ) +
     ggplot2::geom_line(
       ggplot2::aes(
-        colour = .data$mhg,
         linetype = .data$line_sig
       ),
       linewidth = plot_settings$line_width
