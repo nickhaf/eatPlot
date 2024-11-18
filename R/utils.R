@@ -142,9 +142,9 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
     cols_removed <- grep(remove_pattern,
-      colnames(data),
-      invert = TRUE,
-      value = TRUE
+                         colnames(data),
+                         invert = TRUE,
+                         value = TRUE
     )
     data <- data[, cols_removed]
   }
@@ -163,8 +163,8 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
     colnames(data)[col_pos] <- year_cols
 
     data_long <- stats::reshape(data,
-      direction = "long",
-      varying = colnames(data)[col_pos]
+                                direction = "long",
+                                varying = colnames(data)[col_pos]
     )
     data_long$id <- NULL
   } else { ## In this case, there is no trend:
@@ -176,13 +176,13 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
 
   data_long <- rename_columns(data_long,
-    old_names = new_colnames,
-    new_names = paste0(new_colnames, suffix)
+                              old_names = new_colnames,
+                              new_names = paste0(new_colnames, suffix)
   )
 
   data_long <- rename_columns(data_long,
-    old_names = paste0("time", suffix),
-    new_names = "year"
+                              old_names = paste0("time", suffix),
+                              new_names = "year"
   )
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
@@ -290,7 +290,7 @@ get_comparisons <- function(dat, states, sub_groups) {
                           gsub("\\.VS\\..*", "", dat$group_var),
                           dat$group_var)
 
-dat$group_var <- gsub("\\.vs\\.", "\\.VS\\.", dat$group_var)
+  dat$group_var <- gsub("\\.vs\\.", "\\.VS\\.", dat$group_var)
 
   dat[comparisons_log, "compare_1"] <- sapply(strsplit(dat[comparisons_log, "group_var"], split = "\\.VS\\."), function(x) {
     x[[1]]
@@ -315,8 +315,8 @@ dat$group_var <- gsub("\\.vs\\.", "\\.VS\\.", dat$group_var)
   ## Check if comparison is one of group in state vs. the group in wholeGroup
 
   dat$compare_2 <- ifelse(dat$grouping_var == dat$compare_2 & !is.na(dat$grouping_var) & !is.na(dat$compare_2) & dat$grouping_var != "no_comp" & dat$compare_2 != "no_comp",
-    "wholeGroupSameGroup",
-    dat$compare_2
+                          "wholeGroupSameGroup",
+                          dat$compare_2
   )
 
   return(dat)

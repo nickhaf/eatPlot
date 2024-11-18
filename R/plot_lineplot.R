@@ -5,7 +5,6 @@
 #' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroup"`.
-#' @param line_values Character vector with two elements. Column names in `plot_dat[["plot_lines"]]` containing the y-values for the plotted lines. Defaults to `c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")`. If set to `NULL`, no lines will be plotted.
 #' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_noComp"`, which will show the significance of the difference between two time points.
 #' @param label_est Character string of the column name containing the brace labels.
@@ -24,18 +23,17 @@ plot_lineplot <- function(eatRep_dat,
                           grouping_var = NULL,
                           parameter = "mean",
                           line_sig = "trend",
+                          # line_se = "trend",
                           years_lines = list(c(2009, 2015), c(2015, 2022)),
                           years_braces = list(c(2009, 2015), c(2015, 2022)),
                           facets = "TR_BUNDESLAND",
                           seperate_plot_var_box = "wholeGroup",
-                          # point_values = "est_noTrend_noComp",
-                          # point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
-                          # line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
+                          point_values = "none",
+                          point_sig = "none",
                           brace_label_est = "trend",
-                          # brace_label_se = "se_Trend_noComp",
-                          # brace_label_sig_high = NULL,
-                          # brace_label_sig_bold = "sig_Trend_noComp",
-                          # line_se = NULL,
+                          brace_label_se = "trend",
+                          brace_label_sig_high = "trend",
+                          brace_label_sig_bold = "trend",
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
 
@@ -58,12 +56,14 @@ plot_lineplot <- function(eatRep_dat,
 
 
   ## Maybe do preperation not in this function, so the data can be changed afterwards! And also the format for the  table data might be a bit different.
-  line_sig <- "trend_crossDiff_of_groupDiff"
-
   dat_p <- prep_lineplot(eatRep_dat,
                          line_sig = line_sig,
                          parameter = parameter,
-                         brace_label_est = brace_label_est)
+                         brace_label_est = brace_label_est,
+                         brace_label_se = brace_label_se,
+                         brace_label_sig_high = brace_label_sig_high,
+                         brace_label_sig_bold = brace_label_sig_bold
+                         )
 
   ## Muss ich hier nicht für braces und Daten gesondert filtern?
   dat_p$plot_dat <- filter_years(dat_p$plot_dat, line_years = years_lines, brace_years = years_braces)
@@ -82,8 +82,11 @@ plot_lineplot <- function(eatRep_dat,
 
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, facets]), ]
-
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, facets] == i & !is.na(dat_p_facet$plot_dat[, facets]), ]
+
+
+    dat_p_facet$brace_dat <- dat_p_facet$brace_dat[!is.na(dat_p_facet$brace_dat[, facets]), ]
+    dat_p_facet$brace_dat <- dat_p_facet$brace_dat[dat_p_facet$brace_dat[, facets] == i & !is.na(dat_p_facet$brace_dat[, facets]), ]
 
     p_state <- plot_single_lineplot(dat_p_facet, plot_settings) +
       plot_title(sub_dash(i), title_superscripts) +

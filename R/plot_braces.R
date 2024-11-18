@@ -1,10 +1,5 @@
 prep_brace <- function(plot_dat, brace_coords){
 
-  plot_dat_BL <- plot_dat %>%
-    dplyr::filter(TR_BUNDESLAND == "Berlin")
-
-
-
   brace_coords$coord_dat_test1 <- brace_coords$coord_dat %>%
     dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
     tidyr::pivot_longer(cols = c("upper_y", "lower_y"),
@@ -14,35 +9,29 @@ prep_brace <- function(plot_dat, brace_coords){
                         names_to = "year_type") %>%
     dplyr::mutate(year = as.character(year))
 
-
-  brace_labels <- merge(plot_dat_BL[, c("id", "est_comp", "mhg", "trend")],
+  brace_labels <- merge(plot_dat[, c("TR_BUNDESLAND", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "mhg", "trend")],
                         brace_coords$group_labels,
                         by.x = "mhg",
                         by.y = "grouping_lvls",
                         all.x = TRUE)
 
-
   # Construct brace labels --------------------------------------------------
-  ## Significances can be shown with bold font or a raised a.
-  # dat <- construct_label(
-  #   dat,
-  #   new_name = "brace_label",
-  #   label_est = "label_est",
-  #   label_se = "label_se",
-  #   label_sig_high = "label_sig_high",
-  #   label_sig_bold = "label_sig_bold",
-  #   round_est = 0,
-  #   round_se = 1
-  # )
+  # Significances can be shown with bold font or a raised a.
+  ## Need columns for est_brace, sig_brace and se_brace
+  brace_labels <- construct_label(
+    brace_labels,
+    round_est = 0,
+    round_se = 1
+  )
 
-  brace_coords$coord_dat_test <- merge(brace_coords$coord_dat_test1,
+  brace_dat <- merge(brace_coords$coord_dat_test1,
                                        brace_labels,
                                        by = "trend",
                                        all.x = TRUE) %>%
     dplyr::mutate(label_pos_x = as.character(label_pos_x))
 
 
-  return(brace_coords$coord_dat_test)
+  return(brace_dat)
 }
 
 
@@ -74,7 +63,8 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
     rotate = 180,
     linewidth = plot_settings$brace_line_width,
     npoints = 200,
-    outside = FALSE
+    outside = FALSE,
+    colour = "black"
   )
 
   #}
@@ -87,9 +77,9 @@ draw_brace_label <- function(brace_coords, plot_settings = plot_settings()) {
     mapping = ggplot2::aes(
       x = .data$label_pos_x,
       y = .data$label_pos_y,
-      label = .data$est_comp
+      label = .data$brace_label
     ),
-    colour = "#000000",
+    colour = "black",
     size = plot_settings$brace_label_size,
     label.padding = grid::unit(rep(0, 4), "pt"),
     fill = NA,

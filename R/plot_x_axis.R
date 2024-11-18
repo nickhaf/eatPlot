@@ -53,7 +53,8 @@ plot_x_axis <- function(plot_dat,
         label = .data$x_labels,
         group = .data$trend
       ),
-      size = plot_settings$axis_x_label_size
+      size = plot_settings$axis_x_label_size,
+      colour = "black"
     ),
     ggplot2::theme(
       axis.line = ggplot2::element_blank(),

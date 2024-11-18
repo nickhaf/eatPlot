@@ -9,37 +9,37 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, parameter, years_lines, years_braces) {
+prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces) {
   check_eatRep_dat(eatRep_dat)
 
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
-    eatRep_dat$estimate,
-    by = "id",
-    all.x = TRUE
+                                      eatRep_dat$estimate,
+                                      by = "id",
+                                      all.x = TRUE
   )
 
   eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
-    eatRep_dat$estimate,
-    by = "id",
-    all.x = TRUE
+                                     eatRep_dat$estimate,
+                                     by = "id",
+                                     all.x = TRUE
   )
 
   eatRep_dat_long <- tidyr::pivot_longer(
-      eatRep_dat$comp_estimates,
-      cols = starts_with("unit"),
-      names_to = "unit",
-      values_to = "group"
-    )
+    eatRep_dat$comp_estimates,
+    cols = starts_with("unit"),
+    names_to = "unit",
+    values_to = "group"
+  )
 
 
   ## By the way! Not done here, still have to deal with the comparisons of comparisons.
   # trend_crossDiff has another comparison in the group column
-  eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est), c("id", "comparison", "group", "est", "p")]
+  eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold), c("id", "comparison", "group", "est", "se", "p")]
 
-# nested comparisons ------------------------------------------------------
+  # nested comparisons ------------------------------------------------------
   # trend_crossDiff has another comparison in the group column
   # Goal: only have groups in the group column.
 
@@ -59,15 +59,12 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, para
     pivot_longer(cols = c("unit_1", "unit_2"),
                  names_to = "unit_c",
                  values_to = "group") %>%
-    select(id, comparison, group, est, p)
+    select(id, comparison, group, est, se, p)
 
 
 
-
-eatRep_dat_long <- rbind(eatRep_dat_long %>% filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
-###############
-
-
+  eatRep_dat_long <- rbind(eatRep_dat_long %>% filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
+  ###############
   eatRep_dat_merged <- merge(eatRep_dat_long,
                              eatRep_dat$group_estimates,
                              by.x = "group",
@@ -82,15 +79,14 @@ eatRep_dat_long <- rbind(eatRep_dat_long %>% filter(str_detect(group, "comp_", n
   rownames(plot_dat) <- NULL
 
 
-  plot_dat$line_sig <- ifelse(plot_dat$p_comp < 0.05, TRUE, FALSE)
-  plot_dat$point_sig <- ifelse(plot_dat$p_point < 0.05, TRUE, FALSE)
+  plot_dat$sig_comp <- ifelse(plot_dat$p_comp < 0.05, TRUE, FALSE)
+
+  plot_dat$sig_point <- ifelse(plot_dat$p_point < 0.05, TRUE, FALSE)
 
 
   grouping_var = "mhg"
   ## Only into factor, if not already a factor:
   grouping_var_lvls <- levels(factor(plot_dat[, grouping_var]))
-
-
   plot_lims <- calc_plot_lims(plot_dat, plot_settings_expanded)
   brace_coordinates <- calc_brace_coords(plot_dat,
                                          grouping_var_lvls,
@@ -98,20 +94,29 @@ eatRep_dat_long <- rbind(eatRep_dat_long %>% filter(str_detect(group, "comp_", n
                                          plot_settings = plot_settings_expanded
   )
 
-  brace_dat <- prep_brace(plot_dat, brace_coords = brace_coordinates)
+  plot_dat_wide <- as.data.frame(pivot_wider(plot_dat, names_from = "comparison", values_from = c("est_comp", "se_comp", "sig_comp")))
 
+  ######### Hier nohc eine Schleife rum, sodass theoretisch auch andere Comparisons geplottet werden können.
+  plot_dat_wide$point_est <- plot_dat_wide$est_point
+  plot_dat_wide$point_sig <- plot_dat_wide$sig_point
+  ############
+  plot_dat_wide$line_sig <- plot_dat_wide[, paste0("sig_comp_", line_sig)]
+  plot_dat_wide$brace_label_est <- plot_dat_wide[, paste0("est_comp_", brace_label_est)]
+  plot_dat_wide$brace_label_se <- plot_dat_wide[, paste0("se_comp_", brace_label_se)]
+  plot_dat_wide$brace_label_sig_high <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_high)]
+  plot_dat_wide$brace_label_sig_bold <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_bold)]
+
+  for(i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]){
+  plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
+}
+
+  line_dat <- plot_dat_wide
+  brace_dat <- prep_brace(plot_dat_wide, brace_coords = brace_coordinates)
 
   # The multiplicator here is not that easy to understand, possiby take something else.
   plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
 
-  # Add until last brace coord to the plot lims. This is actually done in plot_lims.
-  # Would be easier to just take the min value in the brace_coordinates and maybe add a small nudge value in the end.
-  # This range would then probably be used in plot_single_lineplot()  in ylim of coord_cartesian.
-  #Also: As soon as I have the full coordinates of the whole plot nothing should shange about those anymore. So for all nudging
-  ## etc., use this range as multiplicor
-## Best to do one after the other, but togehter.
-
-  list_final <- list(plot_dat = plot_dat, brace_dat = brace_dat, plot_lims = plot_lims)
+  list_final <- list(plot_dat = line_dat, brace_dat = brace_dat, plot_lims = plot_lims)
 
   return(list_final)
 }
