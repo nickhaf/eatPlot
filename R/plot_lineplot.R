@@ -32,9 +32,9 @@ plot_lineplot <- function(eatRep_dat,
                           # point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
                           # line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
                           brace_label_est = "trend",
-                          # brace_label_se = "se_Trend_noComp",
-                          # brace_label_sig_high = NULL,
-                          # brace_label_sig_bold = "sig_Trend_noComp",
+                          brace_label_se = "trend",
+                          brace_label_sig_high = "trend",
+                          brace_label_sig_bold = "trend",
                           # line_se = NULL,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
@@ -63,7 +63,11 @@ plot_lineplot <- function(eatRep_dat,
   dat_p <- prep_lineplot(eatRep_dat,
                          line_sig = line_sig,
                          parameter = parameter,
-                         brace_label_est = brace_label_est)
+                         brace_label_est = brace_label_est,
+                         brace_label_se = brace_label_se,
+                         brace_label_sig_high = brace_label_sig_high,
+                         brace_label_sig_bold = brace_label_sig_bold
+                         )
 
   ## Muss ich hier nicht für braces und Daten gesondert filtern?
   dat_p$plot_dat <- filter_years(dat_p$plot_dat, line_years = years_lines, brace_years = years_braces)
@@ -82,8 +86,11 @@ plot_lineplot <- function(eatRep_dat,
 
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, facets]), ]
-
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, facets] == i & !is.na(dat_p_facet$plot_dat[, facets]), ]
+
+
+    dat_p_facet$brace_dat <- dat_p_facet$brace_dat[!is.na(dat_p_facet$brace_dat[, facets]), ]
+    dat_p_facet$brace_dat <- dat_p_facet$brace_dat[dat_p_facet$brace_dat[, facets] == i & !is.na(dat_p_facet$brace_dat[, facets]), ]
 
     p_state <- plot_single_lineplot(dat_p_facet, plot_settings) +
       plot_title(sub_dash(i), title_superscripts) +

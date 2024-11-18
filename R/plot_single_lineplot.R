@@ -19,15 +19,12 @@ plot_single_lineplot <- function(plot_dat,
                                  # background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
-
-
-
   ggplot2::ggplot(plot_dat$plot_dat,
-    mapping = ggplot2::aes(
-      x = year,
-      y = est_point,
-      group = id
-    )
+                  mapping = ggplot2::aes(
+                    x = year,
+                    y = est_point,
+                    group = id
+                  )
   ) +
     ggplot2::geom_line(
       ggplot2::aes(
@@ -43,9 +40,9 @@ plot_single_lineplot <- function(plot_dat,
     draw_brace_label(plot_dat$brace_dat, plot_settings) +
     ggplot2::coord_cartesian(ylim = plot_dat$plot_lims$y_lims_total, clip = "off") +
     set_scales(plot_settings) +
-        plot_x_axis(plot_dat,
-          plot_settings = plot_settings
-        ) +
+    plot_x_axis(plot_dat,
+                plot_settings = plot_settings
+    ) +
     NULL
 
 

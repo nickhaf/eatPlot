@@ -11,14 +11,14 @@
 #' @examples # tbd
 plot_points <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
   plot_dat <- calc_y_nudge(plot_dat,
-    plot_settings = plot_settings
+                           plot_settings = plot_settings
   )
 
   # data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge,
   #                                          nudge_x = plot_settings$point_label_nudge_x,
   #                                          split_plot = plot_settings$split_plot)
   list(
-    ggplot2::geom_point(ggplot2::aes(shape = .data$point_sig)),
+    ggplot2::geom_point(ggplot2::aes(shape = .data$sig_point)),
 
     ## Hier genau den gleichen Nudge wie für die x-Achse
     # if (plot_settings$point_label_nudge == TRUE) {
