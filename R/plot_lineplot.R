@@ -41,19 +41,10 @@ plot_lineplot <- function(eatRep_dat,
   check_plotsettings_lineplot(plot_settings)
 
 
-  years_lines_df <- data.frame(do.call("rbind", years_lines))
-  years_braces_df <- data.frame(do.call("rbind", years_braces))
-
-  ## calc overlap, coords, brace_coords, calc_brace_position here directly, put together into a coord_list and give into necessary functions.
-
-  colnames(years_lines_df) <- c("year_start", "year_end")
-  colnames(years_braces_df) <- c("year_start", "year_end")
-
   ## Put it in here, so I don't have to give it into the function as arguments every time
   plot_settings_expanded <- plot_settings
-  plot_settings_expanded$years_list <- list("years_lines" = years_lines_df,
-                                            "years_braces" = years_braces_df)
-
+  plot_settings_expanded$years_list <- lapply(list(years_lines, years_braces), prep_years)
+  names(plot_settings_expanded$years_list) <- c("years_lines", "years_braces")
 
   ## Maybe do preperation not in this function, so the data can be changed afterwards! And also the format for the  table data might be a bit different.
   dat_p <- prep_lineplot(eatRep_dat,
@@ -62,7 +53,8 @@ plot_lineplot <- function(eatRep_dat,
                          brace_label_est = brace_label_est,
                          brace_label_se = brace_label_se,
                          brace_label_sig_high = brace_label_sig_high,
-                         brace_label_sig_bold = brace_label_sig_bold
+                         brace_label_sig_bold = brace_label_sig_bold,
+                         plot_settings = plot_settings_expanded
                          )
 
   ## Muss ich hier nicht für braces und Daten gesondert filtern?
@@ -258,3 +250,11 @@ calc_plot_lims <- function(plot_dat, plot_settings) {
   )
   return(coord_list)
 }
+
+
+prep_years <- function(years){
+  years_df <- data.frame(do.call("rbind", years))
+  colnames(years_df) <- c("year_start", "year_end")
+  return(years_df)
+}
+

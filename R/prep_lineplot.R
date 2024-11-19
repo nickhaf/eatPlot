@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces) {
+prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
   check_eatRep_dat(eatRep_dat)
 
   eatRep_dat$plain <- NULL
