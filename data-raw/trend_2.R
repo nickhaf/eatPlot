@@ -1,19 +1,12 @@
-d1 <- readRDS(file = "P:/Methoden/02_R_Pakete/eatRep/Outputstruktur/report2_outputs/03_mig_verschachtelt.rds")
-bt_example <- d1[[1]][[1]][[1]]
+# remotes::install_github("weirichs/eatTools", upgrade="never")
+# remotes::install_github("weirichs/eatRep", upgrade="never")
 
-trend_2 <- lapply(bt_example, function(x){
-
-  if(checkmate::test_names(colnames(x), must.include = "est")){
-    x$est <- rnorm(n = nrow(x), mean = 500, sd = 100)
-  }
-  if(checkmate::test_names(colnames(x), must.include = "p")){
-    x$p <- runif(n = nrow(x), min = 0, max = 0.1
-    )
-  }
-
-
-return(x)
-
-})
+library(eatRep)
+data(lsa)
+rd     <- lsa[which(lsa[,"domain"] == "reading"),]
+rdN1   <- rd[which(rd[,"nest"] == 1),]
+rdN1y10<- rdN1[which(rdN1[,"year"] == 2010),]
+means1 <- repMean(datL = rdN1y10, ID="idstud", wgt="wgt", type = "JK2", PSU = "jkzone", repInd = "jkrep", imp="imp", groups = "country", group.splits = 0:1, dependent = "score", na.rm=FALSE, doCheck=TRUE, engine = "BIFIEsurvey")
+trend_2  <- report2(means1, add = list(domain = "reading"))
 
 usethis::use_data(trend_2, overwrite = TRUE)
