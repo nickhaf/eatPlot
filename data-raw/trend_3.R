@@ -16,4 +16,6 @@ trend_3 <- lapply(bt_example, function(x){
 
 })
 
+trend_3$group$TR_BUNDESLAND[is.na(trend_3$group$TR_BUNDESLAND)] <- "none"
+
 usethis::use_data(trend_3, overwrite = TRUE)
