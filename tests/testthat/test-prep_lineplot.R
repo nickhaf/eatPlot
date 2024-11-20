@@ -5,7 +5,7 @@ plot_settings_expanded <- plotsettings_lineplot()
 plot_settings_expanded$years_list <- lapply(list(years_lines, years_braces), prep_years)
 names(plot_settings_expanded$years_list) <- c("years_lines", "years_braces")
 
-preped_dat <- prep_lineplot(trend_2,
+preped_dat <- prep_lineplot(trend_3,
                             line_sig = "trend",
                             point_sig = "none",
                             brace_label_est = "trend",
