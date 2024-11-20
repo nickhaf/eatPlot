@@ -36,7 +36,6 @@ plot_lineplot <- function(eatRep_dat,
                           brace_label_sig_bold = "trend",
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
-
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
 
@@ -48,20 +47,20 @@ plot_lineplot <- function(eatRep_dat,
 
   ## Maybe do preperation not in this function, so the data can be changed afterwards! And also the format for the  table data might be a bit different.
   dat_p <- prep_lineplot(eatRep_dat,
-                         line_sig = line_sig,
-                         parameter = parameter,
-                         brace_label_est = brace_label_est,
-                         brace_label_se = brace_label_se,
-                         brace_label_sig_high = brace_label_sig_high,
-                         brace_label_sig_bold = brace_label_sig_bold,
-                         plot_settings = plot_settings_expanded
-                         )
+    line_sig = line_sig,
+    parameter = parameter,
+    brace_label_est = brace_label_est,
+    brace_label_se = brace_label_se,
+    brace_label_sig_high = brace_label_sig_high,
+    brace_label_sig_bold = brace_label_sig_bold,
+    years_lines = years_lines,
+    years_braces = years_braces,
+    plot_settings = plot_settings_expanded
+  )
 
-  ## Muss ich hier nicht für braces und Daten gesondert filtern?
-  dat_p$plot_dat <- filter_years(dat_p$plot_dat, line_years = years_lines, brace_years = years_braces)
   dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
 
-  #plot_dat <- equalize_line_length(plot_dat, plot_settings)
+  # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
 
 
@@ -71,7 +70,6 @@ plot_lineplot <- function(eatRep_dat,
   facet_values <- levels(as.factor(dat_p$plot_dat[, facets]))
 
   for (i in facet_values) {
-
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, facets]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, facets] == i & !is.na(dat_p_facet$plot_dat[, facets]), ]
@@ -133,8 +131,7 @@ plot_lineplot <- function(eatRep_dat,
     widths = widths_setting
   ) +
     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
-
-  }
+}
 
 
 # Utils -------------------------------------------------------------------
@@ -204,16 +201,12 @@ extract_gsub_values <- function(plot_dat) {
 #' * `coords`: Y-value of the first brace start, and heighest y-value of the plot.
 #' @examples # tbd
 calc_plot_lims <- function(plot_dat, plot_settings) {
-
-
   ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
-
     y_range <- range(plot_dat$est_point, na.rm = TRUE)
 
     ## This increases the coords by a nudging parameter:
     coords <- calc_y_value_coords(y_range)
-
   }
 
   # else {
@@ -229,12 +222,12 @@ calc_plot_lims <- function(plot_dat, plot_settings) {
   # Okay, this seems to calculate the brace positions again (will happen later on too), so the plot limits can be set.
 
   # Better: Calc the brace positions once. Putt the lowest value in here, to define the minimum y value
-#
-#   y_lims_total <- calc_plot_lims_y(
-#     plot_dat$plot_braces,
-#     coords,
-#     plot_settings = plot_settings
-#   )
+  #
+  #   y_lims_total <- calc_plot_lims_y(
+  #     plot_dat$plot_braces,
+  #     coords,
+  #     plot_settings = plot_settings
+  #   )
 
   ## Why need this? calc if necessary!
 
@@ -252,9 +245,8 @@ calc_plot_lims <- function(plot_dat, plot_settings) {
 }
 
 
-prep_years <- function(years){
+prep_years <- function(years) {
   years_df <- data.frame(do.call("rbind", years))
   colnames(years_df) <- c("year_start", "year_end")
   return(years_df)
 }
-

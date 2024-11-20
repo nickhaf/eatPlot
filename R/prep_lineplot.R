@@ -116,7 +116,11 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
   # The multiplicator here is not that easy to understand, possiby take something else.
   plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
 
-  list_final <- list(plot_dat = line_dat, brace_dat = brace_dat, plot_lims = plot_lims)
+  line_dat <- filter_years(line_dat, years = years_lines)
+  brace_dat <- filter_years(brace_dat, years = years_braces)
+  background_line_dat <- subset(line_dat, line_dat$TR_BUNDESLAND == "total" & is.na(line_dat$mhg))
+
+  list_final <- list(plot_dat = line_dat, brace_dat = brace_dat, background_line_dat = background_line_dat, plot_lims = plot_lims)
 
   return(list_final)
 }

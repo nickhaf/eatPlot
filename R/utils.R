@@ -655,15 +655,12 @@ set_scale_breaks <- function(plot_borders){
 }
 
 
-filter_years <- function(dat, line_years, brace_years){
-  if(is.null(line_years)){
-    l <- consecutive_numbers(dat$year)
-  }
-
-  years_lines_vec <- vapply(line_years, paste0, collapse = "_", FUN.VALUE = character(1))
-  years_braces_vec <- vapply(brace_years, paste0, collapse = "_", FUN.VALUE = character(1))
-
+filter_years <- function(dat, years){
+  # if(is.null(years)){
+  #   l <- consecutive_numbers(dat$year)
+  # }
+  years_vec <- vapply(years, paste0, collapse = "_", FUN.VALUE = character(1))
   check_years(dat$trend)
-
-  dat_final <- dat[dat$trend %in% years_lines_vec, ]
+  dat_final <- dat[dat$trend %in% years_vec, ]
+  return(dat_final)
 }

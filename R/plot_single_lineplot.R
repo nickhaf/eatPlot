@@ -16,9 +16,9 @@ plot_single_lineplot <- function(plot_dat,
                                  # label_se = "se_Trend_noComp",
                                  # label_sig_high = "sig_Trend_CompCrossDiffWhole",
                                  # label_sig_bold = "sig_Trend_noComp",
-                                 # background_lines = TRUE,
                                  plot_settings = plotsettings_lineplot()) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
+
   ggplot2::ggplot(plot_dat$plot_dat,
                   mapping = ggplot2::aes(
                     x = year,
@@ -43,30 +43,23 @@ plot_single_lineplot <- function(plot_dat,
     plot_x_axis(plot_dat,
                 plot_settings = plot_settings
     ) +
-    NULL
+   # if (plot_settings$background_lines) {
+        plot_background_lines(
+          dat_total = plot_dat$background_line_dat,
+          plot_settings = plot_settings
+        )
+      #}#,
+    #   if (plot_settings$split_plot == TRUE) {
+    #     if (plot_settings$equal_trend_line_length == TRUE) {
+    #       ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
+    #     } else {
+    #       ggplot2::facet_grid(. ~ years_Trend, scales = "free_x", space = "free_x")
+    #     }
+    #   },
+    #   set_plot_coords(
+    #     plot_dat,
+    #     plot_lims = plot_lims,
+    #     plot_settings = plot_settings
+    #   )
 
-
-
-  #   list(
-  #     if (background_lines == TRUE) {
-  #       plot_background_lines(
-  #         dat = plot_dat[["plot_background_lines"]],
-  #         line_values = line_values,
-  #         line_se = line_se,
-  #         plot_settings = plot_settings
-  #       )
-  #     },
-  #     if (plot_settings$split_plot == TRUE) {
-  #       if (plot_settings$equal_trend_line_length == TRUE) {
-  #         ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
-  #       } else {
-  #         ggplot2::facet_grid(. ~ years_Trend, scales = "free_x", space = "free_x")
-  #       }
-  #     },
-  #     set_plot_coords(
-  #       plot_dat,
-  #       plot_lims = plot_lims,
-  #       plot_settings = plot_settings
-  #     )
-  #   )
 }
