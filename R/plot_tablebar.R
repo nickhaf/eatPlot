@@ -64,7 +64,6 @@ plot_tablebar <- function(dat,
   }
 
 
-
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
@@ -155,7 +154,7 @@ plot_tablebar <- function(dat,
   new_colnames <- paste0("col_", 1:length(columns_table))
 
   for (i in seq_along(columns_table)) {
-    dat <- construct_label(
+    dat <- construct_label_2(
       dat,
       new_name = new_colnames[i],
       label_est = columns_table[[i]],
@@ -167,7 +166,7 @@ plot_tablebar <- function(dat,
     )
 
     if (!is.null(columns_table_se[[i]])) {
-      dat <- construct_label(
+      dat <- construct_label_2(
         dat,
         new_name = new_colnames[i],
         label_se = columns_table_se[[i]]
@@ -176,7 +175,7 @@ plot_tablebar <- function(dat,
   }
 
   if (!is.null(bar_label)) {
-    dat <- construct_label(
+    dat <- construct_label_2(
       dat,
       new_name = "bar_label_text",
       label_est = bar_label,

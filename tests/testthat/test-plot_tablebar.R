@@ -1,3 +1,45 @@
+dat <- trend_2
+prep_tablebarplot <- function(dat, par = "mean") {
+  dat$estimate <- subset(
+    dat$estimate,
+    parameter == par
+  )
+
+  dat$group_estimates <- merge(dat$group,
+    dat$estimate,
+    by = "id",
+    all.x = TRUE
+  )
+
+  dat$group_estimates$sig <- ifelse(dat$group_estimates$p < 0.05, TRUE, FALSE)
+
+  return(dat$group_estimates)
+}
+
+dat_prep <- prep_tablebarplot(trend_2)
+
+
+example_table <- plot_tablebar(
+  dat = dat_prep,
+  bar_est = "est",
+  bar_sig = "sig",
+  bar_fill = "sig",
+  headers = list("country", "a barplot"),
+  columns_table = list("country"),
+  y_axis = "country",
+  plot_settings = plotsettings_tablebarplot(columns_alignment = 0.5,
+                                            columns_width = c( 0.3, 0.7),
+                                            headers_alignment = c(0.5, 0.5),
+                                            default_list = barplot_noTrend)
+)
+
+#save_plot(example_table, "/home/nick/Downloads/table.pdf")
+
+
+
+
+# OLD ---------------------------------------------------------------------
+
 test_that("column x coords are calced correctly", {
   expect_equal(
     calc_column_coords(
@@ -73,8 +115,8 @@ test_that("continous barplot looks the same", {
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
     headers = list("est_1", "est_2", "a barplot"),
-    column_spanners = list("spanner_2" = c(2,3), "spanner_1" = 1),
-    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
+    column_spanners = list("spanner_2" = c(2, 3), "spanner_1" = 1),
+    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1, 2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
     columns_table_sig_high = list("bar_sig", "bar_sig"),
@@ -114,8 +156,8 @@ test_that("continous barplot can have a white space", {
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
     headers = list("est_1", "est_2", "a barplot"),
-    column_spanners = list("spanner_2" = c(2,3), "spanner_1" = 1),
-    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
+    column_spanners = list("spanner_2" = c(2, 3), "spanner_1" = 1),
+    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1, 2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
     columns_table_sig_high = list("bar_sig", "bar_sig"),
