@@ -22,6 +22,7 @@ plot_single_lineplot <- function(plot_dat,
     plot_background_lines(
       dat_total = plot_dat$background_line_dat,
       plot_settings = plot_settings
+
     )
   },
     ggplot2::geom_line(

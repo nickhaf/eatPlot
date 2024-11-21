@@ -11,7 +11,7 @@
 #' @examples # tbd
 prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
   check_eatRep_dat(eatRep_dat)
-
+browser()
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
@@ -26,6 +26,89 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
                                      by = "id",
                                      all.x = TRUE
   )
+
+
+
+  # testing -----------------------------------------------------------------
+#
+#   fill_groups <- function(dat) {
+#
+#     dat <- as_tibble(dat)
+#     eatRep_dat[["group"]] <- as_tibble(eatRep_dat[["group"]])
+#
+#     dat %>%
+#       mutate(across(starts_with("unit"), ~
+#                       map(.x, ~ ifelse(str_detect(.x, "^group"),
+#                                        yes = list(eatRep_dat[["group"]] %>% filter(id %in% .x)),
+#                                        no = ifelse(str_detect(.x, "^comp"),
+#                                                    yes = list(dat %>% filter(id %in% c(.x))),
+#                                                    no = list(tibble())
+#                                        )
+#                       ))))
+#   }
+#
+#
+#   ## fills in the specific row describing the comparison in each cell.
+#   fill_comparison <- function(dat) {
+#     dat_res <- dat %>%
+#       mutate(across(starts_with("unit"), ~
+#                       map(.x, ~ ifelse(
+#                         ncol(.x[[1]]) == 4, ## Anderen Indikator finden!
+#                         yes = list(fill_groups(.x[[1]])),
+#                         no = list(.x[[1]])
+#                       ))))%>%
+#       mutate(across(starts_with("unit"), ~
+#                       map(.x, ~ ifelse(
+#                         "unit_1" %in% colnames(.x[[1]]) ,
+#                         yes = list(unnest(.x[[1]], cols = c(unit_1, unit_2))),
+#                         no = list(.x[[1]])
+#                       ))))
+#     return(dat_res)
+#   }
+#
+#
+#
+#   nested_data <- fill_groups(eatRep_dat[["comparisons"]]) %>%
+#     fill_comparison() %>%
+#     unnest(cols = c(unit_1, unit_2))
+#
+#   output_2 <- nested_data %>%
+#     unnest(cols = c(unit_1, unit_2),
+#            names_sep = "_")
+#
+#   ## Unnesting everything at once leaves it all over the place, so probably not the best!
+#   ## Rather, filter first and then build more consciously:
+#
+#   output_3 <- nested_data %>%
+#     filter(comparison == "crossDiff_of_groupDiff") %>%
+#     unnest(cols = c(unit_1, unit_2),
+#            names_sep = "->")
+#
+#   output_4 <- unnest(output_3, cols = colnames(output_3)[output_3 %>% map_lgl(is.list)],
+#                      names_sep = ":")
+
+  #############
+
+
+# example data frame ------------------------------------------------------
+
+# ex_df <- data.frame(
+#   land = "Berlin",
+#   est = 450,
+#   p = 0.04
+# )
+#
+# ex_comp_df <- data.frame(
+#   comparison_id = c("comp_1", "comp_1"),
+#   unit_1 = c("unit_1", "unit_2"),
+#   group = c("group_11", "group_22"),
+#   p = c(0.01, 0.01),
+#   comparison = c("crossDiff", "crossDiff")
+# )
+#
+
+
+############
 
   eatRep_dat_long <- tidyr::pivot_longer(
     eatRep_dat$comp_estimates,
@@ -72,9 +155,23 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
                              all.x = TRUE,
                              suffixes = c("_comp", "_point"))
 
+eatRep_dat_long_bind <- bind_rows(eatRep_dat_long %>% filter(str_detect(group, "comp_", negate = TRUE)),
+                                  eatRep_dat_nested_comps %>% filter(str_detect(group, "comp_", negate = TRUE)),
+                                  eatRep_dat_nested_comps_2)
+eatRep_dat_merged <- merge(eatRep_dat_long_bind,
+                            eatRep_dat$group_estimates,
+                            by.x = "group",
+                            by.y = "id",
+                            all.x = TRUE,
+                            suffixes = c("_comp", "_point"))
+
+## Muss das alles in einen Dataframe? Oder kann man das für ggplot auch in 2 belassen, und für die Punkte dann einfach eigene Daten nehemn?
+## Eigentlich schon, oder?
 
 
   # Split the data frame by 'id', apply the function, and then combine the results
+
+## Trend ist noch falsch. Sollte schauen, welche years in den comps drin sind, und dann die Jahre rausziehen.
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
   rownames(plot_dat) <- NULL
 
@@ -134,7 +231,7 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
 }
 
 create_trend <- function(df) {
-  df$trend <- paste(df$year[1], df$year[2], sep = "_")
+  df$trend <- paste(unique(df$year), collapse = "_")
   return(df)
 }
 
