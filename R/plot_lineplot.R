@@ -27,6 +27,7 @@ plot_lineplot <- function(eatRep_dat,
                           years_lines = list(c(2009, 2015), c(2015, 2022)),
                           years_braces = list(c(2009, 2015), c(2015, 2022)),
                           facets = "TR_BUNDESLAND",
+                          facet_values,
                           seperate_plot_var_box = "wholeGroup",
                           point_values = "none",
                           point_sig = "none",
@@ -38,7 +39,6 @@ plot_lineplot <- function(eatRep_dat,
                           plot_settings = plotsettings_lineplot()) {
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
-
 
   ## Put it in here, so I don't have to give it into the function as arguments every time
   plot_settings_expanded <- plot_settings
@@ -62,12 +62,10 @@ plot_lineplot <- function(eatRep_dat,
 
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
-
-
   plot_list <- list()
   position <- 1
 
-  facet_values <- levels(as.factor(dat_p$plot_dat[, facets]))
+  #facet_values <- levels(as.factor(dat_p$plot_dat[, facets]))
 
   for (i in facet_values) {
     dat_p_facet <- dat_p
@@ -78,7 +76,15 @@ plot_lineplot <- function(eatRep_dat,
     dat_p_facet$brace_dat <- dat_p_facet$brace_dat[!is.na(dat_p_facet$brace_dat[, facets]), ]
     dat_p_facet$brace_dat <- dat_p_facet$brace_dat[dat_p_facet$brace_dat[, facets] == i & !is.na(dat_p_facet$brace_dat[, facets]), ]
 
-    p_state <- plot_single_lineplot(dat_p_facet, plot_settings) +
+    p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
+                      mapping = ggplot2::aes(
+                        x = year,
+                        y = est_point,
+                        group = id,
+                        colour = .data$mhg
+                      )
+      ) +
+      plot_single_lineplot(dat_p_facet, plot_settings) +
       plot_title(sub_dash(i), title_superscripts) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
         plot_settings$margin_top,

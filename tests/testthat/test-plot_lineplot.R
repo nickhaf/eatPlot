@@ -1,4 +1,54 @@
 
+test_that("lineplot runs through", {
+
+  ## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
+  ## einfach hier rausnehmen.
+
+trend_3$group <- subset(trend_3$group, trend_3$group$mhg %in% c("einET", "ersteGen"))
+
+p <- plot_lineplot(trend_3,
+              grouping_var = NULL,
+              parameter = "mean",
+              line_sig = "trend",
+              # line_se = "trend",
+              years_lines = list(c(2009, 2015), c(2015, 2022)),
+              years_braces = list(c(2009, 2015), c(2015, 2022)),
+              facets = "TR_BUNDESLAND",
+              facet_values = unique(trend_3$group$TR_BUNDESLAND)[unique(trend_3$group$TR_BUNDESLAND) != "total"],
+              seperate_plot_var_box = "wholeGroup",
+              point_values = "none",
+              point_sig = "none",
+              brace_label_est = "trend",
+              brace_label_se = "trend",
+              brace_label_sig_high = "trend",
+              brace_label_sig_bold = "trend",
+              title_superscripts = NULL
+              )
+
+save_plot(p, filename = "/home/nick/Downloads/test.pdf")
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Old ---------------------------------------------------------------------
+
+
 test_that("settings do something", {
   trend_books_2 <- trend_books
   colnames(trend_books_2) <- gsub("2021", "2023", colnames(trend_books_2))

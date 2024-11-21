@@ -22,7 +22,7 @@ plot_background_lines <- function(dat_total,
         group = .data$trend
       ),
       fill = plot_settings$background_line_colour,
-      linewidth = 0.01
+      linewidth = 1
     )
 
 
@@ -42,10 +42,4 @@ plot_background_lines <- function(dat_total,
   #   linewidth = 1,
   #   color = plot_settings$background_line_colour
   # )
-}
-
-.trimNames <- function(name_vector) {
-  name_vector <- gsub("Start.*", ".Start", name_vector)
-  name_vector <- gsub("End.*", ".End", name_vector)
-  name_vector
 }

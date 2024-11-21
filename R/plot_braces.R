@@ -73,11 +73,12 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
 
 draw_brace_label <- function(brace_coords, plot_settings = plot_settings()) {
   ggtext::geom_richtext(
-    data = brace_coords,
+    data = unique(brace_coords[, c("label_pos_x", "label_pos_y", "brace_label")]),
     mapping = ggplot2::aes(
       x = .data$label_pos_x,
       y = .data$label_pos_y,
-      label = .data$brace_label
+      label = .data$brace_label,
+      group = NA
     ),
     colour = "black",
     size = plot_settings$brace_label_size,

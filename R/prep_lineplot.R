@@ -87,12 +87,11 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
   grouping_var = "mhg"
   ## Only into factor, if not already a factor:
   grouping_var_lvls <- levels(factor(plot_dat[, grouping_var]))
-  plot_lims <- calc_plot_lims(plot_dat, plot_settings_expanded)
+  plot_lims <- calc_plot_lims(plot_dat, plot_settings)
   brace_coordinates <- calc_brace_coords(plot_dat,
                                          grouping_var_lvls,
                                          plot_lims$coords,
-                                         plot_settings = plot_settings_expanded
-  )
+                                         plot_settings = plot_settings)
 
   plot_dat_wide <- as.data.frame(pivot_wider(plot_dat, names_from = "comparison", values_from = c("est_comp", "se_comp", "sig_comp")))
 
@@ -118,6 +117,15 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
 
   line_dat <- filter_years(line_dat, years = years_lines)
   brace_dat <- filter_years(brace_dat, years = years_braces)
+
+  if(!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)){
+    stop("Some of the trends you provided in 'years_lines' are not in the data.")
+  }
+
+  if(!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)){
+    stop("Some of the trends you provided in 'years_braces' are not in the data.")
+  }
+
   background_line_dat <- subset(line_dat, line_dat$TR_BUNDESLAND == "total" & is.na(line_dat$mhg))
 
   list_final <- list(plot_dat = line_dat, brace_dat = brace_dat, background_line_dat = background_line_dat, plot_lims = plot_lims)

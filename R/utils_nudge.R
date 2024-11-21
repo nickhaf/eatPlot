@@ -50,7 +50,7 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #'
 #' @examples # tbd
 calc_brace_coords <- function(dat, grouping_var_lvls, coords, plot_settings = plotsettings_lineplot()) {
-  years_braces <- plot_settings_expanded$years_list$years_braces
+  years_braces <- plot_settings$years_list$years_braces
 
 
   ## Calculate the y coordinates for the braces and labels:
@@ -151,7 +151,6 @@ calc_brace_position <- function(plot_settings, overlap) {
   ## Don't do this stuff df wise, only once for all year combinations.
   ## I only need one coordinate for each possible brace, that's it!
 
-  plot_settings <- plot_settings_expanded
   years_braces_df <- plot_settings$years_list$years_braces
   ## Calculate the range between all year combinations:
   years_braces_df$range <- apply(years_braces_df, 1, function(x) {

@@ -660,7 +660,6 @@ filter_years <- function(dat, years){
   #   l <- consecutive_numbers(dat$year)
   # }
   years_vec <- vapply(years, paste0, collapse = "_", FUN.VALUE = character(1))
-  check_years(dat$trend)
   dat_final <- dat[dat$trend %in% years_vec, ]
   return(dat_final)
 }
