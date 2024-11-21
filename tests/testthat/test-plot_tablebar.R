@@ -1,5 +1,3 @@
-dat <- trend_2
-
 dat_prep <- prep_tablebarplot(trend_2)
 
 
@@ -18,7 +16,6 @@ example_table <- plot_tablebar(
 )
 
 #save_plot(example_table, "/home/nick/Downloads/table.pdf")
-
 
 
 
