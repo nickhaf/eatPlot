@@ -1,30 +1,12 @@
-
-
-
-test_that("simple tablebarplot can be plotted", {
-  dat_prep <- prep_tablebarplot(trend_2)
-  dat_prep$est <- dat_prep$est/10
-
-  example_table <- plot_tablebar(
-    dat = dat_prep,
-    bar_est = "est",
-    bar_sig = "sig",
-    bar_fill = "sig",
-    headers = list("country", "a barplot"),
-    columns_table = list("country"),
-    y_axis = "country",
-    plot_settings = plotsettings_tablebarplot(columns_alignment = 0,
-                                              columns_width = c( 0.3, 0.7),
-                                              headers_alignment = c(0, 0.5),
-                                              default_list = barplot_noTrend)
-  )
-
-  vdiffr::expect_doppelganger("Minimal_tablebarplot", example_table)
-  #save_plot(example_table, "/home/nick/Downloads/table.pdf",  height = 226.2 / 3)
-
-})
-
-# OLD ---------------------------------------------------------------------
+test_data_1 <- data.frame(
+  state_var = 1:4,
+  x_min = rep(0, 4),
+  x_max = c(10, -20, 40, 30),
+  est_1 = c(12, 12, 15, 23),
+  se_1 = c(12, 10, 8, 4),
+  bar_sig = c("TRUE", "FALSE", "TRUE", "FALSE"),
+  bar_fill = c("a", "b", "c", "d")
+)
 
 test_that("column x coords are calced correctly", {
   expect_equal(
@@ -84,19 +66,33 @@ test_that("column length is checked correctly", {
   )
 })
 
-test_that("continous barplot looks the same", {
-  test_data <- data.frame(
-    state_var = 1:4,
-    x_min = rep(0, 4),
-    x_max = c(10, -20, 40, 30),
-    est_1 = c(12, 12, 15, 23),
-    se_1 = c(12, 10, 8, 4),
-    bar_sig = c("TRUE", "FALSE", "TRUE", "FALSE"),
-    bar_fill = c("a", "b", "c", "d")
+
+test_that("simple tablebarplot can be plotted", {
+  dat_prep <- prep_tablebarplot(trend_2)
+  dat_prep$est <- dat_prep$est/10
+
+  example_table <- plot_tablebar(
+    dat = dat_prep,
+    bar_est = "est",
+    bar_sig = "sig",
+    bar_fill = "sig",
+    headers = list("country", "a barplot"),
+    columns_table = list("country"),
+    y_axis = "country",
+    plot_settings = plotsettings_tablebarplot(columns_alignment = 0,
+                                              columns_width = c( 0.3, 0.7),
+                                              headers_alignment = c(0, 0.5),
+                                              default_list = barplot_noTrend)
   )
 
+  vdiffr::expect_doppelganger("Minimal_tablebarplot", example_table)
+  #save_plot(example_table, "/home/nick/Downloads/table.pdf",  height = 226.2 / 3)
+
+})
+
+test_that("continous barplot looks the same", {
   p_bar <- plot_tablebar(
-    dat = test_data,
+    dat = test_data_1,
     bar_label = NULL,
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
@@ -126,18 +122,8 @@ test_that("continous barplot looks the same", {
 })
 
 test_that("continous barplot can have a white space", {
-  test_data <- data.frame(
-    state_var = 1:4,
-    x_min = rep(0, 4),
-    x_max = c(10, -20, 40, 30),
-    est_1 = c(12, 12, 15, 23),
-    se_1 = c(12, 10, 8, 4),
-    bar_sig = c("TRUE", "FALSE", "TRUE", "FALSE"),
-    bar_fill = c("a", "b", "c", "d")
-  )
-
   p_bar <- plot_tablebar(
-    dat = test_data,
+    dat = test_data_1,
     bar_label = NULL,
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
@@ -167,8 +153,6 @@ test_that("continous barplot can have a white space", {
   vdiffr::expect_doppelganger("Tablebar with white space", p_bar)
 })
 
-
-
 test_that("Vlines are plotted correctly", {
   plot_settings_test <- list(
     bar_background_lines_spanners = list(c(1, 4), c(5, 9)),
@@ -196,7 +180,6 @@ test_that("Vlines are plotted correctly", {
     bar_background_lines = "border",
     bar_background_lines_linetype = "dashed"
   )
-
 
 
   vdiffr::expect_doppelganger(
