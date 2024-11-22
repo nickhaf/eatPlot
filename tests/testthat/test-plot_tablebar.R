@@ -1,23 +1,28 @@
-dat_prep <- prep_tablebarplot(trend_2)
 
 
-example_table <- plot_tablebar(
-  dat = dat_prep,
-  bar_est = "est",
-  bar_sig = "sig",
-  bar_fill = "sig",
-  headers = list("country", "a barplot"),
-  columns_table = list("country"),
-  y_axis = "country",
-  plot_settings = plotsettings_tablebarplot(columns_alignment = 0.5,
-                                            columns_width = c( 0.3, 0.7),
-                                            headers_alignment = c(0.5, 0.5),
-                                            default_list = barplot_noTrend)
-)
 
-#save_plot(example_table, "/home/nick/Downloads/table.pdf")
+test_that("simple tablebarplot can be plotted", {
+  dat_prep <- prep_tablebarplot(trend_2)
+  dat_prep$est <- dat_prep$est/10
 
+  example_table <- plot_tablebar(
+    dat = dat_prep,
+    bar_est = "est",
+    bar_sig = "sig",
+    bar_fill = "sig",
+    headers = list("country", "a barplot"),
+    columns_table = list("country"),
+    y_axis = "country",
+    plot_settings = plotsettings_tablebarplot(columns_alignment = 0,
+                                              columns_width = c( 0.3, 0.7),
+                                              headers_alignment = c(0, 0.5),
+                                              default_list = barplot_noTrend)
+  )
 
+  vdiffr::expect_doppelganger("Minimal_tablebarplot", example_table)
+  #save_plot(example_table, "/home/nick/Downloads/table.pdf",  height = 226.2 / 3)
+
+})
 
 # OLD ---------------------------------------------------------------------
 

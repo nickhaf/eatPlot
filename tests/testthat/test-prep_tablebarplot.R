@@ -19,25 +19,16 @@ test_that("simple data preperation works", {
 
 test_that("data preperation with comparions works", {
 
-
-  ## Now, Guess I want to get the significance of the comparison of each Bundesland with
-  ## mhg = einET vs. = Total in the same Bundesland, while plotting the point estimates as well.
-
-  ## First step: unit_1 and unit_2 have to have the same TR_BUNDESLAND
-
-  ## Vorher hatte ich für jedes Element eine eigene Spalte. Das war aber sehr durcheinander.
-
-str(trend_3$comparisons)
-
-  # Maybe filter plain for the comparison-Ids that I want to take into the data?:
-
-test <- subset(trend_3$plain, mhg == "einET - total" & comparison == "crossDiff" & parameter == "mean")
+  dat_prep <- prep_tablebarplot(trend_3)
+test <- dat_prep %>%
+  dplyr::filter(mhg == c("einET - total", "total"), comparison %in% c("none"), parameter == "mean")
 test <- test[grep(" - total", test$TR_BUNDESLAND, invert = TRUE), ]
-comp_ids <- test$id
+
+## This has to become a function.
+## But what to do, if there are two different CrossDiff types? -> gesonderte Aufbereitung?
+test_wide <- test %>%
+  select(TR_BUNDESLAND, year, comparison, est, p, sig) %>%
+  pivot_wider(names_from = c(comparison, year), values_from = c(est, p, sig))
 
 
-View(test)
-
-
-  dat_prep <- prep_tablebarplot(trend_3, comparisons = "")
 })
