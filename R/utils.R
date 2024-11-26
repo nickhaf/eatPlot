@@ -382,9 +382,9 @@ calc_overlap <- function(df) {
 #'
 #' @examples # tbd
 get_min_max <- function(dat) {
-  min_max_trend <- by(dat, dat$years_Trend, function(x) {
+  min_max_trend <- by(dat, dat$trend, function(x) {
     data.frame(
-      years_Trend = unique(x$years_Trend),
+      trend = unique(x$trend),
       minimum = min(x$year),
       maximum = max(x$year)
     )

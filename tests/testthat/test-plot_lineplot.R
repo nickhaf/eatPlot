@@ -52,6 +52,7 @@ test_that("simple BT-lineplot runs through", {
     brace_label_sig_bold = "trend",
     title_superscripts = NULL,
     plot_settings = plotsettings_lineplot(
+      split_plot = FALSE,
       default_list = lineplot_4x4
     )
   )

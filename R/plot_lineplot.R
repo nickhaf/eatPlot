@@ -59,6 +59,9 @@ plot_lineplot <- function(eatRep_dat,
   )
 
   dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
+  dat_p$plot_dat$year_axis <- as.numeric(factor(dat_p$plot_dat$year))
+
+
 
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
@@ -84,7 +87,7 @@ plot_lineplot <- function(eatRep_dat,
                         colour = .data$mhg
                       )
       ) +
-      plot_single_lineplot(dat_p_facet, plot_settings) +
+      plot_single_lineplot(dat_p_facet, plot_settings_expanded) +
       plot_title(sub_dash(i), title_superscripts) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
         plot_settings$margin_top,
@@ -236,8 +239,9 @@ calc_plot_lims <- function(plot_dat, plot_settings) {
   #   )
 
   ## Why need this? calc if necessary!
-
-  x_range <- range(plot_dat$year)
+  # Build a unique vector from the years in this list of dataframes:
+  unique_years <- unique(unlist(lapply(plot_settings$years_list, function(df) unlist(df))))
+  x_range <- range(unique_years)
 
 
   ## Output an object with the plot coordinate informations:

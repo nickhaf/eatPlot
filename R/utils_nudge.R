@@ -212,30 +212,30 @@ calc_brace_position <- function(plot_settings, overlap) {
 
 
 # Plot_points -------------------------------------------------------------
-calc_x_nudge <- function(dat, nudge_x, split_plot) {
-  range_years <- diff(range(dat$year_axis))
-  min_max_trend <- get_min_max(dat)
+calc_x_nudge <- function(dat, plot_settings) {
+  range_years <- diff(dat$plot_lims$x_range)
+  min_max_trend <- get_min_max(dat$dat_final)
 
-  dat <- merge(dat, min_max_trend,
-    by = "years_Trend",
+  dat <- merge(dat$dat_final, min_max_trend,
+    by = "trend",
     all.x = TRUE,
     all.y = FALSE
   )
 
-  if (split_plot == TRUE) {
+  if (plot_settings$split_plot == TRUE) {
     dat$x_coords <- ifelse(dat$year == dat$minimum,
-      yes = dat$year_axis + range_years * nudge_x,
+      yes = dat$year_axis + range_years * plot_settings$point_label_nudge_x,
       no = ifelse(dat$year == dat$maximum,
-        yes = dat$year_axis - range_years * nudge_x,
+        yes = dat$year_axis - range_years * plot_settings$point_label_nudge_x,
         no = dat$year_axis
       )
     )
   } else {
     dat$x_coords <- ifelse(dat$year == min(dat$year, na.rm = TRUE),
-      yes = dat$year_axis + range_years * nudge_x,
+      yes = dat$year + range_years * plot_settings$point_label_nudge_x,
       no = ifelse(dat$year == max(dat$year, na.rm = TRUE),
-        yes = dat$year_axis - range_years * nudge_x,
-        no = dat$year_axis
+        yes = dat$year - range_years * plot_settings$point_label_nudge_x,
+        no = dat$year
       )
     )
   }
