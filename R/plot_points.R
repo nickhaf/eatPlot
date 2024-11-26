@@ -17,6 +17,7 @@ plot_points <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
   # data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge,
   #                                          nudge_x = plot_settings$point_label_nudge_x,
   #                                          split_plot = plot_settings$split_plot)
+
   list(
     ggplot2::geom_point(ggplot2::aes(shape = .data$sig_point)),
 
@@ -41,7 +42,7 @@ plot_points <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
       ggplot2::aes(
         label = round(.data$est_point, 0)
       ),
-      nudge_y = plot_dat$plot_dat$nudge_y,
+      nudge_y = plot_dat$dat_final$nudge_y,
       size = plot_settings$point_label_size
     )
     # }

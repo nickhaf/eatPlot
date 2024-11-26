@@ -247,10 +247,10 @@ calc_x_nudge <- function(dat, nudge_x, split_plot) {
 calc_y_nudge <- function(plot_dat,
                          plot_settings = plotsettings_lineplot()) {
 
-  coords_diff <- diff(range(plot_dat$plot_lims$coords))
+    coords_diff <- diff(range(plot_dat$plot_lims$coords))
 
   nudge_val <- coords_diff * plot_settings$point_label_nudge_y
-  nudge_val <- 10
+
   # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher.
   # For facetted plots, the trend has to be taken into account as well.
 

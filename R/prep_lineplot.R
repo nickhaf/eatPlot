@@ -18,14 +18,12 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
                                       eatRep_dat$estimate,
                                       by = "id",
-                                      all.x = TRUE
-  )
+                                      all.x = TRUE)
 
   eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
                                      eatRep_dat$estimate,
                                      by = "id",
-                                     all.x = TRUE
-  )
+                                     all.x = TRUE)
 
   eatRep_dat_long <- tidyr::pivot_longer(
     eatRep_dat$comp_estimates,
