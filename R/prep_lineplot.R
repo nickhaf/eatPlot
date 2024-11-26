@@ -14,6 +14,7 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
 
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
+  eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
 
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
                                       eatRep_dat$estimate,

@@ -57,12 +57,7 @@ plot_lineplot <- function(eatRep_dat,
     years_braces = years_braces,
     plot_settings = plot_settings_expanded
   )
-
   dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
-  dat_p$plot_dat$year_axis <- as.numeric(factor(dat_p$plot_dat$year))
-
-
-
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
   plot_list <- list()
