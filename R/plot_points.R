@@ -13,10 +13,8 @@ plot_points <- function(plot_dat, plot_settings) {
   plot_dat <- calc_y_nudge(plot_dat,
                            plot_settings = plot_settings
   )
-
-  # data_plot_points_nudge <- calc_x_nudge(plot_dat,
-  #                                          plot_settings = plot_settings)
-
+  plot_dat$dat_final <- calc_x_nudge(plot_dat,
+                                           plot_settings = plot_settings)
   list(
     ggplot2::geom_point(ggplot2::aes(shape = .data$sig_point)),
 
@@ -38,7 +36,9 @@ plot_points <- function(plot_dat, plot_settings) {
     #   )
     # } else {
     ggplot2::geom_text(
+      data = plot_dat$dat_final,
       ggplot2::aes(
+        x = .data$x_coords,
         label = round(.data$est_point, 0)
       ),
       nudge_y = plot_dat$dat_final$nudge_y,
