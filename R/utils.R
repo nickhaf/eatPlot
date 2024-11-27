@@ -391,7 +391,6 @@ get_min_max <- function(dat) {
   })
 
   min_max_dat <- do.call(rbind, min_max_trend)
-
   return(min_max_dat)
 }
 

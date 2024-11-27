@@ -14,6 +14,7 @@ plot_points <- function(plot_dat, plot_settings) {
                            plot_settings = plot_settings
   )
   plot_dat$dat_final <- calc_x_nudge(plot_dat,
+                                     nudge_x = plot_settings$point_label_nudge_x,
                                            plot_settings = plot_settings)
   list(
     ggplot2::geom_point(ggplot2::aes(shape = .data$sig_point)),
