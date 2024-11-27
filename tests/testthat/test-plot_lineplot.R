@@ -32,7 +32,8 @@ test_that("simple BT-lineplot runs through", {
   ## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
   ## einfach hier rausnehmen.
 
-  trend_3$group <- subset(trend_3$group, trend_3$group$mhg %in% c("einET", "ersteGen"))
+  trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "ersteGen")) |
+                            (trend_3$group$TR_BUNDESLAND == "total" & is.na(trend_3$group$mhg)))
 
   p <- plot_lineplot(trend_3,
     grouping_var = NULL,
@@ -56,8 +57,6 @@ test_that("simple BT-lineplot runs through", {
       default_list = lineplot_4x4
     )
   )
-
-  ## Check Background lines!
 
 
   save_plot(p, filename = "/home/nick/Downloads/test.pdf")
