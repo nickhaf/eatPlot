@@ -14,8 +14,8 @@ dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
 
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.15, 0.1, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, NA),
-    p2 = c(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, NA)
+    p1 = c(0.05, 0.025, rep(0.025, 7), NA),
+    p2 = c(rep(0.01, 7), NA)
   ),
   plot_ranges = c(-60, 60) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
@@ -129,5 +129,5 @@ p_2 <- plot_tablebar(
   )
 )
 example_plot <- combine_plots(list(p_1, p_2))
-save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 480)
+save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf")
 ```
