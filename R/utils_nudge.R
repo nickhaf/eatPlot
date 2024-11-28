@@ -243,6 +243,39 @@ calc_x_nudge <- function(dat, nudge_x, plot_settings) {
 }
 
 
+nudge_x_axis_labels <- function(dat, plot_settings){
+
+
+  range_years <- diff(range(dat$year))
+  min_max_trend <- get_min_max(dat)
+
+  dat <- merge(dat, min_max_trend,
+               by = "trend",
+               all.x = TRUE,
+               all.y = FALSE
+  )
+
+  if (plot_settings$split_plot) {
+    dat$x_coords <- ifelse(dat$year == dat$minimum,
+                           yes = dat$year_axis + range_years * plot_settings$axis_x_label_centralize,
+                           no = ifelse(dat$year == dat$maximum,
+                                       yes = dat$year_axis - range_years * plot_settings$axis_x_label_centralize,
+                                       no = dat$year_axis
+                           )
+    )
+  } else {
+    dat$x_coords <- ifelse(dat$year == min(dat$year, na.rm = TRUE),
+                           yes = dat$year + range_years * plot_settings$axis_x_label_centralize,
+                           no = ifelse(dat$year == max(dat$year, na.rm = TRUE),
+                                       yes = dat$year - range_years * plot_settings$axis_x_label_centralize,
+                                       no = dat$year
+                           )
+    )
+  }
+
+  return(dat)
+}
+
 
 calc_y_nudge <- function(plot_dat,
                          plot_settings = plotsettings_lineplot()) {

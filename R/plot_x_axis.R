@@ -22,16 +22,8 @@ plot_x_axis <- function(plot_dat,
 
   # calc x-axis  ------------------------------------------------------------
   ## x-axis labels should be centered a bit more. So the larger year in the smaller trend and the smaller year in the larger trend need to go into the center more:
-
-  browser()
-  ## so, obviously I don't provide the dat$plot_dat stuff here.
-  ## Rework the nudge function, so it gets more versatile.
-  ## Just input the range and calc the nudge by that maybe? something like that anyways.
-  ## Or put the coords into plot-settings, not into plot_dat?
- ## Get more concious about what the different objects in these lists are for.
-  dat_coords <- calc_x_nudge(
+  dat_coords <-  nudge_x_axis_labels(
       dat_coords,
-      nudge_x = plot_settings$axis_x_label_centralize,
       plot_settings = plot_settings
     )
 
