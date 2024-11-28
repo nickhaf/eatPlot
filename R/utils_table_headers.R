@@ -138,8 +138,8 @@ plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range
   if (is.null(spanners)) {
     return(NULL)
   }
-
   unlist(lapply(seq_along(spanners), function(spanner) {
+
     i <- spanners[[spanner]]
 
     if (length(i) == 1) {
@@ -149,7 +149,7 @@ plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range
     min_col <- i[1]
     max_col <- i[2]
 
-    column_x_coords_rev <- column_x_coords[order(rev(rownames(column_x_coords))), ]
+    column_x_coords_rev <- column_x_coords[order(rev(as.numeric(rownames(column_x_coords)))), ]
     header_x <- mean(
       c(
         max(column_x_coords_rev[c(min_col, max_col), "right"], na.rm = TRUE),
