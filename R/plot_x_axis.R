@@ -9,11 +9,7 @@
 #' @examples # tbd
 plot_x_axis <- function(plot_dat,
                         plot_settings = plotsettings_lineplot()) {
-
-
-  if(is.null(plot_settings$axis_x_label_nudge_y)){
     plot_settings$axis_x_label_nudge_y <- plot_settings$axis_x_background_width_y / 2
-  }
 
   y_max <- plot_dat$plot_lims$coords[2]
 
@@ -24,18 +20,12 @@ plot_x_axis <- function(plot_dat,
   dat_coords$x_labels <- as.character(dat_coords$year)
   dat_coords$y_coords <- y_max - (coord_diff * plot_settings$axis_x_label_nudge_y)
 
-
   # calc x-axis  ------------------------------------------------------------
   ## x-axis labels should be centered a bit more. So the larger year in the smaller trend and the smaller year in the larger trend need to go into the center more:
-
-  # if (plot_settings$split_plot == TRUE) {
-  #   dat_coords <- calc_x_nudge(dat_coords,
-  #     nudge_x = plot_settings$axis_x_label_centralize,
-  #     split_plot = plot_settings$split_plot
-  #   )
-  # } else {
-    ## Don't have to be centralized in this case, looks good without
-     #}
+  dat_coords <-  nudge_x_axis_labels(
+      dat_coords,
+      plot_settings = plot_settings
+    )
 
   res_list <- list(
     ggplot2::annotate(
@@ -48,7 +38,7 @@ plot_x_axis <- function(plot_dat,
     ),
     ggplot2::geom_text(dat_coords,
       mapping = ggplot2::aes(
-        x = .data$year,
+        x = .data$x_coords,
         y = .data$y_coords,
         label = .data$x_labels,
         group = .data$trend

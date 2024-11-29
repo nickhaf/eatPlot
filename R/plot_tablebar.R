@@ -58,7 +58,6 @@ plot_tablebar <- function(dat,
   if (any(duplicated(dat[, y_axis]))) {
     stop("Your y-axis has to contain only unique values. Maybe you have to paste state_var and grouping_var into unique values?")
   }
-
   if (!is.numeric(dat[, bar_est]) & !is.null(bar_est)) {
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
@@ -83,7 +82,6 @@ plot_tablebar <- function(dat,
       x
     }
   })
-
 
   # Sub dashes so they are displayed correctly in pdf:
   for (i in columns_table) {

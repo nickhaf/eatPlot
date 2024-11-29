@@ -1,309 +1,181 @@
+# Lineplot Trend
 
-Update Version!
+```{r} 
+trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "ersteGen")) |
+                            (trend_3$group$TR_BUNDESLAND == "total" & is.na(trend_3$group$mhg)))
 
-```{r}
-library(readxl)
-library(tidyverse)
-
-d1 <- readRDS(file = "P:/Methoden/02_R_Pakete/eatRep/Outputstruktur/report2_outputs/03_mig_verschachtelt.rds")
-
-## Verschachtelung nicht so schlimm bis jetzt, auf niedrigster Ebene muss es ja hiermit klappen.
-
-eatRep_dat <- d1[[1]][[1]][[1]]
-
-
-```
-
-```{r data_prep}
-
-
-merge_data <- function(dat){
-
-  dat$plain <- NULL
-  
-dat$group_estimates <- dat[["group"]] %>%
-  left_join(., dat[["estimate"]], 
-            by = "id")
-
-dat$comp_estimates <- dat[["comparisons"]] %>%
-  left_join(., dat[["estimate"]], 
-            by = "id")
-
-return(dat)
-}
+  p <- plot_lineplot(trend_3,
+    grouping_var = NULL,
+    parameter = "mean",
+    line_sig = "trend",
+    # line_se = "trend",
+    years_lines = list(c(2009, 2015), c(2015, 2022)),
+    years_braces = list(c(2009, 2015), c(2015, 2022)),
+    facets = "TR_BUNDESLAND",
+    facet_values = unique(trend_3$group$TR_BUNDESLAND)[unique(trend_3$group$TR_BUNDESLAND) != "total"],
+    seperate_plot_var_box = "wholeGroup",
+    point_values = "none",
+    point_sig = "none",
+    brace_label_est = "trend",
+    brace_label_se = "trend",
+    brace_label_sig_high = "trend",
+    brace_label_sig_bold = "trend",
+    title_superscripts = NULL,
+    plot_settings = plotsettings_lineplot(
+      split_plot = FALSE,
+      default_list = lineplot_4x4
+    )
+  )
 
 
-d1$estimate <- d1$estimate %>%
-  dplyr::filter(parameter != "Ncases")
-
-
-plot_dat <- merge_data(d1)
-
+  save_plot(p, filename = "/home/nick/Downloads/test.pdf")
 
 ```
 
 
-```{r plot_lines}
 
-  ## Manual filtering can be done in the group - list element, write vignette
-
-## acutally, I only need this for significances: 
-plot_line <- plot_dat$comp_estimates %>%
-  pivot_longer(cols = starts_with("unit"), 
-               names_to = "unit", 
-               values_to = "group") %>%
-  left_join(., 
-            plot_dat$group_estimates, 
-            join_by(group == id), 
-            suffix = c("_comp", "_group"))  %>%
-      filter(TR_BUNDESLAND == "Berlin", comparison == "trend", !is.na(gy)) %>%
-  mutate(line_sig = ifelse(p_comp < 0.5, "solid", "dotted")
-         ) %>%
-  filter(id %in% c("comp_194", "comp_195", "comp_278", "comp_279")) %>%
-  group_by(id) %>%
-  mutate(trend = paste(year[1], year[2], sep = "_")) %>%
-  ungroup()
-  ## be careful not to select the wide trend!
-
-
-ggplot(plot_line, 
-     mapping = aes(
-    x = year,
-    y = est_group, 
-    group = id,
-    linetype = line_sig
-        )) + 
-  ggplot2::geom_line() + 
-  geom_point() +
-  ggbrace::stat_brace(aes(group = trend), 
-                      linetype = "solid", 
-                      width = 0.02) ## use some multiplicative value here? How is it defined currently? I draw them directly on the y-axis, but probably not necessary?
-  
-## maybe use stat_bracetext for labels? 
-
-
-
-```
-
+# Trend Lesen Deutsch
 
 
 ```{r}
+dat_prepped <- prep_tablebarplot(trend_3, par = c("mean", "sd")) %>%
+  filter(mhg %in% c("aohneZWH", "einET"), !str_detect(TR_BUNDESLAND, "- total")) %>%
+  select(comparison, TR_BUNDESLAND, parameter, year, est, se, es, sig, mhg) %>%
+  pivot_wider(names_from = c(year, comparison, parameter), values_from = c(est, se, es, sig)) %>%
+  mutate(y_axis = 1:nrow(.)) %>%
+  as.data.frame() %>%
+  arrange(TR_BUNDESLAND)
 
+dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
 
+column_widths_stand <- standardize_column_width(
+  column_widths = list(
+    p1 = c(0.05, 0.05, rep(0.05, 7), NA),
+    p2 = c(rep(0.05, 7), NA)
+  ),
+  plot_ranges = c(80, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
+)
 
-
-## Ok, so now the data format is quite good already. I'd need some way to set in the groups into the unit columns. But why not do it later in the end, when the plotting is done, and work as long as possible with the groups. 
-## So the group specific information are saved in the groups, and can be extracted later on.
-## Maybe I can Work with a group-var for ggplot, so I don't have to pull the data into wide format and stay within this format? 
-
-# Big part of the data preperation before was to fill up and rename columns ..., not necessary in that extend anymore.
-
-## Because that takes out some of the complexity, and we can just merge in the end?
-## Possible problem: Harder to understand the data frame outputs. But not that bad? 
-## Maybe it will be possible to just name the depVar one is interested in, or even prepare the data before?
-## Maybe write own class for ouptut, would make specific print functions possible. 
-##################################
-## Prepare plot building blocks ##
-##################################
-## So, for the plots I needed special columns to some part. They can be deducted from the groups. So for the lineplots at least, there shouldn't be much more necessary to do. 
-## So actually, prep_data() not necessary anymore? 
-## deprecate! 
-
-
-## Vorgehen: 
-## Neue Funktion zur Datenaufbereitung (eher nur intern)
-## Wird dann einfach am Anfang von jeder Plot-Funktion angewendet. Dann mal die plot_line Geschichte durchgehen. 
-## Version hochsetzen, Mail schreiben, wo alte Version noch drinsteht, und in newsletter packen. 
-
-
-## seperate_plot_var: Variable to split plots. Mainly by state. 
-
-## Years are filtered. 
-
-# So the first part of the plot_line function is still data preperation. Propably doesn't make that much sense to split the functions up. 
-
-
-## Plotting lines: 
-## Year start and year end
-
-
-
-
-
-
-
-
-
-## Okay, so maybe build dataframe trend related, so every trend has a start and an end point. I need this for the split lineplots anyways. 
-## also, dont put all columns at the end, only the line_sig, point_sig ...
-
-## each line in comp_estiamte is a trend from one year to another. 
-
-
-
-## How to get the significances here? They are in comp_estimates.
-## Okay, so the problem now is, that I actually need new columns for the respective estiamtes. 
-## To stay as flexible as possible, add the needed significances as extra column. 
-
-
-
-
-## Okay, that actually feels a lot more natural!
-
-
-
-
-## Add group-readable column:
-my_dat[["group"]] <- my_dat[["group"]] %>%
-  unite("readable", bundesland, geschlecht, dezh, jahr, sep = "_", remove = FALSE)
-
-# Build nested data tibbles -------------------------------------------------------------
-
-## fills in the specific row describing the group in each cell. 
-fill_groups <- function(dat) {
-  dat %>%
-    mutate(across(starts_with("unit"), ~
-      map(.x, ~ ifelse(str_detect(.x, "^group"),
-        yes = list(my_dat[["group"]] %>% filter(group %in% .x)),
-        no = ifelse(str_detect(.x, "^comp"),
-          yes = list(dat %>% filter(comp_id %in% c(.x))),
-          no = list(tibble())
-        )
-      ))))
-}
-
-## fills in the specific row describing the comparison in each cell. 
-fill_comparison <- function(dat) {
-  dat_res <- dat %>%
-    mutate(across(starts_with("unit"), ~
-      map(.x, ~ ifelse(
-        ncol(.x[[1]]) == 4,
-        yes = list(fill_groups(.x[[1]])),
-        no = list(.x[[1]])
-      ))))%>%
-    mutate(across(starts_with("unit"), ~
-                    map(.x, ~ ifelse(
-                      "unit_1" %in% colnames(.x[[1]]) ,
-                      yes = list(unnest(.x[[1]], cols = c(unit_1, unit_2))),
-                      no = list(.x[[1]])
-                    ))))
-  return(dat_res)
-}
-
-
-nested_data <- fill_groups(my_dat[["comparisons"]]) %>%
-  fill_comparison %>%
-  unnest(cols = c(unit_1, unit_2)) %>%
-  left_join(my_dat[[3]], join_by(comp_id==id))  # add estimates
-
-names(nested_data$unit_1) <- my_dat[[1]]$unit_1
-names(nested_data$unit_2) <- my_dat[[1]]$unit_2
-
-# Now we have nested tibbles
-
-# Next build a human readable output from the nests. 
-
-# 1. Go through all tibble-rows.
-# 2. Check if list entry is a tibble with 6 columns. In this case, we are at the highest level, and there are no further nestings. Extract the readables and paste them together.
-# 3. If there are 4 columns, there are nested columns. Go Back to Step 1.
-
-paste_comp <- function(comp_1, comp_2) {
-  paste0(
-    "(",
-    comp_1,
-    " - ",
-    comp_2,
-    ")"
+p_1 <- plot_tablebar(
+  dat = dat_prepped,
+  bar_est = "est_2015 - 2009_trend_mean",
+  bar_label = NULL,
+  bar_sig = "sig_2015 - 2009_trend_mean",
+  bar_fill = "mhg",
+  column_spanners = list(
+    "**2009**<sup>a</sup>" = c(3, 4),
+    "**2015**<sup>a</sup>" = c(5, 6),
+    "**Differenz 2015-2009<sup>a</sup>**" = c(7, 10)
+  ),
+  headers = list(
+    "**Land**",
+    " ",
+    "*M*",
+    "*SD*",
+    "*M*",
+    "*SD*",
+    "M<sub>2015</sub> - M<sub>2009</sub>",
+    "*(SE)*",
+    "*d*",
+    " "
+  ),
+  columns_table = c(
+    "TR_BUNDESLAND",
+    "mhg",
+    "est_2009_none_mean",
+    "est_2009_none_sd",
+    "est_2015_none_mean",
+    "est_2015_none_sd",
+    "est_2015 - 2009_trend_mean",
+    "se_2015 - 2009_trend_mean",
+    "es_2015 - 2009_trend_mean"
+  ),
+  columns_table_sig_bold = list(
+    NULL,
+    NULL,
+    "sig_2009_none_mean",
+    NULL, "sig_2015_none_mean",
+    NULL,
+    "sig_2015 - 2009_trend_mean",
+    NULL,
+    NULL
+  ),
+  y_axis = "y_axis",
+  plot_settings = plotsettings_tablebarplot(
+    axis_x_lims = c(-40, 40),
+    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
+    bar_fill_colour = c("#20D479", "#8DEBBC"),
+    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
+    columns_width = column_widths_stand$p1,
+    headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
+    default_list = barplot_table_plot_pattern
   )
-}
+)
 
-extract_readables <- function(dat) {
-  readables <- lapply(
-    1:nrow(dat),
-    function(x) {
-      ifelse(ncol(dat$unit_1[[x]]) == 11,
-        yes = paste_comp(dat$unit_1[[x]]$readable, dat$unit_2[[x]]$readable),
-        no = paste_comp(extract_readables(dat$unit_1[[x]]), extract_readables(dat$unit_2[[x]]))
-      )
-    }
+p_2 <- plot_tablebar(
+  dat = dat_prepped,
+  bar_est = "est_2022 - 2015_trend_mean",
+  bar_label = NULL,
+  bar_sig = "sig_2022 - 2015_trend_mean",
+  bar_fill = "mhg",
+  column_spanners = list(
+    "**2015**" = c(1, 2),
+    "**2022**" = c(3, 4),
+    "**Differenz 2022-2015**" = c(5, 8)
+  ),
+  headers = list(
+    "*M*",
+    "*SD*",
+    "*M*",
+    "*SD*",
+    "M<sub>2022</sub> - M<sub>2015</sub>",
+    "*(SE)*",
+    "*d*",
+    " "
+  ),
+  columns_table = c(
+    "est_2015_none_mean",
+    "est_2015_none_sd",
+    "est_2022_none_mean",
+    "est_2022_none_sd",
+    "est_2022 - 2015_trend_mean",
+    "se_2022 - 2015_trend_mean",
+    "es_2022 - 2015_trend_mean"
+  ),
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL),
+  columns_table_sig_bold = list(
+    "sig_2015_none_mean",
+    NULL,
+    "sig_2022_none_mean",
+    NULL,
+    "sig_2022 - 2015_trend_mean",
+    NULL,
+    NULL
+  ),
+  y_axis = "y_axis",
+  plot_settings = plotsettings_tablebarplot(
+    axis_x_lims = c(-60, 60),
+    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
+    bar_fill_colour = c("#20D479", "#8DEBBC"),
+    columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
+    columns_width = column_widths_stand$p2,
+    headers_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
+    default_list = barplot_table_plot_pattern
   )
-  
-  return(unlist(readables))
-}
-
-nested_data$readable <- extract_readables(nested_data)
-
-# Extract specific output  ------------------------------------------------
-## Let's say I want to extract all group Values and all crossDiff_of_groupDiffs. 
-## We can build seperate data-frames which only contain the necessary information. 
-
-output_2 <- nested_data %>%
-  unnest(cols = c(unit_1, unit_2), 
-         names_sep = "_")
-
-## Unnesting everything at once leaves it all over the place, so probably not the best!
-## Rather, filter first and then build more consciously: 
-
-output_3 <- nested_data %>%
-  filter(comp_type == "crossDiff_of_groupDiff") %>%
-  unnest(cols = c(unit_1, unit_2), 
-         names_sep = "->") 
-
-output_4 <- unnest(output_3, cols = colnames(output_3)[output_3 %>% map_lgl(is.list)], 
-         names_sep = ":") 
-
-View(output_4)
-
-## This could be cleaned up more and saved as excel, if a sortable output is needed. In other cases it might be enough to output only the readable column and the estimate. 
-
-
-## Group values have already been merged and can just be put out:
-my_dat[["group"]]
-
-
-
-# Formated R-Output -------------------------------------------------------
-# Just started to play around with building a R-internal output
-
-library(crayon)
-## Different group-options, just provide the column you want to group for. 
-
-extract_results <- function(dat, comp_type){
-  filtered_dat <- dat %>% 
-    filter(comp_type %in% comp_type)
-
-  cat("Summary/n/n")
-  for(i in 1:nrow(filtered_dat)){
-    cat(green("Comparison: ", filtered_dat$readable[i], "/n/n"))
-    print(filtered_dat[[i]][[1]])
-    cat("/n/n ---------------------------------------/n/n")
-  }
-}
-
-extract_results(nested_data, comp_type = "groupDiff")
-
+)
+example_plot <- combine_plots(list(p_1, p_2))
+# save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf")
+save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 
 
+```{r}
+dat_prepped_crossdiff <- prep_tablebarplot(trend_3, par = c("mean", "sd")) %>%
+  filter(comparison == "crossDiff_of_groupDiff") %>%
+  select(comparison, TR_BUNDESLAND, parameter, year, est, se, es, sig, mhg) %>%
+  pivot_wider(names_from = c(year, comparison, parameter), values_from = c(est, se, es, sig)) %>%
+  mutate(y_axis = 1:nrow(.)) %>%
+  as.data.frame() %>%
+  arrange(TR_BUNDESLAND)
+```
 
-First of all, the new format might be great because some variables, like group, could be extracted automatically?
-- Think about which function arguments are really necessary. Something like state_var could be just checked and renamed externally?
-- Maybe use long format for plotting? --> Problem, because later on it gets very complex, and I'm not sure everything can be solved with grouping. (maybe keep in mind, but don't try for now)
-- naming the columns might be problematic --> label column?
-- In the end, I had a list of dataframes that contained different dataframes for different parts of the plots. 
-- It might be, that the data preperation was too complicated. But what I had in the end were dataframes with one row per group/country, and the values in different columns behind. 
-- I now have each group just once (which is great already)! The according estimates only have to be added as extra columns. 
-- Need good documentation of column names. 
-
-
-## Requirements on prepared data
-- One row per group
-- One column per estimate
-- different data frames for different aspects of the plot
-
-## Open questions about data
-- Sind die Werte korrekt? Z.B. Trened sehr groß?
-- NAs in group data frame
-- parameter column = 1 in estiamtes
-- Verschachtelte, unbenannte Listen, v.a. im letzten Datensatz
-- Darf ich die Datensätze als Examples hochladen?

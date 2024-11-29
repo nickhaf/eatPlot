@@ -21,8 +21,9 @@ plot_background_lines <- function(dat_total,
         ymax = .data$y_pos,
         group = .data$trend
       ),
+      color = plot_settings$background_line_colour,
       fill = plot_settings$background_line_colour,
-      linewidth = 1
+      linewidth = 0.5
     )
 
 

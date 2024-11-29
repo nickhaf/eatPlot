@@ -9,14 +9,13 @@
 #' @export
 #'
 #' @examples # tbd
-plot_points <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
+plot_points <- function(plot_dat, plot_settings) {
   plot_dat <- calc_y_nudge(plot_dat,
                            plot_settings = plot_settings
   )
-
-  # data_plot_points_nudge <- calc_x_nudge(data_plot_points_nudge,
-  #                                          nudge_x = plot_settings$point_label_nudge_x,
-  #                                          split_plot = plot_settings$split_plot)
+  plot_dat$dat_final <- calc_x_nudge(plot_dat,
+                                     nudge_x = plot_settings$point_label_nudge_x,
+                                           plot_settings = plot_settings)
   list(
     ggplot2::geom_point(ggplot2::aes(shape = .data$sig_point)),
 
@@ -38,10 +37,12 @@ plot_points <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
     #   )
     # } else {
     ggplot2::geom_text(
+      data = plot_dat$dat_final,
       ggplot2::aes(
+        x = .data$x_coords,
         label = round(.data$est_point, 0)
       ),
-      nudge_y = plot_dat$plot_dat$nudge_y,
+      nudge_y = plot_dat$dat_final$nudge_y,
       size = plot_settings$point_label_size
     )
     # }

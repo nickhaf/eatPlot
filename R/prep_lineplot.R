@@ -14,18 +14,17 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
 
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
+  eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
 
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
                                       eatRep_dat$estimate,
                                       by = "id",
-                                      all.x = TRUE
-  )
+                                      all.x = TRUE)
 
   eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
                                      eatRep_dat$estimate,
                                      by = "id",
-                                     all.x = TRUE
-  )
+                                     all.x = TRUE)
 
   eatRep_dat_long <- tidyr::pivot_longer(
     eatRep_dat$comp_estimates,
@@ -125,6 +124,7 @@ prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brac
   if(!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)){
     stop("Some of the trends you provided in 'years_braces' are not in the data.")
   }
+
 
   background_line_dat <- subset(line_dat, line_dat$TR_BUNDESLAND == "total" & is.na(line_dat$mhg))
 

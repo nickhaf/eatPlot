@@ -113,7 +113,6 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, plot_settings = pl
   range_coords <- diff(range(coords)) ## Take from above!
 
   # calc brace label y ------------------------------------------------------
-
   brace_positions$label_pos_x <- brace_positions$year_start + brace_positions$range * brace_positions$brace_position_x + (max(brace_positions$range) * plot_settings$brace_label_nudge_x)
 
   label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x){
@@ -212,17 +211,18 @@ calc_brace_position <- function(plot_settings, overlap) {
 
 
 # Plot_points -------------------------------------------------------------
-calc_x_nudge <- function(dat, nudge_x, split_plot) {
-  range_years <- diff(range(dat$year_axis))
-  min_max_trend <- get_min_max(dat)
+calc_x_nudge <- function(dat, nudge_x, plot_settings) {
 
-  dat <- merge(dat, min_max_trend,
-    by = "years_Trend",
+  range_years <- diff(dat$plot_lims$x_range)
+  min_max_trend <- get_min_max(dat$dat_final)
+
+  dat <- merge(dat$dat_final, min_max_trend,
+    by = "trend",
     all.x = TRUE,
     all.y = FALSE
   )
 
-  if (split_plot == TRUE) {
+  if (plot_settings$split_plot) {
     dat$x_coords <- ifelse(dat$year == dat$minimum,
       yes = dat$year_axis + range_years * nudge_x,
       no = ifelse(dat$year == dat$maximum,
@@ -232,10 +232,10 @@ calc_x_nudge <- function(dat, nudge_x, split_plot) {
     )
   } else {
     dat$x_coords <- ifelse(dat$year == min(dat$year, na.rm = TRUE),
-      yes = dat$year_axis + range_years * nudge_x,
+      yes = dat$year + range_years * nudge_x,
       no = ifelse(dat$year == max(dat$year, na.rm = TRUE),
-        yes = dat$year_axis - range_years * nudge_x,
-        no = dat$year_axis
+        yes = dat$year - range_years * nudge_x,
+        no = dat$year
       )
     )
   }
@@ -243,14 +243,47 @@ calc_x_nudge <- function(dat, nudge_x, split_plot) {
 }
 
 
+nudge_x_axis_labels <- function(dat, plot_settings){
+
+
+  range_years <- diff(range(dat$year))
+  min_max_trend <- get_min_max(dat)
+
+  dat <- merge(dat, min_max_trend,
+               by = "trend",
+               all.x = TRUE,
+               all.y = FALSE
+  )
+
+  if (plot_settings$split_plot) {
+    dat$x_coords <- ifelse(dat$year == dat$minimum,
+                           yes = dat$year_axis + range_years * plot_settings$axis_x_label_centralize,
+                           no = ifelse(dat$year == dat$maximum,
+                                       yes = dat$year_axis - range_years * plot_settings$axis_x_label_centralize,
+                                       no = dat$year_axis
+                           )
+    )
+  } else {
+    dat$x_coords <- ifelse(dat$year == min(dat$year, na.rm = TRUE),
+                           yes = dat$year + range_years * plot_settings$axis_x_label_centralize,
+                           no = ifelse(dat$year == max(dat$year, na.rm = TRUE),
+                                       yes = dat$year - range_years * plot_settings$axis_x_label_centralize,
+                                       no = dat$year
+                           )
+    )
+  }
+
+  return(dat)
+}
+
 
 calc_y_nudge <- function(plot_dat,
                          plot_settings = plotsettings_lineplot()) {
 
-  coords_diff <- diff(range(plot_dat$plot_lims$coords))
+    coords_diff <- diff(range(plot_dat$plot_lims$coords))
 
   nudge_val <- coords_diff * plot_settings$point_label_nudge_y
-  nudge_val <- 10
+
   # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher.
   # For facetted plots, the trend has to be taken into account as well.
 

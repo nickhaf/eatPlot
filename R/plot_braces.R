@@ -1,13 +1,11 @@
 prep_brace <- function(plot_dat, brace_coords){
-
   brace_coords$coord_dat_test1 <- brace_coords$coord_dat %>%
     dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
     tidyr::pivot_longer(cols = c("upper_y", "lower_y"),
                         values_to = "y") %>%
     tidyr::pivot_longer(cols = c("year_start", "year_end"),
                         values_to = "year",
-                        names_to = "year_type") %>%
-    dplyr::mutate(year = as.character(year))
+                        names_to = "year_type")
 
   brace_labels <- merge(plot_dat[, c("TR_BUNDESLAND", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "mhg", "trend")],
                         brace_coords$group_labels,
@@ -27,8 +25,7 @@ prep_brace <- function(plot_dat, brace_coords){
   brace_dat <- merge(brace_coords$coord_dat_test1,
                                        brace_labels,
                                        by = "trend",
-                                       all.x = TRUE) %>%
-    dplyr::mutate(label_pos_x = as.character(label_pos_x))
+                                       all.x = TRUE)
 
 
   return(brace_dat)
