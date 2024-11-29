@@ -1,3 +1,39 @@
+# Lineplot Trend
+
+```{r} 
+trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "ersteGen")) |
+                            (trend_3$group$TR_BUNDESLAND == "total" & is.na(trend_3$group$mhg)))
+
+  p <- plot_lineplot(trend_3,
+    grouping_var = NULL,
+    parameter = "mean",
+    line_sig = "trend",
+    # line_se = "trend",
+    years_lines = list(c(2009, 2015), c(2015, 2022)),
+    years_braces = list(c(2009, 2015), c(2015, 2022)),
+    facets = "TR_BUNDESLAND",
+    facet_values = unique(trend_3$group$TR_BUNDESLAND)[unique(trend_3$group$TR_BUNDESLAND) != "total"],
+    seperate_plot_var_box = "wholeGroup",
+    point_values = "none",
+    point_sig = "none",
+    brace_label_est = "trend",
+    brace_label_se = "trend",
+    brace_label_sig_high = "trend",
+    brace_label_sig_bold = "trend",
+    title_superscripts = NULL,
+    plot_settings = plotsettings_lineplot(
+      split_plot = FALSE,
+      default_list = lineplot_4x4
+    )
+  )
+
+
+  save_plot(p, filename = "/home/nick/Downloads/test.pdf")
+
+```
+
+
+
 # Trend Lesen Deutsch
 
 
@@ -14,10 +50,10 @@ dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
 
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.05, 0.025, rep(0.025, 7), NA),
-    p2 = c(rep(0.01, 7), NA)
+    p1 = c(0.05, 0.05, rep(0.05, 7), NA),
+    p2 = c(rep(0.05, 7), NA)
   ),
-  plot_ranges = c(-60, 60) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  plot_ranges = c(80, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 
 p_1 <- plot_tablebar(
@@ -66,11 +102,11 @@ p_1 <- plot_tablebar(
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-        axis_x_lims = c(-60, 60),
+    axis_x_lims = c(-40, 40),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
-        columns_width = column_widths_stand$p1, 
+    columns_width = column_widths_stand$p1,
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     default_list = barplot_table_plot_pattern
   )
@@ -106,10 +142,10 @@ p_2 <- plot_tablebar(
     "se_2022 - 2015_trend_mean",
     "es_2022 - 2015_trend_mean"
   ),
-    columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL), 
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL),
   columns_table_sig_bold = list(
     "sig_2015_none_mean",
-    NULL, 
+    NULL,
     "sig_2022_none_mean",
     NULL,
     "sig_2022 - 2015_trend_mean",
@@ -118,16 +154,16 @@ p_2 <- plot_tablebar(
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-            axis_x_lims = c(-60, 60),
-
+    axis_x_lims = c(-60, 60),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
-        columns_width = column_widths_stand$p2,
+    columns_width = column_widths_stand$p2,
     headers_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     default_list = barplot_table_plot_pattern
   )
 )
 example_plot <- combine_plots(list(p_1, p_2))
-save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf")
+# save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf")
+save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```

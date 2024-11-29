@@ -23,7 +23,7 @@ test_that("simple lineplot runs through", {
     title_superscripts = NULL
   )
 
-  save_plot(p, filename = "/home/nick/Downloads/test.pdf")
+  #save_plot(p, filename = "/home/nick/Downloads/test.pdf")
 })
 
 
