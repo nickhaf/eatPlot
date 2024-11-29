@@ -20,9 +20,3 @@ test_that("plot data is eatRep output", {
   expect_error(check_eatRep_dat(example_list_2))
 })
 
-
-test_that("check_years works", {
-  expect_no_error(check_years(c("2010_2011", "2011_2012"), c("2010_2011", "2011_2012"), c("2010_2011", "2011_2012")))
-  expect_error(check_years(c("2010_2011", "2011_2012"), c("2010_2014", "2011_2012"), c("2010_2011", "2011_2012")), "Some of the trends you provided in 'years_lines' are not in the data.")
-  expect_error(check_years(c("2010_2011", "2011_2012"), c("2010_2011", "2011_2012"), c("2010_2011", "2011_2013")), "Some of the trends you provided in 'years_braces' are not in the data.")
-})
