@@ -167,3 +167,15 @@ example_plot <- combine_plots(list(p_1, p_2))
 # save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf")
 save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
+
+
+```{r}
+dat_prepped_crossdiff <- prep_tablebarplot(trend_3, par = c("mean", "sd")) %>%
+  filter(comparison == "crossDiff_of_groupDiff") %>%
+  select(comparison, TR_BUNDESLAND, parameter, year, est, se, es, sig, mhg) %>%
+  pivot_wider(names_from = c(year, comparison, parameter), values_from = c(est, se, es, sig)) %>%
+  mutate(y_axis = 1:nrow(.)) %>%
+  as.data.frame() %>%
+  arrange(TR_BUNDESLAND)
+```
+
