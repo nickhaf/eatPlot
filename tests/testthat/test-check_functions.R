@@ -2,11 +2,13 @@ example_list <- list(plain = 1, comparisons = 2, group = 3, estimate = 4)
 example_list_2 <- list(wrong_name = 1, comparisons = 2, group = 3, estimate = 4)
 
 test_that("facet checks work", {
-  vec_unordered <- c("c", "b", "c", "a")
-  vec_ordered <- factor(c("a", "b", "c", "c"), levels = unique(vec_unordered[order(vec_unordered)]), ordered = TRUE)
+  dat_unordered <- data.frame(unordered = c("c", "b", "c", "a"))
+  dat_ordered <- data.frame(ordered = factor(c("a", "c", "c", "b"),
+                                             levels = c("a", "c", "b"), ordered = TRUE))
 
-  expect_equal(check_facets(vec_unordered), vec_ordered)
-  expect_equal(check_facets(vec_ordered), vec_ordered)
+  expect_equal(check_facets(dat_unordered, "unordered")[, "unordered"],
+               factor(c("a", "b", "c", "c"), ordered = TRUE))
+  expect_equal(check_facets(dat_ordered, "ordered"), dat_ordered)
 
 })
 
