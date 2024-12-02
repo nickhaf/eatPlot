@@ -16,8 +16,12 @@ prep_brace <- function(plot_dat, brace_coords){
   # Construct brace labels --------------------------------------------------
   # Significances can be shown with bold font or a raised a.
   ## Need columns for est_brace, sig_brace and se_brace
-  brace_labels <- construct_label(
+  brace_labels$brace_label <- construct_label(
     brace_labels,
+    column_est = "brace_label_est",
+    column_se = "brace_label_se",
+    column_sig_bold = "brace_label_sig_bold",
+    column_sig_superscript = "brace_label_sig_high",
     round_est = 0,
     round_se = 1
   )

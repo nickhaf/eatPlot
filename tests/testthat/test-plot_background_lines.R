@@ -11,13 +11,30 @@ df_backgroundlines <- data.frame(
   years_Trend = c("20112013", "20132016")
 )
 
+dat_p <- prep_lineplot(eatRep_dat,
+                       line_sig = line_sig,
+                       parameter = parameter,
+                       brace_label_est = brace_label_est,
+                       brace_label_se = brace_label_se,
+                       brace_label_sig_high = brace_label_sig_high,
+                       brace_label_sig_bold = brace_label_sig_bold,
+                       years_lines = years_lines,
+                       years_braces = years_braces,
+                       plot_settings = plot_settings_expanded
+)
+
+df_preped
+
 line_values <- c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")
 line_se <- c("se_noTrendStart_noComp_wholeGroup", "se_noTrendEnd_noComp_wholeGroup")
 
 test_that("backgroundlines is still the same", {
   vdiffr::expect_doppelganger(
     "Plotting backgroundlines",
-    ggplot2::ggplot() +
+    ggplot2::ggplot(
+      dat = df_backgroundlines,
+      aes(x = )
+    ) +
       plot_background_lines(
         dat = df_backgroundlines,
         line_values = line_values,
