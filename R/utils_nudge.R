@@ -56,7 +56,8 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, plot_settings = pl
   ## Calculate the y coordinates for the braces and labels:
   ## Check if any braces overlap. If that's the case, they have to plotted below each other
   overlap <- calc_overlap(
-    df = years_braces
+    year_start = years_braces$year_start,
+    year_end = years_braces$year_end
   )
 
 
