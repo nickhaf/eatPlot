@@ -4,6 +4,10 @@
 trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "ersteGen")) |
                             (trend_3$group$TR_BUNDESLAND == "total" & is.na(trend_3$group$mhg)))
 
+trend_3_prepped <- prep_lineplot(
+  
+)
+
   p <- plot_lineplot(trend_3,
     grouping_var = NULL,
     parameter = "mean",

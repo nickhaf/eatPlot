@@ -1,18 +1,28 @@
-prep_brace <- function(plot_dat, brace_coords){
+prep_brace <- function(plot_dat, grouping_var_lvls, plot_lims, plot_settings) {
+  brace_coordinates <- calc_brace_coords(plot_dat,
+    grouping_var_lvls,
+    plot_lims$coords,
+    plot_settings = plot_settings
+  )
 
-    brace_coords$coord_dat_test1 <- brace_coords$coord_dat %>%
+  brace_coords$coord_dat_test1 <- brace_coords$coord_dat %>%
     dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
-    tidyr::pivot_longer(cols = c("upper_y", "lower_y"),
-                        values_to = "y") %>%
-    tidyr::pivot_longer(cols = c("year_start", "year_end"),
-                        values_to = "year",
-                        names_to = "year_type")
+    tidyr::pivot_longer(
+      cols = c("upper_y", "lower_y"),
+      values_to = "y"
+    ) %>%
+    tidyr::pivot_longer(
+      cols = c("year_start", "year_end"),
+      values_to = "year",
+      names_to = "year_type"
+    )
 
   brace_labels <- merge(plot_dat[, c("TR_BUNDESLAND", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "mhg", "trend")],
-                        brace_coords$group_labels,
-                        by.x = "mhg",
-                        by.y = "grouping_lvls",
-                        all.x = TRUE)
+    brace_coords$group_labels,
+    by.x = "mhg",
+    by.y = "grouping_lvls",
+    all.x = TRUE
+  )
 
   # Construct brace labels --------------------------------------------------
   # Significances can be shown with bold font or a raised a.
@@ -29,9 +39,10 @@ prep_brace <- function(plot_dat, brace_coords){
   )
 
   brace_dat <- merge(brace_coords$coord_dat_test1,
-                                       brace_labels,
-                                       by = "trend",
-                                       all.x = TRUE)
+    brace_labels,
+    by = "trend",
+    all.x = TRUE
+  )
 
 
   return(brace_dat)
@@ -39,7 +50,6 @@ prep_brace <- function(plot_dat, brace_coords){
 
 
 draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
-
   # if (plot_settings$split_plot == TRUE) {
   #   res <- ggbrace::stat_brace(
   #     data = unique(dat[, c("years_Trend", "year_axis", "brace_y")]),
@@ -70,7 +80,7 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
     colour = "black"
   )
 
-  #}
+  # }
   return(res)
 }
 

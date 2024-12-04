@@ -9,78 +9,28 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
+prep_lineplot <- function(eatRep_dat, grouping_var, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
+
+
+
+# Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
 
+
+  used_cols <- c(line_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold)
+
+# Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-
-  eatRep_dat$group_estimates <- merge(eatRep_dat$group,
-                                      eatRep_dat$estimate,
-                                      by = "id",
-                                      all.x = TRUE)
-
-  eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
-                                     eatRep_dat$estimate,
-                                     by = "id",
-                                     all.x = TRUE)
-
-  eatRep_dat_long <- tidyr::pivot_longer(
-    eatRep_dat$comp_estimates,
-    cols = starts_with("unit"),
-    names_to = "unit",
-    values_to = "group"
-  )
-
-
-  ## By the way! Not done here, still have to deal with the comparisons of comparisons.
-  # trend_crossDiff has another comparison in the group column
-  eatRep_dat_long <- eatRep_dat_long[eatRep_dat_long$comparison %in% c(line_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold), c("id", "comparison", "group", "est", "se", "p")]
-
-  # nested comparisons ------------------------------------------------------
-  # trend_crossDiff has another comparison in the group column
-  # Goal: only have groups in the group column.
-
-  ## Make into a function and apply until there is no comp in the group column any more
-  eatRep_dat_nested_comps <- eatRep_dat_long %>%
-    filter(str_detect(group, "comp_")) %>%
-    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-    mutate(id = paste(id, group, sep = "_")) %>%
-    dplyr::select(-group) %>%
-    pivot_longer(cols = c("unit_1", "unit_2"),
-                 names_to = "unit_b",
-                 values_to = "group") %>%
-    filter(str_detect(group, "comp_")) %>%
-    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-    mutate(id = paste(id, group, sep = "_")) %>%
-    dplyr::select(-group) %>%
-    pivot_longer(cols = c("unit_1", "unit_2"),
-                 names_to = "unit_c",
-                 values_to = "group") %>%
-    select(id, comparison, group, est, se, p)
+  eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons %in% used_cols, ]
 
 
 
-  eatRep_dat_long <- rbind(eatRep_dat_long %>% filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
-  ###############
-  eatRep_dat_merged <- merge(eatRep_dat_long,
-                             eatRep_dat$group_estimates,
-                             by.x = "group",
-                             by.y = "id",
-                             all.x = TRUE,
-                             suffixes = c("_comp", "_point"))
 
-
-
-  # Split the data frame by 'id', apply the function, and then combine the results
-  plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
-  rownames(plot_dat) <- NULL
-
-
-  plot_dat$sig_comp <- ifelse(plot_dat$p_comp < 0.05, TRUE, FALSE)
-
-  plot_dat$sig_point <- ifelse(plot_dat$p_point < 0.05, TRUE, FALSE)
+# Merge Data --------------------------------------------------------------
+  browser()
+  plot_dat <- build_plot_dat(eatRep_dat)
 
 
   grouping_var = "mhg"
@@ -138,3 +88,75 @@ create_trend <- function(df) {
   return(df)
 }
 
+
+
+build_plot_dat <- function(eatRep_dat){
+  eatRep_dat$group_estimates <- merge(eatRep_dat$group,
+                                      eatRep_dat$estimate,
+                                      by = "id",
+                                      all.x = TRUE)
+
+  eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
+                                     eatRep_dat$estimate,
+                                     by = "id",
+                                     all.x = TRUE)
+
+  eatRep_dat_long <- tidyr::pivot_longer(
+    eatRep_dat$comp_estimates,
+    cols = starts_with("unit"),
+    names_to = "unit",
+    values_to = "group"
+  )
+
+
+  ## By the way! Not done here, still have to deal with the comparisons of comparisons.
+  # trend_crossDiff has another comparison in the group column
+
+  # nested comparisons ------------------------------------------------------
+  # trend_crossDiff has another comparison in the group column
+  # Goal: only have groups in the group column.
+
+  ## Make into a function and apply until there is no comp in the group column any more
+  eatRep_dat_nested_comps <- eatRep_dat_long %>%
+    filter(str_detect(group, "comp_")) %>%
+    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
+    mutate(id = paste(id, group, sep = "_")) %>%
+    dplyr::select(-group) %>%
+    pivot_longer(cols = c("unit_1", "unit_2"),
+                 names_to = "unit_b",
+                 values_to = "group") %>%
+    filter(str_detect(group, "comp_")) %>%
+    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
+    mutate(id = paste(id, group, sep = "_")) %>%
+    dplyr::select(-group) %>%
+    pivot_longer(cols = c("unit_1", "unit_2"),
+                 names_to = "unit_c",
+                 values_to = "group") %>%
+    select(id, comparison, group, est, se, p)
+
+
+
+  eatRep_dat_long <- rbind(eatRep_dat_long %>%
+                             filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
+  eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p")]
+
+
+  ###############
+  eatRep_dat_merged <- merge(eatRep_dat_long,
+                             eatRep_dat$group_estimates,
+                             by.x = "group",
+                             by.y = "id",
+                             all.x = TRUE,
+                             suffixes = c("_comp", "_point"))
+
+
+  plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
+  rownames(plot_dat) <- NULL
+
+
+  plot_dat$sig_comp <- ifelse(plot_dat$p_comp < 0.05, TRUE, FALSE)
+
+  plot_dat$sig_point <- ifelse(plot_dat$p_point < 0.05, TRUE, FALSE)
+
+  return(plot_dat)
+}
