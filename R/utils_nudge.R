@@ -64,9 +64,9 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, year_list, plot_se
   # calc starting points for braces -----------------------------------------
   ## Braces should start some distance below the lower x-axis. Labels below lowest brace
   range_coords <- diff(range(coords))
-
+browser()
   if (overlap == TRUE) {
-    lower_brace_y_a <- calc_pos(coords[1], range_coords, plot_settings$brace_span_y)
+    lower_brace_y_a <- coords[1] - (range_coords * plot_settings$brace_span_y)
     lower_brace_y_b <- lower_brace_y_a - range_coords * plot_settings$brace_span_y
     upper_label_y <- lower_brace_y_b - range_coords * plot_settings$brace_label_nudge_y
 
@@ -78,12 +78,12 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, year_list, plot_se
   } else {
     lower_brace_y <- coords[1] - (range_coords * plot_settings$brace_span_y)
     upper_label_y <- lower_brace_y - range_coords * plot_settings$brace_label_nudge_y
-
+}
     starting_points <- list(
       "lower_brace_y" = lower_brace_y,
       "upper_label_y" = upper_label_y
     )
-  }
+
 
   ## For each brace, save where it should be indented, and where it's position relative to the other braces is
   brace_positions <- calc_brace_position(years_list, overlap)
