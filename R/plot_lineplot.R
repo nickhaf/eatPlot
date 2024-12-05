@@ -197,17 +197,13 @@ extract_gsub_values <- function(plot_dat) {
 }
 
 
-#' Calculate different plot limit values.
-#'
-#' @inheritParams plot_lineplot
-#'
-#' @return List containing the following elements:
-#' * `range_y`: Minimum and maximum of the values in `point_values`.
-#' * `y_lims_total`: Minimum and maximum value of the plot.
-#' * `coords`: Y-value of the first brace start, and heighest y-value of the plot.
-#' @examples # tbd
-calc_plot_lims <- function(plot_dat, plot_settings) {
-  ## Axis limits can be set manually. If not, calculate by range.
+
+calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
+
+
+  check_columns(plot_dat, c("est_point", "year"))
+
+    ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
     y_range <- range(plot_dat$est_point, na.rm = TRUE)
 
@@ -236,17 +232,24 @@ calc_plot_lims <- function(plot_dat, plot_settings) {
   #   )
 
   ## Why need this? calc if necessary!
-  # Build a unique vector from the years in this list of dataframes:
-  unique_years <- unique(unlist(lapply(plot_settings$years_list, function(df) unlist(df))))
+  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
+
   x_range <- range(unique_years)
 
+  brace_coords <- calc_brace_coords(plot_dat,
+                                    subgroup_lvls,
+                                    coords,
+                                    years_list,
+                                    plot_settings = plot_settings
+  )
 
   ## Output an object with the plot coordinate informations:
   coord_list <- list(
     x_range = x_range,
     y_range = y_range,
     # y_lims_total = y_lims_total,
-    coords = coords
+    coords = coords,
+    brace_coords = brace_coords
   )
   return(coord_list)
 }

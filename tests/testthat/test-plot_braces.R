@@ -1,3 +1,34 @@
+years_list <- prep_years_list(years_lines = list(c(2009, 2015), c(2015, 2022)), years_braces = list(c(2009, 2015), c(2009, 2022)))
+
+plot_dat <- data.frame(
+  TR_BUNDESLAND = c("Berlin", "Berlin"),
+  id = c(1, 2),
+  est_point = c(400, 500.34, 401.3, 501.34),
+  brace_label_est = c(400, 500.34, 401.3, 501.34),
+  brace_label_se = c(30, 20, 10, 20),
+  brace_label_sig_high = c(FALSE, TRUE, TRUE, FALSE),
+  brace_label_sig_bold = c(FALSE, TRUE, FALSE, TRUE),
+  mhg = c("einET", "ersteGen", "einET", "ersteGen"),
+  year = c(2009, 2015, 2011, 2020),
+  trend = c("2009_2015", "2009_2015", "2015_2022", "2015_2022")
+)
+
+
+
+test_that("Overlapping braces are looking good", {
+
+  plot_lims <- calc_plot_lims(plot_dat,
+                              subgroup_lvls = c("einET", "ersteGen"),
+                              years_list = years_list,
+                              plot_settings = plotsettings_lineplot())
+
+  brace_dat <- prep_brace(plot_dat, plot_lims, plotsettings_lineplot())
+  ggplot2::ggplot() +
+    draw_braces(brace_dat$brace_dat,
+                plot_settings = plotsettings_lineplot(split_plot = FALSE)
+    )
+
+})
 test_that("y limits are set correctly", {
   df <- data.frame(
     state_var = rep("Berlin", 4),
@@ -92,39 +123,6 @@ test_that("brace label is drawn", {
 
 
 test_that("braces are prepped", {
-  # Create the coord_dat data frame
-  coord_dat <- data.frame(
-    year_start = c(2009, 2015),
-    year_end = c(2015, 2022),
-    range = c(6, 7),
-    brace_position_x = c(0.5, 0.5),
-    brace_position_y = c("middle", "middle"),
-    upper_y = c(248.6513, 248.6513),
-    lower_y = c(211.149, 211.149),
-    label_pos_x = c(2013.085, 2019.585)
-  )
-
-  # Create the group_labels data frame
-  group_labels <- data.frame(
-    grouping_lvls = c("einET", "ersteGen"),
-    label_pos_y = c(192.3978, 162.3960)
-  )
-
-  brace_coords <- list(
-    "coord_dat" = coord_dat,
-    "group_labels" = group_labels
-  )
-
-  plot_dat <- data.frame(
-    TR_BUNDESLAND = c("Berlin", "Berlin"),
-    id = c(1, 2),
-    brace_label_est = c(400, 500.34, 401.3, 501.34),
-    brace_label_se = c(30, 20, 10, 20),
-    brace_label_sig_high = c(FALSE, TRUE, TRUE, FALSE),
-    brace_label_sig_bold = c(FALSE, TRUE, FALSE, TRUE),
-    mhg = c("einET", "ersteGen", "einET", "ersteGen"),
-    trend = c("2009_2015", "2009_2015", "2015_2022", "2015_2022")
-  )
 
   brace_dat <- prep_brace(plot_dat, brace_coords)
   # Combine the data frames into a list
@@ -137,54 +135,7 @@ test_that("braces are prepped", {
 })
 
 
-test_that("Overlapping braces are looking good", {
-  coord_dat <- data.frame(
-    year_start = c(2009, 2015),
-    year_end = c(2013, 2022),
-    range = c(6, 7),
-    brace_position_x = c(0.5, 0.5),
-    brace_position_y = c("middle", "middle"),
-    upper_y = c(248.6513, 248.6513),
-    lower_y = c(211.149, 211.149),
-    label_pos_x = c(2013.085, 2019.585)
-  )
 
-  # Create the group_labels data frame
-  group_labels <- data.frame(
-    grouping_lvls = c("einET", "ersteGen"),
-    label_pos_y = c(192.3978, 162.3960)
-  )
-
-  brace_coords <- list(
-    "coord_dat" = coord_dat,
-    "group_labels" = group_labels
-  )
-
-  plot_dat <- data.frame(
-    TR_BUNDESLAND = c("Berlin", "Berlin"),
-    id = c(1, 2),
-    est_point = c(400, 500.34, 401.3, 501.34),
-    brace_label_est = c(400, 500.34, 401.3, 501.34),
-    brace_label_se = c(30, 20, 10, 20),
-    brace_label_sig_high = c(FALSE, TRUE, TRUE, FALSE),
-    brace_label_sig_bold = c(FALSE, TRUE, FALSE, TRUE),
-    mhg = c("einET", "ersteGen", "einET", "ersteGen"),
-    trend = c("2009_2015", "2009_2015", "2013_2022", "2013_2022")
-  )
-
-
-  calc_plot_lims(plot_dat, plot_settings = plotsettings_lineplot(split_plot = FALSE))
-
-  brace_dat <- prep_brace(plot_dat,
-                          grouping_var_lvls = c("einET", "ersteGen"),
-                          plot_lims = plot_lims,
-                          plot_settings = plotsettings_lineplot(split_plot = FALSE))
-
-
-  ggplot2::ggplot() +
-    draw_braces(brace_dat, plot_settings = plotsettings_lineplot(split_plot = FALSE)) +
-    draw_brace_label(brace_dat, plot_settings = plotsettings_lineplot())
-})
 
 test_that("Overlapping braces in the other direction", {
   df <- data.frame(

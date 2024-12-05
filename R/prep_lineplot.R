@@ -13,6 +13,8 @@ prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, brace_l
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
 
+years_list <- prep_years_list(years_lines, years_braces)
+
   # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
@@ -30,17 +32,9 @@ prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, brace_l
   subgroup_lvls <- levels(factor(plot_dat$subgroup_var))
 
 
-
   # Coordinates -------------------------------------------------------------
   ## Some coordinates are needed to set the plot into the correct margins:
-  plot_lims <- calc_plot_lims(plot_dat, plot_settings)
-
-  brace_coordinates <- calc_brace_coords(plot_dat,
-    subgroup_lvls,
-    plot_lims$coords,
-    plot_settings = plot_settings
-  )
-
+  plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
 
 
 # Wide Format -------------------------------------------------------------
@@ -67,7 +61,10 @@ prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, brace_l
   }
 
   line_dat <- plot_dat_wide
-  brace_dat <- prep_brace(plot_dat_wide, brace_coords = brace_coordinates)
+  brace_dat_list <- prep_brace(plot_dat_wide, plot_lims, plot_settings)
+brace_dat <- brace_dat_list$brace_dat
+brace_coordinates <- brace_dat_list$brace_coords
+
 
   # The multiplicator here is not that easy to understand, possiby take something else.
   plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
@@ -177,4 +174,10 @@ build_plot_dat <- function(eatRep_dat) {
   plot_dat$sig_point <- ifelse(plot_dat$p_point < 0.05, TRUE, FALSE)
 
   return(plot_dat)
+}
+
+prep_years_list <- function(years_lines, years_braces){
+  years_list <- lapply(list(years_lines, years_braces), prep_years)
+  names(years_list) <- c("years_lines", "years_braces")
+  return(years_list)
 }
