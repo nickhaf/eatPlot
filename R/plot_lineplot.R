@@ -20,7 +20,7 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatRep_dat,
-                          grouping_var = NULL,
+                          groups = NULL,
                           parameter = "mean",
                           line_sig = "trend",
                           # line_se = "trend",

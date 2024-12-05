@@ -9,7 +9,7 @@ trend_3_prepped <- prep_lineplot(
 )
 
   p <- plot_lineplot(trend_3,
-    grouping_var = NULL,
+    groups = "mhg",
     parameter = "mean",
     line_sig = "trend",
     # line_se = "trend",
@@ -32,7 +32,7 @@ trend_3_prepped <- prep_lineplot(
   )
 
 
-  save_plot(p, filename = "/home/nick/Downloads/test.pdf")
+  # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
 
 ```
 

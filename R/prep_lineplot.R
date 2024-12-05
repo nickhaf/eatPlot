@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, grouping_var, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
+prep_lineplot <- function(eatRep_dat, groups, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
 
 
 
@@ -17,30 +17,39 @@ prep_lineplot <- function(eatRep_dat, grouping_var, line_sig, point_sig, brace_l
   check_eatRep_dat(eatRep_dat)
 
 
-  used_cols <- c(line_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold)
-
 # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-  eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% used_cols, ]
 
-
-
+  used_comps <- c(line_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold)
+  eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% used_comps, ]
 
 # Merge Data --------------------------------------------------------------
   plot_dat <- build_plot_dat(eatRep_dat)
-browser()
-  grouping_var = "mhg"
+
+  browser()
+
+plot_dat <- build_column(plot_dat, groups, "groups")
+
+
   ## Only into factor, if not already a factor:
   grouping_var_lvls <- levels(factor(plot_dat[, grouping_var]))
+
+  ## Some coordinates are needed to set the plot into the correct margins:
   plot_lims <- calc_plot_lims(plot_dat, plot_settings)
+
   brace_coordinates <- calc_brace_coords(plot_dat,
                                          grouping_var_lvls,
                                          plot_lims$coords,
                                          plot_settings = plot_settings)
 
   plot_dat_wide <- as.data.frame(pivot_wider(plot_dat, names_from = "comparison", values_from = c("est_comp", "se_comp", "sig_comp")))
+
+
+
+# Set column names --------------------------------------------------------
+
 
   ######### Hier nohc eine Schleife rum, sodass theoretisch auch andere Comparisons geplottet werden können.
   plot_dat_wide$point_est <- plot_dat_wide$est_point

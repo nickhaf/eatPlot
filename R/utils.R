@@ -448,17 +448,17 @@ check_column_warn <- function(dat, column) {
 #' @param old Character string of column name in dat.
 #' @param new Character string of new column.
 #'
-#' @return Data.frame with a new column, either copyed or `NA`.
+#' @return Data.frame with a new column, either copuied or `NA`.
 #'
 #' @examples # tbd
 build_column <- function(dat, old, new) {
-  check_column(dat, old)
+check_no_columns(dat, new)
   if (is.null(old)) {
     dat[, new] <- NA
     return(dat)
   } else {
+    check_columns(dat, old)
     dat[, new] <- dat[, old]
-
     return(dat)
   }
 }
