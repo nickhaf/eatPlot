@@ -28,8 +28,8 @@ trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "erste
   )
 
 
-  save_plot(p, filename = "/home/nick/Downloads/test.pdf")
-
+  # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
+  save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
 ```
 
 
@@ -164,8 +164,8 @@ p_2 <- plot_tablebar(
   )
 )
 example_plot <- combine_plots(list(p_1, p_2))
-# save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf")
-save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
+ save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
+# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 
 
