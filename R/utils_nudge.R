@@ -85,19 +85,19 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, year_list, plot_se
 }
 
   ## For each brace, save where it should be indented, and where it's position relative to the other braces is
+browser()
   brace_positions <- calc_brace_position(years_list, overlap)
 
 
   if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
     ## larger brace on top, smaller one below. If equal, just put the one with the smallest start year on top:
-browser()
-    dat$upper_y <- ifelse(brace_positions$brace_position_y == "top",
+    brace_positions$upper_y <- ifelse(brace_positions$brace_position_y == "top",
       yes = coords[1],
       no = starting_points$lower_brace_y_a
     )
 
     # Lower brace coordinates:
-    dat$lower_y <- ifelse(brace_positions$brace_position_y == "top",
+    brace_positions$lower_y <- ifelse(brace_positions$brace_position_y == "top",
       starting_points$lower_brace_y_a,
       starting_points$lower_brace_y_b
     )
@@ -156,53 +156,53 @@ calc_brace_position <- function(years_list, overlap) {
   })
 
 
-  # if (overlap == TRUE) {
-  #     if (all(dat$range == dat$range[1])) { ## All braces have the same range
-  #
-  #       ## The first brace will get an indention to the left, the second one none
-  #       dat$brace_position_x <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
-  #         yes = "left",
-  #         no = "middle"
-  #       )
-  #
-  #       ## The first brace will get plotted on top, the second one on the bottom:
-  #       dat$brace_position_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
-  #         yes = "top",
-  #         no = "bottom"
-  #       )
-  #     } else {
-  #       # The smaller brace won't get any indention.
-  #       dat$brace_position_x <- ifelse(dat$range == max(dat$range),
-  #         yes = ifelse(dat$year_start_axis == min(dat$year_start_axis),
-  #           yes = "left",
-  #           no = "right"
-  #         ),
-  #         no = "middle"
-  #       )
-  #
-  #       # The larger brace will be plotted on top
-  #       dat$brace_position_y <- ifelse(dat$range == max(dat$range),
-  #         yes = "top",
-  #         no = "bottom"
-  #       )
-  #
-  #       # If any bottom brace starts at the first year, the upper needs to go right
-  #
-  #       middle_bottom <- ifelse(dat$year_start_axis == min(dat$year_start_axis) & dat$brace_position_y == "bottom",
-  #         yes = TRUE,
-  #         no = FALSE
-  #       )
-  #
-  #       if (any(middle_bottom)) {
-  #         dat[dat$brace_position_y == "top", "brace_position_x"] <- "right"
-  #       }
-  #     }
-  #  } else {
+  if (overlap == TRUE) {
+      if (all(dat$range == dat$range[1])) { ## All braces have the same range
+
+        ## The first brace will get an indention to the left, the second one none
+        dat$brace_position_x <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+          yes = "left",
+          no = "middle"
+        )
+
+        ## The first brace will get plotted on top, the second one on the bottom:
+        dat$brace_position_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+          yes = "top",
+          no = "bottom"
+        )
+      } else {
+        # The smaller brace won't get any indention.
+        dat$brace_position_x <- ifelse(dat$range == max(dat$range),
+          yes = ifelse(dat$year_start_axis == min(dat$year_start_axis),
+            yes = "left",
+            no = "right"
+          ),
+          no = "middle"
+        )
+
+        # The larger brace will be plotted on top
+        dat$brace_position_y <- ifelse(dat$range == max(dat$range),
+          yes = "top",
+          no = "bottom"
+        )
+
+        # If any bottom brace starts at the first year, the upper needs to go right
+
+        middle_bottom <- ifelse(dat$year_start_axis == min(dat$year_start_axis) & dat$brace_position_y == "bottom",
+          yes = TRUE,
+          no = FALSE
+        )
+
+        if (any(middle_bottom)) {
+          dat[dat$brace_position_y == "top", "brace_position_x"] <- "right"
+        }
+      }
+   } else {
   years_braces_df$brace_position_x <- rep(0.5, nrow(years_braces_df)) ## If left = 0.25, else 0.75
   years_braces_df$brace_position_y <- rep("middle", nrow(years_braces_df))
 
 
-  #  }
+   }
 
   return(years_braces_df)
 }
