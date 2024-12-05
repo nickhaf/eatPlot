@@ -49,6 +49,7 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #'
 #' @examples # tbd
 calc_brace_coords <- function(dat, grouping_var_lvls, coords, year_list, plot_settings = plotsettings_lineplot()) {
+
   years_braces <- years_list$years_braces
 
 
@@ -82,10 +83,10 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, year_list, plot_se
       "lower_brace_y" = lower_brace_y,
       "upper_label_y" = upper_label_y
     )
-}
+  }
+
 
   ## For each brace, save where it should be indented, and where it's position relative to the other braces is
-browser()
   brace_positions <- calc_brace_position(years_list, overlap)
 
 
@@ -112,6 +113,8 @@ browser()
   range_coords <- diff(range(coords)) ## Take from above!
 
   # calc brace label y ------------------------------------------------------
+  browser()
+  # brace_positions$brace_position_x: how is it calculated?
   brace_positions$label_pos_x <- brace_positions$year_start + brace_positions$range * brace_positions$brace_position_x + (max(brace_positions$range) * plot_settings$brace_label_nudge_x)
 
   label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x) {
@@ -155,25 +158,24 @@ calc_brace_position <- function(years_list, overlap) {
     diff(range(x))
   })
 
-
   if (overlap == TRUE) {
-      if (all(dat$range == dat$range[1])) { ## All braces have the same range
+      if (all(years_braces_df$range == years_braces_df$range[1])) { ## All braces have the same range
 
         ## The first brace will get an indention to the left, the second one none
-        dat$brace_position_x <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+        years_braces_df$brace_position_x <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
           yes = "left",
           no = "middle"
         )
 
         ## The first brace will get plotted on top, the second one on the bottom:
-        dat$brace_position_y <- ifelse(dat$year_start_axis == min(dat$year_start_axis),
+        years_braces_df$brace_position_y <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
           yes = "top",
           no = "bottom"
         )
       } else {
         # The smaller brace won't get any indention.
-        dat$brace_position_x <- ifelse(dat$range == max(dat$range),
-          yes = ifelse(dat$year_start_axis == min(dat$year_start_axis),
+        years_braces_df$brace_position_x <- ifelse(years_braces_df$range == max(years_braces_df$range),
+          yes = ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
             yes = "left",
             no = "right"
           ),
@@ -181,28 +183,28 @@ calc_brace_position <- function(years_list, overlap) {
         )
 
         # The larger brace will be plotted on top
-        dat$brace_position_y <- ifelse(dat$range == max(dat$range),
+        years_braces_df$brace_position_y <- ifelse(years_braces_df$range == max(years_braces_df$range),
           yes = "top",
           no = "bottom"
         )
 
         # If any bottom brace starts at the first year, the upper needs to go right
 
-        middle_bottom <- ifelse(dat$year_start_axis == min(dat$year_start_axis) & dat$brace_position_y == "bottom",
+        middle_bottom <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start) & years_braces_df$brace_position_y == "bottom",
           yes = TRUE,
           no = FALSE
         )
 
         if (any(middle_bottom)) {
-          dat[dat$brace_position_y == "top", "brace_position_x"] <- "right"
+          years_braces_df[years_braces_df$brace_position_y == "top", "brace_position_x"] <- "right"
         }
       }
    } else {
   years_braces_df$brace_position_x <- rep(0.5, nrow(years_braces_df)) ## If left = 0.25, else 0.75
   years_braces_df$brace_position_y <- rep("middle", nrow(years_braces_df))
-
-
    }
+
+  years_braces_df
 
   return(years_braces_df)
 }
