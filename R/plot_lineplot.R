@@ -37,6 +37,7 @@ plot_lineplot <- function(eatRep_dat,
                           brace_label_sig_bold = "trend",
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
+
   check_eatRep_dat(eatRep_dat)
   check_plotsettings_lineplot(plot_settings)
 

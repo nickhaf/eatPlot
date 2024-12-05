@@ -23,16 +23,14 @@ prep_lineplot <- function(eatRep_dat, grouping_var, line_sig, point_sig, brace_l
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-  eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons %in% used_cols, ]
+  eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% used_cols, ]
 
 
 
 
 # Merge Data --------------------------------------------------------------
-  browser()
   plot_dat <- build_plot_dat(eatRep_dat)
-
-
+browser()
   grouping_var = "mhg"
   ## Only into factor, if not already a factor:
   grouping_var_lvls <- levels(factor(plot_dat[, grouping_var]))
@@ -91,6 +89,7 @@ create_trend <- function(df) {
 
 
 build_plot_dat <- function(eatRep_dat){
+
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
                                       eatRep_dat$estimate,
                                       by = "id",
@@ -108,7 +107,6 @@ build_plot_dat <- function(eatRep_dat){
     values_to = "group"
   )
 
-
   ## By the way! Not done here, still have to deal with the comparisons of comparisons.
   # trend_crossDiff has another comparison in the group column
 
@@ -117,6 +115,9 @@ build_plot_dat <- function(eatRep_dat){
   # Goal: only have groups in the group column.
 
   ## Make into a function and apply until there is no comp in the group column any more
+
+  if(any(grep("comp_", eatRep_dat_long$group))){
+
   eatRep_dat_nested_comps <- eatRep_dat_long %>%
     filter(str_detect(group, "comp_")) %>%
     left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
@@ -138,6 +139,9 @@ build_plot_dat <- function(eatRep_dat){
 
   eatRep_dat_long <- rbind(eatRep_dat_long %>%
                              filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
+
+  }
+
   eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p")]
 
 
@@ -146,7 +150,7 @@ build_plot_dat <- function(eatRep_dat){
                              eatRep_dat$group_estimates,
                              by.x = "group",
                              by.y = "id",
-                             all.x = TRUE,
+                             all.y = TRUE,
                              suffixes = c("_comp", "_point"))
 
 
