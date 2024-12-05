@@ -64,13 +64,12 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, year_list, plot_se
   # calc starting points for braces -----------------------------------------
   ## Braces should start some distance below the lower x-axis. Labels below lowest brace
   range_coords <- diff(range(coords))
-browser()
   if (overlap == TRUE) {
     lower_brace_y_a <- coords[1] - (range_coords * plot_settings$brace_span_y)
     lower_brace_y_b <- lower_brace_y_a - range_coords * plot_settings$brace_span_y
     upper_label_y <- lower_brace_y_b - range_coords * plot_settings$brace_label_nudge_y
 
-    res_list <- list(
+    starting_points <- list(
       "lower_brace_y_a" = lower_brace_y_a,
       "lower_brace_y_b" = lower_brace_y_b,
       "upper_label_y" = upper_label_y
@@ -78,26 +77,27 @@ browser()
   } else {
     lower_brace_y <- coords[1] - (range_coords * plot_settings$brace_span_y)
     upper_label_y <- lower_brace_y - range_coords * plot_settings$brace_label_nudge_y
-}
+
     starting_points <- list(
       "lower_brace_y" = lower_brace_y,
       "upper_label_y" = upper_label_y
     )
-
+}
 
   ## For each brace, save where it should be indented, and where it's position relative to the other braces is
   brace_positions <- calc_brace_position(years_list, overlap)
 
+
   if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
     ## larger brace on top, smaller one below. If equal, just put the one with the smallest start year on top:
-
-    dat$upper_y <- ifelse(dat$brace_position_y == "top",
+browser()
+    dat$upper_y <- ifelse(brace_positions$brace_position_y == "top",
       yes = coords[1],
       no = starting_points$lower_brace_y_a
     )
 
     # Lower brace coordinates:
-    dat$lower_y <- ifelse(dat$brace_position_y == "top",
+    dat$lower_y <- ifelse(brace_positions$brace_position_y == "top",
       starting_points$lower_brace_y_a,
       starting_points$lower_brace_y_b
     )
