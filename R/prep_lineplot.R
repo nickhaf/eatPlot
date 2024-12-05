@@ -9,15 +9,11 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, groups, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
-
-
-
-# Check input -------------------------------------------------------------
+prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
+  # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
 
-
-# Filtering ---------------------------------------------------------------
+  # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
@@ -25,30 +21,35 @@ prep_lineplot <- function(eatRep_dat, groups, line_sig, point_sig, brace_label_e
   used_comps <- c(line_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold)
   eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% used_comps, ]
 
-# Merge Data --------------------------------------------------------------
-  plot_dat <- build_plot_dat(eatRep_dat)
-
-  browser()
-
-plot_dat <- build_column(plot_dat, groups, "groups")
+  # Merge Data --------------------------------------------------------------
+  plot_dat <- build_plot_dat(eatRep_dat) |>
+    build_column(subgroup_var, "subgroup_var")
 
 
   ## Only into factor, if not already a factor:
-  grouping_var_lvls <- levels(factor(plot_dat[, grouping_var]))
+  subgroup_lvls <- levels(factor(plot_dat$subgroup_var))
 
+
+
+  # Coordinates -------------------------------------------------------------
   ## Some coordinates are needed to set the plot into the correct margins:
   plot_lims <- calc_plot_lims(plot_dat, plot_settings)
 
   brace_coordinates <- calc_brace_coords(plot_dat,
-                                         grouping_var_lvls,
-                                         plot_lims$coords,
-                                         plot_settings = plot_settings)
-
-  plot_dat_wide <- as.data.frame(pivot_wider(plot_dat, names_from = "comparison", values_from = c("est_comp", "se_comp", "sig_comp")))
-
+    subgroup_lvls,
+    plot_lims$coords,
+    plot_settings = plot_settings
+  )
 
 
-# Set column names --------------------------------------------------------
+
+# Wide Format -------------------------------------------------------------
+  plot_dat_wide <- tidyr::pivot_wider(plot_dat,
+    names_from = "comparison",
+    values_from = c("est_comp", "se_comp", "sig_comp")
+  ) |>
+    as.data.frame()
+
 
 
   ######### Hier nohc eine Schleife rum, sodass theoretisch auch andere Comparisons geplottet werden können.
@@ -61,9 +62,9 @@ plot_dat <- build_column(plot_dat, groups, "groups")
   plot_dat_wide$brace_label_sig_high <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_high)]
   plot_dat_wide$brace_label_sig_bold <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_bold)]
 
-  for(i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]){
-  plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
-}
+  for (i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]) {
+    plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
+  }
 
   line_dat <- plot_dat_wide
   brace_dat <- prep_brace(plot_dat_wide, brace_coords = brace_coordinates)
@@ -74,11 +75,11 @@ plot_dat <- build_column(plot_dat, groups, "groups")
   line_dat <- filter_years(line_dat, years = years_lines)
   brace_dat <- filter_years(brace_dat, years = years_braces)
 
-  if(!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)){
+  if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
     stop("Some of the trends you provided in 'years_lines' are not in the data.")
   }
 
-  if(!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)){
+  if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
     stop("Some of the trends you provided in 'years_braces' are not in the data.")
   }
 
@@ -97,17 +98,18 @@ create_trend <- function(df) {
 
 
 
-build_plot_dat <- function(eatRep_dat){
-
+build_plot_dat <- function(eatRep_dat) {
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
-                                      eatRep_dat$estimate,
-                                      by = "id",
-                                      all.x = TRUE)
+    eatRep_dat$estimate,
+    by = "id",
+    all.x = TRUE
+  )
 
   eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
-                                     eatRep_dat$estimate,
-                                     by = "id",
-                                     all.x = TRUE)
+    eatRep_dat$estimate,
+    by = "id",
+    all.x = TRUE
+  )
 
   eatRep_dat_long <- tidyr::pivot_longer(
     eatRep_dat$comp_estimates,
@@ -125,30 +127,32 @@ build_plot_dat <- function(eatRep_dat){
 
   ## Make into a function and apply until there is no comp in the group column any more
 
-  if(any(grep("comp_", eatRep_dat_long$group))){
+  if (any(grep("comp_", eatRep_dat_long$group))) {
+    eatRep_dat_nested_comps <- eatRep_dat_long %>%
+      filter(str_detect(group, "comp_")) %>%
+      left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
+      mutate(id = paste(id, group, sep = "_")) %>%
+      dplyr::select(-group) %>%
+      pivot_longer(
+        cols = c("unit_1", "unit_2"),
+        names_to = "unit_b",
+        values_to = "group"
+      ) %>%
+      filter(str_detect(group, "comp_")) %>%
+      left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
+      mutate(id = paste(id, group, sep = "_")) %>%
+      dplyr::select(-group) %>%
+      pivot_longer(
+        cols = c("unit_1", "unit_2"),
+        names_to = "unit_c",
+        values_to = "group"
+      ) %>%
+      select(id, comparison, group, est, se, p)
 
-  eatRep_dat_nested_comps <- eatRep_dat_long %>%
-    filter(str_detect(group, "comp_")) %>%
-    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-    mutate(id = paste(id, group, sep = "_")) %>%
-    dplyr::select(-group) %>%
-    pivot_longer(cols = c("unit_1", "unit_2"),
-                 names_to = "unit_b",
-                 values_to = "group") %>%
-    filter(str_detect(group, "comp_")) %>%
-    left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-    mutate(id = paste(id, group, sep = "_")) %>%
-    dplyr::select(-group) %>%
-    pivot_longer(cols = c("unit_1", "unit_2"),
-                 names_to = "unit_c",
-                 values_to = "group") %>%
-    select(id, comparison, group, est, se, p)
 
 
-
-  eatRep_dat_long <- rbind(eatRep_dat_long %>%
-                             filter(str_detect(group, "comp_", negate = TRUE)) , eatRep_dat_nested_comps)
-
+    eatRep_dat_long <- rbind(eatRep_dat_long %>%
+      filter(str_detect(group, "comp_", negate = TRUE)), eatRep_dat_nested_comps)
   }
 
   eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p")]
@@ -156,11 +160,12 @@ build_plot_dat <- function(eatRep_dat){
 
   ###############
   eatRep_dat_merged <- merge(eatRep_dat_long,
-                             eatRep_dat$group_estimates,
-                             by.x = "group",
-                             by.y = "id",
-                             all.y = TRUE,
-                             suffixes = c("_comp", "_point"))
+    eatRep_dat$group_estimates,
+    by.x = "group",
+    by.y = "id",
+    all.y = TRUE,
+    suffixes = c("_comp", "_point")
+  )
 
 
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))

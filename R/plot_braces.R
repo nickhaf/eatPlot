@@ -1,10 +1,4 @@
-prep_brace <- function(plot_dat, grouping_var_lvls, plot_lims, plot_settings) {
-  brace_coordinates <- calc_brace_coords(plot_dat,
-    grouping_var_lvls,
-    plot_lims$coords,
-    plot_settings = plot_settings
-  )
-
+prep_brace <- function(plot_dat, brace_coords) {
   brace_coords$coord_dat_test1 <- brace_coords$coord_dat %>%
     dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
     tidyr::pivot_longer(

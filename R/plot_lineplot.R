@@ -20,7 +20,7 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatRep_dat,
-                          groups = NULL,
+                          subgroup_var = NULL,
                           parameter = "mean",
                           line_sig = "trend",
                           # line_se = "trend",
@@ -49,6 +49,7 @@ plot_lineplot <- function(eatRep_dat,
   ## Maybe do preperation not in this function, so the data can be changed afterwards! And also the format for the  table data might be a bit different.
   dat_p <- prep_lineplot(eatRep_dat,
     line_sig = line_sig,
+    subgroup_var = subgroup_var,
     parameter = parameter,
     brace_label_est = brace_label_est,
     brace_label_se = brace_label_se,
