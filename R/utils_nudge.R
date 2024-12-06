@@ -48,7 +48,7 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #' @return Data.frame containing the coordinates for plotting braces and their labels.
 #'
 #' @examples # tbd
-calc_brace_coords <- function(dat, grouping_var_lvls, coords, year_list, plot_settings = plotsettings_lineplot()) {
+calc_brace_coords <- function(dat, grouping_var_lvls, coords, years_list, plot_settings = plotsettings_lineplot()) {
 
   years_braces <- years_list$years_braces
 
@@ -217,6 +217,7 @@ calc_brace_position <- function(years_list, overlap) {
 
 # Plot_points -------------------------------------------------------------
 calc_x_nudge <- function(dat, nudge_x, plot_settings) {
+
   range_years <- diff(dat$plot_lims$x_range)
   min_max_trend <- get_min_max(dat$dat_final)
 
@@ -235,6 +236,7 @@ calc_x_nudge <- function(dat, nudge_x, plot_settings) {
       )
     )
   } else {
+
     dat$x_coords <- ifelse(dat$year == min(dat$year, na.rm = TRUE),
       yes = dat$year + range_years * nudge_x,
       no = ifelse(dat$year == max(dat$year, na.rm = TRUE),
@@ -282,7 +284,6 @@ nudge_x_axis_labels <- function(dat, plot_settings) {
 calc_y_nudge <- function(plot_dat,
                          plot_settings = plotsettings_lineplot()) {
   coords_diff <- diff(range(plot_dat$plot_lims$coords))
-
   nudge_val <- coords_diff * plot_settings$point_label_nudge_y
 
   # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher.

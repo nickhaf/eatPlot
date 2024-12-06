@@ -9,11 +9,11 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
+prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, point_est, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
 
-years_list <- prep_years_list(years_lines, years_braces)
+  years_list <- prep_years_list(years_lines, years_braces)
 
   # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
@@ -37,7 +37,7 @@ years_list <- prep_years_list(years_lines, years_braces)
   plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
 
 
-# Wide Format -------------------------------------------------------------
+  # Wide Format -------------------------------------------------------------
   plot_dat_wide <- tidyr::pivot_wider(plot_dat,
     names_from = "comparison",
     values_from = c("est_comp", "se_comp", "sig_comp")
@@ -59,11 +59,10 @@ years_list <- prep_years_list(years_lines, years_braces)
   for (i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]) {
     plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
   }
-
   line_dat <- plot_dat_wide
   brace_dat_list <- prep_brace(plot_dat_wide, plot_lims, plot_settings)
-brace_dat <- brace_dat_list$brace_dat
-brace_coordinates <- brace_dat_list$brace_coords
+  brace_dat <- brace_dat_list$brace_dat
+  brace_coordinates <- brace_dat_list$brace_coords
 
 
   # The multiplicator here is not that easy to understand, possiby take something else.
@@ -83,7 +82,7 @@ brace_coordinates <- brace_dat_list$brace_coords
 
   background_line_dat <- subset(line_dat, line_dat$TR_BUNDESLAND == "total" & is.na(line_dat$mhg))
 
-  list_final <- list(plot_dat = line_dat, brace_dat = brace_dat, background_line_dat = background_line_dat, plot_lims = plot_lims)
+  list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
 
   return(list_final)
 }
@@ -176,7 +175,7 @@ build_plot_dat <- function(eatRep_dat) {
   return(plot_dat)
 }
 
-prep_years_list <- function(years_lines, years_braces){
+prep_years_list <- function(years_lines, years_braces) {
   years_list <- lapply(list(years_lines, years_braces), prep_years)
   names(years_list) <- c("years_lines", "years_braces")
   return(years_list)

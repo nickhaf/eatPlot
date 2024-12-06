@@ -1,5 +1,7 @@
-years_list <- prep_years_list(years_lines = list(c(2009, 2015), c(2015, 2022)), years_braces = list(c(2009, 2015), c(2009, 2022)))
-
+years_list <- prep_years_list(
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2009, 2022))
+)
 plot_dat <- data.frame(
   TR_BUNDESLAND = rep("Berlin", 12),
   id = 1:12,
@@ -13,7 +15,8 @@ plot_dat <- data.frame(
   trend = c(rep("2009_2015", 4), rep("2015_2022", 4), rep("2009_2022", 4))
 )
 
-plot_lims <- calc_plot_lims(plot_dat,
+plot_lims <- calc_plot_lims(
+  plot_dat,
   subgroup_lvls = c("einET", "ersteGen"),
   years_list = years_list,
   plot_settings = plotsettings_lineplot()
@@ -32,40 +35,6 @@ test_that("Overlapping braces are looking good", {
       ) +
       draw_brace_label(brace_dat$brace_label, plot_settings = plotsettings_lineplot())
   )
-})
-
-test_that("y limits are set correctly", {
-  df <- data.frame(
-    state_var = rep("Berlin", 4),
-    year_start_axis = c(2011, 2011, 2015, 2015),
-    year_end_axis = c(2020, 2020, 2020, 2020),
-    grouping_var = factor(c(0, 1, 0, 1)),
-    est = c(1:4),
-    se = c(1:4),
-    sig_1 = c(TRUE, FALSE, FALSE, TRUE),
-    sig_2 = c(FALSE, TRUE, FALSE, TRUE),
-    est_noTrendStart_noComp = 400:403,
-    est_noTrendEnd_noComp = 500:503,
-    years_Trend = c("20112020", "20112020", "2152020", "20152020"),
-    competence_var = "a"
-  )
-
-  test_p <- ggplot2::ggplot() +
-    plot_braces(df,
-      plot_lims = list(
-        coords = calc_y_value_coords(y_range = c(400, 503)),
-        y_range = c(400, 503)
-      ),
-      label_est = "est",
-      label_se = "se",
-      label_sig_high = "sig_1",
-      label_sig_bold = "sig_2",
-      plot_settings = plotsettings_lineplot(split_plot = TRUE)
-    )
-  coords <- calc_y_value_coords(c(400, 503)) ## need the new function for calculating then
-
-  skip("test new function for y-lims here")
-  expect_equal(test_p$coordinates$limits$y, coords)
 })
 
 

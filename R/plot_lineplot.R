@@ -19,62 +19,28 @@
 #' @export
 #'
 #' @examples # tbd
-plot_lineplot <- function(eatRep_dat,
-                          subgroup_var = NULL,
-                          parameter = "mean",
-                          line_sig = "trend",
-                          # line_se = "trend",
-                          years_lines = list(c(2009, 2015), c(2015, 2022)),
-                          years_braces = list(c(2009, 2015), c(2015, 2022)),
+plot_lineplot <- function(eatPlot_dat,
                           facets = "TR_BUNDESLAND",
-                          facet_values,
                           seperate_plot_var_box = "wholeGroup",
-                          point_values = "none",
-                          point_sig = "none",
-                          brace_label_est = "trend",
-                          brace_label_se = "trend",
-                          brace_label_sig_high = "trend",
-                          brace_label_sig_bold = "trend",
-                          title_superscripts = NULL,
-                          plot_settings = plotsettings_lineplot()) {
+                          title_superscripts = NULL) {
 
-  check_eatRep_dat(eatRep_dat)
-  check_plotsettings_lineplot(plot_settings)
-
-  ## Put it in here, so I don't have to give it into the function as arguments every time
-  plot_settings_expanded <- plot_settings
-  plot_settings_expanded$years_list <- lapply(list(years_lines, years_braces), prep_years)
-  names(plot_settings_expanded$years_list) <- c("years_lines", "years_braces")
-
-  ## Maybe do preperation not in this function, so the data can be changed afterwards! And also the format for the  table data might be a bit different.
-  dat_p <- prep_lineplot(eatRep_dat,
-    line_sig = line_sig,
-    subgroup_var = subgroup_var,
-    parameter = parameter,
-    brace_label_est = brace_label_est,
-    brace_label_se = brace_label_se,
-    brace_label_sig_high = brace_label_sig_high,
-    brace_label_sig_bold = brace_label_sig_bold,
-    years_lines = years_lines,
-    years_braces = years_braces,
-    plot_settings = plot_settings_expanded
-  )
+  check_plotsettings_lineplot(eatPlot_dat$plot_settings)
+  dat_p <- eatPlot_dat
   dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
   plot_list <- list()
   position <- 1
 
-  #facet_values <- levels(as.factor(dat_p$plot_dat[, facets]))
-
+  facet_values <- levels(as.factor(dat_p$plot_dat[, facets]))
   for (i in facet_values) {
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, facets]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, facets] == i & !is.na(dat_p_facet$plot_dat[, facets]), ]
 
 
-    dat_p_facet$brace_dat <- dat_p_facet$brace_dat[!is.na(dat_p_facet$brace_dat[, facets]), ]
-    dat_p_facet$brace_dat <- dat_p_facet$brace_dat[dat_p_facet$brace_dat[, facets] == i & !is.na(dat_p_facet$brace_dat[, facets]), ]
+    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[!is.na(dat_p_facet$brace_dat$brace_label[, facets]), ]
+    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, facets] == i & !is.na(dat_p_facet$brace_dat$brace_label[, facets]), ]
 
     p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
                       mapping = ggplot2::aes(
@@ -82,15 +48,14 @@ plot_lineplot <- function(eatRep_dat,
                         y = est_point,
                         group = id,
                         colour = .data$mhg
-                      )
-      ) +
-      plot_single_lineplot(dat_p_facet, plot_settings_expanded) +
+                      )) +
+      plot_single_lineplot(dat_p_facet) +
       plot_title(sub_dash(i), title_superscripts) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
-        plot_settings$margin_top,
-        plot_settings$margin_right,
-        plot_settings$margin_bottom,
-        plot_settings$margin_left
+        dat_p$plot_settings$margin_top,
+        dat_p$plot_settings$margin_right,
+        dat_p$plot_settings$margin_bottom,
+        dat_p$plot_settings$margin_left
       ), "npc"))
 
     plot_list[[i]] <- p_state
@@ -100,23 +65,23 @@ plot_lineplot <- function(eatRep_dat,
   names(plot_list) <- facet_values
 
   # Add y axis as seperate plot --------------------------------------------------------------
-  if (plot_settings$axis_y == TRUE) {
+  if (dat_p$plot_settings$axis_y == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
       plot_y_axis(
         dat_p_facet,
-        plot_settings = plot_settings
+        plot_settings = dat_p$plot_settings
       )
 
-    positions_y_axis <- calc_y_positions(facet_values, plot_settings$n_cols)
+    positions_y_axis <- calc_y_positions(facet_values, dat_p$plot_settings$n_cols)
 
     for (i in positions_y_axis) {
       plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
     }
 
-    widths_setting <- c(0.02, rep(1 - 0.02 / plot_settings$n_cols, times = plot_settings$n_cols))
-    plot_settings$n_cols <- plot_settings$n_cols + 1
+    widths_setting <- c(0.02, rep(1 - 0.02 / dat_p$plot_settings$n_cols, times = dat_p$plot_settings$n_cols))
+    dat_p$plot_settings$n_cols <- dat_p$plot_settings$n_cols + 1
   } else {
-    widths_setting <- 1 / plot_settings$n_cols
+    widths_setting <- 1 / dat_p$plot_settings$n_cols
   }
 
   ## The wholeGroup plot gets a box drawn around it.
@@ -125,7 +90,7 @@ plot_lineplot <- function(eatRep_dat,
       plot_list[[plot_names]] <- plot_list[[plot_names]] +
         ggplot2::theme(plot.background = ggplot2::element_rect(
           color = "black",
-          linewidth = plot_settings$seperate_plot_var_box_linewidth,
+          linewidth = dat_p$plot_settings$seperate_plot_var_box_linewidth,
           fill = NA
         ))
     }
@@ -133,7 +98,7 @@ plot_lineplot <- function(eatRep_dat,
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list,
-    ncol = plot_settings$n_cols,
+    ncol = dat_p$plot_settings$n_cols,
     widths = widths_setting
   ) +
     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
