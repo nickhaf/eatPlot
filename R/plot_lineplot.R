@@ -235,7 +235,6 @@ calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
 
   x_range <- range(unique_years)
-
   brace_coords <- calc_brace_coords(plot_dat,
                                     subgroup_lvls,
                                     coords,
@@ -243,6 +242,9 @@ calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
                                     plot_settings = plot_settings
   )
 
+
+
+## Label_position_x muss noch irgendwie hier ran.
   ## Output an object with the plot coordinate informations:
   coord_list <- list(
     x_range = x_range,
