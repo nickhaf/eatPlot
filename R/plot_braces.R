@@ -1,6 +1,6 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
 
-  brace_coords$coord_dat_test1 <- plot_lims$brace_coords$coord_dat %>%
+  plot_lims$brace_coords$coord_dat_test1 <- plot_lims$brace_coords$coord_dat %>%
     dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
     tidyr::pivot_longer(
       cols = c("upper_y", "lower_y"),
@@ -13,7 +13,7 @@ prep_brace <- function(plot_dat, plot_lims, plot_settings) {
     )
 
   brace_labels <- merge(plot_dat[, c("TR_BUNDESLAND", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "mhg", "trend")],
-    brace_coords$group_labels,
+    plot_lims$brace_coords$group_labels,
     by.x = "mhg",
     by.y = "grouping_lvls",
     all.x = TRUE
@@ -33,13 +33,13 @@ prep_brace <- function(plot_dat, plot_lims, plot_settings) {
     round_se = 1
   )
 
-  brace_dat <- merge(brace_coords$coord_dat_test1,
+  brace_dat <- merge(plot_lims$brace_coords$coord_dat_test1,
     brace_labels,
     by = "trend",
     all.x = TRUE
   )
 
-brace_list <- list(brace_dat=brace_dat, brace_coords=brace_coords)
+brace_list <- list(brace_dat=brace_dat, brace_coords=plot_lims$brace_coords)
 
   return(brace_list)
 }
@@ -60,15 +60,17 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
   #     outside = FALSE
   #   )
   # } else {
-
-  res <- ggbrace::stat_brace(
+  browser()
+  res <-
+    ggplot2::ggplot() +
+    ggbrace::stat_brace(
     data = brace_coords,
     mapping = ggplot2::aes(
       x = year,
       y = y,
       group = trend
     ),
-    mid = brace_coords$brace_position_x,
+    mid = unique(brace_coords$brace_position_x),
     rotate = 180,
     linewidth = plot_settings$brace_line_width,
     npoints = 200,

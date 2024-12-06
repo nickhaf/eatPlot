@@ -23,8 +23,9 @@ test_that("Overlapping braces are looking good", {
                               plot_settings = plotsettings_lineplot())
 
   brace_dat <- prep_brace(plot_dat, plot_lims, plotsettings_lineplot())
+
   ggplot2::ggplot() +
-    draw_braces(brace_dat$brace_dat,
+    draw_braces(brace_dat$brace_coords$coord_dat_test1,
                 plot_settings = plotsettings_lineplot(split_plot = FALSE)
     )
 
