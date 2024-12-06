@@ -7,38 +7,29 @@
 #' @export
 #'
 #' @examples # tbd
-plot_single_lineplot <- function(plot_dat,
-                                 # point_values = "est_noTrend_noComp",
-                                 # point_sig = "sig_noTrend_noComp",
-                                 # line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-                                 # line_se = NULL,
-                                 # line_sig = "sig_Trend_CompWithin",
-                                 # label_se = "se_Trend_noComp",
-                                 # label_sig_high = "sig_Trend_CompCrossDiffWhole",
-                                 # label_sig_bold = "sig_Trend_noComp",
-                                 plot_settings = plotsettings_lineplot()) {
+plot_single_lineplot <- function(plot_dat) {
   # Assemble a single lineplot (one "tile" in the whole lineplot).
-  list(if (plot_settings$background_lines) {
+  list(if (plot_dat$plot_settings$background_lines) {
     plot_background_lines(
       dat_total = plot_dat$background_line_dat,
-      plot_settings = plot_settings
+      plot_settings = plot_dat$plot_settings
     )
   },
     ggplot2::geom_line(
       ggplot2::aes(
         linetype = .data$line_sig
       ),
-      linewidth = plot_settings$line_width
+      linewidth = plot_dat$plot_settings$line_width
     ),
-    plot_points(plot_dat, plot_settings = plot_settings),
+    plot_points(plot_dat, plot_settings = plot_dat$plot_settings),
     ggplot2::theme(plot.margin = ggplot2::unit(c(0.25, 0.11, 0.11, 0.11), units = "npc")),
-    theme_line(plot_settings),
-    draw_braces(plot_dat$brace_dat, plot_settings),
-    draw_brace_label(plot_dat$brace_dat, plot_settings),
+    theme_line(plot_dat$plot_settings),
+    draw_braces(plot_dat$brace_dat$brace_coords$coord_dat_test1, plot_dat$plot_settings),
+    draw_brace_label(plot_dat$brace_dat$brace_label, plot_dat$plot_settings),
     ggplot2::coord_cartesian(ylim = plot_dat$plot_lims$y_lims_total, clip = "off"),
-    set_scales(plot_settings) ,
+    set_scales(plot_dat$plot_settings) ,
     plot_x_axis(plot_dat,
-                plot_settings = plot_settings
+                plot_settings = plot_dat$plot_settings
     )
   )
 
