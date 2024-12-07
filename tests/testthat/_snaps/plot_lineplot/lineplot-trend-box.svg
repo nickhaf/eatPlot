@@ -131,6 +131,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMzYwLjAwfDUzOS4zOXwxOC4yOHwxNTcuNDc=)'>
+<rect x='360.00' y='18.28' width='179.39' height='139.18' style='stroke-width: 1.07;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='443.08,71.33 524.62,81.76 ' style='stroke-width: 1.49; stroke-linecap: butt;' />
@@ -783,6 +784,6 @@
 <text x='622.47' y='459.86' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2015</text>
 <text x='696.43' y='459.86' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2022</text>
 <text x='628.29' y='444.38' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='35.41px' lengthAdjust='spacingAndGlyphs'>Thueringen</text>
-<text x='4.10' y='10.06' style='font-size: 13.20px; font-family: sans;' textLength='79.26px' lengthAdjust='spacingAndGlyphs'>lineplot_trend</text>
+<text x='4.10' y='10.06' style='font-size: 13.20px; font-family: sans;' textLength='107.89px' lengthAdjust='spacingAndGlyphs'>lineplot_trend_box</text>
 </g>
 </svg>

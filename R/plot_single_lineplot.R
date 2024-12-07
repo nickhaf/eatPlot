@@ -21,7 +21,7 @@ plot_single_lineplot <- function(plot_dat) {
       ),
       linewidth = plot_dat$plot_settings$line_width
     ),
-    plot_points(plot_dat, plot_settings = plot_dat$plot_settings),
+    plot_points(plot_dat),
     ggplot2::theme(plot.margin = ggplot2::unit(c(0.25, 0.11, 0.11, 0.11), units = "npc")),
     theme_line(plot_dat$plot_settings),
     draw_braces(plot_dat$brace_dat$brace_coords$coord_dat_test1, plot_dat$plot_settings),

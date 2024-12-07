@@ -280,7 +280,6 @@ nudge_x_axis_labels <- function(dat, plot_settings) {
   return(dat)
 }
 
-
 calc_y_nudge <- function(plot_dat,
                          plot_settings = plotsettings_lineplot()) {
   coords_diff <- diff(range(plot_dat$plot_lims$coords))

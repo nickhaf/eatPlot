@@ -9,13 +9,13 @@
 #' @export
 #'
 #' @examples # tbd
-plot_points <- function(plot_dat, plot_settings) {
+plot_points <- function(plot_dat) {
   plot_dat <- calc_y_nudge(plot_dat,
-                           plot_settings = plot_settings
+                           plot_settings = plot_dat$plot_settings
   )
   plot_dat$dat_final <- calc_x_nudge(plot_dat,
-                                     nudge_x = plot_settings$point_label_nudge_x,
-                                           plot_settings = plot_settings)
+                                     nudge_x = plot_dat$plot_settings$point_label_nudge_x,
+                                           plot_settings = plot_dat$plot_settings)
   list(
     ggplot2::geom_point(ggplot2::aes(shape = .data$sig_point)),
 
@@ -43,7 +43,7 @@ plot_points <- function(plot_dat, plot_settings) {
         label = round(.data$est_point, 0)
       ),
       nudge_y = plot_dat$dat_final$nudge_y,
-      size = plot_settings$point_label_size
+      size = plot_dat$plot_settings$point_label_size
     )
     # }
   )

@@ -47,7 +47,7 @@ plot_lineplot <- function(eatPlot_dat,
                         x = year,
                         y = est_point,
                         group = id,
-                        colour = .data$mhg
+                        colour = .data$subgroup_var
                       )) +
       plot_single_lineplot(dat_p_facet) +
       plot_title(sub_dash(i), title_superscripts) +
@@ -200,6 +200,7 @@ calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
 
   x_range <- range(unique_years)
+
   brace_coords <- calc_brace_coords(plot_dat,
                                     subgroup_lvls,
                                     coords,
