@@ -9,7 +9,6 @@
 #' @examples # tbd
 plot_background_lines <- function(dat_total,
                                   plot_settings = plotsettings_lineplot()) {
-
   dat_total$y_pos <- dat_total$est_point + 2 * dat_total$se_point
   dat_total$y_neg <- dat_total$est_point - 2 * dat_total$se_point
 

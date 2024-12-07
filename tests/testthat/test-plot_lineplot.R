@@ -1,7 +1,7 @@
 ## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
 ## einfach hier rausnehmen.
 
-trend_3$group <- subset(trend_3$group, trend_3$group$mhg %in% c("einET", "ersteGen"))
+trend_3$group <- subset(trend_3$group, trend_3$group$mhg %in% c("einET", "ersteGen")) #| is.na(trend_3$group$mhg))
 trend_3$group$TR_BUNDESLAND <- factor(trend_3$group$TR_BUNDESLAND,
                                       levels = unique(trend_3$group$TR_BUNDESLAND)[-1]
 )
@@ -105,7 +105,7 @@ test_that("box around state", {
                      title_superscripts = NULL
   )
 
-  vdiffr::expect_doppelganger("lineplot_trend", p)
+  vdiffr::expect_doppelganger("lineplot_trend_box", p)
 
 
   #save_plot(p, filename = "/home/nick/Downloads/test.pdf")

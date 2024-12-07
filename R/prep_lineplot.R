@@ -79,8 +79,7 @@ prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, point_e
     stop("Some of the trends you provided in 'years_braces' are not in the data.")
   }
 
-
-  background_line_dat <- subset(line_dat, line_dat$TR_BUNDESLAND == "total" & is.na(line_dat$mhg))
+  background_line_dat <- subset(line_dat, line_dat$TR_BUNDESLAND == "total" & is.na(line_dat$subgroup_var))
 
   list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
 
