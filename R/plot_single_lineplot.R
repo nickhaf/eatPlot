@@ -28,9 +28,7 @@ plot_single_lineplot <- function(plot_dat) {
     draw_brace_label(plot_dat$brace_dat$brace_label, plot_dat$plot_settings),
     ggplot2::coord_cartesian(ylim = plot_dat$plot_lims$y_lims_total, clip = "off"),
     set_scales(plot_dat$plot_settings) ,
-    plot_x_axis(plot_dat,
-                plot_settings = plot_dat$plot_settings
-    )
+    plot_x_axis(plot_dat)
   )
 
 #,

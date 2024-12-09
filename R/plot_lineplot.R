@@ -23,7 +23,6 @@ plot_lineplot <- function(eatPlot_dat,
                           facets = "TR_BUNDESLAND",
                           seperate_plot_var_box = "wholeGroup",
                           title_superscripts = NULL) {
-
   check_plotsettings_lineplot(eatPlot_dat$plot_settings)
   dat_p <- eatPlot_dat
   dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
@@ -43,12 +42,13 @@ plot_lineplot <- function(eatPlot_dat,
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, facets] == i & !is.na(dat_p_facet$brace_dat$brace_label[, facets]), ]
 
     p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
-                      mapping = ggplot2::aes(
-                        x = year,
-                        y = est_point,
-                        group = id,
-                        colour = .data$subgroup_var
-                      )) +
+      mapping = ggplot2::aes(
+        x = year,
+        y = est_point,
+        group = id,
+        colour = .data$subgroup_var
+      )
+    ) +
       plot_single_lineplot(dat_p_facet) +
       plot_title(sub_dash(i), title_superscripts) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
@@ -164,11 +164,9 @@ extract_gsub_values <- function(plot_dat) {
 
 
 calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
-
-
   check_columns(plot_dat, c("est_point", "year"))
 
-    ## Axis limits can be set manually. If not, calculate by range.
+  ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
     y_range <- range(plot_dat$est_point, na.rm = TRUE)
 
@@ -201,16 +199,16 @@ calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
 
   x_range <- range(unique_years)
 
-  brace_coords <- calc_brace_coords(plot_dat,
-                                    subgroup_lvls,
-                                    coords,
-                                    years_list,
-                                    plot_settings = plot_settings
+  brace_coords <- calc_brace_coords(
+    subgroup_lvls,
+    coords,
+    years_list,
+    plot_settings = plot_settings
   )
 
 
 
-## Label_position_x muss noch irgendwie hier ran.
+  ## Label_position_x muss noch irgendwie hier ran.
   ## Output an object with the plot coordinate informations:
   coord_list <- list(
     x_range = x_range,

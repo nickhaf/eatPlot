@@ -6,7 +6,6 @@ trend_3$group$TR_BUNDESLAND <- factor(trend_3$group$TR_BUNDESLAND,
                                       levels = unique(trend_3$group$TR_BUNDESLAND)[-1]
 )
 
-
 trend_3_prepped <- prep_lineplot(
   trend_3,
   subgroup_var = "mhg",

@@ -48,7 +48,7 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #' @return Data.frame containing the coordinates for plotting braces and their labels.
 #'
 #' @examples # tbd
-calc_brace_coords <- function(dat, grouping_var_lvls, coords, years_list, plot_settings = plotsettings_lineplot()) {
+calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settings = plotsettings_lineplot()) {
 
   years_braces <- years_list$years_braces
 
@@ -112,7 +112,6 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, years_list, plot_s
   range_coords <- diff(range(coords)) ## Take from above!
 
   # calc brace label y ------------------------------------------------------
-  # brace_positions$brace_position_x: how is it calculated?
   brace_positions$label_pos_x <- brace_positions$year_start + brace_positions$range * brace_positions$brace_position_x + (max(brace_positions$range) * plot_settings$brace_label_nudge_x)
 
   label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x) {
@@ -124,22 +123,6 @@ calc_brace_coords <- function(dat, grouping_var_lvls, coords, years_list, plot_s
     label_pos_y = label_pos_y
   )
 
-
-  # Change Format if needed -------------------------------------------------
-  # if (plot_settings$split_plot == TRUE) {
-  #   ## Long oder wide format argument
-  #   dat_long <- stats::reshape(
-  #     dat,
-  #     idvar = c("grouping_var", "years_Trend", "competence_var"),
-  #     varying = c("upper_y", "year_end_axis", "lower_y", "year_start_axis"),
-  #     v.names = c("year_axis", "value"),
-  #     direction = "long"
-  #   )
-  #
-  #   dat <- unique(dat_long[, c("grouping_var", "state_var", "label_pos_y", "label_pos_x", "year_axis", "value", "brace_label", "years_Trend")])
-  #   dat$brace_y <- dat$value
-  #   dat <- build_column(dat, old = "value", new = "brace_y")
-  # }
 
   return(list(coord_dat = brace_positions, group_labels = df))
 }
@@ -280,8 +263,8 @@ nudge_x_axis_labels <- function(dat, plot_settings) {
   return(dat)
 }
 
-calc_y_nudge <- function(plot_dat,
-                         plot_settings = plotsettings_lineplot()) {
+calc_y_nudge <- function(plot_dat, plot_settings) {
+
   coords_diff <- diff(range(plot_dat$plot_lims$coords))
   nudge_val <- coords_diff * plot_settings$point_label_nudge_y
 
