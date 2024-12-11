@@ -1,34 +1,36 @@
 # Lineplot Trend
 
 ```{r} 
-trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "ersteGen")) |
-                            (trend_3$group$TR_BUNDESLAND == "total" & is.na(trend_3$group$mhg)))
+## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
+## einfach hier rausnehmen.
+trend_3_subset <- trend_3
+trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen") | is.na(trend_3$group$mhg))
+trend_3_subset$group$TR_BUNDESLAND <- factor(trend_3_subset$group$TR_BUNDESLAND)
 
-
-
-  p <- plot_lineplot(trend_3,
-    subgroup_var = "mhg",
-    parameter = "mean",
-    line_sig = "trend",
-    # line_se = "trend",
-    years_lines = list(c(2009, 2015), c(2015, 2022)),
-    years_braces = list(c(2009, 2015), c(2015, 2022)),
-    facets = "TR_BUNDESLAND",
-    facet_values = unique(trend_3$group$TR_BUNDESLAND)[unique(trend_3$group$TR_BUNDESLAND) != "total"],
-    seperate_plot_var_box = "wholeGroup",
-    point_values = "none",
-    point_sig = "none",
-    brace_label_est = "trend",
-    brace_label_se = "trend",
-    brace_label_sig_high = "trend",
-    brace_label_sig_bold = "trend",
-    title_superscripts = NULL,
-    plot_settings = plotsettings_lineplot(
-      split_plot = FALSE,
-      default_list = lineplot_4x4
-    )
+trend_3_prepped <- prep_lineplot(
+  trend_3_subset,
+  subgroup_var = "mhg",
+  parameter = "mean",
+  line_sig = "trend",
+  background_level = "total", ## level of the facet-factor that is not plotted as facet, but as background-line.
+  background_group = NA, ## group of the background-variable, that is only plotted as background line
+  # line_se = "trend",
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  brace_label_est = "trend",
+  brace_label_se = "trend",
+  brace_label_sig_high = "trend",
+  brace_label_sig_bold = "trend",
+  plot_settings = plotsettings_lineplot(
+    split_plot = FALSE,
+    default_list = lineplot_4x4
   )
+)
 
+p <- plot_lineplot(trend_3_prepped,
+    seperate_plot_var_box = "wholeGroup",
+    title_superscripts = NULL
+  )
 
   # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
 

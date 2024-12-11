@@ -20,26 +20,28 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
-                          facets = "TR_BUNDESLAND",
                           seperate_plot_var_box = "wholeGroup",
                           title_superscripts = NULL) {
+
   check_plotsettings_lineplot(eatPlot_dat$plot_settings)
   dat_p <- eatPlot_dat
-  dat_p$plot_dat <- check_facets(dat_p$plot_dat, facets)
+  dat_p$plot_dat <- check_facets(dat_p$plot_dat, "facet_var")
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
   plot_list <- list()
   position <- 1
 
-  facet_values <- levels(as.factor(dat_p$plot_dat[, facets]))
+  facet_values <- levels(dat_p$plot_dat[, "facet_var"])
+
+
   for (i in facet_values) {
     dat_p_facet <- dat_p
-    dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, facets]), ]
-    dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, facets] == i & !is.na(dat_p_facet$plot_dat[, facets]), ]
+    dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
+    dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
 
 
-    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[!is.na(dat_p_facet$brace_dat$brace_label[, facets]), ]
-    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, facets] == i & !is.na(dat_p_facet$brace_dat$brace_label[, facets]), ]
+    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[!is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
+    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
 
     p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
       mapping = ggplot2::aes(

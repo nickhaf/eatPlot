@@ -9,11 +9,15 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, point_est, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, plot_settings) {
+prep_lineplot <- function(
+    eatRep_dat, subgroup_var, line_sig, point_sig, point_est, brace_label_est, brace_label_se, brace_label_sig_high, brace_label_sig_bold, parameter, years_lines, years_braces, facet_var = "TR_BUNDESLAND",
+    background_level, background_group, plot_settings) {
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
 
   years_list <- prep_years_list(years_lines, years_braces)
+
+
 
   # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
@@ -25,8 +29,13 @@ prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, point_e
 
   # Merge Data --------------------------------------------------------------
   plot_dat <- build_plot_dat(eatRep_dat) |>
-    build_column(subgroup_var, "subgroup_var")
+    build_column(subgroup_var, "subgroup_var") |>
+    build_column(facet_var, "facet_var")
 
+  if (is.na(background_group)) {
+    background_group <- "noGroup"
+    plot_dat[, "subgroup_var"][is.na(plot_dat$subgroup_var)] <- background_group
+  }
 
   ## Only into factor, if not already a factor:
   subgroup_lvls <- levels(factor(plot_dat$subgroup_var))
@@ -59,7 +68,19 @@ prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, point_e
   for (i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]) {
     plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
   }
+
+
+  background_line_dat <- subset(plot_dat_wide,
+                                facet_var == background_level &
+                                  subgroup_var == background_group)
+  plot_dat_wide <- subset(plot_dat_wide, subgroup_var != background_group)
+  plot_dat_wide <- subset(plot_dat_wide, plot_dat_wide$facet_var != background_level)
+
+
+
   line_dat <- plot_dat_wide
+
+
   brace_dat_list <- prep_brace(plot_dat_wide, plot_lims, plot_settings)
   brace_dat <- brace_dat_list$brace_dat
   brace_coordinates <- brace_dat_list$brace_coords
@@ -79,7 +100,6 @@ prep_lineplot <- function(eatRep_dat, subgroup_var, line_sig, point_sig, point_e
     stop("Some of the trends you provided in 'years_braces' are not in the data.")
   }
 
-  background_line_dat <- subset(line_dat, line_dat$TR_BUNDESLAND == "total" & is.na(line_dat$subgroup_var))
 
   list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
 
