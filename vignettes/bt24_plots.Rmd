@@ -4,8 +4,10 @@
 trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "ersteGen")) |
                             (trend_3$group$TR_BUNDESLAND == "total" & is.na(trend_3$group$mhg)))
 
+
+
   p <- plot_lineplot(trend_3,
-    grouping_var = NULL,
+    subgroup_var = "mhg",
     parameter = "mean",
     line_sig = "trend",
     # line_se = "trend",
@@ -29,7 +31,8 @@ trend_3$group <- subset(trend_3$group, (trend_3$group$mhg %in% c("einET", "erste
 
 
   # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
-  save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
+
+  # save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
 ```
 
 

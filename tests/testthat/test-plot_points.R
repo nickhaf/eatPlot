@@ -1,46 +1,41 @@
-test_that("simple pointplot", {
-  df <- data.frame(
-    grouping_var = rep(c("0", "1"), 4),
-    year = c(2011, 2011, 2012, 2012, 2024, 2024, 2030, 2030),
-    est_point = 100:107,
-    p = seq(0.02, 0.09, by = 0.01),
-    sig_noTrend_noComp = c(TRUE, TRUE, TRUE, rep(FALSE, 5)),
-    years_Trend = c(1, 1, 1, 1, 2, 2, 2, 2),
-    year_axis = c(1, 1, 2, 2, 3, 3, 4, 4)
-  )
+trend_3$group <- subset(trend_3$group, trend_3$group$mhg %in% c("einET", "ersteGen")) #| is.na(trend_3$group$mhg))
+trend_3$group <- subset(trend_3$group, TR_BUNDESLAND == "Brandenburg") #| is.na(trend_3$group$mhg))
+trend_3$group$TR_BUNDESLAND <- factor(trend_3$group$TR_BUNDESLAND,
+                                      levels = unique(trend_3$group$TR_BUNDESLAND)[-1]
+)
 
+
+trend_3_prepped <- prep_lineplot(
+  trend_3,
+  subgroup_var = "mhg",
+  parameter = "mean",
+  line_sig = "trend",
+  # line_se = "trend",
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  brace_label_est = "trend",
+  brace_label_se = "trend",
+  brace_label_sig_high = "trend",
+  brace_label_sig_bold = "trend",
+  plot_settings = plotsettings_lineplot(
+    split_plot = FALSE,
+    default_list = lineplot_4x4
+  )
+)
+
+
+test_that("simple pointplot", {
   vdiffr::expect_doppelganger(
     "Simple pointplot",
-    ggplot2::ggplot() +
-      plot_points(df,
-        point_sig = "sig_noTrend_noComp",
-        point_values = "est_point",
-        plot_lims = list(y_range = c(100, 107),
-                         coords_diff = 7)
-      )
+    ggplot2::ggplot(trend_3_prepped$plot_dat,
+                     mapping = ggplot2::aes(
+                       x = year,
+                       y = est_point,
+                       group = id,
+                       colour = .data$subgroup_var
+                     ))  +
+      plot_points(trend_3_prepped)
   )
 })
 
-test_that("Pointplot can be facetted", {
-  df <- data.frame(
-    grouping_var = rep(c("0", "1"), 4),
-    year = c(2011, 2011, 2012, 2012, 2024, 2024, 2030, 2030),
-    est_point = 100:107,
-    p = seq(0.02, 0.09, by = 0.01),
-    sig_noTrend_noComp = c(TRUE, TRUE, TRUE, rep(FALSE, 5)),
-    years_Trend = c(1, 1, 1, 1, 2, 2, 2, 2),
-    year_axis = c(1, 1, 2, 2, 3, 3, 4, 4)
-  )
 
-  vdiffr::expect_doppelganger(
-    "Facetted Points",
-    ggplot2::ggplot() +
-      plot_points(df,
-        point_values = "est_point",
-        point_sig = "sig_noTrend_noComp",
-        plot_lims = list(y_range = c(100, 107),
-                         coords_diff = 7)
-      ) +
-      ggplot2::facet_grid(. ~ years_Trend, scales = "free_x")
-  )
-})

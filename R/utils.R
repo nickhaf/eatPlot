@@ -359,13 +359,16 @@ replace_VS <- function(x) {
 #' @return Logical vector the same length as `year_start` with a `TRUE` if the respective year is overlapping.
 #'
 #' @examples calc_overlap(c(2010, 2012, 2013), c(2015, 2016, 2015))
-calc_overlap <- function(df) {
+calc_overlap <- function(year_start, year_end) {
 
-  # Convert the list into a data frame
+  if(length(year_start) != length(year_end)){
+    stop("The length of `year_start` and `year_end` must be the same.")
+  }
+
   overlap <- c()
-  for (i in 1:length(df$year_start)) {
-    overlap[i] <- any((df$year_start[i] > df$year_start[-i]) & (df$year_start[i] < df$year_end[-i])|
-                        any((df$year_end[i] > df$year_start[-i]) & (df$year_end[i] < df$year_end[-i]))
+  for (i in 1:length(year_start)) {
+    overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i])|
+                        any((year_end[i] > year_start[-i]) & (year_end[i] < year_end[-i]))
     )
   }
   return(any(overlap))
@@ -445,17 +448,17 @@ check_column_warn <- function(dat, column) {
 #' @param old Character string of column name in dat.
 #' @param new Character string of new column.
 #'
-#' @return Data.frame with a new column, either copyed or `NA`.
+#' @return Data.frame with a new column, either copuied or `NA`.
 #'
 #' @examples # tbd
 build_column <- function(dat, old, new) {
-  check_column(dat, old)
+check_no_columns(dat, new)
   if (is.null(old)) {
     dat[, new] <- NA
     return(dat)
   } else {
+    check_columns(dat, old)
     dat[, new] <- dat[, old]
-
     return(dat)
   }
 }

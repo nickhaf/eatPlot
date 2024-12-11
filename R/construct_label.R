@@ -29,69 +29,80 @@
 #' construct_label(dat, brace_label_est = "estimate", brace_label_se = "se", brace_label_sig_high = "p_estimate",  brace_label_sig_high_extra_column = TRUE)
 #'
 construct_label <- function(dat,
-                            brace_label_sig_high_extra_column = FALSE,
+                            column_est = NULL,
+                            column_se = NULL,
+                            column_sig_bold = NULL,
+                            column_sig_superscript = NULL,
+                            sig_superscript_letter = NULL,
                             round_est = 0,
                             round_se = 1,
                             plot_settings = plotsettings_tablebarplot()) {
-  # dat <- fill_column(dat, column_name = brace_label_est, filling = "")
-  # dat <- fill_column(dat, column_name = brace_label_se, filling = NA)
-  # dat <- fill_column(dat, column_name = brace_label_sig_high, filling = FALSE)
-  # dat <- fill_column(dat, column_name = brace_label_sig_bold, filling = FALSE)
-  if (any(is.na(dat[, c("brace_label_sig_high", "brace_label_sig_bold")]))) {
-    for (i in c("brace_label_sig_high", "brace_label_sig_bold")) {
+
+  dat <- fill_column(dat, column_name = column_est, filling = "")
+  if(is.null(column_est)){column_est <- "column_est"}
+  dat <- fill_column(dat, column_name = column_se, filling = NA)
+  if(is.null(column_se)){column_se <- "column_se"}
+  dat <- fill_column(dat, column_name = column_sig_bold, filling = FALSE)
+  if(is.null(column_sig_bold)){column_sig_bold <- "column_sig_bold"}
+  dat <- fill_column(dat, column_name = column_sig_superscript, filling = FALSE)
+  if(is.null(column_sig_superscript)){column_sig_superscript <- "column_sig_superscript"}
+
+
+  if (any(is.na(dat[, c(column_sig_bold, column_sig_superscript)]))) {
+    for (i in c(column_sig_bold, column_sig_superscript)) {
       dat[is.na(dat[, i]), i] <- FALSE
     }
   }
 
-  if (is.numeric(dat$brace_label_est)) {
-    dat$brace_label_est <- format(round(dat$brace_label_est, round_est),
+  if (is.numeric(dat[, column_est])) {
+    dat[, column_est] <- format(round(dat[, column_est], round_est),
                             trim = TRUE,
                             nsmall = round_est)
-    dat$brace_label_est[dat$brace_label_est == "NA"] <- ""
+    dat[, column_est][dat[, column_est] == "NA"] <- ""
   }
-  if (is.numeric(dat$brace_label_se)) {
-    dat$brace_label_se <- format(round(dat$brace_label_se, round_se),
+
+  if (is.numeric(dat[, column_se])) {
+    dat[, column_se] <- format(round(dat[, column_se], round_se),
                            trim = TRUE,
                            nsmall = round_se)
-    dat$brace_label_se[dat$brace_label_se == "NA"] <- ""
-
+    dat[, column_se][dat[, column_se] == "NA"] <- ""
   }
 
-  dat$brace_label_est <- ifelse(dat$brace_label_sig_bold == TRUE & dat$brace_label_est != "",
-    paste0("**", dat$brace_label_est, "**"),
-    dat$brace_label_est
+  label_est <- ifelse(dat[, column_sig_bold] == TRUE & dat[, column_est] != "",
+    paste0("**", dat[, column_est], "**"),
+    dat[, column_est]
   )
 
-  dat$label_sig <- ifelse(dat$brace_label_sig_high == TRUE & dat$brace_label_est != "",
-                          paste0("<sup>", plot_settings$columns_table_sig_high_letter, "</sup>"), "")
+  label_superscript <- ifelse(dat[, column_sig_superscript] == TRUE & dat[, column_est] != "",
+                          paste0("<sup>", sig_superscript_letter, "</sup>"),
+                          "")
 
-  dat$brace_label_se <- ifelse(!is.na(dat$brace_label_se),
-    paste0(" (", dat$brace_label_se, ")"),
+  label_se <- ifelse(
+    !is.na(dat[, column_se]),
+    paste0(" (", dat[, column_se], ")"),
     ""
-  )
-
-  dat[, c("brace_label_est", "label_sig", "brace_label_se")][is.na(dat[, c("brace_label_est", "label_sig", "brace_label_se")]) | dat[, c("brace_label_est", "label_sig", "brace_label_se")] == "NA"] <- ""
-
-  if (brace_label_sig_high_extra_column == FALSE) {
-    dat[, "brace_label"] <- paste0(
-      dat$brace_label_est,
-      dat$label_sig,
-      dat$brace_label_se
     )
-  } else {
-    ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column.
-    if (any(dat$label_sig != "")) {
-      dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
-    }
-    dat[, new_name] <- paste0(
-      dat$brace_label_est,
-      dat$brace_label_se
+
+
+    label_out <- paste0(
+      label_est,
+      label_superscript,
+      label_se
     )
-  }
+  # } else {
+  #   ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column.
+  #   if (any(dat$label_sig != "")) {
+  #     dat[, paste0(new_name, "_sig_superscript")] <- dat$label_sig
+  #   }
+  #   dat[, new_name] <- paste0(
+  #     dat[, column_est],
+  #     dat[, column_se]
+  #   )
+  # }
+  #
+  # dat <- remove_columns(dat, cols = c("brace_label_est", "label_sig", "brace_label_se", "brace_label_sig_bold", "brace_label_sig_high"))
 
-  dat <- remove_columns(dat, cols = c("brace_label_est", "label_sig", "brace_label_se", "brace_label_sig_bold", "brace_label_sig_high"))
-
-  return(dat)
+  return(label_out)
 }
 
 
