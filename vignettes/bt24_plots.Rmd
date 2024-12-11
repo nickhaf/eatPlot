@@ -156,6 +156,15 @@ p_2 <- plot_tablebar(
     NULL,
     NULL
   ),
+  columns_table_sig_high = list(
+    "sig_2015_none_mean",
+    NULL,
+    "sig_2022_none_mean",
+    NULL,
+    "sig_2022 - 2015_trend_mean",
+    NULL,
+    NULL
+  ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-60, 60),
