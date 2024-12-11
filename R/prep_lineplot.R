@@ -90,6 +90,8 @@ prep_lineplot <- function(
   plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
 
   line_dat <- filter_years(line_dat, years = years_lines)
+  background_line_dat <- filter_years(background_line_dat, years = years_lines)
+
   brace_dat <- filter_years(brace_dat, years = years_braces)
 
   if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {

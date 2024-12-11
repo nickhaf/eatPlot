@@ -5,7 +5,6 @@
 ## einfach hier rausnehmen.
 trend_3_subset <- trend_3
 trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen") | is.na(trend_3$group$mhg))
-trend_3_subset$group$TR_BUNDESLAND <- factor(trend_3_subset$group$TR_BUNDESLAND)
 
 trend_3_prepped <- prep_lineplot(
   trend_3_subset,
