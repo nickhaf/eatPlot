@@ -3,7 +3,7 @@ years_list <- prep_years_list(
   years_braces = list(c(2009, 2015), c(2009, 2022))
 )
 plot_dat <- data.frame(
-  TR_BUNDESLAND = rep("Berlin", 12),
+  facet_var = rep("Berlin", 12),
   id = 1:12,
   est_point = 400:411, # isn't plotted in the braces, only sets the range
   brace_label_est = rep(400.1902, 12),
@@ -112,7 +112,7 @@ test_that("braces are prepped", {
 
 test_that("Overlapping braces in the other direction", {
   plot_dat <- data.frame(
-    TR_BUNDESLAND = rep("Berlin", 12),
+    facet_var = rep("Berlin", 12),
     id = 1:12,
     est_point = 400:411, # isn't plotted in the braces, only sets the range
     brace_label_est = rep(400.1902, 12),

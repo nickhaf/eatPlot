@@ -18,7 +18,6 @@ prep_lineplot <- function(
   years_list <- prep_years_list(years_lines, years_braces)
 
 
-
   # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]

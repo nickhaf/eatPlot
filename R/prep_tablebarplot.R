@@ -1,4 +1,8 @@
-prep_tablebarplot <- function(dat, par = "mean") {
+prep_tablebarplot <- function(eatRep_dat, par = "mean") {
+check_eatRep_dat(eatRep_dat)
+
+check_columns(eatRep_dat$plain, c("unit_1", "unit_2", "id", "comparison", "parameter", "year", "est", "se", "p", "mhg"))
+
 dat <- dat$plain
 dat <- dat[dat$parameter %in% par, ]
 dat$sig <- ifelse(dat$p < 0.05, TRUE, FALSE)
