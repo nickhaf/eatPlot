@@ -8,18 +8,24 @@ trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %i
 
 trend_3_prepped <- prep_lineplot(
   trend_3_subset,
-  parameter = "mean", 
+  parameter = "mean",
   used_comparisons = c("none", "trend")
 )
 
 p <- plot_lineplot(trend_3_prepped,
-    seperate_plot_var_box = "wholeGroup",
-    title_superscripts = NULL
-  )
+  line_est = "est_comparison_none",
+  line_sig = "sig_comparison_none",
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  facet_var = "TR_BUNDESLAND",
+  seperate_plot_var_box = "wholeGroup",
+  title_superscripts = NULL,
+  plot_settings = plotsettings_lineplot()
+)
 
-  # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
+# save_plot(p, filename = "/home/nick/Downloads/test.pdf")
 
-  # save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
+# save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
 ```
 
 
@@ -163,7 +169,7 @@ p_2 <- plot_tablebar(
   )
 )
 example_plot <- combine_plots(list(p_1, p_2))
- save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
+save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 
@@ -177,4 +183,3 @@ dat_prepped_crossdiff <- prep_tablebarplot(trend_3, par = c("mean", "sd")) %>%
   as.data.frame() %>%
   arrange(TR_BUNDESLAND)
 ```
-
