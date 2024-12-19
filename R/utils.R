@@ -437,9 +437,7 @@ check_column_warn <- function(dat, column) {
   }
 }
 
-#' Add a new column that is derived from an old one.
-#'
-#' Copy a column or insert a new `NA` column.
+#' Either renames a column or build a new column with `NA` values.
 #'
 #' @keywords internal
 #' @noRd
@@ -448,7 +446,7 @@ check_column_warn <- function(dat, column) {
 #' @param old Character string of column name in dat.
 #' @param new Character string of new column.
 #'
-#' @return Data.frame with a new column, either copuied or `NA`.
+#' @return Data.frame with a new column, either renamed or `NA`.
 #'
 #' @examples # tbd
 build_column <- function(dat, old, new) {
@@ -459,6 +457,7 @@ check_no_columns(dat, new)
   } else {
     check_columns(dat, old)
     dat[, new] <- dat[, old]
+    dat[, old] <- NULL
     return(dat)
   }
 }
