@@ -13,7 +13,6 @@ prep_lineplot <- function(eatRep_dat, parameter, used_comparisons) {
 
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
-  # years_list <- prep_years_list(years_lines, years_braces)
 
   # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
@@ -23,79 +22,16 @@ prep_lineplot <- function(eatRep_dat, parameter, used_comparisons) {
   eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% used_comparisons, ]
 
   # Merge Data --------------------------------------------------------------
-  plot_dat <- build_plot_dat(eatRep_dat) # |>
-    # build_column(subgroup_var, "subgroup_var") |>
-    # build_column(facet_var, "facet_var")
-
-  # if (is.na(background_group)) {
-  #   background_group <- "noGroup"
-  #   plot_dat[, "subgroup_var"][is.na(plot_dat$subgroup_var)] <- background_group
-  # }
-
-  ## Only into factor, if not already a factor:
-  # subgroup_lvls <- levels(factor(plot_dat$subgroup_var))
-  #
-
-  # Coordinates -------------------------------------------------------------
-  ## Some coordinates are needed to set the plot into the correct margins:
-  # plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
-
-
-  # Wide Format -------------------------------------------------------------
+  plot_dat <- build_plot_dat(eatRep_dat)
   plot_dat_wide <- tidyr::pivot_wider(plot_dat,
     names_from = "comparison",
     values_from = c("est_comp", "se_comp", "sig_comp")
   ) |>
     as.data.frame()
 
-
-
-  ######### Hier nohc eine Schleife rum, sodass theoretisch auch andere Comparisons geplottet werden können.
-  plot_dat_wide$point_est <- plot_dat_wide$est_point
-  plot_dat_wide$point_sig <- plot_dat_wide$sig_point
-  ############
-  # plot_dat_wide$line_sig <- plot_dat_wide[, paste0("sig_comp_", line_sig)]
-  # plot_dat_wide$brace_label_est <- plot_dat_wide[, paste0("est_comp_", brace_label_est)]
-  # plot_dat_wide$brace_label_se <- plot_dat_wide[, paste0("se_comp_", brace_label_se)]
-  # plot_dat_wide$brace_label_sig_high <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_high)]
-  # plot_dat_wide$brace_label_sig_bold <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_bold)]
-
   for (i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]) {
     plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
   }
-
-
-  # background_line_dat <- subset(plot_dat_wide,
-  #                               facet_var == background_level &
-  #                                 subgroup_var == background_group)
-  # plot_dat_wide <- subset(plot_dat_wide, subgroup_var != background_group)
-  # plot_dat_wide <- subset(plot_dat_wide, plot_dat_wide$facet_var != background_level)
-
-  # line_dat <- plot_dat_wide
-  #
-  # brace_dat_list <- prep_brace(plot_dat_wide, plot_lims, plot_settings)
-  # brace_dat <- brace_dat_list$brace_dat
-  # brace_coordinates <- brace_dat_list$brace_coords
-
-
-  # The multiplicator here is not that easy to understand, possiby take something else.
-  #plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
-
-  #line_dat <- filter_years(line_dat, years = years_lines)
-  #background_line_dat <- filter_years(background_line_dat, years = years_lines)
-
-  # brace_dat <- filter_years(brace_dat, years = years_braces)
-  #
-  # if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-  #   stop("Some of the trends you provided in 'years_lines' are not in the data.")
-  # }
-  #
-  # if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-  #   stop("Some of the trends you provided in 'years_braces' are not in the data.")
-  # }
-
-
-  #list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
 
   return(plot_dat_wide)
 }
@@ -104,8 +40,6 @@ create_trend <- function(df) {
   df$trend <- paste(df$year[1], df$year[2], sep = "_")
   return(df)
 }
-
-
 
 build_plot_dat <- function(eatRep_dat) {
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,

@@ -20,13 +20,72 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
+                          years_lines,
+                          years_braces,
+                          facet_var = "TR_BUNDESLAND",
                           seperate_plot_var_box = "wholeGroup",
                           title_superscripts = NULL) {
 
+
+# Check ----------------------------------------------------------------
   check_plotsettings_lineplot(eatPlot_dat$plot_settings)
-  dat_p <- eatPlot_dat
-  dat_p$plot_dat <- check_facets(dat_p$plot_dat, "facet_var")
+  check_columns(eatPlot_dat,
+                cols = c(facet_var))
+  eatPlot_dat<- check_facets(eatPlot_dat, facet_var)
+
+
+# Filter ---------------------------------------------------------------
+  years_list <- prep_years_list(years_lines, years_braces)
+
+
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
+
+
+# Rename/Build needed columns ---------------------------------------------
+
+  # plot_dat_wide$line_sig <- plot_dat_wide[, paste0("sig_comp_", line_sig)]
+  # plot_dat_wide$brace_label_est <- plot_dat_wide[, paste0("est_comp_", brace_label_est)]
+  # plot_dat_wide$brace_label_se <- plot_dat_wide[, paste0("se_comp_", brace_label_se)]
+  # plot_dat_wide$brace_label_sig_high <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_high)]
+  # plot_dat_wide$brace_label_sig_bold <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_bold)]
+
+
+# Calculate Coordinates ---------------------------------------------------
+plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
+
+  #plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
+
+
+# Prepare Subsets ---------------------------------------------------------
+
+  # background_line_dat <- subset(plot_dat_wide,
+  #                               facet_var == background_level &
+  #                                 subgroup_var == background_group)
+  #background_line_dat <- filter_years(background_line_dat, years = years_lines)
+
+  # line_dat <- plot_dat_wide
+  #line_dat <- filter_years(line_dat, years = years_lines)
+
+
+  #
+  # brace_dat_list <- prep_brace(plot_dat_wide, plot_lims, plot_settings)
+  # brace_dat <- brace_dat_list$brace_dat
+  # brace_coordinates <- brace_dat_list$brace_coords
+  # brace_dat <- filter_years(brace_dat, years = years_braces)
+
+
+
+  #
+  # if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+  #   stop("Some of the trends you provided in 'years_lines' are not in the data.")
+  # }
+  #
+  # if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+  #   stop("Some of the trends you provided in 'years_braces' are not in the data.")
+  # }
+
+
+  #list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
 
   plot_list <- list()
   position <- 1

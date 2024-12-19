@@ -8,22 +8,8 @@ trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %i
 
 trend_3_prepped <- prep_lineplot(
   trend_3_subset,
-  subgroup_var = "mhg",
-  parameter = "mean",
-  line_sig = "trend",
-  background_level = "total", ## level of the facet-factor that is not plotted as facet, but as background-line.
-  background_group = NA, ## group of the background-variable, that is only plotted as background line
-  # line_se = "trend",
-  years_lines = list(c(2009, 2015), c(2015, 2022)),
-  years_braces = list(c(2009, 2015), c(2015, 2022)),
-  brace_label_est = "trend",
-  brace_label_se = "trend",
-  brace_label_sig_high = "trend",
-  brace_label_sig_bold = "trend",
-  plot_settings = plotsettings_lineplot(
-    split_plot = FALSE,
-    default_list = lineplot_4x4
-  )
+  parameter = "mean", 
+  used_comparisons = c("none", "trend")
 )
 
 p <- plot_lineplot(trend_3_prepped,
