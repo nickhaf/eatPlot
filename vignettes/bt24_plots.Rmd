@@ -42,13 +42,9 @@ p <- plot_lineplot(trend_3_prepped,
 
 
 ```{r}
-dat_prepped <- prep_tablebarplot(trend_3, par = c("mean", "sd")) %>%
-  filter(mhg %in% c("aohneZWH", "einET"), !str_detect(TR_BUNDESLAND, "- total")) %>%
-  select(comparison, TR_BUNDESLAND, parameter, year, est, se, es, sig, mhg) %>%
-  pivot_wider(names_from = c(year, comparison, parameter), values_from = c(est, se, es, sig)) %>%
-  mutate(y_axis = 1:nrow(.)) %>%
-  as.data.frame() %>%
-  arrange(TR_BUNDESLAND)
+dat_prepped <- prep_tablebarplot(trend_3, par = c("mean", "sd")) 
+dat_prepped <- filter(dat_prepped, mhg %in% c("aohneZWH", "einET"), !str_detect(TR_BUNDESLAND, "- total"))
+dat_prepped <- arrange(dat_prepped, TR_BUNDESLAND)
 
 dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
 
@@ -176,8 +172,9 @@ p_2 <- plot_tablebar(
     default_list = barplot_table_plot_pattern
   )
 )
+
 example_plot <- combine_plots(list(p_1, p_2))
- save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
+ # save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 
