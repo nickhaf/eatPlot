@@ -5,14 +5,17 @@
 #' @param parameter Character string. Contains the value in column `parameter` that is used for plotting the lines.  Defaults to `"mean"`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
+#' @param sig_niveau Numeric indicating the border below which p-values will be considered significant. Defaults to `0.05`.
+#'
 #' @return Data prepared for plotting the BT-lineplots.
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, parameter, used_comparisons) {
+prep_lineplot <- function(eatRep_dat, parameter, used_comparisons, sig_niveau = 0.05) {
 
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
+  check_columns(eatRep_dat$estimate, cols = c("p"))
 
   # Filtering ---------------------------------------------------------------
   eatRep_dat$plain <- NULL
@@ -22,16 +25,25 @@ prep_lineplot <- function(eatRep_dat, parameter, used_comparisons) {
   eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% used_comparisons, ]
 
   # Merge Data --------------------------------------------------------------
+  check_no_columns(eatRep_dat$estimate, cols = "sig")
+  eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
+
   plot_dat <- build_plot_dat(eatRep_dat)
   plot_dat_wide <- tidyr::pivot_wider(plot_dat,
     names_from = "comparison",
-    values_from = c("est_comp", "se_comp", "sig_comp")
+    values_from = c("est_comparison", "se_comparison", "sig_comparison")
   ) |>
     as.data.frame()
 
   for (i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]) {
     plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
   }
+
+
+# Order columns -----------------------------------------------------------
+  auxillary_colnames <- grep("^est_|^es_|^p_|^sig_|^se_", colnames(plot_dat_wide), invert = TRUE, value = TRUE)
+  value_colnames <- sort(grep("^est_|^es_|^p_|^sig_|^se", colnames(plot_dat_wide), value = TRUE))
+  plot_dat_wide <- plot_dat_wide[, c(auxillary_colnames, value_colnames)]
 
   return(plot_dat_wide)
 }
@@ -90,7 +102,7 @@ build_plot_dat <- function(eatRep_dat) {
         names_to = "unit_c",
         values_to = "group"
       ) %>%
-      select(id, comparison, group, est, se, p)
+      select(id, comparison, group, est, se, p, sig, es)
 
 
 
@@ -98,7 +110,7 @@ build_plot_dat <- function(eatRep_dat) {
       filter(str_detect(group, "comp_", negate = TRUE)), eatRep_dat_nested_comps)
   }
 
-  eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p")]
+  eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")]
 
 
   ###############
@@ -107,17 +119,11 @@ build_plot_dat <- function(eatRep_dat) {
     by.x = "group",
     by.y = "id",
     all.y = TRUE,
-    suffixes = c("_comp", "_point")
+    suffixes = c("_comparison", "_comparison_none")
   )
-
 
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
   rownames(plot_dat) <- NULL
-
-
-  plot_dat$sig_comp <- ifelse(plot_dat$p_comp < 0.05, TRUE, FALSE)
-
-  plot_dat$sig_point <- ifelse(plot_dat$p_point < 0.05, TRUE, FALSE)
 
   return(plot_dat)
 }
