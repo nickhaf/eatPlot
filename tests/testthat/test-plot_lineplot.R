@@ -12,6 +12,8 @@ trend_3_prepped <- prep_lineplot(
   parameter = "mean",
   line_sig = "trend",
   # line_se = "trend",
+  background_level = "total", ## level of the facet-factor that is not plotted as facet, but as background-line.
+  background_group = NA,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   brace_label_est = "trend",
@@ -28,7 +30,6 @@ trend_3_prepped <- prep_lineplot(
 test_that("simple lineplot runs through", {
 
 p <- plot_lineplot(trend_3_prepped,
-    facets = "TR_BUNDESLAND",
     seperate_plot_var_box = "wholeGroup",
     title_superscripts = NULL
   )
@@ -46,6 +47,8 @@ test_that("settings do something", {
     subgroup_var = "mhg",
     parameter = "mean",
     line_sig = "trend",
+    background_level = "total", ## level of the facet-factor that is not plotted as facet, but as background-line.
+    background_group = NA,
     # line_se = "trend",
     years_lines = list(c(2009, 2015), c(2015, 2022)),
     years_braces = list(c(2009, 2015), c(2015, 2022)),
@@ -88,7 +91,6 @@ test_that("settings do something", {
 
   p_line <- plot_lineplot(
     trend_3_settings,
-    facets = "TR_BUNDESLAND",
     seperate_plot_var_box = "wholeGroup",
     title_superscripts = NULL
   )
@@ -99,7 +101,6 @@ test_that("settings do something", {
 test_that("box around state", {
 
   p <- plot_lineplot(trend_3_prepped,
-                     facets = "TR_BUNDESLAND",
                      seperate_plot_var_box = "Berlin",
                      title_superscripts = NULL
   )
