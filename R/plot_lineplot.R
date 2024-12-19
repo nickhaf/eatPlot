@@ -20,8 +20,15 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
+                          point_est,
+                          point_sig,
                           line_est,
                           line_sig,
+                          brace_label_est = NULL,
+                          brace_label_sig = NULL,
+                          brace_label_se = NULL,
+                          brace_label_sig_high = NULL,
+                          brace_label_sig_bold = NULL,
                           years_lines,
                           years_braces,
                           facet_var = "TR_BUNDESLAND",
@@ -40,12 +47,15 @@ plot_lineplot <- function(eatPlot_dat,
   years_list <- prep_years_list(years_lines, years_braces)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
-  eatPlot_dat <- build_column(eatPlot_dat, old = line_sig, new = "line_sig")
-  # plot_dat_wide$brace_label_est <- plot_dat_wide[, paste0("est_comp_", brace_label_est)]
-  # plot_dat_wide$brace_label_se <- plot_dat_wide[, paste0("se_comp_", brace_label_se)]
-  # plot_dat_wide$brace_label_sig_high <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_high)]
-  # plot_dat_wide$brace_label_sig_bold <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_bold)]
-
+  eatPlot_dat <- eatPlot_dat |>
+    build_column(old = point_est, new = "point_est") |>
+    build_column(old = point_sig, new = "point_sig") |>
+    build_column(old = line_sig, new = "line_sig") |>
+    build_column(old = line_est, new = "line_est") |>
+    build_column(old = brace_label_est, new = "brace_label_est") |>
+    build_column(old = brace_label_se, new = "brace_label_se") |>
+    build_column(old = brace_label_sig_high, new = "brace_label_sig_high") |>
+    build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold")
 
 # Calculate Coordinates ---------------------------------------------------
 plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
