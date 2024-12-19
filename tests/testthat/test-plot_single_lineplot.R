@@ -1,8 +1,6 @@
 trend_3$group <- subset(trend_3$group, trend_3$group$mhg %in% c("einET", "ersteGen")) #| is.na(trend_3$group$mhg))
 trend_3$group <- subset(trend_3$group, TR_BUNDESLAND == "Brandenburg") #| is.na(trend_3$group$mhg))
-trend_3$group$TR_BUNDESLAND <- factor(trend_3$group$TR_BUNDESLAND,
-                                      levels = unique(trend_3$group$TR_BUNDESLAND)[-1]
-)
+
 
 
 trend_3_prepped <- prep_lineplot(
@@ -11,6 +9,8 @@ trend_3_prepped <- prep_lineplot(
   parameter = "mean",
   line_sig = "trend",
   # line_se = "trend",
+  background_level = "total", ## level of the facet-factor that is not plotted as facet, but as background-line.
+  background_group = NA,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   brace_label_est = "trend",

@@ -1,5 +1,4 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
-
   check_columns(plot_dat, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "subgroup_var", "trend"))
 
   plot_lims$brace_coords$coord_dat_test1 <- plot_lims$brace_coords$coord_dat %>%
