@@ -20,30 +20,27 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
+                          line_est,
+                          line_sig,
                           years_lines,
                           years_braces,
                           facet_var = "TR_BUNDESLAND",
                           seperate_plot_var_box = "wholeGroup",
-                          title_superscripts = NULL) {
+                          title_superscripts = NULL,
+                          plot_settings = plotsettings_lineplot()) {
 
 
 # Check ----------------------------------------------------------------
-  check_plotsettings_lineplot(eatPlot_dat$plot_settings)
+  check_plotsettings_lineplot(plot_settings)
   check_columns(eatPlot_dat,
                 cols = c(facet_var))
   eatPlot_dat<- check_facets(eatPlot_dat, facet_var)
 
-
-# Filter ---------------------------------------------------------------
+# Rename/Build needed columns ---------------------------------------------
   years_list <- prep_years_list(years_lines, years_braces)
-
-
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
-
-# Rename/Build needed columns ---------------------------------------------
-
-  # plot_dat_wide$line_sig <- plot_dat_wide[, paste0("sig_comp_", line_sig)]
+  eatPlot_dat <- build_column(eatPlot_dat, old = line_sig, new = "line_sig")
   # plot_dat_wide$brace_label_est <- plot_dat_wide[, paste0("est_comp_", brace_label_est)]
   # plot_dat_wide$brace_label_se <- plot_dat_wide[, paste0("se_comp_", brace_label_se)]
   # plot_dat_wide$brace_label_sig_high <- plot_dat_wide[, paste0("sig_comp_", brace_label_sig_high)]
