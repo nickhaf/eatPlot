@@ -87,9 +87,7 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
 }
 
 draw_brace_label <- function(brace_label, plot_settings = plot_settings()) {
-
     check_columns(brace_label, c("label_pos_x", "label_pos_y", "brace_label"))
-
     ggtext::geom_richtext(
     data = unique(brace_label[, c("label_pos_x", "label_pos_y", "brace_label")]),
     mapping = ggplot2::aes(

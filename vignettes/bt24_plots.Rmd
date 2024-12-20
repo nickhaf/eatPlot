@@ -13,11 +13,16 @@ trend_3_prepped <- prep_lineplot(
 )
 
 p <- plot_lineplot(trend_3_prepped,
-                   point_est = "est_comparison_none",
-  point_sig = "sig_comparison_none",
+  point_est = "est_comparison_none",
+  point_sig = "sig_comparison_none", ## sig_noTrend_Comp_crossDiff_wholeGroup
   line_est = "est_comparison_none",
-  line_sig = "sig_comparison_none",
+  line_sig = "sig_comparison_trend",
   line_se = "se_comparison_none",
+  brace_label_est = "est_comparison_trend",
+  brace_label_sig = "sig_comparison_trend",
+  brace_label_se = "se_comparison_trend",
+  brace_label_sig_high = NULL,
+  brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   subgroup_var = "mhg",
@@ -40,7 +45,7 @@ p <- plot_lineplot(trend_3_prepped,
 
 
 ```{r}
-dat_prepped <- prep_tablebarplot(trend_3, par = c("mean", "sd")) 
+dat_prepped <- prep_tablebarplot(trend_3, par = c("mean", "sd"))
 dat_prepped <- filter(dat_prepped, mhg %in% c("aohneZWH", "einET"), !str_detect(TR_BUNDESLAND, "- total"))
 dat_prepped <- arrange(dat_prepped, TR_BUNDESLAND)
 
@@ -172,7 +177,7 @@ p_2 <- plot_tablebar(
 )
 
 example_plot <- combine_plots(list(p_1, p_2))
- # save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
+# save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 

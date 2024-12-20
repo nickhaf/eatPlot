@@ -25,11 +25,11 @@ plot_lineplot <- function(eatPlot_dat,
                           line_est,
                           line_sig,
                           line_se,
-                          brace_label_est = NULL,
-                          brace_label_sig = NULL,
-                          brace_label_se = NULL,
-                          brace_label_sig_high = NULL,
-                          brace_label_sig_bold = NULL,
+                          brace_label_est,
+                          brace_label_sig,
+                          brace_label_se,
+                          brace_label_sig_high,
+                          brace_label_sig_bold,
                           years_lines,
                           years_braces,
                           subgroup_var,
@@ -65,7 +65,7 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = line_se, new = "line_se")
 
   # Calculate Coordinates ---------------------------------------------------
-  plot_lims <- calc_plot_lims(eatPlot_dat, years_list, plot_settings)
+  plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
 
   # Prepare Subsets ---------------------------------------------------------
   background_line_dat <- subset(eatPlot_dat,
@@ -78,8 +78,10 @@ plot_lineplot <- function(eatPlot_dat,
                        subgroup_var != background_subgroup)
   line_dat <- filter_years(line_dat, years = years_lines)
 
+
   brace_dat_list <- prep_brace(eatPlot_dat, plot_lims, plot_settings)
-  brace_dat <- brace_dat_list$brace_dat
+  brace_dat <- brace_dat_list$brace_dat |>
+    subset(facet_var != background_facet & subgroup_var != background_subgroup)
   brace_coordinates <- brace_dat_list$brace_coords
   brace_dat <- filter_years(brace_dat, years = years_braces)
 
@@ -106,7 +108,6 @@ plot_lineplot <- function(eatPlot_dat,
 
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[!is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
-
     p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
         x = year,
@@ -229,7 +230,7 @@ extract_gsub_values <- function(plot_dat) {
 
 
 
-calc_plot_lims <- function(plot_dat, years_list, plot_settings) {
+calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_settings) {
   check_columns(plot_dat, c("facet_var", "point_est", "year"))
 
   ## Axis limits can be set manually. If not, calculate by range.
@@ -245,7 +246,7 @@ calc_plot_lims <- function(plot_dat, years_list, plot_settings) {
   #   ))
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
-  subgroup_lvls <- levels(plot_dat$facet_var)
+  subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
 
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
