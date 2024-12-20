@@ -4,12 +4,20 @@
 ## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
 ## einfach hier rausnehmen.
 trend_3_subset <- trend_3
+
+
+## hier nur die nehmen, die "- total" in TR_BUNDESLAND enthalten 
+
+crossDiffTotal <- trend_3_subset$plain[grep(pattern = "- total", trend_3_subset$plain$TR_BUNDESLAND),]$id
+crossDiffBL <- trend_3_subset$plain[grep(pattern = "- total", trend_3_subset$plain$TR_BUNDESLAND, invert = TRUE),]$id
+trend_3_subset$comparisons[trend_3_subset$comparisons$id %in% crossDiffTotal, "comparison"] <- "crossDiffTotal"
+
 trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen", "total"))
 
 trend_3_prepped <- prep_lineplot(
   trend_3_subset,
   parameter = "mean",
-  used_comparisons = c("none", "trend")
+  used_comparisons = c("none", "trend", "crossDiffTotal") ## evtl. auch einfach davor filtern?
 )
 
 p <- plot_lineplot(trend_3_prepped,
