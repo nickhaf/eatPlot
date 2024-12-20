@@ -22,7 +22,7 @@ trend_3_prepped <- prep_lineplot(
 
 p <- plot_lineplot(trend_3_prepped,
   point_est = "est_comparison_none",
-  point_sig = "sig_comparison_none", ## sig_noTrend_Comp_crossDiff_wholeGroup
+  point_sig = "sig_comparison_crossDiffTotal", ## sig_noTrend_Comp_crossDiff_wholeGroup
   line_est = "est_comparison_none",
   line_sig = "sig_comparison_trend",
   line_se = "se_comparison_none",
