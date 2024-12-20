@@ -437,7 +437,7 @@ check_column_warn <- function(dat, column) {
   }
 }
 
-#' Either renames a column or build a new column with `NA` values.
+#' Either copy a column or build a new one with `NA` values.
 #'
 #' @keywords internal
 #' @noRd

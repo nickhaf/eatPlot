@@ -55,13 +55,12 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = brace_label_est, new = "brace_label_est") |>
     build_column(old = brace_label_se, new = "brace_label_se") |>
     build_column(old = brace_label_sig_high, new = "brace_label_sig_high") |>
-    build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold")
-
-  browser()
+    build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold") |>
+    build_column(old = facet_var, new = "facet_var")
 
   # Calculate Coordinates ---------------------------------------------------
-  plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
-
+  plot_lims <- calc_plot_lims(eatPlot_dat, years_list, plot_settings)
+browser()
   # plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
 
 
@@ -233,17 +232,14 @@ extract_gsub_values <- function(plot_dat) {
 
 
 
-calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
-  check_columns(plot_dat, c("est_point", "year"))
+calc_plot_lims <- function(plot_dat, years_list, plot_settings) {
+  check_columns(plot_dat, c("facet_var", "point_est", "year"))
 
   ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
-    y_range <- range(plot_dat$est_point, na.rm = TRUE)
-
-    ## This increases the coords by a nudging parameter:
+    y_range <- range(plot_dat$point_est, na.rm = TRUE)
     coords <- calc_y_value_coords(y_range)
   }
-
   # else {
   #   y_range <- range(seq_over(
   #     from = plot_settings$axis_y_lims[1],
@@ -252,22 +248,7 @@ calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
   #   ))
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
-
-  ## And what does this do extra?:
-  # Okay, this seems to calculate the brace positions again (will happen later on too), so the plot limits can be set.
-
-  # Better: Calc the brace positions once. Putt the lowest value in here, to define the minimum y value
-  #
-  #   y_lims_total <- calc_plot_lims_y(
-  #     plot_dat$plot_braces,
-  #     coords,
-  #     plot_settings = plot_settings
-  #   )
-
-  ## Why need this? calc if necessary!
-  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
-
-  x_range <- range(unique_years)
+  subgroup_lvls <- levels(plot_dat$facet_var)
 
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
@@ -276,17 +257,16 @@ calc_plot_lims <- function(plot_dat, subgroup_lvls, years_list, plot_settings) {
     plot_settings = plot_settings
   )
 
+  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
+  x_range <- range(unique_years)
 
-
-  ## Label_position_x muss noch irgendwie hier ran.
-  ## Output an object with the plot coordinate informations:
   coord_list <- list(
     x_range = x_range,
     y_range = y_range,
-    # y_lims_total = y_lims_total,
     coords = coords,
     brace_coords = brace_coords
   )
+
   return(coord_list)
 }
 
