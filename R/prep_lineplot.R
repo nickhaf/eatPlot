@@ -21,7 +21,6 @@ prep_lineplot <- function(eatRep_dat, parameter, used_comparisons, sig_niveau = 
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-
   eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% used_comparisons, ]
 
   # Merge Data --------------------------------------------------------------
@@ -54,6 +53,7 @@ create_trend <- function(df) {
 }
 
 build_plot_dat <- function(eatRep_dat) {
+
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
     eatRep_dat$estimate,
     by = "id",
@@ -105,9 +105,11 @@ build_plot_dat <- function(eatRep_dat) {
       select(id, comparison, group, est, se, p, sig, es)
 
 
+    eatRep_dat_no_nested_comps <- eatRep_dat_long %>%
+      dplyr::filter(stringr::str_detect(group, "comp_", negate = TRUE)) %>%
+      select(c("id", "comparison", "group", "est", "se", "p", "sig", "es"))
 
-    eatRep_dat_long <- rbind(eatRep_dat_long %>%
-      filter(str_detect(group, "comp_", negate = TRUE)), eatRep_dat_nested_comps)
+    eatRep_dat_long <- rbind(eatRep_dat_no_nested_comps, eatRep_dat_nested_comps[,c("id", "comparison", "group", "est", "se", "p", "sig", "es")])
   }
 
   eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")]
