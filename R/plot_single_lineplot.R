@@ -8,7 +8,7 @@
 #'
 #' @examples # tbd
 plot_single_lineplot <- function(plot_dat) {
-  # Assemble a single lineplot (one "tile" in the whole lineplot).
+  # Assemble a single lineplot (one "facet" in the whole lineplot).
   list(if (plot_dat$plot_settings$background_lines) {
     plot_background_lines(
       dat_total = plot_dat$background_line_dat,

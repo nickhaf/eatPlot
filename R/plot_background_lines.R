@@ -9,8 +9,10 @@
 #' @examples # tbd
 plot_background_lines <- function(dat_total,
                                   plot_settings = plotsettings_lineplot()) {
-  dat_total$y_pos <- dat_total$est_point + 2 * dat_total$se_point
-  dat_total$y_neg <- dat_total$est_point - 2 * dat_total$se_point
+
+  check_columns(dat_total, c("line_est", "line_se", "year", "trend"))
+  dat_total$y_pos <- dat_total$line_est + 2 * dat_total$line_se
+  dat_total$y_neg <- dat_total$line_est - 2 * dat_total$line_se
 
     ggplot2::geom_ribbon(
       data = dat_total,
