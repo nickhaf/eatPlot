@@ -457,7 +457,6 @@ check_no_columns(dat, new)
   } else {
     check_columns(dat, old)
     dat[, new] <- dat[, old]
-    dat[, old] <- NULL
     return(dat)
   }
 }

@@ -35,17 +35,17 @@ plot_lineplot <- function(eatPlot_dat,
                           seperate_plot_var_box = "wholeGroup",
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
-
-
-# Check ----------------------------------------------------------------
+  # Check ----------------------------------------------------------------
   check_plotsettings_lineplot(plot_settings)
   check_columns(eatPlot_dat,
-                cols = c(facet_var))
-  eatPlot_dat<- check_facets(eatPlot_dat, facet_var)
+    cols = c(facet_var)
+  )
+  eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
 
-# Rename/Build needed columns ---------------------------------------------
+  # Rename/Build needed columns ---------------------------------------------
   years_list <- prep_years_list(years_lines, years_braces)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
+
 
   eatPlot_dat <- eatPlot_dat |>
     build_column(old = point_est, new = "point_est") |>
@@ -57,21 +57,23 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = brace_label_sig_high, new = "brace_label_sig_high") |>
     build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold")
 
-# Calculate Coordinates ---------------------------------------------------
-plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
+  browser()
 
-  #plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
+  # Calculate Coordinates ---------------------------------------------------
+  plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings = plot_settings)
+
+  # plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
 
 
-# Prepare Subsets ---------------------------------------------------------
+  # Prepare Subsets ---------------------------------------------------------
 
   # background_line_dat <- subset(plot_dat_wide,
   #                               facet_var == background_level &
   #                                 subgroup_var == background_group)
-  #background_line_dat <- filter_years(background_line_dat, years = years_lines)
+  # background_line_dat <- filter_years(background_line_dat, years = years_lines)
 
   # line_dat <- plot_dat_wide
-  #line_dat <- filter_years(line_dat, years = years_lines)
+  # line_dat <- filter_years(line_dat, years = years_lines)
 
 
   #
@@ -92,7 +94,7 @@ plot_lims <- calc_plot_lims(plot_dat, subgroup_lvls, years_list, plot_settings =
   # }
 
 
-  #list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
+  # list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
 
   plot_list <- list()
   position <- 1
