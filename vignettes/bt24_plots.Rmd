@@ -4,7 +4,7 @@
 ## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
 ## einfach hier rausnehmen.
 trend_3_subset <- trend_3
-trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen") | is.na(trend_3$group$mhg))
+trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen", "total"))
 
 trend_3_prepped <- prep_lineplot(
   trend_3_subset,
@@ -17,8 +17,12 @@ p <- plot_lineplot(trend_3_prepped,
   point_sig = "sig_comparison_none",
   line_est = "est_comparison_none",
   line_sig = "sig_comparison_none",
+  line_se = "se_comparison_none",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
+  subgroup_var = "mhg",
+  background_facet = "total",
+  background_subgroup = "total",
   facet_var = "TR_BUNDESLAND",
   seperate_plot_var_box = "wholeGroup",
   title_superscripts = NULL,

@@ -24,6 +24,7 @@ plot_lineplot <- function(eatPlot_dat,
                           point_sig,
                           line_est,
                           line_sig,
+                          line_se,
                           brace_label_est = NULL,
                           brace_label_sig = NULL,
                           brace_label_se = NULL,
@@ -31,7 +32,10 @@ plot_lineplot <- function(eatPlot_dat,
                           brace_label_sig_bold = NULL,
                           years_lines,
                           years_braces,
+                          subgroup_var,
                           facet_var = "TR_BUNDESLAND",
+                          background_facet = "total",
+                          background_subgroup = "total",
                           seperate_plot_var_box = "wholeGroup",
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
@@ -56,46 +60,42 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = brace_label_se, new = "brace_label_se") |>
     build_column(old = brace_label_sig_high, new = "brace_label_sig_high") |>
     build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold") |>
-    build_column(old = facet_var, new = "facet_var")
+    build_column(old = facet_var, new = "facet_var") |>
+    build_column(old = subgroup_var, new = "subgroup_var") |>
+    build_column(old = line_se, new = "line_se")
 
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, plot_settings)
 
   # Prepare Subsets ---------------------------------------------------------
+  background_line_dat <- subset(eatPlot_dat,
+                                facet_var == background_facet &
+                                  subgroup_var == background_subgroup)
+  background_line_dat <- filter_years(background_line_dat, years = years_lines)
 
-  # background_line_dat <- subset(plot_dat_wide,
-  #                               facet_var == background_level &
-  #                                 subgroup_var == background_group)
-  # background_line_dat <- filter_years(background_line_dat, years = years_lines)
+  line_dat <- subset(eatPlot_dat,
+                     facet_var != background_facet &
+                       subgroup_var != background_subgroup)
+  line_dat <- filter_years(line_dat, years = years_lines)
 
-  # line_dat <- plot_dat_wide
-  # line_dat <- filter_years(line_dat, years = years_lines)
+  brace_dat_list <- prep_brace(eatPlot_dat, plot_lims, plot_settings)
+  brace_dat <- brace_dat_list$brace_dat
+  brace_coordinates <- brace_dat_list$brace_coords
+  brace_dat <- filter_years(brace_dat, years = years_braces)
 
+  if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+    stop("Some of the trends you provided in 'years_lines' are not in the data.")
+  }
 
-  #
-  # brace_dat_list <- prep_brace(plot_dat_wide, plot_lims, plot_settings)
-  # brace_dat <- brace_dat_list$brace_dat
-  # brace_coordinates <- brace_dat_list$brace_coords
-  # brace_dat <- filter_years(brace_dat, years = years_braces)
+  if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+    stop("Some of the trends you provided in 'years_braces' are not in the data.")
+  }
 
-
-
-  #
-  # if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-  #   stop("Some of the trends you provided in 'years_lines' are not in the data.")
-  # }
-  #
-  # if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-  #   stop("Some of the trends you provided in 'years_braces' are not in the data.")
-  # }
-
-
-  # list_final <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
+  dat_p <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
 
   plot_list <- list()
   position <- 1
-
-  facet_values <- levels(dat_p$plot_dat[, "facet_var"])
+  facet_values <- levels(dat_p$plot_dat[, "facet_var"])[levels(dat_p$plot_dat[, "facet_var"]) != background_facet]
 
 
   for (i in facet_values) {
@@ -110,7 +110,7 @@ plot_lineplot <- function(eatPlot_dat,
     p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
         x = year,
-        y = est_point,
+        y = point_est,
         group = id,
         colour = .data$subgroup_var
       )

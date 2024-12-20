@@ -10,23 +10,24 @@
 #'
 #' @examples # tbd
 plot_points <- function(plot_dat) {
+  check_columns(plot_dat$plot_dat, c("point_est", "year", "trend", "point_sig"))
+
   nudge_val <- calc_y_nudge(plot_dat,
                            plot_settings = plot_dat$plot_settings
   )
 
   plot_dat$dat_final <- within(plot_dat$plot_dat, {
-    nudge_y <- ifelse(est_point == ave(est_point, year, FUN = min),
+    nudge_y <- ifelse(point_est == ave(point_est, year, FUN = min),
                       -nudge_val,
                       nudge_val)
   })
-
 
   plot_dat$dat_final <- calc_x_nudge(plot_dat,
                                      nudge_x = plot_dat$plot_settings$point_label_nudge_x,
                                            plot_settings = plot_dat$plot_settings)
 
   list(
-    ggplot2::geom_point(ggplot2::aes(shape = .data$sig_point)),
+    ggplot2::geom_point(ggplot2::aes(shape = .data$point_sig)),
 
     ## Hier genau den gleichen Nudge wie für die x-Achse
     # if (plot_settings$point_label_nudge == TRUE) {
@@ -49,7 +50,7 @@ plot_points <- function(plot_dat) {
       data = plot_dat$dat_final,
       ggplot2::aes(
         x = .data$x_coords,
-        label = round(.data$est_point, 0)
+        label = round(.data$point_est, 0)
       ),
       nudge_y = plot_dat$dat_final$nudge_y,
       size = plot_dat$plot_settings$point_label_size
