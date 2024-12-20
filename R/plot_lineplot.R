@@ -60,9 +60,6 @@ plot_lineplot <- function(eatPlot_dat,
 
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, plot_settings)
-browser()
-  # plot_lims$y_lims_total <- c(min(brace_coordinates$group_labels$label_pos_y) - diff(range(plot_lims$coords)) * 0.06, max(plot_lims$coords)) # a bit smaller, so the labels don't get cut off
-
 
   # Prepare Subsets ---------------------------------------------------------
 
@@ -260,9 +257,12 @@ calc_plot_lims <- function(plot_dat, years_list, plot_settings) {
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
   x_range <- range(unique_years)
 
+  y_lims_total <- c(min(brace_coords$group_labels$label_pos_y) - diff(range(coords)) * 0.06, max(coords))
+
   coord_list <- list(
     x_range = x_range,
     y_range = y_range,
+    y_lims_total = y_lims_total,
     coords = coords,
     brace_coords = brace_coords
   )
