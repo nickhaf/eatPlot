@@ -200,7 +200,6 @@ calc_brace_position <- function(years_list, overlap) {
 
 # Plot_points -------------------------------------------------------------
 calc_x_nudge <- function(dat, nudge_x, plot_settings) {
-
   range_years <- diff(dat$plot_lims$x_range)
   min_max_trend <- get_min_max(dat$dat_final)
 

@@ -46,6 +46,11 @@ plot_lineplot <- function(eatPlot_dat,
   )
   eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
 
+  if(plot_settings$split_plot){
+    warning("Split lineplot currently not supported. Set to non-split.")
+    plot_settings$split_plot <- FALSE
+  }
+
   # Rename/Build needed columns ---------------------------------------------
   years_list <- prep_years_list(years_lines, years_braces)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
@@ -99,8 +104,8 @@ plot_lineplot <- function(eatPlot_dat,
   position <- 1
   facet_values <- levels(dat_p$plot_dat[, "facet_var"])[levels(dat_p$plot_dat[, "facet_var"]) != background_facet]
 
-
   for (i in facet_values) {
+
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]

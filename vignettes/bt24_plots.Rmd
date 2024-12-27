@@ -5,7 +5,6 @@
 ## einfach hier rausnehmen.
 trend_3_subset <- trend_3
 
-
 ## hier nur die nehmen, die "- total" in TR_BUNDESLAND enthalten 
 
 crossDiffTotal <- trend_3_subset$plain[grep(pattern = "- total", trend_3_subset$plain$TR_BUNDESLAND),]$id
@@ -39,11 +38,10 @@ p <- plot_lineplot(trend_3_prepped,
   facet_var = "TR_BUNDESLAND",
   seperate_plot_var_box = "wholeGroup",
   title_superscripts = NULL,
-  plot_settings = plotsettings_lineplot()
+  plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
 )
 
 # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
-
 # save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
 ```
 

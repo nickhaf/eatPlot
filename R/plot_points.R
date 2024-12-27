@@ -11,7 +11,6 @@
 #' @examples # tbd
 plot_points <- function(plot_dat) {
   check_columns(plot_dat$plot_dat, c("point_est", "year", "trend", "point_sig"))
-
   nudge_val <- calc_y_nudge(plot_dat,
                            plot_settings = plot_dat$plot_settings
   )
