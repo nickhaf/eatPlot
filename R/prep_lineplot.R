@@ -23,7 +23,7 @@ prep_lineplot <- function(eatRep_dat, parameter, used_comparisons, facet_var = "
 # Rename specific crossDiffs ----------------------------------------------
   total_group_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_group, "id"]
   total_comparisons <- eatRep_dat$comparison[eatRep_dat$comparison$unit_2 %in% total_group_ids, "id"]
-  eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"] <- "crossDiffTotal"
+  eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"], "Total")
 
 
 
