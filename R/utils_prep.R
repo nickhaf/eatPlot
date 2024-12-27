@@ -1,3 +1,13 @@
+rename_comparisons_total <- function(eatRep_dat, total_group, facet_var){
+  total_group_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_group, "id"]
+  total_comparisons <- eatRep_dat$comparison[eatRep_dat$comparison$unit_2 %in% total_group_ids, "id"]
+  eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"], "Total")
+  eatRep_dat$plain[eatRep_dat$plain$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$plain[eatRep_dat$plain$id %in% total_comparisons, "comparison"], "Total")
+
+  return(eatRep_dat)
+}
+
+
 prepare_comp <- function(dat, year_columns) {
   comp_trend <- data.frame()
 

@@ -20,14 +20,9 @@ prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", to
   check_columns(eatRep_dat$estimate, cols = c("p"))
 
 
-# Rename specific crossDiffs ----------------------------------------------
-  total_group_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_group, "id"]
-  total_comparisons <- eatRep_dat$comparison[eatRep_dat$comparison$unit_2 %in% total_group_ids, "id"]
-  eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"], "Total")
-
-
 
   # Filtering ---------------------------------------------------------------
+  eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group)
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)

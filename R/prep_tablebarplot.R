@@ -1,7 +1,9 @@
-prep_tablebarplot <- function(eatRep_dat, par = "mean") {
+prep_tablebarplot <- function(eatRep_dat, par = "mean", facet_var = "TR_BUNDESLAND", total_group = "total") {
 check_eatRep_dat(eatRep_dat)
 
 check_columns(eatRep_dat$plain, c("unit_1", "unit_2", "id", "comparison", "parameter", "year", "est", "se", "p", "mhg"))
+eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group, facet_var)
+
 
 dat <- eatRep_dat$plain
 dat <- dat[dat$parameter %in% par, ]
