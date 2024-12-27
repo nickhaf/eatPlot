@@ -19,8 +19,6 @@ prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", to
   check_eatRep_dat(eatRep_dat)
   check_columns(eatRep_dat$estimate, cols = c("p"))
 
-
-
   # Filtering ---------------------------------------------------------------
   eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group)
   eatRep_dat$plain <- NULL
@@ -30,7 +28,6 @@ prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", to
   # Merge Data --------------------------------------------------------------
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
-
   plot_dat <- build_plot_dat(eatRep_dat)
   plot_dat_wide <- tidyr::pivot_wider(plot_dat,
     names_from = "comparison",
