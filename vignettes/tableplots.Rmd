@@ -1,54 +1,16 @@
-# Lineplot Trend
+---
+title: "Tableplots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tableplots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-```{r} 
-## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
-## einfach hier rausnehmen.
-trend_3_subset <- trend_3
-
-## hier nur die nehmen, die "- total" in TR_BUNDESLAND enthalten 
-
-crossDiffTotal <- trend_3_subset$plain[grep(pattern = "- total", trend_3_subset$plain$TR_BUNDESLAND),]$id
-crossDiffBL <- trend_3_subset$plain[grep(pattern = "- total", trend_3_subset$plain$TR_BUNDESLAND, invert = TRUE),]$id
-trend_3_subset$comparisons[trend_3_subset$comparisons$id %in% crossDiffTotal, "comparison"] <- "crossDiffTotal"
-
-trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen", "total"))
-
-trend_3_prepped <- prep_lineplot(
-  trend_3_subset,
-  parameter = "mean",
-  used_comparisons = c("none", "trend", "crossDiffTotal") ## evtl. auch einfach davor filtern?
-)
-
-p <- plot_lineplot(trend_3_prepped,
-  point_est = "est_comparison_none",
-  point_sig = "sig_comparison_crossDiffTotal", ## sig_noTrend_Comp_crossDiff_wholeGroup
-  line_est = "est_comparison_none",
-  line_sig = "sig_comparison_trend",
-  line_se = "se_comparison_none",
-  brace_label_est = "est_comparison_trend",
-  brace_label_sig = "sig_comparison_trend",
-  brace_label_se = "se_comparison_trend",
-  brace_label_sig_high = NULL,
-  brace_label_sig_bold = "sig_comparison_trend",
-  years_lines = list(c(2009, 2015), c(2015, 2022)),
-  years_braces = list(c(2009, 2015), c(2015, 2022)),
-  subgroup_var = "mhg",
-  background_facet = "total",
-  background_subgroup = "total",
-  facet_var = "TR_BUNDESLAND",
-  seperate_plot_var_box = "wholeGroup",
-  title_superscripts = NULL,
-  plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
-)
-
-# save_plot(p, filename = "/home/nick/Downloads/test.pdf")
-# save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
-```
-
+This vignette shows you how to plot tableplots from [eatRep] data. The workflow is optimized for Bildungstrend-graphs, but can be expanded for plotting other [eatRep] data as well. 
 
 
 # Trend Lesen Deutsch
-
 
 ```{r}
 dat_prepped <- prep_tablebarplot(trend_3, par = c("mean", "sd"))
