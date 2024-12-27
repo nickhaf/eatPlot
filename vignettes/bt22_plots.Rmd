@@ -20,7 +20,7 @@ ACHTUNG: Schaut bitte selbst noch einmal genau, welche Spalten ihr zum Plotten b
 library(eatPlot)
 ```
 
-# Lineplots
+# Lineplots   
 ## Chapter 4
 ### Kompetenzwerte Bundesländer
 ```{r chpt4_line}
