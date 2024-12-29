@@ -22,14 +22,12 @@ In a first step, the data has to be prepared:
 
 trend_3_sub <- trend_3
 
-trend_3_sub$plain <- trend_3_sub$plain[trend_3_sub$plain$comparison %in% c("crossDiff", "none"), ]
+trend_3_sub$plain <- trend_3_sub$plain[trend_3_sub$plain$comparison %in% c("crossDiff", "none", "trend"), ]
 
 dat_prepped <- prep_tablebarplot(trend_3_sub, 
                                  par = c("mean", "sd"), 
                                  facet_var = "TR_BUNDESLAND", 
                                  total_group = "total")
-## Ungünstig, dass das Bundesland mit BL - total benannt ist. 
-## Ich glaube teilweise wird ja der Vergleich mit Gesamtdeutschland benötigt. Dafür sollte jedes Bundesland eine eigene Zeile haben. eventuell die Gruppenspalte dafür benutzen?  
 
 ```
 
