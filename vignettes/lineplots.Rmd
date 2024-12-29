@@ -28,13 +28,11 @@ It can make sense to pre-process the data a bit,
 trend_3_subset <- trend_3
 trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen", "total"))
 
-## hier nur die nehmen, die "- total" in TR_BUNDESLAND enthalten 
+trend_3_subset$comparisons <- subset(trend_3_subset$comparisons,trend_3_subset$comparisons$comparison %in% c("none", "trend", "crossDiffTotal", "crossDiff") )
 
 trend_3_prepped <- prep_lineplot(
   trend_3_subset,
-  parameter = "mean",
-  used_comparisons = c("none", "trend", "crossDiffTotal", "crossDiff") ## evtl. auch einfach davor filtern?
-)
+  parameter = "mean")
 
 ```
 
