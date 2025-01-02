@@ -11,8 +11,12 @@ trend_mw$plain <- trend_mw$plain %>%
 trend_mw$group <- trend_mw$group %>%
   mutate(across(where(is.character), ~ gsub("ersteGen", "m", gsub("aohneZWH", "w", .))))
 
-trend_mw$group <- subset(trend_mw$group, grepl("^total|^w -|^m -", mhg) & !grepl("m - einET", x = mhg))
-trend_mw$plain <- subset(trend_mw$plain, grepl("^total|^w -|^m -", mhg) & !grepl("m - einET", x = mhg))
+trend_mw$group <- subset(trend_mw$group, grepl("^total|^w -|^m -|^m$|^w$", mhg) & !grepl("m - einET", x = mhg))
+trend_mw$plain <- subset(trend_mw$plain, grepl("^total|^w -|^m -|^m$|^w$", mhg) & !grepl("m - einET", x = mhg))
+
+colnames(trend_mw$group)[colnames(trend_mw$group) == "mhg"] <- "geschlecht"
+colnames(trend_mw$plain)[colnames(trend_mw$plain) == "mhg"] <- "geschlecht"
+
 
 usethis::use_data(trend_mw, overwrite = TRUE)
 
