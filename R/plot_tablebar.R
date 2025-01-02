@@ -243,7 +243,7 @@ plot_tablebar <- function(dat,
       y = .data$y_axis,
     )
   ) +
-    build_background_stripes(dat, columns_table, plot_borders, plot_settings = plot_settings) +
+    build_background_stripes(dat, column_x_coords, columns_table, plot_borders, plot_settings = plot_settings) +
     ggplot2::scale_fill_manual(
       breaks = dat$background_colour,
       values = dat$background_colour
@@ -482,6 +482,7 @@ build_columns_3 <- function(df,
 }
 
 build_background_stripes <- function(dat,
+                                     column_x_coords,
                                      columns_table,
                                      plot_borders,
                                      plot_settings = plotsettings_tablebarplot()) {
@@ -531,6 +532,36 @@ build_background_stripes <- function(dat,
       ggplot2::aes(
         xmin = -Inf,
         xmax = max(scale_breaks),
+        ymin = .data$y_axis - 0.5,
+        ymax = .data$y_axis + 0.5,
+        fill = .data$background_colour
+      ),
+      colour = NA
+    ))
+  } else if (plot_settings$background_stripes_border == "background_line_table") {
+    left_table_border <- min(column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]$left)
+    right_table_border <- max(column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]$right)
+
+    if (any("bar" == column_x_coords$column)) {
+      bar_border <- subset(column_x_coords, column == "bar")
+
+      left_table_border <- ifelse(left_table_border < subset(column_x_coords, column == "bar")$left,
+        -Inf,
+        left_table_border <- bar_border$right
+      )
+
+      right_table_border <- ifelse(right_table_border < subset(column_x_coords, column == "bar")$right,
+                                  right_table_border,
+                                  Inf
+      )
+    }
+
+
+    stripes <- c(ggplot2::geom_rect(
+      data = dat,
+      ggplot2::aes(
+        xmin = left_table_border,
+        xmax = right_table_border,
         ymin = .data$y_axis - 0.5,
         ymax = .data$y_axis + 0.5,
         fill = .data$background_colour

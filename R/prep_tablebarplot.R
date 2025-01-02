@@ -9,11 +9,10 @@ eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group, facet_var)
 eatRep_dat$plain$TR_BUNDESLAND <- gsub(" - total", "", eatRep_dat$plain$TR_BUNDESLAND)
 ## Gibts hier ein besseres Vorgehen? Ich könnte mir die Daten auch selber zusammenmergen. Aber for now ...
 
-
 dat <- eatRep_dat$plain
 dat <- dat[dat$parameter %in% par, ]
 if(!is.null(comparisons)){
-dat <- dat[dat$comparison %in% comparisons, ]
+dat <- dat[dat$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
 }
 dat$sig <- ifelse(dat$p < 0.05, TRUE, FALSE)
 
