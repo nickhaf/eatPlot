@@ -288,13 +288,14 @@ p6.5 <- plot_tablebar(
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Höhrverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
+    axis_x_lims = c(-5, 60), 
     columns_alignment = c(0, rep(2, 6), NULL), # NULL evtl. nicht optimal, oder in die Message mit rein.
     headers_alignment = 0.5,
     headers_nudge_y = c(rep(0, 7), 0.5),
     columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
     columns_width = c(0.15, rep(0.075, 6), 0.4), 
     bar_nudge_y = rep(c(-0.3, 0.3), nrow(mw_prepped_lesen) / 2),
-    background_stripes_colour = rep(c("white", "white", "#EBFDF3", "#EBFDF3"), nrow(mw_prepped_lesen) / 4),
+    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     background_stripes_border = "background_line_table",
     bar_width = 0.3,
     bar_fill_colour = c("#20D479", "#8DEBBC"),
