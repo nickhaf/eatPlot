@@ -88,6 +88,7 @@ check_headers_requirements <- function(plot_settings, n_table_cols) {
 
 
 set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_settings) {
+
   if (rev(plot_settings$headers_alignment)[header_pos] == 0) {
     x_axis_i_header <- column_x_coords_headers$left[header_pos]
   } else if (rev(plot_settings$headers_alignment)[header_pos] == 0.5) {
@@ -95,7 +96,7 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
   } else if (rev(plot_settings$headers_alignment)[header_pos] == 1) {
     x_axis_i_header <- column_x_coords_headers$right[header_pos]
   } else {
-    x_axis_i_header <- column_x_coords_headers$middle[header_pos]
+    x_axis_i_header <- (column_x_coords_headers$middle[header_pos]) #+ column_x_coords_headers$right[header_pos])/2
   }
   return(x_axis_i_header)
 }
