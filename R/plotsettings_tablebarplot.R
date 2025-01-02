@@ -102,7 +102,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_width Numeric for the line-size around the bar.
-#' @param bar_nudge_y Numeric for nudging the bar in y direction. Defaults to `0`.
+#' @param bar_nudge_y Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to `0`.
 #' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to `white`.
 #' @param bar_pattern_spacing Numeric for the gap between patterns.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
@@ -232,7 +232,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "columns_width" = NULL,
       "headers_alignment" = NULL,
       "headers_background_colour" = "white",
-      "headers_font_size" = 2,
+      "headers_font_size" = 3,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
       "headers_row_height" = 1,
