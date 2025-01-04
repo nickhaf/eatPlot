@@ -66,6 +66,8 @@ standardize_column_width <- function(column_widths, plot_ranges = c(0, 0)) {
 
 # Utils -------------------------------------------------------------------
 calc_barplot_width <- function(column_widths, plot_ranges) {
+
+  browser()
   ## Fill up NAs with the remaining space with the relative barplot widths
   sum_plot_ranges <- sum(abs(plot_ranges))
   relative_plot_ranges <- sapply(plot_ranges, function(x) {
@@ -79,11 +81,6 @@ calc_barplot_width <- function(column_widths, plot_ranges) {
     column_widths[[x]][is.na(column_widths[[x]])] <- plot_width[[x]]
     return(column_widths[[x]])
   })
-
-
-  if (1 - sum(unlist(column_widths)) != 0) {
-    stop("The sum of all your column widths has to be equal to 1.", call. = FALSE)
-  }
 
   return(column_widths)
 }
