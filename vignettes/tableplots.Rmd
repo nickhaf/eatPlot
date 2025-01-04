@@ -317,9 +317,6 @@ save_plot(p6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 22
 
 ## Abb. 6.6
 
-```{r}
-library(eatPlot)
-```
 
 In a first step, the data has to be prepared:
 
@@ -331,76 +328,45 @@ dat_prepped <- prep_tablebarplot(
   subgroup_var = "geschlecht",
   par = c("mean", "sd"),
   facet_var = "TR_BUNDESLAND",
-  total_group = "total"
+  total_group = "total", 
+  comparisons = c("none", "trend", "trend_crossDiff")
 )
 ```
 
-This results in a large dataframe, containing a column for each comparisons made in the data:
-
-```{r}
-str(dat_prepped)
-```
-
-The columns are all named after the same scheme: 
-
-1. First, the column type is shown: `est_` for example contains estimated values, while `sig_` gives us information about the significance, `es_` about the effect size and `se_` about the standard errors of the estimates.
-1. This is followed by the year(s) the value is referring to. 
-If it is refering to a trend, this is indicated like so: `2015 - 2009`.
-1. Then we can see the type of comparison the values in the column are referring to. 
-For example, `none` means that no comparison was made, while `trend` indicates that a trend was calculated. 
-`crossDiff` shows us a crossDiff and `crossDiffTotal` a crossDiff between some subgroup and an overarching total group (like a state vs. the whole of Germany). 
-See [] for a more thorough description of the different comparsions available in `eatRep`. 
-
-I'd suggest to reduce the `data.frame` by selecting the columns needed for the plot in the next step. 
-This makes it easier to spot problems in the data. 
-For example, I might have gathered either from the data directly, or from a template, that I will need the following columns:
-
-```{r}
-table_dat <- dat_prepped[, c(
-  "TR_BUNDESLAND",
-  "mhg",
-  "est_2009_crossDiffTotal_mean",
-  "est_2009_none_mean",
-  "est_2009_none_sd",
-  "est_2015_none_mean",
-  "est_2015_none_sd",
-  "est_2015 - 2009_trend_mean",
-  "sig_2015 - 2009_trend_mean",
-  "se_2015 - 2009_trend_mean",
-  "es_2015 - 2009_trend_mean"
-)]
-```
-
-
-
-
 
 
 ```{r}
-dat_prepped <- filter(dat_prepped, mhg %in% c("aohneZWH", "einET"), !str_detect(TR_BUNDESLAND, "- total"))
-dat_prepped <- arrange(dat_prepped, TR_BUNDESLAND)
+dat_prepped <- subset(dat_prepped, geschlecht %in% c("m", "w"))
+dat_prepped$geschlecht <- gsub("m", "männlich", dat_prepped$geschlecht)
+dat_prepped$geschlecht <- gsub("w", "weiblich", dat_prepped$geschlecht)
 
-dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
+dat_prepped_a <- arrange(dat_prepped, TR_BUNDESLAND)
+
+dat_prepped_a$TR_BUNDESLAND[duplicated(dat_prepped_a$TR_BUNDESLAND)] <- " "
+dat_prepped_a$TR_BUNDESLAND <- gsub("total", "Deutschland", dat_prepped_a$TR_BUNDESLAND)
+dat_prepped_a$TR_BUNDESLAND <- gsub("ue", "ü", dat_prepped_a$TR_BUNDESLAND)
+
 
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.05, 0.05, rep(0.05, 7), NA),
-    p2 = c(rep(0.05, 7), NA)
+    p1 = c(0.1, 0.03, rep(0.03, 4), 0.05, rep(0.03, 2), NA),
+    p2 = c(rep(0.03, 4), 0.05, rep(0.03, 2), NA)
   ),
-  plot_ranges = c(80, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  plot_ranges = c(120, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 
 p_1 <- plot_tablebar(
-  dat = dat_prepped,
+  dat = dat_prepped_a,
   bar_est = "est_2015 - 2009_trend_mean",
   bar_label = NULL,
   bar_sig = "sig_2015 - 2009_trend_mean",
-  bar_fill = "mhg",
+  bar_fill = "geschlecht",
   column_spanners = list(
     "**2009**<sup>a</sup>" = c(3, 4),
     "**2015**<sup>a</sup>" = c(5, 6),
     "**Differenz 2015-2009<sup>a</sup>**" = c(7, 10)
   ),
+    columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL, NULL),
   headers = list(
     "**Land**",
     " ",
@@ -415,7 +381,7 @@ p_1 <- plot_tablebar(
   ),
   columns_table = c(
     "TR_BUNDESLAND",
-    "mhg",
+    "geschlecht",
     "est_2009_none_mean",
     "est_2009_none_sd",
     "est_2015_none_mean",
@@ -428,17 +394,31 @@ p_1 <- plot_tablebar(
     NULL,
     NULL,
     "sig_2009_none_mean",
-    NULL, "sig_2015_none_mean",
+    NULL, 
+    "sig_2015_none_mean",
     NULL,
-    "sig_2015 - 2009_trend_mean",
     NULL,
-    NULL
+    NULL,
+    "sig_2015 - 2009_trend_mean"
+  ),
+  columns_table_sig_high = list(
+    NULL,
+    NULL,
+    NULL,
+    NULL, 
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "sig_2015 - 2009_trend_crossDiffTotal_mean"
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-40, 40),
+    axis_x_lims = c(-60, 60),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
+    bar_background_lines = "scale_breaks",
+    bar_background_lines_linetype = "dotted",
     columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
     columns_width = column_widths_stand$p1,
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
@@ -447,11 +427,11 @@ p_1 <- plot_tablebar(
 )
 
 p_2 <- plot_tablebar(
-  dat = dat_prepped,
+  dat = dat_prepped_a,
   bar_est = "est_2022 - 2015_trend_mean",
   bar_label = NULL,
   bar_sig = "sig_2022 - 2015_trend_mean",
-  bar_fill = "mhg",
+  bar_fill = "geschlecht",
   column_spanners = list(
     "**2015**" = c(1, 2),
     "**2022**" = c(3, 4),
@@ -476,7 +456,7 @@ p_2 <- plot_tablebar(
     "se_2022 - 2015_trend_mean",
     "es_2022 - 2015_trend_mean"
   ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_2022 - 2015_trend_mean", NULL),
   columns_table_sig_bold = list(
     "sig_2015_none_mean",
     NULL,
@@ -487,17 +467,19 @@ p_2 <- plot_tablebar(
     NULL
   ),
   columns_table_sig_high = list(
-    "sig_2015_none_mean",
     NULL,
-    "sig_2022_none_mean",
     NULL,
-    "sig_2022 - 2015_trend_mean",
     NULL,
-    NULL
+    NULL,
+    NULL,
+    NULL,
+    "sig_2022 - 2015_trend_crossDiffTotal_mean"
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-60, 60),
+    bar_background_lines = "scale_breaks",
+    bar_background_lines_linetype = "dotted",
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
@@ -508,6 +490,11 @@ p_2 <- plot_tablebar(
 )
 
 example_plot <- combine_plots(list(p_1, p_2))
-# save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
-# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
+
+```{r}
+save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 320)
+# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
+
+```
+
