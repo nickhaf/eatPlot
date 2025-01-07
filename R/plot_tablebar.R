@@ -740,7 +740,8 @@ plot_capped_x_axis <- function(scale_breaks) {
       xend = max(scale_breaks),
       y = 0.4,
       yend = 0.4,
-      linewidth = 0.1
+      linewidth = 0.1,
+      color = "black"
     )
   } else {
     ## Plot something invisible, so the y axis is the same over all plots:
