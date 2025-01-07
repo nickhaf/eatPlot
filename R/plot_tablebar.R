@@ -298,7 +298,6 @@ plot_tablebar <- function(dat,
         size = plot_settings$bar_label_size
       )
     }
-
   if (!is.null(bar_est)) {
     if (is.null(bar_sig)) {
       res_plot <- res_plot +

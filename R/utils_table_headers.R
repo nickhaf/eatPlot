@@ -30,7 +30,6 @@ plot_column_headers <- function(column_x_coords_headers,
       column_x_coords_headers,
       plot_settings
     )
-
     if (!is.null(headers)) {
       ggtext::geom_richtext(
         data = data.frame(),

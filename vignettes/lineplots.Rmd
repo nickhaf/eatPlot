@@ -108,7 +108,7 @@ p <- plot_lineplot(trend_total,
 ```
 
 ```{r}
-save_plot(p, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2/4)
+save_plot(p, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2/4 + 10)
 
 ```
 
