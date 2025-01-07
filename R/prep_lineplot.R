@@ -13,17 +13,20 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", total_group = "total", sig_niveau = 0.05) {
+prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", total_group = "total", sig_niveau = 0.05, comparisons = NULL) {
 
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
   check_columns(eatRep_dat$estimate, cols = c("p"))
 
   # Filtering ---------------------------------------------------------------
-  eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group)
+  eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group, facet_var = facet_var)
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
+  if(!is.null(comparisons)){
+    dat <- dat[dat$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
+  }
 
   # Merge Data --------------------------------------------------------------
   check_no_columns(eatRep_dat$estimate, cols = "sig")
