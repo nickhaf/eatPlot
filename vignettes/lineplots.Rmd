@@ -25,12 +25,12 @@ It can make sense to pre-process the data a bit,
 
 
 ```{r lineplot_states} 
-trend_3_subset <- trend_3
-trend_3_subset$group <- subset(trend_3_subset$group, trend_3_subset$group$mhg %in% c("einET", "ersteGen", "total"))
+trend_3_subset <- trend_mw
 
 trend_3_prepped <- prep_lineplot(
   trend_3_subset,
   parameter = "mean")
+
 
 ```
 
@@ -50,7 +50,7 @@ p <- plot_lineplot(trend_3_prepped,
   brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
-  subgroup_var = "mhg",
+  subgroup_var = "geschlecht",
   background_facet = "total",
   background_subgroup = "total",
   facet_var = "TR_BUNDESLAND",
@@ -60,6 +60,55 @@ p <- plot_lineplot(trend_3_prepped,
 )
 
 # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
-# save_plot(p, filename = "C:/Users/hafiznij/Downloads/test.pdf")
+# save_plot(p, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
+```
+
+
+## Lineplot for whole Germany
+
+
+```{r lineplot_germany} 
+trend_ger <- prep_lineplot(
+  trend_mw,
+  parameter = "mean")
+
+trend_ger_lesen <- trend_ger 
+trend_ger_lesen$kb <- "lesen"
+
+trend_total <- rbind(trend_ger, trend_ger_lesen)
+
+trend_total <- subset(trend_total, TR_BUNDESLAND == "total") |>
+  subset(geschlecht %in% c("m", "w"))
+
+
+```
+
+```{r}
+p <- plot_lineplot(trend_total,
+  point_est = "est_comparison_none",
+  point_sig = NULL,
+  line_est = "est_comparison_none",
+  line_sig = "sig_comparison_trend",
+  line_se = "se_comparison_none",
+  brace_label_est = "est_comparison_trend",
+  brace_label_sig = "sig_comparison_trend",
+  brace_label_se = "se_comparison_trend",
+  brace_label_sig_high = NULL,
+  brace_label_sig_bold = "sig_comparison_trend",
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  subgroup_var = "geschlecht",
+  background_facet = NULL,
+  background_subgroup = NULL,
+  facet_var = "kb",
+  seperate_plot_var_box = "wholeGroup",
+  title_superscripts = NULL,
+  plot_settings = plotsettings_lineplot(split_plot = FALSE, background_lines = FALSE, default_list = lineplot_4x4)
+)
+```
+
+```{r}
+save_plot(p, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2/4)
+
 ```
 

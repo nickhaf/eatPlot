@@ -449,10 +449,10 @@ check_column_warn <- function(dat, column) {
 #' @return Data.frame with a new column, either renamed or `NA`.
 #'
 #' @examples # tbd
-build_column <- function(dat, old, new) {
+build_column <- function(dat, old, new, fill_value = NA) {
 check_no_columns(dat, new)
   if (is.null(old)) {
-    dat[, new] <- NA
+    dat[, new] <- fill_value
     return(dat)
   } else {
     check_columns(dat, old)
