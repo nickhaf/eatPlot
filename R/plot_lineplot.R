@@ -54,16 +54,15 @@ plot_lineplot <- function(eatPlot_dat,
   years_list <- prep_years_list(years_lines, years_braces)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
 
-
   eatPlot_dat <- eatPlot_dat |>
     build_column(old = point_est, new = "point_est") |>
-    build_column(old = point_sig, new = "point_sig") |>
-    build_column(old = line_sig, new = "line_sig") |>
+    build_column(old = point_sig, new = "point_sig", fill_value = FALSE) |>
+    build_column(old = line_sig, new = "line_sig", fill_value = FALSE) |>
     build_column(old = line_est, new = "line_est") |>
     build_column(old = brace_label_est, new = "brace_label_est") |>
     build_column(old = brace_label_se, new = "brace_label_se") |>
-    build_column(old = brace_label_sig_high, new = "brace_label_sig_high") |>
-    build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold") |>
+    build_column(old = brace_label_sig_high, new = "brace_label_sig_high", fill_value = FALSE) |>
+    build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold", fill_value = FALSE) |>
     build_column(old = facet_var, new = "facet_var") |>
     build_column(old = subgroup_var, new = "subgroup_var") |>
     build_column(old = line_se, new = "line_se")
@@ -77,17 +76,27 @@ plot_lineplot <- function(eatPlot_dat,
                                   subgroup_var == background_subgroup)
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
 
-  line_dat <- subset(eatPlot_dat,
-                     facet_var != background_facet &
-                       subgroup_var != background_subgroup)
+  if(!is.null(background_facet) & !is.null(background_subgroup)){
+    line_dat <- subset(eatPlot_dat,
+                       facet_var != background_facet &
+                         subgroup_var != background_subgroup)
+  }else{
+    line_dat <- eatPlot_dat
+  }
+
   line_dat <- filter_years(line_dat, years = years_lines)
 
-
   brace_dat_list <- prep_brace(eatPlot_dat, plot_lims, plot_settings)
-  brace_dat <- brace_dat_list$brace_dat |>
+
+  if(!is.null(background_facet) & !is.null(background_subgroup)){
+    brace_dat <- brace_dat_list$brace_dat |>
     subset(facet_var != background_facet & subgroup_var != background_subgroup)
+  }else{
+    brace_dat <- brace_dat_list$brace_dat
+  }
   brace_coordinates <- brace_dat_list$brace_coords
   brace_dat <- filter_years(brace_dat, years = years_braces)
+
 
   if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
     stop("Some of the trends you provided in 'years_lines' are not in the data.")
@@ -101,7 +110,13 @@ plot_lineplot <- function(eatPlot_dat,
 
   plot_list <- list()
   position <- 1
+
+  if(!is.null(background_facet)){
   facet_values <- levels(dat_p$plot_dat[, "facet_var"])[levels(dat_p$plot_dat[, "facet_var"]) != background_facet]
+  }else{
+    facet_values <- levels(dat_p$plot_dat[, "facet_var"])
+  }
+
 
   for (i in facet_values) {
 
@@ -236,7 +251,6 @@ extract_gsub_values <- function(plot_dat) {
 
 calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_settings) {
   check_columns(plot_dat, c("facet_var", "point_est", "year"))
-
   ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
     y_range <- range(plot_dat$point_est, na.rm = TRUE)
@@ -250,8 +264,12 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   #   ))
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
-  subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
 
+if(!is.null(background_subgroup)){
+  subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
+}else{
+  subgroup_lvls <- unique(plot_dat$subgroup_var)
+}
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
     coords,
