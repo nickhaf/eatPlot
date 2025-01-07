@@ -92,7 +92,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #'
 #' @param axis_x_label_size Numeric for the size of the x axis labels. Defaults to `5`.
 #' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, `NULL` (default).
-#' @param background_stripes_border Character string of either `c("Inf", "background_line_both", "background_line_left", "background_line_right")`. The background stripes will either be drawn over the whole plot (`"Inf"`), from the outer left background_line to the outer right background_line (`"background_line_both"`), from the outer left background line to the right of the plot (`"background_line_left"`), or the outer right background line to the left of the plot (`"background_line_right`).
+#' @param background_stripes_border Character string of either `c("Inf", "background_line_both", "background_line_left", "background_line_right", "background_line_table")`. The background stripes will either be drawn over the whole plot (`"Inf"`), from the outer left background_line to the outer right background_line (`"background_line_both"`), from the outer left background line to the right of the plot (`"background_line_left"`), the outer right background line to the left of the plot (`"background_line_right`), or only over the table-part of the plot (`background_line_table"`).
 #' @param background_stripes_colour Character vector containing the background colour of each row. Defaults to `NULL`.
 #' @param bar_background_lines Character string of either `c("borders", "scale_breaks", "none")`, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.
 #' @param bar_background_lines_linetype Character string indicating the linetype for the background lines of the barplot.
@@ -102,7 +102,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_width Numeric for the line-size around the bar.
-#' @param bar_nudge_y Numeric for nudging the bar in y direction. Defaults to `0`.
+#' @param bar_nudge_y Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to `0`.
 #' @param bar_pattern_fill_colour Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in `bar_pattern_fill`. Defaults to `white`.
 #' @param bar_pattern_spacing Numeric for the gap between patterns.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
@@ -232,7 +232,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "columns_width" = NULL,
       "headers_alignment" = NULL,
       "headers_background_colour" = "white",
-      "headers_font_size" = 2,
+      "headers_font_size" = 3,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
       "headers_row_height" = 1,

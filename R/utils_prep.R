@@ -1,10 +1,22 @@
-rename_comparisons_total <- function(eatRep_dat, total_group, facet_var){
+rename_comparisons_total <- function(eatRep_dat, total_group, facet_var) {
+
+#  Aufpassen: Nur, wenn gegen "total" verglichen wird, also nicht beide Gruppen in der Comparison "total" sind.
   total_group_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_group, "id"]
-  total_comparisons <- eatRep_dat$comparison[eatRep_dat$comparison$unit_1 %in% total_group_ids | eatRep_dat$comparison$unit_2 %in% total_group_ids, "id"]
+  total_comparisons <- eatRep_dat$comparison[
+    (eatRep_dat$comparison$unit_1 %in% total_group_ids) != (eatRep_dat$comparison$unit_2 %in% total_group_ids),
+    "id"
+  ]
 
-  ### Obacht: Das funktioniert noch nicht weil in unit_1 und unit_2 auch noch comps sein können. Aber für CrossDiff sollte es klappen?
 
+  total_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_comparisons, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_comparisons, "id"])
 
+  total_comparisons <- c(total_comparisons, total_comparisons_nested)
+
+  while (length(total_comparisons_nested) > 0) {
+    total_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_comparisons_nested, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_comparisons_nested, "id"])
+
+    total_comparisons <- c(total_comparisons, total_comparisons_nested)
+  }
 
   eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"], "Total")
   eatRep_dat$plain[eatRep_dat$plain$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$plain[eatRep_dat$plain$id %in% total_comparisons, "comparison"], "Total")
@@ -49,9 +61,9 @@ reshape_dat_comp_wide <- function(dat_comp, comp, year_columns) {
 
     ## Build an unique identifier for the column names of the comparisons
 
-      dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
+    dat_comp$compare_2_Comp <- paste0(comp, "_", dat_comp$compare_2_Comp)
 
- dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
+    dat_comp <- remove_columns(dat_comp, c("comparison", "compare_1_Comp"))
 
     dat_comp_wide <- stats::reshape(dat_comp,
       direction = "wide",

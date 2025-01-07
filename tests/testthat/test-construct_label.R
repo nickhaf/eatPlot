@@ -86,3 +86,15 @@ test_that("NAs are converted to empty strings", {
     c("20<sup>a</sup> ()", "35 (2.3)", " ()", " (0.6)")
   )
 })
+
+
+test_that("NAs are converted to empty strings without ()", {
+  df <- data.frame(
+    label_est = c(20, 35, NA, NA),
+    label_se = c(NA, 2.3, NA, 0.6),
+    p_est = c(TRUE, FALSE, TRUE, FALSE)
+  )
+
+expect_equal(construct_label_2(dat = df, label_se = "label_se")$label, c("", " (2.3)", "", " (0.6)"))
+
+})
