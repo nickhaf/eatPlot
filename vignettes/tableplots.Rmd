@@ -678,12 +678,13 @@ p_8.4 <- combine_plots(list(p_1, p_2, p_3))
 ```
 
 ```{r}
-save_plot(p_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf", width = 320, height = 226.2 / 2, grDevices::cairo_pdf)
 
-save_plot(p_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
+save_plot(p_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
 
 
-ggsave(filename='C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf', p_8.4, device=cairo_pdf)
+ggsave(filename='C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf', p_8.4,
+       width = 320, height = 226.2 / 2, units = "mm",
+       device=cairo_pdf)
 
 ## Okay, so either the letters are not rendered corretly, or the color model is wrong. 
 ```
