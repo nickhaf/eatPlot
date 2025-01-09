@@ -30,7 +30,12 @@ plot_column_headers <- function(column_x_coords_headers,
       column_x_coords_headers,
       plot_settings
     )
+
     if (!is.null(headers)) {
+      hjust_header <- rev(plot_settings$headers_alignment)[i]
+      if(hjust_header == 2){
+        hjust_header <- 1
+      }
       ggtext::geom_richtext(
         data = data.frame(),
         ggplot2::aes(
@@ -45,7 +50,7 @@ plot_column_headers <- function(column_x_coords_headers,
         label.padding = grid::unit(rep(0, 4), "pt"),
         fill = NA,
         label.color = NA,
-        hjust = rev(plot_settings$headers_alignment)[i],
+        hjust = hjust_header,
         nudge_x = rev(plot_settings$headers_nudge_x)[i]
       )
     }
@@ -87,7 +92,7 @@ check_headers_requirements <- function(plot_settings, n_table_cols) {
 
 
 set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_settings) {
-
+  ## Kann ich hier einfach die column coordinates nehmen?
   if (rev(plot_settings$headers_alignment)[header_pos] == 0) {
     x_axis_i_header <- column_x_coords_headers$left[header_pos]
   } else if (rev(plot_settings$headers_alignment)[header_pos] == 0.5) {
@@ -95,7 +100,7 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
   } else if (rev(plot_settings$headers_alignment)[header_pos] == 1) {
     x_axis_i_header <- column_x_coords_headers$right[header_pos]
   } else {
-    x_axis_i_header <- (column_x_coords_headers$middle[header_pos]) #+ column_x_coords_headers$right[header_pos])/2
+    x_axis_i_header <-  (column_x_coords_headers$middle[header_pos] + column_x_coords_headers$right[header_pos]) /2
   }
   return(x_axis_i_header)
 }
