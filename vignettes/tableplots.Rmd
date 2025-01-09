@@ -97,7 +97,7 @@ p_1 <- plot_tablebar(
   headers = list(
     "**Land**",
     " ",
-    "*M*",
+    "\u0394 *M*",
     "*SD*",
     "*M*",
     "*SD*",
@@ -201,7 +201,8 @@ p_2 <- plot_tablebar(
 )
 
 example_plot <- combine_plots(list(p_1, p_2))
-# save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table.pdf", width = 320)
+ save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320, 
+          encoding = "Greek.enc")
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 
@@ -487,13 +488,15 @@ p_2 <- plot_tablebar(
     headers_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     default_list = barplot_table_plot_pattern
   )
-)
+) 
 
 example_plot <- combine_plots(list(p_1, p_2))
 ```
 
 ```{r}
-save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 320)
+save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pdf", width = 320)
+## Conversion Failure: In R wurde auch scohn der convertierte Buchstabe angezeigt, nicht der code
+
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 
 ```
