@@ -62,6 +62,8 @@ plot_tablebar <- function(dat,
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
 
+  check_columns(dat, c(bar_est, bar_label, bar_label_sig, bar_sig, bar_fill, unlist(columns_table), unlist(columns_table_sig_bold), unlist(columns_table_sig_high), unlist(columns_table_se), y_axis))
+
 
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
@@ -371,6 +373,7 @@ plot_tablebar <- function(dat,
     } else {
       message("`sig_type` must be either \"frame\" or \"pattern\"")
     }
+
   }
 
   # Column spanners ---------------------------------------------------------
