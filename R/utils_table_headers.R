@@ -85,7 +85,7 @@ check_headers_requirements <- function(plot_settings, n_table_cols) {
   plot_settings$headers_nudge_y <- check_length(
     plot_settings$headers_nudge_y,
     n_table_cols,
-    fill = plot_settings$headers_nudge_x[1])
+    fill = plot_settings$headers_nudge_y[1])
 
   return(plot_settings)
 }
