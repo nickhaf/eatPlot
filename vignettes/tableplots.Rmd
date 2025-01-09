@@ -24,7 +24,7 @@ dat_prepped <- prep_tablebarplot(
   subgroup_var = "mhg",
   par = c("mean", "sd"),
   facet_var = "TR_BUNDESLAND",
-  total_group = "total", 
+  total_group = "total",
   comparisons = c("none", "trend")
 )
 ```
@@ -201,8 +201,10 @@ p_2 <- plot_tablebar(
 )
 
 example_plot <- combine_plots(list(p_1, p_2))
- save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320, 
-          encoding = "Greek.enc")
+save_plot(example_plot,
+  filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320,
+  encoding = "Greek.enc"
+)
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 
@@ -287,31 +289,29 @@ p6.5 <- plot_tablebar(
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Höhrverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-5, 60), 
+    axis_x_lims = c(-5, 60),
     columns_alignment = c(0, rep(2, 6), NULL), # NULL evtl. nicht optimal, oder in die Message mit rein.
     headers_alignment = 0.5,
     headers_nudge_y = c(rep(0, 7), 0.5),
     columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
-    columns_width = c(0.15, rep(0.075, 6), 0.4), 
+    columns_width = c(0.15, rep(0.075, 6), 0.4),
     bar_nudge_y = rep(c(-0.3, 0.3), nrow(mw_prepped_lesen) / 2),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     background_stripes_border = "background_line_table",
     bar_width = 0.3,
     bar_fill_colour = c("#20D479", "#8DEBBC"),
-    bar_background_lines = "scale_breaks", 
+    bar_background_lines = "scale_breaks",
     bar_background_lines_linetype = "solid",
     default_list = barplot_table_plot_pattern
   )
 )
-
 ```
 
 Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(p6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 226.2*2/3)
-
+save_plot(p6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 226.2 * 2 / 3)
 ```
 
 
@@ -329,7 +329,7 @@ dat_prepped <- prep_tablebarplot(
   subgroup_var = "geschlecht",
   par = c("mean", "sd"),
   facet_var = "TR_BUNDESLAND",
-  total_group = "total", 
+  total_group = "total",
   comparisons = c("none", "trend", "trend_crossDiff")
 )
 ```
@@ -367,7 +367,7 @@ p_1 <- plot_tablebar(
     "**2015**<sup>a</sup>" = c(5, 6),
     "**Differenz 2015-2009<sup>a</sup>**" = c(7, 10)
   ),
-    columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL, NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL, NULL),
   headers = list(
     "**Land**",
     " ",
@@ -395,7 +395,7 @@ p_1 <- plot_tablebar(
     NULL,
     NULL,
     "sig_2009_none_mean",
-    NULL, 
+    NULL,
     "sig_2015_none_mean",
     NULL,
     NULL,
@@ -406,7 +406,7 @@ p_1 <- plot_tablebar(
     NULL,
     NULL,
     NULL,
-    NULL, 
+    NULL,
     NULL,
     NULL,
     NULL,
@@ -488,7 +488,7 @@ p_2 <- plot_tablebar(
     headers_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     default_list = barplot_table_plot_pattern
   )
-) 
+)
 
 example_plot <- combine_plots(list(p_1, p_2))
 ```
@@ -498,6 +498,184 @@ save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pd
 ## Conversion Failure: In R wurde auch scohn der convertierte Buchstabe angezeigt, nicht der code
 
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
+```
+
+
+# Zuwanderungskapitel
+```{r}
+zwh_prepped <- prep_tablebarplot(trend_zwh,
+  subgroup_var = "zwh",
+  comparisons = c("groupDiff", "trend_groupDiff")
+)
+zwh_prepped <- arrange(zwh_prepped, TR_BUNDESLAND)
+zwh_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", zwh_prepped$TR_BUNDESLAND)
+
+zwh_prepped$TR_BUNDESLAND <- gsub("ue", "ü", zwh_prepped$TR_BUNDESLAND)
+zwh_prepped$TR_BUNDESLAND <- gsub("Berlin", "Berlin<sup>2<\sup>", zwh_prepped$TR_BUNDESLAND)
+zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<sup>3<\sup>", zwh_prepped$TR_BUNDESLAND)
+```
+
+
+```{r}
+column_widths_stand <- standardize_column_width(
+  column_widths = list(
+    p1 = c(0.1, rep(0.05, 5), NA),
+    p2 = c(0.05, 0.05, NA),
+    p3 = c(0.05, 0.05, NA)
+  ),
+  plot_ranges = c(65, 65, 65) # Range of the x-axes of both plots set in 'axis_x_lims'.
+)
+```
+
+```{r}
+p_1 <- plot_tablebar(
+  dat = zwh_prepped,
+  bar_est = "est_2022_groupDiff_mean",
+  bar_sig = "sig_2022_groupDiff_mean",
+  column_spanners = list(
+    "**2009**" = c(2),
+    "**2015**" = c(3),
+    "**2022**" = c(4, 7)
+  ),
+  column_spanners_2 = list(
+    "**Differenz <br> Schüler:innen mit - Schüler:innen ohne <br> Zuwanderungshintergrund**" = c(2, 7)
+  ),
+  columns_table_se = list(NULL, NULL, NULL, NULL, "se_2022_groupDiff_mean", NULL),
+  headers = list(
+    "Land",
+    "\u0394 *M*",
+    "\u0394 *M*",
+    "\u0394 *M*",
+    "*(SE)*",
+    "*d*",
+    " "
+  ),
+  columns_table = c(
+    "TR_BUNDESLAND",
+    "est_2009_groupDiff_mean",
+    "est_2015_groupDiff_mean",
+    "est_2022_groupDiff_mean",
+    "se_2022_groupDiff_mean",
+    "es_2022_groupDiff_mean"
+  ),
+  columns_table_sig_bold = list(
+    NULL,
+    "sig_2009_groupDiff_mean",
+    "sig_2015_groupDiff_mean",
+    "sig_2022_groupDiff_mean",
+    NULL,
+    "sig_2022_groupDiff_mean"
+  ),
+  y_axis = "y_axis",
+  plot_settings = plotsettings_tablebarplot(
+    column_spanners_2_row_height = 2,
+    axis_x_lims = c(0, 65),
+    bar_pattern_spacing = 0.0249,
+    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
+    # bar_fill_colour = c("#20D479", "#8DEBBC"),
+    bar_background_lines = "scale_breaks",
+    bar_background_lines_linetype = "dotted",
+    columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
+    columns_width = column_widths_stand$p1,
+    headers_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5, 0),
+    headers_row_height = 1.5,
+    default_list = barplot_table_plot_pattern
+  )
+)
 
 ```
 
+```{r}
+p_2 <- plot_tablebar(
+  dat = zwh_prepped,
+  bar_est = "est_2015 - 2009_trend_groupDiff_mean",
+  bar_sig = "sig_2015 - 2009_trend_groupDiff_mean",
+  column_spanners = list(
+    "**2015 - 2009**" = c(1, 3)
+  ),
+  column_spanners_2 = list(
+    "**Veränderung der Differenz <br> Schüler:innen mit - Schüler:innen ohne Zuwanderungshintergrund**" = c(1, 3)
+  ),
+  columns_table_se = list(NULL, "est_2015 - 2009_trend_groupDiff_mean"),
+  headers = list(
+    "\u0394 *M*<sub>2015</sub> - <br> \u0394 *M*<sub>2009</sub>",
+    "*(SE)*",
+    " "
+  ),
+  columns_table = c(
+    "est_2015 - 2009_trend_groupDiff_mean",
+    "se_2015 - 2009_trend_groupDiff_mean"
+  ),
+  columns_table_sig_bold = list(
+    "sig_2015 - 2009_trend_groupDiff_mean", NULL
+  ),
+  y_axis = "y_axis",
+  plot_settings = plotsettings_tablebarplot(
+    column_spanners_2_row_height = 2,
+    axis_x_lims = c(0, 65),
+    bar_pattern_spacing = 0.0375 ,
+    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
+    bar_background_lines = "scale_breaks",
+    bar_background_lines_linetype = "dotted",
+    columns_alignment = c(0.5, 2),
+    columns_width = column_widths_stand$p2,
+    headers_alignment = c(0.5, 2, 0),
+    headers_row_height = 1.5,
+    default_list = barplot_table_plot_pattern
+  )
+)
+```
+
+```{r}
+p_3 <- plot_tablebar(
+  dat = zwh_prepped,
+  bar_est = "est_2022 - 2015_trend_groupDiff_mean",
+  bar_sig = "sig_2022 - 2015_trend_groupDiff_mean",
+  column_spanners = list(
+    "**2022 - 2015**" = c(1, 3)
+  ),
+  column_spanners_2 = list(
+    "**Veränderung der Differenz <br> Schüler:innen mit - Schüler:innen ohne Zuwanderungshintergrund**" = c(1, 3)
+  ),
+  columns_table_se = list(NULL, "est_2022 - 2015_trend_groupDiff_mean"),
+  headers = list(
+    "\u0394 *M*<sub>2015</sub> - <br> \u0394 *M*<sub>2009</sub>",
+    "*(SE)*",
+    " "
+  ),
+  columns_table = c(
+    "est_2022 - 2015_trend_groupDiff_mean",
+    "se_2022 - 2015_trend_groupDiff_mean"
+  ),
+  columns_table_sig_bold = list(
+    "sig_2022 - 2015_trend_groupDiff_mean", NULL
+  ),
+  y_axis = "y_axis",
+  plot_settings = plotsettings_tablebarplot(
+    bar_pattern_spacing = 0.0375 ,
+    column_spanners_2_row_height = 2,
+    axis_x_lims = c(0, 65),
+    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
+    bar_background_lines = "scale_breaks",
+    bar_background_lines_linetype = "dotted",
+    columns_alignment = c(0.5, 2),
+    columns_width = column_widths_stand$p3,
+    headers_alignment = c(0.5, 2, 0),
+    headers_row_height = 1.5,
+    default_list = barplot_table_plot_pattern
+  )
+)
+```
+
+```{r}
+bar_pattern_spacing_stand <- standardize_pattern_spacing(list(p_1, p_2, p_3), pattern_spacing = 0.05)
+```
+
+
+```{r}
+p_8.4 <- combine_plots(list(p_1, p_2, p_3))
+```
+
+```{r}
+save_plot(p_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
+```
