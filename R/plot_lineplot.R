@@ -66,7 +66,6 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = facet_var, new = "facet_var") |>
     build_column(old = subgroup_var, new = "subgroup_var") |>
     build_column(old = line_se, new = "line_se")
-
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
 
@@ -76,7 +75,7 @@ plot_lineplot <- function(eatPlot_dat,
                                   subgroup_var == background_subgroup)
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
 
-  if(!is.null(background_facet) & !is.null(background_subgroup)){
+  if(!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1){
     line_dat <- subset(eatPlot_dat,
                        facet_var != background_facet &
                          subgroup_var != background_subgroup)
@@ -265,7 +264,7 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
 
-if(!is.null(background_subgroup)){
+if(!is.null(background_subgroup) & length(background_subgroup) > 1){
   subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
 }else{
   subgroup_lvls <- unique(plot_dat$subgroup_var)
@@ -276,7 +275,6 @@ if(!is.null(background_subgroup)){
     years_list,
     plot_settings = plot_settings
   )
-
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
   x_range <- range(unique_years)
 
