@@ -19,11 +19,9 @@ plot_column_headers <- function(column_x_coords_headers,
                                 header_y_coords,
                                 n_table_cols,
                                 plot_settings) {
-
   plot_settings <- check_headers_requirements(plot_settings, n_table_cols)
 
   ## Headers_nudge_y needs to be checked in length!
-
   lapply(1:nrow(column_x_coords_headers), function(i) {
     x_axis_i_header <- set_headers_alignment(
       header_pos = i,
@@ -33,7 +31,7 @@ plot_column_headers <- function(column_x_coords_headers,
 
     if (!is.null(headers)) {
       hjust_header <- rev(plot_settings$headers_alignment)[i]
-      if(hjust_header == 2){
+      if (hjust_header == 2) {
         hjust_header <- 1
       }
       ggtext::geom_richtext(
@@ -62,15 +60,15 @@ plot_column_headers <- function(column_x_coords_headers,
 #################################
 
 check_headers_requirements <- function(plot_settings, n_table_cols) {
-
   if (is.null(plot_settings$headers_alignment)) {
-    plot_settings$headers_alignment <- ifelse(plot_settings$columns_alignment == 2,
-      0.5,
-      plot_settings$columns_alignment
-    )
-    plot_settings$headers_alignment <- c(plot_settings$headers_alignment,
-                                         rep(0.5, n_table_cols - length(plot_settings$headers_alignment))
-                                         )
+    plot_settings$headers_alignment <- plot_settings$columns_alignment
+
+    if (n_table_cols - length(plot_settings$headers_alignment) == 1) {
+      plot_settings$headers_alignment <- c(
+        plot_settings$headers_alignment,
+        0
+      )
+    }
   }
 
   plot_settings$headers_alignment <- check_length(
@@ -81,11 +79,13 @@ check_headers_requirements <- function(plot_settings, n_table_cols) {
   plot_settings$headers_nudge_x <- check_length(
     plot_settings$headers_nudge_x,
     n_table_cols,
-    fill = plot_settings$headers_nudge_x[1])
+    fill = plot_settings$headers_nudge_x[1]
+  )
   plot_settings$headers_nudge_y <- check_length(
     plot_settings$headers_nudge_y,
     n_table_cols,
-    fill = plot_settings$headers_nudge_y[1])
+    fill = plot_settings$headers_nudge_y[1]
+  )
 
   return(plot_settings)
 }
@@ -100,7 +100,7 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
   } else if (rev(plot_settings$headers_alignment)[header_pos] == 1) {
     x_axis_i_header <- column_x_coords_headers$right[header_pos]
   } else {
-    x_axis_i_header <-  (column_x_coords_headers$middle[header_pos] + column_x_coords_headers$right[header_pos]) /2
+    x_axis_i_header <- (column_x_coords_headers$middle[header_pos] + column_x_coords_headers$right[header_pos]) / 2
   }
   return(x_axis_i_header)
 }
@@ -109,18 +109,17 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
 
 # Column spanners ---------------------------------------------------------
 
-check_spanners_requirements <- function(column_spanners, column_spanners_2, plot_settings){
-
+check_spanners_requirements <- function(column_spanners, column_spanners_2, plot_settings) {
   plot_settings$column_spanners_nudge_y <- check_length(plot_settings$column_spanners_nudge_y,
-                                  length(column_spanners),
-                                  fill = plot_settings$column_spanners_nudge_y[1]
-    )
-  if(!is.null(column_spanners_2)){
+    length(column_spanners),
+    fill = plot_settings$column_spanners_nudge_y[1]
+  )
+  if (!is.null(column_spanners_2)) {
     plot_settings$column_spanners_2_nudge_y <- check_length(plot_settings$column_spanners_2_nudge_y,
-                                    length(column_spanners_2),
-                                    fill = plot_settings$column_spanners_2_nudge_y[1]
-      )
-    }
+      length(column_spanners_2),
+      fill = plot_settings$column_spanners_2_nudge_y[1]
+    )
+  }
 
   return(plot_settings)
 }
@@ -139,12 +138,10 @@ check_spanners_requirements <- function(column_spanners, column_spanners_2, plot
 #'
 #' @examples # tbd
 plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range, header_y_coords, spanners_2 = FALSE, plot_settings) {
-
   if (is.null(spanners)) {
     return(NULL)
   }
   unlist(lapply(seq_along(spanners), function(spanner) {
-
     i <- spanners[[spanner]]
 
     if (length(i) == 1) {
@@ -170,7 +167,7 @@ plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range
       (header_y_coords$row_height_column_spanners / 2) +
       plot_settings$column_spanners_nudge_y[spanner] # Nudge a bit down, so the text stands on the line
 
-    if(spanners_2 == TRUE){
+    if (spanners_2 == TRUE) {
       spanner_line_y <- spanner_line_y +
         header_y_coords$row_height_column_spanners
 
