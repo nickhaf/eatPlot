@@ -11,11 +11,7 @@ set_plot_coords(
 )
 }
 \arguments{
-\item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
-
-\item{plot_lims}{List obtained by \code{\link[=calc_plot_lims]{calc_plot_lims()}}, containing different coordinate values.}
-
-\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
+\item{plot_dat}{Input is a list prepared by \code{prep_plot()}.}
 }
 \value{
 \link{ggplot2} object.

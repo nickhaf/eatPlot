@@ -5,7 +5,7 @@
 #' @param parameter Character string. Contains the value in column `parameter` that is used for plotting the lines.  Defaults to `"mean"`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
-#' @param facet_var
+#' @param facet_var Character string of the name of the variable that should be used for faceting the plot. Defaults to `"TR_BUNDESLAND"`.
 #' @param total_group Character string of the name of the total groups containing all other groups of the facet var. Defaults to `"total"`.
 #' @param sig_niveau Numeric indicating the border below which p-values will be considered significant. Defaults to `0.05`.
 #'

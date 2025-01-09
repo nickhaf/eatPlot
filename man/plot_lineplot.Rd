@@ -5,44 +5,48 @@
 \title{Plot a lineplot.}
 \usage{
 plot_lineplot(
-  eatRep_dat,
-  parameter = "mean",
-  line_sig = "trend",
-  years_lines = NULL,
-  years_braces = NULL,
-  seperate_plot_var = "state_var",
-  seperate_plot_var_order = NULL,
+  eatPlot_dat,
+  point_est,
+  point_sig,
+  line_est,
+  line_sig,
+  line_se,
+  brace_label_est,
+  brace_label_sig,
+  brace_label_se,
+  brace_label_sig_high,
+  brace_label_sig_bold,
+  years_lines,
+  years_braces,
+  subgroup_var,
+  facet_var = "TR_BUNDESLAND",
+  background_facet = "total",
+  background_subgroup = "total",
   seperate_plot_var_box = "wholeGroup",
-  point_values = "est_noTrend_noComp",
-  point_sig = "sig_noTrend_Comp_crossDiff_wholeGroup",
-  line_values = c("est_noTrendStart_noComp", "est_noTrendEnd_noComp"),
-  label_est = "est_Trend_noComp",
-  label_se = "se_Trend_noComp",
-  label_sig_high = NULL,
-  label_sig_bold = "sig_Trend_noComp",
-  line_se = NULL,
   title_superscripts = NULL,
   plot_settings = plotsettings_lineplot()
 )
 }
 \arguments{
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroup"}.}
+
 \item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_noComp"}, which will show the significance of the difference between two time points.}
+
+\item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
 
 \item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
 
 \item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
-\item{seperate_plot_var}{Character string of the column containing the tiles. For every unique value, a new tile will be plotted. Defaults to \code{state_var}.}
-
-\item{seperate_plot_var_order}{Character vector containing all unique elements in the \code{seperate_plot_var} column. The lineplot-tiles will be ordered according to the order of this vector.}
-
 \item{seperate_plot_var_box}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 
+\item{title_superscripts}{Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to \code{NULL}.}
+
+\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
+
+\item{plot_dat}{Input is a list prepared by \code{prep_plot()}.}
+
 \item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
-
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroup"}.}
-
-\item{line_values}{Character vector with two elements. Column names in \code{plot_dat[["plot_lines"]]} containing the y-values for the plotted lines. Defaults to \code{c("est_noTrendStart_noComp", "est_noTrendEnd_noComp")}. If set to \code{NULL}, no lines will be plotted.}
 
 \item{label_est}{Character string of the column name containing the brace labels.}
 
@@ -51,14 +55,6 @@ plot_lineplot(
 \item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}
-
-\item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
-
-\item{title_superscripts}{Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to \code{NULL}.}
-
-\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
-
-\item{plot_dat}{Input is a list prepared by \code{\link[=prep_plot]{prep_plot()}}.`}
 }
 \value{
 \link{ggplot2} object.

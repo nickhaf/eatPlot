@@ -50,9 +50,9 @@ plotsettings_tablebarplot(
 
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, \code{NULL} (default).}
 
-\item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), or the outer right background line to the left of the plot (\verb{"background_line_right}).}
+\item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right", "background_line_table")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), the outer right background line to the left of the plot (\verb{"background_line_right}), or only over the table-part of the plot (\verb{background_line_table"}).}
 
-\item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background. Defaults to \code{NULL}.}
+\item{background_stripes_colour}{Character vector containing the background colour of each row. Defaults to \code{NULL}.}
 
 \item{bar_background_lines}{Character string of either \code{c("borders", "scale_breaks", "none")}, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.}
 
@@ -70,7 +70,7 @@ plotsettings_tablebarplot(
 
 \item{bar_line_width}{Numeric for the line-size around the bar.}
 
-\item{bar_nudge_y}{Numeric for nudging the bar in y direction. Defaults to \code{0}.}
+\item{bar_nudge_y}{Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to \code{0}.}
 
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to \code{white}.}
 

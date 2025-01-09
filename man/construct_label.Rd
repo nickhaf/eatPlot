@@ -6,12 +6,11 @@
 \usage{
 construct_label(
   dat,
-  new_name = "label",
-  label_est = NULL,
-  label_se = NULL,
-  label_sig_bold = NULL,
-  label_sig_high = NULL,
-  label_sig_high_extra_column = FALSE,
+  column_est = NULL,
+  column_se = NULL,
+  column_sig_bold = NULL,
+  column_sig_superscript = NULL,
+  sig_superscript_letter = NULL,
   round_est = 0,
   round_se = 1,
   plot_settings = plotsettings_tablebarplot()
@@ -20,29 +19,21 @@ construct_label(
 \arguments{
 \item{dat}{Data frame with the columns that should be merged into labels.}
 
-\item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
+\item{round_est}{Rounding of brace_label_est.}
 
-\item{label_est}{Character string of the column name containing the brace labels.}
-
-\item{label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
-
-\item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}
-
-\item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
-
-\item{label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
-
-\item{round_est}{Rounding of label_est.}
-
-\item{round_se}{Rounding of label_se.}
+\item{round_se}{Rounding of brace_label_se.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
+
+\item{brace_label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
+
+\item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 }
 \value{
 The data frame with an added column for the constructed label.
 }
 \description{
-This function creates a new column or label, merging estimates and standard errors with significant estimates represented in bold or as superscript (via \code{label_est}), and standard errors in brackets, if needed (via \code{label_se}). NAs are converted to empty strings. Main usage is for plotting tables and brace labels.
+This function creates a new column or label, merging estimates and standard errors with significant estimates represented in bold or as superscript (via \code{brace_label_est}), and standard errors in brackets, if needed (via \code{brace_label_se}). NAs are converted to empty strings. Main usage is for plotting tables and brace labels.
 }
 \examples{
 # example data frame
@@ -54,10 +45,10 @@ dat <- data.frame(
   )
 
 # lineplots
-construct_label(dat, label_est = "estimate", label_se = "se", round_se = 2)
-construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", label_sig_bold = "p_estimate")
+construct_label(dat, brace_label_est = "estimate", brace_label_se = "se", round_se = 2)
+construct_label(dat, new_name = "new", brace_label_est = "estimate", brace_label_se = "se", brace_label_sig_bold = "p_estimate")
 
 # tables
-construct_label(dat, label_est = "estimate", label_se = "se", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
+construct_label(dat, brace_label_est = "estimate", brace_label_se = "se", brace_label_sig_high = "p_estimate",  brace_label_sig_high_extra_column = TRUE)
 
 }

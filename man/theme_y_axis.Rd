@@ -4,7 +4,7 @@
 \alias{theme_y_axis}
 \title{Theme for a y-axis plot.}
 \usage{
-theme_y_axis()
+theme_y_axis(plot_settings = plotsettings_lineplot())
 }
 \value{
 \link{ggplot2} theme, that can be used for a plotted y-axis.
