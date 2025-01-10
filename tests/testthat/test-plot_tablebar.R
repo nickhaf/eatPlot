@@ -1,4 +1,4 @@
-test_data_1 <- data.frame(
+test_data <- data.frame(
   state_var = 1:4,
   x_min = rep(0, 4),
   x_max = c(10, -20, 40, 30),
@@ -68,37 +68,16 @@ test_that("column length is checked correctly", {
 
 
 test_that("simple tablebarplot can be plotted", {
-  dat_prep <- prep_tablebarplot(trend_2)
-  dat_prep$est <- dat_prep$est/10
 
-  example_table <- plot_tablebar(
-    dat = dat_prep,
-    bar_est = "est",
-    bar_sig = "sig",
-    bar_fill = "sig",
-    headers = list("country", "a barplot"),
-    columns_table = list("country"),
-    y_axis = "country",
-    plot_settings = plotsettings_tablebarplot(columns_alignment = 0,
-                                              columns_width = c( 0.3, 0.7),
-                                              headers_alignment = c(0, 0.5),
-                                              default_list = barplot_noTrend)
-  )
 
-  vdiffr::expect_doppelganger("Minimal_tablebarplot", example_table)
-  #save_plot(example_table, "/home/nick/Downloads/table.pdf",  height = 226.2 / 3)
-
-})
-
-test_that("continous barplot looks the same", {
-  p_bar <- plot_tablebar(
-    dat = test_data_1,
+  example_table <- p_bar <- plot_tablebar(
+    dat = test_data,
     bar_label = NULL,
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
     headers = list("est_1", "est_2", "a barplot"),
-    column_spanners = list("spanner_2" = c(2, 3), "spanner_1" = 1),
-    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1, 2)),
+    column_spanners = list("spanner_2" = c(2,3), "spanner_1" = 1),
+    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
     columns_table_sig_high = list("bar_sig", "bar_sig"),
@@ -117,13 +96,15 @@ test_that("continous barplot looks the same", {
     )
   )
 
-  # wenn nicht benannt, dann benennen der Farbsettings
-  vdiffr::expect_doppelganger("Minimal_tablebar", p_bar)
+  vdiffr::expect_doppelganger("Minimal_tablebarplot", example_table)
+  #save_plot(example_table, "/home/nick/Downloads/table.pdf",  height = 226.2 / 3)
+
 })
+
 
 test_that("continous barplot can have a white space", {
   p_bar <- plot_tablebar(
-    dat = test_data_1,
+    dat = test_data,
     bar_label = NULL,
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
