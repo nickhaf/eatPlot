@@ -87,33 +87,43 @@ build_plot_dat <- function(eatRep_dat) {
   ## Make into a function and apply until there is no comp in the group column any more
 
   if (any(grep("comp_", eatRep_dat_long$group))) {
-    eatRep_dat_nested_comps <- eatRep_dat_long %>%
-      filter(str_detect(group, "comp_")) %>%
-      left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-      mutate(id = paste(id, group, sep = "_")) %>%
-      dplyr::select(-group) %>%
-      pivot_longer(
+
+    eatRep_comp <- eatRep_dat_long[grep("comp_", eatRep_dat_long$group), ]
+
+    eatRep_comp_m <- merge(eatRep_comp,
+                           eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
+                           by.x = "group",
+                           by.y = "id",
+                           all.x = TRUE)
+    eatRep_comp_m$id <- paste(eatRep_comp_m$id, eatRep_comp_m$group, sep = "_")
+    eatRep_comp_m$group <- NULL
+
+    eatRep_comp_nested <- tidyr::pivot_longer(
+      eatRep_comp_m,
         cols = c("unit_1", "unit_2"),
         names_to = "unit_b",
         values_to = "group"
-      ) %>%
-      filter(str_detect(group, "comp_")) %>%
-      left_join(eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")], join_by(group == id)) %>%
-      mutate(id = paste(id, group, sep = "_")) %>%
-      dplyr::select(-group) %>%
-      pivot_longer(
+      )
+
+      eatRep_comp_nested <- eatRep_comp_nested[grep("comp_", eatRep_comp_nested$group), ]
+
+    eatRep_comp_nested_m <- merge(eatRep_comp_nested,
+                                  eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
+                           by.x = "group",
+                           by.y = "id",
+                           all.x = TRUE)
+    eatRep_comp_nested_m$id <- paste(eatRep_comp_nested_m$id, eatRep_comp_nested_m$group, sep = "_")
+    eatRep_comp_nested_m$group <- NULL
+
+    eatRep_comp_nested_l <- tidyr::pivot_longer(eatRep_comp_nested_m,
         cols = c("unit_1", "unit_2"),
         names_to = "unit_c",
         values_to = "group"
-      ) %>%
-      select(id, comparison, group, est, se, p, sig, es)
+      )
 
-
-    eatRep_dat_no_nested_comps <- eatRep_dat_long %>%
-      dplyr::filter(stringr::str_detect(group, "comp_", negate = TRUE)) %>%
-      select(c("id", "comparison", "group", "est", "se", "p", "sig", "es"))
-
-    eatRep_dat_long <- rbind(eatRep_dat_no_nested_comps, eatRep_dat_nested_comps[,c("id", "comparison", "group", "est", "se", "p", "sig", "es")])
+    eatRep_comp_nested_l <- eatRep_comp_nested_l[ , c("id", "comparison", "group", "est", "se", "p", "sig", "es")]
+    eatRep_dat_no_nested_comps <- eatRep_dat_long[grep("comp_", eatRep_dat_long$group, invert = TRUE), c("id", "comparison", "group", "est", "se", "p", "sig", "es")]
+    eatRep_dat_long <- rbind(eatRep_dat_no_nested_comps, eatRep_comp_nested_l)
   }
 
   eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")]

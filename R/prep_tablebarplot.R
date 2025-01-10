@@ -1,3 +1,11 @@
+#' Prepare lineplot data.
+#'
+#' @inheritParams prep_lineplot
+#'
+#' @return Data prepared for plotting the BT-lineplots.
+#' @export
+#'
+#' @examples # tbd
 prep_tablebarplot <- function(eatRep_dat, subgroup_var, names_from =  c("year", "comparison", "parameter"), par = "mean", facet_var = "TR_BUNDESLAND", total_group = "total", comparisons = NULL) {
 check_eatRep_dat(eatRep_dat)
 
@@ -20,7 +28,7 @@ dat <- dat[, !(colnames(dat) %in% c("unit_1", "unit_2", "id"))]
 
 dat_wide <- dat[, c("comparison", "TR_BUNDESLAND", "parameter", "year", "est", "se", "es", "sig", subgroup_var)] |>
   unique() |>
-  pivot_wider(names_from = names_from, values_from = c(est, se, es, sig))
+  tidyr::pivot_wider(names_from = names_from, values_from = c(est, se, es, sig))
 
 
 dat_wide$y_axis <- 1:nrow(dat_wide)

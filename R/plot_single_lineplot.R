@@ -24,7 +24,7 @@ plot_single_lineplot <- function(plot_dat) {
     plot_points(plot_dat),
     ggplot2::theme(plot.margin = ggplot2::unit(c(0.25, 0.11, 0.11, 0.11), units = "npc")),
     theme_line(plot_dat$plot_settings),
-    draw_braces(plot_dat$brace_dat$brace_coords$coord_dat_test1, plot_dat$plot_settings),
+    draw_braces(plot_dat$brace_dat$brace_coords$coord_dat_2, plot_dat$plot_settings),
     draw_brace_label(plot_dat$brace_dat$brace_label, plot_dat$plot_settings),
     ggplot2::coord_cartesian(ylim = plot_dat$plot_lims$y_lims_total, clip = "off"),
     set_scales(plot_dat$plot_settings) ,

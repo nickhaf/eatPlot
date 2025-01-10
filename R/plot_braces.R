@@ -1,12 +1,13 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
   check_columns(plot_dat, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "subgroup_var", "trend"))
 
-  plot_lims$brace_coords$coord_dat_test1 <- plot_lims$brace_coords$coord_dat %>%
-    dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
-    tidyr::pivot_longer(
+  plot_lims$brace_coords$coord_dat$trend <-  paste0(plot_lims$brace_coords$coord_dat$year_start, "_", plot_lims$brace_coords$coord_dat$year_end)
+
+
+  plot_lims$brace_coords$coord_dat_2 <- tidyr::pivot_longer(plot_lims$brace_coords$coord_dat,
       cols = c("upper_y", "lower_y"),
       values_to = "y"
-    ) %>%
+    ) |>
     tidyr::pivot_longer(
       cols = c("year_start", "year_end"),
       values_to = "year",
@@ -34,11 +35,11 @@ prep_brace <- function(plot_dat, plot_lims, plot_settings) {
   )
 
   brace_labels_merged <- merge(unique(brace_labels[ , c("trend", "subgroup_var", "facet_var", "brace_label", "label_pos_y")]),
-                        unique(plot_lims$brace_coords$coord_dat_test1[ ,c("trend", "label_pos_x")]),
+                        unique(plot_lims$brace_coords$coord_dat_2[ ,c("trend", "label_pos_x")]),
                         by = "trend",
                         all.y = TRUE)
 
-brace_list <- list(brace_dat=plot_lims$brace_coords$coord_dat_test1,
+brace_list <- list(brace_dat=plot_lims$brace_coords$coord_dat_2,
                    brace_label = brace_labels_merged,
                    brace_coords=plot_lims$brace_coords)
 
