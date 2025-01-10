@@ -32,6 +32,7 @@ dat_prepped <- prep_tablebarplot(
 This results in a large dataframe, containing a column for each comparisons made in the data:
 
 ```{r}
+#| eval: false
 str(dat_prepped)
 ```
 
@@ -202,14 +203,14 @@ p_2 <- plot_tablebar(
   )
 )
 
-example_plot <- combine_plots(list(p_1, p_2))
+tableplot_trend <- combine_plots(list(p_1, p_2))
 
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
 
 ```{r}
 #| eval: false
-save_plot(example_plot,
+save_plot(tableplot_trend,
   filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320,
   encoding = "Greek.enc"
 )
@@ -282,7 +283,7 @@ Now we can plot the table like usual, with one exception: I can nudge the table 
 
 
 ```{r}
-p6.5 <- plot_tablebar(
+tableplot_6.5 <- plot_tablebar(
   dat = mw_prepped_final,
   bar_est = "est_2022_groupDiff_mean",
   bar_fill = "domain",
@@ -319,7 +320,7 @@ Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(p6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 226.2 * 2 / 3)
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 226.2 * 2 / 3)
 ```
 
 
@@ -498,13 +499,13 @@ p_2 <- plot_tablebar(
   )
 )
 
-example_plot <- combine_plots(list(p_1, p_2))
+tableplot_6.6 <- combine_plots(list(p_1, p_2))
 ```
 
 ```{r}
 #| eval: false
 
-save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pdf", width = 320)
+save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pdf", width = 320)
 ## Conversion Failure: In R wurde auch scohn der convertierte Buchstabe angezeigt, nicht der code
 
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
@@ -684,12 +685,12 @@ bar_pattern_spacing_stand <- standardize_pattern_spacing(list(p_1, p_2, p_3), pa
 
 
 ```{r}
-p_8.4 <- combine_plots(list(p_1, p_2, p_3))
+tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 ```
 
 ```{r}
 #| eval: false
-save_plot(p_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
+# save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
 
 
 ggsave(filename='C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf', p_8.4,
