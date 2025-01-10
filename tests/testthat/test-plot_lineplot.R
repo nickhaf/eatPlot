@@ -1,4 +1,5 @@
 test_data_lineplot <- data.frame(
+  id = c("comp_1", "comp_2"),
   state_var = c("Berlin", "Berlin"),
   subgroup = c("m", "m"),
   year = c(2000, 2005),

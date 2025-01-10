@@ -83,25 +83,25 @@ plot_lineplot <- function(eatPlot_dat,
   }
 
   line_dat <- filter_years(line_dat, years = years_lines)
-
   brace_dat_list <- prep_brace(eatPlot_dat, plot_lims, plot_settings)
 
-  if(!is.null(background_facet) & !is.null(background_subgroup)){
+if(!is.null(background_facet) & !is.null(background_subgroup)){
     brace_dat <- brace_dat_list$brace_dat |>
     subset(facet_var != background_facet & subgroup_var != background_subgroup)
   }else{
     brace_dat <- brace_dat_list$brace_dat
   }
   brace_coordinates <- brace_dat_list$brace_coords
+  if(length(brace_dat) > 0){
   brace_dat <- filter_years(brace_dat, years = years_braces)
-
-
-  if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-    stop("Some of the trends you provided in 'years_lines' are not in the data.")
-  }
 
   if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
     stop("Some of the trends you provided in 'years_braces' are not in the data.")
+  }
+  }
+
+  if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+    stop("Some of the trends you provided in 'years_lines' are not in the data.")
   }
 
   dat_p <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
@@ -121,10 +121,8 @@ plot_lineplot <- function(eatPlot_dat,
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
-
-
-    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[!is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
+
     p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
         x = year,
@@ -274,9 +272,9 @@ if(!is.null(background_subgroup) & length(background_subgroup) > 1){
     years_list,
     plot_settings = plot_settings
   )
+
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
   x_range <- range(unique_years)
-  browser()
   y_lims_total <- c(min(brace_coords$group_labels$label_pos_y) - diff(range(coords)) * 0.06, max(coords))
 
   coord_list <- list(
