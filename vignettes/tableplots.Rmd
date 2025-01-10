@@ -70,8 +70,10 @@ table_dat <- dat_prepped[, c(
 
 
 ```{r}
-dat_prepped <- filter(dat_prepped, mhg %in% c("aohneZWH", "einET"), !str_detect(TR_BUNDESLAND, "- total"))
-dat_prepped <- arrange(dat_prepped, TR_BUNDESLAND)
+dat_prepped <- subset(dat_prepped, mhg %in% c("aohneZWH", "einET") & grep("- total", dat_prepped$TR_BUNDESLAND, invert = TRUE))
+
+
+dat_prepped <- dat_prepped[order(dat_prepped$TR_BUNDESLAND), ]
 
 dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
 
@@ -201,12 +203,18 @@ p_2 <- plot_tablebar(
 )
 
 example_plot <- combine_plots(list(p_1, p_2))
+
+# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
+```
+
+```{r}
+#| eval: false
 save_plot(example_plot,
   filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320,
   encoding = "Greek.enc"
 )
-# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
+
 
 # Geschlechterkapitel
 ## Abb. 6.5
@@ -341,7 +349,7 @@ dat_prepped <- subset(dat_prepped, geschlecht %in% c("m", "w"))
 dat_prepped$geschlecht <- gsub("m", "männlich", dat_prepped$geschlecht)
 dat_prepped$geschlecht <- gsub("w", "weiblich", dat_prepped$geschlecht)
 
-dat_prepped_a <- arrange(dat_prepped, TR_BUNDESLAND)
+dat_prepped_a <- dat_prepped[order(dat_prepped$TR_BUNDESLAND), ]
 
 dat_prepped_a$TR_BUNDESLAND[duplicated(dat_prepped_a$TR_BUNDESLAND)] <- " "
 dat_prepped_a$TR_BUNDESLAND <- gsub("total", "Deutschland", dat_prepped_a$TR_BUNDESLAND)
@@ -494,6 +502,8 @@ example_plot <- combine_plots(list(p_1, p_2))
 ```
 
 ```{r}
+#| eval: false
+
 save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pdf", width = 320)
 ## Conversion Failure: In R wurde auch scohn der convertierte Buchstabe angezeigt, nicht der code
 
@@ -507,12 +517,12 @@ zwh_prepped <- prep_tablebarplot(trend_zwh,
   subgroup_var = "zwh",
   comparisons = c("groupDiff", "trend_groupDiff")
 )
-zwh_prepped <- arrange(zwh_prepped, TR_BUNDESLAND)
+zwh_prepped <- zwh_prepped[order(zwh_prepped$TR_BUNDESLAND), ]
 zwh_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", zwh_prepped$TR_BUNDESLAND)
 
 zwh_prepped$TR_BUNDESLAND <- gsub("ue", "ü", zwh_prepped$TR_BUNDESLAND)
-zwh_prepped$TR_BUNDESLAND <- gsub("Berlin", "Berlin<sup>2<\sup>", zwh_prepped$TR_BUNDESLAND)
-zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<sup>3<\sup>", zwh_prepped$TR_BUNDESLAND)
+zwh_prepped$TR_BUNDESLAND <- gsub("Berlin", "Berlin<sup>2<sup>", zwh_prepped$TR_BUNDESLAND)
+zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<sup>3<sup>", zwh_prepped$TR_BUNDESLAND)
 ```
 
 
@@ -678,7 +688,7 @@ p_8.4 <- combine_plots(list(p_1, p_2, p_3))
 ```
 
 ```{r}
-
+#| eval: false
 save_plot(p_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
 
 
