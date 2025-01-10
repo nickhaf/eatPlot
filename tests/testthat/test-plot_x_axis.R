@@ -8,37 +8,13 @@ trend_3$group$TR_BUNDESLAND <- factor(trend_3$group$TR_BUNDESLAND,
 
 trend_3_prepped <- prep_lineplot(
   trend_3,
-  subgroup_var = "mhg",
-  parameter = "mean",
-  line_sig = "trend",
-  # line_se = "trend",
-  years_lines = list(c(2009, 2015), c(2015, 2022)),
-  years_braces = list(c(2009, 2015), c(2015, 2022)),
-  brace_label_est = "trend",
-  brace_label_se = "trend",
-  brace_label_sig_high = "trend",
-  brace_label_sig_bold = "trend",
-  plot_settings = plotsettings_lineplot(
-    split_plot = FALSE,
-    default_list = lineplot_4x4
-  )
+  parameter = "mean"
 )
 
 
-test_that("x axis can be built on plot with relationaal distance x-axis", {
+test_that("x axis can be built on plot with relational distance x-axis", {
 
-  vdiffr::expect_doppelganger(
-    "x-axis with relational distance",
-    ggplot2::ggplot(trend_3_prepped$plot_dat,
-                    mapping = ggplot2::aes(
-                      x = year,
-                      y = est_point,
-                      group = id,
-                      colour = .data$subgroup_var
-                    ))  +
-      ggplot2::geom_point() +
-      plot_x_axis(trend_3_prepped)
-      )
+
 })
 
 

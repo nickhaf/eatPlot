@@ -9,8 +9,6 @@ construct_grouping_var(dat, grouping_vars, group_var = "group")
 \arguments{
 \item{dat}{Data frame with a \code{group} column.}
 
-\item{grouping_vars}{Character vector containing maximal two column names in \code{dat} that should be used to distinguish between subgroups. If two columns are provided, they will be merged internally into one.}
-
 \item{group_var}{Name of the \code{group} column in your data. Defaults to \code{group}.}
 }
 \value{

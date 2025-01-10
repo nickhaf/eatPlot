@@ -5,7 +5,7 @@ years_list <- prep_years_list(
 plot_dat <- data.frame(
   facet_var = rep("Berlin", 12),
   id = 1:12,
-  est_point = 400:411, # isn't plotted in the braces, only sets the range
+  point_est = 400:411, # isn't plotted in the braces, only sets the range
   brace_label_est = rep(400.1902, 12),
   brace_label_se = rep(30, 12),
   brace_label_sig_high = rep(c(TRUE), 12),
@@ -17,8 +17,8 @@ plot_dat <- data.frame(
 
 plot_lims <- calc_plot_lims(
   plot_dat,
-  subgroup_lvls = c("einET", "ersteGen"),
   years_list = years_list,
+  background_subgroup = NULL,
   plot_settings = plotsettings_lineplot()
 )
 
@@ -30,7 +30,7 @@ test_that("Overlapping braces are looking good", {
   vdiffr::expect_doppelganger(
     "overlapping brace",
     ggplot2::ggplot() +
-      draw_braces(brace_dat$brace_coords$coord_dat_test1,
+      draw_braces(brace_dat$brace_coords$coord_dat_2,
         plot_settings = plotsettings_lineplot(split_plot = FALSE)
       ) +
       draw_brace_label(brace_dat$brace_label, plot_settings = plotsettings_lineplot())
@@ -99,7 +99,7 @@ test_that("brace label is drawn", {
 
 test_that("braces are prepped", {
   plot_brace_build <- ggplot2::ggplot_build(ggplot2::ggplot() +
-    draw_braces(brace_dat$brace_coords$coord_dat_test1,
+    draw_braces(brace_dat$brace_coords$coord_dat_2,
       plot_settings = plotsettings_lineplot(split_plot = FALSE)
     ) +
     draw_brace_label(brace_dat$brace_label, plot_settings = plotsettings_lineplot()))
@@ -114,7 +114,7 @@ test_that("Overlapping braces in the other direction", {
   plot_dat <- data.frame(
     facet_var = rep("Berlin", 12),
     id = 1:12,
-    est_point = 400:411, # isn't plotted in the braces, only sets the range
+    point_est = 400:411, # isn't plotted in the braces, only sets the range
     brace_label_est = rep(400.1902, 12),
     brace_label_se = rep(30, 12),
     brace_label_sig_high = rep(c(TRUE), 12),
@@ -125,8 +125,8 @@ test_that("Overlapping braces in the other direction", {
   )
 
   plot_lims <- calc_plot_lims(plot_dat,
-    subgroup_lvls = c("einET", "ersteGen"),
     years_list = years_list,
+    background_subgroup = NULL,
     plot_settings = plotsettings_lineplot()
   )
 
@@ -135,7 +135,7 @@ test_that("Overlapping braces in the other direction", {
   vdiffr::expect_doppelganger(
     "overlapping brace",
     ggplot2::ggplot() +
-      draw_braces(brace_dat$brace_coords$coord_dat_test1,
+      draw_braces(brace_dat$brace_coords$coord_dat_2,
         plot_settings = plotsettings_lineplot(split_plot = FALSE)
       ) +
       draw_brace_label(brace_dat$brace_label, plot_settings = plotsettings_lineplot())

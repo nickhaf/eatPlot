@@ -20,6 +20,8 @@ prep_tablebarplot(
 \item{facet_var}{Character string of the name of the variable that should be used for faceting the plot. Defaults to \code{"TR_BUNDESLAND"}.}
 
 \item{total_group}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
+
+\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{NULL}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.

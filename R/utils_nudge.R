@@ -50,6 +50,10 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #' @examples # tbd
 calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settings = plotsettings_lineplot()) {
 
+  if(nrow(years_list$years_braces) == 0){
+    return(list(coord_dat = data.frame(), group_labels = data.frame(label_pos_y = 0)))
+  }
+
   years_braces <- years_list$years_braces
 
 

@@ -24,11 +24,7 @@ prep_lineplot(
 
 \item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
 
-\item{line_sig}{Character string. Contains the variable in column \code{comparison} that is used for plotting significances of the lines.}
-
-\item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
-
-\item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
+\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{NULL}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.

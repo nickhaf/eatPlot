@@ -1,38 +1,26 @@
-## Zuordnung über group-dataframe. Falls also eine Gruppe nicht geplottet werden soll,
-## einfach hier rausnehmen.
-
-trend_3$group <- subset(trend_3$group, trend_3$group$mhg %in% c("einET", "ersteGen")) #| is.na(trend_3$group$mhg))
-trend_3$group$TR_BUNDESLAND <- factor(trend_3$group$TR_BUNDESLAND,
-                                      levels = unique(trend_3$group$TR_BUNDESLAND)[-1]
-)
-
-trend_3_prepped <- prep_lineplot(
-  trend_3,
-  subgroup_var = "mhg",
-  parameter = "mean",
-  line_sig = "trend",
-  # line_se = "trend",
-  background_level = "total", ## level of the facet-factor that is not plotted as facet, but as background-line.
-  background_group = NA,
-  years_lines = list(c(2009, 2015), c(2015, 2022)),
-  years_braces = list(c(2009, 2015), c(2015, 2022)),
-  brace_label_est = "trend",
-  brace_label_se = "trend",
-  brace_label_sig_high = "trend",
-  brace_label_sig_bold = "trend",
-  plot_settings = plotsettings_lineplot(
-    split_plot = FALSE,
-    default_list = lineplot_4x4
-  )
+test_data_lineplot <- data.frame(
+  state_var = c("Berlin", "Berlin"),
+  subgroup = c("m", "m"),
+  year = c(2000, 2005),
+  trend = c("2000_2005", "2000_2005"),
+  est_point = c(500, 560),
+  sig_point = c(TRUE, FALSE),
+  est_line = c(500, 560),
+  sig_line = c(FALSE, FALSE)
 )
 
 
 test_that("simple lineplot runs through", {
 
-p <- plot_lineplot(trend_3_prepped,
-    seperate_plot_var_box = "wholeGroup",
-    title_superscripts = NULL
-  )
+
+  p <- plot_lineplot(test_data_lineplot,
+                     point_est = "est_point",
+                     point_sig = "sig_point",
+                     line_est = "est_line",
+                     line_sig = "sig_line",
+                     years_lines = list(c(2000, 2005)),
+                     subgroup_var = "subgroup",
+                     facet_var = "state_var")
 
 vdiffr::expect_doppelganger("lineplot_trend", p)
 
@@ -43,9 +31,8 @@ vdiffr::expect_doppelganger("lineplot_trend", p)
 test_that("settings do something", {
 
   trend_3_settings <- prep_lineplot(
-    trend_3,
+    trend_3_prepped,
     subgroup_var = "mhg",
-    parameter = "mean",
     line_sig = "trend",
     background_level = "total", ## level of the facet-factor that is not plotted as facet, but as background-line.
     background_group = NA,
@@ -87,6 +74,7 @@ test_that("settings do something", {
       split_plot_gap_width = 0.01,
       axis_y = FALSE
     )
+
   )
 
   p_line <- plot_lineplot(

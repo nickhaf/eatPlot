@@ -32,6 +32,12 @@ trend_3_prepped <- prep_lineplot(
   parameter = "mean")
 
 
+trend_3_prepped <- prep_lineplot(
+  trend_3_subset,
+  parameter = "mean",
+  comparisons = c("none", "crossDiff"))
+
+
 ```
 
 

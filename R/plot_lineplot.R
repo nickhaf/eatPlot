@@ -19,23 +19,23 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
-                          point_est,
-                          point_sig,
-                          line_est,
-                          line_sig,
-                          line_se,
-                          brace_label_est,
-                          brace_label_sig,
-                          brace_label_se,
-                          brace_label_sig_high,
-                          brace_label_sig_bold,
-                          years_lines,
-                          years_braces,
-                          subgroup_var,
-                          facet_var = "TR_BUNDESLAND",
-                          background_facet = "total",
-                          background_subgroup = "total",
-                          seperate_plot_var_box = "wholeGroup",
+                          point_est = NULL,
+                          point_sig = NULL,
+                          line_est = NULL,
+                          line_sig = NULL,
+                          line_se = NULL,
+                          brace_label_est = NULL,
+                          brace_label_sig = NULL,
+                          brace_label_se = NULL,
+                          brace_label_sig_high = NULL,
+                          brace_label_sig_bold = NULL,
+                          years_lines = list(),
+                          years_braces = list(),
+                          subgroup_var = NULL,
+                          facet_var = NULL,
+                          background_facet = NULL,
+                          background_subgroup = NULL,
+                          seperate_plot_var_box = NULL,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
@@ -44,7 +44,6 @@ plot_lineplot <- function(eatPlot_dat,
     cols = c(facet_var)
   )
   eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
-
   if(plot_settings$split_plot){
     warning("Split lineplot currently not supported. Set to non-split.")
     plot_settings$split_plot <- FALSE
@@ -277,7 +276,7 @@ if(!is.null(background_subgroup) & length(background_subgroup) > 1){
   )
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
   x_range <- range(unique_years)
-
+  browser()
   y_lims_total <- c(min(brace_coords$group_labels$label_pos_y) - diff(range(coords)) * 0.06, max(coords))
 
   coord_list <- list(
@@ -294,6 +293,11 @@ if(!is.null(background_subgroup) & length(background_subgroup) > 1){
 
 prep_years <- function(years) {
   years_df <- data.frame(do.call("rbind", years))
+
+  if(ncol(years_df) == 0){
+    years_df <- data.frame("year_start" = numeric(), "year_end" = numeric())
+  }
+
   colnames(years_df) <- c("year_start", "year_end")
   return(years_df)
 }

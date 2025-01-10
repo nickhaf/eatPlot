@@ -14,17 +14,9 @@ clean_data(
 )
 }
 \arguments{
-\item{dat}{Input data.frame stemming from \code{eatRep}.}
-
 \item{all_states}{Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).}
 
-\item{states}{Character vector of the states that should be plotted.}
-
 \item{sub_groups}{Character vector of the different sub_groups.}
-
-\item{competence}{Character string containing the competence that should be plotted.}
-
-\item{parameter}{Character string of the parameter value that should be reported. Defaults to \code{"mean"}.}
 }
 \value{
 \code{clean_data()} returns a \code{data.frame} with renamend columns and filled in \code{NAs}.
