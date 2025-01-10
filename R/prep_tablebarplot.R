@@ -30,10 +30,9 @@ dat <- dat[dat$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
 dat$sig <- ifelse(dat$p < sig_niveau, TRUE, FALSE)
 
 dat <- dat[, !(colnames(dat) %in% c("unit_1", "unit_2", "id"))]
-
-dat_wide <- dat[, colnames(dat) %in% c("comparison", "depVar",facet_var, "domain", "parameter", "year", "est", "p","se", "es", "sig", subgroup_var)] |>
+dat_wide <- dat[, colnames(dat) %in% c("comparison", "depVar", facet_var, "domain", "parameter", "year", "est", "p", "se", "es", "sig", subgroup_var)] |>
   unique() |>
-  tidyr::pivot_wider(names_from = names_from, values_from = c(est, se, es, sig))
+  tidyr::pivot_wider(names_from = names_from, values_from = c(est, se, es, sig, p))
 
 
 dat_wide$y_axis <- 1:nrow(dat_wide)
