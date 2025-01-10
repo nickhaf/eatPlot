@@ -1,8 +1,15 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
+
+if(nrow(plot_lims$brace_coords$coord_dat) == 0){
+  return(list(brace_dat = list(),
+              brace_label = data.frame(facet_var = NA),
+              brace_coords = data.frame())
+         )
+}
+
   check_columns(plot_dat, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "subgroup_var", "trend"))
 
   plot_lims$brace_coords$coord_dat$trend <-  paste0(plot_lims$brace_coords$coord_dat$year_start, "_", plot_lims$brace_coords$coord_dat$year_end)
-
 
   plot_lims$brace_coords$coord_dat_2 <- tidyr::pivot_longer(plot_lims$brace_coords$coord_dat,
       cols = c("upper_y", "lower_y"),
