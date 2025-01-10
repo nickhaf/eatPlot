@@ -10,10 +10,9 @@ prep_tablebarplot <- function(eatRep_dat, subgroup_var = NULL, names_from =  c("
 check_eatRep_dat(eatRep_dat)
 
   if(nrow(eatRep_dat$comparison) > 0){
+  check_columns(eatRep_dat$plain, c("unit_1", "unit_2", "id", "comparison", "parameter", "year", "est", "se", "p", facet_var, subgroup_var))
 
-  check_columns(eatRep_dat$plain, c("unit_1", "unit_2", "id", "comparison", "parameter", "year", "est", "se", "p", "facet_var", subgroup_var))
-
-eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group, "facet_var") ## don't call it facet var.
+    eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group, facet_var) ## don't call it facet var.
 # its the variable where the comparison is made against
 
 ## Dirty Fix: "- total" aus TR_BUNDESLAND entfernen.
@@ -32,7 +31,7 @@ dat$sig <- ifelse(dat$p < sig_niveau, TRUE, FALSE)
 
 dat <- dat[, !(colnames(dat) %in% c("unit_1", "unit_2", "id"))]
 
-dat_wide <- dat[, c("comparison", "depVar",facet_var, "domain", "parameter", "year", "est", "p","se", "es", "sig", subgroup_var)] |>
+dat_wide <- dat[, colnames(dat) %in% c("comparison", "depVar",facet_var, "domain", "parameter", "year", "est", "p","se", "es", "sig", subgroup_var)] |>
   unique() |>
   tidyr::pivot_wider(names_from = names_from, values_from = c(est, se, es, sig))
 

@@ -6,12 +6,13 @@
 \usage{
 prep_tablebarplot(
   eatRep_dat,
-  subgroup_var,
+  subgroup_var = NULL,
   names_from = c("year", "comparison", "parameter"),
   par = "mean",
   facet_var = "TR_BUNDESLAND",
   total_group = "total",
-  comparisons = NULL
+  comparisons = NULL,
+  sig_niveau = 0.05
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ prep_tablebarplot(
 \item{total_group}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
 
 \item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{NULL}.}
+
+\item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.
