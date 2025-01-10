@@ -17,6 +17,8 @@ clean_data(
 \item{all_states}{Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).}
 
 \item{sub_groups}{Character vector of the different sub_groups.}
+
+\item{parameter}{Character string. Contains the value in column \code{parameter} that is used for plotting the lines.  Defaults to \code{"mean"}.}
 }
 \value{
 \code{clean_data()} returns a \code{data.frame} with renamend columns and filled in \code{NAs}.

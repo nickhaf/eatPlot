@@ -52,12 +52,4 @@ dat <- data.frame(
   se = c(0.1, 0.45, 1, 0.27, 0.9),
   p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
   )
-
-# lineplots
-construct_label(dat, label_est = "estimate", label_se = "se", round_se = 2)
-construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", label_sig_bold = "p_estimate")
-
-# tables
-construct_label(dat, label_est = "estimate", label_se = "se", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
-
 }

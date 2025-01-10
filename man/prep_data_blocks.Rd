@@ -9,6 +9,8 @@ prep_data_blocks(data_clean, sig_niveau, states, sub_groups, merging_columns)
 \arguments{
 \item{data_clean}{Input data.frame, that has already been cleaned with \code{\link[=clean_data]{clean_data()}}.}
 
+\item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
+
 \item{states}{Character vector of the different states (Bundesländer) found in the data.}
 
 \item{sub_groups}{Character vector of the different groups found in \code{grouping_var}.}

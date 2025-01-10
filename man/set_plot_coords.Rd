@@ -11,7 +11,7 @@ set_plot_coords(
 )
 }
 \arguments{
-\item{plot_dat}{Input is a list prepared by \code{prep_plot()}.}
+\item{plot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
 }
 \value{
 \link{ggplot2} object.

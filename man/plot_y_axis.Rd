@@ -7,7 +7,7 @@
 plot_y_axis(plot_dat, plot_settings = plotsettings_lineplot())
 }
 \arguments{
-\item{plot_dat}{Input is a list prepared by \code{prep_plot()}.}
+\item{plot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
 }
 \value{
 \link{ggplot2} plot that can be used as a y-axis.

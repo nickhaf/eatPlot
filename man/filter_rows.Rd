@@ -14,7 +14,7 @@ filter_rows(
 )
 }
 \arguments{
-\item{plot_dat}{List of data.frames, output of \link{prep_plot}.}
+\item{plot_dat}{List of data.frames, output of \link{prep_lineplot}.}
 
 \item{column_name}{Column that the subsetter will be searched in.}
 

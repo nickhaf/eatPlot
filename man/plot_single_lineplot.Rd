@@ -7,7 +7,7 @@
 plot_single_lineplot(plot_dat)
 }
 \arguments{
-\item{plot_dat}{Input is a list prepared by \code{prep_plot()}.}
+\item{plot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
 }
 \value{
 ggplot2 Object.

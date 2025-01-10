@@ -7,7 +7,7 @@
 plot_x_axis(plot_dat)
 }
 \arguments{
-\item{plot_dat}{Input is a list prepared by \code{prep_plot()}.}
+\item{plot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
 }
 \value{
 A blue stripe on top of ggplot2 plot which can be used as x-axis.

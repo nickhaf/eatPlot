@@ -7,7 +7,7 @@
 plot_points(plot_dat)
 }
 \arguments{
-\item{plot_dat}{Input is a list prepared by \code{prep_plot()}.}
+\item{plot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
 
 \item{data_plot_points}{Data frame with the point estimates for every year. Prepared by ...}
 }
