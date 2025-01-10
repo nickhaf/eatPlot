@@ -1,7 +1,7 @@
 #' Extract or remove rows from prepared data.
 #'
 #' @inheritParams filter_plot_dat
-#' @param plot_dat List of data.frames, output of [prep_plot].
+#' @param plot_dat List of data.frames, output of [prep_lineplot].
 #' @param column_name Column that the subsetter will be searched in.
 #' @param subsetter Character string of the state you want to extract or remove.
 #' @param remove Logical. If `TRUE`, the state defined in `state` will be removed. Defaults to `FALSE`.

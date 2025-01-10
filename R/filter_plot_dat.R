@@ -1,6 +1,6 @@
 #' Filter specified rows from plot_dat objects.
 #'
-#' @param plot_dat A list of data.frames prepared by [prep_plot()].
+#' @param plot_dat A list of data.frames prepared by [prep_lineplot()].
 #' @param filter_statement Character string containing a logical expression for filtering specific rows in all data.frames in the list when possible. Write `dat$column_name` to specify the wanted columns.
 #' @param list_elements Character vector with the names of the list objects you want to filter in. Defaults to `c("plot_lines", "plot_points", "plot_background_lines", "plot_braces")`.
 #'

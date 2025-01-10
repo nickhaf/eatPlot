@@ -1,6 +1,6 @@
 #' Plot a lineplot.
 #'
-#' @param plot_dat Input is a list prepared by `prep_plot()`.
+#' @param plot_dat Input is a list prepared by `prep_lineplot()`.
 #' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroup"`.

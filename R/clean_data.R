@@ -7,7 +7,7 @@
 #' * Only rows containing `mean` in `dat$parameter` are returend.
 #' * The group `wholeGroup` currently contains `NAs` in the columns `dat[ , state_var]` and `dat$grouping_var`. These are subbed with `wholeGroup` or `noGroup` respectively.
 #' * The column `dat[ , state_var]` is filled up by extracting the first state found in `dat$groups` for the respective row.
-#' @inheritParams prep_plot
+#' @inheritParams prep_lineplot
 #' @param all_states Character vector of the different groups that should be plotted seperatly. Normally these should be the states (Bundesländer).
 #' @param sub_groups Character vector of the different sub_groups.
 #'

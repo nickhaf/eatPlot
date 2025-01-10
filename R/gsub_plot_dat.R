@@ -1,6 +1,6 @@
 #' [gsub()] for lists and data.frames.
 #'
-#' @param plot_dat List or data.frame, mainly usage intention for plot_dat - objects from [prep_plot()].
+#' @param plot_dat List or data.frame, mainly usage intention for plot_dat - objects from [prep_lineplot()].
 #' @param search_for Character string that should be replaced.
 #' @param replace_with Character string that will be the replacement.
 #'

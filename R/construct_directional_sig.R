@@ -1,6 +1,6 @@
 #' Calculate the significance descriptions for the 'Mindeststandards'
 #'
-#' @param dat_bar Data prepared by `prep_plot()`.
+#' @param dat_bar Data prepared by `prep_lineplot()`.
 #' @param est_column Column that contains the estimates.
 #' @param sig_column Column that contains the significances.
 #'

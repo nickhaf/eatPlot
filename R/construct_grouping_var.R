@@ -1,7 +1,7 @@
 #' Merge two grouping var columns into one.
 #'
 #' @param dat Data frame with a `group` column.
-#' @inheritParams prep_plot
+#' @inheritParams prep_lineplot
 #' @param group_var Name of the `group` column in your data. Defaults to `group`.
 #'
 #' @return Data frame with a new `grouping_var` column, constructed from the provided `grouping_vars` and the `group_var` column.
