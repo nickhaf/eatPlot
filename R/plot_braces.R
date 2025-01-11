@@ -77,9 +77,9 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
     ggbrace::stat_brace(
     data = dat,
     mapping = ggplot2::aes(
-      x = year,
-      y = y,
-      group = trend
+      x = .data$year,
+      y = .data$y,
+      group = .data$trend
     ),
     mid = unique(dat$brace_position_x),
     rotate = 180,

@@ -67,7 +67,7 @@ build_plot_dat <- function(eatRep_dat) {
 
   eatRep_dat_long <- tidyr::pivot_longer(
     eatRep_dat$comp_estimates,
-    cols = starts_with("unit"),
+    cols = tidyr::starts_with("unit"),
     names_to = "unit",
     values_to = "group"
   )

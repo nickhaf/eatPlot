@@ -123,11 +123,12 @@ if(!is.null(background_facet) & !is.null(background_subgroup)){
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
 
-    p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
+    p_state <- ggplot2::ggplot(
+      dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
-        x = year,
-        y = point_est,
-        group = id,
+        x = .data$year,
+        y = .data$point_est,
+        group = .data$id,
         colour = .data$subgroup_var
       )
     ) +
