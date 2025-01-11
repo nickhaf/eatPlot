@@ -1,12 +1,11 @@
 #' Plot a lineplot.
 #'
-#' @param plot_dat Input is a list prepared by `prep_lineplot()`.
+#' @param eatPlot_dat Input is a list prepared by `prep_lineplot()`.
 #' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroup"`.
 #' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_noComp"`, which will show the significance of the difference between two time points.
-#' @param label_est Character string of the column name containing the brace labels.
 #' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
 #' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
 #' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
@@ -21,7 +20,6 @@
 plot_lineplot <- function(eatPlot_dat,
                           point_est = NULL,
                           point_sig = NULL,
-                          line_est = NULL,
                           line_sig = NULL,
                           line_se = NULL,
                           brace_label_est = NULL,
@@ -57,7 +55,6 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = point_est, new = "point_est") |>
     build_column(old = point_sig, new = "point_sig", fill_value = FALSE) |>
     build_column(old = line_sig, new = "line_sig", fill_value = FALSE) |>
-    build_column(old = line_est, new = "line_est") |>
     build_column(old = brace_label_est, new = "brace_label_est") |>
     build_column(old = brace_label_se, new = "brace_label_se") |>
     build_column(old = brace_label_sig_high, new = "brace_label_sig_high", fill_value = FALSE) |>

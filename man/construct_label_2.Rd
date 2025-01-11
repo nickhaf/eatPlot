@@ -22,8 +22,6 @@ construct_label_2(
 
 \item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 
-\item{label_est}{Character string of the column name containing the brace labels.}
-
 \item{label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
 
 \item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}

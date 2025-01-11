@@ -21,7 +21,6 @@ test_that("simple lineplot with one group", {
     trend = c("2000_2005", "2000_2005"),
     est_point = c(500, 560),
     sig_point = c(TRUE, FALSE),
-    est_line = c(500, 560),
     sig_line = c(FALSE, FALSE)
   )
 
@@ -29,7 +28,6 @@ test_that("simple lineplot with one group", {
   p <- plot_lineplot(test_data_lineplot,
                      point_est = "est_point",
                      point_sig = "sig_point",
-                     line_est = "est_line",
                      line_sig = "sig_line",
                      years_lines = list(c(2000, 2005)),
                      subgroup_var = "subgroup",

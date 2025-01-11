@@ -8,7 +8,6 @@ plot_lineplot(
   eatPlot_dat,
   point_est = NULL,
   point_sig = NULL,
-  line_est = NULL,
   line_sig = NULL,
   line_se = NULL,
   brace_label_est = NULL,
@@ -28,6 +27,8 @@ plot_lineplot(
 )
 }
 \arguments{
+\item{eatPlot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
+
 \item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroup"}.}
 
 \item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_noComp"}, which will show the significance of the difference between two time points.}
@@ -44,11 +45,7 @@ plot_lineplot(
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 
-\item{plot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
-
 \item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
-
-\item{label_est}{Character string of the column name containing the brace labels.}
 
 \item{label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
 

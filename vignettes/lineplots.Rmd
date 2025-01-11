@@ -41,7 +41,6 @@ trend_3_prepped <- prep_lineplot(
 lineplot_2 <- plot_lineplot(trend_3_prepped,
   point_est = "est_comparison_none",
   point_sig = "sig_comparison_crossDiffTotal", ## sig_noTrend_Comp_crossDiff_wholeGroup
-  line_est = "est_comparison_none",
   line_sig = "sig_comparison_trend",
   line_se = "se_comparison_none",
   brace_label_est = "est_comparison_trend",
@@ -88,7 +87,6 @@ trend_total <- subset(trend_total, TR_BUNDESLAND == "total") |>
 lineplot_germany_2 <- plot_lineplot(trend_total,
   point_est = "est_comparison_none",
   point_sig = NULL,
-  line_est = "est_comparison_none",
   line_sig = "sig_comparison_trend",
   line_se = "se_comparison_none",
   brace_label_est = "est_comparison_trend",
@@ -127,7 +125,6 @@ trend_3_prepped <- subset(trend_3_prepped, geschlecht == "total")
 lineplot_1 <- plot_lineplot(trend_3_prepped,
   point_est = "est_comparison_none",
   point_sig = "sig_comparison_crossDiffTotal", ## sig_noTrend_Comp_crossDiff_wholeGroup
-  line_est = "est_comparison_none",
   line_sig = "sig_comparison_trend",
   line_se = "se_comparison_none",
   brace_label_est = "est_comparison_trend",

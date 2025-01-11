@@ -10,9 +10,6 @@ set_plot_coords(
   plot_settings = plotsettings_lineplot()
 )
 }
-\arguments{
-\item{plot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
-}
 \value{
 \link{ggplot2} object.
 }

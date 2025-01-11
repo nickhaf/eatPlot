@@ -1,18 +1,19 @@
 #' Plot background lines.
 #'
-#' @param dat Data.
+#' @keywords internal
+#' @noRd
+
+#' @param dat_total Data.
 #' @inheritParams plot_lineplot
 #'
 #' @return ggplot2 object.
-#' @export
 #'
 #' @examples # tbd
 plot_background_lines <- function(dat_total,
                                   plot_settings = plotsettings_lineplot()) {
-
-  check_columns(dat_total, c("line_est", "line_se", "year", "trend"))
-  dat_total$y_pos <- dat_total$line_est + 2 * dat_total$line_se
-  dat_total$y_neg <- dat_total$line_est - 2 * dat_total$line_se
+  check_columns(dat_total, c("point_est", "line_se", "year", "trend"))
+  dat_total$y_pos <- dat_total$point_est + 2 * dat_total$line_se
+  dat_total$y_neg <- dat_total$point_est - 2 * dat_total$line_se
 
     ggplot2::geom_ribbon(
       data = dat_total,
