@@ -6,7 +6,14 @@
 #' @export
 #'
 #' @examples # tbd
-prep_tablebarplot <- function(eatRep_dat, subgroup_var = NULL, names_from =  c("year", "comparison", "parameter"), par = "mean", facet_var = "TR_BUNDESLAND", total_group = "total", comparisons = NULL, sig_niveau = 0.05) {
+prep_tablebarplot <- function(eatRep_dat,
+                              subgroup_var = NULL,
+                              names_from =  c("year", "comparison", "parameter"),
+                              par = "mean",
+                              facet_var = "TR_BUNDESLAND",
+                              total_group = "total",
+                              comparisons = NULL,
+                              sig_niveau = 0.05) {
 check_eatRep_dat(eatRep_dat)
 
   if(nrow(eatRep_dat$comparison) > 0){

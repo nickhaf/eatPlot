@@ -70,7 +70,7 @@ test_that("column length is checked correctly", {
 test_that("simple tablebarplot can be plotted", {
 
 
-  example_table <- p_bar <- plot_tablebar(
+  example_table <- p_bar <- plot_tablebarplot(
     dat = test_data,
     bar_label = NULL,
     bar_sig = "bar_sig",
@@ -103,7 +103,7 @@ test_that("simple tablebarplot can be plotted", {
 
 
 test_that("continous barplot can have a white space", {
-  p_bar <- plot_tablebar(
+  p_bar <- plot_tablebarplot(
     dat = test_data,
     bar_label = NULL,
     bar_sig = "bar_sig",

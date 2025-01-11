@@ -1,46 +1,45 @@
 #' Plot a table and/or a barchart.
 #'
 #' @param dat Data prepared with [prep_lineplot()].
+#' @param y_axis Character string of the columnname used as y-axis. Has to contain unique values.
+#' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
 #' @param bar_label Character string for the column that should be used for bar labels on top of the bars. If `NULL`, no labels are printed. Defaults to `NULL`.
 #' @param bar_label_sig Character string for the column that should be used for marking the bar labels as significant.
 #' @param bar_sig Character string for the column that should be used for marking the bars as significant.
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.
-#' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
-#' @param headers Character vector containing the headers of the ploted table columns, including the bar table.
-#' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
-#' @param column_spanners_2 Named list. A second dimension of column spanners. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
 #' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
 #' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to `1`.
+#' @param headers Character vector containing the headers of the ploted table columns, including the bar table.
+#' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
+#' @param column_spanners_2 Named list. A second dimension of column spanners. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
 #' @param columns_round List of numerics, for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
-#' @param y_axis Character string of the columnname used as y-axis. Has to contain unique values.
 #'
 #' @return [ggplot2] object.
 #' @export
 #'
 #' @examples # tbd
-plot_tablebar <- function(dat,
-                          bar_est = NULL,
-                          bar_label = NULL,
-                          bar_label_sig = NULL,
-                          bar_sig = NULL,
-                          bar_fill = NULL,
-                          columns_round = 0,
-                          column_spanners = NULL,
-                          column_spanners_2 = NULL,
-                          columns_table = NULL,
-                          columns_table_sig_bold = NULL,
-                          columns_table_sig_high = NULL,
-                          columns_table_se = NULL,
-                          headers = NULL,
-                          y_axis = NULL,
-                          plot_settings = plotsettings_tablebarplot()) {
-  ## Namen der Einstellungslisten checken: Taucht so in der entsprechenden Spalte auf? Kann man auch über die Reihenfolge gehen? eventl. in der scale_manual mit breaks arbeiten (oder so ähnlich) und dann nur Warnung ausgeben.
+plot_tablebarplot <- function(dat,
+                              y_axis = NULL,
+                              bar_est = NULL,
+                              bar_label = NULL,
+                              bar_sig = NULL,
+                              bar_label_sig = NULL,
+                              bar_fill = NULL,
+                              columns_table = NULL,
+                              columns_table_sig_bold = NULL,
+                              columns_table_sig_high = NULL,
+                              columns_table_se = NULL,
+                              headers = NULL,
+                              column_spanners = NULL,
+                              column_spanners_2 = NULL,
+                              columns_round = 0,
+                              plot_settings = plotsettings_tablebarplot()) {
 
   if (inherits(dat, "list")) {
-    dat <- dat$plot_tablebar
+    dat <- dat$plot_tablebarplot
   }
 
   if (!inherits(headers, "list") & !is.character(headers) & !is.null(headers)) {
@@ -373,7 +372,6 @@ plot_tablebar <- function(dat,
     } else {
       message("`sig_type` must be either \"frame\" or \"pattern\"")
     }
-
   }
 
   # Column spanners ---------------------------------------------------------
@@ -553,8 +551,8 @@ build_background_stripes <- function(dat,
       )
 
       right_table_border <- ifelse(right_table_border < subset(column_x_coords, `column` == "bar")$right,
-                                  right_table_border,
-                                  Inf
+        right_table_border,
+        Inf
       )
     }
 
@@ -766,7 +764,7 @@ check_linebreak <- function(vec) {
 # Header coords -----------------------------------------------------------
 #' Define y coords for headers.
 #'
-#' @inheritParams plot_tablebar
+#' @inheritParams plot_tablebarplot
 #'
 #' @keywords internal
 #' @noRd

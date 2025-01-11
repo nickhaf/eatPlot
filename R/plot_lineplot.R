@@ -1,37 +1,41 @@
 #' Plot a lineplot.
 #'
 #' @param eatPlot_dat Input is a list prepared by `prep_lineplot()`.
-#' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
-#' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroup"`.
-#' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
+#' @param facet_var Character string of the column name in `eatPlot_dat` containing the variable that should be split over multiple facets. Defaults to `NULL`.
+#' @param subgroup_var Character string of the column name in `eatPlot_dat` of the variable containing the subgroup mapping. Each supgroup will receive it's own line. Defaults to `NULL`.
+#' @param point_est Character string of the column name in `eatPlot_dat` containing the y-values for the plotted points. Defaults to `NULL`.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `NULL`.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_noComp"`, which will show the significance of the difference between two time points.
-#' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
-#' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
-#' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
+#' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
+#' @param brace_label_est Character string of the column name containing the brace labels.
+#' @param brace_label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
+#' @param brace_label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
+#' @param brace_label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
 #' @param title_superscripts Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to `NULL`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
+#' @param background_facet Character string in the `facet_var` column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to `"Deutschland"`.
+#' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to `"total"`.
+#' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
 #' @export
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
+                          facet_var = NULL,
+                          subgroup_var = NULL,
                           point_est = NULL,
                           point_sig = NULL,
                           line_sig = NULL,
                           line_se = NULL,
                           brace_label_est = NULL,
-                          brace_label_sig = NULL,
                           brace_label_se = NULL,
                           brace_label_sig_high = NULL,
                           brace_label_sig_bold = NULL,
                           years_lines = list(),
                           years_braces = list(),
-                          subgroup_var = NULL,
-                          facet_var = NULL,
-                          background_facet = NULL,
+                          background_facet = "Deutschland",
                           background_subgroup = NULL,
                           seperate_plot_var_box = NULL,
                           title_superscripts = NULL,

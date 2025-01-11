@@ -1,6 +1,6 @@
 #' Theme for table plotted with ggplot2.
 #'
-#' @inheritParams plot_tablebar
+#' @inheritParams plot_tablebarplot
 #' @return ggplot2 theme.
 #' @export
 #'

@@ -75,7 +75,7 @@ Therefore, the naming of the respective columns could be adapted, and the output
 * In `plot_lineplot()` kann die `seperate_plot_var` jetzt als factor übergeben werden, damit die Reihenfolge der Linienplots der Reihenfolge der `factorlevels` entspricht.
 
 ## eatPlot 0.0.0.9011
-* The bar header argument was merged with the columns_headers argument in `plot_tablebar`, which is now named `headers`. The bar header now behaves like the other column headers, and can be aligned by the `headers_alignment` - Argument in `plotsettings_tablebarplot()`. 
+* The bar header argument was merged with the columns_headers argument in `plot_tablebarplot`, which is now named `headers`. The bar header now behaves like the other column headers, and can be aligned by the `headers_alignment` - Argument in `plotsettings_tablebarplot()`. 
 
 ## eatPlot 0.0.0.9010
 * The argument `columns_table_se` can now be used for specifying which columns should be plotted as (SE) (with brackets).
@@ -94,7 +94,7 @@ Therefore, the naming of the respective columns could be adapted, and the output
 * Removed default setting for `label_sig_high` argument in `plot_lineplot()`. 
 * Added the argument `title_superscript` in `plot_lineplot()` for specifying superscripts for the plot titles. 
 * Added the argument `comparisons` in `plot_lineplot()` for specifying wanted comparisons. 
-* Standardized the column names in `plot_data$plot_tablebar`, so `_noTrend` always is written before `Comp`.
+* Standardized the column names in `plot_data$plot_tablebarplot`, so `_noTrend` always is written before `Comp`.
 
 ## eatPlot 0.0.0.9008
 * Added argument `plotsettings_tablebarplot(bar_background_lines = TRUE)` for striped border lines in barplots.
@@ -120,7 +120,7 @@ Therefore, the naming of the respective columns could be adapted, and the output
 
 
 ## eatPlot 0.0.0.9003
-* `prep_plot()$plot_tablebar` now returns a data.frame in wide format. 
+* `prep_plot()$plot_tablebarplot` now returns a data.frame in wide format. 
 
 ## eatPlot 0.0.0.9002
 * Added checks in `prep_plot()` to reduce error messages.

@@ -62,7 +62,7 @@ plotsettings_tablebarplot(
 
 \item{bar_fill_colour}{Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in \code{bar_fill}. If no names are provided for the vector, the order of the factor levels of \code{bar_fill} will be used for determining the colour assignment.}
 
-\item{bar_frame_linetype}{Named vector with the bar frame linetypes. Names have to be found in the column defined in the \code{bar_sig}-argument of\code{plot_tablebar()}. Defaults to \code{solid}.}
+\item{bar_frame_linetype}{Named vector with the bar frame linetypes. Names have to be found in the column defined in the \code{bar_sig}-argument of\code{plot_tablebarplot()}. Defaults to \code{solid}.}
 
 \item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
 
@@ -146,7 +146,7 @@ plotsettings_tablebarplot(
 
 ## Or, to get better control over the colour assignment
 ## we can also directly name the colours with the different groups
-## defined in the bar_sig-argument of plot_tablebar()
+## defined in the bar_sig-argument of plot_tablebarplot()
 ## (as these groups are used to distinguish between different bar colours):
 plotsettings_tablebarplot(
   bar_fill_colour = c(
