@@ -25,7 +25,7 @@ construct_label(
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 
-\item{brace_label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
+\item{brace_label_sig_superscript_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
 
 \item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 }

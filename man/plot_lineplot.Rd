@@ -13,7 +13,7 @@ plot_lineplot(
   brace_label_est = NULL,
   brace_label_sig = NULL,
   brace_label_se = NULL,
-  brace_label_sig_high = NULL,
+  brace_label_sig_superscript = NULL,
   brace_label_sig_bold = NULL,
   years_lines = list(),
   years_braces = list(),

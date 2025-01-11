@@ -4,7 +4,7 @@
 #'
 #' @inheritParams plot_lineplot
 #' @param dat Data frame with the columns that should be merged into labels.
-#' @param brace_label_sig_high_extra_column Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).
+#' @param brace_label_sig_superscript_extra_column Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).
 #' @param new_name Character string for the new column that is added to `dat`. Defaults to `'label'`.
 #' @param round_est Rounding of brace_label_est.
 #' @param round_se Rounding of brace_label_se.
@@ -92,7 +92,7 @@ construct_label <- function(dat,
   #   )
   # }
   #
-  # dat <- remove_columns(dat, cols = c("brace_label_est", "label_sig", "brace_label_se", "brace_label_sig_bold", "brace_label_sig_high"))
+  # dat <- remove_columns(dat, cols = c("brace_label_est", "label_sig", "brace_label_se", "brace_label_sig_bold", "brace_label_sig_superscript"))
 
   return(label_out)
 }

@@ -9,7 +9,7 @@
 #' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
 #' @param brace_label_est Character string of the column name containing the brace labels.
 #' @param brace_label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
-#' @param brace_label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
+#' @param brace_label_sig_superscript Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
 #' @param brace_label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
 #' @param title_superscripts Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to `NULL`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
@@ -31,7 +31,7 @@ plot_lineplot <- function(eatPlot_dat,
                           line_se = NULL,
                           brace_label_est = NULL,
                           brace_label_se = NULL,
-                          brace_label_sig_high = NULL,
+                          brace_label_sig_superscript = NULL,
                           brace_label_sig_bold = NULL,
                           years_lines = list(),
                           years_braces = list(),
@@ -61,7 +61,7 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = line_sig, new = "line_sig", fill_value = FALSE) |>
     build_column(old = brace_label_est, new = "brace_label_est") |>
     build_column(old = brace_label_se, new = "brace_label_se") |>
-    build_column(old = brace_label_sig_high, new = "brace_label_sig_high", fill_value = FALSE) |>
+    build_column(old = brace_label_sig_superscript, new = "brace_label_sig_superscript", fill_value = FALSE) |>
     build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold", fill_value = FALSE) |>
     build_column(old = facet_var, new = "facet_var") |>
     build_column(old = subgroup_var, new = "subgroup_var") |>

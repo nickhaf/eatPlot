@@ -51,7 +51,7 @@ vdiffr::expect_doppelganger("lineplot_oneGroup", p)
 #     years_braces = list(c(2009, 2015), c(2015, 2022)),
 #     brace_label_est = "trend",
 #     brace_label_se = "trend",
-#     brace_label_sig_high = "trend",
+#     brace_label_sig_superscript = "trend",
 #     brace_label_sig_bold = "trend",
 #     plot_settings = plotsettings_lineplot(
 #       axis_x_background_colour = "red",

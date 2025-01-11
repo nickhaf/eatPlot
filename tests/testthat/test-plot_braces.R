@@ -8,7 +8,7 @@ plot_dat <- data.frame(
   point_est = 400:411, # isn't plotted in the braces, only sets the range
   brace_label_est = rep(400.1902, 12),
   brace_label_se = rep(30, 12),
-  brace_label_sig_high = rep(c(TRUE), 12),
+  brace_label_sig_superscript = rep(c(TRUE), 12),
   brace_label_sig_bold = rep(TRUE, 12),
   subgroup_var = rep(c("einET", "ersteGen"), 6),
   year = c(rep(2009, 2), rep(2015, 4), rep(2022, 2), rep(2009, 2), rep(2022, 2)),
@@ -117,7 +117,7 @@ test_that("Overlapping braces in the other direction", {
     point_est = 400:411, # isn't plotted in the braces, only sets the range
     brace_label_est = rep(400.1902, 12),
     brace_label_se = rep(30, 12),
-    brace_label_sig_high = rep(c(TRUE), 12),
+    brace_label_sig_superscript = rep(c(TRUE), 12),
     brace_label_sig_bold = rep(TRUE, 12),
     subgroup_var = rep(c("einET", "ersteGen"), 6),
     year = c(rep(2009, 2), rep(2015, 4), rep(2022, 2), rep(2009, 2), rep(2022, 2)),
