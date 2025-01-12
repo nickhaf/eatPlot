@@ -723,7 +723,8 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
           xend = 0,
           y = y_1 + 0.2,
           yend = y_2 - 0.2,
-          colour = plot_settings$bar_background_lines_colour,
+          colour = plot_settings$bar_background_0line_colour,
+          linetype = plot_settings$bar_background_0line_linetype,
           linewidth = 0.1
         )
       )
