@@ -543,14 +543,14 @@ build_background_stripes <- function(dat,
     right_table_border <- max(column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]$right)
 
     if (any("bar" == column_x_coords$column)) {
-      bar_border <- subset(column_x_coords, `column` == "bar")
+      bar_border <- column_x_coords[column_x_coords$column == "bar", ]
 
-      left_table_border <- ifelse(left_table_border < subset(column_x_coords, `column` == "bar")$left,
+      left_table_border <- ifelse(left_table_border < column_x_coords[column_x_coords$column == "bar", ]$left,
         -Inf,
         left_table_border <- bar_border$right
       )
 
-      right_table_border <- ifelse(right_table_border < subset(column_x_coords, `column` == "bar")$right,
+      right_table_border <- ifelse(right_table_border < column_x_coords[column_x_coords$column == "bar", ]$right,
         right_table_border,
         Inf
       )

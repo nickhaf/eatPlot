@@ -22,12 +22,6 @@ construct_label_2(
 
 \item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 
-\item{label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
-
-\item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}
-
-\item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
-
 \item{label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
 
 \item{round_est}{Rounding of label_est.}

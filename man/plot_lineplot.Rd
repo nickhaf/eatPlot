@@ -6,20 +6,19 @@
 \usage{
 plot_lineplot(
   eatPlot_dat,
+  facet_var = NULL,
+  subgroup_var = NULL,
   point_est = NULL,
   point_sig = NULL,
   line_sig = NULL,
   line_se = NULL,
   brace_label_est = NULL,
-  brace_label_sig = NULL,
   brace_label_se = NULL,
   brace_label_sig_superscript = NULL,
   brace_label_sig_bold = NULL,
   years_lines = list(),
   years_braces = list(),
-  subgroup_var = NULL,
-  facet_var = NULL,
-  background_facet = NULL,
+  background_facet = "Deutschland",
   background_subgroup = NULL,
   seperate_plot_var_box = NULL,
   title_superscripts = NULL,
@@ -29,29 +28,39 @@ plot_lineplot(
 \arguments{
 \item{eatPlot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
 
-\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{"sig_noTrend_Comp_crossDiff_wholeGroup"}.}
+\item{facet_var}{Character string of the column name in \code{eatPlot_dat} containing the variable that should be split over multiple facets. Defaults to \code{NULL}.}
+
+\item{subgroup_var}{Character string of the column name in \code{eatPlot_dat} of the variable containing the subgroup mapping. Each supgroup will receive it's own line. Defaults to \code{NULL}.}
+
+\item{point_est}{Character string of the column name in \code{eatPlot_dat} containing the y-values for the plotted points. Defaults to \code{NULL}.}
+
+\item{point_sig}{Character string of the column name containing significance values for \code{point_values}. Defaults to \code{NULL}.}
 
 \item{line_sig}{Character string of the column name containing significance values for \code{line_values}. Defaults to \code{"sig_Trend_noComp"}, which will show the significance of the difference between two time points.}
 
 \item{line_se}{Character vector of the column name containing the standard errors for the plotted lines. Defaults to \code{NULL}, in which case they will be deducted from the line values.}
 
+\item{brace_label_est}{Character string of the column name containing the brace labels.}
+
+\item{brace_label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
+
+\item{brace_label_sig_superscript}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
+
+\item{brace_label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}
+
 \item{years_lines}{List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.}
 
 \item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
+
+\item{background_facet}{Character string in the \code{facet_var} column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to \code{"Deutschland"}.}
+
+\item{background_subgroup}{Character string in the \code{subgroup_var} column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to \code{"total"}.}
 
 \item{seperate_plot_var_box}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 
 \item{title_superscripts}{Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to \code{NULL}.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
-
-\item{point_values}{Character string of the column name in \code{plot_dat[["plot_points"]]} containing the y-values for the plotted points. Defaults to \code{est_noTrend_noComp}.}
-
-\item{label_se}{Character string of the column name containing the standard errors for \code{label_est}. Will be put in bracktes behind \code{label_est}.}
-
-\item{label_sig_high}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to \code{NULL}, as this parameter is not always provided.}
-
-\item{label_sig_bold}{Character string of the column name containing significance values for \code{label_est}. Significant values will be marked as bold. Defaults to \code{"sig_Trend_noComp"}.}
 }
 \value{
 \link{ggplot2} object.

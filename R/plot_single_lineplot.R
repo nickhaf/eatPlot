@@ -1,10 +1,14 @@
 #' Plot a single lineplot. Multiple of this lineplots are combined as tiles to the output of [plot_lineplot()].
 #'
+#' @keywords internal
+#' @noRd
+#'
 #' @inheritParams plot_lineplot
 #' @inheritParams plotsettings_lineplot
+#' @param plot_dat Prepared data.
+#'
 #'
 #' @return ggplot2 Object.
-#' @export
 #'
 #' @examples # tbd
 plot_single_lineplot <- function(plot_dat) {

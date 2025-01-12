@@ -1,6 +1,11 @@
 #' Prepare lineplot data.
 #'
 #' @inheritParams prep_lineplot
+#' @inheritParams plot_lineplot
+#'
+#' @param par Character vector of the parameters that should be used for the data preperation. Defaults to `mean`.
+#' @param names_from Character vector of the variables that should be used to create the wide format. Defaults to `c("year", "comparison", "parameter")`.
+#' @param facet_var Character string of the variable containing information on groups some of the comparisons are made against. This is needed to decosntruct comparisons like `crossDiff` into `crossDiff` and `crossDiffTotal` (so a crossDiff comparison against the total group). Name might be a bit confusing, but is the same as in `prep_lineplot`. Defaults to `TR_BUNDESLAND`.
 #'
 #' @return Data prepared for plotting the BT-lineplots.
 #' @export

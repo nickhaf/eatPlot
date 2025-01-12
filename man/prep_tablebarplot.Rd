@@ -18,7 +18,13 @@ prep_tablebarplot(
 \arguments{
 \item{eatRep_dat}{Object returned by \code{eatRep}.}
 
-\item{facet_var}{Character string of the name of the variable that should be used for faceting the plot. Defaults to \code{"TR_BUNDESLAND"}.}
+\item{subgroup_var}{Character string of the column name in \code{eatPlot_dat} of the variable containing the subgroup mapping. Each supgroup will receive it's own line. Defaults to \code{NULL}.}
+
+\item{names_from}{Character vector of the variables that should be used to create the wide format. Defaults to \code{c("year", "comparison", "parameter")}.}
+
+\item{par}{Character vector of the parameters that should be used for the data preperation. Defaults to \code{mean}.}
+
+\item{facet_var}{Character string of the variable containing information on groups some of the comparisons are made against. This is needed to decosntruct comparisons like \code{crossDiff} into \code{crossDiff} and \code{crossDiffTotal} (so a crossDiff comparison against the total group). Name might be a bit confusing, but is the same as in \code{prep_lineplot}. Defaults to \code{TR_BUNDESLAND}.}
 
 \item{total_group}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
 
