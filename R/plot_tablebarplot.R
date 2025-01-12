@@ -705,8 +705,10 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
       } else {
         x_intercepts <- 0
       }
+      x_intercepts <- x_intercepts[x_intercepts != 0]
 
       c(
+        if(length(x_intercepts) > 0){
         ggplot2::annotate(
           "segment",
           x = x_intercepts,
@@ -716,7 +718,7 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
           colour = plot_settings$bar_background_lines_colour,
           linetype = plot_settings$bar_background_lines_linetype,
           linewidth = 0.1
-        ),
+        )},
         ggplot2::annotate(
           "segment",
           x = 0,

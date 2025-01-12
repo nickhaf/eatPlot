@@ -74,7 +74,6 @@ plot_lineplot <- function(eatPlot_dat,
                                 facet_var == background_facet &
                                   subgroup_var == background_subgroup)
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
-
   if(!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1){
     line_dat <- subset(eatPlot_dat,
                        facet_var != background_facet &
@@ -84,7 +83,7 @@ plot_lineplot <- function(eatPlot_dat,
   }
 
   line_dat <- filter_years(line_dat, years = years_lines)
-  brace_dat_list <- prep_brace(eatPlot_dat, plot_lims, plot_settings)
+  brace_dat_list <- prep_brace(line_dat, plot_lims, plot_settings)
 
 if(!is.null(background_facet) & !is.null(background_subgroup)){
     brace_dat <- brace_dat_list$brace_dat |>

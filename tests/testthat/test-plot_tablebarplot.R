@@ -138,7 +138,11 @@ test_that("Vlines are plotted correctly", {
   plot_settings_test <- list(
     bar_background_lines_spanners = list(c(1, 4), c(5, 9)),
     bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "solid"
+    bar_background_lines_linetype = "solid",
+    bar_background_lines_colour = "red",
+    bar_background_0line_linetype = "solid",
+    bar_background_0line_colour = "blue"
+
   )
 
   df_test <- data.frame(
@@ -159,7 +163,10 @@ test_that("Vlines are plotted correctly", {
   plot_settings_test_2 <- list(
     bar_background_lines_spanners = NULL,
     bar_background_lines = "border",
-    bar_background_lines_linetype = "dashed"
+    bar_background_lines_linetype = "dashed",
+    bar_background_lines_colour = "red",
+    bar_background_0line_linetype = "solid",
+    bar_background_0line_colour = "blue"
   )
 
 

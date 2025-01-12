@@ -1,6 +1,6 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
 
-if(nrow(plot_lims$brace_coords$coord_dat) == 0){
+  if(nrow(plot_lims$brace_coords$coord_dat) == 0){
   return(list(brace_dat = list(),
               brace_label = data.frame(facet_var = NA),
               brace_coords = data.frame())
