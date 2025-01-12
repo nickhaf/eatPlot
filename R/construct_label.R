@@ -55,7 +55,7 @@ construct_label <- function(dat,
 
   if (is.numeric(dat[, column_se])) {
 
-    extra_space <- ifelse(abs(dat[, column_se]) < 10, "&nbsp;", "")
+    extra_space <- ifelse(abs(dat[, column_se]) < 10, "\u2000;", "")
 
     dat[, column_se] <- format(round(dat[, column_se], round_se),
                            trim = TRUE,
