@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 37
+      length(settings_list) == 38
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -13,6 +13,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "background_stripes_colour",
         "bar_background_lines",
         "bar_background_lines_linetype",
+        "bar_background_lines_colour",
         "bar_background_lines_spanners",
         "bar_fill_colour",
         "bar_frame_linetype",
@@ -54,6 +55,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(settings_list$bar_background_lines %in% c("border", "scale_breaks", "none"))
   stopifnot(is.character(settings_list$bar_background_lines_linetype))
+  stopifnot(is.character(settings_list$bar_background_lines_colour))
   stopifnot(is.numeric(unlist(settings_list$bar_background_lines_spanners)) | is.null(settings_list$bar_background_lines_spanners))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
   stopifnot(is.character(settings_list$bar_frame_linetype))
@@ -96,6 +98,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param background_stripes_colour Character vector containing the background colour of each row. Defaults to `NULL`.
 #' @param bar_background_lines Character string of either `c("borders", "scale_breaks", "none")`, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.
 #' @param bar_background_lines_linetype Character string indicating the linetype for the background lines of the barplot.
+#' @param bar_background_lines_colour Character string indicating the colour for the background lines of the barplot.
 #' @param bar_background_lines_spanners List containing of numeric vectors of two elements for indicating over which rows the background_lines in the barplot should span. Each vector contains the start and end row for the background line. Defaults to `NULL`, in which case The background_lines will be drawn from top to bottom.
 #' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in `bar_fill`. If no names are provided for the vector, the order of the factor levels of `bar_fill` will be used for determining the colour assignment.
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebarplot()`. Defaults to `solid`.
@@ -168,6 +171,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
                                       background_stripes_colour = NULL,
                                       bar_background_lines = NULL,
                                       bar_background_lines_linetype = NULL,
+                                      bar_background_lines_colour = NULL,
                                       bar_background_lines_spanners = NULL,
                                       bar_fill_colour = NULL,
                                       bar_frame_linetype = NULL,
@@ -209,6 +213,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "background_stripes_colour" = "white",
       "bar_background_lines" = "none",
       "bar_background_lines_linetype" = "solid",
+      "bar_background_lines_colour" = "black",
       "bar_background_lines_spanners" = NULL,
       "bar_fill_colour" = "white",
       "bar_frame_linetype" = "solid",

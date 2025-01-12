@@ -223,7 +223,8 @@ save_plot(tableplot_trend,
 Now we have to filter the data in such a way, that it looks like the table we want to plot.
 
 ```{r}
-mw_prepped <- prep_tablebarplot(trend_mw, subgroup_var = "geschlecht", comparisons = c("groupDiff"))
+mw_prepped <- prep_tablebarplot(trend_mw, subgroup_var = "geschlecht", 
+                                comparisons = c("groupDiff", "crossDiff_of_groupDiff"))
 ```
 
 It makes our live a lot easier if we set the `comparions` argument in the above column. 
@@ -262,6 +263,8 @@ mw_prepped$y_axis <- 1:nrow(mw_prepped)
 
 ## Rename "total" to "Deutschland"
 mw_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", mw_prepped$TR_BUNDESLAND)
+mw_prepped$TR_BUNDESLAND <- gsub("ue", "ü", mw_prepped$TR_BUNDESLAND)
+
 ```
 
 The tables need some more work, because they need to be connected with the barplot, but only have half the rows.
@@ -291,23 +294,23 @@ tableplot_6.5 <- plot_tablebarplot(
   columns_table = list(
     "TR_BUNDESLAND_lesen", "est_2022_groupDiff_mean_lesen", "se_2022_groupDiff_mean_lesen", "es_2022_groupDiff_mean_lesen", "est_2022_groupDiff_mean_hören", "se_2022_groupDiff_mean_hören", "es_2022_groupDiff_mean_hören"
   ),
-  columns_table_sig_bold = list(NULL, "sig_2022_groupDiff_mean_lesen", NULL, NULL, "sig_2022_groupDiff_mean_hören", NULL, NULL),
+  columns_table_sig_bold = list(NULL, "sig_2022_groupDiff_mean_lesen", NULL, "sig_2022_groupDiff_mean_lesen", "sig_2022_groupDiff_mean_hören", NULL, "sig_2022_groupDiff_mean_hören"),
+  columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiff_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiff_mean_lesen", "sig_2022_crossDiff_of_groupDiff_mean_hören", NULL, "est_2022_crossDiff_of_groupDiff_mean_hören"), 
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
   columns_table_se = list(NULL, NULL, "se_2022_groupDiff_mean_lesen", NULL, NULL, "se_2022_groupDiff_mean_hören", NULL),
-  headers = list("", "*M<sub>J</sub> - M<sub>M</sub>*", "(*SE*)", "*d*", "*M<sub>J</sub> - M<sub>M</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
+  headers = list("", "*M<sub>Jungen</sub> - M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "*M<sub>Jungen</sub> - M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Höhrverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-5, 60),
     columns_alignment = c(0, rep(2, 6), NULL), # NULL evtl. nicht optimal, oder in die Message mit rein.
-    headers_alignment = 0.5,
+    headers_alignment = c(rep(0.5, 2), 2, rep(0.5, 2), 2, 0.5, 0.5),
     headers_nudge_y = c(rep(0, 7), 0.5),
     columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
-    columns_width = c(0.15, rep(0.075, 6), 0.4),
-    bar_nudge_y = rep(c(-0.3, 0.3), nrow(mw_prepped_lesen) / 2),
+    columns_width = c(0.15, rep(0.1, 6), 0.25),
+    bar_nudge_y = rep(c(-0.1, 0.1), nrow(mw_prepped_lesen) / 2),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     background_stripes_border = "background_line_table",
-    bar_width = 0.3,
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     bar_background_lines = "scale_breaks",
     bar_background_lines_linetype = "solid",
@@ -320,7 +323,7 @@ Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 226.2 * 2 / 3)
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf")
 ```
 
 
@@ -391,7 +394,7 @@ p_1 <- plot_tablebarplot(
     "*SD*",
     "*M*",
     "*SD*",
-    "M<sub>2015</sub> - M<sub>2009</sub>",
+    "*M<sub>2015</sub> - M<sub>2009</sub>*",
     "*(SE)*",
     "*d*",
     " "
@@ -460,7 +463,7 @@ p_2 <- plot_tablebarplot(
     "**Differenz 2022-2015**" = c(1, 4)
   ),
   headers = list(
-    "M<sub>2022</sub> - M<sub>2015</sub>",
+    "*M<sub>2022</sub> - M<sub>2015</sub>*",
     "*(SE)*",
     "*d*",
     " "
@@ -521,15 +524,20 @@ zwh_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", zwh_prepped$TR_BUNDESL
 zwh_prepped$TR_BUNDESLAND <- gsub("ue", "ü", zwh_prepped$TR_BUNDESLAND)
 zwh_prepped$TR_BUNDESLAND <- gsub("Berlin", "Berlin<sup>2<sup>", zwh_prepped$TR_BUNDESLAND)
 zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<sup>3<sup>", zwh_prepped$TR_BUNDESLAND)
+
+## I add an empty column for being able to easily adjust the sapce between subplots:
+zwh_prepped$empty <- NA
+
+
 ```
 
 
 ```{r}
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.1, rep(0.05, 5), NA),
-    p2 = c(0.05, 0.05, NA),
-    p3 = c(0.05, 0.05, NA)
+    p1 = c(0.1, rep(0.035, 5), NA),
+    p2 = c(0.025, 0.05, 0.035, NA),
+    p3 = c(0.05, 0.035, NA)
   ),
   plot_ranges = c(65, 65, 65) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
@@ -546,7 +554,7 @@ p_1 <- plot_tablebarplot(
     "**2022**" = c(4, 7)
   ),
   column_spanners_2 = list(
-    "**Differenz <br> Schüler:innen mit - Schüler:innen ohne <br> Zuwanderungshintergrund**" = c(2, 7)
+    "**Differenz Schüler:innen mit - Schüler:innen ohne <br> Zuwanderungshintergrund**" = c(2, 7)
   ),
   columns_table_se = list(NULL, NULL, NULL, NULL, "se_2022_groupDiff_mean", NULL),
   headers = list(
@@ -575,6 +583,7 @@ p_1 <- plot_tablebarplot(
     "sig_2022_groupDiff_mean"
   ),
   y_axis = "y_axis",
+  columns_round = c(0, 0, 0, 0, 0, 2), 
   plot_settings = plotsettings_tablebarplot(
     column_spanners_2_row_height = 2,
     axis_x_lims = c(0, 65),
@@ -582,7 +591,7 @@ p_1 <- plot_tablebarplot(
     background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
     # bar_fill_colour = c("#20D479", "#8DEBBC"),
     bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "dotted",
+    bar_background_lines_linetype = "solid",
     columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
     columns_width = column_widths_stand$p1,
     headers_row_height = 1.5,
@@ -598,23 +607,25 @@ p_2 <- plot_tablebarplot(
   bar_est = "est_2015 - 2009_trend_groupDiff_mean",
   bar_sig = "sig_2015 - 2009_trend_groupDiff_mean",
   column_spanners = list(
-    "**2015 - 2009**" = c(1, 3)
+    "**2015 - 2009**" = c(2, 4)
   ),
   column_spanners_2 = list(
-    "**Veränderung der Differenz <br> Schüler:innen mit - Schüler:innen ohne Zuwanderungshintergrund**" = c(1, 3)
+    "**Veränderung der Differenz<br>**" = c(2, 4)
   ),
-  columns_table_se = list(NULL, "est_2015 - 2009_trend_groupDiff_mean"),
+  columns_table_se = list(NULL, NULL, "est_2015 - 2009_trend_groupDiff_mean"),
   headers = list(
+    " ",
     "\u0394 *M*<sub>2015</sub> - <br> \u0394 *M*<sub>2009</sub>",
     "*(SE)*",
     " "
   ),
   columns_table = c(
+    "empty",
     "est_2015 - 2009_trend_groupDiff_mean",
     "se_2015 - 2009_trend_groupDiff_mean"
   ),
   columns_table_sig_bold = list(
-    "sig_2015 - 2009_trend_groupDiff_mean", NULL
+    NULL, "sig_2015 - 2009_trend_groupDiff_mean", NULL
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
@@ -623,10 +634,10 @@ p_2 <- plot_tablebarplot(
     bar_pattern_spacing = 0.0375 ,
     background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
     bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "dotted",
-    columns_alignment = c(0.5, 2),
-    headers_alignment = c(0, 2, 0),
-    headers_nudge_x = c(4, 0, 0),
+    bar_background_lines_linetype = "solid",
+    columns_alignment = c(0.5, 0.5, 2),
+    headers_alignment = c(0, 0, 2, 0),
+    headers_nudge_x = c(0, 4, 0, 0),
     columns_width = column_widths_stand$p2,
     headers_row_height = 1.5,
     default_list = barplot_table_plot_pattern
@@ -643,7 +654,7 @@ p_3 <- plot_tablebarplot(
     "**2022 - 2015**" = c(1, 3)
   ),
   column_spanners_2 = list(
-    "**Veränderung der Differenz <br> Schüler:innen mit - Schüler:innen ohne Zuwanderungshintergrund**" = c(1, 3)
+    "**Veränderung der Differenz<br>**" = c(1, 3)
   ),
   columns_table_se = list(NULL, "est_2022 - 2015_trend_groupDiff_mean"),
   headers = list(
@@ -665,7 +676,7 @@ p_3 <- plot_tablebarplot(
     axis_x_lims = c(0, 65),
     background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
     bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "dotted",
+    bar_background_lines_linetype = "solid",
     columns_alignment = c(0.5, 2),
     headers_alignment = c(0, 2, 0), 
     headers_nudge_x = c(4, 0, 0),
@@ -687,7 +698,7 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 
 ```{r}
 #| eval: false
-# save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
+save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
 
 
 ggsave(filename='C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf', p_8.4,

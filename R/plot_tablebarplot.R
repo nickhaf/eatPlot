@@ -713,7 +713,7 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
           xend = x_intercepts,
           y = y_1 + 0.2,
           yend = y_2 - 0.2,
-          colour = "darkgrey",
+          colour = plot_settings$bar_background_lines_colour,
           linetype = plot_settings$bar_background_lines_linetype,
           linewidth = 0.1
         ),
@@ -723,7 +723,7 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
           xend = 0,
           y = y_1 + 0.2,
           yend = y_2 - 0.2,
-          colour = "darkgrey",
+          colour = plot_settings$bar_background_lines_colour,
           linewidth = 0.1
         )
       )
