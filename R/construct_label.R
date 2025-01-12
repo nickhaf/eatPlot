@@ -54,10 +54,15 @@ construct_label <- function(dat,
   }
 
   if (is.numeric(dat[, column_se])) {
+
+    extra_space <- ifelse(abs(dat[, column_se]) < 10, "&nbsp;", "")
+
     dat[, column_se] <- format(round(dat[, column_se], round_se),
                            trim = TRUE,
                            nsmall = round_se)
     dat[, column_se][dat[, column_se] == "NA"] <- ""
+  }else{
+    extra_space <- rep("", nrow(dat))
   }
 
   label_est <- ifelse(dat[, column_sig_bold] == TRUE & dat[, column_est] != "",
@@ -71,7 +76,7 @@ construct_label <- function(dat,
 
   label_se <- ifelse(
     !is.na(dat[, column_se]),
-    paste0(" (", dat[, column_se], ")"),
+    paste0(extra_space, " (", dat[, column_se], ")"),
     ""
     )
 
