@@ -33,8 +33,8 @@ check_plotsettings_barplot <- function(settings_list) {
         "columns_alignment",
         "columns_nudge_x",
         "columns_nudge_y",
-        "columns_table_sig_high_letter",
-        "columns_table_sig_high_letter_nudge_x",
+        "columns_table_sig_superscript_letter",
+        "columns_table_sig_superscript_letter_nudge_x",
         "columns_width",
         "headers_alignment",
         "headers_background_colour",
@@ -72,8 +72,8 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$columns_alignment))
   stopifnot(is.numeric(settings_list$columns_nudge_x))
   stopifnot(is.numeric(settings_list$columns_nudge_y))
-  stopifnot(is.character(settings_list$columns_table_sig_high_letter))
-  stopifnot(is.numeric(settings_list$columns_table_sig_high_letter_nudge_x))
+  stopifnot(is.character(settings_list$columns_table_sig_superscript_letter))
+  stopifnot(is.numeric(settings_list$columns_table_sig_superscript_letter_nudge_x))
   stopifnot(is.numeric(settings_list$columns_width) | is.null(settings_list$columns_width))
   stopifnot(is.numeric(settings_list$headers_alignment) | is.null(settings_list$headers_alignment))
   stopifnot(is_colour(settings_list$headers_background_colour) | is.null(settings_list$headers_background_colour))
@@ -116,8 +116,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `0.5`.
 #' @param columns_nudge_x Numeric vector to nudge the column text in x direction. Defaults to `0`.
 #' @param columns_nudge_y Numeric vector to nudge the column texts in y direction. Defaults to `0`.
-#' @param columns_table_sig_high_letter Character, that will be added on significant values defined by `columns_table_sig_high`.
-#' @param columns_table_sig_high_letter_nudge_x Numeric for nudging the superscript towards or away from a number.
+#' @param columns_table_sig_superscript_letter Character, that will be added on significant values defined by `columns_table_sig_superscript`.
+#' @param columns_table_sig_superscript_letter_nudge_x Numeric for nudging the superscript towards or away from a number.
 #' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
 #' @param headers_background_colour Colour of the background of the headers.
@@ -188,8 +188,8 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
                                       columns_alignment = NULL,
                                       columns_nudge_x = NULL,
                                       columns_nudge_y = NULL,
-                                      columns_table_sig_high_letter = NULL,
-                                      columns_table_sig_high_letter_nudge_x = NULL,
+                                      columns_table_sig_superscript_letter = NULL,
+                                      columns_table_sig_superscript_letter_nudge_x = NULL,
                                       columns_width = NULL,
                                       headers_alignment = NULL,
                                       headers_background_colour = NULL,
@@ -227,8 +227,8 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "columns_alignment" = 0.5,
       "columns_nudge_x" = 0,
       "columns_nudge_y" = 0,
-      "columns_table_sig_high_letter" = "a",
-      "columns_table_sig_high_letter_nudge_x" = 0,
+      "columns_table_sig_superscript_letter" = "a",
+      "columns_table_sig_superscript_letter_nudge_x" = 0,
       "columns_width" = NULL,
       "headers_alignment" = NULL,
       "headers_background_colour" = "white",

@@ -14,7 +14,7 @@ plot_tablebarplot(
   bar_fill = NULL,
   columns_table = NULL,
   columns_table_sig_bold = NULL,
-  columns_table_sig_high = NULL,
+  columns_table_sig_superscript = NULL,
   columns_table_se = NULL,
   headers = NULL,
   column_spanners = NULL,
@@ -42,7 +42,7 @@ plot_tablebarplot(
 
 \item{columns_table_sig_bold}{List of character strings of the columns that contain the significances for plotting significant values as bold.}
 
-\item{columns_table_sig_high}{List of character strings of the columns that contain the significances for plotting significant values with a raised a.}
+\item{columns_table_sig_superscript}{List of character strings of the columns that contain the significances for plotting significant values with a raised a.}
 
 \item{columns_table_se}{List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to \code{1}.}
 

@@ -56,9 +56,9 @@ standardize_column_width <- function(column_widths, plot_ranges = c(0, 0)) {
 
   ## superscript nudge
 
-  # res_list[["columns_table_sig_high_letter_nudge_x"]] <- sapply(plot_width, function(x){x * columns_table_sig_high_letter_nudge_x})
+  # res_list[["columns_table_sig_superscript_letter_nudge_x"]] <- sapply(plot_width, function(x){x * columns_table_sig_superscript_letter_nudge_x})
 
-  names(standardized_column_widths) <- c(names_column_widths) # , "columns_table_sig_high_letter_nudge_x")
+  names(standardized_column_widths) <- c(names_column_widths) # , "columns_table_sig_superscript_letter_nudge_x")
 
   return(standardized_column_widths)
 }

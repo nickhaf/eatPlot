@@ -163,7 +163,7 @@ construct_label_2 <- function(dat,
   )
 
   dat$label_sig <- ifelse(dat$label_sig_high == TRUE & dat$label_est != "",
-                          paste0("<sup>", plot_settings$columns_table_sig_high_letter, "</sup>"), "")
+                          paste0("<sup>", plot_settings$columns_table_sig_superscript_letter, "</sup>"), "")
 
   dat$label_se <- ifelse(!is.na(dat$label_se) & dat$label_se != "",
                          paste0(" (", dat$label_se, ")"),

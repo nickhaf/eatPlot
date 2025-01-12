@@ -80,7 +80,7 @@ test_that("simple tablebarplot can be plotted", {
     column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
-    columns_table_sig_high = list("bar_sig", "bar_sig"),
+    columns_table_sig_superscript = list("bar_sig", "bar_sig"),
     bar_est = "est_1",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -113,7 +113,7 @@ test_that("continous barplot can have a white space", {
     column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1, 2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
-    columns_table_sig_high = list("bar_sig", "bar_sig"),
+    columns_table_sig_superscript = list("bar_sig", "bar_sig"),
     bar_est = "est_1",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(

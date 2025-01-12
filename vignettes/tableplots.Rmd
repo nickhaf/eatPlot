@@ -182,7 +182,7 @@ p_2 <- plot_tablebarplot(
     NULL,
     NULL
   ),
-  columns_table_sig_high = list(
+  columns_table_sig_superscript = list(
     "sig_2015_none_mean",
     NULL,
     "sig_2022_none_mean",
@@ -411,7 +411,7 @@ p_1 <- plot_tablebarplot(
     NULL,
     "sig_2015 - 2009_trend_mean"
   ),
-  columns_table_sig_high = list(
+  columns_table_sig_superscript = list(
     NULL,
     NULL,
     NULL,
@@ -476,7 +476,7 @@ p_2 <- plot_tablebarplot(
     NULL,
     NULL
   ),
-  columns_table_sig_high = list(
+  columns_table_sig_superscript = list(
     NULL,
     NULL,
     NULL,

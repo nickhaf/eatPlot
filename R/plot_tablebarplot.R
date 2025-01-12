@@ -9,7 +9,7 @@
 #' @param bar_fill Character string for the column that groups the bar filling colours into different groups.
 #' @param columns_table List of character strings of the columns that should be plotted as table columns in the plot.
 #' @param columns_table_sig_bold List of character strings of the columns that contain the significances for plotting significant values as bold.
-#' @param columns_table_sig_high List of character strings of the columns that contain the significances for plotting significant values with a raised a.
+#' @param columns_table_sig_superscript List of character strings of the columns that contain the significances for plotting significant values with a raised a.
 #' @param columns_table_se List of character strings of the columns that contain standard errors, which will be plotted in brackets and rounded to `1`.
 #' @param headers Character vector containing the headers of the ploted table columns, including the bar table.
 #' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
@@ -30,7 +30,7 @@ plot_tablebarplot <- function(dat,
                               bar_fill = NULL,
                               columns_table = NULL,
                               columns_table_sig_bold = NULL,
-                              columns_table_sig_high = NULL,
+                              columns_table_sig_superscript = NULL,
                               columns_table_se = NULL,
                               headers = NULL,
                               column_spanners = NULL,
@@ -61,7 +61,7 @@ plot_tablebarplot <- function(dat,
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
 
-  check_columns(dat, c(bar_est, bar_label, bar_label_sig, bar_sig, bar_fill, unlist(columns_table), unlist(columns_table_sig_bold), unlist(columns_table_sig_high), unlist(columns_table_se), y_axis))
+  check_columns(dat, c(bar_est, bar_label, bar_label_sig, bar_sig, bar_fill, unlist(columns_table), unlist(columns_table_sig_bold), unlist(columns_table_sig_superscript), unlist(columns_table_se), y_axis))
 
 
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
@@ -94,7 +94,7 @@ plot_tablebarplot <- function(dat,
 
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table), leng_1 = FALSE)
-  columns_table_sig_high <- check_length(columns_table_sig_high, length(columns_table), leng_1 = FALSE)
+  columns_table_sig_superscript <- check_length(columns_table_sig_superscript, length(columns_table), leng_1 = FALSE)
 
   columns_table_se <- check_length(columns_table_se, length(columns_table), leng_1 = FALSE)
 
@@ -143,7 +143,7 @@ plot_tablebarplot <- function(dat,
     bar_est,
     columns_table,
     columns_table_sig_bold,
-    columns_table_sig_high,
+    columns_table_sig_superscript,
     columns_table_se,
     y_axis
   )), function(col) {
@@ -158,7 +158,7 @@ plot_tablebarplot <- function(dat,
       new_name = new_colnames[i],
       label_est = columns_table[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
-      label_sig_high = columns_table_sig_high[[i]],
+      label_sig_high = columns_table_sig_superscript[[i]],
       label_sig_high_extra_column = TRUE,
       round_est = columns_round[[i]],
       plot_settings = plot_settings
@@ -320,7 +320,7 @@ plot_tablebarplot <- function(dat,
     } else if (plot_settings$bar_sig_type == "pattern") {
       ## ggpattern can't deal with NAs, therefore convert them to FALSE (not significant):
 
-      for (i in c(columns_table_sig_bold, columns_table_sig_high, bar_label_sig, "bar_sig")) {
+      for (i in c(columns_table_sig_bold, columns_table_sig_superscript, bar_label_sig, "bar_sig")) {
         # if(any(is.na(dat[, i]))){warning("Your column '", i,"' contains missing values. They will be converted to FALSE for the plot.", .call = FALSE)
         # }
         dat <- fill_na(dat, column_name = i, filling = "FALSE")
@@ -670,7 +670,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
         fill = NA,
         label.color = NA,
         hjust = rev(plot_settings$columns_alignment)[i],
-        nudge_x = rev(plot_settings$columns_nudge_x)[i] + plot_settings$columns_table_sig_high_letter_nudge_x,
+        nudge_x = rev(plot_settings$columns_nudge_x)[i] + plot_settings$columns_table_sig_superscript_letter_nudge_x,
         nudge_y = rev(plot_settings$columns_nudge_y)[i]
       )
     }

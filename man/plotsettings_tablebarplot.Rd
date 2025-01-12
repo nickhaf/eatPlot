@@ -31,8 +31,8 @@ plotsettings_tablebarplot(
   columns_alignment = NULL,
   columns_nudge_x = NULL,
   columns_nudge_y = NULL,
-  columns_table_sig_high_letter = NULL,
-  columns_table_sig_high_letter_nudge_x = NULL,
+  columns_table_sig_superscript_letter = NULL,
+  columns_table_sig_superscript_letter_nudge_x = NULL,
   columns_width = NULL,
   headers_alignment = NULL,
   headers_background_colour = NULL,
@@ -98,9 +98,9 @@ plotsettings_tablebarplot(
 
 \item{columns_nudge_y}{Numeric vector to nudge the column texts in y direction. Defaults to \code{0}.}
 
-\item{columns_table_sig_high_letter}{Character, that will be added on significant values defined by \code{columns_table_sig_high}.}
+\item{columns_table_sig_superscript_letter}{Character, that will be added on significant values defined by \code{columns_table_sig_superscript}.}
 
-\item{columns_table_sig_high_letter_nudge_x}{Numeric for nudging the superscript towards or away from a number.}
+\item{columns_table_sig_superscript_letter_nudge_x}{Numeric for nudging the superscript towards or away from a number.}
 
 \item{columns_width}{Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to \code{NULL}, in which case all collumns will get the same width.}
 
