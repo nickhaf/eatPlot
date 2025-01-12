@@ -121,11 +121,11 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
 #' @param headers_background_colour Colour of the background of the headers.
-#' @param headers_font_size Numeric for the font size that will be used for the headers and column_spanners. Defaults to `3`.
+#' @param headers_font_size Numeric for the font size that will be used for the headers and column_spanners. Defaults to `2.5`.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
-#' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
+#' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `2.5`.
 #' @param space_right Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to `0`.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
@@ -232,13 +232,13 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "columns_width" = NULL,
       "headers_alignment" = NULL,
       "headers_background_colour" = "white",
-      "headers_font_size" = 3,
+      "headers_font_size" = 2.5,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
       "headers_row_height" = 1,
       "bar_pattern_spacing" = 0.1,
       "bar_pattern_width" = 0.5,
-      "font_size" = 3,
+      "font_size" = 2.5,
       "space_right" = 0
     )
   } else {

@@ -14,7 +14,7 @@
 #' @param headers Character vector containing the headers of the ploted table columns, including the bar table.
 #' @param column_spanners Named list. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
 #' @param column_spanners_2 Named list. A second dimension of column spanners. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.
-#' @param columns_round List of numerics, for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
+#' @param columns_round Numeric vector for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
 #'
 #' @return [ggplot2] object.

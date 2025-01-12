@@ -344,11 +344,10 @@ dat_prepped <- prep_tablebarplot(
 ```
 
 
-
 ```{r}
 dat_prepped <- subset(dat_prepped, geschlecht %in% c("m", "w"))
-dat_prepped$geschlecht <- gsub("m", "männlich", dat_prepped$geschlecht)
-dat_prepped$geschlecht <- gsub("w", "weiblich", dat_prepped$geschlecht)
+dat_prepped$geschlecht <- gsub("m", "Jungen", dat_prepped$geschlecht)
+dat_prepped$geschlecht <- gsub("w", "Mädchen", dat_prepped$geschlecht)
 
 dat_prepped_a <- dat_prepped[order(dat_prepped$TR_BUNDESLAND), ]
 
@@ -359,11 +358,16 @@ dat_prepped_a$TR_BUNDESLAND <- gsub("ue", "ü", dat_prepped_a$TR_BUNDESLAND)
 
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.1, 0.03, rep(0.03, 4), 0.05, rep(0.03, 2), NA),
-    p2 = c(rep(0.03, 4), 0.05, rep(0.03, 2), NA)
+    p1 = c(0.1, rep(0.04, 7), 0.05, rep(0.04, 2), NA),
+    p2 = c(0.05, rep(0.04, 2), NA)
   ),
-  plot_ranges = c(120, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  plot_ranges = c(65, 65) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
+```
+
+
+```{r}
+
 
 p_1 <- plot_tablebarplot(
   dat = dat_prepped_a,
@@ -374,12 +378,15 @@ p_1 <- plot_tablebarplot(
   column_spanners = list(
     "**2009**<sup>a</sup>" = c(3, 4),
     "**2015**<sup>a</sup>" = c(5, 6),
-    "**Differenz 2015-2009<sup>a</sup>**" = c(7, 10)
+    "**2022**<sup>a</sup>" = c(7, 8),
+    "**Differenz 2015-2009<sup>a</sup>**" = c(9, 12)
   ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL, NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL),
   headers = list(
     "**Land**",
     " ",
+    "*M*",
+    "*SD*",
     "*M*",
     "*SD*",
     "*M*",
@@ -396,6 +403,8 @@ p_1 <- plot_tablebarplot(
     "est_2009_none_sd",
     "est_2015_none_mean",
     "est_2015_none_sd",
+    "est_2022_none_mean",
+    "est_2022_none_sd",
     "est_2015 - 2009_trend_mean",
     "se_2015 - 2009_trend_mean",
     "es_2015 - 2009_trend_mean"
@@ -407,7 +416,9 @@ p_1 <- plot_tablebarplot(
     NULL,
     "sig_2015_none_mean",
     NULL,
+    "sig_2022_none_mean",
     NULL,
+    "sig_2015 - 2009_trend_mean",
     NULL,
     "sig_2015 - 2009_trend_mean"
   ),
@@ -420,18 +431,21 @@ p_1 <- plot_tablebarplot(
     NULL,
     NULL,
     NULL,
-    "sig_2015 - 2009_trend_crossDiffTotal_mean"
+    "sig_2015 - 2009_trend_crossDiffTotal_mean",
+    NULL,
+    NULL
   ),
   y_axis = "y_axis",
+  columns_round = c(rep(0, 10), 2),
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-60, 60),
+    axis_x_lims = c(-5, 60),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     bar_background_lines = "scale_breaks",
     bar_background_lines_linetype = "dotted",
-    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
+    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5,0.5, 0.5, 0.5, 2),
     columns_width = column_widths_stand$p1,
-    headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
+    headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     default_list = barplot_table_plot_pattern
   )
 )
@@ -443,58 +457,41 @@ p_2 <- plot_tablebarplot(
   bar_sig = "sig_2022 - 2015_trend_mean",
   bar_fill = "geschlecht",
   column_spanners = list(
-    "**2015**" = c(1, 2),
-    "**2022**" = c(3, 4),
-    "**Differenz 2022-2015**" = c(5, 8)
+    "**Differenz 2022-2015**" = c(1, 4)
   ),
   headers = list(
-    "*M*",
-    "*SD*",
-    "*M*",
-    "*SD*",
     "M<sub>2022</sub> - M<sub>2015</sub>",
     "*(SE)*",
     "*d*",
     " "
   ),
   columns_table = c(
-    "est_2015_none_mean",
-    "est_2015_none_sd",
-    "est_2022_none_mean",
-    "est_2022_none_sd",
     "est_2022 - 2015_trend_mean",
     "se_2022 - 2015_trend_mean",
     "es_2022 - 2015_trend_mean"
   ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_2022 - 2015_trend_mean", NULL),
+  columns_table_se = list(NULL, "se_2022 - 2015_trend_mean", NULL),
   columns_table_sig_bold = list(
-    "sig_2015_none_mean",
-    NULL,
-    "sig_2022_none_mean",
-    NULL,
     "sig_2022 - 2015_trend_mean",
+    NULL,
+    "sig_2022 - 2015_trend_mean"
+  ),
+  columns_table_sig_superscript = list(
+    "sig_2022 - 2015_trend_crossDiffTotal_mean",
     NULL,
     NULL
   ),
-  columns_table_sig_superscript = list(
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    "sig_2022 - 2015_trend_crossDiffTotal_mean"
-  ),
   y_axis = "y_axis",
+  columns_round = c(0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-60, 60),
+    axis_x_lims = c(-5, 60),
     bar_background_lines = "scale_breaks",
     bar_background_lines_linetype = "dotted",
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
-    columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
+    columns_alignment = c(rep(0.5, 2), 2),
     columns_width = column_widths_stand$p2,
-    headers_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
+    headers_alignment = c(0.5, 0.5, 0.5, 0),
     default_list = barplot_table_plot_pattern
   )
 )
@@ -505,7 +502,7 @@ tableplot_6.6 <- combine_plots(list(p_1, p_2))
 ```{r}
 #| eval: false
 
-save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pdf", width = 320)
+save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 320)
 ## Conversion Failure: In R wurde auch scohn der convertierte Buchstabe angezeigt, nicht der code
 
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
