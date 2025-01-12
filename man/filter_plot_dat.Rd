@@ -11,7 +11,7 @@ filter_plot_dat(
 )
 }
 \arguments{
-\item{plot_dat}{A list of data.frames prepared by \code{\link[=prep_plot]{prep_plot()}}.}
+\item{plot_dat}{A list of data.frames prepared by \code{\link[=prep_lineplot]{prep_lineplot()}}.}
 
 \item{filter_statement}{Character string containing a logical expression for filtering specific rows in all data.frames in the list when possible. Write \code{dat$column_name} to specify the wanted columns.}
 

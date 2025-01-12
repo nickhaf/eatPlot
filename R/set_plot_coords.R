@@ -1,9 +1,12 @@
 #' Set the x- and y-coordinates for a plot.
 #'
 #' @inheritParams plot_single_lineplot
+#' @param plot_dat Data.
+#' @param plot_lims Plot limit object.
+#' @keywords internal
+#' @noRd
 #'
 #' @return [ggplot2] object.
-#' @export
 #'
 #' @examples # tbd
 set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plotsettings_lineplot()) {

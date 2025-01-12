@@ -450,8 +450,9 @@ check_column_warn <- function(dat, column) {
 #'
 #' @examples # tbd
 build_column <- function(dat, old, new, fill_value = NA) {
-check_no_columns(dat, new)
-  if (is.null(old)) {
+
+  check_no_columns(dat, new)
+  if (is.null(old) | test_no_columns(dat, old)) {
     dat[, new] <- fill_value
     return(dat)
   } else {

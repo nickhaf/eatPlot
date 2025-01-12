@@ -78,20 +78,20 @@
 <text x='461.09' y='82.00' style='font-size: 14.23px; font-family: sans;' textLength='67.25px' lengthAdjust='spacingAndGlyphs'>spanner_3</text>
 <line x1='6.96' y1='101.56' x2='327.76' y2='101.56' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='133.74' y='82.00' style='font-size: 14.23px; font-family: sans;' textLength='67.25px' lengthAdjust='spacingAndGlyphs'>spanner_2</text>
-<text x='467.03' y='219.87' style='font-size: 14.23px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>a</text>
-<text x='478.89' y='219.87' style='font-size: 14.23px; font-family: sans;' textLength='43.50px' lengthAdjust='spacingAndGlyphs'>barplot</text>
+<text x='331.04' y='219.87' style='font-size: 14.23px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>a</text>
+<text x='342.90' y='219.87' style='font-size: 14.23px; font-family: sans;' textLength='43.50px' lengthAdjust='spacingAndGlyphs'>barplot</text>
 <text x='248.16' y='219.87' style='font-size: 14.23px; font-family: sans;' textLength='34.81px' lengthAdjust='spacingAndGlyphs'>est_2</text>
 <text x='84.49' y='219.87' style='font-size: 14.23px; font-family: sans;' textLength='34.81px' lengthAdjust='spacingAndGlyphs'>est_1</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<polyline points='331.04,571.52 331.04,568.78 ' style='stroke-width: 0.21; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='440.15,571.52 440.15,568.78 ' style='stroke-width: 0.21; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='549.27,571.52 549.27,568.78 ' style='stroke-width: 0.21; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='658.38,571.52 658.38,568.78 ' style='stroke-width: 0.21; stroke: #333333; stroke-linecap: butt;' />
-<text x='331.04' y='575.48' text-anchor='middle' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='2.78px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='440.15' y='575.48' text-anchor='middle' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>10</text>
-<text x='549.27' y='575.48' text-anchor='middle' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>20</text>
-<text x='658.38' y='575.48' text-anchor='middle' style='font-size: 5.00px; fill: #4D4D4D; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>30</text>
+<polyline points='331.04,571.52 331.04,568.78 ' style='stroke-width: 0.21; stroke-linecap: butt;' />
+<polyline points='440.15,571.52 440.15,568.78 ' style='stroke-width: 0.21; stroke-linecap: butt;' />
+<polyline points='549.27,571.52 549.27,568.78 ' style='stroke-width: 0.21; stroke-linecap: butt;' />
+<polyline points='658.38,571.52 658.38,568.78 ' style='stroke-width: 0.21; stroke-linecap: butt;' />
+<text x='331.04' y='575.48' text-anchor='middle' style='font-size: 5.00px; font-family: sans;' textLength='2.78px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='440.15' y='575.48' text-anchor='middle' style='font-size: 5.00px; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text x='549.27' y='575.48' text-anchor='middle' style='font-size: 5.00px; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>20</text>
+<text x='658.38' y='575.48' text-anchor='middle' style='font-size: 5.00px; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>30</text>
 <text x='-0.095' y='9.08' style='font-size: 13.20px; font-family: sans;' textLength='152.63px' lengthAdjust='spacingAndGlyphs'>Tablebar with white space</text>
 </g>
 </svg>

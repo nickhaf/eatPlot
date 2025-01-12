@@ -1,6 +1,6 @@
 #' Theme for table plotted with ggplot2.
 #'
-#' @inheritParams plot_tablebar
+#' @inheritParams plot_tablebarplot
 #' @return ggplot2 theme.
 #' @export
 #'
@@ -26,6 +26,7 @@ theme_table <- function(plot_settings) {
 }
 
 #' Theme for a y-axis plot.
+#' @inheritParams plot_lineplot
 #'
 #' @return [ggplot2] theme, that can be used for a plotted y-axis.
 #' @export

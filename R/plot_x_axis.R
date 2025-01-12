@@ -1,10 +1,11 @@
 #' Plot the x-Axis.
 #'
-#' @inheritParams plot_points
-#' @inheritParams plot_single_lineplot
+#' @keywords internal
+#' @noRd
+#'
+#' @param plot_dat Prepared data.
 #'
 #' @return A blue stripe on top of ggplot2 plot which can be used as x-axis.
-#' @export
 #'
 #' @examples # tbd
 plot_x_axis <- function(plot_dat) {

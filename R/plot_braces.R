@@ -1,19 +1,27 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
-  check_columns(plot_dat, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "subgroup_var", "trend"))
 
-  plot_lims$brace_coords$coord_dat_test1 <- plot_lims$brace_coords$coord_dat %>%
-    dplyr::mutate(trend = paste0(.$year_start, "_", .$year_end)) %>%
-    tidyr::pivot_longer(
+if(nrow(plot_lims$brace_coords$coord_dat) == 0){
+  return(list(brace_dat = list(),
+              brace_label = data.frame(facet_var = NA),
+              brace_coords = data.frame())
+         )
+}
+
+  check_columns(plot_dat, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend"))
+
+  plot_lims$brace_coords$coord_dat$trend <-  paste0(plot_lims$brace_coords$coord_dat$year_start, "_", plot_lims$brace_coords$coord_dat$year_end)
+
+  plot_lims$brace_coords$coord_dat_2 <- tidyr::pivot_longer(plot_lims$brace_coords$coord_dat,
       cols = c("upper_y", "lower_y"),
       values_to = "y"
-    ) %>%
+    ) |>
     tidyr::pivot_longer(
       cols = c("year_start", "year_end"),
       values_to = "year",
       names_to = "year_type"
     )
 
-  brace_labels <- merge(plot_dat[, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_high", "brace_label_sig_bold", "subgroup_var", "trend")],
+  brace_labels <- merge(plot_dat[, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend")],
     plot_lims$brace_coords$group_labels,
     by.x = "subgroup_var",
     by.y = "grouping_lvls",
@@ -27,18 +35,18 @@ prep_brace <- function(plot_dat, plot_lims, plot_settings) {
     column_est = "brace_label_est",
     column_se = "brace_label_se",
     column_sig_bold = "brace_label_sig_bold",
-    column_sig_superscript = "brace_label_sig_high",
+    column_sig_superscript = "brace_label_sig_superscript",
     sig_superscript_letter = "a",
     round_est = 0,
     round_se = 1
   )
 
   brace_labels_merged <- merge(unique(brace_labels[ , c("trend", "subgroup_var", "facet_var", "brace_label", "label_pos_y")]),
-                        unique(plot_lims$brace_coords$coord_dat_test1[ ,c("trend", "label_pos_x")]),
+                        unique(plot_lims$brace_coords$coord_dat_2[ ,c("trend", "label_pos_x")]),
                         by = "trend",
                         all.y = TRUE)
 
-brace_list <- list(brace_dat=plot_lims$brace_coords$coord_dat_test1,
+brace_list <- list(brace_dat=plot_lims$brace_coords$coord_dat_2,
                    brace_label = brace_labels_merged,
                    brace_coords=plot_lims$brace_coords)
 
@@ -69,9 +77,9 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
     ggbrace::stat_brace(
     data = dat,
     mapping = ggplot2::aes(
-      x = year,
-      y = y,
-      group = trend
+      x = .data$year,
+      y = .data$y,
+      group = .data$trend
     ),
     mid = unique(dat$brace_position_x),
     rotate = 180,

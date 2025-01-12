@@ -1,12 +1,14 @@
 #' Plot Points.
 #'
-#' @param data_plot_points Data frame with the point estimates for every year. Prepared by ...
+#' @keywords internal
+#' @noRd
+#'
+#' @param plot_dat Data frame with the point estimates for every year. Prepared by ...
 #' @inheritParams plot_lineplot
 #' @inheritParams plot_single_lineplot
 #' @inheritParams plotsettings_lineplot
 #'
 #' @return ggplot2 object
-#' @export
 #'
 #' @examples # tbd
 plot_points <- function(plot_dat) {

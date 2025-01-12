@@ -32,6 +32,7 @@ dat_prepped <- prep_tablebarplot(
 This results in a large dataframe, containing a column for each comparisons made in the data:
 
 ```{r}
+#| eval: false
 str(dat_prepped)
 ```
 
@@ -70,8 +71,10 @@ table_dat <- dat_prepped[, c(
 
 
 ```{r}
-dat_prepped <- filter(dat_prepped, mhg %in% c("aohneZWH", "einET"), !str_detect(TR_BUNDESLAND, "- total"))
-dat_prepped <- arrange(dat_prepped, TR_BUNDESLAND)
+dat_prepped <- subset(dat_prepped, mhg %in% c("aohneZWH", "einET") & grep("- total", dat_prepped$TR_BUNDESLAND, invert = TRUE))
+
+
+dat_prepped <- dat_prepped[order(dat_prepped$TR_BUNDESLAND), ]
 
 dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
 
@@ -83,7 +86,7 @@ column_widths_stand <- standardize_column_width(
   plot_ranges = c(80, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 
-p_1 <- plot_tablebar(
+p_1 <- plot_tablebarplot(
   dat = dat_prepped,
   bar_est = "est_2015 - 2009_trend_mean",
   bar_label = NULL,
@@ -139,7 +142,7 @@ p_1 <- plot_tablebar(
   )
 )
 
-p_2 <- plot_tablebar(
+p_2 <- plot_tablebarplot(
   dat = dat_prepped,
   bar_est = "est_2022 - 2015_trend_mean",
   bar_label = NULL,
@@ -200,13 +203,19 @@ p_2 <- plot_tablebar(
   )
 )
 
-example_plot <- combine_plots(list(p_1, p_2))
-save_plot(example_plot,
+tableplot_trend <- combine_plots(list(p_1, p_2))
+
+# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
+```
+
+```{r}
+#| eval: false
+save_plot(tableplot_trend,
   filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320,
   encoding = "Greek.enc"
 )
-# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
 ```
+
 
 # Geschlechterkapitel
 ## Abb. 6.5
@@ -274,7 +283,7 @@ Now we can plot the table like usual, with one exception: I can nudge the table 
 
 
 ```{r}
-p6.5 <- plot_tablebar(
+tableplot_6.5 <- plot_tablebarplot(
   dat = mw_prepped_final,
   bar_est = "est_2022_groupDiff_mean",
   bar_fill = "domain",
@@ -311,7 +320,7 @@ Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(p6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 226.2 * 2 / 3)
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 226.2 * 2 / 3)
 ```
 
 
@@ -341,7 +350,7 @@ dat_prepped <- subset(dat_prepped, geschlecht %in% c("m", "w"))
 dat_prepped$geschlecht <- gsub("m", "männlich", dat_prepped$geschlecht)
 dat_prepped$geschlecht <- gsub("w", "weiblich", dat_prepped$geschlecht)
 
-dat_prepped_a <- arrange(dat_prepped, TR_BUNDESLAND)
+dat_prepped_a <- dat_prepped[order(dat_prepped$TR_BUNDESLAND), ]
 
 dat_prepped_a$TR_BUNDESLAND[duplicated(dat_prepped_a$TR_BUNDESLAND)] <- " "
 dat_prepped_a$TR_BUNDESLAND <- gsub("total", "Deutschland", dat_prepped_a$TR_BUNDESLAND)
@@ -356,7 +365,7 @@ column_widths_stand <- standardize_column_width(
   plot_ranges = c(120, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 
-p_1 <- plot_tablebar(
+p_1 <- plot_tablebarplot(
   dat = dat_prepped_a,
   bar_est = "est_2015 - 2009_trend_mean",
   bar_label = NULL,
@@ -427,7 +436,7 @@ p_1 <- plot_tablebar(
   )
 )
 
-p_2 <- plot_tablebar(
+p_2 <- plot_tablebarplot(
   dat = dat_prepped_a,
   bar_est = "est_2022 - 2015_trend_mean",
   bar_label = NULL,
@@ -490,11 +499,13 @@ p_2 <- plot_tablebar(
   )
 )
 
-example_plot <- combine_plots(list(p_1, p_2))
+tableplot_6.6 <- combine_plots(list(p_1, p_2))
 ```
 
 ```{r}
-save_plot(example_plot, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pdf", width = 320)
+#| eval: false
+
+save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6_greek.pdf", width = 320)
 ## Conversion Failure: In R wurde auch scohn der convertierte Buchstabe angezeigt, nicht der code
 
 # save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
@@ -507,12 +518,12 @@ zwh_prepped <- prep_tablebarplot(trend_zwh,
   subgroup_var = "zwh",
   comparisons = c("groupDiff", "trend_groupDiff")
 )
-zwh_prepped <- arrange(zwh_prepped, TR_BUNDESLAND)
+zwh_prepped <- zwh_prepped[order(zwh_prepped$TR_BUNDESLAND), ]
 zwh_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", zwh_prepped$TR_BUNDESLAND)
 
 zwh_prepped$TR_BUNDESLAND <- gsub("ue", "ü", zwh_prepped$TR_BUNDESLAND)
-zwh_prepped$TR_BUNDESLAND <- gsub("Berlin", "Berlin<sup>2<\sup>", zwh_prepped$TR_BUNDESLAND)
-zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<sup>3<\sup>", zwh_prepped$TR_BUNDESLAND)
+zwh_prepped$TR_BUNDESLAND <- gsub("Berlin", "Berlin<sup>2<sup>", zwh_prepped$TR_BUNDESLAND)
+zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<sup>3<sup>", zwh_prepped$TR_BUNDESLAND)
 ```
 
 
@@ -528,7 +539,7 @@ column_widths_stand <- standardize_column_width(
 ```
 
 ```{r}
-p_1 <- plot_tablebar(
+p_1 <- plot_tablebarplot(
   dat = zwh_prepped,
   bar_est = "est_2022_groupDiff_mean",
   bar_sig = "sig_2022_groupDiff_mean",
@@ -585,7 +596,7 @@ p_1 <- plot_tablebar(
 ```
 
 ```{r}
-p_2 <- plot_tablebar(
+p_2 <- plot_tablebarplot(
   dat = zwh_prepped,
   bar_est = "est_2015 - 2009_trend_groupDiff_mean",
   bar_sig = "sig_2015 - 2009_trend_groupDiff_mean",
@@ -627,7 +638,7 @@ p_2 <- plot_tablebar(
 ```
 
 ```{r}
-p_3 <- plot_tablebar(
+p_3 <- plot_tablebarplot(
   dat = zwh_prepped,
   bar_est = "est_2022 - 2015_trend_groupDiff_mean",
   bar_sig = "sig_2022 - 2015_trend_groupDiff_mean",
@@ -674,12 +685,12 @@ bar_pattern_spacing_stand <- standardize_pattern_spacing(list(p_1, p_2, p_3), pa
 
 
 ```{r}
-p_8.4 <- combine_plots(list(p_1, p_2, p_3))
+tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 ```
 
 ```{r}
-
-save_plot(p_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
+#| eval: false
+# save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
 
 
 ggsave(filename='C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf', p_8.4,

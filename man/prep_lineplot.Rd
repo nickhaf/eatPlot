@@ -2,18 +2,35 @@
 % Please edit documentation in R/prep_lineplot.R
 \name{prep_lineplot}
 \alias{prep_lineplot}
-\title{Plot a lineplot.}
+\title{Prepare lineplot data.}
 \usage{
-prep_lineplot(eatRep_dat, line_sig, parameter, years_lines, years_braces)
+prep_lineplot(
+  eatRep_dat,
+  parameter,
+  facet_var = "TR_BUNDESLAND",
+  total_group = "total",
+  sig_niveau = 0.05,
+  comparisons = NULL
+)
 }
 \arguments{
 \item{eatRep_dat}{Object returned by \code{eatRep}.}
+
+\item{parameter}{Character string. Contains the value in column \code{parameter} that is used for plotting the lines.  Defaults to \code{"mean"}.}
+
+\item{facet_var}{Character string of the name of the variable that should be used for faceting the plot. Defaults to \code{"TR_BUNDESLAND"}.}
+
+\item{total_group}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
+
+\item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
+
+\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{NULL}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.
 }
 \description{
-Plot a lineplot.
+Prepare lineplot data.
 }
 \examples{
 # tbd

@@ -4,7 +4,7 @@
 #'
 #' @inheritParams plot_lineplot
 #' @param dat Data frame with the columns that should be merged into labels.
-#' @param brace_label_sig_high_extra_column Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).
+#' @param brace_label_sig_superscript_extra_column Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).
 #' @param new_name Character string for the new column that is added to `dat`. Defaults to `'label'`.
 #' @param round_est Rounding of brace_label_est.
 #' @param round_se Rounding of brace_label_se.
@@ -20,14 +20,6 @@
 #'   se = c(0.1, 0.45, 1, 0.27, 0.9),
 #'   p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
 #'   )
-#'
-#' # lineplots
-#' construct_label(dat, brace_label_est = "estimate", brace_label_se = "se", round_se = 2)
-#' construct_label(dat, new_name = "new", brace_label_est = "estimate", brace_label_se = "se", brace_label_sig_bold = "p_estimate")
-#'
-#' # tables
-#' construct_label(dat, brace_label_est = "estimate", brace_label_se = "se", brace_label_sig_high = "p_estimate",  brace_label_sig_high_extra_column = TRUE)
-#'
 construct_label <- function(dat,
                             column_est = NULL,
                             column_se = NULL,
@@ -100,7 +92,7 @@ construct_label <- function(dat,
   #   )
   # }
   #
-  # dat <- remove_columns(dat, cols = c("brace_label_est", "label_sig", "brace_label_se", "brace_label_sig_bold", "brace_label_sig_high"))
+  # dat <- remove_columns(dat, cols = c("brace_label_est", "label_sig", "brace_label_se", "brace_label_sig_bold", "brace_label_sig_superscript"))
 
   return(label_out)
 }
@@ -128,14 +120,6 @@ construct_label <- function(dat,
 #'   se = c(0.1, 0.45, 1, 0.27, 0.9),
 #'   p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
 #'   )
-#'
-#' # lineplots
-#' construct_label(dat, label_est = "estimate", label_se = "se", round_se = 2)
-#' construct_label(dat, new_name = "new", label_est = "estimate", label_se = "se", label_sig_bold = "p_estimate")
-#'
-#' # tables
-#' construct_label(dat, label_est = "estimate", label_se = "se", label_sig_high = "p_estimate",  label_sig_high_extra_column = TRUE)
-#'
 construct_label_2 <- function(dat,
                             new_name = "label",
                             label_est = NULL,

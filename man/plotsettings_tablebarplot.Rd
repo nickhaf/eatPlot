@@ -50,9 +50,9 @@ plotsettings_tablebarplot(
 
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, \code{NULL} (default).}
 
-\item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), or the outer right background line to the left of the plot (\verb{"background_line_right}).}
+\item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right", "background_line_table")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), the outer right background line to the left of the plot (\verb{"background_line_right}), or only over the table-part of the plot (\verb{background_line_table"}).}
 
-\item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background. Defaults to \code{NULL}.}
+\item{background_stripes_colour}{Character vector containing the background colour of each row. Defaults to \code{NULL}.}
 
 \item{bar_background_lines}{Character string of either \code{c("borders", "scale_breaks", "none")}, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.}
 
@@ -62,7 +62,7 @@ plotsettings_tablebarplot(
 
 \item{bar_fill_colour}{Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in \code{bar_fill}. If no names are provided for the vector, the order of the factor levels of \code{bar_fill} will be used for determining the colour assignment.}
 
-\item{bar_frame_linetype}{Named vector with the bar frame linetypes. Names have to be found in the column defined in the \code{bar_sig}-argument of\code{plot_tablebar()}. Defaults to \code{solid}.}
+\item{bar_frame_linetype}{Named vector with the bar frame linetypes. Names have to be found in the column defined in the \code{bar_sig}-argument of\code{plot_tablebarplot()}. Defaults to \code{solid}.}
 
 \item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
 
@@ -70,7 +70,7 @@ plotsettings_tablebarplot(
 
 \item{bar_line_width}{Numeric for the line-size around the bar.}
 
-\item{bar_nudge_y}{Numeric for nudging the bar in y direction. Defaults to \code{0}.}
+\item{bar_nudge_y}{Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to \code{0}.}
 
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to \code{white}.}
 
@@ -146,7 +146,7 @@ plotsettings_tablebarplot(
 
 ## Or, to get better control over the colour assignment
 ## we can also directly name the colours with the different groups
-## defined in the bar_sig-argument of plot_tablebar()
+## defined in the bar_sig-argument of plot_tablebarplot()
 ## (as these groups are used to distinguish between different bar colours):
 plotsettings_tablebarplot(
   bar_fill_colour = c(

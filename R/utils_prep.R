@@ -1,4 +1,6 @@
 rename_comparisons_total <- function(eatRep_dat, total_group, facet_var) {
+
+
 #  Aufpassen: Nur, wenn gegen "total" verglichen wird, also nicht beide Gruppen in der Comparison "total" sind.
   total_group_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_group, "id"]
   total_comparisons <- eatRep_dat$comparison[

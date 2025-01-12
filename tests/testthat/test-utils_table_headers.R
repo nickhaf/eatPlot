@@ -128,7 +128,7 @@ test_that("column spanners can be plotted on second level", {
 
 test_that("Column spanners work in whole plot", {
 
-p_all_headers <- plot_tablebar(
+p_all_headers <- plot_tablebarplot(
   dat = test_data_full,
   headers = list("est_1", "est_2", "a barplot"),
   column_spanners = list("spanner_1" = 1, "spanner_2" = c(2,3)),
@@ -143,7 +143,7 @@ p_all_headers <- plot_tablebar(
   vdiffr::expect_doppelganger("Plot with all header levels", p_all_headers)
 
 ## Lower dimension should always be supplied first:
-  expect_error(plot_tablebar(
+  expect_error(plot_tablebarplot(
     dat = test_data,
     headers = list("est_1", "est_2", "a barplot"),
     column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
@@ -157,7 +157,7 @@ p_all_headers <- plot_tablebar(
 })
 
 test_that("Column spanners over multiple lines work in whole plot", {
-  p_all_headers <- plot_tablebar(
+  p_all_headers <- plot_tablebarplot(
     dat = test_data_full,
     headers = list("est_1 <br> newline <br> new line", "est_2", "a barplot"),
     column_spanners = list("spanner_1" = 1, "spanner_2 <br> new line<br> new line<br> new line<br> new line" = c(2,3)),

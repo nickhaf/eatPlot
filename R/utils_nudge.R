@@ -1,39 +1,3 @@
-#########################################
-## Rename to coordinates or something?###
-############################################
-
-calc_plot_lims_y <- function(dat, coords, plot_settings) {
-  overlap <- calc_overlap(dat$year_start_axis, dat$year_end_axis)
-
-  range_coords <- diff(range(coords))
-  range_years <- diff(range(c(dat$year_start_axis, dat$year_end_axis), na.rm = TRUE))
-
-  brace_label_nudge_y <- plot_settings$brace_label_nudge_y
-  starting_points <- calc_brace_starting_points(
-    overlap = overlap,
-    coords,
-    range_coords,
-    brace_label_nudge_y,
-    plot_settings
-  )
-
-  dat <- calc_brace_position(dat, overlap)
-
-  dat <- calc_brace_indent(dat)
-
-  y_label <- calc_brace_label_coords(
-    dat,
-    starting_points,
-    range_coords,
-    range_years,
-    plot_settings
-  )$label_pos_y
-
-  y_lims_total <- c(min(y_label) - diff(range(coords)) * 0.06, max(coords)) # a bit smaller, so the labels don't get cut off
-
-  return(y_lims_total)
-}
-
 # Plot_braces -------------------------------------------------------------
 #' Calculate the coordinates for the braces and their labels.
 #'
@@ -49,6 +13,10 @@ calc_plot_lims_y <- function(dat, coords, plot_settings) {
 #'
 #' @examples # tbd
 calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settings = plotsettings_lineplot()) {
+
+  if(nrow(years_list$years_braces) == 0){
+    return(list(coord_dat = data.frame(), group_labels = data.frame(label_pos_y = 0)))
+  }
 
   years_braces <- years_list$years_braces
 

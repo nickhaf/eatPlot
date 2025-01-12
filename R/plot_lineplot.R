@@ -1,41 +1,43 @@
 #' Plot a lineplot.
 #'
-#' @param plot_dat Input is a list prepared by `prep_plot()`.
-#' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
-#' @param point_values Character string of the column name in `plot_dat[["plot_points"]]` containing the y-values for the plotted points. Defaults to `est_noTrend_noComp`.
-#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `"sig_noTrend_Comp_crossDiff_wholeGroup"`.
-#' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
+#' @param eatPlot_dat Input is a list prepared by `prep_lineplot()`.
+#' @param facet_var Character string of the column name in `eatPlot_dat` containing the variable that should be split over multiple facets. Defaults to `NULL`.
+#' @param subgroup_var Character string of the column name in `eatPlot_dat` of the variable containing the subgroup mapping. Each supgroup will receive it's own line. Defaults to `NULL`.
+#' @param point_est Character string of the column name in `eatPlot_dat` containing the y-values for the plotted points. Defaults to `NULL`.
+#' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `NULL`.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_noComp"`, which will show the significance of the difference between two time points.
-#' @param label_est Character string of the column name containing the brace labels.
-#' @param label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
-#' @param label_sig_high Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
-#' @param label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
+#' @param line_se Character vector of the column name containing the standard errors for the plotted lines. Defaults to `NULL`, in which case they will be deducted from the line values.
+#' @param brace_label_est Character string of the column name containing the brace labels.
+#' @param brace_label_se Character string of the column name containing the standard errors for `label_est`. Will be put in bracktes behind `label_est`.
+#' @param brace_label_sig_superscript Character string of the column name containing significance values for `label_est`. Significant values will be marked by a raised 'a'. Normally, should be the comparison of the trend vs. the trend in whole Germany, which can be found in the trendDiff_cross parameter. Defaults to `NULL`, as this parameter is not always provided.
+#' @param brace_label_sig_bold Character string of the column name containing significance values for `label_est`. Significant values will be marked as bold. Defaults to `"sig_Trend_noComp"`.
 #' @param title_superscripts Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to `NULL`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
+#' @param background_facet Character string in the `facet_var` column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to `"Deutschland"`.
+#' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to `"total"`.
+#' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
 #' @export
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
-                          point_est,
-                          point_sig,
-                          line_est,
-                          line_sig,
-                          line_se,
-                          brace_label_est,
-                          brace_label_sig,
-                          brace_label_se,
-                          brace_label_sig_high,
-                          brace_label_sig_bold,
-                          years_lines,
-                          years_braces,
-                          subgroup_var,
-                          facet_var = "TR_BUNDESLAND",
-                          background_facet = "total",
-                          background_subgroup = "total",
-                          seperate_plot_var_box = "wholeGroup",
+                          facet_var = NULL,
+                          subgroup_var = NULL,
+                          point_est = NULL,
+                          point_sig = NULL,
+                          line_sig = NULL,
+                          line_se = NULL,
+                          brace_label_est = NULL,
+                          brace_label_se = NULL,
+                          brace_label_sig_superscript = NULL,
+                          brace_label_sig_bold = NULL,
+                          years_lines = list(),
+                          years_braces = list(),
+                          background_facet = "Deutschland",
+                          background_subgroup = NULL,
+                          seperate_plot_var_box = NULL,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
@@ -44,7 +46,6 @@ plot_lineplot <- function(eatPlot_dat,
     cols = c(facet_var)
   )
   eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
-
   if(plot_settings$split_plot){
     warning("Split lineplot currently not supported. Set to non-split.")
     plot_settings$split_plot <- FALSE
@@ -58,15 +59,13 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = point_est, new = "point_est") |>
     build_column(old = point_sig, new = "point_sig", fill_value = FALSE) |>
     build_column(old = line_sig, new = "line_sig", fill_value = FALSE) |>
-    build_column(old = line_est, new = "line_est") |>
     build_column(old = brace_label_est, new = "brace_label_est") |>
     build_column(old = brace_label_se, new = "brace_label_se") |>
-    build_column(old = brace_label_sig_high, new = "brace_label_sig_high", fill_value = FALSE) |>
+    build_column(old = brace_label_sig_superscript, new = "brace_label_sig_superscript", fill_value = FALSE) |>
     build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold", fill_value = FALSE) |>
     build_column(old = facet_var, new = "facet_var") |>
     build_column(old = subgroup_var, new = "subgroup_var") |>
     build_column(old = line_se, new = "line_se")
-
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
 
@@ -76,7 +75,7 @@ plot_lineplot <- function(eatPlot_dat,
                                   subgroup_var == background_subgroup)
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
 
-  if(!is.null(background_facet) & !is.null(background_subgroup)){
+  if(!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1){
     line_dat <- subset(eatPlot_dat,
                        facet_var != background_facet &
                          subgroup_var != background_subgroup)
@@ -85,25 +84,25 @@ plot_lineplot <- function(eatPlot_dat,
   }
 
   line_dat <- filter_years(line_dat, years = years_lines)
-
   brace_dat_list <- prep_brace(eatPlot_dat, plot_lims, plot_settings)
 
-  if(!is.null(background_facet) & !is.null(background_subgroup)){
+if(!is.null(background_facet) & !is.null(background_subgroup)){
     brace_dat <- brace_dat_list$brace_dat |>
     subset(facet_var != background_facet & subgroup_var != background_subgroup)
   }else{
     brace_dat <- brace_dat_list$brace_dat
   }
   brace_coordinates <- brace_dat_list$brace_coords
+  if(length(brace_dat) > 0){
   brace_dat <- filter_years(brace_dat, years = years_braces)
-
-
-  if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-    stop("Some of the trends you provided in 'years_lines' are not in the data.")
-  }
 
   if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
     stop("Some of the trends you provided in 'years_braces' are not in the data.")
+  }
+  }
+
+  if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+    stop("Some of the trends you provided in 'years_lines' are not in the data.")
   }
 
   dat_p <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
@@ -123,15 +122,14 @@ plot_lineplot <- function(eatPlot_dat,
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
-
-
-    dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[!is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
-    p_state <- ggplot2::ggplot(dat_p_facet$plot_dat,
+
+    p_state <- ggplot2::ggplot(
+      dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
-        x = year,
-        y = point_est,
-        group = id,
+        x = .data$year,
+        y = .data$point_est,
+        group = .data$id,
         colour = .data$subgroup_var
       )
     ) +
@@ -265,7 +263,7 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
 
-if(!is.null(background_subgroup)){
+if(!is.null(background_subgroup) & length(background_subgroup) > 1){
   subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
 }else{
   subgroup_lvls <- unique(plot_dat$subgroup_var)
@@ -279,7 +277,6 @@ if(!is.null(background_subgroup)){
 
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
   x_range <- range(unique_years)
-
   y_lims_total <- c(min(brace_coords$group_labels$label_pos_y) - diff(range(coords)) * 0.06, max(coords))
 
   coord_list <- list(
@@ -296,6 +293,11 @@ if(!is.null(background_subgroup)){
 
 prep_years <- function(years) {
   years_df <- data.frame(do.call("rbind", years))
+
+  if(ncol(years_df) == 0){
+    years_df <- data.frame("year_start" = numeric(), "year_end" = numeric())
+  }
+
   colnames(years_df) <- c("year_start", "year_end")
   return(years_df)
 }

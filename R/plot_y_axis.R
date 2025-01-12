@@ -1,9 +1,13 @@
 #' Plot a y-axis plot. Can be merged with other plots for a customisable y-axis.
 #'
-#' @inheritParams plot_single_lineplot
+#' @keywords internal
+#' @noRd
+#'
+#' @param plot_dat Prepared data.
+#' @inheritParams plot_lineplot
+#'
 #'
 #' @return [ggplot2] plot that can be used as a y-axis.
-#' @export
 #'
 #' @examples # tbd
 plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
