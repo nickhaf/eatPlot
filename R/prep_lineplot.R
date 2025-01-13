@@ -59,8 +59,9 @@ prep_lineplot <- function(eatRep_dat, parameter = "mean", total_facet = "total",
 }
 
 create_trend <- function(df) {
+
   df$trend <- ifelse(length(unique(df$year)) == 2,
-                     paste(unique(df$year)[1], unique(df$year)[2], sep = "_"),
+                     paste(min(unique(df$year)), max(unique(df$year)), sep = "_"),
                      ifelse(length(unique(df$year)) == 1,
                             unique(df$year),
                      stop("There are more than two years in the data.")))
