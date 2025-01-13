@@ -32,6 +32,8 @@ trend_3_prepped <- prep_lineplot(
   trend_3_subset
   )
 
+
+trend_3_prepped$TR_BUNDESLAND <- gsub("ue", "ü", trend_3_prepped$TR_BUNDESLAND)
 ```
 
 
@@ -80,6 +82,8 @@ trend_total$kb <- gsub("hoeren", "Hören", trend_total$kb)
 trend_total <- subset(trend_total, TR_BUNDESLAND == "total") |>
   subset(geschlecht %in% c("m", "w"))
 
+trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND)
+
 
 ```
 
@@ -100,7 +104,11 @@ lineplot_germany_2 <- plot_lineplot(trend_total,
   facet_var = "kb",
   seperate_plot_var_box = "wholeGroup",
   title_superscripts = NULL,
-  plot_settings = plotsettings_lineplot(split_plot = FALSE, background_lines = FALSE, default_list = lineplot_4x4)
+  plot_settings = plotsettings_lineplot(
+    brace_label_nudge_x = 0.3,
+    split_plot = FALSE, 
+    background_lines = FALSE, 
+    default_list = lineplot_4x4)
 )
 ```
 
@@ -115,10 +123,12 @@ save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_d
 
 ```{r}
 trend_3_prepped <- prep_lineplot(
-  trend_mw,
-  parameter = "mean")
+  trend_mw)
 
 trend_3_prepped <- subset(trend_3_prepped, geschlecht == "total")
+
+trend_3_prepped$TR_BUNDESLAND <- gsub("ue", "ü", trend_3_prepped$TR_BUNDESLAND)
+
 
 lineplot_1 <- plot_lineplot(trend_3_prepped,
   point_est = "est_comparison_none",
@@ -148,3 +158,47 @@ save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.p
 ```
 
 
+## Workshop example
+```{r}
+trend_dat <- readRDS("I:/Methoden/02_IQB-interne_eat_Workshops/eatRep_2024/Beispieloutputs/04_meansAufbereitet.rds")
+
+
+trend_p <- prep_lineplot(
+  trend_dat)
+
+str(trend_p)
+``` 
+
+
+```{r}
+
+
+trend_p$TR_BUNDESLAND <- gsub("ue", "ü", trend_p$TR_BUNDESLAND)
+
+
+lineplot_1_w <- plot_lineplot(trend_p,
+  point_est = "est_comparison_none",
+  point_sig = "sig_comparison_crossDiffTotal", 
+  line_sig = "sig_comparison_trend",
+  line_se = "se_comparison_none",
+  brace_label_est = "est_comparison_trend",
+  brace_label_se = "se_comparison_trend",
+  brace_label_sig_superscript = NULL,
+  brace_label_sig_bold = "sig_comparison_trend",
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  subgroup_var = NULL,
+  background_facet = "total", 
+  background_subgroup = NULL,
+  facet_var = "TR_BUNDESLAND",
+  seperate_plot_var_box = "wholeGroup",
+  title_superscripts = NULL,
+  plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
+)
+
+```
+
+```{r save lineplot_1_group}
+#| eval: false
+save_plot(lineplot_1_w, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group_workshop.pdf")
+```
