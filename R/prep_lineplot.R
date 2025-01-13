@@ -28,7 +28,9 @@ prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", to
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
   plot_dat <- build_plot_dat(eatRep_dat)
-  plot_dat_wide <- tidyr::pivot_wider(plot_dat,
+
+  plot_dat_wide <- tidyr::pivot_wider(
+    unique(plot_dat),
     names_from = "comparison",
     values_from = c("est_comparison", "se_comparison", "sig_comparison")
   ) |>
@@ -72,61 +74,12 @@ build_plot_dat <- function(eatRep_dat) {
     values_to = "group"
   )
 
-  ## By the way! Not done here, still have to deal with the comparisons of comparisons.
-  # trend_crossDiff has another comparison in the group column
-
   # nested comparisons ------------------------------------------------------
-  # trend_crossDiff has another comparison in the group column
-  # Goal: only have groups in the group column.
 
-  ## Make into a function and apply until there is no comp in the group column any more
+  eatRep_dat_unnested <- unnest_eatRep(eatRep_dat_long, eatRep_dat)
 
-  if (any(grep("comp_", eatRep_dat_long$group))) {
-    eatRep_comp <- eatRep_dat_long[grep("comp_", eatRep_dat_long$group), ]
-
-    eatRep_comp_m <- merge(eatRep_comp,
-      eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
-      by.x = "group",
-      by.y = "id",
-      all.x = TRUE
-    )
-    eatRep_comp_m$id <- paste(eatRep_comp_m$id, eatRep_comp_m$group, sep = "_")
-    eatRep_comp_m$group <- NULL
-
-    eatRep_comp_nested <- tidyr::pivot_longer(
-      eatRep_comp_m,
-      cols = c("unit_1", "unit_2"),
-      names_to = "unit_b",
-      values_to = "group"
-    )
-
-    eatRep_comp_nested <- eatRep_comp_nested[grep("comp_", eatRep_comp_nested$group), ]
-
-    eatRep_comp_nested_m <- merge(eatRep_comp_nested,
-      eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
-      by.x = "group",
-      by.y = "id",
-      all.x = TRUE
-    )
-    eatRep_comp_nested_m$id <- paste(eatRep_comp_nested_m$id, eatRep_comp_nested_m$group, sep = "_")
-    eatRep_comp_nested_m$group <- NULL
-
-    eatRep_comp_nested_l <- tidyr::pivot_longer(eatRep_comp_nested_m,
-      cols = c("unit_1", "unit_2"),
-      names_to = "unit_c",
-      values_to = "group"
-    )
-
-    eatRep_comp_nested_l <- eatRep_comp_nested_l[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")]
-    eatRep_dat_no_nested_comps <- eatRep_dat_long[grep("comp_", eatRep_dat_long$group, invert = TRUE), c("id", "comparison", "group", "est", "se", "p", "sig", "es")]
-    eatRep_dat_long <- rbind(eatRep_dat_no_nested_comps, eatRep_comp_nested_l)
-  }
-
-  eatRep_dat_long <- eatRep_dat_long[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")]
-
-
-  ###############
-  eatRep_dat_merged <- merge(eatRep_dat_long,
+  eatRep_dat_merged <- merge(
+    eatRep_dat_unnested,
     eatRep_dat$group_estimates,
     by.x = "group",
     by.y = "id",
@@ -147,4 +100,55 @@ prep_years_list <- function(years_lines, years_braces) {
   names(years_list) <- c("years_lines", "years_braces")
 
   return(years_list)
+}
+
+
+unnest_eatRep <- function(comparison_dat, eatRep_dat){
+
+  eatRep_unnested <- data.frame()
+  ## comparison_dat now contains all comparisons that are made in the data.
+  ## The group column contains the groups that belong to that comparison. Can either other comparisons, or groups.
+  ## So,as long as there is a comparison in the group column, some nested comparison is in there:
+  comp_groups <- comparison_dat$group[grep("comp_", comparison_dat$group)]
+
+  ## The others are already unnested and can be saved:
+  eatRep_no_comp_group <- comparison_dat[!(comparison_dat$group %in% comp_groups), ]
+  eatRep_unnested <- rbind(eatRep_unnested, eatRep_no_comp_group)
+
+
+
+  while(length(comp_groups > 0)){
+
+    eatRep_nested <- comparison_dat[comparison_dat$group %in% comp_groups, ]
+
+    eatRep_nested_m <- merge(eatRep_nested,
+                           eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
+                           by.x = "group",
+                           by.y = "id",
+                           all.x = TRUE)
+
+    eatRep_nested_m$id <- paste(eatRep_nested_m$id, eatRep_nested_m$group, sep = "_")
+
+# Build new group-column --------------------------------------------------
+    eatRep_nested_m$group <- NULL
+    eatRep_nested_m <- tidyr::pivot_longer(
+      eatRep_nested_m,
+      cols = c("unit_1", "unit_2"),
+      names_to = "unit_b",
+      values_to = "group"
+    )
+
+  ## Now do the stuff we did before the loop started again.
+  ## By this, the comparisons should be unnested until all done!
+
+    comp_groups <- eatRep_nested_m$group[grep("comp_", eatRep_nested_m$group)]
+    eatRep_no_comp_group <- eatRep_nested_m[!(eatRep_nested_m$group %in% comp_groups), ]
+
+    eatRep_unnested <- rbind(
+      eatRep_unnested[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")],
+      eatRep_no_comp_group[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")])
+  }
+
+return(eatRep_unnested)
+
 }
