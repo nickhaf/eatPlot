@@ -59,7 +59,7 @@ lineplot_2 <- plot_lineplot(trend_3_prepped,
 )
 
 # save_plot(p, filename = "/home/nick/Downloads/test.pdf")
-# save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
+ save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
 ```
 
 
