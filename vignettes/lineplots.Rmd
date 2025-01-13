@@ -198,7 +198,7 @@ lineplot_1_w <- plot_lineplot(trend_p,
 
 ```
 
-```{r save lineplot_1_group}
+```{r save lineplot_1_group_w}
 #| eval: false
 save_plot(lineplot_1_w, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group_workshop.pdf")
 ```

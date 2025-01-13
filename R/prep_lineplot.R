@@ -22,21 +22,24 @@ prep_lineplot <- function(eatRep_dat, parameter = "mean", total_facet = "total",
     stop(paste("Comparison '", unsupported_comp, "' is not supported. Please contact the package author."))
   }
 
+
   # Filtering ---------------------------------------------------------------
+  if (!is.null(comparisons)) {
+    eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
+  }
 
   eatRep_dat <- rename_comparisons_total(eatRep_dat, facet_var = facet_var, total_facet = total_facet)
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-  if (!is.null(comparisons)) {
-    eatRep_dat$comparison <- eatRep_dat$comparison[eatRep_dat$comparison$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
-  }
+
 
 
   # Merge Data --------------------------------------------------------------
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
+
   plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var)
 
 
@@ -67,12 +70,10 @@ create_trend <- function(df) {
 
 build_plot_dat <- function(eatRep_dat, facet_var) { ## facet_var schon außerhalb erzeugen
 
-
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
     eatRep_dat$estimate,
     by = "id"
   )
-
   eatRep_dat$comp_estimates <- merge(eatRep_dat$comparisons,
     eatRep_dat$estimate,
     by = "id"
@@ -89,16 +90,12 @@ build_plot_dat <- function(eatRep_dat, facet_var) { ## facet_var schon außerhal
   # nested comparisons ------------------------------------------------------
   eatRep_dat_unnested <- unnest_eatRep(eatRep_dat_long, eatRep_dat)
 
-
-  ## Besser wäre glaube ich, wenn alle Trends in der Trend-Spalte zweistellig sind, und die nicht-TrendWerte dann beim entsprechenden Jahr stehen.
-
   eatRep_dat_merged <- merge(
     eatRep_dat_unnested,
     eatRep_dat$group_estimates,
     by.x = "unit",
     by.y = "id",
-    suffixes = c("_comparison", "_comparison_none"),
-    no.dups = FALSE
+    suffixes = c("_comparison", "_comparison_none")
   )
 
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
@@ -112,7 +109,6 @@ build_plot_dat <- function(eatRep_dat, facet_var) { ## facet_var schon außerhal
   ## duplicated
   trend <- trend[!(trend[, facet_var] == "total" & grepl("Total", trend$comparison)), ]
 
-
   noTrend_wide <- tidyr::pivot_wider(
     noTrend,
     names_from = "comparison",
@@ -120,6 +116,8 @@ build_plot_dat <- function(eatRep_dat, facet_var) { ## facet_var schon außerhal
   ) |>
     as.data.frame()
 
+
+  ## Hier Fehler, z.B. trend_crossDiffTotal Berlin nz 2009_2015
   trend_wide <- tidyr::pivot_wider(
     unique(trend[, !colnames(trend) %in% c("group", "id") ]),
     names_from = "comparison",
@@ -159,7 +157,6 @@ unnest_eatRep <- function(comparison_dat, eatRep_dat){
   ## The others are already unnested and can be saved:
   eatRep_no_comp_group <- comparison_dat[!(comparison_dat$group %in% comp_groups), ]
   eatRep_unnested <- rbind(eatRep_unnested, eatRep_no_comp_group)
-
 
   while(length(comp_groups > 0)){
 
