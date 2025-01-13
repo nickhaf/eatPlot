@@ -60,7 +60,6 @@ plot_tablebarplot <- function(dat,
   if (!is.numeric(dat[, bar_est]) & !is.null(bar_est)) {
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
-
   check_columns(dat, c(bar_est, bar_label, bar_label_sig, bar_sig, bar_fill, unlist(columns_table), unlist(columns_table_sig_bold), unlist(columns_table_sig_superscript), unlist(columns_table_se), y_axis))
 
 

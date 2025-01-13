@@ -29,9 +29,8 @@ It can make sense to pre-process the data a bit,
 trend_3_subset <- trend_mw
 
 trend_3_prepped <- prep_lineplot(
-  trend_3_subset,
-  parameter = "mean")
-
+  trend_3_subset
+  )
 
 ```
 
@@ -45,7 +44,7 @@ lineplot_2 <- plot_lineplot(trend_3_prepped,
   line_se = "se_comparison_none",
   brace_label_est = "est_comparison_trend",
   brace_label_se = "se_comparison_trend",
-  brace_label_sig_superscript = NULL,
+  brace_label_sig_superscript = "sig_comparison_trend_crossDiffTotal",
   brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
@@ -53,13 +52,14 @@ lineplot_2 <- plot_lineplot(trend_3_prepped,
   background_facet = "total",
   background_subgroup = "total",
   facet_var = "TR_BUNDESLAND",
-  seperate_plot_var_box = "wholeGroup",
   title_superscripts = NULL,
   plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
 )
+```
 
-# save_plot(p, filename = "/home/nick/Downloads/test.pdf")
- save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
+```{r save lineplot_2}
+#| eval: false
+save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
 ```
 
 
@@ -91,7 +91,6 @@ lineplot_germany_2 <- plot_lineplot(trend_total,
   line_se = "se_comparison_none",
   brace_label_est = "est_comparison_trend",
   brace_label_se = "se_comparison_trend",
-  brace_label_sig_superscript = NULL,
   brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
@@ -105,7 +104,7 @@ lineplot_germany_2 <- plot_lineplot(trend_total,
 )
 ```
 
-```{r}
+```{r save lineplot_germany_2_groups}
 #| eval: false
 save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2/4)
 
@@ -141,9 +140,11 @@ lineplot_1 <- plot_lineplot(trend_3_prepped,
   plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
 )
 
-# save_plot(p, filename = "/home/nick/Downloads/test.pdf")
-# save_plot(p, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
 ```
 
+```{r save lineplot_1_group}
+#| eval: false
+save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf")
 ```
+
 

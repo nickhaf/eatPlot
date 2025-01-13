@@ -24,7 +24,7 @@ dat_prepped <- prep_tablebarplot(
   subgroup_var = "mhg",
   par = c("mean", "sd"),
   facet_var = "TR_BUNDESLAND",
-  total_group = "total",
+  total_facet = "total",
   comparisons = c("none", "trend")
 )
 ```
@@ -80,7 +80,7 @@ dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
 
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.05, 0.05, rep(0.05, 7), NA),
+    p1 = c(0.1, 0.05, rep(0.05, 7), NA),
     p2 = c(rep(0.05, 7), NA)
   ),
   plot_ranges = c(80, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
@@ -295,14 +295,14 @@ tableplot_6.5 <- plot_tablebarplot(
     "TR_BUNDESLAND_lesen", "est_2022_groupDiff_mean_lesen", "se_2022_groupDiff_mean_lesen", "es_2022_groupDiff_mean_lesen", "est_2022_groupDiff_mean_hören", "se_2022_groupDiff_mean_hören", "es_2022_groupDiff_mean_hören"
   ),
   columns_table_sig_bold = list(NULL, "sig_2022_groupDiff_mean_lesen", NULL, "sig_2022_groupDiff_mean_lesen", "sig_2022_groupDiff_mean_hören", NULL, "sig_2022_groupDiff_mean_hören"),
-  columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiff_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiff_mean_lesen", "sig_2022_crossDiff_of_groupDiff_mean_hören", NULL, "est_2022_crossDiff_of_groupDiff_mean_hören"), 
+  columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"), 
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
   columns_table_se = list(NULL, NULL, "se_2022_groupDiff_mean_lesen", NULL, NULL, "se_2022_groupDiff_mean_hören", NULL),
   headers = list("", "*M<sub>Jungen</sub> - M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "*M<sub>Jungen</sub> - M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Höhrverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-5, 60),
+    axis_x_lims = c(-5, 70),
     columns_alignment = c(0, rep(2, 6), NULL), # NULL evtl. nicht optimal, oder in die Message mit rein.
     headers_alignment = c(rep(0.5, 2), 2, rep(0.5, 2), 2, 0.5, 0.5),
     headers_nudge_y = c(rep(0, 7), 0.5),
@@ -341,7 +341,7 @@ dat_prepped <- prep_tablebarplot(
   subgroup_var = "geschlecht",
   par = c("mean", "sd"),
   facet_var = "TR_BUNDESLAND",
-  total_group = "total",
+  total_facet = "total",
   comparisons = c("none", "trend", "trend_crossDiff")
 )
 ```

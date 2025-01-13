@@ -3,20 +3,27 @@
 #' @param eatRep_dat Object returned by `eatRep`.
 #' @param parameter Character string. Contains the value in column `parameter` that is used for plotting the lines.  Defaults to `"mean"`.
 #' @param facet_var Character string of the name of the variable that should be used for faceting the plot. Defaults to `"TR_BUNDESLAND"`.
-#' @param total_group Character string of the name of the total groups containing all other groups of the facet var. Defaults to `"total"`.
+#' @param total_facet Character string of the name of the total groups containing all other groups of the facet var. Defaults to `"total"`.
 #' @param sig_niveau Numeric indicating the border below which p-values will be considered significant. Defaults to `0.05`.
-#' @param comparisons Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to `NULL`.
+#' @param comparisons Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to `c("none", "crossDiff", "trend", "trend_crossDiff")`.
 #' @return Data prepared for plotting the BT-lineplots.
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", total_group = "total", sig_niveau = 0.05, comparisons = NULL) {
+prep_lineplot <- function(eatRep_dat, parameter = "mean", total_facet = "total",
+                          facet_var = "TR_BUNDESLAND", sig_niveau = 0.05,
+                          comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")) {
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
   check_columns(eatRep_dat$estimate, cols = c("p"))
 
+  unsupported_comp <- comparisons[!(comparisons %in% c("none", "crossDiff", "trend", "trend_crossDiff"))]
+  if(length(unsupported_comp) > 0){
+    stop(paste("Comparison '", unsupported_comp, "' is not supported. Please contact the package author."))
+  }
+
   # Filtering ---------------------------------------------------------------
-  eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group, facet_var = facet_var)
+  eatRep_dat <- rename_comparisons_total(eatRep_dat, facet_var = facet_var, total_facet = total_facet)
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
@@ -30,11 +37,13 @@ prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", to
   plot_dat <- build_plot_dat(eatRep_dat)
 
   plot_dat_wide <- tidyr::pivot_wider(
-    unique(plot_dat),
+    plot_dat,
     names_from = "comparison",
     values_from = c("est_comparison", "se_comparison", "sig_comparison")
   ) |>
     as.data.frame()
+
+
 
   for (i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]) {
     plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
@@ -50,7 +59,11 @@ prep_lineplot <- function(eatRep_dat, parameter, facet_var = "TR_BUNDESLAND", to
 }
 
 create_trend <- function(df) {
-  df$trend <- paste(df$year[1], df$year[2], sep = "_")
+  df$trend <- ifelse(length(unique(df$year)) == 2,
+                     paste(unique(df$year)[1], unique(df$year)[2], sep = "_"),
+                     ifelse(length(unique(df$year)) == 1,
+                            unique(df$year),
+                     stop("There are more than two years in the data.")))
   return(df)
 }
 
@@ -75,16 +88,17 @@ build_plot_dat <- function(eatRep_dat) {
   )
 
   # nested comparisons ------------------------------------------------------
-
   eatRep_dat_unnested <- unnest_eatRep(eatRep_dat_long, eatRep_dat)
+
 
   eatRep_dat_merged <- merge(
     eatRep_dat_unnested,
     eatRep_dat$group_estimates,
-    by.x = "group",
+    by.x = "unit",
     by.y = "id",
-    all.y = TRUE,
-    suffixes = c("_comparison", "_comparison_none")
+    all.x = TRUE,
+    suffixes = c("_comparison", "_comparison_none"),
+    no.dups = FALSE
   )
 
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
@@ -110,43 +124,47 @@ unnest_eatRep <- function(comparison_dat, eatRep_dat){
   ## The group column contains the groups that belong to that comparison. Can either other comparisons, or groups.
   ## So,as long as there is a comparison in the group column, some nested comparison is in there:
   comp_groups <- comparison_dat$group[grep("comp_", comparison_dat$group)]
+  comparison_dat$unit <- comparison_dat$group
 
+  column_order <- c("id", "group", "unit")
+  comparison_dat <- comparison_dat[, c(column_order, colnames(comparison_dat)[(!(colnames(comparison_dat) %in% column_order))])]
   ## The others are already unnested and can be saved:
   eatRep_no_comp_group <- comparison_dat[!(comparison_dat$group %in% comp_groups), ]
   eatRep_unnested <- rbind(eatRep_unnested, eatRep_no_comp_group)
 
 
-
   while(length(comp_groups > 0)){
 
-    eatRep_nested <- comparison_dat[comparison_dat$group %in% comp_groups, ]
-
+    eatRep_nested <- comparison_dat[comparison_dat$unit %in% comp_groups,]
     eatRep_nested_m <- merge(eatRep_nested,
                            eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
-                           by.x = "group",
+                           by.x = "unit",
                            by.y = "id",
                            all.x = TRUE)
+    # Hier vom Format noch richtig! Jetzt lang machen.
 
-    eatRep_nested_m$id <- paste(eatRep_nested_m$id, eatRep_nested_m$group, sep = "_")
+    eatRep_nested_m$unit_merged <- paste(eatRep_nested_m$unit_1, eatRep_nested_m$unit_2, sep = "_")
 
-# Build new group-column --------------------------------------------------
-    eatRep_nested_m$group <- NULL
+# Build new column --------------------------------------------------
+    eatRep_nested_m$unit <- NULL
+    eatRep_nested_m$unit_b <- NULL
     eatRep_nested_m <- tidyr::pivot_longer(
       eatRep_nested_m,
       cols = c("unit_1", "unit_2"),
       names_to = "unit_b",
-      values_to = "group"
+      values_to = "unit"
     )
 
   ## Now do the stuff we did before the loop started again.
   ## By this, the comparisons should be unnested until all done!
 
-    comp_groups <- eatRep_nested_m$group[grep("comp_", eatRep_nested_m$group)]
-    eatRep_no_comp_group <- eatRep_nested_m[!(eatRep_nested_m$group %in% comp_groups), ]
+    comp_groups <- eatRep_nested_m$unit[grep("comp_", eatRep_nested_m$unit)]
+    eatRep_no_comp_group <- eatRep_nested_m[!(eatRep_nested_m$unit %in% comp_groups), ]
+    comparison_dat <- eatRep_nested_m[eatRep_nested_m$unit %in% comp_groups, ]
 
     eatRep_unnested <- rbind(
-      eatRep_unnested[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")],
-      eatRep_no_comp_group[, c("id", "comparison", "group", "est", "se", "p", "sig", "es")])
+      eatRep_unnested[, c("id", "group", "unit",  "comparison", "est", "se", "p", "sig", "es")],
+      eatRep_no_comp_group[, c("id",  "group", "unit", "comparison", "est", "se", "p", "sig", "es")])
   }
 
 return(eatRep_unnested)

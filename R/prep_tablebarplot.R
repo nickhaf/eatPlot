@@ -16,7 +16,7 @@ prep_tablebarplot <- function(eatRep_dat,
                               names_from =  c("year", "comparison", "parameter"),
                               par = "mean",
                               facet_var = "TR_BUNDESLAND",
-                              total_group = "total",
+                              total_facet = "total",
                               comparisons = NULL,
                               sig_niveau = 0.05) {
 check_eatRep_dat(eatRep_dat)
@@ -24,7 +24,7 @@ check_eatRep_dat(eatRep_dat)
   if(nrow(eatRep_dat$comparison) > 0){
   check_columns(eatRep_dat$plain, c("unit_1", "unit_2", "id", "comparison", "parameter", "year", "est", "se", "p", facet_var, subgroup_var))
 
-    eatRep_dat <- rename_comparisons_total(eatRep_dat, total_group, facet_var) ## don't call it facet var.
+    eatRep_dat <- rename_comparisons_total(eatRep_dat, facet_var, total_facet) ## don't call it facet var.
 # its the variable where the comparison is made against
 
 ## Dirty Fix: "- total" aus TR_BUNDESLAND entfernen.
