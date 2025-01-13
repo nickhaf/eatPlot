@@ -17,7 +17,7 @@ test_that("labels are build correctly", {
       round_est = 4,
       round_se = 5
     ),
-    c("1.3400 (0.10000)", "**2.1221** (0.23000)", "3.5600<sup>a</sup> (0.47000)", "**10.1500**<sup>a</sup> (0.43236)")
+    c("1.3400<span style='white-space: pre;'> </span> (0.10000)", "**2.1221**<span style='white-space: pre;'> </span> (0.23000)", "3.5600<sup>a</sup><span style='white-space: pre;'> </span> (0.47000)", "**10.1500**<sup>a</sup><span style='white-space: pre;'> </span> (0.43236)")
   )
 
 
@@ -64,7 +64,7 @@ test_that("NAs are converted to empty strings", {
       column_est = "label_est",
       column_se = "label_se"
     ),
-    c("20 ()", "35 (2.3)", " ()", " (0.6)")
+    c("20 ()", "35<span style='white-space: pre;'> </span> (2.3)", " ()", "<span style='white-space: pre;'> </span> (0.6)")
   )
 
   expect_equal(
@@ -73,7 +73,7 @@ test_that("NAs are converted to empty strings", {
       column_se = "label_se",
       column_sig_bold = "p_est",
     ),
-    c("**20** ()", "35 (2.3)", " ()", " (0.6)")
+    c("**20** ()", "35<span style='white-space: pre;'> </span> (2.3)", " ()", "<span style='white-space: pre;'> </span> (0.6)")
   )
 
   expect_equal(
@@ -83,7 +83,7 @@ test_that("NAs are converted to empty strings", {
       column_sig_superscript = "p_est",
       sig_superscript_letter = "a"
     ),
-    c("20<sup>a</sup> ()", "35 (2.3)", " ()", " (0.6)")
+    c("20<sup>a</sup> ()", "35<span style='white-space: pre;'> </span> (2.3)", " ()", "<span style='white-space: pre;'> </span> (0.6)")
   )
 })
 

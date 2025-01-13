@@ -479,6 +479,7 @@ fill_column <- function(df, column_name, filling = NA) {
   if (is.null(column_name)) {
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
   } else if (column_name %in% colnames(df)) {
+#    df[[column_name]] <- ifelse(is.na(df[[column_name]]), filling, df[[column_name]])
     df[[deparse(substitute(column_name))]] <- df[[column_name]]
   } else if ((!column_name %in% colnames(df))) {
     warning(paste0("Your column '", column_name, "' is not part of your data. Trying to set it automatically."))
