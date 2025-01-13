@@ -13,6 +13,7 @@ trend_mw$group <- trend_mw$group %>%
 
 trend_mw$group <- subset(trend_mw$group, grepl("^total|^w -|^m -|^m$|^w$", mhg) & !grepl("m - einET", x = mhg))
 trend_mw$plain <- subset(trend_mw$plain, grepl("^total|^w -|^m -|^m$|^w$", mhg) & !grepl("m - einET", x = mhg))
+trend_mw$comparisons <- subset(trend_mw$comparisons, unit_1 %in% trend_mw$group$id & unit_2 %in% trend_mw$group$id)
 
 colnames(trend_mw$group)[colnames(trend_mw$group) == "mhg"] <- "geschlecht"
 colnames(trend_mw$plain)[colnames(trend_mw$plain) == "mhg"] <- "geschlecht"
