@@ -10,8 +10,8 @@ construct_label_2(
   label_est = NULL,
   label_se = NULL,
   label_sig_bold = NULL,
-  label_sig_high = NULL,
-  label_sig_high_extra_column = FALSE,
+  label_sig_superscript = NULL,
+  label_sig_superscript_extra_column = FALSE,
   round_est = 0,
   round_se = 1,
   plot_settings = plotsettings_tablebarplot()
@@ -22,7 +22,15 @@ construct_label_2(
 
 \item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 
-\item{label_sig_high_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
+\item{label_est}{Character string for the column with the estimates.}
+
+\item{label_se}{Character string for the column with the standard errors.}
+
+\item{label_sig_bold}{Character string for the column with the significant estimates that should determine the bold printing.}
+
+\item{label_sig_superscript}{Character string for the column with the significant estimates that should determine the superscript.}
+
+\item{label_sig_superscript_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
 
 \item{round_est}{Rounding of label_est.}
 
@@ -43,5 +51,5 @@ dat <- data.frame(
   estimate = c(400, 650, 380, 500, 600),
   se = c(0.1, 0.45, 1, 0.27, 0.9),
   p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
-  )
+)
 }

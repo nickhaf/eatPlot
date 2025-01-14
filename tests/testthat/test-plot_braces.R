@@ -170,7 +170,7 @@ test_that("Overlapping braces in the other direction", {
 #         ),
 #         label_est = "est",
 #         label_se = "se",
-#         label_sig_high = "sig_2",
+#         label_sig_superscript = "sig_2",
 #         label_sig_bold = "sig_1",
 #         plot_settings = plotsettings_lineplot(split_plot = TRUE)
 #       ) +

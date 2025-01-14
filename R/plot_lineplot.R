@@ -2,7 +2,6 @@
 #'
 #' @param eatPlot_dat Input is a list prepared by `prep_lineplot()`.
 #' @param facet_var Character string of the column name in `eatPlot_dat` containing the variable that should be split over multiple facets. Defaults to `NULL`.
-#' @param subgroup_var Character string of the column name in `eatPlot_dat` of the variable containing the subgroup mapping. Each supgroup will receive it's own line. Defaults to `NULL`.
 #' @param point_est Character string of the column name in `eatPlot_dat` containing the y-values for the plotted points. Defaults to `NULL`.
 #' @param point_sig Character string of the column name containing significance values for `point_values`. Defaults to `NULL`.
 #' @param line_sig Character string of the column name containing significance values for `line_values`. Defaults to `"sig_Trend_noComp"`, which will show the significance of the difference between two time points.

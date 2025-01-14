@@ -1,7 +1,7 @@
 #' Prepare lineplot data.
 #'
 #' @param eatRep_dat Object returned by `eatRep`.
-#' @param subgroup_var Character string of the name of the variable that contains the subgroups. IF there are subgroups within the data, this needs to be set, otherwise the data preperation might fail.  Defaults to `NULL`.
+#' @param subgroup_var Character string of the column in `eatPlot_dat$group` or `eatPlot_dat$plain` containing the subgroup mapping. Each supgroup will receive it's own line. IF there are subgroups within the data, this needs to be set, otherwise the data preparation might fail.  Defaults to `NULL`.
 #' @param total_subgroup Character string indicating the subgroup containing all other groups of the subgroup_var. Defaults to `"total"`.
 #' @param parameter Character string. Contains the value in column `parameter` that is used for plotting the lines.  Defaults to `"mean"`.
 #' @param facet_var Character string of the name of the variable that should be used for faceting the plot. Defaults to `"TR_BUNDESLAND"`.

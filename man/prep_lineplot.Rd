@@ -6,25 +6,31 @@
 \usage{
 prep_lineplot(
   eatRep_dat,
-  parameter,
+  subgroup_var = NULL,
+  total_subgroup = "total",
   facet_var = "TR_BUNDESLAND",
-  total_group = "total",
+  total_facet = "total",
+  parameter = "mean",
   sig_niveau = 0.05,
-  comparisons = NULL
+  comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")
 )
 }
 \arguments{
 \item{eatRep_dat}{Object returned by \code{eatRep}.}
 
-\item{parameter}{Character string. Contains the value in column \code{parameter} that is used for plotting the lines.  Defaults to \code{"mean"}.}
+\item{subgroup_var}{Character string of the column in \code{eatPlot_dat$group} or \code{eatPlot_dat$plain} containing the subgroup mapping. Each supgroup will receive it's own line. IF there are subgroups within the data, this needs to be set, otherwise the data preparation might fail.  Defaults to \code{NULL}.}
+
+\item{total_subgroup}{Character string indicating the subgroup containing all other groups of the subgroup_var. Defaults to \code{"total"}.}
 
 \item{facet_var}{Character string of the name of the variable that should be used for faceting the plot. Defaults to \code{"TR_BUNDESLAND"}.}
 
-\item{total_group}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
+\item{total_facet}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
+
+\item{parameter}{Character string. Contains the value in column \code{parameter} that is used for plotting the lines.  Defaults to \code{"mean"}.}
 
 \item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
 
-\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{NULL}.}
+\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{c("none", "crossDiff", "trend", "trend_crossDiff")}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.

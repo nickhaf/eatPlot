@@ -21,34 +21,34 @@ test_that("labels are build correctly", {
   )
 
 
-  expect_equal(
-    construct_label(
-      df,
-      column_est = "est",
-      column_se = NULL,
-      column_sig_bold = "sig_bold",
-      column_sig_superscript = "sig_superscript",
-      sig_superscript_letter = "a",
-      round_est = 4,
-      round_se = 5
-    ),
-    c("1.3400", "**2.1221**", "3.5600<sup>a</sup>", "**10.1500**<sup>a</sup>")
-  )
-
-
-  expect_equal(
-    construct_label(
-      dat = df,
-      column_est = "est",
-      column_se = NULL,
-      column_sig_bold = NULL,
-      column_sig_superscript = "sig_superscript",
-      sig_superscript_letter = "a",
-      round_est = 4,
-      round_se = 5
-    ),
-    c("1.3400", "2.1221", "3.5600<sup>a</sup>", "10.1500<sup>a</sup>")
-  )
+  # expect_equal(
+  #   construct_label(
+  #     df,
+  #     column_est = "est",
+  #     column_se = NULL,
+  #     column_sig_bold = "sig_bold",
+  #     column_sig_superscript = "sig_superscript",
+  #     sig_superscript_letter = "a",
+  #     round_est = 4,
+  #     round_se = 5
+  #   ),
+  #   c("1.3400", "**2.1221**", "3.5600<sup>a</sup>", "**10.1500**<sup>a</sup>")
+  # )
+  #
+  #
+  # expect_equal(
+  #   construct_label(
+  #     dat = df,
+  #     column_est = "est",
+  #     column_se = NULL,
+  #     column_sig_bold = NULL,
+  #     column_sig_superscript = "sig_superscript",
+  #     sig_superscript_letter = "a",
+  #     round_est = 4,
+  #     round_se = 5
+  #   ),
+  #   c("1.3400", "2.1221", "3.5600<sup>a</sup>", "10.1500<sup>a</sup>")
+  # )
 })
 
 

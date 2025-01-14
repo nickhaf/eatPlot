@@ -4,8 +4,11 @@
 #'
 #' @inheritParams plot_lineplot
 #' @param dat Data frame with the columns that should be merged into labels.
-#' @param brace_label_sig_superscript_extra_column Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).
-#' @param new_name Character string for the new column that is added to `dat`. Defaults to `'label'`.
+#' @param column_est Character string for the column with the estimates.
+#' @param column_se Character string for the column with the standard errors.
+#' @param column_sig_bold Character string for the column with the significant estimates that should determine the bold printing.
+#' @param column_sig_superscript Character string for the column with the significant estimates that should determine the superscript.
+#' @param sig_superscript_letter Character string for the letter that should be used for the superscript.
 #' @param round_est Rounding of brace_label_est.
 #' @param round_se Rounding of brace_label_se.
 #'
@@ -116,8 +119,14 @@ construct_label <- function(dat,
 #' This function creates a new column or label, merging estimates and standard errors with significant estimates represented in bold or as superscript (via `label_est`), and standard errors in brackets, if needed (via `label_se`). NAs are converted to empty strings. Main usage is for plotting tables and brace labels.
 #'
 #' @inheritParams plot_lineplot
+#' @inheritParams construct_label
+#'
 #' @param dat Data frame with the columns that should be merged into labels.
-#' @param label_sig_high_extra_column Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).
+#' @param label_est Character string for the column with the estimates.
+#' @param label_se Character string for the column with the standard errors.
+#' @param label_sig_bold Character string for the column with the significant estimates that should determine the bold printing.
+#' @param label_sig_superscript Character string for the column with the significant estimates that should determine the superscript.
+#' @param label_sig_superscript_extra_column Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).
 #' @param new_name Character string for the new column that is added to `dat`. Defaults to `'label'`.
 #' @param round_est Rounding of label_est.
 #' @param round_se Rounding of label_se.
@@ -138,19 +147,19 @@ construct_label_2 <- function(dat,
                               label_est = NULL,
                               label_se = NULL,
                               label_sig_bold = NULL,
-                              label_sig_high = NULL,
-                              label_sig_high_extra_column = FALSE,
+                              label_sig_superscript = NULL,
+                              label_sig_superscript_extra_column = FALSE,
                               round_est = 0,
                               round_se = 1,
                               plot_settings = plotsettings_tablebarplot()) {
   dat <- fill_column(dat, column_name = label_est, filling = "")
   dat <- fill_column(dat, column_name = label_se, filling = NA)
-  dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
+  dat <- fill_column(dat, column_name = label_sig_superscript, filling = FALSE)
   dat <- fill_column(dat, column_name = label_sig_bold, filling = FALSE)
 
 
-  if (any(is.na(dat[, c("label_sig_high", "label_sig_bold")]))) {
-    for (i in c("label_sig_high", "label_sig_bold")) {
+  if (any(is.na(dat[, c("label_sig_superscript", "label_sig_bold")]))) {
+    for (i in c("label_sig_superscript", "label_sig_bold")) {
       dat[is.na(dat[, i]), i] <- FALSE
     }
   }
@@ -175,7 +184,7 @@ construct_label_2 <- function(dat,
     dat$label_est
   )
 
-  dat$label_sig <- ifelse(dat$label_sig_high == TRUE & dat$label_est != "",
+  dat$label_sig <- ifelse(dat$label_sig_superscript == TRUE & dat$label_est != "",
     paste0("<sup>", plot_settings$columns_table_sig_superscript_letter, "</sup>"), ""
   )
 
@@ -186,7 +195,7 @@ construct_label_2 <- function(dat,
 
   dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")]) | dat[, c("label_est", "label_sig", "label_se")] == "NA"] <- ""
 
-  if (label_sig_high_extra_column == FALSE) {
+  if (label_sig_superscript_extra_column == FALSE) {
     dat[, new_name] <- paste0(
       dat$label_est,
       dat$label_sig,
@@ -203,7 +212,7 @@ construct_label_2 <- function(dat,
     )
   }
 
-  dat <- remove_columns(dat, cols = c("label_est", "label_sig", "label_se", "label_sig_bold", "label_sig_high"))
+  dat <- remove_columns(dat, cols = c("label_est", "label_sig", "label_se", "label_sig_bold", "label_sig_superscript"))
 
   return(dat)
 }

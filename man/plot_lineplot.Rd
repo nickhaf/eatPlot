@@ -6,19 +6,18 @@
 \usage{
 plot_lineplot(
   eatPlot_dat,
-  facet_var = NULL,
-  subgroup_var = NULL,
-  point_est = NULL,
-  point_sig = NULL,
-  line_sig = NULL,
-  line_se = NULL,
-  brace_label_est = NULL,
-  brace_label_se = NULL,
+  facet_var = "TR_BUNDESLAND",
+  point_est = "est_comparison_none",
+  point_sig = "sig_comparison_crossDiffTotal",
+  line_sig = "sig_comparison_trend",
+  line_se = "se_comparison_none",
+  brace_label_est = "est_comparison_trend",
+  brace_label_se = "se_comparison_trend",
   brace_label_sig_superscript = NULL,
-  brace_label_sig_bold = NULL,
+  brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(),
   years_braces = list(),
-  background_facet = "Deutschland",
+  background_facet = "total",
   background_subgroup = NULL,
   box_facet = NULL,
   title_superscripts = NULL,
@@ -29,8 +28,6 @@ plot_lineplot(
 \item{eatPlot_dat}{Input is a list prepared by \code{prep_lineplot()}.}
 
 \item{facet_var}{Character string of the column name in \code{eatPlot_dat} containing the variable that should be split over multiple facets. Defaults to \code{NULL}.}
-
-\item{subgroup_var}{Character string of the column name in \code{eatPlot_dat} of the variable containing the subgroup mapping. Each supgroup will receive it's own line. Defaults to \code{NULL}.}
 
 \item{point_est}{Character string of the column name in \code{eatPlot_dat} containing the y-values for the plotted points. Defaults to \code{NULL}.}
 

@@ -19,15 +19,21 @@ construct_label(
 \arguments{
 \item{dat}{Data frame with the columns that should be merged into labels.}
 
+\item{column_est}{Character string for the column with the estimates.}
+
+\item{column_se}{Character string for the column with the standard errors.}
+
+\item{column_sig_bold}{Character string for the column with the significant estimates that should determine the bold printing.}
+
+\item{column_sig_superscript}{Character string for the column with the significant estimates that should determine the superscript.}
+
+\item{sig_superscript_letter}{Character string for the letter that should be used for the superscript.}
+
 \item{round_est}{Rounding of brace_label_est.}
 
 \item{round_se}{Rounding of brace_label_se.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
-
-\item{brace_label_sig_superscript_extra_column}{Logical, if set 'FALSE' the superscript for significant values is added directly into the label (necessary for line plots), if set 'TRUE' the superscript for significant values is written into an extra column with the ending '_sig_superscript' (necessary for tables).}
-
-\item{new_name}{Character string for the new column that is added to \code{dat}. Defaults to \code{'label'}.}
 }
 \value{
 The data frame with an added column for the constructed label.
@@ -42,5 +48,5 @@ dat <- data.frame(
   estimate = c(400, 650, 380, 500, 600),
   se = c(0.1, 0.45, 1, 0.27, 0.9),
   p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
-  )
+)
 }

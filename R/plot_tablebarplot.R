@@ -156,8 +156,8 @@ plot_tablebarplot <- function(dat,
       new_name = new_colnames[i],
       label_est = columns_table[[i]],
       label_sig_bold = columns_table_sig_bold[[i]],
-      label_sig_high = columns_table_sig_superscript[[i]],
-      label_sig_high_extra_column = TRUE,
+      label_sig_superscript = columns_table_sig_superscript[[i]],
+      label_sig_superscript_extra_column = TRUE,
       round_est = columns_round[[i]],
       plot_settings = plot_settings
     )
@@ -178,7 +178,7 @@ plot_tablebarplot <- function(dat,
       label_est = bar_label,
       label_se = NULL,
       label_sig_bold = bar_label_sig,
-      label_sig_high = NULL,
+      label_sig_superscript = NULL,
       round_est = 1,
       plot_settings = plot_settings
     )

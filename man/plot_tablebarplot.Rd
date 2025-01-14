@@ -52,7 +52,7 @@ plot_tablebarplot(
 
 \item{column_spanners_2}{Named list. A second dimension of column spanners. The name of each element will be the column header. The list element itself has to be a numeric vector indicating which columns the column spanner should span.}
 
-\item{columns_round}{List of numerics, for rounding the column values. Insert \code{NULL} or \code{0} for no rounding/character columns.}
+\item{columns_round}{Numeric vector for rounding the column values. Insert \code{NULL} or \code{0} for no rounding/character columns.}
 
 \item{plot_settings}{Named list constructed with \code{plotsettings_tablebarplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_tablebarplot()} for an overview.}
 }

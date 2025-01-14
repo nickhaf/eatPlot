@@ -10,7 +10,7 @@ prep_tablebarplot(
   names_from = c("year", "comparison", "parameter"),
   par = "mean",
   facet_var = "TR_BUNDESLAND",
-  total_group = "total",
+  total_facet = "total",
   comparisons = NULL,
   sig_niveau = 0.05
 )
@@ -18,7 +18,7 @@ prep_tablebarplot(
 \arguments{
 \item{eatRep_dat}{Object returned by \code{eatRep}.}
 
-\item{subgroup_var}{Character string of the column name in \code{eatPlot_dat} of the variable containing the subgroup mapping. Each supgroup will receive it's own line. Defaults to \code{NULL}.}
+\item{subgroup_var}{Character string of the column in \code{eatPlot_dat$group} or \code{eatPlot_dat$plain} containing the subgroup mapping. Each supgroup will receive it's own line. IF there are subgroups within the data, this needs to be set, otherwise the data preparation might fail.  Defaults to \code{NULL}.}
 
 \item{names_from}{Character vector of the variables that should be used to create the wide format. Defaults to \code{c("year", "comparison", "parameter")}.}
 
@@ -26,9 +26,9 @@ prep_tablebarplot(
 
 \item{facet_var}{Character string of the variable containing information on groups some of the comparisons are made against. This is needed to decosntruct comparisons like \code{crossDiff} into \code{crossDiff} and \code{crossDiffTotal} (so a crossDiff comparison against the total group). Name might be a bit confusing, but is the same as in \code{prep_lineplot}. Defaults to \code{TR_BUNDESLAND}.}
 
-\item{total_group}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
+\item{total_facet}{Character string of the name of the total groups containing all other groups of the facet var. Defaults to \code{"total"}.}
 
-\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{NULL}.}
+\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{c("none", "crossDiff", "trend", "trend_crossDiff")}.}
 
 \item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
 }

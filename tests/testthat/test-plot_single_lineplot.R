@@ -70,7 +70,7 @@ test_that("single_lineplot with one grouping_var is plotted correctly (same dist
 #         line_sig = "sig_trend",
 #         label_est = "est_label",
 #         label_se = "se_label",
-#         label_sig_high = "sig_label_1",
+#         label_sig_superscript = "sig_label_1",
 #         label_sig_bold = "sig_label_2",
 #         point_values = "point_values",
 #         point_sig = "sig_noTrend_noComp"
@@ -141,7 +141,7 @@ test_that("single_lineplot with one grouping_var is plotted correctly (same dist
 #         line_sig = "sig_trend",
 #         label_est = "est_label",
 #         label_se = "se_label",
-#         label_sig_high = "sig_label_1",
+#         label_sig_superscript = "sig_label_1",
 #         label_sig_bold = "sig_label_2",
 #         point_values = "point_values",
 #         plot_settings = plotsettings_lineplot(
@@ -221,7 +221,7 @@ test_that("single_lineplot with one grouping_var is plotted correctly (same dist
 #         line_sig = "sig_trend",
 #         label_est = "est_label",
 #         label_se = "se_label",
-#         label_sig_high = "sig_label_1",
+#         label_sig_superscript = "sig_label_1",
 #         label_sig_bold = "sig_label_2",
 #         point_values = "point_values",
 #         plot_settings = plotsettings_lineplot(

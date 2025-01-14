@@ -11,6 +11,9 @@ plotsettings_tablebarplot(
   background_stripes_colour = NULL,
   bar_background_lines = NULL,
   bar_background_lines_linetype = NULL,
+  bar_background_lines_colour = NULL,
+  bar_background_0line_linetype = NULL,
+  bar_background_0line_colour = NULL,
   bar_background_lines_spanners = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
@@ -57,6 +60,12 @@ plotsettings_tablebarplot(
 \item{bar_background_lines}{Character string of either \code{c("borders", "scale_breaks", "none")}, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.}
 
 \item{bar_background_lines_linetype}{Character string indicating the linetype for the background lines of the barplot.}
+
+\item{bar_background_lines_colour}{Character string indicating the colour for the background lines of the barplot.}
+
+\item{bar_background_0line_linetype}{Character string indicating the linetype for the background line of the barplot at zero.}
+
+\item{bar_background_0line_colour}{Character string indicating the colour for the background line of the barplot at zero.}
 
 \item{bar_background_lines_spanners}{List containing of numeric vectors of two elements for indicating over which rows the background_lines in the barplot should span. Each vector contains the start and end row for the background line. Defaults to \code{NULL}, in which case The background_lines will be drawn from top to bottom.}
 
@@ -108,7 +117,7 @@ plotsettings_tablebarplot(
 
 \item{headers_background_colour}{Colour of the background of the headers.}
 
-\item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{3}.}
+\item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{2.5}.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 
@@ -116,7 +125,7 @@ plotsettings_tablebarplot(
 
 \item{headers_row_height}{Numeric for the row height of the row the headers are written in. Defaults to \code{1}.}
 
-\item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{3}.}
+\item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{2.5}.}
 
 \item{space_right}{Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to \code{0}.}
 
