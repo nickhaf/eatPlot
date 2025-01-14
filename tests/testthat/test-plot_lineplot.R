@@ -87,7 +87,7 @@ test_that("simple lineplot with one group", {
 #
 #   p_line <- plot_lineplot(
 #     trend_3_settings,
-#     seperate_plot_var_box = "wholeGroup",
+#     box_facet = "wholeGroup",
 #     title_superscripts = NULL
 #   )
 #
@@ -97,7 +97,7 @@ test_that("simple lineplot with one group", {
 # test_that("box around state", {
 #
 #   p <- plot_lineplot(trend_3_prepped,
-#                      seperate_plot_var_box = "Berlin",
+#                      box_facet = "Berlin",
 #                      title_superscripts = NULL
 #   )
 #

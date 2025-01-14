@@ -16,7 +16,7 @@
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param background_facet Character string in the `facet_var` column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to `"Deutschland"`.
 #' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to `"total"`.
-#' @param seperate_plot_var_box Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
+#' @param box_facet Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
 #' @export
@@ -36,7 +36,7 @@ plot_lineplot <- function(eatPlot_dat,
                           years_braces = list(),
                           background_facet = "total",
                           background_subgroup = NULL,
-                          seperate_plot_var_box = NULL,
+                          box_facet = NULL,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
@@ -172,11 +172,11 @@ plot_lineplot <- function(eatPlot_dat,
 
   ## The wholeGroup plot gets a box drawn around it.
   for (plot_names in names(plot_list)) {
-    if (plot_names %in% seperate_plot_var_box) {
+    if (plot_names %in% box_facet) {
       plot_list[[plot_names]] <- plot_list[[plot_names]] +
         ggplot2::theme(plot.background = ggplot2::element_rect(
           color = "black",
-          linewidth = dat_p$plot_settings$seperate_plot_var_box_linewidth,
+          linewidth = dat_p$plot_settings$box_facet_linewidth,
           fill = NA
         ))
     }

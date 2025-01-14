@@ -100,7 +100,7 @@ lineplot_germany_2 <- plot_lineplot(trend_total,
   background_facet = NULL,
   background_subgroup = NULL,
   facet_var = "kb",
-  seperate_plot_var_box = "wholeGroup",
+  box_facet = "wholeGroup",
   title_superscripts = NULL,
   plot_settings = plotsettings_lineplot(
     brace_label_nudge_x = 0.3,
@@ -144,7 +144,7 @@ lineplot_1 <- plot_lineplot(trend_3_prepped,
   background_facet = "total",
   background_subgroup = "total",
   facet_var = "TR_BUNDESLAND",
-  seperate_plot_var_box = "Berlin",
+  box_facet = "Berlin",
   title_superscripts = NULL,
   plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
 )
@@ -182,7 +182,7 @@ lineplot_1_w <- plot_lineplot(
   trend_p,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
-  seperate_plot_var_box = "Berlin",
+  box_facet = "Berlin",
   title_superscripts = list(
     "Bayern" = "a",
     "Thüringen" = "3"),

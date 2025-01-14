@@ -20,7 +20,7 @@ plot_lineplot(
   years_braces = list(),
   background_facet = "Deutschland",
   background_subgroup = NULL,
-  seperate_plot_var_box = NULL,
+  box_facet = NULL,
   title_superscripts = NULL,
   plot_settings = plotsettings_lineplot()
 )
@@ -56,7 +56,7 @@ plot_lineplot(
 
 \item{background_subgroup}{Character string in the \code{subgroup_var} column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to \code{"total"}.}
 
-\item{seperate_plot_var_box}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
+\item{box_facet}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 
 \item{title_superscripts}{Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to \code{NULL}.}
 
