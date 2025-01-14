@@ -141,10 +141,8 @@ str(trend_p)
 ```{r}
 #| eval: FALSE
 
-
 trend_p$TR_BUNDESLAND <- gsub("([a-z])([A-Z])", "\\1-\\2", trend_p$TR_BUNDESLAND)
 trend_p$TR_BUNDESLAND <- gsub("ue", "ü", trend_p$TR_BUNDESLAND)
-
 
 lineplot_1_w <- plot_lineplot(
   trend_p,
