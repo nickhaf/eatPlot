@@ -1,4 +1,9 @@
-# eatPlot 1.0.0
+# eatPlot 1.0.0 "Major Update"
+* Breaking Changes: The package was completely restructured to encompass changes that were made to the output format of `eatRep`. 
+* Mainly, the data preparation was changed internally. 
+On user end, changes will be most visible in changed output format of the prepared data, and changed column names of the prepared data. 
+* Some function arguments were changed for more consistency. 
+* `prep_plot()` was split up into `prep_plot_lineplot()` and `prep_plot_tablebarplot()`, with different arguments and output formats.
 
 ## eatPlot 0.0.0.9029 "Better Braces"
 * Updated the algorithm for calculating the brace position and indention, so the longer trend always gets the longer brace. The braces get indented automatically, depending on their position in the plot. 
