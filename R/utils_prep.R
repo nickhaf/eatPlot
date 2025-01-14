@@ -12,7 +12,12 @@ rename_comparisons_total <- function(eatRep_dat, facet_var, total_facet, total_s
   total_facet_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ", total_facet, "$"), eatRep_dat$plain[, facet_var])])
   total_subgroup_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ", total_subgroup, "$"), eatRep_dat$plain[, "subgroup_var"])])
 
-
+  ## If there is none, than every comparison is against the own group and against Total.
+  ## There should be only one group for this to be correct.
+  ## in this case duplicate and name one with totalgroup and one with sameGroup:
+#   if(length(total_subgroup_comparisons) == 0 & length(unique(eatRep_dat$group$subgroup_var)) == 1){
+# total_subgroup_comparisons <- total_facet_comparisons
+#     }
 
   # while (length(total_comparisons_nested) > 0) {
   #   total_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_comparisons_nested, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_comparisons_nested, "id"])
