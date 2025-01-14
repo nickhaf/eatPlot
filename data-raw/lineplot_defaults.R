@@ -38,7 +38,7 @@ lineplot_4x4 <- plotsettings_lineplot(
     "FALSE" = 16
   ),
   point_size = 1.7,
-  split_plot = TRUE,
+  split_plot = FALSE,
   split_plot_gap_width = 0.03,
   axis_y = FALSE
 )
