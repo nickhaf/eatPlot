@@ -1,5 +1,6 @@
 trend_3_prepped <- prep_lineplot(
-  trend_3
+  trend_3,
+  subgroup_var = "mhg"
 )
 
 

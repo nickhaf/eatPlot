@@ -1,6 +1,8 @@
 #' Prepare lineplot data.
 #'
 #' @param eatRep_dat Object returned by `eatRep`.
+#' @param subgroup_var Character string of the name of the variable that contains the subgroups. IF there are subgroups within the data, this needs to be set, otherwise the data preperation might fail.  Defaults to `NULL`.
+#' @param total_subgroup Character string indicating the subgroup containing all other groups of the subgroup_var. Defaults to `"total"`.
 #' @param parameter Character string. Contains the value in column `parameter` that is used for plotting the lines.  Defaults to `"mean"`.
 #' @param facet_var Character string of the name of the variable that should be used for faceting the plot. Defaults to `"TR_BUNDESLAND"`.
 #' @param total_facet Character string of the name of the total groups containing all other groups of the facet var. Defaults to `"total"`.
@@ -10,8 +12,8 @@
 #' @export
 #'
 #' @examples # tbd
-prep_lineplot <- function(eatRep_dat, parameter = "mean", total_facet = "total",
-                          facet_var = "TR_BUNDESLAND", sig_niveau = 0.05,
+prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "total",
+                          facet_var = "TR_BUNDESLAND", total_facet = "total", parameter = "mean",  sig_niveau = 0.05,
                           comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")) {
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
@@ -28,7 +30,11 @@ prep_lineplot <- function(eatRep_dat, parameter = "mean", total_facet = "total",
     eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
   }
 
-  eatRep_dat <- rename_comparisons_total(eatRep_dat, facet_var = facet_var, total_facet = total_facet)
+  eatRep_dat <- rename_comparisons_total(eatRep_dat,
+                                         facet_var = facet_var,
+                                         total_facet = total_facet,
+                                         subgroup_var = subgroup_var,
+                                         total_subgroup = total_subgroup)
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
@@ -40,8 +46,7 @@ prep_lineplot <- function(eatRep_dat, parameter = "mean", total_facet = "total",
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
-  plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var)
-
+  plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var, facet_total, subgroup_var, subgroup_total)
 
 
 
@@ -58,6 +63,15 @@ prep_lineplot <- function(eatRep_dat, parameter = "mean", total_facet = "total",
   return(plot_dat_wide)
 }
 
+
+
+
+
+
+
+
+
+
 create_trend <- function(df) {
 
   df$trend <- ifelse(length(unique(df$year)) == 2,
@@ -68,7 +82,7 @@ create_trend <- function(df) {
   return(df)
 }
 
-build_plot_dat <- function(eatRep_dat, facet_var) { ## facet_var schon außerhalb erzeugen
+build_plot_dat <- function(eatRep_dat, facet_var, facet_total, subgroup_var, subgroup_total ) { ## facet_var schon außerhalb erzeugen
 
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
     eatRep_dat$estimate,
@@ -101,23 +115,31 @@ build_plot_dat <- function(eatRep_dat, facet_var) { ## facet_var schon außerhal
   plot_dat <- do.call(rbind, lapply(split(eatRep_dat_merged, eatRep_dat_merged$id), create_trend))
   rownames(plot_dat) <- NULL
 
+
+
+  ## Ansosnten hier irgendwo die Comparisons gruppieren, nach Unit = 2 Filtern und dann schauen ob die entsprechenden total label drin sind
+  ## Everywhere where the comparison is against total, the total facet var can be removed, because it is duplicated. Same for subgroups.
+  plot_dat <- plot_dat[!(plot_dat[, facet_var] == "total" & grepl("Total", plot_dat$comparison)), ]
+  plot_dat <- plot_dat[!(plot_dat[, subgroup_var] == "total" & grepl("_subgroupTotal", plot_dat$comparison)), ]
+
+
+## Problem: Total fehlt jetzt hier ganz. Ich brauche ja trotzdem die Est und Trend sachen von Total. Nur  ebend nicht das, was gegen Total verglichen wird
+
+  ## trend ist z.B. gar nicht mit drin?
+
   noTrend <- plot_dat[plot_dat$trend %in% c("2009", "2015", "2022"), ]
   trend <- plot_dat[!(plot_dat$trend %in% c("2009", "2015", "2022")), ]
 
 
-  ## Everywhere where the comparison is against total, the total facet var can be removed, because it is
-  ## duplicated
-  trend <- trend[!(trend[, facet_var] == "total" & grepl("Total", trend$comparison)), ]
-
   noTrend_wide <- tidyr::pivot_wider(
-    noTrend,
+    unique(noTrend[, !colnames(noTrend) %in% c("group", "id") ]),
     names_from = "comparison",
     values_from = c("est_comparison", "se_comparison", "sig_comparison", "p_comparison", "es_comparison")
   ) |>
     as.data.frame()
 
 
-  ## Hier Fehler, z.B. trend_crossDiffTotal Berlin nz 2009_2015
+
   trend_wide <- tidyr::pivot_wider(
     unique(trend[, !colnames(trend) %in% c("group", "id") ]),
     names_from = "comparison",
@@ -127,7 +149,8 @@ build_plot_dat <- function(eatRep_dat, facet_var) { ## facet_var schon außerhal
 
 plot_dat <- merge(
   noTrend_wide[, !colnames(noTrend_wide) %in% c("group", "id", "trend") ],
-  trend_wide)
+  trend_wide,
+  all = TRUE)
 
 
   return(plot_dat)

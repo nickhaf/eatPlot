@@ -67,6 +67,7 @@ plot_lineplot <- function(eatPlot_dat,
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
 
+  browser()
   # Prepare Subsets ---------------------------------------------------------
 ## Hier auch subsetten wenn background_subgroup = NULL
 
@@ -130,12 +131,13 @@ if(!is.null(background_facet) & !is.null(background_subgroup)){
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
+
     p_state <- ggplot2::ggplot(
       dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
         x = .data$year,
         y = .data$point_est,
-        group = .data$trend,
+        #group = .data$trend,
         colour = .data$subgroup_var
       )
     ) +
