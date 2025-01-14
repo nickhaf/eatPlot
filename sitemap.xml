@@ -1,10 +1,9 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://nickhaf.github.io/eatPlot/404.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/articles/bt22_plots.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/articles/data_preperation.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/articles/getting_started.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/articles/index.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/articles/lineplots.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/articles/plot_settings.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/articles/tableplots.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/authors.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/index.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/news/index.html</loc></url>
@@ -13,13 +12,11 @@
 <url><loc>https://nickhaf.github.io/eatPlot/reference/barplot_plot_frame.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/barplot_plot_frz.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/barplot_table_plot_pattern.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/calc_plot_lims.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/clean_data.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/cmyk.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/combine_plots.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/construct_directional_sig.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/construct_grouping_var.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/construct_label.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/construct_label_2.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/construct_percent.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/eatPlot-package.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/filter_plot_dat.html</loc></url>
@@ -30,21 +27,13 @@
 <url><loc>https://nickhaf.github.io/eatPlot/reference/lineplot_4x4.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/lineplot_4x4_3groups.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/min_stand.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_background_lines.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_braces.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/plot_lineplot.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_lines.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_points.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_single_lineplot.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_tablebar.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_x_axis.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_y_axis.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/plot_tablebarplot.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/plotsettings_lineplot.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/prep_data_blocks.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/prep_plot.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/prep_lineplot.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/prep_tablebarplot.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/save_plot.html</loc></url>
-<url><loc>https://nickhaf.github.io/eatPlot/reference/set_plot_coords.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/set_scales.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/standardize_column_width.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/standardize_pattern_spacing.html</loc></url>
@@ -52,6 +41,10 @@
 <url><loc>https://nickhaf.github.io/eatPlot/reference/theme_table.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/theme_table_col.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/theme_y_axis.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/trend_2.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/trend_3.html</loc></url>
 <url><loc>https://nickhaf.github.io/eatPlot/reference/trend_books.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/trend_mw.html</loc></url>
+<url><loc>https://nickhaf.github.io/eatPlot/reference/trend_zwh.html</loc></url>
 </urlset>
 
