@@ -1,4 +1,4 @@
-# eatPlot (development version)
+# eatPlot 1.0.0
 
 ## eatPlot 0.0.0.9029 "Better Braces"
 * Updated the algorithm for calculating the brace position and indention, so the longer trend always gets the longer brace. The braces get indented automatically, depending on their position in the plot. 
