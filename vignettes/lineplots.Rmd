@@ -40,19 +40,9 @@ trend_3_prepped$TR_BUNDESLAND <- gsub("ue", "ü", trend_3_prepped$TR_BUNDESLAND)
 ```{r}
 lineplot_2 <- plot_lineplot(
   trend_3_prepped,
-  point_est = "est_comparison_none",
-  point_sig = "sig_comparison_crossDiffTotal_subgroupTotal",
-  line_sig = "sig_comparison_trend",
-  line_se = "se_comparison_none",
-  brace_label_est = "est_comparison_trend",
-  brace_label_se = "se_comparison_trend",
-  brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
-  background_facet = "total",
   background_subgroup = "total",
-  facet_var = "TR_BUNDESLAND",
-  title_superscripts = NULL,
   plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
 )
 
@@ -88,19 +78,9 @@ trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND)
 
 ```{r}
 lineplot_germany_2 <- plot_lineplot(trend_total,
-  point_est = "est_comparison_none",
-  point_sig = NULL,
-  line_sig = "sig_comparison_trend",
-  line_se = "se_comparison_none",
-  brace_label_est = "est_comparison_trend",
-  brace_label_se = "se_comparison_trend",
-  brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
-  background_facet = NULL,
-  background_subgroup = NULL,
   facet_var = "kb",
-  box_facet = "wholeGroup",
   title_superscripts = NULL,
   plot_settings = plotsettings_lineplot(
     brace_label_nudge_x = 0.3,
@@ -131,21 +111,8 @@ trend_3_prepped$TR_BUNDESLAND <- gsub("ue", "ü", trend_3_prepped$TR_BUNDESLAND)
 
 
 lineplot_1 <- plot_lineplot(trend_3_prepped,
-  point_est = "est_comparison_none",
-  point_sig = "sig_comparison_crossDiffTotal", ## sig_noTrend_Comp_crossDiff_wholeGroup
-  line_sig = "sig_comparison_trend",
-  line_se = "se_comparison_none",
-  brace_label_est = "est_comparison_trend",
-  brace_label_se = "se_comparison_trend",
-  brace_label_sig_superscript = NULL,
-  brace_label_sig_bold = "sig_comparison_trend",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
-  background_facet = "total",
-  background_subgroup = "total",
-  facet_var = "TR_BUNDESLAND",
-  box_facet = "Berlin",
-  title_superscripts = NULL,
   plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
 )
 ```
@@ -174,7 +141,7 @@ str(trend_p)
 #| eval: FALSE
 
 
-trend_p$TR_BUNDESLAND <- gsub("([a-z])([A-Z])", "\\1 \\2", trend_p$TR_BUNDESLAND)
+trend_p$TR_BUNDESLAND <- gsub("([a-z])([A-Z])", "\\1-\\2", trend_p$TR_BUNDESLAND)
 trend_p$TR_BUNDESLAND <- gsub("ue", "ü", trend_p$TR_BUNDESLAND)
 
 
@@ -183,6 +150,7 @@ lineplot_1_w <- plot_lineplot(
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   box_facet = "Berlin",
+  background_subgroup = "total",
   title_superscripts = list(
     "Bayern" = "a",
     "Thüringen" = "3"),

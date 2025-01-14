@@ -14,7 +14,7 @@
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
 #' @param background_facet Character string in the `facet_var` column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to `"Deutschland"`.
-#' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to `"total"`.
+#' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to `NULL`.
 #' @param box_facet Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
@@ -24,7 +24,7 @@
 plot_lineplot <- function(eatPlot_dat,
                           facet_var = "TR_BUNDESLAND",
                           point_est = "est_comparison_none",
-                          point_sig = "sig_comparison_crossDiffTotal",
+                          point_sig = "sig_comparison_crossDiffTotal_subgroupTotal",
                           line_sig = "sig_comparison_trend",
                           line_se = "se_comparison_none",
                           brace_label_est = "est_comparison_trend",
@@ -68,7 +68,6 @@ plot_lineplot <- function(eatPlot_dat,
 
   # Prepare Subsets ---------------------------------------------------------
   ## Hier auch subsetten wenn background_subgroup = NULL
-
   if (!is.null(background_facet) & !is.null(background_subgroup)) {
     background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet & eatPlot_dat$subgroup_var == background_subgroup, ]
   } else if (!is.null(background_facet) & is.null(background_subgroup)) {
