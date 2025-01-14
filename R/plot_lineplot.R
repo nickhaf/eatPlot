@@ -24,7 +24,7 @@
 plot_lineplot <- function(eatPlot_dat,
                           facet_var = "TR_BUNDESLAND",
                           point_est = "est_comparison_none",
-                          point_sig = "sig_comparison_crossDiffTotal_subgroupTotal",
+                          point_sig = "sig_comparison_crossDiffTotal",
                           line_sig = "sig_comparison_trend",
                           line_se = "se_comparison_none",
                           brace_label_est = "est_comparison_trend",

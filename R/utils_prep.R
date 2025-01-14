@@ -9,9 +9,9 @@ rename_comparisons_total <- function(eatRep_dat, facet_var, total_facet, total_s
   # total_facet_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_facet_comparisons, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_facet_comparisons, "id"])
 
   # total_comparisons <- c(total_facet_comparisons, total_comparisons_nested)
-browser()
   total_facet_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ", total_facet, "$"), eatRep_dat$plain[, facet_var])])
   total_subgroup_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ", total_subgroup, "$"), eatRep_dat$plain[, "subgroup_var"])])
+
 
 
   # while (length(total_comparisons_nested) > 0) {
