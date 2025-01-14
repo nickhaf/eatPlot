@@ -33,7 +33,6 @@ standardize_column_width <- function(column_widths, plot_ranges = c(0, 0)) {
   if (length(plot_ranges) != length(column_widths)) {
     stop("You need to provide plot ranges for every plot.", call. = FALSE)
   }
-
   names_column_widths <- names(column_widths)
 
   column_widths <- calc_barplot_width(column_widths, plot_ranges)
@@ -57,9 +56,9 @@ standardize_column_width <- function(column_widths, plot_ranges = c(0, 0)) {
 
   ## superscript nudge
 
-  # res_list[["columns_table_sig_high_letter_nudge_x"]] <- sapply(plot_width, function(x){x * columns_table_sig_high_letter_nudge_x})
+  # res_list[["columns_table_sig_superscript_letter_nudge_x"]] <- sapply(plot_width, function(x){x * columns_table_sig_superscript_letter_nudge_x})
 
-  names(standardized_column_widths) <- c(names_column_widths) # , "columns_table_sig_high_letter_nudge_x")
+  names(standardized_column_widths) <- c(names_column_widths) # , "columns_table_sig_superscript_letter_nudge_x")
 
   return(standardized_column_widths)
 }
@@ -68,9 +67,9 @@ standardize_column_width <- function(column_widths, plot_ranges = c(0, 0)) {
 # Utils -------------------------------------------------------------------
 calc_barplot_width <- function(column_widths, plot_ranges) {
   ## Fill up NAs with the remaining space with the relative barplot widths
-  sum_plot_ranges <- sum(plot_ranges)
+  sum_plot_ranges <- sum(abs(plot_ranges))
   relative_plot_ranges <- sapply(plot_ranges, function(x) {
-    x / sum_plot_ranges
+    abs(x / sum_plot_ranges)
   })
 
   rest <- 1 - sum(unlist(column_widths), na.rm = TRUE)
@@ -80,11 +79,6 @@ calc_barplot_width <- function(column_widths, plot_ranges) {
     column_widths[[x]][is.na(column_widths[[x]])] <- plot_width[[x]]
     return(column_widths[[x]])
   })
-
-
-  if (1 - sum(unlist(column_widths)) != 0) {
-    stop("The sum of all your column widths has to be equal to 1.", call. = FALSE)
-  }
 
   return(column_widths)
 }

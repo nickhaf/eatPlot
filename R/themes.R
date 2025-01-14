@@ -1,6 +1,6 @@
 #' Theme for table plotted with ggplot2.
 #'
-#' @inheritParams plot_tablebar
+#' @inheritParams plot_tablebarplot
 #' @return ggplot2 theme.
 #' @export
 #'
@@ -13,11 +13,11 @@ theme_table <- function(plot_settings) {
       panel.grid.major = ggplot2::element_blank(),
       panel.border = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_line(linewidth = 0.1),
+      axis.ticks.x = ggplot2::element_line(linewidth = 0.1, color = "black"),
       axis.line.y = ggplot2::element_blank(),
       axis.title = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_text(size = plot_settings$axis_x_label_size),
+      axis.text.x = ggplot2::element_text(size = plot_settings$axis_x_label_size, color = "black"),
       axis.ticks.y = ggplot2::element_blank(),
       plot.caption = ggplot2::element_text(hjust = 0),
       legend.position = "none", # "bottom",
@@ -26,19 +26,26 @@ theme_table <- function(plot_settings) {
 }
 
 #' Theme for a y-axis plot.
+#' @inheritParams plot_lineplot
 #'
 #' @return [ggplot2] theme, that can be used for a plotted y-axis.
 #' @export
 #'
 #' @examples # tbd
-theme_y_axis <- function() {
+theme_y_axis <- function(plot_settings = plotsettings_lineplot()) {
   theme_line() %+replace%
     ggplot2::theme(
       axis.text.y = ggplot2::element_text(colour = "black", size = 6),
       text = ggplot2::element_text(colour = "black", size = 4),
       axis.ticks.y = ggplot2::element_line(linewidth = 0.2),
       axis.text.x = ggplot2::element_blank(),
-      axis.line.x = ggplot2::element_blank()
+      axis.line.x = ggplot2::element_blank(),
+      plot.margin = ggplot2::unit(c(
+        plot_settings$margin_top,
+        0,
+        plot_settings$margin_bottom,
+        0
+      ), "npc")
     )
 }
 
@@ -87,10 +94,11 @@ theme_line <- function(plot_settings = plotsettings_lineplot()) {
       text = ggplot2::element_text(colour = "#000000"),
       panel.spacing = ggplot2::unit(plot_settings$split_plot_gap_width, "npc"), # Gap in split plot
       plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units = "npc"),
-      plot.title = ggplot2::element_text(size = 7,
-                                         hjust = 0.5,
-                                         vjust = 0,
-                                         margin = ggplot2::margin(-3.5, 0, 3.5, 0)
-                                         )
+      plot.title = ggplot2::element_text(
+        size = 7,
+        hjust = 0.5,
+        vjust = 0,
+        margin = ggplot2::margin(-3.5, 0, 3.5, 0)
+      )
     )
 }

@@ -7,7 +7,7 @@
 construct_directional_sig(dat_bar, est_column, sig_column)
 }
 \arguments{
-\item{dat_bar}{Data prepared by \code{prep_plot()}.}
+\item{dat_bar}{Data prepared by \code{prep_lineplot()}.}
 
 \item{est_column}{Column that contains the estimates.}
 

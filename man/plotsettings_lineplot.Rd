@@ -38,7 +38,7 @@ plotsettings_lineplot(
   point_label_nudge_x = NULL,
   point_label_nudge_y = NULL,
   point_size = NULL,
-  seperate_plot_var_box_linewidth = NULL,
+  box_facet_linewidth = NULL,
   split_plot = NULL,
   split_plot_gap_width = NULL,
   default_list = NULL
@@ -101,7 +101,7 @@ plotsettings_lineplot(
 
 \item{point_size}{Numeric for the size of plotted points.}
 
-\item{seperate_plot_var_box_linewidth}{Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).}
+\item{box_facet_linewidth}{Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).}
 
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 

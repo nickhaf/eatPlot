@@ -1,6 +1,6 @@
 Package: eatPlot
 Title: Plot eatRep output
-Version: 0.0.0.9030
+Version: 1.0.0
 Authors@R: c(
     person("Nicklas", "Hafiz", email = "hafiznij@hu-berlin.de", role = c("aut", "cre")),
     person("Philipp", "Franikowski", role = c("ctb"))
@@ -9,7 +9,7 @@ Description: Functions for plotting eatModel output.
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Suggests: 
     covr,
     knitr,
@@ -18,9 +18,10 @@ Suggests:
     vdiffr
 Config/testthat/edition: 3
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1)
 LazyData: true
 Imports: 
+    checkmate,
     ggbrace (>= 0.1.1),
     ggnewscale,
     ggpattern,
@@ -31,6 +32,7 @@ Imports:
     lifecycle,
     patchwork,
     plyr,
-    rlang
+    rlang,
+    tidyr
 VignetteBuilder: knitr
 URL: https://nickhaf.github.io/eatPlot/

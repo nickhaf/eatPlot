@@ -11,6 +11,9 @@ plotsettings_tablebarplot(
   background_stripes_colour = NULL,
   bar_background_lines = NULL,
   bar_background_lines_linetype = NULL,
+  bar_background_lines_colour = NULL,
+  bar_background_0line_linetype = NULL,
+  bar_background_0line_colour = NULL,
   bar_background_lines_spanners = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
@@ -31,8 +34,8 @@ plotsettings_tablebarplot(
   columns_alignment = NULL,
   columns_nudge_x = NULL,
   columns_nudge_y = NULL,
-  columns_table_sig_high_letter = NULL,
-  columns_table_sig_high_letter_nudge_x = NULL,
+  columns_table_sig_superscript_letter = NULL,
+  columns_table_sig_superscript_letter_nudge_x = NULL,
   columns_width = NULL,
   headers_alignment = NULL,
   headers_background_colour = NULL,
@@ -50,19 +53,25 @@ plotsettings_tablebarplot(
 
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, \code{NULL} (default).}
 
-\item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), or the outer right background line to the left of the plot (\verb{"background_line_right}).}
+\item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right", "background_line_table")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), the outer right background line to the left of the plot (\verb{"background_line_right}), or only over the table-part of the plot (\verb{background_line_table"}).}
 
-\item{background_stripes_colour}{Named vector containing the two colours that should be used for the striped background. Defaults to \code{NULL}.}
+\item{background_stripes_colour}{Character vector containing the background colour of each row. Defaults to \code{NULL}.}
 
 \item{bar_background_lines}{Character string of either \code{c("borders", "scale_breaks", "none")}, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.}
 
 \item{bar_background_lines_linetype}{Character string indicating the linetype for the background lines of the barplot.}
 
+\item{bar_background_lines_colour}{Character string indicating the colour for the background lines of the barplot.}
+
+\item{bar_background_0line_linetype}{Character string indicating the linetype for the background line of the barplot at zero.}
+
+\item{bar_background_0line_colour}{Character string indicating the colour for the background line of the barplot at zero.}
+
 \item{bar_background_lines_spanners}{List containing of numeric vectors of two elements for indicating over which rows the background_lines in the barplot should span. Each vector contains the start and end row for the background line. Defaults to \code{NULL}, in which case The background_lines will be drawn from top to bottom.}
 
 \item{bar_fill_colour}{Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in \code{bar_fill}. If no names are provided for the vector, the order of the factor levels of \code{bar_fill} will be used for determining the colour assignment.}
 
-\item{bar_frame_linetype}{Named vector with the bar frame linetypes. Names have to be found in the column defined in the \code{bar_sig}-argument of\code{plot_tablebar()}. Defaults to \code{solid}.}
+\item{bar_frame_linetype}{Named vector with the bar frame linetypes. Names have to be found in the column defined in the \code{bar_sig}-argument of\code{plot_tablebarplot()}. Defaults to \code{solid}.}
 
 \item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
 
@@ -70,7 +79,7 @@ plotsettings_tablebarplot(
 
 \item{bar_line_width}{Numeric for the line-size around the bar.}
 
-\item{bar_nudge_y}{Numeric for nudging the bar in y direction. Defaults to \code{0}.}
+\item{bar_nudge_y}{Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to \code{0}.}
 
 \item{bar_pattern_fill_colour}{Named vector with the filling colours for the bar pattern. Names of the vector must be found in the column specified in \code{bar_pattern_fill}. Defaults to \code{white}.}
 
@@ -98,9 +107,9 @@ plotsettings_tablebarplot(
 
 \item{columns_nudge_y}{Numeric vector to nudge the column texts in y direction. Defaults to \code{0}.}
 
-\item{columns_table_sig_high_letter}{Character, that will be added on significant values defined by \code{columns_table_sig_high}.}
+\item{columns_table_sig_superscript_letter}{Character, that will be added on significant values defined by \code{columns_table_sig_superscript}.}
 
-\item{columns_table_sig_high_letter_nudge_x}{Numeric for nudging the superscript towards or away from a number.}
+\item{columns_table_sig_superscript_letter_nudge_x}{Numeric for nudging the superscript towards or away from a number.}
 
 \item{columns_width}{Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to \code{NULL}, in which case all collumns will get the same width.}
 
@@ -108,7 +117,7 @@ plotsettings_tablebarplot(
 
 \item{headers_background_colour}{Colour of the background of the headers.}
 
-\item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{3}.}
+\item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{2.5}.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 
@@ -116,7 +125,7 @@ plotsettings_tablebarplot(
 
 \item{headers_row_height}{Numeric for the row height of the row the headers are written in. Defaults to \code{1}.}
 
-\item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{3}.}
+\item{font_size}{Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to \code{2.5}.}
 
 \item{space_right}{Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to \code{0}.}
 
@@ -146,7 +155,7 @@ plotsettings_tablebarplot(
 
 ## Or, to get better control over the colour assignment
 ## we can also directly name the colours with the different groups
-## defined in the bar_sig-argument of plot_tablebar()
+## defined in the bar_sig-argument of plot_tablebarplot()
 ## (as these groups are used to distinguish between different bar colours):
 plotsettings_tablebarplot(
   bar_fill_colour = c(

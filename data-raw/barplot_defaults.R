@@ -14,10 +14,9 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   bar_pattern_type = c("FALSE" = "stripe", "TRUE" = "none"),
   bar_sig_type = "pattern",
   bar_width = 0.7,
-  columns_table_sig_high_letter = "b",
-  columns_table_sig_high_letter_nudge_x = 4.7,
+  columns_table_sig_superscript_letter = "b",
+  columns_table_sig_superscript_letter_nudge_x = 3,
   headers_background_colour = cmyk(40, 0, 20, 8),
-  font_size = 2,
   bar_pattern_spacing = 0.015,
   bar_pattern_width = 0.4
 )
@@ -51,7 +50,6 @@ barplot_plot_frame <- plotsettings_tablebarplot(
   bar_pattern_fill_colour = c("yellow"),
   bar_sig_type = "frame",
   bar_width = 0.4,
-  font_size = 2,
   default_list = barplot_table_plot_pattern
 )
 
@@ -69,5 +67,3 @@ barplot_plot_frz <- plotsettings_tablebarplot(
 )
 
 usethis::use_data(barplot_plot_frz, overwrite = TRUE)
-
-

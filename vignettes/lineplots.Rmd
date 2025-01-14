@@ -1,0 +1,163 @@
+---
+title: "Lineplots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lineplots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette shows you how to plot lineplots from `eatRep` data. The workflow is optimized for Bildungstrend-graphs, but can be expanded for plotting other `eatRep` data as well. 
+
+## Data preparation
+```{r load_package}
+library(eatPlot)
+```
+
+The first step in the workflow always is the data preparation. This is needed to bring the data into the correct format for plotting. When getting data from `eatRep`, it will look something like this:
+
+```{r}
+#| eval: false
+str(trend_3)
+```
+
+It can make sense to pre-process the data a bit, 
+
+
+```{r lineplot_states} 
+trend_3_subset <- trend_mw
+
+trend_3_prepped <- prep_lineplot(
+  trend_3_subset,
+  subgroup_var = "geschlecht"
+)
+
+
+trend_3_prepped$TR_BUNDESLAND <- gsub("ue", "ü", trend_3_prepped$TR_BUNDESLAND)
+```
+
+
+```{r}
+lineplot_2 <- plot_lineplot(
+  trend_3_prepped,
+  point_sig = "sig_comparison_crossDiffTotal_subgroupTotal",
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  background_subgroup = "total",
+  plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
+)
+
+## Jetzt wird Background line irgendwo nicht rausgefiltert. 
+```
+
+```{r save lineplot_2}
+#| eval: false
+save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
+```
+
+
+## Lineplot for whole Germany
+
+
+```{r lineplot_germany} 
+trend_ger <- prep_lineplot(
+  trend_mw,
+  subgroup_var = "geschlecht"
+)
+
+trend_ger_lesen <- trend_ger
+trend_ger_lesen$kb <- "Lesen"
+
+trend_total <- rbind(trend_ger, trend_ger_lesen)
+trend_total$kb <- gsub("hoeren", "Hören", trend_total$kb)
+
+trend_total <- subset(trend_total, TR_BUNDESLAND == "total") |>
+  subset(geschlecht %in% c("m", "w"))
+
+trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND)
+```
+
+```{r}
+lineplot_germany_2 <- plot_lineplot(trend_total,
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  facet_var = "kb",
+  title_superscripts = NULL,
+  plot_settings = plotsettings_lineplot(
+    brace_label_nudge_x = 0.3,
+    split_plot = FALSE,
+    background_lines = FALSE,
+    default_list = lineplot_4x4
+  )
+)
+```
+
+```{r save lineplot_germany_2_groups}
+#| eval: false
+save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2 / 4)
+```
+
+
+## Lineplot one group
+
+```{r}
+trend_3_prepped <- prep_lineplot(
+  trend_mw,
+  subgroup_var = "geschlecht"
+)
+
+trend_3_prepped <- subset(trend_3_prepped, subgroup_var == "total")
+
+trend_3_prepped$TR_BUNDESLAND <- gsub("ue", "ü", trend_3_prepped$TR_BUNDESLAND)
+
+
+lineplot_1 <- plot_lineplot(trend_3_prepped,
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
+)
+```
+
+```{r save lineplot_1_group}
+#| eval: false
+save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf")
+```
+
+
+## Workshop example
+```{r}
+#| eval: FALSE
+trend_dat <- readRDS("I:/Methoden/02_IQB-interne_eat_Workshops/eatRep_2024/Beispieloutputs/04_meansAufbereitet.rds")
+
+
+trend_p <- prep_lineplot(
+  trend_dat
+)
+
+str(trend_p)
+``` 
+
+
+```{r}
+#| eval: FALSE
+
+trend_p$TR_BUNDESLAND <- gsub("([a-z])([A-Z])", "\\1-\\2", trend_p$TR_BUNDESLAND)
+trend_p$TR_BUNDESLAND <- gsub("ue", "ü", trend_p$TR_BUNDESLAND)
+
+lineplot_1_w <- plot_lineplot(
+  trend_p,
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  box_facet = "Berlin",
+  background_subgroup = "total",
+  title_superscripts = list(
+    "Bayern" = "a",
+    "Thüringen" = "3"),
+  plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
+)
+```
+
+```{r save lineplot_1_group_w}
+#| eval: false
+save_plot(lineplot_1_w, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group_workshop.pdf")
+```

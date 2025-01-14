@@ -4,7 +4,10 @@
 \alias{theme_y_axis}
 \title{Theme for a y-axis plot.}
 \usage{
-theme_y_axis()
+theme_y_axis(plot_settings = plotsettings_lineplot())
+}
+\arguments{
+\item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
 \value{
 \link{ggplot2} theme, that can be used for a plotted y-axis.

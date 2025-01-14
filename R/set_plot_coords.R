@@ -1,23 +1,26 @@
 #' Set the x- and y-coordinates for a plot.
 #'
 #' @inheritParams plot_single_lineplot
+#' @param plot_dat Data.
+#' @param plot_lims Plot limit object.
+#' @keywords internal
+#' @noRd
 #'
 #' @return [ggplot2] object.
-#' @export
 #'
 #' @examples # tbd
 set_plot_coords <- function(plot_dat, plot_lims = plot_lims, plot_settings = plotsettings_lineplot()) {
-
   y_coords <- calc_y_value_space(plot_lims$coords,
-                                 range_y = plot_lims$y_range,
-                                 plot_settings)
+    range_y = plot_lims$y_range,
+    plot_settings
+  )
 
   list(
     set_y_coords(plot_dat, y_coords, plot_lims, plot_settings),
     ggplot2::scale_x_continuous(
-  #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
+      #    limits = c(min(plot_dat[["plot_points"]]$year) -1, max(plot_dat[["plot_points"]]$year) + 1),
       breaks = unique(plot_dat[["plot_points"]]$year),
-      expand = c(plot_settings$axis_x_background_width_x, 0) #ggplot2::expansion(c(plot_settings$axis_x_background_width_x, plot_settings$axis_x_background_width_x)) ## Increase, so the left and right side of the blue x-axis background gets bigger.
+      expand = c(plot_settings$axis_x_background_width_x, 0) # ggplot2::expansion(c(plot_settings$axis_x_background_width_x, plot_settings$axis_x_background_width_x)) ## Increase, so the left and right side of the blue x-axis background gets bigger.
     )
   )
 }
@@ -50,7 +53,7 @@ calc_y_value_coords <- function(y_range,
 }
 
 
-calc_y_value_space <- function(coords, range_y, plot_settings){
+calc_y_value_space <- function(coords, range_y, plot_settings) {
   x_axis_start_y <- coords[2] - (coords[2] * plot_settings$axis_x_background_width_y)
   brace_start_y <- coords[1]
   y_axis_start <- round(brace_start_y, -1)
@@ -93,15 +96,13 @@ set_cartesian_coords <- function(y_lims_total) {
 #'
 #' @return Sequenced vector.
 #'
-#' @examples #seq_over(10, 40, 20)
-seq_over <- function(from, to, by){
-
+#' @examples # seq_over(10, 40, 20)
+seq_over <- function(from, to, by) {
   res_vec <- from
   i <- from
-  while(i < to){
+  while (i < to) {
     i <- i + by
-res_vec[length(res_vec) + 1] <- i
+    res_vec[length(res_vec) + 1] <- i
   }
   return(res_vec)
 }
-

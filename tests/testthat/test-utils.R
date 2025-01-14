@@ -9,7 +9,6 @@ test_that("Plot borders are calculated correctly", {
 })
 
 test_that("calc_sig(): significance niveau is working correctly", {
-
   test_sig <- calc_sig(c(0.02, 0.1, 0.01, NA, 0.03), sig_niveau = 0.03)
 
   expect_equal(test_sig, c(TRUE, FALSE, TRUE, FALSE, FALSE))
@@ -115,13 +114,21 @@ test_that("brace_position is calculated correctly", {
     c(TRUE)
   )
 
-  expect_equal(calc_overlap(year_start = c(2011, 2011, 2011, 2011),
-                            year_end = c(2016, 2016, 2021, 2021)),
-               c(TRUE))
+  expect_equal(
+    calc_overlap(
+      year_start = c(2011, 2011, 2011, 2011),
+      year_end = c(2016, 2016, 2021, 2021)
+    ),
+    c(TRUE)
+  )
 
-  expect_equal(calc_overlap(year_start = c(2011, 2011, 2016, 2016),
-                            year_end = c(2016, 2016, 2021, 2021)),
-               c(FALSE))
+  expect_equal(
+    calc_overlap(
+      year_start = c(2011, 2011, 2016, 2016),
+      year_end = c(2016, 2016, 2021, 2021)
+    ),
+    c(FALSE)
+  )
 })
 
 
@@ -194,9 +201,8 @@ test_that("second vs is replaced correctly", {
 
 
 test_that("Linebreaks are counted correctly", {
-
   test_string <- c("This <br> is <br> a linebreak", "This is not", "This <br> are <br>  more <br>")
-  test_list <- list("This <br> is <br> a linebreak" = c(1,2), "This is not" = c("a", "b"))
+  test_list <- list("This <br> is <br> a linebreak" = c(1, 2), "This is not" = c("a", "b"))
 
   expect_equal(count_words(test_string, "<br>"), 3)
   expect_equal(count_words(test_list, "<br>"), 2)

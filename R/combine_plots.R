@@ -8,19 +8,18 @@
 #'
 #' @examples # tbd
 combine_plots <- function(plot_list, plot_widths = NULL) {
-
-  if(!is.null(plot_widths)){
+  if (!is.null(plot_widths)) {
     warning("Careful! You have provided plot_widths. Please be beware that the x-axes might be distorted, if your plot_widths don't account for different x-axis ranges.", call. = FALSE)
   }
 
-  if(is.null(plot_widths)){
-  coordinates <- get_coordinates(plot_list)
+  if (is.null(plot_widths)) {
+    coordinates <- get_coordinates(plot_list)
 
-  sum_coords <- sum(coordinates)
-  plot_widths <- vapply(coordinates, function(coord_range) {
-    coord_range / sum_coords
-  }, FUN.VALUE = numeric(1))
-}
+    sum_coords <- sum(coordinates)
+    plot_widths <- vapply(coordinates, function(coord_range) {
+      coord_range / sum_coords
+    }, FUN.VALUE = numeric(1))
+  }
 
   patchwork::wrap_plots(plot_list, widths = plot_widths) &
     ggplot2::theme(
@@ -32,12 +31,10 @@ combine_plots <- function(plot_list, plot_widths = NULL) {
 
 
 # Utils -------------------------------------------------------------------
-get_coordinates <- function(plot_list){
+get_coordinates <- function(plot_list) {
+  coords <- vapply(plot_list, function(plot) {
+    get_x_range(plot)
+  }, FUN.VALUE = numeric(1))
 
- coords <- vapply(plot_list, function(plot) {
-  get_x_range(plot)
-}, FUN.VALUE = numeric(1))
-
- return(coords)
+  return(coords)
 }
-

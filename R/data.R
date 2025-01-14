@@ -136,3 +136,49 @@
 #'   ...
 #' }
 "barplot_noTrend"
+
+#' BT24 example data.
+#'
+#' Default plot settings for mean-barplot without trend.
+#'
+#' @format ## `trend_2`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"trend_2"
+
+
+
+#' BT24 example data.
+#'
+#' Example data with male/female subgroup_var.
+#'
+#' @format ## `trend_mw`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"trend_mw"
+
+#' BT24 example data.
+#'
+#' Example data with zuwanderungshintergrund as subgroup_var.
+#'
+#' @format ## `trend_zwh`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"trend_zwh"
+
+#' BT24 example data.
+#'
+#' Example data with grouping var with multiple levels.
+#'
+#' @format ## `trend_3`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"trend_3"

@@ -11,7 +11,7 @@ gsub_plot_dat(
 )
 }
 \arguments{
-\item{plot_dat}{List or data.frame, mainly usage intention for plot_dat - objects from \code{\link[=prep_plot]{prep_plot()}}.}
+\item{plot_dat}{List or data.frame, mainly usage intention for plot_dat - objects from \code{\link[=prep_lineplot]{prep_lineplot()}}.}
 
 \item{search_for}{Character string that should be replaced.}
 

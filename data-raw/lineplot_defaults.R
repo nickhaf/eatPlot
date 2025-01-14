@@ -8,7 +8,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   axis_x_label_size = 2,
   background_line_colour = cmyk(30, 0, 15, 6),
   brace_label_gap_y = 0.08,
-  brace_label_nudge_x = 0.155,
+  brace_label_nudge_x = 0.3225,
   brace_label_nudge_y = 0.05,
   brace_label_size = 2,
   brace_line_width = 0.5,
@@ -38,7 +38,7 @@ lineplot_4x4 <- plotsettings_lineplot(
     "FALSE" = 16
   ),
   point_size = 1.7,
-  split_plot = TRUE,
+  split_plot = FALSE,
   split_plot_gap_width = 0.03,
   axis_y = FALSE
 )

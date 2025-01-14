@@ -1,100 +1,113 @@
-#' Plot braces below plot.
-#'
-#' @param dat Prepared Trend data.
-#' @inheritParams plot_lineplot
-#' @inheritParams plot_single_lineplot
-#' @inheritParams plotsettings_lineplot
-#'
-#' @return ggplot2 object.
-#' @export
-#'
-#' @examples ##
-plot_braces <- function(dat,
-                        plot_lims,
-                        label_est = NULL,
-                        label_se = NULL,
-                        label_sig_high = NULL,
-                        label_sig_bold = NULL,
-                        plot_settings = plotsettings_lineplot()) {
-  sapply(c(label_est, label_se, label_sig_high, label_sig_bold), check_column, dat = dat)
+prep_brace <- function(plot_dat, plot_lims, plot_settings) {
+  if (nrow(plot_lims$brace_coords$coord_dat) == 0) {
+    return(list(
+      brace_dat = list(),
+      brace_label = data.frame(facet_var = NA),
+      brace_coords = data.frame()
+    ))
+  }
 
+  check_columns(plot_dat, c("facet_var", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend"))
 
-  dat <- fill_column(dat, column_name = label_est, filling = NA)
-  dat <- fill_column(dat, column_name = label_se, filling = NA)
-  dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
-  dat <- fill_column(dat, column_name = label_sig_bold, filling = FALSE)
+  plot_lims$brace_coords$coord_dat$trend <- paste0(plot_lims$brace_coords$coord_dat$year_start, "_", plot_lims$brace_coords$coord_dat$year_end)
 
+  plot_lims$brace_coords$coord_dat_2 <- tidyr::pivot_longer(plot_lims$brace_coords$coord_dat,
+    cols = c("upper_y", "lower_y"),
+    values_to = "y"
+  ) |>
+    tidyr::pivot_longer(
+      cols = c("year_start", "year_end"),
+      values_to = "year",
+      names_to = "year_type"
+    )
 
+  brace_labels <- merge(plot_dat[, c("facet_var", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend")],
+    plot_lims$brace_coords$group_labels,
+    by.x = "subgroup_var",
+    by.y = "grouping_lvls",
+    all.x = TRUE
+  )
   # Construct brace labels --------------------------------------------------
-  ## Significances can be shown with bold font or a raised a.
-  dat <- construct_label(dat,
-    new_name = "brace_label",
-    label_est = "label_est",
-    label_se = "label_se",
-    label_sig_high = "label_sig_high",
-    label_sig_bold = "label_sig_bold",
+  # Significances can be shown with bold font or a raised a.
+
+  brace_labels$brace_label <- construct_label(
+    brace_labels,
+    column_est = "brace_label_est",
+    column_se = "brace_label_se",
+    column_sig_bold = "brace_label_sig_bold",
+    column_sig_superscript = "brace_label_sig_superscript",
+    sig_superscript_letter = "a",
     round_est = 0,
     round_se = 1
   )
 
-  # Calculate brace coordinates ---------------------------------------------
-  brace_coordinates <- calc_brace_coords(dat,
-    plot_lims$coords,
-    plot_settings = plot_settings
+  brace_labels_merged <- merge(unique(brace_labels[, c("trend", "subgroup_var", "facet_var", "brace_label", "label_pos_y")]),
+    unique(plot_lims$brace_coords$coord_dat_2[, c("trend", "label_pos_x")]),
+    by = "trend",
+    all.y = TRUE
   )
 
-
-  # Draw braces and labels --------------------------------------------------
-  c(
-    draw_braces(brace_coordinates, plot_settings),
-    draw_brace_label(brace_coordinates, plot_settings) # ,
+  brace_list <- list(
+    brace_dat = plot_lims$brace_coords$coord_dat_2,
+    brace_label = brace_labels_merged,
+    brace_coords = plot_lims$brace_coords
   )
+
+  return(brace_list)
 }
 
 
-# Utils -------------------------------------------------------------------
-draw_braces <- function(dat, plot_settings = plotsettings_lineplot()) {
-  if (plot_settings$split_plot == TRUE) {
-    res <- ggbrace::stat_brace(
-      data = unique(dat[, c("years_Trend", "year_axis", "brace_y")]),
+draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
+  check_columns(brace_coords, c("year", "y", "trend", "brace_position_x"))
+
+  # if (plot_settings$split_plot == TRUE) {
+  #   res <- ggbrace::stat_brace(
+  #     data = unique(dat[, c("years_Trend", "year_axis", "brace_y")]),
+  #     mapping = ggplot2::aes(
+  #       x = .data$year_axis,
+  #       y = .data$brace_y,
+  #       group = .data$years_Trend
+  #     ),
+  #     rotate = 180,
+  #     linewidth = plot_settings$brace_line_width,
+  #     npoints = 200,
+  #     outside = FALSE
+  #   )
+  # } else {
+  res <- lapply(unique(brace_coords$trend), function(x) {
+    dat <- brace_coords[brace_coords$trend == x, ]
+
+    ggbrace::stat_brace(
+      data = dat,
       mapping = ggplot2::aes(
-        x = .data$year_axis,
-        y = .data$brace_y,
-        group = .data$years_Trend
+        x = .data$year,
+        y = .data$y,
+        group = .data$trend
       ),
+      mid = unique(dat$brace_position_x),
       rotate = 180,
       linewidth = plot_settings$brace_line_width,
       npoints = 200,
-      outside = FALSE
+      outside = FALSE,
+      colour = "black"
     )
-  } else {
-    res <- lapply(unique(dat$years_Trend), function(x) {
-      dat_year <- unique(dat[dat$years_Trend == x, c("year_start_axis", "year_end_axis", "upper_y", "lower_y", "mid")])
-      ggbrace::stat_brace(
-        mapping = ggplot2::aes(
-          x = c(dat_year$year_start_axis, dat_year$year_end_axis),
-          y = c(dat_year$upper_y, dat_year$lower_y),
-        ),
-        mid = unique(dat_year$mid),
-        rotate = 180,
-        linewidth = plot_settings$brace_line_width,
-        npoints = 200,
-        outside = FALSE
-      )
-    })
-  }
+  })
+
+  # }
   return(res)
 }
 
-draw_brace_label <- function(dat, plot_settings = plot_settings()) {
+draw_brace_label <- function(brace_label, plot_settings = plot_settings()) {
+  check_columns(brace_label, c("label_pos_x", "label_pos_y", "brace_label"))
   ggtext::geom_richtext(
-    data = dat,
+    data = unique(brace_label[, c("label_pos_x", "label_pos_y", "brace_label")]),
     mapping = ggplot2::aes(
       x = .data$label_pos_x,
       y = .data$label_pos_y,
-      label = .data$brace_label
+      label = .data$brace_label,
+      group = NA
     ),
-    colour = "#000000",
+    colour = "black",
     size = plot_settings$brace_label_size,
     label.padding = grid::unit(rep(0, 4), "pt"),
     fill = NA,
