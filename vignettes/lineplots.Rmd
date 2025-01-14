@@ -29,7 +29,8 @@ It can make sense to pre-process the data a bit,
 trend_3_subset <- trend_mw
 
 trend_3_prepped <- prep_lineplot(
-  trend_3_subset
+  trend_3_subset, 
+  subgroup_var = "geschlecht"
   )
 
 
@@ -72,7 +73,7 @@ save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.
 ```{r lineplot_germany} 
 trend_ger <- prep_lineplot(
   trend_mw,
-  parameter = "mean")
+  subgroup_var = "geschlecht")
 
 trend_ger_lesen <- trend_ger 
 trend_ger_lesen$kb <- "Lesen"
@@ -124,7 +125,9 @@ save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_d
 
 ```{r}
 trend_3_prepped <- prep_lineplot(
-  trend_mw)
+  trend_mw, 
+  subgroup_var = "geschlecht"
+  )
 
 trend_3_prepped <- subset(trend_3_prepped, geschlecht == "total")
 

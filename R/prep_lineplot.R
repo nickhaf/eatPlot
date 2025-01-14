@@ -24,6 +24,12 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
     stop(paste("Comparison '", unsupported_comp, "' is not supported. Please contact the package author."))
   }
 
+  if(is.null(subgroup_var)){
+    message("Are you sure you don't have a subgroup_var? If you do,  please set it.")
+    eatRep_dat$estimate <- build_column(eatRep_dat$estimate, old = subgroup_var, new = "subgroup_var", fill_value = "single_group_added_by_eatPlot")
+
+  }
+
 
   # Filtering ---------------------------------------------------------------
   if (!is.null(comparisons)) {
@@ -39,8 +45,6 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
   eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-
-
 
   # Merge Data --------------------------------------------------------------
   check_no_columns(eatRep_dat$estimate, cols = "sig")

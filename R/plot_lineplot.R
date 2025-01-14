@@ -41,6 +41,7 @@ plot_lineplot <- function(eatPlot_dat,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
+
   check_plotsettings_lineplot(plot_settings)
   check_columns(eatPlot_dat,
     cols = c(facet_var)
@@ -67,7 +68,6 @@ plot_lineplot <- function(eatPlot_dat,
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
 
-  browser()
   # Prepare Subsets ---------------------------------------------------------
 ## Hier auch subsetten wenn background_subgroup = NULL
 
