@@ -1,4 +1,4 @@
-rename_comparisons_total <- function(eatRep_dat, facet_var, total_facet, subgroup_var, total_subgroup) {
+rename_comparisons_total <- function(eatRep_dat, facet_var, total_facet, subgroup_var = NULL, total_subgroup = NULL) {
 
 # #  Aufpassen: Nur, wenn gegen "total" verglichen wird, also nicht beide Gruppen in der Comparison "total" sind.
 #   total_facet_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_facet, "id"]
@@ -12,8 +12,10 @@ rename_comparisons_total <- function(eatRep_dat, facet_var, total_facet, subgrou
  # total_comparisons <- c(total_facet_comparisons, total_comparisons_nested)
 
   total_facet_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ",total_facet, "$"), eatRep_dat$plain[, facet_var])])
-  total_subgroup_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ",total_subgroup, "$"), eatRep_dat$plain[, subgroup_var])])
 
+if(!is.null(subgroup_var)){
+  total_subgroup_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ",total_subgroup, "$"), eatRep_dat$plain[, subgroup_var])])
+}
 
 
   # while (length(total_comparisons_nested) > 0) {
@@ -25,9 +27,10 @@ rename_comparisons_total <- function(eatRep_dat, facet_var, total_facet, subgrou
   eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_facet_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_facet_comparisons, "comparison"], "Total")
   eatRep_dat$plain[eatRep_dat$plain$id %in% total_facet_comparisons, "comparison"] <- paste0(eatRep_dat$plain[eatRep_dat$plain$id %in% total_facet_comparisons, "comparison"], "Total")
 
+  if(!is.null(subgroup_var)){
   eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_subgroup_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_subgroup_comparisons, "comparison"], "_subgroupTotal")
   eatRep_dat$plain[eatRep_dat$plain$id %in% total_subgroup_comparisons, "comparison"] <- paste0(eatRep_dat$plain[eatRep_dat$plain$id %in% total_subgroup_comparisons, "comparison"], "_subgroupTotal")
-
+}
 
 
   return(eatRep_dat)
