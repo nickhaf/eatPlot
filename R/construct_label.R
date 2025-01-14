@@ -29,16 +29,14 @@ construct_label <- function(dat,
                             round_est = 0,
                             round_se = 1,
                             plot_settings = plotsettings_tablebarplot()) {
-
   dat <- fill_column(dat, column_name = column_est, filling = "")
   if(is.null(column_est)){column_est <- "column_est"}
-  dat <- fill_column(dat, column_name = column_se, filling = NA)
+  dat <- fill_column(dat, column_name = column_se, filling = "")
   if(is.null(column_se)){column_se <- "column_se"}
   dat <- fill_column(dat, column_name = column_sig_bold, filling = FALSE)
   if(is.null(column_sig_bold)){column_sig_bold <- "column_sig_bold"}
   dat <- fill_column(dat, column_name = column_sig_superscript, filling = FALSE)
   if(is.null(column_sig_superscript)){column_sig_superscript <- "column_sig_superscript"}
-
 
   if (any(is.na(dat[, c(column_sig_bold, column_sig_superscript)]))) {
     for (i in c(column_sig_bold, column_sig_superscript)) {
@@ -54,10 +52,15 @@ construct_label <- function(dat,
   }
 
   if (is.numeric(dat[, column_se])) {
+
+    extra_space <- ifelse(abs(dat[, column_se]) < 10 & !is.na(abs(dat[, column_se])), "<span style='white-space: pre;'> </span>", "")
+
     dat[, column_se] <- format(round(dat[, column_se], round_se),
                            trim = TRUE,
                            nsmall = round_se)
     dat[, column_se][dat[, column_se] == "NA"] <- ""
+  }else{
+    extra_space <- rep("", nrow(dat))
   }
 
   label_est <- ifelse(dat[, column_sig_bold] == TRUE & dat[, column_est] != "",
@@ -71,7 +74,7 @@ construct_label <- function(dat,
 
   label_se <- ifelse(
     !is.na(dat[, column_se]),
-    paste0(" (", dat[, column_se], ")"),
+    paste0(extra_space, " (", dat[, column_se], ")"),
     ""
     )
 
@@ -163,7 +166,7 @@ construct_label_2 <- function(dat,
   )
 
   dat$label_sig <- ifelse(dat$label_sig_high == TRUE & dat$label_est != "",
-                          paste0("<sup>", plot_settings$columns_table_sig_high_letter, "</sup>"), "")
+                          paste0("<sup>", plot_settings$columns_table_sig_superscript_letter, "</sup>"), "")
 
   dat$label_se <- ifelse(!is.na(dat$label_se) & dat$label_se != "",
                          paste0(" (", dat$label_se, ")"),

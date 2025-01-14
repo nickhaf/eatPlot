@@ -41,6 +41,7 @@ plot_lineplot <- function(eatPlot_dat,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
+
   check_plotsettings_lineplot(plot_settings)
   check_columns(eatPlot_dat,
     cols = c(facet_var)
@@ -50,11 +51,9 @@ plot_lineplot <- function(eatPlot_dat,
     warning("Split lineplot currently not supported. Set to non-split.")
     plot_settings$split_plot <- FALSE
   }
-
   # Rename/Build needed columns ---------------------------------------------
   years_list <- prep_years_list(years_lines, years_braces)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
-
   eatPlot_dat <- eatPlot_dat |>
     build_column(old = point_est, new = "point_est") |>
     build_column(old = point_sig, new = "point_sig", fill_value = FALSE) |>
@@ -64,17 +63,27 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = brace_label_sig_superscript, new = "brace_label_sig_superscript", fill_value = FALSE) |>
     build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold", fill_value = FALSE) |>
     build_column(old = facet_var, new = "facet_var") |>
-    build_column(old = subgroup_var, new = "subgroup_var") |>
+    build_column(old = subgroup_var, new = "subgroup_var", fill = "1group") |>
     build_column(old = line_se, new = "line_se")
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
 
   # Prepare Subsets ---------------------------------------------------------
+## Hier auch subsetten wenn background_subgroup = NULL
+
+if(!is.null(background_facet) & !is.null(background_subgroup)){
   background_line_dat <- subset(eatPlot_dat,
                                 facet_var == background_facet &
                                   subgroup_var == background_subgroup)
-  background_line_dat <- filter_years(background_line_dat, years = years_lines)
+}else if(!is.null(background_facet) & is.null(background_subgroup)){
+ background_line_dat <- subset(eatPlot_dat,
+                                facet_var == background_facet)
+}else{
+ background_line_dat <- data.frame()
+}
 
+
+  background_line_dat <- filter_years(background_line_dat, years = years_lines)
   if(!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1){
     line_dat <- subset(eatPlot_dat,
                        facet_var != background_facet &
@@ -82,9 +91,9 @@ plot_lineplot <- function(eatPlot_dat,
   }else{
     line_dat <- eatPlot_dat
   }
-
   line_dat <- filter_years(line_dat, years = years_lines)
-  brace_dat_list <- prep_brace(eatPlot_dat, plot_lims, plot_settings)
+  brace_dat_list <- prep_brace(line_dat, plot_lims, plot_settings)
+
 
 if(!is.null(background_facet) & !is.null(background_subgroup)){
     brace_dat <- brace_dat_list$brace_dat |>
@@ -118,7 +127,6 @@ if(!is.null(background_facet) & !is.null(background_subgroup)){
 
 
   for (i in facet_values) {
-
     dat_p_facet <- dat_p
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
@@ -129,7 +137,7 @@ if(!is.null(background_facet) & !is.null(background_subgroup)){
       mapping = ggplot2::aes(
         x = .data$year,
         y = .data$point_est,
-        group = .data$id,
+        #group = .data$trend,
         colour = .data$subgroup_var
       )
     ) +
@@ -262,8 +270,7 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   #   ))
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
-
-if(!is.null(background_subgroup) & length(background_subgroup) > 1){
+if(!is.null(background_subgroup) & length(unique(plot_dat$subgroup_var)) > 1){
   subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
 }else{
   subgroup_lvls <- unique(plot_dat$subgroup_var)

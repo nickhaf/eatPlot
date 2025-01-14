@@ -1,13 +1,13 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
 
-if(nrow(plot_lims$brace_coords$coord_dat) == 0){
+  if(nrow(plot_lims$brace_coords$coord_dat) == 0){
   return(list(brace_dat = list(),
               brace_label = data.frame(facet_var = NA),
               brace_coords = data.frame())
          )
 }
 
-  check_columns(plot_dat, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend"))
+  check_columns(plot_dat, c("facet_var", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend"))
 
   plot_lims$brace_coords$coord_dat$trend <-  paste0(plot_lims$brace_coords$coord_dat$year_start, "_", plot_lims$brace_coords$coord_dat$year_end)
 
@@ -21,7 +21,7 @@ if(nrow(plot_lims$brace_coords$coord_dat) == 0){
       names_to = "year_type"
     )
 
-  brace_labels <- merge(plot_dat[, c("facet_var", "id", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend")],
+  brace_labels <- merge(plot_dat[, c("facet_var", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend")],
     plot_lims$brace_coords$group_labels,
     by.x = "subgroup_var",
     by.y = "grouping_lvls",

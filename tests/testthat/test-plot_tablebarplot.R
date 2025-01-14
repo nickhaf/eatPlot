@@ -80,7 +80,7 @@ test_that("simple tablebarplot can be plotted", {
     column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
-    columns_table_sig_high = list("bar_sig", "bar_sig"),
+    columns_table_sig_superscript = list("bar_sig", "bar_sig"),
     bar_est = "est_1",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -113,7 +113,7 @@ test_that("continous barplot can have a white space", {
     column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1, 2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
-    columns_table_sig_high = list("bar_sig", "bar_sig"),
+    columns_table_sig_superscript = list("bar_sig", "bar_sig"),
     bar_est = "est_1",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
@@ -138,7 +138,11 @@ test_that("Vlines are plotted correctly", {
   plot_settings_test <- list(
     bar_background_lines_spanners = list(c(1, 4), c(5, 9)),
     bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "solid"
+    bar_background_lines_linetype = "solid",
+    bar_background_lines_colour = "red",
+    bar_background_0line_linetype = "solid",
+    bar_background_0line_colour = "blue"
+
   )
 
   df_test <- data.frame(
@@ -159,7 +163,10 @@ test_that("Vlines are plotted correctly", {
   plot_settings_test_2 <- list(
     bar_background_lines_spanners = NULL,
     bar_background_lines = "border",
-    bar_background_lines_linetype = "dashed"
+    bar_background_lines_linetype = "dashed",
+    bar_background_lines_colour = "red",
+    bar_background_0line_linetype = "solid",
+    bar_background_0line_colour = "blue"
   )
 
 

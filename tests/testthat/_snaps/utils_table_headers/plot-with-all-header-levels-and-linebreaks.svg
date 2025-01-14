@@ -31,8 +31,7 @@
 <rect x='-0.095' y='416.14' width='720.09' height='49.24' style='stroke-width: 0.21; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='-0.095' y='465.38' width='720.09' height='49.24' style='stroke-width: 0.21; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='-0.095' y='514.62' width='720.09' height='49.24' style='stroke-width: 0.21; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
-<line x1='476.83' y1='366.90' x2='476.83' y2='563.86' style='stroke-width: 0.21; stroke: #A9A9A9; stroke-linecap: butt;' />
-<line x1='476.83' y1='366.90' x2='476.83' y2='563.86' style='stroke-width: 0.21; stroke: #A9A9A9; stroke-linecap: butt;' />
+<line x1='476.83' y1='366.90' x2='476.83' y2='563.86' style='stroke-width: 0.21; stroke-linecap: butt;' />
 <rect x='-0.095' y='22.23' width='720.09' height='344.67' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='-0.095' y='22.23' width='720.09' height='344.67' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='-0.095' y='22.23' width='720.09' height='344.67' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
@@ -44,14 +43,14 @@
 <rect x='476.83' y='430.91' width='94.44' height='19.70' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='476.83' y='480.15' width='118.06' height='19.70' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='476.83' y='529.39' width='181.02' height='19.70' style='stroke-width: 1.07; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
-<text x='354.02' y='393.57' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
-<text x='354.02' y='442.81' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>10</text>
-<text x='356.40' y='492.05' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>8</text>
-<text x='356.40' y='541.29' style='font-size: 8.54px; font-family: sans;' textLength='4.75px' lengthAdjust='spacingAndGlyphs'>4</text>
-<text x='117.91' y='393.57' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
-<text x='117.91' y='442.81' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>12</text>
-<text x='117.91' y='492.05' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>15</text>
-<text x='117.91' y='541.29' style='font-size: 8.54px; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>23</text>
+<text x='354.82' y='393.23' style='font-size: 7.11px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>12</text>
+<text x='354.82' y='442.47' style='font-size: 7.11px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text x='356.79' y='491.71' style='font-size: 7.11px; font-family: sans;' textLength='3.96px' lengthAdjust='spacingAndGlyphs'>8</text>
+<text x='356.79' y='540.95' style='font-size: 7.11px; font-family: sans;' textLength='3.96px' lengthAdjust='spacingAndGlyphs'>4</text>
+<text x='118.70' y='393.23' style='font-size: 7.11px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>12</text>
+<text x='118.70' y='442.47' style='font-size: 7.11px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>12</text>
+<text x='118.70' y='491.71' style='font-size: 7.11px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>15</text>
+<text x='118.70' y='540.95' style='font-size: 7.11px; font-family: sans;' textLength='7.91px' lengthAdjust='spacingAndGlyphs'>23</text>
 <line x1='6.96' y1='317.66' x2='238.35' y2='317.66' style='stroke-width: 0.32; stroke-linecap: butt;' />
 <text x='102.49' y='290.17' style='font-size: 8.54px; font-family: sans;' textLength='40.35px' lengthAdjust='spacingAndGlyphs'>spanner_1</text>
 <line x1='243.08' y1='317.66' x2='710.58' y2='317.66' style='stroke-width: 0.32; stroke-linecap: butt;' />

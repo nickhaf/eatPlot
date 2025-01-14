@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 37
+      length(settings_list) == 40
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -13,6 +13,9 @@ check_plotsettings_barplot <- function(settings_list) {
         "background_stripes_colour",
         "bar_background_lines",
         "bar_background_lines_linetype",
+        "bar_background_lines_colour",
+        "bar_background_0line_linetype",
+        "bar_background_0line_colour",
         "bar_background_lines_spanners",
         "bar_fill_colour",
         "bar_frame_linetype",
@@ -33,8 +36,8 @@ check_plotsettings_barplot <- function(settings_list) {
         "columns_alignment",
         "columns_nudge_x",
         "columns_nudge_y",
-        "columns_table_sig_high_letter",
-        "columns_table_sig_high_letter_nudge_x",
+        "columns_table_sig_superscript_letter",
+        "columns_table_sig_superscript_letter_nudge_x",
         "columns_width",
         "headers_alignment",
         "headers_background_colour",
@@ -54,6 +57,9 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(settings_list$bar_background_lines %in% c("border", "scale_breaks", "none"))
   stopifnot(is.character(settings_list$bar_background_lines_linetype))
+  stopifnot(is.character(settings_list$bar_background_lines_colour))
+  stopifnot(is.character(settings_list$bar_background_0line_linetype))
+  stopifnot(is.character(settings_list$bar_background_0line_colour))
   stopifnot(is.numeric(unlist(settings_list$bar_background_lines_spanners)) | is.null(settings_list$bar_background_lines_spanners))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
   stopifnot(is.character(settings_list$bar_frame_linetype))
@@ -72,8 +78,8 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$columns_alignment))
   stopifnot(is.numeric(settings_list$columns_nudge_x))
   stopifnot(is.numeric(settings_list$columns_nudge_y))
-  stopifnot(is.character(settings_list$columns_table_sig_high_letter))
-  stopifnot(is.numeric(settings_list$columns_table_sig_high_letter_nudge_x))
+  stopifnot(is.character(settings_list$columns_table_sig_superscript_letter))
+  stopifnot(is.numeric(settings_list$columns_table_sig_superscript_letter_nudge_x))
   stopifnot(is.numeric(settings_list$columns_width) | is.null(settings_list$columns_width))
   stopifnot(is.numeric(settings_list$headers_alignment) | is.null(settings_list$headers_alignment))
   stopifnot(is_colour(settings_list$headers_background_colour) | is.null(settings_list$headers_background_colour))
@@ -96,6 +102,9 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param background_stripes_colour Character vector containing the background colour of each row. Defaults to `NULL`.
 #' @param bar_background_lines Character string of either `c("borders", "scale_breaks", "none")`, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.
 #' @param bar_background_lines_linetype Character string indicating the linetype for the background lines of the barplot.
+#' @param bar_background_lines_colour Character string indicating the colour for the background lines of the barplot.
+#' @param bar_background_0line_linetype Character string indicating the linetype for the background line of the barplot at zero.
+#' @param bar_background_0line_colour Character string indicating the colour for the background line of the barplot at zero.
 #' @param bar_background_lines_spanners List containing of numeric vectors of two elements for indicating over which rows the background_lines in the barplot should span. Each vector contains the start and end row for the background line. Defaults to `NULL`, in which case The background_lines will be drawn from top to bottom.
 #' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in `bar_fill`. If no names are provided for the vector, the order of the factor levels of `bar_fill` will be used for determining the colour assignment.
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebarplot()`. Defaults to `solid`.
@@ -116,16 +125,16 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `0.5`.
 #' @param columns_nudge_x Numeric vector to nudge the column text in x direction. Defaults to `0`.
 #' @param columns_nudge_y Numeric vector to nudge the column texts in y direction. Defaults to `0`.
-#' @param columns_table_sig_high_letter Character, that will be added on significant values defined by `columns_table_sig_high`.
-#' @param columns_table_sig_high_letter_nudge_x Numeric for nudging the superscript towards or away from a number.
+#' @param columns_table_sig_superscript_letter Character, that will be added on significant values defined by `columns_table_sig_superscript`.
+#' @param columns_table_sig_superscript_letter_nudge_x Numeric for nudging the superscript towards or away from a number.
 #' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
 #' @param headers_background_colour Colour of the background of the headers.
-#' @param headers_font_size Numeric for the font size that will be used for the headers and column_spanners. Defaults to `3`.
+#' @param headers_font_size Numeric for the font size that will be used for the headers and column_spanners. Defaults to `2.5`.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
-#' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `3`.
+#' @param font_size Numeric vector with as many elements as columns for the font sizes of the columns. Defaults to `2.5`.
 #' @param space_right Numeric for the width of a white space that will be added on the right of the plotting pane. Has to be the same scale as the data. Defaults to `0`.
 #' @param default_list Named list with predefined settings. Defaults to a list with all settings set to `0`.
 #'
@@ -168,6 +177,9 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
                                       background_stripes_colour = NULL,
                                       bar_background_lines = NULL,
                                       bar_background_lines_linetype = NULL,
+                                      bar_background_lines_colour = NULL,
+                                      bar_background_0line_linetype = NULL,
+                                      bar_background_0line_colour = NULL,
                                       bar_background_lines_spanners = NULL,
                                       bar_fill_colour = NULL,
                                       bar_frame_linetype = NULL,
@@ -188,8 +200,8 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
                                       columns_alignment = NULL,
                                       columns_nudge_x = NULL,
                                       columns_nudge_y = NULL,
-                                      columns_table_sig_high_letter = NULL,
-                                      columns_table_sig_high_letter_nudge_x = NULL,
+                                      columns_table_sig_superscript_letter = NULL,
+                                      columns_table_sig_superscript_letter_nudge_x = NULL,
                                       columns_width = NULL,
                                       headers_alignment = NULL,
                                       headers_background_colour = NULL,
@@ -208,7 +220,10 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "background_stripes_border" = "Inf",
       "background_stripes_colour" = "white",
       "bar_background_lines" = "none",
-      "bar_background_lines_linetype" = "solid",
+      "bar_background_lines_linetype" = "dotted",
+      "bar_background_lines_colour" = "darkgrey",
+      "bar_background_0line_linetype" = "solid",
+      "bar_background_0line_colour" = "black",
       "bar_background_lines_spanners" = NULL,
       "bar_fill_colour" = "white",
       "bar_frame_linetype" = "solid",
@@ -227,18 +242,18 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "columns_alignment" = 0.5,
       "columns_nudge_x" = 0,
       "columns_nudge_y" = 0,
-      "columns_table_sig_high_letter" = "a",
-      "columns_table_sig_high_letter_nudge_x" = 0,
+      "columns_table_sig_superscript_letter" = "a",
+      "columns_table_sig_superscript_letter_nudge_x" = 0,
       "columns_width" = NULL,
       "headers_alignment" = NULL,
       "headers_background_colour" = "white",
-      "headers_font_size" = 3,
+      "headers_font_size" = 2.5,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
       "headers_row_height" = 1,
       "bar_pattern_spacing" = 0.1,
       "bar_pattern_width" = 0.5,
-      "font_size" = 3,
+      "font_size" = 2.5,
       "space_right" = 0
     )
   } else {

@@ -1,26 +1,37 @@
-rename_comparisons_total <- function(eatRep_dat, total_group, facet_var) {
+rename_comparisons_total <- function(eatRep_dat, facet_var, total_facet, subgroup_var = NULL, total_subgroup = NULL) {
+
+# #  Aufpassen: Nur, wenn gegen "total" verglichen wird, also nicht beide Gruppen in der Comparison "total" sind.
+#   total_facet_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_facet, "id"]
+#   total_facet_comparisons <- eatRep_dat$comparison[
+#     !(eatRep_dat$comparison$unit_1 %in% total_facet_ids) & (eatRep_dat$comparison$unit_2 %in% total_facet_ids),
+#     "id"
+#   ]
+
+  # total_facet_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_facet_comparisons, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_facet_comparisons, "id"])
+
+ # total_comparisons <- c(total_facet_comparisons, total_comparisons_nested)
+
+  total_facet_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ",total_facet, "$"), eatRep_dat$plain[, facet_var])])
+
+if(!is.null(subgroup_var)){
+  total_subgroup_comparisons <- unique(eatRep_dat$plain$id[grep(paste0("- ",total_subgroup, "$"), eatRep_dat$plain[, subgroup_var])])
+}
 
 
-#  Aufpassen: Nur, wenn gegen "total" verglichen wird, also nicht beide Gruppen in der Comparison "total" sind.
-  total_group_ids <- eatRep_dat$group[eatRep_dat$group[, facet_var] == total_group, "id"]
-  total_comparisons <- eatRep_dat$comparison[
-    (eatRep_dat$comparison$unit_1 %in% total_group_ids) != (eatRep_dat$comparison$unit_2 %in% total_group_ids),
-    "id"
-  ]
+  # while (length(total_comparisons_nested) > 0) {
+  #   total_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_comparisons_nested, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_comparisons_nested, "id"])
+  #
+  #   total_comparisons <- c(total_comparisons, total_comparisons_nested)
+  # }
 
+  eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_facet_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_facet_comparisons, "comparison"], "Total")
+  eatRep_dat$plain[eatRep_dat$plain$id %in% total_facet_comparisons, "comparison"] <- paste0(eatRep_dat$plain[eatRep_dat$plain$id %in% total_facet_comparisons, "comparison"], "Total")
 
-  total_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_comparisons, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_comparisons, "id"])
+  if(!is.null(subgroup_var)){
+  eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_subgroup_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_subgroup_comparisons, "comparison"], "_subgroupTotal")
+  eatRep_dat$plain[eatRep_dat$plain$id %in% total_subgroup_comparisons, "comparison"] <- paste0(eatRep_dat$plain[eatRep_dat$plain$id %in% total_subgroup_comparisons, "comparison"], "_subgroupTotal")
+}
 
-  total_comparisons <- c(total_comparisons, total_comparisons_nested)
-
-  while (length(total_comparisons_nested) > 0) {
-    total_comparisons_nested <- c(eatRep_dat$comparisons[eatRep_dat$comparisons$unit_1 %in% total_comparisons_nested, "id"], eatRep_dat$comparisons[eatRep_dat$comparisons$unit_2 %in% total_comparisons_nested, "id"])
-
-    total_comparisons <- c(total_comparisons, total_comparisons_nested)
-  }
-
-  eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$comparisons[eatRep_dat$comparisons$id %in% total_comparisons, "comparison"], "Total")
-  eatRep_dat$plain[eatRep_dat$plain$id %in% total_comparisons, "comparison"] <- paste0(eatRep_dat$plain[eatRep_dat$plain$id %in% total_comparisons, "comparison"], "Total")
 
   return(eatRep_dat)
 }
