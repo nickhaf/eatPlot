@@ -223,8 +223,10 @@ save_plot(tableplot_trend,
 Now we have to filter the data in such a way, that it looks like the table we want to plot.
 
 ```{r}
-mw_prepped <- prep_tablebarplot(trend_mw, subgroup_var = "geschlecht", 
-                                comparisons = c("groupDiff", "crossDiff_of_groupDiff"))
+mw_prepped <- prep_tablebarplot(trend_mw,
+  subgroup_var = "geschlecht",
+  comparisons = c("groupDiff", "crossDiff_of_groupDiff")
+)
 ```
 
 It makes our live a lot easier if we set the `comparions` argument in the above column. 
@@ -264,7 +266,6 @@ mw_prepped$y_axis <- 1:nrow(mw_prepped)
 ## Rename "total" to "Deutschland"
 mw_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", mw_prepped$TR_BUNDESLAND)
 mw_prepped$TR_BUNDESLAND <- gsub("ue", "ü", mw_prepped$TR_BUNDESLAND)
-
 ```
 
 The tables need some more work, because they need to be connected with the barplot, but only have half the rows.
@@ -295,7 +296,7 @@ tableplot_6.5 <- plot_tablebarplot(
     "TR_BUNDESLAND_lesen", "est_2022_groupDiff_mean_lesen", "se_2022_groupDiff_mean_lesen", "es_2022_groupDiff_mean_lesen", "est_2022_groupDiff_mean_hören", "se_2022_groupDiff_mean_hören", "es_2022_groupDiff_mean_hören"
   ),
   columns_table_sig_bold = list(NULL, "sig_2022_groupDiff_mean_lesen", NULL, "sig_2022_groupDiff_mean_lesen", "sig_2022_groupDiff_mean_hören", NULL, "sig_2022_groupDiff_mean_hören"),
-  columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"), 
+  columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
   columns_table_se = list(NULL, NULL, "se_2022_groupDiff_mean_lesen", NULL, NULL, "se_2022_groupDiff_mean_hören", NULL),
   headers = list("", "*M<sub>Jungen</sub> - M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "*M<sub>Jungen</sub> - M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
@@ -370,8 +371,6 @@ column_widths_stand <- standardize_column_width(
 
 
 ```{r}
-
-
 p_1 <- plot_tablebarplot(
   dat = dat_prepped_a,
   bar_est = "est_2015 - 2009_trend_mean",
@@ -446,8 +445,8 @@ p_1 <- plot_tablebarplot(
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     bar_background_lines = "scale_breaks",
     bar_background_lines_linetype = "dotted",
-    bar_pattern_spacing = 0.0154 ,
-    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5,0.5, 0.5, 0.5, 2),
+    bar_pattern_spacing = 0.0154,
+    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2),
     columns_width = column_widths_stand$p1,
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     default_list = barplot_table_plot_pattern
@@ -505,8 +504,6 @@ bar_pattern_spacing_stand <- standardize_pattern_spacing(list(p_1, p_2), pattern
 
 
 tableplot_6.6 <- combine_plots(list(p_1, p_2))
-
-
 ```
 
 ```{r}
@@ -534,8 +531,6 @@ zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<su
 
 ## I add an empty column for being able to easily adjust the sapce between subplots:
 zwh_prepped$empty <- NA
-
-
 ```
 
 
@@ -590,7 +585,7 @@ p_1 <- plot_tablebarplot(
     "sig_2022_groupDiff_mean"
   ),
   y_axis = "y_axis",
-  columns_round = c(0, 0, 0, 0, 0, 2), 
+  columns_round = c(0, 0, 0, 0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
     column_spanners_2_row_height = 2,
     axis_x_lims = c(0, 65),
@@ -604,7 +599,6 @@ p_1 <- plot_tablebarplot(
     default_list = barplot_table_plot_pattern
   )
 )
-
 ```
 
 ```{r}
@@ -637,7 +631,7 @@ p_2 <- plot_tablebarplot(
   plot_settings = plotsettings_tablebarplot(
     column_spanners_2_row_height = 2,
     axis_x_lims = c(0, 65),
-    bar_pattern_spacing = 0.0375 ,
+    bar_pattern_spacing = 0.0375,
     background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
     bar_background_lines = "scale_breaks",
     columns_alignment = c(0.5, 0.5, 2),
@@ -676,13 +670,13 @@ p_3 <- plot_tablebarplot(
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    bar_pattern_spacing = 0.0375 ,
+    bar_pattern_spacing = 0.0375,
     column_spanners_2_row_height = 2,
     axis_x_lims = c(0, 65),
     background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
     bar_background_lines = "scale_breaks",
     columns_alignment = c(0.5, 2),
-    headers_alignment = c(0, 2, 0), 
+    headers_alignment = c(0, 2, 0),
     headers_nudge_x = c(4, 0, 0),
     columns_width = column_widths_stand$p3,
     headers_row_height = 1.5,
@@ -705,9 +699,11 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
 
 
-ggplot2::ggsave(filename='C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf', tableplot_8.4,
-       width = 320, height = 226.2 / 2, units = "mm",
-       device=cairo_pdf)
+ggplot2::ggsave(
+  filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf", tableplot_8.4,
+  width = 320, height = 226.2 / 2, units = "mm",
+  device = cairo_pdf
+)
 
-## Okay, so either the letters are not rendered corretly, or the color model is wrong. 
+## Okay, so either the letters are not rendered corretly, or the color model is wrong.
 ```

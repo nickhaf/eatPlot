@@ -11,7 +11,6 @@
 #'
 #' @examples # tbd
 plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
-
   plot_lims <- plot_dat$plot_lims
 
   y_coords <- calc_y_value_space(plot_lims$coords, plot_lims$y_range, plot_settings)
@@ -25,14 +24,14 @@ plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
   list(
     # Y-Line ------------------------------------------------------------------
     ggplot2::annotate("segment",
-                      x = 0,
-                      xend = 0,
-                      y = y_coords[1] - diff(y_coords) * 0.002425, # Without this, the axis tick will be plotted a bit over the y-line.
-                      yend = y_coords[2] + diff(y_coords) * 0.002425
+      x = 0,
+      xend = 0,
+      y = y_coords[1] - diff(y_coords) * 0.002425, # Without this, the axis tick will be plotted a bit over the y-line.
+      yend = y_coords[2] + diff(y_coords) * 0.002425
     ),
     ggplot2::scale_x_continuous(
       limits = c(
-        0,1
+        0, 1
       ),
       expand = c(0, 0)
     ),
@@ -40,8 +39,7 @@ plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
     ## Use same coordinate system as the braces, so the plots can be aligned.
     theme_y_axis(plot_settings)
   )
-
-  }
+}
 
 
 
@@ -58,4 +56,3 @@ calc_y_positions <- function(facets, n_cols) {
   }))
   return(pos)
 }
-

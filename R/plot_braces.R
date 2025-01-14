@@ -1,20 +1,20 @@
 prep_brace <- function(plot_dat, plot_lims, plot_settings) {
-
-  if(nrow(plot_lims$brace_coords$coord_dat) == 0){
-  return(list(brace_dat = list(),
-              brace_label = data.frame(facet_var = NA),
-              brace_coords = data.frame())
-         )
-}
+  if (nrow(plot_lims$brace_coords$coord_dat) == 0) {
+    return(list(
+      brace_dat = list(),
+      brace_label = data.frame(facet_var = NA),
+      brace_coords = data.frame()
+    ))
+  }
 
   check_columns(plot_dat, c("facet_var", "brace_label_est", "brace_label_se", "brace_label_sig_superscript", "brace_label_sig_bold", "subgroup_var", "trend"))
 
-  plot_lims$brace_coords$coord_dat$trend <-  paste0(plot_lims$brace_coords$coord_dat$year_start, "_", plot_lims$brace_coords$coord_dat$year_end)
+  plot_lims$brace_coords$coord_dat$trend <- paste0(plot_lims$brace_coords$coord_dat$year_start, "_", plot_lims$brace_coords$coord_dat$year_end)
 
   plot_lims$brace_coords$coord_dat_2 <- tidyr::pivot_longer(plot_lims$brace_coords$coord_dat,
-      cols = c("upper_y", "lower_y"),
-      values_to = "y"
-    ) |>
+    cols = c("upper_y", "lower_y"),
+    values_to = "y"
+  ) |>
     tidyr::pivot_longer(
       cols = c("year_start", "year_end"),
       values_to = "year",
@@ -41,14 +41,17 @@ prep_brace <- function(plot_dat, plot_lims, plot_settings) {
     round_se = 1
   )
 
-  brace_labels_merged <- merge(unique(brace_labels[ , c("trend", "subgroup_var", "facet_var", "brace_label", "label_pos_y")]),
-                        unique(plot_lims$brace_coords$coord_dat_2[ ,c("trend", "label_pos_x")]),
-                        by = "trend",
-                        all.y = TRUE)
+  brace_labels_merged <- merge(unique(brace_labels[, c("trend", "subgroup_var", "facet_var", "brace_label", "label_pos_y")]),
+    unique(plot_lims$brace_coords$coord_dat_2[, c("trend", "label_pos_x")]),
+    by = "trend",
+    all.y = TRUE
+  )
 
-brace_list <- list(brace_dat=plot_lims$brace_coords$coord_dat_2,
-                   brace_label = brace_labels_merged,
-                   brace_coords=plot_lims$brace_coords)
+  brace_list <- list(
+    brace_dat = plot_lims$brace_coords$coord_dat_2,
+    brace_label = brace_labels_merged,
+    brace_coords = plot_lims$brace_coords
+  )
 
   return(brace_list)
 }
@@ -75,19 +78,19 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
     dat <- brace_coords[brace_coords$trend == x, ]
 
     ggbrace::stat_brace(
-    data = dat,
-    mapping = ggplot2::aes(
-      x = .data$year,
-      y = .data$y,
-      group = .data$trend
-    ),
-    mid = unique(dat$brace_position_x),
-    rotate = 180,
-    linewidth = plot_settings$brace_line_width,
-    npoints = 200,
-    outside = FALSE,
-    colour = "black"
-  )
+      data = dat,
+      mapping = ggplot2::aes(
+        x = .data$year,
+        y = .data$y,
+        group = .data$trend
+      ),
+      mid = unique(dat$brace_position_x),
+      rotate = 180,
+      linewidth = plot_settings$brace_line_width,
+      npoints = 200,
+      outside = FALSE,
+      colour = "black"
+    )
   })
 
   # }
@@ -95,8 +98,8 @@ draw_braces <- function(brace_coords, plot_settings = plotsettings_lineplot()) {
 }
 
 draw_brace_label <- function(brace_label, plot_settings = plot_settings()) {
-    check_columns(brace_label, c("label_pos_x", "label_pos_y", "brace_label"))
-    ggtext::geom_richtext(
+  check_columns(brace_label, c("label_pos_x", "label_pos_y", "brace_label"))
+  ggtext::geom_richtext(
     data = unique(brace_label[, c("label_pos_x", "label_pos_y", "brace_label")]),
     mapping = ggplot2::aes(
       x = .data$label_pos_x,

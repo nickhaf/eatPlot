@@ -13,34 +13,35 @@
 #'
 #' @examples # tbd
 prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "total",
-                          facet_var = "TR_BUNDESLAND", total_facet = "total", parameter = "mean",  sig_niveau = 0.05,
-                          comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")) {
+                          facet_var = "TR_BUNDESLAND", total_facet = "total", parameter = "mean",
+                          sig_niveau = 0.05, comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")) {
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
   check_columns(eatRep_dat$estimate, cols = c("p"))
 
   unsupported_comp <- comparisons[!(comparisons %in% c("none", "crossDiff", "trend", "trend_crossDiff"))]
-  if(length(unsupported_comp) > 0){
+  if (length(unsupported_comp) > 0) {
     stop(paste("Comparison '", unsupported_comp, "' is not supported. Please contact the package author."))
   }
 
-  if(is.null(subgroup_var)){
+  if (is.null(subgroup_var)) {
     message("Are you sure you don't have a subgroup_var? If you do,  please set it.")
-    eatRep_dat$estimate <- build_column(eatRep_dat$estimate, old = subgroup_var, new = "subgroup_var", fill_value = "single_group_added_by_eatPlot")
-
   }
+
+  eatRep_dat$group <- build_column(eatRep_dat$group, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
+  eatRep_dat$plain <- build_column(eatRep_dat$plain, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
+
 
 
   # Filtering ---------------------------------------------------------------
   if (!is.null(comparisons)) {
     eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
   }
-
   eatRep_dat <- rename_comparisons_total(eatRep_dat,
-                                         facet_var = facet_var,
-                                         total_facet = total_facet,
-                                         subgroup_var = subgroup_var,
-                                         total_subgroup = total_subgroup)
+    facet_var = facet_var,
+    total_facet = total_facet,
+    total_subgroup = total_subgroup
+  )
   eatRep_dat$plain <- NULL
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
 
@@ -50,7 +51,7 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
-  plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var, facet_total, subgroup_var, subgroup_total)
+  plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var, facet_total, subgroup_total)
 
 
 
@@ -77,17 +78,17 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
 
 
 create_trend <- function(df) {
-
   df$trend <- ifelse(length(unique(df$year)) == 2,
-                     paste(min(unique(df$year)), max(unique(df$year)), sep = "_"),
-                     ifelse(length(unique(df$year)) == 1,
-                            unique(df$year),
-                     stop("There are more than two years in the data.")))
+    paste(min(unique(df$year)), max(unique(df$year)), sep = "_"),
+    ifelse(length(unique(df$year)) == 1,
+      unique(df$year),
+      stop("There are more than two years in the data.")
+    )
+  )
   return(df)
 }
 
-build_plot_dat <- function(eatRep_dat, facet_var, facet_total, subgroup_var, subgroup_total ) { ## facet_var schon außerhalb erzeugen
-
+build_plot_dat <- function(eatRep_dat, facet_var, facet_total, subgroup_total) { ## facet_var schon außerhalb erzeugen
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
     eatRep_dat$estimate,
     by = "id"
@@ -124,37 +125,31 @@ build_plot_dat <- function(eatRep_dat, facet_var, facet_total, subgroup_var, sub
   ## Ansosnten hier irgendwo die Comparisons gruppieren, nach Unit = 2 Filtern und dann schauen ob die entsprechenden total label drin sind
   ## Everywhere where the comparison is against total, the total facet var can be removed, because it is duplicated. Same for subgroups.
   plot_dat <- plot_dat[!(plot_dat[, facet_var] == "total" & grepl("Total", plot_dat$comparison)), ]
-  plot_dat <- plot_dat[!(plot_dat[, subgroup_var] == "total" & grepl("_subgroupTotal", plot_dat$comparison)), ]
+  plot_dat <- plot_dat[!(plot_dat[, "subgroup_var"] == "total" & grepl("_subgroupTotal", plot_dat$comparison)), ]
 
 
-## Problem: Total fehlt jetzt hier ganz. Ich brauche ja trotzdem die Est und Trend sachen von Total. Nur  ebend nicht das, was gegen Total verglichen wird
-
-  ## trend ist z.B. gar nicht mit drin?
-
-  noTrend <- plot_dat[plot_dat$trend %in% c("2009", "2015", "2022"), ]
-  trend <- plot_dat[!(plot_dat$trend %in% c("2009", "2015", "2022")), ]
-
+  noTrend <- plot_dat[grep("_", plot_dat$trend, invert = TRUE), ]
+  trend <- plot_dat[grep("_", plot_dat$trend), ]
 
   noTrend_wide <- tidyr::pivot_wider(
-    unique(noTrend[, !colnames(noTrend) %in% c("group", "id") ]),
+    unique(noTrend[, !colnames(noTrend) %in% c("group", "id")]),
     names_from = "comparison",
     values_from = c("est_comparison", "se_comparison", "sig_comparison", "p_comparison", "es_comparison")
   ) |>
     as.data.frame()
-
-
 
   trend_wide <- tidyr::pivot_wider(
-    unique(trend[, !colnames(trend) %in% c("group", "id") ]),
+    unique(trend[, !colnames(trend) %in% c("group", "id")]),
     names_from = "comparison",
     values_from = c("est_comparison", "se_comparison", "sig_comparison", "p_comparison", "es_comparison")
   ) |>
     as.data.frame()
 
-plot_dat <- merge(
-  noTrend_wide[, !colnames(noTrend_wide) %in% c("group", "id", "trend") ],
-  trend_wide,
-  all = TRUE)
+  plot_dat <- merge(
+    noTrend_wide[, !colnames(noTrend_wide) %in% c("group", "id", "trend")],
+    trend_wide,
+    all = TRUE
+  )
 
 
   return(plot_dat)
@@ -170,8 +165,7 @@ prep_years_list <- function(years_lines, years_braces) {
 }
 
 
-unnest_eatRep <- function(comparison_dat, eatRep_dat){
-
+unnest_eatRep <- function(comparison_dat, eatRep_dat) {
   eatRep_unnested <- data.frame()
   ## comparison_dat now contains all comparisons that are made in the data.
   ## The group column contains the groups that belong to that comparison. Can either other comparisons, or groups.
@@ -185,19 +179,19 @@ unnest_eatRep <- function(comparison_dat, eatRep_dat){
   eatRep_no_comp_group <- comparison_dat[!(comparison_dat$group %in% comp_groups), ]
   eatRep_unnested <- rbind(eatRep_unnested, eatRep_no_comp_group)
 
-  while(length(comp_groups > 0)){
-
-    eatRep_nested <- comparison_dat[comparison_dat$unit %in% comp_groups,]
+  while (length(comp_groups > 0)) {
+    eatRep_nested <- comparison_dat[comparison_dat$unit %in% comp_groups, ]
     eatRep_nested_m <- merge(eatRep_nested,
-                           eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
-                           by.x = "unit",
-                           by.y = "id",
-                           all.x = TRUE)
+      eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
+      by.x = "unit",
+      by.y = "id",
+      all.x = TRUE
+    )
     # Hier vom Format noch richtig! Jetzt lang machen.
 
     eatRep_nested_m$unit_merged <- paste(eatRep_nested_m$unit_1, eatRep_nested_m$unit_2, sep = "_")
 
-# Build new column --------------------------------------------------
+    # Build new column --------------------------------------------------
     eatRep_nested_m$unit <- NULL
     eatRep_nested_m$unit_b <- NULL
     eatRep_nested_m <- tidyr::pivot_longer(
@@ -207,24 +201,23 @@ unnest_eatRep <- function(comparison_dat, eatRep_dat){
       values_to = "unit"
     )
 
-  ## Now do the stuff we did before the loop started again.
-  ## By this, the comparisons should be unnested until all done!
+    ## Now do the stuff we did before the loop started again.
+    ## By this, the comparisons should be unnested until all done!
 
     comp_groups <- eatRep_nested_m$unit[grep("comp_", eatRep_nested_m$unit)]
     eatRep_no_comp_group <- eatRep_nested_m[!(eatRep_nested_m$unit %in% comp_groups), ]
     comparison_dat <- eatRep_nested_m[eatRep_nested_m$unit %in% comp_groups, ]
 
     eatRep_unnested <- rbind(
-      eatRep_unnested[, c("id", "group", "unit",  "comparison", "est", "se", "p", "sig", "es")],
-      eatRep_no_comp_group[, c("id",  "group", "unit", "comparison", "est", "se", "p", "sig", "es")])
+      eatRep_unnested[, c("id", "group", "unit", "comparison", "est", "se", "p", "sig", "es")],
+      eatRep_no_comp_group[, c("id", "group", "unit", "comparison", "est", "se", "p", "sig", "es")]
+    )
   }
 
-return(eatRep_unnested)
-
+  return(eatRep_unnested)
 }
 
-remove_comparisons_without_group <- function(eatRep_dat){
-
+remove_comparisons_without_group <- function(eatRep_dat) {
   ## Schrittweise durch: erst schauen ob groups drin sind.
   ## Dann schauen ob die Comps noch drin sind.
   eatRep_dat$comparisons <- eatRep_dat$comparisons[grepl("group_", eatRep_dat$comparisons$unit_1) & eatRep_dat$comparisons$unit_1 %in% eatRep_dat$group$id & grepl("group_", eatRep_dat$comparisons$unit_2) & eatRep_dat$comparisons$unit_2 %in% eatRep_dat$group$id, ]

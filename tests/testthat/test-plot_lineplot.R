@@ -12,11 +12,10 @@ test_data_lineplot <- data.frame(
 
 
 test_that("simple lineplot with one group", {
-
   test_data_lineplot <- data.frame(
     id = c("comp_1", "comp_1"),
     state_var = c("Berlin", "Berlin"),
-    subgroup = c("m", "m"),
+    subgroup_var = c("m", "m"),
     year = c(2000, 2005),
     trend = c("2000_2005", "2000_2005"),
     est_point = c(500, 560),
@@ -26,15 +25,14 @@ test_that("simple lineplot with one group", {
 
 
   p <- plot_lineplot(test_data_lineplot,
-                     point_est = "est_point",
-                     point_sig = "sig_point",
-                     line_sig = "sig_line",
-                     years_lines = list(c(2000, 2005)),
-                     subgroup_var = "subgroup",
-                     facet_var = "state_var")
+    point_est = "est_point",
+    point_sig = "sig_point",
+    line_sig = "sig_line",
+    years_lines = list(c(2000, 2005)),
+    facet_var = "state_var"
+  )
 
-vdiffr::expect_doppelganger("lineplot_oneGroup", p)
-
+  vdiffr::expect_doppelganger("lineplot_oneGroup", p)
 })
 
 
@@ -108,5 +106,3 @@ vdiffr::expect_doppelganger("lineplot_oneGroup", p)
 #
 #   #save_plot(p, filename = "/home/nick/Downloads/test.pdf")
 # })
-
-

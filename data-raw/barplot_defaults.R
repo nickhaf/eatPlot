@@ -67,5 +67,3 @@ barplot_plot_frz <- plotsettings_tablebarplot(
 )
 
 usethis::use_data(barplot_plot_frz, overwrite = TRUE)
-
-

@@ -41,10 +41,12 @@ theme_y_axis <- function(plot_settings = plotsettings_lineplot()) {
       axis.text.x = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_blank(),
       plot.margin = ggplot2::unit(c(
-      plot_settings$margin_top,
-      0,
-      plot_settings$margin_bottom,
-      0), "npc"))
+        plot_settings$margin_top,
+        0,
+        plot_settings$margin_bottom,
+        0
+      ), "npc")
+    )
 }
 
 #' Theme for a table column.
@@ -92,10 +94,11 @@ theme_line <- function(plot_settings = plotsettings_lineplot()) {
       text = ggplot2::element_text(colour = "#000000"),
       panel.spacing = ggplot2::unit(plot_settings$split_plot_gap_width, "npc"), # Gap in split plot
       plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units = "npc"),
-      plot.title = ggplot2::element_text(size = 7,
-                                         hjust = 0.5,
-                                         vjust = 0,
-                                         margin = ggplot2::margin(-3.5, 0, 3.5, 0)
-                                         )
+      plot.title = ggplot2::element_text(
+        size = 7,
+        hjust = 0.5,
+        vjust = 0,
+        margin = ggplot2::margin(-3.5, 0, 3.5, 0)
+      )
     )
 }

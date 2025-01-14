@@ -68,16 +68,14 @@ test_that("column length is checked correctly", {
 
 
 test_that("simple tablebarplot can be plotted", {
-
-
   example_table <- p_bar <- plot_tablebarplot(
     dat = test_data,
     bar_label = NULL,
     bar_sig = "bar_sig",
     bar_fill = "bar_fill",
     headers = list("est_1", "est_2", "a barplot"),
-    column_spanners = list("spanner_2" = c(2,3), "spanner_1" = 1),
-    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1,2)),
+    column_spanners = list("spanner_2" = c(2, 3), "spanner_1" = 1),
+    column_spanners_2 = list("spanner_3" = 3, "spanner_2" = c(1, 2)),
     columns_table = list("est_1", "se_1"),
     columns_table_sig_bold = list(NULL, "bar_sig"),
     columns_table_sig_superscript = list("bar_sig", "bar_sig"),
@@ -97,8 +95,7 @@ test_that("simple tablebarplot can be plotted", {
   )
 
   vdiffr::expect_doppelganger("Minimal_tablebarplot", example_table)
-  #save_plot(example_table, "/home/nick/Downloads/table.pdf",  height = 226.2 / 3)
-
+  # save_plot(example_table, "/home/nick/Downloads/table.pdf",  height = 226.2 / 3)
 })
 
 
@@ -142,7 +139,6 @@ test_that("Vlines are plotted correctly", {
     bar_background_lines_colour = "red",
     bar_background_0line_linetype = "solid",
     bar_background_0line_colour = "blue"
-
   )
 
   df_test <- data.frame(

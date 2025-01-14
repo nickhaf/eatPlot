@@ -81,7 +81,6 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$seperate_plot_var_box_linewidth))
   stopifnot(is.logical(settings_list$split_plot))
   stopifnot(is.numeric(settings_list$split_plot_gap_width))
-
 }
 
 

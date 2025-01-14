@@ -9,7 +9,6 @@
 #'
 #' @examples # tbd
 plot_x_axis <- function(plot_dat) {
-
   plot_dat$plot_settings$axis_x_label_nudge_y <- plot_dat$plot_settings$axis_x_background_width_y / 2
 
   y_max <- plot_dat$plot_lims$coords[2]

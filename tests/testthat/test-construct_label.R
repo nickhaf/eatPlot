@@ -28,7 +28,7 @@ test_that("labels are build correctly", {
       column_se = NULL,
       column_sig_bold = "sig_bold",
       column_sig_superscript = "sig_superscript",
-      sig_superscript_letter ="a",
+      sig_superscript_letter = "a",
       round_est = 4,
       round_se = 5
     ),
@@ -43,7 +43,7 @@ test_that("labels are build correctly", {
       column_se = NULL,
       column_sig_bold = NULL,
       column_sig_superscript = "sig_superscript",
-      sig_superscript_letter ="a",
+      sig_superscript_letter = "a",
       round_est = 4,
       round_se = 5
     ),
@@ -95,6 +95,5 @@ test_that("NAs are converted to empty strings without ()", {
     p_est = c(TRUE, FALSE, TRUE, FALSE)
   )
 
-expect_equal(construct_label_2(dat = df, label_se = "label_se")$label, c("", " (2.3)", "", " (0.6)"))
-
+  expect_equal(construct_label_2(dat = df, label_se = "label_se")$label, c("", " (2.3)", "", " (0.6)"))
 })

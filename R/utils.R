@@ -142,9 +142,9 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   ## Sometimes it's necessary to remove some columns before reforming to long format:
   if (!is.null(remove_pattern)) {
     cols_removed <- grep(remove_pattern,
-                         colnames(data),
-                         invert = TRUE,
-                         value = TRUE
+      colnames(data),
+      invert = TRUE,
+      value = TRUE
     )
     data <- data[, cols_removed]
   }
@@ -163,8 +163,8 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
     colnames(data)[col_pos] <- year_cols
 
     data_long <- stats::reshape(data,
-                                direction = "long",
-                                varying = colnames(data)[col_pos]
+      direction = "long",
+      varying = colnames(data)[col_pos]
     )
     data_long$id <- NULL
   } else { ## In this case, there is no trend:
@@ -176,13 +176,13 @@ prep_long <- function(data, include_pattern, remove_pattern = NULL, suffix = "")
   new_colnames <- colnames(data_long)[!(colnames(data_long) %in% colnames(data))]
 
   data_long <- rename_columns(data_long,
-                              old_names = new_colnames,
-                              new_names = paste0(new_colnames, suffix)
+    old_names = new_colnames,
+    new_names = paste0(new_colnames, suffix)
   )
 
   data_long <- rename_columns(data_long,
-                              old_names = paste0("time", suffix),
-                              new_names = "year"
+    old_names = paste0("time", suffix),
+    new_names = "year"
   )
 
   colnames(data_long) <- gsub("\\.", "_", colnames(data_long))
@@ -287,8 +287,9 @@ get_comparisons <- function(dat, states, sub_groups) {
   ## if .vs. in the string, delete the second comparison part, it is redundant, as the next comparison is always of these groups against these groups in the wholeGroup
   dat$group_var_2 <- dat$group_var
   dat$group_var <- ifelse(grepl("\\.vs\\.", dat$group_var),
-                          gsub("\\.VS\\..*", "", dat$group_var),
-                          dat$group_var)
+    gsub("\\.VS\\..*", "", dat$group_var),
+    dat$group_var
+  )
 
   dat$group_var <- gsub("\\.vs\\.", "\\.VS\\.", dat$group_var)
 
@@ -301,8 +302,9 @@ get_comparisons <- function(dat, states, sub_groups) {
 
   ## Add better description to compare_2, as it will be used as column header later on.
   dat$compare_2 <- ifelse(grepl("\\.vs\\.", dat$group_var_2),
-                          paste0("BL-groupingvar_vs_", dat$compare_2, "_VS_wholeGroup-groupingvar_vs_", dat$compare_2),
-                          dat$compare_2)
+    paste0("BL-groupingvar_vs_", dat$compare_2, "_VS_wholeGroup-groupingvar_vs_", dat$compare_2),
+    dat$compare_2
+  )
   dat$group_var_2 <- NULL
 
   for (i in c("compare_1", "compare_2")) {
@@ -315,8 +317,8 @@ get_comparisons <- function(dat, states, sub_groups) {
   ## Check if comparison is one of group in state vs. the group in wholeGroup
 
   dat$compare_2 <- ifelse(dat$grouping_var == dat$compare_2 & !is.na(dat$grouping_var) & !is.na(dat$compare_2) & dat$grouping_var != "no_comp" & dat$compare_2 != "no_comp",
-                          "wholeGroupSameGroup",
-                          dat$compare_2
+    "wholeGroupSameGroup",
+    dat$compare_2
   )
 
   return(dat)
@@ -360,16 +362,14 @@ replace_VS <- function(x) {
 #'
 #' @examples calc_overlap(c(2010, 2012, 2013), c(2015, 2016, 2015))
 calc_overlap <- function(year_start, year_end) {
-
-  if(length(year_start) != length(year_end)){
+  if (length(year_start) != length(year_end)) {
     stop("The length of `year_start` and `year_end` must be the same.")
   }
 
   overlap <- c()
   for (i in 1:length(year_start)) {
-    overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i])|
-                        any((year_end[i] > year_start[-i]) & (year_end[i] < year_end[-i]))
-    )
+    overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]) |
+      any((year_end[i] > year_start[-i]) & (year_end[i] < year_end[-i])))
   }
   return(any(overlap))
 }
@@ -450,7 +450,6 @@ check_column_warn <- function(dat, column) {
 #'
 #' @examples # tbd
 build_column <- function(dat, old, new, fill_value = NA) {
-
   check_no_columns(dat, new)
   if (is.null(old) | test_no_columns(dat, old)) {
     dat[, new] <- fill_value
@@ -479,7 +478,7 @@ fill_column <- function(df, column_name, filling = NA) {
   if (is.null(column_name)) {
     df[[deparse(substitute(column_name))]] <- rep(filling, nrow(df))
   } else if (column_name %in% colnames(df)) {
-#    df[[column_name]] <- ifelse(is.na(df[[column_name]]), filling, df[[column_name]])
+    #    df[[column_name]] <- ifelse(is.na(df[[column_name]]), filling, df[[column_name]])
     df[[deparse(substitute(column_name))]] <- df[[column_name]]
   } else if ((!column_name %in% colnames(df))) {
     warning(paste0("Your column '", column_name, "' is not part of your data. Trying to set it automatically."))
@@ -543,12 +542,12 @@ check_factor <- function(dat, column, variable_type) {
 #'
 #' @return dataframe
 #'
-#' @examples #tbd
+#' @examples # tbd
 rename_columns <- function(dat, old_names, new_names) {
-  if(!is.data.frame(dat)){
+  if (!is.data.frame(dat)) {
     stop("dat has to be a data.frame")
-  }else{
-  colnames(dat)[colnames(dat) %in% old_names] <- new_names
+  } else {
+    colnames(dat)[colnames(dat) %in% old_names] <- new_names
   }
   return(dat)
 }
@@ -582,7 +581,8 @@ merge_2 <- function(dat_1, dat_2, ...) {
 #' @return Numeric value of the range of the x-axis coordinates of the given `plot`.
 #'
 #' @examples
-#' example_plot <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
+#' example_plot <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+#'   geom_point()
 #' get_x_range(example_plot)
 get_x_range <- function(plot) {
   diff(ggplot2::layer_scales(plot)$x$get_limits())
@@ -626,15 +626,14 @@ construct_colour_scale <- function(colours, dat, colname) {
 #' @return Maximum occurence of the word that is searched for.
 #'
 #' @examples count_words(c("Test word", "word word, Test word"), "word")
-count_words <- function(string, word){
-
-  if(inherits(string, "list") & !is.null(names(string))){
+count_words <- function(string, word) {
+  if (inherits(string, "list") & !is.null(names(string))) {
     string <- names(string)
   }
 
-max(unlist(lapply(string, function(x){
-  lengths(regmatches(x, gregexpr(word, x)))
-})))
+  max(unlist(lapply(string, function(x) {
+    lengths(regmatches(x, gregexpr(word, x)))
+  })))
 }
 
 
@@ -648,7 +647,7 @@ max(unlist(lapply(string, function(x){
 #' @return Numeric vector with the scale breaks.
 #'
 #' @examples set_scale_breaks(c(-100, 50))
-set_scale_breaks <- function(plot_borders){
+set_scale_breaks <- function(plot_borders) {
   scale_breaks <- unique(c(
     seq(0, plot_borders[1], by = -10),
     seq(0, plot_borders[2], by = 10)
@@ -657,7 +656,7 @@ set_scale_breaks <- function(plot_borders){
 }
 
 
-filter_years <- function(dat, years){
+filter_years <- function(dat, years) {
   # if(is.null(years)){
   #   l <- consecutive_numbers(dat$year)
   # }

@@ -14,18 +14,20 @@
 plot_points <- function(plot_dat) {
   check_columns(plot_dat$plot_dat, c("point_est", "year", "trend", "point_sig"))
   nudge_val <- calc_y_nudge(plot_dat,
-                           plot_settings = plot_dat$plot_settings
+    plot_settings = plot_dat$plot_settings
   )
 
   plot_dat$dat_final <- within(plot_dat$plot_dat, {
     nudge_y <- ifelse(point_est == ave(point_est, year, FUN = min),
-                      -nudge_val,
-                      nudge_val)
+      -nudge_val,
+      nudge_val
+    )
   })
 
   plot_dat$dat_final <- calc_x_nudge(plot_dat,
-                                     nudge_x = plot_dat$plot_settings$point_label_nudge_x,
-                                           plot_settings = plot_dat$plot_settings)
+    nudge_x = plot_dat$plot_settings$point_label_nudge_x,
+    plot_settings = plot_dat$plot_settings
+  )
 
   list(
     ggplot2::geom_point(ggplot2::aes(shape = .data$point_sig)),

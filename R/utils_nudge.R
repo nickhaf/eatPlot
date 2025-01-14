@@ -13,8 +13,7 @@
 #'
 #' @examples # tbd
 calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settings = plotsettings_lineplot()) {
-
-  if(nrow(years_list$years_braces) == 0){
+  if (nrow(years_list$years_braces) == 0) {
     return(list(coord_dat = data.frame(), group_labels = data.frame(label_pos_y = 0)))
   }
 
@@ -44,7 +43,6 @@ calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settin
       "upper_label_y" = upper_label_y
     )
   } else {
-
     lower_brace_y <- coords[1] - (range_coords * plot_settings$brace_span_y)
     upper_label_y <- lower_brace_y - range_coords * plot_settings$brace_label_nudge_y
 
@@ -71,11 +69,9 @@ calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settin
       starting_points$lower_brace_y_b
     )
   } else {
-
-  brace_positions$upper_y <- coords[1]
-  brace_positions$lower_y <- starting_points$lower_brace_y
-
- }
+    brace_positions$upper_y <- coords[1]
+    brace_positions$lower_y <- starting_points$lower_brace_y
+  }
 
 
   range_coords <- diff(range(coords)) ## Take from above!
@@ -108,57 +104,58 @@ calc_brace_position <- function(years_list, overlap) {
   })
 
   if (overlap == TRUE) {
-      if (all(years_braces_df$range == years_braces_df$range[1])) { ## All braces have the same range
+    if (all(years_braces_df$range == years_braces_df$range[1])) { ## All braces have the same range
 
-        ## The first brace will get an indention to the left, the second one none
-        years_braces_df$brace_position_x <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
+      ## The first brace will get an indention to the left, the second one none
+      years_braces_df$brace_position_x <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
+        yes = "left",
+        no = "middle"
+      )
+
+      ## The first brace will get plotted on top, the second one on the bottom:
+      years_braces_df$brace_position_y <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
+        yes = "top",
+        no = "bottom"
+      )
+    } else {
+      # The smaller brace won't get any indention.
+      years_braces_df$brace_position_x <- ifelse(years_braces_df$range == max(years_braces_df$range),
+        yes = ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
           yes = "left",
-          no = "middle"
-        )
+          no = "right"
+        ),
+        no = "middle"
+      )
 
-        ## The first brace will get plotted on top, the second one on the bottom:
-        years_braces_df$brace_position_y <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
-          yes = "top",
-          no = "bottom"
-        )
-      } else {
-        # The smaller brace won't get any indention.
-        years_braces_df$brace_position_x <- ifelse(years_braces_df$range == max(years_braces_df$range),
-          yes = ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
-            yes = "left",
-            no = "right"
-          ),
-          no = "middle"
-        )
+      # The larger brace will be plotted on top
+      years_braces_df$brace_position_y <- ifelse(years_braces_df$range == max(years_braces_df$range),
+        yes = "top",
+        no = "bottom"
+      )
 
-        # The larger brace will be plotted on top
-        years_braces_df$brace_position_y <- ifelse(years_braces_df$range == max(years_braces_df$range),
-          yes = "top",
-          no = "bottom"
-        )
+      # If any bottom brace starts at the first year, the upper needs to go right
 
-        # If any bottom brace starts at the first year, the upper needs to go right
+      middle_bottom <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start) & years_braces_df$brace_position_y == "bottom",
+        yes = TRUE,
+        no = FALSE
+      )
 
-        middle_bottom <- ifelse(years_braces_df$year_start == min(years_braces_df$year_start) & years_braces_df$brace_position_y == "bottom",
-          yes = TRUE,
-          no = FALSE
-        )
-
-        if (any(middle_bottom)) {
-          years_braces_df[years_braces_df$brace_position_y == "top", "brace_position_x"] <- "right"
-        }
+      if (any(middle_bottom)) {
+        years_braces_df[years_braces_df$brace_position_y == "top", "brace_position_x"] <- "right"
       }
-   } else {
-
-     years_braces_df$brace_position_x <- "middle"
-  years_braces_df$brace_position_y <- rep("middle", nrow(years_braces_df))
-   }
+    }
+  } else {
+    years_braces_df$brace_position_x <- "middle"
+    years_braces_df$brace_position_y <- rep("middle", nrow(years_braces_df))
+  }
 
   years_braces_df$brace_position_x <- ifelse(years_braces_df$brace_position_x == "left",
-                                             0.25,
-                                             ifelse(years_braces_df$brace_position_x == "right",
-                                                    0.75,
-                                                    0.5))
+    0.25,
+    ifelse(years_braces_df$brace_position_x == "right",
+      0.75,
+      0.5
+    )
+  )
 
 
   return(years_braces_df)
@@ -186,7 +183,6 @@ calc_x_nudge <- function(dat, nudge_x, plot_settings) {
       )
     )
   } else {
-
     dat$x_coords <- ifelse(dat$year == min(dat$year, na.rm = TRUE),
       yes = dat$year + range_years * nudge_x,
       no = ifelse(dat$year == max(dat$year, na.rm = TRUE),
@@ -231,7 +227,6 @@ nudge_x_axis_labels <- function(dat, plot_settings) {
 }
 
 calc_y_nudge <- function(plot_dat, plot_settings) {
-
   coords_diff <- diff(range(plot_dat$plot_lims$coords))
   nudge_val <- coords_diff * plot_settings$point_label_nudge_y
 

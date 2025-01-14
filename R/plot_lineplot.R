@@ -24,7 +24,6 @@
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
                           facet_var = NULL,
-                          subgroup_var = NULL,
                           point_est = NULL,
                           point_sig = NULL,
                           line_sig = NULL,
@@ -47,7 +46,7 @@ plot_lineplot <- function(eatPlot_dat,
     cols = c(facet_var)
   )
   eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
-  if(plot_settings$split_plot){
+  if (plot_settings$split_plot) {
     warning("Split lineplot currently not supported. Set to non-split.")
     plot_settings$split_plot <- FALSE
   }
@@ -63,51 +62,46 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = brace_label_sig_superscript, new = "brace_label_sig_superscript", fill_value = FALSE) |>
     build_column(old = brace_label_sig_bold, new = "brace_label_sig_bold", fill_value = FALSE) |>
     build_column(old = facet_var, new = "facet_var") |>
-    build_column(old = subgroup_var, new = "subgroup_var", fill = "1group") |>
     build_column(old = line_se, new = "line_se")
+
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
 
   # Prepare Subsets ---------------------------------------------------------
-## Hier auch subsetten wenn background_subgroup = NULL
+  ## Hier auch subsetten wenn background_subgroup = NULL
 
-if(!is.null(background_facet) & !is.null(background_subgroup)){
-  background_line_dat <- subset(eatPlot_dat,
-                                facet_var == background_facet &
-                                  subgroup_var == background_subgroup)
-}else if(!is.null(background_facet) & is.null(background_subgroup)){
- background_line_dat <- subset(eatPlot_dat,
-                                facet_var == background_facet)
-}else{
- background_line_dat <- data.frame()
-}
+  if (!is.null(background_facet) & !is.null(background_subgroup)) {
+    background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet & eatPlot_dat$subgroup_var == background_subgroup, ]
+  } else if (!is.null(background_facet) & is.null(background_subgroup)) {
+    background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet, ]
+  } else {
+    background_line_dat <- data.frame()
+  }
 
 
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
-  if(!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1){
-    line_dat <- subset(eatPlot_dat,
-                       facet_var != background_facet &
-                         subgroup_var != background_subgroup)
-  }else{
+  if (!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1) {
+    line_dat <- eatPlot_dat[eatPlot_dat$facet_var != background_facet & eatPlot_dat$subgroup_var != background_subgroup, ]
+  } else {
     line_dat <- eatPlot_dat
   }
   line_dat <- filter_years(line_dat, years = years_lines)
   brace_dat_list <- prep_brace(line_dat, plot_lims, plot_settings)
 
 
-if(!is.null(background_facet) & !is.null(background_subgroup)){
+  if (!is.null(background_facet) & !is.null(background_subgroup)) {
     brace_dat <- brace_dat_list$brace_dat |>
-    subset(facet_var != background_facet & subgroup_var != background_subgroup)
-  }else{
+      subset(facet_var != background_facet & "subgroup_var" != background_subgroup)
+  } else {
     brace_dat <- brace_dat_list$brace_dat
   }
   brace_coordinates <- brace_dat_list$brace_coords
-  if(length(brace_dat) > 0){
-  brace_dat <- filter_years(brace_dat, years = years_braces)
+  if (length(brace_dat) > 0) {
+    brace_dat <- filter_years(brace_dat, years = years_braces)
 
-  if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-    stop("Some of the trends you provided in 'years_braces' are not in the data.")
-  }
+    if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+      stop("Some of the trends you provided in 'years_braces' are not in the data.")
+    }
   }
 
   if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
@@ -119,9 +113,9 @@ if(!is.null(background_facet) & !is.null(background_subgroup)){
   plot_list <- list()
   position <- 1
 
-  if(!is.null(background_facet)){
-  facet_values <- levels(dat_p$plot_dat[, "facet_var"])[levels(dat_p$plot_dat[, "facet_var"]) != background_facet]
-  }else{
+  if (!is.null(background_facet)) {
+    facet_values <- levels(dat_p$plot_dat[, "facet_var"])[levels(dat_p$plot_dat[, "facet_var"]) != background_facet]
+  } else {
     facet_values <- levels(dat_p$plot_dat[, "facet_var"])
   }
 
@@ -137,7 +131,7 @@ if(!is.null(background_facet) & !is.null(background_subgroup)){
       mapping = ggplot2::aes(
         x = .data$year,
         y = .data$point_est,
-        #group = .data$trend,
+        # group = .data$trend,
         colour = .data$subgroup_var
       )
     ) +
@@ -270,11 +264,11 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   #   ))
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
-if(!is.null(background_subgroup) & length(unique(plot_dat$subgroup_var)) > 1){
-  subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
-}else{
-  subgroup_lvls <- unique(plot_dat$subgroup_var)
-}
+  if (!is.null(background_subgroup) & length(unique(plot_dat$subgroup_var)) > 1) {
+    subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
+  } else {
+    subgroup_lvls <- unique(plot_dat$subgroup_var)
+  }
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
     coords,
@@ -301,7 +295,7 @@ if(!is.null(background_subgroup) & length(unique(plot_dat$subgroup_var)) > 1){
 prep_years <- function(years) {
   years_df <- data.frame(do.call("rbind", years))
 
-  if(ncol(years_df) == 0){
+  if (ncol(years_df) == 0) {
     years_df <- data.frame("year_start" = numeric(), "year_end" = numeric())
   }
 

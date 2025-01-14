@@ -19,7 +19,7 @@
 #'   estimate = c(400, 650, 380, 500, 600),
 #'   se = c(0.1, 0.45, 1, 0.27, 0.9),
 #'   p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
-#'   )
+#' )
 construct_label <- function(dat,
                             column_est = NULL,
                             column_se = NULL,
@@ -30,13 +30,21 @@ construct_label <- function(dat,
                             round_se = 1,
                             plot_settings = plotsettings_tablebarplot()) {
   dat <- fill_column(dat, column_name = column_est, filling = "")
-  if(is.null(column_est)){column_est <- "column_est"}
+  if (is.null(column_est)) {
+    column_est <- "column_est"
+  }
   dat <- fill_column(dat, column_name = column_se, filling = "")
-  if(is.null(column_se)){column_se <- "column_se"}
+  if (is.null(column_se)) {
+    column_se <- "column_se"
+  }
   dat <- fill_column(dat, column_name = column_sig_bold, filling = FALSE)
-  if(is.null(column_sig_bold)){column_sig_bold <- "column_sig_bold"}
+  if (is.null(column_sig_bold)) {
+    column_sig_bold <- "column_sig_bold"
+  }
   dat <- fill_column(dat, column_name = column_sig_superscript, filling = FALSE)
-  if(is.null(column_sig_superscript)){column_sig_superscript <- "column_sig_superscript"}
+  if (is.null(column_sig_superscript)) {
+    column_sig_superscript <- "column_sig_superscript"
+  }
 
   if (any(is.na(dat[, c(column_sig_bold, column_sig_superscript)]))) {
     for (i in c(column_sig_bold, column_sig_superscript)) {
@@ -46,20 +54,21 @@ construct_label <- function(dat,
 
   if (is.numeric(dat[, column_est])) {
     dat[, column_est] <- format(round(dat[, column_est], round_est),
-                            trim = TRUE,
-                            nsmall = round_est)
+      trim = TRUE,
+      nsmall = round_est
+    )
     dat[, column_est][dat[, column_est] == "NA"] <- ""
   }
 
   if (is.numeric(dat[, column_se])) {
-
     extra_space <- ifelse(abs(dat[, column_se]) < 10 & !is.na(abs(dat[, column_se])), "<span style='white-space: pre;'> </span>", "")
 
     dat[, column_se] <- format(round(dat[, column_se], round_se),
-                           trim = TRUE,
-                           nsmall = round_se)
+      trim = TRUE,
+      nsmall = round_se
+    )
     dat[, column_se][dat[, column_se] == "NA"] <- ""
-  }else{
+  } else {
     extra_space <- rep("", nrow(dat))
   }
 
@@ -69,21 +78,22 @@ construct_label <- function(dat,
   )
 
   label_superscript <- ifelse(dat[, column_sig_superscript] == TRUE & dat[, column_est] != "",
-                          paste0("<sup>", sig_superscript_letter, "</sup>"),
-                          "")
+    paste0("<sup>", sig_superscript_letter, "</sup>"),
+    ""
+  )
 
   label_se <- ifelse(
     !is.na(dat[, column_se]),
     paste0(extra_space, " (", dat[, column_se], ")"),
     ""
-    )
+  )
 
 
-    label_out <- paste0(
-      label_est,
-      label_superscript,
-      label_se
-    )
+  label_out <- paste0(
+    label_est,
+    label_superscript,
+    label_se
+  )
   # } else {
   #   ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column.
   #   if (any(dat$label_sig != "")) {
@@ -122,18 +132,17 @@ construct_label <- function(dat,
 #'   estimate = c(400, 650, 380, 500, 600),
 #'   se = c(0.1, 0.45, 1, 0.27, 0.9),
 #'   p_estimate = c(FALSE, FALSE, TRUE, TRUE, FALSE)
-#'   )
+#' )
 construct_label_2 <- function(dat,
-                            new_name = "label",
-                            label_est = NULL,
-                            label_se = NULL,
-                            label_sig_bold = NULL,
-                            label_sig_high = NULL,
-                            label_sig_high_extra_column = FALSE,
-                            round_est = 0,
-                            round_se = 1,
-                            plot_settings = plotsettings_tablebarplot()) {
-
+                              new_name = "label",
+                              label_est = NULL,
+                              label_se = NULL,
+                              label_sig_bold = NULL,
+                              label_sig_high = NULL,
+                              label_sig_high_extra_column = FALSE,
+                              round_est = 0,
+                              round_se = 1,
+                              plot_settings = plotsettings_tablebarplot()) {
   dat <- fill_column(dat, column_name = label_est, filling = "")
   dat <- fill_column(dat, column_name = label_se, filling = NA)
   dat <- fill_column(dat, column_name = label_sig_high, filling = FALSE)
@@ -148,29 +157,31 @@ construct_label_2 <- function(dat,
 
   if (is.numeric(dat$label_est) & !is.null(round_est)) {
     dat$label_est <- format(round(dat$label_est, round_est),
-                            trim = TRUE,
-                            nsmall = round_est)
+      trim = TRUE,
+      nsmall = round_est
+    )
     dat$label_est[dat$label_est == "NA"] <- ""
   }
   if (is.numeric(dat$label_se) & !is.null(round_se)) {
     dat$label_se <- format(round(dat$label_se, round_se),
-                           trim = TRUE,
-                           nsmall = round_se)
+      trim = TRUE,
+      nsmall = round_se
+    )
     dat$label_se[dat$label_se == "NA"] <- ""
-
   }
 
   dat$label_est <- ifelse(dat$label_sig_bold == TRUE & dat$label_est != "",
-                          paste0("**", dat$label_est, "**"),
-                          dat$label_est
+    paste0("**", dat$label_est, "**"),
+    dat$label_est
   )
 
   dat$label_sig <- ifelse(dat$label_sig_high == TRUE & dat$label_est != "",
-                          paste0("<sup>", plot_settings$columns_table_sig_superscript_letter, "</sup>"), "")
+    paste0("<sup>", plot_settings$columns_table_sig_superscript_letter, "</sup>"), ""
+  )
 
   dat$label_se <- ifelse(!is.na(dat$label_se) & dat$label_se != "",
-                         paste0(" (", dat$label_se, ")"),
-                         ""
+    paste0(" (", dat$label_se, ")"),
+    ""
   )
 
   dat[, c("label_est", "label_sig", "label_se")][is.na(dat[, c("label_est", "label_sig", "label_se")]) | dat[, c("label_est", "label_sig", "label_se")] == "NA"] <- ""

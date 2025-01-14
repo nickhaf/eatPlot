@@ -22,7 +22,3 @@ trend_zwh$plain$est <- rnorm(nrow(trend_zwh$plain), mean = 40, sd = 10)
 trend_zwh$plain$p <- abs(rnorm(nrow(trend_zwh$plain), mean = 0.1, sd = 0.25))
 
 usethis::use_data(trend_zwh, overwrite = TRUE)
-
-
-
-

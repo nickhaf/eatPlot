@@ -66,7 +66,6 @@ standardize_column_width <- function(column_widths, plot_ranges = c(0, 0)) {
 
 # Utils -------------------------------------------------------------------
 calc_barplot_width <- function(column_widths, plot_ranges) {
-
   ## Fill up NAs with the remaining space with the relative barplot widths
   sum_plot_ranges <- sum(abs(plot_ranges))
   relative_plot_ranges <- sapply(plot_ranges, function(x) {

@@ -1,4 +1,3 @@
-
 test_that("single_lineplot with one grouping_var is plotted correctly (same distances between years)", {
 
 })
