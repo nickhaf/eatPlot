@@ -14,7 +14,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   brace_line_width = 0.5,
   brace_span_y = 0.1,
   equal_trend_line_length = TRUE,
-  grouping_colours = c(
+  subgroup_colours = c(
     cmyk(0, 0, 0, 100),
     cmyk(0, 0, 0, 40)
   ),
@@ -48,7 +48,7 @@ usethis::use_data(lineplot_4x4, overwrite = TRUE)
 
 
 lineplot_4x4_3groups <- plotsettings_lineplot(
-  grouping_colours = c(
+  subgroup_colours = c(
     cmyk(0, 0, 0, 100),
     cmyk(0, 0, 0, 40),
     cmyk(0, 0, 0, 20)

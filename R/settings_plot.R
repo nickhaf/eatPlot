@@ -14,9 +14,9 @@ set_scales <- function(plot_settings = plotsettings_lineplot()) {
     if (!is.null(plot_settings$point_shapes)) {
       ggplot2::scale_shape_manual(values = plot_settings$point_shapes)
     },
-    if (!is.null(plot_settings$grouping_colours)) {
+    if (!is.null(plot_settings$subgroup_colours)) {
       ggplot2::scale_colour_manual(
-        values = plot_settings$grouping_colours
+        values = plot_settings$subgroup_colours
       )
     }
   )

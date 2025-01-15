@@ -64,7 +64,7 @@ test_that("simple lineplot with one group", {
 #       brace_label_size = 3,
 #       brace_line_width = 0.8,
 #       brace_span_y = 0.16,
-#       grouping_colours = c("einET" = "blue", "ersteGen" = "green"),
+#       subgroup_colours = c("einET" = "blue", "ersteGen" = "green"),
 #       line_type = c("TRUE" = "dotted", "FALSE" = "F1"),
 #       line_width = 1,
 #       margin_bottom = 0.05,

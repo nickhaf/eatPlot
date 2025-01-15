@@ -23,7 +23,7 @@ plotsettings_lineplot(
   brace_line_width = NULL,
   brace_span_y = NULL,
   equal_trend_line_length = NULL,
-  grouping_colours = NULL,
+  subgroup_colours = NULL,
   line_type = NULL,
   line_width = NULL,
   margin_bottom = NULL,
@@ -79,7 +79,7 @@ plotsettings_lineplot(
 
 \item{equal_trend_line_length}{Logical. If true, all trend lines will have the same length, even if the actual distance between the year is differently. E.g., the distance between the years of the trends 2010 - 2011 and 2011 - 2020 would be equal, even though the first trend only takes 1 year, and the second one 9 years. Please use with care, as it will distort the x-axis and results in misleading line lengths. Defaults to \code{FALSE}.}
 
-\item{grouping_colours}{Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.}
+\item{subgroup_colours}{Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.}
 
 \item{line_type}{Named vector containing the linetypes for the plots. The names must be either \code{"TRUE"} or \code{"FALSE"}, as the linetpyes represent significances. See \link[ggplot2:scale_linetype]{ggplot2::scale_linetype}.}
 
