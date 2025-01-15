@@ -677,7 +677,7 @@ filter_years <- function(dat, years) {
 #'
 #' @examples # tbd
 process_bundesland <- function(eatPlot_dat, column = "TR_BUNDESLAND"){
-  eatPlot_dat[, column] <- gsub("([a-z])([A-Z])", "\\1-\\2", eatPlot_dat[, column])
+  eatPlot_dat[, column] <- gsub("([a-z])([A-Z])", "\\1\uad\\2", eatPlot_dat[, column])
   eatPlot_dat[, column] <- gsub("ue", "\u00fc", eatPlot_dat[, column] )
 
   return(eatPlot_dat)
