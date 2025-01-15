@@ -51,7 +51,7 @@ plot_lineplot(
 
 \item{background_facet}{Character string in the \code{facet_var} column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to \code{"Deutschland"}.}
 
-\item{background_subgroup}{Character string in the \code{subgroup_var} column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to \code{"total"}.}
+\item{background_subgroup}{Character string in the \code{subgroup_var} column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to \code{NULL}.}
 
 \item{box_facet}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 
