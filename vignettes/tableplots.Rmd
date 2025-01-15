@@ -18,7 +18,7 @@ library(eatPlot)
 # Geschlechterkapitel
 ## Abbildung 6.5
 
-Now we have to filter the data in such a way, that it looks like the table we want to plot.
+First we prepare the data:
 
 ```{r}
 mw_prepped <- prep_tablebarplot(trend_mw,
@@ -51,8 +51,6 @@ mw_prepped_hören$domain <- "Hörverstehen"
 
 mw_prepped <- rbind(mw_prepped_lesen, mw_prepped_hören)
 ```
-
-
 
 
 Now we can easily plot the barplot, after sorting the data.frame and adding a y-axis:
