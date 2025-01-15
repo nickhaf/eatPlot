@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,12 +118,17 @@ format for plotting.</p>
 <span><span class="op">)</span></span>
 <span><span class="va">dat_lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">)</span></span>
 <span></span>
+<span></span>
+<span><span class="co">## We can set the order of the brace labels by setting the factor levels of the subgroup_var:</span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"w"</span>, <span class="st">"m"</span>, <span class="st">"total"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">dat_lineplot_2</span>,</span>
 <span>  years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  background_subgroup <span class="op">=</span> <span class="st">"total"</span>,</span>
-<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>default_list <span class="op">=</span> <span class="va">lineplot_4x4</span><span class="op">)</span></span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>subgroup_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>w <span class="op">=</span> <span class="st">"#000000"</span>, m <span class="op">=</span> <span class="st">"#999999"</span><span class="op">)</span>, <span class="co">## Here we determine the colours of the subgroups</span></span>
+<span>                                        default_list <span class="op">=</span> <span class="va">lineplot_4x4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_2</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf"</span><span class="op">)</span></span></code></pre></div>

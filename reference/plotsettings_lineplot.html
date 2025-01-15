@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
 <span>  brace_line_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_span_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  equal_trend_line_length <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  grouping_colours <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subgroup_colours <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  margin_bottom <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -156,7 +156,7 @@
 <dd><p>Logical. If true, all trend lines will have the same length, even if the actual distance between the year is differently. E.g., the distance between the years of the trends 2010 - 2011 and 2011 - 2020 would be equal, even though the first trend only takes 1 year, and the second one 9 years. Please use with care, as it will distort the x-axis and results in misleading line lengths. Defaults to <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-grouping-colours">grouping_colours<a class="anchor" aria-label="anchor" href="#arg-grouping-colours"></a></dt>
+<dt id="arg-subgroup-colours">subgroup_colours<a class="anchor" aria-label="anchor" href="#arg-subgroup-colours"></a></dt>
 <dd><p>Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.</p></dd>
 
 
@@ -278,7 +278,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $equal_trend_line_length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $grouping_colours</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $subgroup_colours</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $line_type</span>
