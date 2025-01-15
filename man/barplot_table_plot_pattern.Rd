@@ -13,11 +13,24 @@ A list with two elements.
 ...
 }
 }
+
+\subsection{\code{barplot_table_plot_pattern}}{
+
+A list with two elements.
+\describe{
+\item{background_stripes_colour}{Colour of the background stripes.}
+...
+}
+}
 }
 \usage{
 barplot_table_plot_pattern
+
+barplot_table_plot_pattern
 }
 \description{
+Default plot settings for Mindest Standards trend.
+
 Default plot settings for Mindest Standards trend.
 }
 \keyword{datasets}

@@ -84,7 +84,17 @@
 #' }
 "barplot_table_plot_pattern"
 
-
+#' Default plot settings for chapter 6.6.
+#'
+#' Default plot settings for Mindest Standards trend.
+#'
+#' @format ## `barplot_table_plot_pattern`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"barplot_table_plot_pattern"
 
 #' BT22 default plot settings.
 #'
