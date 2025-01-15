@@ -1,3 +1,6 @@
+# eatPlot 1.0.1
+* Renamed the `grouping_var` argument in `plotsettings_lineplot()` to `subgroup_var`. 
+
 # eatPlot 1.0.0 "Major Update"
 * Breaking Changes: The package was completely restructured to encompass changes that were made to the output format of `eatRep`. 
 * Mainly, the data preparation was changed internally. 
