@@ -51,7 +51,7 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
-  plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var, facet_total, subgroup_total)
+  plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var, total_facet, total_subgroup)
 
 
 
@@ -88,7 +88,7 @@ create_trend <- function(df) {
   return(df)
 }
 
-build_plot_dat <- function(eatRep_dat, facet_var, facet_total, subgroup_total) { ## facet_var schon außerhalb erzeugen
+build_plot_dat <- function(eatRep_dat, facet_var, total_facet, total_subgroup) { ## facet_var schon außerhalb erzeugen
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
     eatRep_dat$estimate,
     by = "id"
