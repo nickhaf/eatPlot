@@ -81,6 +81,9 @@ lineplot_2 <- plot_lineplot(
 save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
 ```
 
+```{r}
+lineplot_2
+```
 
 <!-- ## Lineplot for whole Germany -->
 
