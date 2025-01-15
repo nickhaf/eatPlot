@@ -49,6 +49,11 @@ plot_lineplot <- function(eatPlot_dat,
     warning("Split lineplot currently not supported. Set to non-split.")
     plot_settings$split_plot <- FALSE
   }
+
+if(is.null(background_subgroup)){
+  message("You haven't set a background_subgroup. This might lead to unexpected behaviour, if actually one group should be plotted in the background. Most times this will be the 'total' group.")
+}
+
   # Rename/Build needed columns ---------------------------------------------
   years_list <- prep_years_list(years_lines, years_braces)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)

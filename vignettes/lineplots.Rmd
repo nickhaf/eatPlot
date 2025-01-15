@@ -65,67 +65,70 @@ dat_lineplot_2 <- prep_lineplot(
   trend_mw,
   subgroup_var = "geschlecht"
 )
+dat_lineplot_2 <- process_bundesland(dat_lineplot_2)
 
-dat_lineplot_2$TR_BUNDESLAND <- gsub("ue", "ü", dat_lineplot_2$TR_BUNDESLAND)
-```
-
-
-```{r}
 lineplot_2 <- plot_lineplot(
   dat_lineplot_2,
-  point_sig = "sig_comparison_crossDiffTotal_subgroupTotal",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   background_subgroup = "total",
-  plot_settings = plotsettings_lineplot(split_plot = FALSE, default_list = lineplot_4x4)
+  plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
 )
-
-## Jetzt wird Background line irgendwo nicht rausgefiltert. 
 ```
 
-```{r save lineplot_2}
+```{r}
 #| eval: false
 save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
 ```
 
 
-## Lineplot for whole Germany
+<!-- ## Lineplot for whole Germany -->
 
 
-```{r lineplot_germany} 
-trend_ger <- prep_lineplot(
-  trend_mw,
-  subgroup_var = "geschlecht"
-)
+<!-- ```{r lineplot_germany}  -->
 
-trend_ger_lesen <- trend_ger
-trend_ger_lesen$kb <- "Lesen"
+<!-- trend_ger <- prep_lineplot( -->
+<!--   trend_mw, -->
+<!--   subgroup_var = "geschlecht" -->
+<!-- ) -->
 
-trend_total <- rbind(trend_ger, trend_ger_lesen)
-trend_total$kb <- gsub("hoeren", "Hören", trend_total$kb)
+<!-- ## This is data preperation for the example and will be updated as soon as I have example data with multiple Kompetenzbereichen: -->
 
-trend_total <- subset(trend_total, TR_BUNDESLAND == "total") |>
-  subset(geschlecht %in% c("m", "w"))
+<!-- trend_ger_lesen <- trend_ger -->
+<!-- trend_ger_lesen$kb <- "Lesen" -->
 
-trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND)
-```
+<!-- trend_total <- rbind(trend_ger, trend_ger_lesen) -->
+<!-- trend_total$kb <- gsub("hoeren", "Hören", trend_total$kb) -->
 
-```{r}
-lineplot_germany_2 <- plot_lineplot(trend_total,
-  years_lines = list(c(2009, 2015), c(2015, 2022)),
-  years_braces = list(c(2009, 2015), c(2015, 2022)),
-  facet_var = "kb",
-  title_superscripts = NULL,
-  plot_settings = plotsettings_lineplot(
-    brace_label_nudge_x = 0.3,
-    split_plot = FALSE,
-    background_lines = FALSE,
-    default_list = lineplot_4x4
-  )
-)
-```
+<!-- trend_total <- subset(trend_total, TR_BUNDESLAND == "total") -->
 
-```{r save lineplot_germany_2_groups}
-#| eval: false
-save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2 / 4)
-```
+<!-- trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- ## Hier fehlt noch der Hintergrund für ganz Deutschland -->
+<!-- lineplot_germany_2 <- plot_lineplot(trend_total, -->
+<!--   years_lines = list(c(2009, 2015), c(2015, 2022)), -->
+<!--   years_braces = list(c(2009, 2015), c(2015, 2022)), -->
+<!--   facet_var = "kb", -->
+<!--   background_facet = NULL, -->
+<!--   background_subgroup = "total", -->
+<!--   plot_settings = plotsettings_lineplot( -->
+<!--     brace_label_nudge_x = 0.3, -->
+<!--     split_plot = FALSE, -->
+<!--     background_lines = FALSE, -->
+<!--     default_list = lineplot_4x4 -->
+<!--   ) -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r save lineplot_germany_2_groups} -->
+<!-- #| eval: false -->
+<!-- save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2 / 4) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- lineplot_germany_2 -->
+<!-- ``` -->
+

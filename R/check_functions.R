@@ -1,6 +1,6 @@
 check_facets <- function(dat, facets) {
   if (!checkmate::test_factor(dat[, facets], ordered = TRUE)) {
-    message("Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor.")
+    # message("Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor.")
     ordered_dat <- dat[order(dat[, facets]), , drop = FALSE]
     ordered_dat[, facets] <- factor(ordered_dat[, facets],
       ordered = TRUE
