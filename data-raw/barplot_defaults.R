@@ -24,6 +24,17 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
 usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 
+barplot_6.6 <- plotsettings_tablebarplot(
+  bar_background_lines = "scale_breaks",
+  bar_background_lines_linetype = "dotted",
+  background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
+  bar_fill_colour = c("#20D479", "#8DEBBC"),
+  default_list = barplot_table_plot_pattern
+)
+
+usethis::use_data(barplot_6.6, overwrite = TRUE)
+
+
 barplot_noTrend <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", cmyk(7, 0, 4, 1)), 8), cmyk(0, 0, 0, 10)),
   bar_background_lines = "scale_breaks", # set background lines at scalebreaks
