@@ -267,11 +267,16 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   #   ))
   #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
   # }
-  if (!is.null(background_subgroup) & length(unique(plot_dat$subgroup_var)) > 1) {
-    subgroup_lvls <- unique(plot_dat$subgroup_var[plot_dat$subgroup_var != background_subgroup])
+
+  if(!is.factor(plot_dat$subgroup_var)){plot_dat$subgroup_var <- as.factor(plot_dat$subgroup_var)}
+
+  if (!is.null(background_subgroup) & length(levels(plot_dat$subgroup_var)) > 1) {
+    subgroup_lvls <- levels(plot_dat$subgroup_var)[levels(plot_dat$subgroup_var) != background_subgroup]
   } else {
-    subgroup_lvls <- unique(plot_dat$subgroup_var)
+    subgroup_lvls <- levels(plot_dat$subgroup_var)
   }
+
+
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
     coords,
