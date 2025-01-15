@@ -11,6 +11,10 @@ This vignette shows you how to plot tableplots from `eatRep` data.
 The workflow is optimized for Bildungstrend-graphs, but can be expanded for plotting other `eatRep` data as well. 
 
 
+```{r}
+library(eatPlot)
+```
+
 # Geschlechterkapitel
 ## Abbildung 6.5
 
