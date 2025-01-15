@@ -103,7 +103,7 @@ format for plotting.</p>
 <span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>default_list <span class="op">=</span> <span class="va">lineplot_4x4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor.</span></span></code></pre>
+<pre><code><span><span class="co">## You haven't set a background_subgroup. This might lead to unexpected behaviour, if actually one group should be plotted in the background. Most times this will be the 'total' group.</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_1</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_1_group.pdf"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lineplots_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
@@ -116,58 +116,54 @@ format for plotting.</p>
 <span>  <span class="va">trend_mw</span>,</span>
 <span>  subgroup_var <span class="op">=</span> <span class="st">"geschlecht"</span></span>
 <span><span class="op">)</span></span>
+<span><span class="va">dat_lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"ue"</span>, <span class="st">"ü"</span>, <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
+<span><span class="va">lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">dat_lineplot_2</span>,</span>
-<span>  point_sig <span class="op">=</span> <span class="st">"sig_comparison_crossDiffTotal_subgroupTotal"</span>,</span>
 <span>  years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  background_subgroup <span class="op">=</span> <span class="st">"total"</span>,</span>
-<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>split_plot <span class="op">=</span> <span class="cn">FALSE</span>, default_list <span class="op">=</span> <span class="va">lineplot_4x4</span><span class="op">)</span></span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>default_list <span class="op">=</span> <span class="va">lineplot_4x4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor.</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Jetzt wird Background line irgendwo nicht rausgefiltert. </span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_2</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="lineplot-for-whole-germany">Lineplot for whole Germany<a class="anchor" aria-label="anchor" href="#lineplot-for-whole-germany"></a>
-</h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trend_ger</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_lineplot.html">prep_lineplot</a></span><span class="op">(</span></span>
-<span>  <span class="va">trend_mw</span>,</span>
-<span>  subgroup_var <span class="op">=</span> <span class="st">"geschlecht"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">trend_ger_lesen</span> <span class="op">&lt;-</span> <span class="va">trend_ger</span></span>
-<span><span class="va">trend_ger_lesen</span><span class="op">$</span><span class="va">kb</span> <span class="op">&lt;-</span> <span class="st">"Lesen"</span></span>
-<span></span>
-<span><span class="va">trend_total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">trend_ger</span>, <span class="va">trend_ger_lesen</span><span class="op">)</span></span>
-<span><span class="va">trend_total</span><span class="op">$</span><span class="va">kb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"hoeren"</span>, <span class="st">"Hören"</span>, <span class="va">trend_total</span><span class="op">$</span><span class="va">kb</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">trend_total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">trend_total</span>, <span class="va">TR_BUNDESLAND</span> <span class="op">==</span> <span class="st">"total"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">geschlecht</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"m"</span>, <span class="st">"w"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">trend_total</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"ue"</span>, <span class="st">"ü"</span>, <span class="va">trend_total</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lineplot_germany_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span><span class="va">trend_total</span>,</span>
-<span>  years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  facet_var <span class="op">=</span> <span class="st">"kb"</span>,</span>
-<span>  title_superscripts <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
-<span>    brace_label_nudge_x <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span>    split_plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    background_lines <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Facets will be ordered alphabetically. To enforce a custom order, convert your `facet` variable into an ordered factor.</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_germany_2</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf"</span>, height <span class="op">=</span> <span class="fl">226.2</span> <span class="op">/</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<!-- ## Lineplot for whole Germany -->
+<!-- ```{r lineplot_germany}  -->
+<!-- trend_ger <- prep_lineplot( -->
+<!--   trend_mw, -->
+<!--   subgroup_var = "geschlecht" -->
+<!-- ) -->
+<!-- ## This is data preperation for the example and will be updated as soon as I have example data with multiple Kompetenzbereichen: -->
+<!-- trend_ger_lesen <- trend_ger -->
+<!-- trend_ger_lesen$kb <- "Lesen" -->
+<!-- trend_total <- rbind(trend_ger, trend_ger_lesen) -->
+<!-- trend_total$kb <- gsub("hoeren", "Hören", trend_total$kb) -->
+<!-- trend_total <- subset(trend_total, TR_BUNDESLAND == "total") -->
+<!-- trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- ## Hier fehlt noch der Hintergrund für ganz Deutschland -->
+<!-- lineplot_germany_2 <- plot_lineplot(trend_total, -->
+<!--   years_lines = list(c(2009, 2015), c(2015, 2022)), -->
+<!--   years_braces = list(c(2009, 2015), c(2015, 2022)), -->
+<!--   facet_var = "kb", -->
+<!--   background_facet = NULL, -->
+<!--   background_subgroup = "total", -->
+<!--   plot_settings = plotsettings_lineplot( -->
+<!--     brace_label_nudge_x = 0.3, -->
+<!--     split_plot = FALSE, -->
+<!--     background_lines = FALSE, -->
+<!--     default_list = lineplot_4x4 -->
+<!--   ) -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ```{r save lineplot_germany_2_groups} -->
+<!-- #| eval: false -->
+<!-- save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2 / 4) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- lineplot_germany_2 -->
+<!-- ``` -->
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
