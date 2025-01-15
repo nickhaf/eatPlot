@@ -72,7 +72,7 @@ dat_lineplot_2$TR_BUNDESLAND <- gsub("ue", "ü", dat_lineplot_2$TR_BUNDESLAND)
 
 ```{r}
 lineplot_2 <- plot_lineplot(
-  trend_3_prepped,
+  dat_lineplot_2,
   point_sig = "sig_comparison_crossDiffTotal_subgroupTotal",
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
