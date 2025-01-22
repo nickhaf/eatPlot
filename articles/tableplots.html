@@ -146,8 +146,8 @@ the table contents a bit downwards, so they also fill the empty row.</p>
 <span>  columns_table_sig_superscript <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="st">"sig_2022_crossDiff_of_groupDiffTotal_mean_lesen"</span>, <span class="cn">NULL</span>, <span class="st">"sig_2022_crossDiff_of_groupDiffTotal_mean_lesen"</span>, <span class="st">"sig_2022_crossDiff_of_groupDiffTotal_mean_hören"</span>, <span class="cn">NULL</span>, <span class="st">"est_2022_crossDiff_of_groupDiffTotal_mean_hören"</span><span class="op">)</span>,</span>
 <span>  columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_2022_groupDiff_mean_lesen"</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_2022_groupDiff_mean_hören"</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
-<span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"*M&lt;sub&gt;Jungen&lt;/sub&gt;-M&lt;sub&gt;Mädchen&lt;/sub&gt;*"</span>, <span class="st">"(*SE*)"</span>, <span class="st">"*d*"</span>, <span class="st">"*M&lt;sub&gt;Jungen&lt;/sub&gt;-M&lt;sub&gt;Mädchen&lt;/sub&gt;*"</span>, <span class="st">"(*SE*)"</span>, <span class="st">"*d*"</span>, <span class="st">"**Vorsprung zugunsten der&lt;br&gt;Mädchen**"</span><span class="op">)</span>,</span>
-<span>  column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"**Leseverstehen**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, <span class="st">"**Höhrverstehen**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Land"</span>, <span class="st">"*M&lt;sub&gt;M&lt;/sub&gt;-M&lt;sub&gt;J&lt;/sub&gt;*"</span>, <span class="st">"(*SE*)"</span>, <span class="st">"*d*"</span>, <span class="st">"*M&lt;sub&gt;M&lt;/sub&gt;-M&lt;sub&gt;J&lt;/sub&gt;*"</span>, <span class="st">"(*SE*)"</span>, <span class="st">"*d*"</span>, <span class="st">"**Vorsprung zugunsten der&lt;br&gt;Mädchen**"</span><span class="op">)</span>,</span>
+<span>  column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"**Leseverstehen**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, <span class="st">"**Hörverstehen**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">70</span><span class="op">)</span>,</span>
@@ -158,7 +158,6 @@ the table contents a bit downwards, so they also fill the empty row.</p>
 <span>    columns_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fl">0.25</span><span class="op">)</span>,</span>
 <span>    bar_nudge_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mw_prepped_lesen</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,</span>
 <span>    background_stripes_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"#EBFDF3"</span>, <span class="st">"#EBFDF3"</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span>, <span class="st">"grey"</span>, <span class="st">"grey"</span><span class="op">)</span>,</span>
-<span>    background_stripes_border <span class="op">=</span> <span class="st">"background_line_table"</span>,</span>
 <span>    bar_fill_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#20D479"</span>, <span class="st">"#8DEBBC"</span><span class="op">)</span>,</span>
 <span>    bar_background_lines <span class="op">=</span> <span class="st">"scale_breaks"</span>,</span>
 <span>    bar_background_lines_linetype <span class="op">=</span> <span class="st">"solid"</span>,</span>
@@ -467,204 +466,12 @@ plots:</p>
 <span>  device <span class="op">=</span> <span class="va">cairo_pdf</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Okay, so either the letters are not rendered corretly, or the color model is wrong.</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="trend-lesen-deutsch">Trend Lesen Deutsch<a class="anchor" aria-label="anchor" href="#trend-lesen-deutsch"></a>
-</h2>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nickhaf.github.io/eatPlot/">eatPlot</a></span><span class="op">)</span></span></code></pre></div>
-<p>In a first step, the data has to be prepared:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dat_prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_tablebarplot.html">prep_tablebarplot</a></span><span class="op">(</span></span>
-<span>  <span class="va">trend_3</span>,</span>
-<span>  subgroup_var <span class="op">=</span> <span class="st">"mhg"</span>,</span>
-<span>  par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span>,</span>
-<span>  facet_var <span class="op">=</span> <span class="st">"TR_BUNDESLAND"</span>,</span>
-<span>  total_facet <span class="op">=</span> <span class="st">"total"</span>,</span>
-<span>  comparisons <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"trend"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>This results in a large dataframe, containing a column for each
-comparisons made in the data:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dat_prepped</span><span class="op">)</span></span></code></pre></div>
-<p>The columns are all named after the same scheme:</p>
-<ol style="list-style-type: decimal">
-<li>First, the column type is shown: <code>est_</code> for example
-contains estimated values, while <code>sig_</code> gives us information
-about the significance, <code>es_</code> about the effect size and
-<code>se_</code> about the standard errors of the estimates.</li>
-<li>This is followed by the year(s) the value is referring to. If it is
-refering to a trend, this is indicated like so:
-<code>2015 - 2009</code>.</li>
-<li>Then we can see the type of comparison the values in the column are
-referring to. For example, <code>none</code> means that no comparison
-was made, while <code>trend</code> indicates that a trend was
-calculated. <code>crossDiff</code> shows us a crossDiff and
-<code>crossDiffTotal</code> a crossDiff between some subgroup and an
-overarching total group (like a state vs. the whole of Germany). See []
-for a more thorough description of the different comparsions available
-in <code>eatRep</code>.</li>
-</ol>
-<p>I’d suggest to reduce the <code>data.frame</code> by selecting the
-columns needed for the plot in the next step. This makes it easier to
-spot problems in the data. For example, I might have gathered either
-from the data directly, or from a template, that I will need the
-following columns:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">table_dat</span> <span class="op">&lt;-</span> <span class="va">dat_prepped</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"TR_BUNDESLAND"</span>,</span>
-<span>  <span class="st">"mhg"</span>,</span>
-<span>  <span class="st">"est_2009_none_mean"</span>,</span>
-<span>  <span class="st">"est_2009_none_sd"</span>,</span>
-<span>  <span class="st">"est_2015_none_mean"</span>,</span>
-<span>  <span class="st">"est_2015_none_sd"</span>,</span>
-<span>  <span class="st">"est_2015 - 2009_trend_mean"</span>,</span>
-<span>  <span class="st">"sig_2015 - 2009_trend_mean"</span>,</span>
-<span>  <span class="st">"se_2015 - 2009_trend_mean"</span>,</span>
-<span>  <span class="st">"es_2015 - 2009_trend_mean"</span></span>
-<span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dat_prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_prepped</span>, <span class="va">mhg</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aohneZWH"</span>, <span class="st">"einET"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"- total"</span>, <span class="va">dat_prepped</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span>, invert <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">dat_prepped</span> <span class="op">&lt;-</span> <span class="va">dat_prepped</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">dat_prepped</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span><span class="op">)</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="va">dat_prepped</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">dat_prepped</span><span class="op">$</span><span class="va">TR_BUNDESLAND</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">" "</span></span>
-<span></span>
-<span><span class="va">column_widths_stand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_column_width.html">standardize_column_width</a></span><span class="op">(</span></span>
-<span>  column_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    p1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">7</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
-<span>    p2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">7</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  plot_ranges <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">120</span><span class="op">)</span> <span class="co"># Range of the x-axes of both plots set in 'axis_x_lims'.</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span></span>
-<span>  dat <span class="op">=</span> <span class="va">dat_prepped</span>,</span>
-<span>  bar_est <span class="op">=</span> <span class="st">"est_2015 - 2009_trend_mean"</span>,</span>
-<span>  bar_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bar_sig <span class="op">=</span> <span class="st">"sig_2015 - 2009_trend_mean"</span>,</span>
-<span>  bar_fill <span class="op">=</span> <span class="st">"mhg"</span>,</span>
-<span>  column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"**2009**&lt;sup&gt;a&lt;/sup&gt;"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
-<span>    <span class="st">"**2015**&lt;sup&gt;a&lt;/sup&gt;"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span>    <span class="st">"**Differenz 2015-2009&lt;sup&gt;a&lt;/sup&gt;**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"**Land**"</span>,</span>
-<span>    <span class="st">" "</span>,</span>
-<span>    <span class="st">"\u0394 *M*"</span>,</span>
-<span>    <span class="st">"*SD*"</span>,</span>
-<span>    <span class="st">"*M*"</span>,</span>
-<span>    <span class="st">"*SD*"</span>,</span>
-<span>    <span class="st">"M&lt;sub&gt;2015&lt;/sub&gt;-M&lt;sub&gt;2009&lt;/sub&gt;"</span>,</span>
-<span>    <span class="st">"*(SE)*"</span>,</span>
-<span>    <span class="st">"*d*"</span>,</span>
-<span>    <span class="st">" "</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"TR_BUNDESLAND"</span>,</span>
-<span>    <span class="st">"mhg"</span>,</span>
-<span>    <span class="st">"est_2009_none_mean"</span>,</span>
-<span>    <span class="st">"est_2009_none_sd"</span>,</span>
-<span>    <span class="st">"est_2015_none_mean"</span>,</span>
-<span>    <span class="st">"est_2015_none_sd"</span>,</span>
-<span>    <span class="st">"est_2015 - 2009_trend_mean"</span>,</span>
-<span>    <span class="st">"se_2015 - 2009_trend_mean"</span>,</span>
-<span>    <span class="st">"es_2015 - 2009_trend_mean"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_2009_none_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>, <span class="st">"sig_2015_none_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_2015 - 2009_trend_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="cn">NULL</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
-<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40</span>, <span class="fl">40</span><span class="op">)</span>,</span>
-<span>    background_stripes_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"#EBFDF3"</span>, <span class="st">"#EBFDF3"</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span>, <span class="st">"grey"</span>, <span class="st">"grey"</span><span class="op">)</span>,</span>
-<span>    bar_fill_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#20D479"</span>, <span class="st">"#8DEBBC"</span><span class="op">)</span>,</span>
-<span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p1</span>,</span>
-<span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>    default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span></span>
-<span>  dat <span class="op">=</span> <span class="va">dat_prepped</span>,</span>
-<span>  bar_est <span class="op">=</span> <span class="st">"est_2022 - 2015_trend_mean"</span>,</span>
-<span>  bar_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bar_sig <span class="op">=</span> <span class="st">"sig_2022 - 2015_trend_mean"</span>,</span>
-<span>  bar_fill <span class="op">=</span> <span class="st">"mhg"</span>,</span>
-<span>  column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"**2015**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>    <span class="st">"**2022**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
-<span>    <span class="st">"**Differenz 2022-2015**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">8</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"*M*"</span>,</span>
-<span>    <span class="st">"*SD*"</span>,</span>
-<span>    <span class="st">"*M*"</span>,</span>
-<span>    <span class="st">"*SD*"</span>,</span>
-<span>    <span class="st">"M&lt;sub&gt;2022&lt;/sub&gt;-M&lt;sub&gt;2015&lt;/sub&gt;"</span>,</span>
-<span>    <span class="st">"*(SE)*"</span>,</span>
-<span>    <span class="st">"*d*"</span>,</span>
-<span>    <span class="st">" "</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"est_2015_none_mean"</span>,</span>
-<span>    <span class="st">"est_2015_none_sd"</span>,</span>
-<span>    <span class="st">"est_2022_none_mean"</span>,</span>
-<span>    <span class="st">"est_2022_none_sd"</span>,</span>
-<span>    <span class="st">"est_2022 - 2015_trend_mean"</span>,</span>
-<span>    <span class="st">"se_2022 - 2015_trend_mean"</span>,</span>
-<span>    <span class="st">"es_2022 - 2015_trend_mean"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_2015 - 2009_trend_mean"</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
-<span>  columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"sig_2015_none_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_2022_none_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_2022 - 2015_trend_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="cn">NULL</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  columns_table_sig_superscript <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"sig_2015_none_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_2022_none_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_2022 - 2015_trend_mean"</span>,</span>
-<span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="cn">NULL</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
-<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">60</span><span class="op">)</span>,</span>
-<span>    background_stripes_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"#EBFDF3"</span>, <span class="st">"#EBFDF3"</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span>, <span class="st">"grey"</span>, <span class="st">"grey"</span><span class="op">)</span>,</span>
-<span>    bar_fill_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#20D479"</span>, <span class="st">"#8DEBBC"</span><span class="op">)</span>,</span>
-<span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p2</span>,</span>
-<span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>    default_list <span class="op">=</span> <span class="va">barplot_table_plot_pattern</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tableplot_trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_1</span>, <span class="va">p_2</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)</span></span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">tableplot_trend</span>,</span>
+<span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">tableplot_8.4</span>,</span>
 <span>  filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/test_table_greek.pdf"</span>, width <span class="op">=</span> <span class="fl">320</span>,</span>
 <span>  encoding <span class="op">=</span> <span class="st">"Greek.enc"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Okay, so either the letters are not rendered corretly, or the color model is wrong.</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
