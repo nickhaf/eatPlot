@@ -95,8 +95,8 @@ tableplot_6.5 <- plot_tablebarplot(
   columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
   columns_table_se = list(NULL, NULL, "se_2022_groupDiff_mean_lesen", NULL, NULL, "se_2022_groupDiff_mean_hören", NULL),
-  headers = list("", "*M<sub>Jungen</sub>-M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "*M<sub>Jungen</sub>-M<sub>Mädchen</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
-  column_spanners = list("**Leseverstehen**" = c(2, 4), "**Höhrverstehen**" = c(5, 7)),
+  headers = list("Land", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
+  column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-5, 70),
@@ -107,7 +107,6 @@ tableplot_6.5 <- plot_tablebarplot(
     columns_width = c(0.15, rep(0.1, 6), 0.25),
     bar_nudge_y = rep(c(-0.1, 0.1), nrow(mw_prepped_lesen) / 2),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    background_stripes_border = "background_line_table",
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     bar_background_lines = "scale_breaks",
     bar_background_lines_linetype = "solid",
@@ -462,214 +461,12 @@ ggplot2::ggsave(
   device = cairo_pdf
 )
 
-## Okay, so either the letters are not rendered corretly, or the color model is wrong.
-```
-
-
-# Trend Lesen Deutsch
-```{r}
-library(eatPlot)
-```
-
-In a first step, the data has to be prepared:
-
-```{r}
-dat_prepped <- prep_tablebarplot(
-  trend_3,
-  subgroup_var = "mhg",
-  par = c("mean", "sd"),
-  facet_var = "TR_BUNDESLAND",
-  total_facet = "total",
-  comparisons = c("none", "trend")
-)
-```
-
-This results in a large dataframe, containing a column for each comparisons made in the data:
-
-```{r}
-#| eval: false
-str(dat_prepped)
-```
-
-The columns are all named after the same scheme:
-
-1. First, the column type is shown: `est_` for example contains estimated values, while `sig_` gives us information about the significance, `es_` about the effect size and `se_` about the standard errors of the estimates.
-1. This is followed by the year(s) the value is referring to.
-If it is refering to a trend, this is indicated like so: `2015 - 2009`.
-1. Then we can see the type of comparison the values in the column are referring to.
-For example, `none` means that no comparison was made, while `trend` indicates that a trend was calculated.
-`crossDiff` shows us a crossDiff and `crossDiffTotal` a crossDiff between some subgroup and an overarching total group (like a state vs. the whole of Germany).
-See [] for a more thorough description of the different comparsions available in `eatRep`.
-
-I'd suggest to reduce the `data.frame` by selecting the columns needed for the plot in the next step.
-This makes it easier to spot problems in the data.
-For example, I might have gathered either from the data directly, or from a template, that I will need the following columns:
-
-```{r}
-table_dat <- dat_prepped[, c(
-  "TR_BUNDESLAND",
-  "mhg",
-  "est_2009_none_mean",
-  "est_2009_none_sd",
-  "est_2015_none_mean",
-  "est_2015_none_sd",
-  "est_2015 - 2009_trend_mean",
-  "sig_2015 - 2009_trend_mean",
-  "se_2015 - 2009_trend_mean",
-  "es_2015 - 2009_trend_mean"
-)]
-```
-
-
-
-
-
-
-```{r}
-dat_prepped <- subset(dat_prepped, mhg %in% c("aohneZWH", "einET") & grep("- total", dat_prepped$TR_BUNDESLAND, invert = TRUE))
-
-
-dat_prepped <- dat_prepped[order(dat_prepped$TR_BUNDESLAND), ]
-
-dat_prepped$TR_BUNDESLAND[duplicated(dat_prepped$TR_BUNDESLAND)] <- " "
-
-column_widths_stand <- standardize_column_width(
-  column_widths = list(
-    p1 = c(0.1, 0.05, rep(0.05, 7), NA),
-    p2 = c(rep(0.05, 7), NA)
-  ),
-  plot_ranges = c(80, 120) # Range of the x-axes of both plots set in 'axis_x_lims'.
-)
-
-p_1 <- plot_tablebarplot(
-  dat = dat_prepped,
-  bar_est = "est_2015 - 2009_trend_mean",
-  bar_label = NULL,
-  bar_sig = "sig_2015 - 2009_trend_mean",
-  bar_fill = "mhg",
-  column_spanners = list(
-    "**2009**<sup>a</sup>" = c(3, 4),
-    "**2015**<sup>a</sup>" = c(5, 6),
-    "**Differenz 2015-2009<sup>a</sup>**" = c(7, 10)
-  ),
-  headers = list(
-    "**Land**",
-    " ",
-    "\u0394 *M*",
-    "*SD*",
-    "*M*",
-    "*SD*",
-    "M<sub>2015</sub>-M<sub>2009</sub>",
-    "*(SE)*",
-    "*d*",
-    " "
-  ),
-  columns_table = c(
-    "TR_BUNDESLAND",
-    "mhg",
-    "est_2009_none_mean",
-    "est_2009_none_sd",
-    "est_2015_none_mean",
-    "est_2015_none_sd",
-    "est_2015 - 2009_trend_mean",
-    "se_2015 - 2009_trend_mean",
-    "es_2015 - 2009_trend_mean"
-  ),
-  columns_table_sig_bold = list(
-    NULL,
-    NULL,
-    "sig_2009_none_mean",
-    NULL, "sig_2015_none_mean",
-    NULL,
-    "sig_2015 - 2009_trend_mean",
-    NULL,
-    NULL
-  ),
-  y_axis = "y_axis",
-  plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-40, 40),
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),
-    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
-    columns_width = column_widths_stand$p1,
-    headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
-    default_list = barplot_table_plot_pattern
-  )
-)
-
-p_2 <- plot_tablebarplot(
-  dat = dat_prepped,
-  bar_est = "est_2022 - 2015_trend_mean",
-  bar_label = NULL,
-  bar_sig = "sig_2022 - 2015_trend_mean",
-  bar_fill = "mhg",
-  column_spanners = list(
-    "**2015**" = c(1, 2),
-    "**2022**" = c(3, 4),
-    "**Differenz 2022-2015**" = c(5, 8)
-  ),
-  headers = list(
-    "*M*",
-    "*SD*",
-    "*M*",
-    "*SD*",
-    "M<sub>2022</sub>-M<sub>2015</sub>",
-    "*(SE)*",
-    "*d*",
-    " "
-  ),
-  columns_table = c(
-    "est_2015_none_mean",
-    "est_2015_none_sd",
-    "est_2022_none_mean",
-    "est_2022_none_sd",
-    "est_2022 - 2015_trend_mean",
-    "se_2022 - 2015_trend_mean",
-    "es_2022 - 2015_trend_mean"
-  ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL),
-  columns_table_sig_bold = list(
-    "sig_2015_none_mean",
-    NULL,
-    "sig_2022_none_mean",
-    NULL,
-    "sig_2022 - 2015_trend_mean",
-    NULL,
-    NULL
-  ),
-  columns_table_sig_superscript = list(
-    "sig_2015_none_mean",
-    NULL,
-    "sig_2022_none_mean",
-    NULL,
-    "sig_2022 - 2015_trend_mean",
-    NULL,
-    NULL
-  ),
-  y_axis = "y_axis",
-  plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-60, 60),
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),
-    columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
-    columns_width = column_widths_stand$p2,
-    headers_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
-    default_list = barplot_table_plot_pattern
-  )
-)
-
-tableplot_trend <- combine_plots(list(p_1, p_2))
-
-# save_plot(example_plot, filename = "/home/nick/Downloads/test_table.pdf", width = 320)
-```
-
-```{r}
-#| eval: false
-save_plot(tableplot_trend,
+save_plot(tableplot_8.4,
   filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320,
   encoding = "Greek.enc"
 )
-```
 
+## Okay, so either the letters are not rendered corretly, or the color model is wrong.
+```
 
 
