@@ -557,20 +557,18 @@
 <text x='433.97' y='43.39' style='font-size: 7.11px; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>(</text>
 <text x='436.34' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='9.49px' lengthAdjust='spacingAndGlyphs'>SE</text>
 <text x='445.83' y='43.39' style='font-size: 7.11px; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>)</text>
-<text x='329.82' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='335.75' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='18.67px' lengthAdjust='spacingAndGlyphs'>Jungen</text>
-<text x='356.40' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>-</text>
-<text x='360.74' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='366.67' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='23.42px' lengthAdjust='spacingAndGlyphs'>Mädchen</text>
+<text x='331.80' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
+<text x='337.72' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='18.67px' lengthAdjust='spacingAndGlyphs'>Jungen</text>
+<text x='356.40' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='8.30px' lengthAdjust='spacingAndGlyphs'>-M</text>
+<text x='364.69' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='23.42px' lengthAdjust='spacingAndGlyphs'>Mädchen</text>
 <text x='287.38' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='3.96px' lengthAdjust='spacingAndGlyphs'>d</text>
 <text x='222.18' y='43.39' style='font-size: 7.11px; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>(</text>
 <text x='224.55' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='9.49px' lengthAdjust='spacingAndGlyphs'>SE</text>
 <text x='234.04' y='43.39' style='font-size: 7.11px; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>)</text>
-<text x='118.03' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='123.96' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='18.67px' lengthAdjust='spacingAndGlyphs'>Jungen</text>
-<text x='144.60' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>-</text>
-<text x='148.95' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='154.88' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='23.42px' lengthAdjust='spacingAndGlyphs'>Mädchen</text>
+<text x='120.00' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
+<text x='125.93' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='18.67px' lengthAdjust='spacingAndGlyphs'>Jungen</text>
+<text x='144.60' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='8.30px' lengthAdjust='spacingAndGlyphs'>-M</text>
+<text x='152.90' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='23.42px' lengthAdjust='spacingAndGlyphs'>Mädchen</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='548.21,571.52 548.21,568.78 ' style='stroke-width: 0.21; stroke-linecap: butt;' />

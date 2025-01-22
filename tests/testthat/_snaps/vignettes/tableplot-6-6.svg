@@ -768,11 +768,10 @@
 <text x='413.86' y='29.73' style='font-size: 5.69px; font-weight: bold; font-family: sans;' textLength='3.17px' lengthAdjust='spacingAndGlyphs'>a</text>
 <text x='349.41' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='3.96px' lengthAdjust='spacingAndGlyphs'>d</text>
 <text x='315.98' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='14.23px' lengthAdjust='spacingAndGlyphs'>(SE)</text>
-<text x='269.53' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='275.46' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2015</text>
-<text x='290.09' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>-</text>
-<text x='294.44' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='300.37' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2009</text>
+<text x='271.50' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
+<text x='277.43' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2015</text>
+<text x='290.09' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='8.30px' lengthAdjust='spacingAndGlyphs'>-M</text>
+<text x='298.39' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2009</text>
 <text x='254.51' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='9.88px' lengthAdjust='spacingAndGlyphs'>SD</text>
 <text x='228.20' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
 <text x='197.94' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='9.88px' lengthAdjust='spacingAndGlyphs'>SD</text>
@@ -1303,11 +1302,10 @@
 <text x='606.42' y='31.20' style='font-size: 7.11px; font-weight: bold; font-family: sans;' textLength='34.02px' lengthAdjust='spacingAndGlyphs'>2022-2015</text>
 <text x='574.41' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='3.96px' lengthAdjust='spacingAndGlyphs'>d</text>
 <text x='540.99' y='43.39' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='14.23px' lengthAdjust='spacingAndGlyphs'>(SE)</text>
-<text x='494.53' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='500.46' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2022</text>
-<text x='515.10' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='2.37px' lengthAdjust='spacingAndGlyphs'>-</text>
-<text x='519.44' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
-<text x='525.37' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2015</text>
+<text x='496.51' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='5.93px' lengthAdjust='spacingAndGlyphs'>M</text>
+<text x='502.44' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2022</text>
+<text x='515.10' y='42.56' style='font-size: 7.11px; font-style: italic; font-family: sans;' textLength='8.30px' lengthAdjust='spacingAndGlyphs'>-M</text>
+<text x='523.39' y='44.51' style='font-size: 5.69px; font-style: italic; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2015</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='599.02,571.52 599.02,568.78 ' style='stroke-width: 0.21; stroke-linecap: butt;' />
