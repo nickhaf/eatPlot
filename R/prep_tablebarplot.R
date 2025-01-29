@@ -51,6 +51,39 @@ prep_tablebarplot <- function(eatRep_dat,
 
   ## Okay, what happens if we don't have any comps? Check that!
 
+  ## Gruppieren nach id
+  ## Umbennen der comparisons as needed:
+  ## - remove all comparisons with a total in 1.1.1 or 1.1 or unit_1
+  ## - Build 2 new columns: comparison_specifications
+  ## - all groups that stil have a total somewhere then get a _total at the end of the compar
+
+
+  remove_ids <- dat_group[dat_group$unit %in% c("unit_1", "1.1", "1.1.1") &
+                            dat_group$TR_BUNDESLAND == "total", "id"]
+
+
+ dat_group_r <- dat_group[!(dat_group$id %in% remove_ids),]
+
+  ## remove duplicates, for example because of total group, which would be overrepresented otherwise.
+## They should be duplicated, but check that later. Alternatively, the total stuff has to be prepared seperatly and rbinded?
+ dat_hardest <- dat_group[dat_group$comparison == "trend_crossDiff_of_groupDiff", ]
+
+id_list <- split( dat_hardest[ dat_hardest$comparison == "trend_crossDiff_of_groupDiff", ],  dat_hardest$id)
+## this contains the comparisons
+browser()
+## deal with that! How to proceed?
+
+lapply(id_list, function(x){
+  if(unique(x$TR_BUNDESLAND) > 1)
+})
+
+
+
+## merge with estimates: once for the subgroups, and once for the id (so the comparison estimates)
+  ## pivot wider everything like before
+
+
+
   eatRep_dat <- rename_comparisons_total(eatRep_dat,
                                          facet_var = facet_var,
                                          total_facet = total_facet,

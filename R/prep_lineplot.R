@@ -89,6 +89,7 @@ create_trend <- function(df) {
 }
 
 build_plot_dat <- function(eatRep_dat, facet_var, total_facet, total_subgroup) { ## facet_var schon außerhalb erzeugen
+
   eatRep_dat$group_estimates <- merge(eatRep_dat$group,
     eatRep_dat$estimate,
     by = "id"
@@ -131,28 +132,8 @@ build_plot_dat <- function(eatRep_dat, facet_var, total_facet, total_subgroup) {
   noTrend <- plot_dat[grep("_", plot_dat$trend, invert = TRUE), ]
   trend <- plot_dat[grep("_", plot_dat$trend), ]
 
-  noTrend_wide <- tidyr::pivot_wider(
-    unique(noTrend[, !colnames(noTrend) %in% c("group", "id")]),
-    names_from = "comparison",
-    values_from = c("est_comparison", "se_comparison", "sig_comparison", "p_comparison", "es_comparison")
-  ) |>
-    as.data.frame()
 
-  trend_wide <- tidyr::pivot_wider(
-    unique(trend[, !colnames(trend) %in% c("group", "id")]),
-    names_from = "comparison",
-    values_from = c("est_comparison", "se_comparison", "sig_comparison", "p_comparison", "es_comparison")
-  ) |>
-    as.data.frame()
-
-  plot_dat <- merge(
-    noTrend_wide[, !colnames(noTrend_wide) %in% c("group", "id", "trend")],
-    trend_wide,
-    all = TRUE
-  )
-
-
-  return(plot_dat)
+  return(list(noTrend = noTrend, trend = trend))
 }
 
 prep_years_list <- function(years_lines, years_braces) {
@@ -166,12 +147,16 @@ prep_years_list <- function(years_lines, years_braces) {
 
 
 unnest_eatRep <- function(comparison_dat, eatRep_dat) {
+  browser()
+
   eatRep_unnested <- data.frame()
   ## comparison_dat now contains all comparisons that are made in the data.
-  ## The group column contains the groups that belong to that comparison. Can either other comparisons, or groups.
+  ## The group column contains the groups that belong to that comparison. Can either be other comparisons, or groups.
   ## So,as long as there is a comparison in the group column, some nested comparison is in there:
-  comp_groups <- comparison_dat$group[grep("comp_", comparison_dat$group)]
-  comparison_dat$unit <- comparison_dat$group
+  comp_groups <- unique(comparison_dat$group[grep("comp_", comparison_dat$group)])
+  comparison_dat$group_dup <- comparison_dat$group
+
+  ## id in comparison_dat contains the comparison Id. group contains the respective group for this comparison, and unit contains the order of the groups.
 
   column_order <- c("id", "group", "unit")
   comparison_dat <- comparison_dat[, c(column_order, colnames(comparison_dat)[(!(colnames(comparison_dat) %in% column_order))])]
@@ -179,14 +164,22 @@ unnest_eatRep <- function(comparison_dat, eatRep_dat) {
   eatRep_no_comp_group <- comparison_dat[!(comparison_dat$group %in% comp_groups), ]
   eatRep_unnested <- rbind(eatRep_unnested, eatRep_no_comp_group)
 
-  while (length(comp_groups > 0)) {
-    eatRep_nested <- comparison_dat[comparison_dat$unit %in% comp_groups, ]
+
+  ## Now I want to unnest by overwriting the group_dup-column.
+
+  while (length(comp_groups) > 0) {
+
+    ## why does unit_1 and unit_2 contain NA after merging???!
+    ## Okay, so both data.frames don't overlapp. Whyyyy?
+
+    eatRep_nested <- comparison_dat[comparison_dat$group_dup %in% comp_groups, ]
     eatRep_nested_m <- merge(eatRep_nested,
       eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
-      by.x = "unit",
+      by.x = "group_dup",
       by.y = "id",
       all.x = TRUE
     )
+
     # Hier vom Format noch richtig! Jetzt lang machen.
 
     eatRep_nested_m$unit_merged <- paste(eatRep_nested_m$unit_1, eatRep_nested_m$unit_2, sep = "_")
