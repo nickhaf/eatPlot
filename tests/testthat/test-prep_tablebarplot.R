@@ -20,7 +20,18 @@ test_that("simple data preperation works", {
   expect_equal(dat_prep, dat_out)
 })
 
+
+
+mw_prepped <- prep_tablebarplot(trend_3,
+                                subgroup_var = "mhg",
+                                comparisons = c("none", "trend_crossDiff_of_groupDiff")
+)
+
+
+
+
 # test_that("data preperation with comparions works", {
+
 #
 #   dat_prep <- prep_tablebarplot(trend_3)
 # test <- dat_prep %>%
