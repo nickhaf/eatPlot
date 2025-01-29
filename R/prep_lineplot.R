@@ -146,68 +146,37 @@ prep_years_list <- function(years_lines, years_braces) {
 }
 
 
-unnest_eatRep <- function(comparison_dat, eatRep_dat) {
-  browser()
+unnest_eatRep <- function(eatRep_dat) {
 
-  eatRep_unnested <- data.frame()
-  ## comparison_dat now contains all comparisons that are made in the data.
-  ## The group column contains the groups that belong to that comparison. Can either be other comparisons, or groups.
-  ## So,as long as there is a comparison in the group column, some nested comparison is in there:
-  comp_groups <- unique(comparison_dat$group[grep("comp_", comparison_dat$group)])
-  comparison_dat$group_dup <- comparison_dat$group
+  comp_long <- pivot_longer(eatRep_dat$comparisons,
+                            cols = c("unit_1", "unit_2"),
+                            names_to = "unit")
 
-  ## id in comparison_dat contains the comparison Id. group contains the respective group for this comparison, and unit contains the order of the groups.
-
-  column_order <- c("id", "group", "unit")
-  comparison_dat <- comparison_dat[, c(column_order, colnames(comparison_dat)[(!(colnames(comparison_dat) %in% column_order))])]
-  ## The others are already unnested and can be saved:
-  eatRep_no_comp_group <- comparison_dat[!(comparison_dat$group %in% comp_groups), ]
-  eatRep_unnested <- rbind(eatRep_unnested, eatRep_no_comp_group)
+  comp_long_noComps <- comp_long[grep("comp_", comp_long$value, invert = TRUE), ] ## these are done, rbind!
+  comp_long_comps <- comp_long[grep("comp_", comp_long$value),  ]
 
 
-  ## Now I want to unnest by overwriting the group_dup-column.
+  while(length(grep("comp_", comp_long_comps$value)) > 0){
 
-  while (length(comp_groups) > 0) {
+    comp_long_m <- merge(comp_long_comps,
+                         eatRep_dat$comparisons[, c("id", "unit_1", "unit_2")],
+                         by.x = "value",
+                         by.y = "id",
+                         all.x = TRUE)
+    comp_long_m$unit <- gsub("unit_", "", comp_long_m$unit)
 
-    ## why does unit_1 and unit_2 contain NA after merging???!
-    ## Okay, so both data.frames don't overlapp. Whyyyy?
+    comp_long_comps_l <- pivot_longer(comp_long_m[, c("id", "comparison", "unit", "unit_1", "unit_2" )],
+                                      cols = c("unit_1", "unit_2"))
 
-    eatRep_nested <- comparison_dat[comparison_dat$group_dup %in% comp_groups, ]
-    eatRep_nested_m <- merge(eatRep_nested,
-      eatRep_dat$comp_estimates[, c("id", "unit_1", "unit_2")],
-      by.x = "group_dup",
-      by.y = "id",
-      all.x = TRUE
-    )
+    comp_long_comps_l$unit <- paste(comp_long_comps_l$unit, gsub("unit_", "", comp_long_comps_l$name), sep = ".")
 
-    # Hier vom Format noch richtig! Jetzt lang machen.
-
-    eatRep_nested_m$unit_merged <- paste(eatRep_nested_m$unit_1, eatRep_nested_m$unit_2, sep = "_")
-
-    # Build new column --------------------------------------------------
-    eatRep_nested_m$unit <- NULL
-    eatRep_nested_m$unit_b <- NULL
-    eatRep_nested_m <- tidyr::pivot_longer(
-      eatRep_nested_m,
-      cols = c("unit_1", "unit_2"),
-      names_to = "unit_b",
-      values_to = "unit"
-    )
-
-    ## Now do the stuff we did before the loop started again.
-    ## By this, the comparisons should be unnested until all done!
-
-    comp_groups <- eatRep_nested_m$unit[grep("comp_", eatRep_nested_m$unit)]
-    eatRep_no_comp_group <- eatRep_nested_m[!(eatRep_nested_m$unit %in% comp_groups), ]
-    comparison_dat <- eatRep_nested_m[eatRep_nested_m$unit %in% comp_groups, ]
-
-    eatRep_unnested <- rbind(
-      eatRep_unnested[, c("id", "group", "unit", "comparison", "est", "se", "p", "sig", "es")],
-      eatRep_no_comp_group[, c("id", "group", "unit", "comparison", "est", "se", "p", "sig", "es")]
-    )
+    comp_long_comps <- comp_long_comps_l[grep("comp_", comp_long_comps_l$value),  ]
+    comp_long_noComps <- rbind(comp_long_noComps,
+                               comp_long_comps_l[grep("comp_", comp_long_comps_l$value, invert = TRUE), c("id", "comparison", "unit", "value")])
   }
 
-  return(eatRep_unnested)
+  return(comp_long_noComps)
+
 }
 
 remove_comparisons_without_group <- function(eatRep_dat) {
