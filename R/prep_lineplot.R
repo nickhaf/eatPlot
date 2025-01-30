@@ -148,7 +148,7 @@ prep_years_list <- function(years_lines, years_braces) {
 
 unnest_eatRep <- function(eatRep_dat) {
 
-  comp_long <- pivot_longer(eatRep_dat$comparisons,
+  comp_long <- tidyr::pivot_longer(eatRep_dat$comparisons,
                             cols = c("unit_1", "unit_2"),
                             names_to = "unit")
 
