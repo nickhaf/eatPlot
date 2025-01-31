@@ -88,17 +88,16 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
 
 
 pivot_eatRep <- function(eatRep_prepped){
-  dat_comp_test <- dat_comp[, c("TR_BUNDESLAND", "subgroup_var", "year", "trend", "comparison_split", "est_comparison_none", "est_comparison", "se_comparison_none", "se_comparison")]
+  eatRep_prepped <- eatRep_prepped[, c("TR_BUNDESLAND", "subgroup_var", "year", "trend", "comparison_split", "est_comparison_none", "est_comparison", "se_comparison_none", "se_comparison")]
 
-  dat_comp_test_trend <- dat_comp_test[grep("_", dat_comp_test$trend), ]
-  dat_comp_test_noTrend <- dat_comp_test[grep("_", dat_comp_test$trend, invert = TRUE), ]
+  eatRep_prepped_trend <- eatRep_prepped[grep("_", eatRep_prepped$trend), ]
+  eatRep_prepped_noTrend <- eatRep_prepped[grep("_", eatRep_prepped$trend, invert = TRUE), ]
 
   noTrend_wide <- tidyr::pivot_wider(
-    unique(dat_comp_test_noTrend %>% select(- c("trend"))),
+    unique(subset(eatRep_prepped_noTrend, select = -trend)),
     names_from = c("comparison_split"),
     values_from = c("est_comparison", "se_comparison") #, "se_comparison", "p_comparison", "es_comparison") #  "sig_comparison",
   )
-
 
   noTrend_wide_year <-  tidyr::pivot_wider(
     noTrend_wide,
@@ -107,14 +106,14 @@ pivot_eatRep <- function(eatRep_prepped){
   )
 
   trend_wide_year <- tidyr::pivot_wider(
-    unique(dat_comp_test_trend %>% select(- c("est_comparison_none", "se_comparison_none", "year"))),
+    unique(subset(eatRep_prepped_trend, select =  -c(est_comparison_none, se_comparison_none, year))),
     names_from = c("comparison_split", "trend"),
     values_from = c("est_comparison", "se_comparison") #, "se_comparison", "p_comparison", "es_comparison") #  "sig_comparison",
   )
 
-
   trend_wide <- merge(noTrend_wide_year, trend_wide_year)
 
+  return(trend_wide)
 }
 
 

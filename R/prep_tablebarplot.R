@@ -29,120 +29,18 @@ prep_tablebarplot <- function(eatRep_dat,
   }
 
   eatRep_dat$group <- build_column(eatRep_dat$group, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
-  eatRep_dat$plain <- build_column(eatRep_dat$plain, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
-
-
-
-  # Filtering ---------------------------------------------------------------
-  if (!is.null(comparisons)) {
-    eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
-  }
-
-  dat_unnested <- unnest_eatRep(eatRep_dat)
-
-  dat_group <- merge(dat,
-    eatRep_dat$group,
-    all = TRUE,
-    by.x = "value",
-    by.y = "id"
-  )
-
-  dat_group_est <- merge(dat_group,
-                        eatRep_dat$estimate[eatRep_dat$estimate$parameter == "mean", c("id", "est", "se", "p", "es")] ,
-                        by.x = "value",
-                        by.y = "id")
-
-  dat_group_long <- merge(dat_group_est,
-                              eatRep_dat$estimate[eatRep_dat$estimate$parameter == "mean", c("id", "est", "se", "p", "es")],
-                              by = "id",
-                              suffixes = c("_comparison_none", "_comparison"))
-
-  dat_group_long_t <- do.call(rbind, lapply(split(dat_group_long, dat_group_long$id), create_trend))
-
-  unique(trend_3$plain$comparison)
-  dat_hardest <- dat_group_long_t[dat_group_long_t$comparison != "trend_crossDiff_of_groupDiff", ]
-
-
-  id_list <- split(dat_hardest, dat_hardest$id)
-
-df_list <-   lapply(id_list, function(x){
-
-## Split the facet comparisons
-  if(length(unique(x$TR_BUNDESLAND)) == 1){
-      x$comparison_split <- paste0(x$comparison, "_sameFacet")
-    }else if(any(grepl(total_facet, x$TR_BUNDESLAND))){
-      x$comparison_split <- paste0(x$comparison, "_totalFacet")
-    }
-
-## Split the subgroup comparisons
-  if(length(unique(x$subgroup_var)) == 1){
-    x$comparison_split <- paste0(x$comparison_split, "_sameSubgroup")
-  }else if(any(grepl(total_subgroup, x$subgroup_var))){
-    x$comparison_split <- paste0(x$comparison_split, "_totalSubgroup")
-  }else{
-    possible_subgroups <- unique(x$subgroup_var)
-
-res <- c()
-    for(i in 1:nrow(x)){
-      res[i] <- possible_subgroups[possible_subgroups != x[i, "subgroup_var"]]
-    }
-
-
-    x$comparison_split <- paste0(x$comparison_split, "_", res, "Subgroup")
-  }
-
-# Remove all comparisons that start with total! They are duplicates
-if(any(grepl(total_facet, x$TR_BUNDESLAND)) & length(unique(x$TR_BUNDESLAND)) != 1){
-  x <- x[x$TR_BUNDESLAND != total_facet, ]
-}
-if(any(grepl(total_subgroup, x$subgroup_var)) & length(unique(x$subgroup_var)) != 1){
-    x <- x[x$subgroup_var != total_subgroup, ]
-  }
-    return(x)
-  })
-
-## maybe thats enough for now, and the merging can just be done with ID first?
-## So: I've now established which comparisons are of which type. Now I can just Loose everything but ID and comparison_split and
-## then merge again? But I will also need the subgroups. But this might make the merging easier?
-
-
-dat_comp <- do.call(rbind, df_list)
-
-
-dat_comp_test <- dat_comp[, c("TR_BUNDESLAND", "subgroup_var", "year", "trend", "comparison_split", "est_comparison_none", "est_comparison", "se_comparison_none", "se_comparison")]
-
-dat_comp_test_trend <- dat_comp_test[grep("_", dat_comp_test$trend), ]
-dat_comp_test_noTrend <- dat_comp_test[grep("_", dat_comp_test$trend, invert = TRUE), ]
-
-noTrend_wide <- tidyr::pivot_wider(
-  unique(dat_comp_test_noTrend %>% select(- c("trend"))),
-  names_from = c("comparison_split"),
-  values_from = c("est_comparison", "se_comparison") #, "se_comparison", "p_comparison", "es_comparison") #  "sig_comparison",
-)
-
-
-noTrend_wide_year <-  tidyr::pivot_wider(
-  noTrend_wide,
-  names_from = c("year"),
-    values_from = colnames(noTrend_wide)[grep(c("est_comparison|se_comparison"), colnames(noTrend_wide))] #, "se_comparison", "p_comparison", "es_comparison") #  "sig_comparison",
-  )
-
-  trend_wide_year <- tidyr::pivot_wider(
-    unique(dat_comp_test_trend %>% select(- c("est_comparison_none", "se_comparison_none", "year"))),
-    names_from = c("comparison_split", "trend"),
-    values_from = c("est_comparison", "se_comparison") #, "se_comparison", "p_comparison", "es_comparison") #  "sig_comparison",
-  )
-
-
-trend_wide <- merge(noTrend_wide_year, trend_wide_year)
-
-  eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-
-  # Merge Data --------------------------------------------------------------
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
+  # Filtering ---------------------------------------------------------------
+  if (!is.null(comparisons)) {
+    eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% comparisons, ]
+  }
 
+  dat_unnested <- unnest_eatRep(eatRep_dat)
+  dat_merged <- merge_eatRep(dat_unnested)
+  dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
+  dat_wide <- pivot_eatRep(dat_prepped)
 
 
   if (nrow(eatRep_dat$comparison) > 0) {
@@ -164,6 +62,6 @@ trend_wide <- merge(noTrend_wide_year, trend_wide_year)
       tidyr::pivot_wider(names_from = tidyr::all_of(names_from), values_from = c("est", "se", "es", "sig", "p"))
 
     dat_wide$y_axis <- 1:nrow(dat_wide)
-
+}
 return(dat_wide)
 }

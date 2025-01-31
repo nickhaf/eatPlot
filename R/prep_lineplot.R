@@ -165,7 +165,7 @@ unnest_eatRep <- function(eatRep_dat) {
                          all.x = TRUE)
     comp_long_m$unit <- gsub("unit_", "", comp_long_m$unit)
 
-    comp_long_comps_l <- pivot_longer(comp_long_m[, c("id", "comparison", "unit", "unit_1", "unit_2" )],
+    comp_long_comps_l <- tidyr::pivot_longer(comp_long_m[, c("id", "comparison", "unit", "unit_1", "unit_2" )],
                                       cols = c("unit_1", "unit_2"))
 
     comp_long_comps_l$unit <- paste(comp_long_comps_l$unit, gsub("unit_", "", comp_long_comps_l$name), sep = ".")
