@@ -98,7 +98,7 @@ test_that("comparison splits work for complex comparisons", {
 
 test_that("column renaming works", {
   expect_equal(colnames(build_column(data.frame(col1 = 1), "col1", "col_1")), c("col1", "col_1"))
-  expect_error(build_column(data.frame(col1 = 1), "col2", "col1"))
+  expect_equal(build_column(data.frame(col1 = 1), "col2", "col1"), data.frame(col1 = 1))
   expect_equal(build_column(data.frame(col1 = 1), NULL, "col2"), data.frame(col1 = 1, col2 = NA))
 })
 
