@@ -22,4 +22,6 @@ trend_mw$plain$es <- rnorm(nrow(trend_mw$plain), mean = 0, sd = 1)
 trend_mw$plain$est <- rnorm(nrow(trend_mw$plain), mean = 40, sd = 10)
 trend_mw$plain$p <- abs(rnorm(nrow(trend_mw$plain), mean = 0.1, sd = 0.25))
 
+trend_mw$estimate[is.na(trend_mw$estimate$es), "es" ] <- rnorm(length(sum(is.na(trend_mw$estimate$es))), mean = 0, sd = 1)
+
 usethis::use_data(trend_mw, overwrite = TRUE)

@@ -53,7 +53,6 @@ prep_tablebarplot <- function(eatRep_dat,
   if (!is.null(comparisons)) {
     eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% comparisons, ]
   }
-
   dat_unnested <- unnest_eatRep(eatRep_dat)
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)

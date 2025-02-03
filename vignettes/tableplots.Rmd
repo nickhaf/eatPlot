@@ -75,22 +75,27 @@ mw_preped_lh <- merge(mw_prepped_lesen, mw_prepped_hören, by = c("y_axis"), suf
 mw_prepped_final <- merge(mw_prepped, mw_preped_lh, by = c("y_axis"))
 ```
 
+
+```{r}
+```
+
+
 Now we can plot the table like usual, with one exception: I can nudge the table contents a bit downwards, so they also fill the empty row. 
 
 
 ```{r}
 tableplot_6.5 <- plot_tablebarplot(
   dat = mw_prepped_final,
-  bar_est = "est_2022_groupDiff_mean",
+  bar_est = "est_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen",
   bar_fill = "domain",
-  bar_sig = "sig_2022_groupDiff_mean",
+  bar_sig = "sig_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen",
   columns_table = list(
-    "TR_BUNDESLAND_lesen", "est_2022_groupDiff_mean_lesen", "se_2022_groupDiff_mean_lesen", "es_2022_groupDiff_mean_lesen", "est_2022_groupDiff_mean_hören", "se_2022_groupDiff_mean_hören", "es_2022_groupDiff_mean_hören"
+    "state_var", "est_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen", "se_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen", "es_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen", "est_comparison_groupDiff_sameFacet_mSubgroup_2022_hören", "se_comparison_groupDiff_sameFacet_mSubgroup_2022_hören", "es_comparison_groupDiff_sameFacet_mSubgroup_2022_hören"
   ),
-  columns_table_sig_bold = list(NULL, "sig_2022_groupDiff_mean_lesen", NULL, "sig_2022_groupDiff_mean_lesen", "sig_2022_groupDiff_mean_hören", NULL, "sig_2022_groupDiff_mean_hören"),
-  columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"),
+  columns_table_sig_bold = list(NULL, "sig_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen", NULL, "sig_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen", "sig_comparison_groupDiff_sameFacet_mSubgroup_2022_hören", NULL, "sig_comparison_groupDiff_sameFacet_mSubgroup_2022_hören"),
+  # columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
-  columns_table_se = list(NULL, NULL, "se_2022_groupDiff_mean_lesen", NULL, NULL, "se_2022_groupDiff_mean_hören", NULL),
+  columns_table_se = list(NULL, NULL, "se_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen", NULL, NULL, "se_comparison_groupDiff_sameFacet_mSubgroup_2022_lesen", NULL),
   headers = list("Land", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
@@ -101,7 +106,7 @@ tableplot_6.5 <- plot_tablebarplot(
     headers_nudge_y = c(rep(0, 7), 0.5),
     columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
     columns_width = c(0.15, rep(0.1, 6), 0.25),
-    bar_nudge_y = rep(c(-0.1, 0.1), nrow(mw_prepped_lesen) / 2),
+    bar_nudge_y = rep(c(-0.1, 0.1), nrow(mw_prepped_final) / 2),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     bar_background_lines = "scale_breaks",
