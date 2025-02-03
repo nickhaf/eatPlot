@@ -146,37 +146,6 @@ prep_years_list <- function(years_lines, years_braces) {
 }
 
 
-unnest_eatRep <- function(eatRep_dat) {
-  comp_long <- tidyr::pivot_longer(eatRep_dat$comparisons,
-                            cols = c("unit_1", "unit_2"),
-                            names_to = "unit")
-
-  comp_long_noComps <- comp_long[grep("comp_", comp_long$value, invert = TRUE), ] ## these are done, rbind!
-  comp_long_comps <- comp_long[grep("comp_", comp_long$value),  ]
-
-
-  while(length(grep("comp_", comp_long_comps$value)) > 0){
-    comp_long_m <- merge(comp_long_comps,
-                         eatRep_dat$comparisons[, c("id", "unit_1", "unit_2")],
-                         by.x = "value",
-                         by.y = "id",
-                         all.x = TRUE)
-    comp_long_m$unit <- gsub("unit_", "", comp_long_m$unit)
-
-    comp_long_comps_l <- tidyr::pivot_longer(comp_long_m[, c("id", "comparison", "unit", "unit_1", "unit_2" )],
-                                      cols = c("unit_1", "unit_2"))
-
-    comp_long_comps_l$unit <- paste(comp_long_comps_l$unit, gsub("unit_", "", comp_long_comps_l$name), sep = ".")
-
-    comp_long_comps <- comp_long_comps_l[grep("comp_", comp_long_comps_l$value),  ]
-    comp_long_noComps <- rbind(comp_long_noComps,
-                               comp_long_comps_l[grep("comp_", comp_long_comps_l$value, invert = TRUE), c("id", "comparison", "unit", "value")])
-  }
-
-
-  return(comp_long_noComps)
-
-}
 
 remove_comparisons_without_group <- function(eatRep_dat) {
   ## Schrittweise durch: erst schauen ob groups drin sind.

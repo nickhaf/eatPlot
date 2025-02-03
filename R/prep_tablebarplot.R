@@ -20,7 +20,6 @@ prep_tablebarplot <- function(eatRep_dat,
                               comparisons = NULL,
                               sig_niveau = 0.05,
                               total_subgroup = "total") {
-
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
   check_columns(eatRep_dat$estimate, cols = c("p"))
@@ -32,7 +31,21 @@ prep_tablebarplot <- function(eatRep_dat,
   eatRep_dat$group <- build_column(eatRep_dat$group,
                                    old = subgroup_var,
                                    new = "subgroup_var",
-                                   fill_value = "total") ## set to total so the background_line can be plotted
+                                   fill_value = "total")
+  eatRep_dat$group <- build_column(eatRep_dat$group,
+                                   old = facet_var,
+                                   new = "state_var",
+                                   fill_value = "total")
+  eatRep_dat$estimate <- build_column(eatRep_dat$estimate,
+                                   old = "es",
+                                   new = "es",
+                                   fill_value = NA)
+  eatRep_dat$group <- build_column(eatRep_dat$group,
+                                      old = "year",
+                                      new = "year",
+                                      fill_value = NA)
+
+
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
@@ -40,11 +53,13 @@ prep_tablebarplot <- function(eatRep_dat,
   if (!is.null(comparisons)) {
     eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% comparisons, ]
   }
+
   dat_unnested <- unnest_eatRep(eatRep_dat)
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
   dat_wide <- pivot_eatRep(dat_prepped)
-
+  dat_wide <- dat_wide[order(dat_wide$state_var), ]
+  dat_wide <- dat_wide[, colSums(!is.na(dat_wide)) > 0]
   dat_wide$y_axis <- 1:nrow(dat_wide)
-return(dat_wide)
+return(as.data.frame(dat_wide))
 }
