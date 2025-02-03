@@ -1,23 +1,6 @@
+merge_eatRep <- function(eatRep_unnested, eatRep_dat){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-merge_eatRep <- function(eatRep_unnested){
-
-  dat_group <- merge(dat_unnested,
+  dat_group <- merge(eatRep_unnested,
                      eatRep_dat$group,
                      all = TRUE,
                      by.x = "value",

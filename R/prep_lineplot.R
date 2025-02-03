@@ -147,7 +147,6 @@ prep_years_list <- function(years_lines, years_braces) {
 
 
 unnest_eatRep <- function(eatRep_dat) {
-
   comp_long <- tidyr::pivot_longer(eatRep_dat$comparisons,
                             cols = c("unit_1", "unit_2"),
                             names_to = "unit")
@@ -157,7 +156,6 @@ unnest_eatRep <- function(eatRep_dat) {
 
 
   while(length(grep("comp_", comp_long_comps$value)) > 0){
-
     comp_long_m <- merge(comp_long_comps,
                          eatRep_dat$comparisons[, c("id", "unit_1", "unit_2")],
                          by.x = "value",
@@ -174,6 +172,7 @@ unnest_eatRep <- function(eatRep_dat) {
     comp_long_noComps <- rbind(comp_long_noComps,
                                comp_long_comps_l[grep("comp_", comp_long_comps_l$value, invert = TRUE), c("id", "comparison", "unit", "value")])
   }
+
 
   return(comp_long_noComps)
 

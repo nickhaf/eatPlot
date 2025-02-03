@@ -20,6 +20,7 @@ prep_tablebarplot <- function(eatRep_dat,
                               comparisons = NULL,
                               sig_niveau = 0.05,
                               total_subgroup = "total") {
+
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
   check_columns(eatRep_dat$estimate, cols = c("p"))
@@ -28,7 +29,10 @@ prep_tablebarplot <- function(eatRep_dat,
     message("Are you sure you don't have a subgroup_var? If you do,  please set it.")
   }
 
-  eatRep_dat$group <- build_column(eatRep_dat$group, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
+  eatRep_dat$group <- build_column(eatRep_dat$group,
+                                   old = subgroup_var,
+                                   new = "subgroup_var",
+                                   fill_value = "total") ## set to total so the background_line can be plotted
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
@@ -36,32 +40,11 @@ prep_tablebarplot <- function(eatRep_dat,
   if (!is.null(comparisons)) {
     eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% comparisons, ]
   }
-
   dat_unnested <- unnest_eatRep(eatRep_dat)
-  dat_merged <- merge_eatRep(dat_unnested)
+  dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
   dat_wide <- pivot_eatRep(dat_prepped)
 
-
-  if (nrow(eatRep_dat$comparison) > 0) {
-    check_columns(eatRep_dat$plain, c("unit_1", "unit_2", "id", "comparison", "parameter", "year", "est", "se", "p", facet_var, subgroup_var))
-
-
-    if (!is.null(par)) {
-      dat <- dat[dat$parameter %in% par, ]
-    }
-    if (!is.null(comparisons)) {
-      dat <- dat[dat$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
-    }
-    dat$sig <- ifelse(dat$p < sig_niveau, TRUE, FALSE)
-
-
-    ## make argument so users can decide whether year etc. should be in the column names
-    dat_wide <- dat[, colnames(dat) %in% c("comparison", "depVar", facet_var, "domain", "parameter", "year", "est", "p", "se", "es", "sig", subgroup_var)] |>
-      unique() |>
-      tidyr::pivot_wider(names_from = tidyr::all_of(names_from), values_from = c("est", "se", "es", "sig", "p"))
-
-    dat_wide$y_axis <- 1:nrow(dat_wide)
-}
+  dat_wide$y_axis <- 1:nrow(dat_wide)
 return(dat_wide)
 }
