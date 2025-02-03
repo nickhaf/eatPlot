@@ -22,14 +22,10 @@ First we prepare the data:
 
 ```{r}
 mw_prepped <- prep_tablebarplot(trend_mw,
-  subgroup_var = "geschlecht",
-  comparisons = c("groupDiff", "crossDiff_of_groupDiff")
+  subgroup_var = "geschlecht"
 )
 ```
 
-It makes our live a lot easier if we set the `comparions` argument in the above column. 
-This dramatically reduces the output, as only the relevant columns are prepared. 
-To see which comparisons we actually need, we can take a look at the `plain` data.frame:
 
 ```{r}
 #| eval: false
@@ -56,12 +52,12 @@ mw_prepped <- rbind(mw_prepped_lesen, mw_prepped_hören)
 Now we can easily plot the barplot, after sorting the data.frame and adding a y-axis:
 
 ```{r}
-mw_prepped <- mw_prepped[order(mw_prepped$TR_BUNDESLAND), ]
+mw_prepped <- mw_prepped[order(mw_prepped$state_var), ]
 mw_prepped$y_axis <- 1:nrow(mw_prepped)
 
 ## Rename "total" to "Deutschland"
-mw_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", mw_prepped$TR_BUNDESLAND)
-mw_prepped$TR_BUNDESLAND <- gsub("ue", "ü", mw_prepped$TR_BUNDESLAND)
+mw_prepped$state_var <- gsub("total", "Deutschland", mw_prepped$state_var)
+mw_prepped$state_var <- gsub("ue", "ü", mw_prepped$state_var)
 ```
 
 The tables need some more work, because they need to be connected with the barplot, but only have half the rows.
@@ -120,6 +116,10 @@ Finally we can save the plot:
 ```{r}
 #| eval: false
 save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf")
+```
+
+```{r}
+tableplot_6.5
 ```
 
 
