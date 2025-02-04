@@ -113,7 +113,7 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
 
 pivot_eatRep <- function(eatRep_prepped){
 
-  eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "year", "trend") | grepl("comparison", colnames(eatRep_prepped))]
+  eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comparison", colnames(eatRep_prepped))]
 
   eatRep_prepped_trend <- eatRep_prepped[grep("_", eatRep_prepped$trend), ]
   eatRep_prepped_noTrend <- eatRep_prepped[grep("_", eatRep_prepped$trend, invert = TRUE), ]
@@ -132,14 +132,14 @@ pivot_eatRep <- function(eatRep_prepped){
 
   if(nrow(eatRep_prepped_trend) > 0){
 trend_wide_year <- tidyr::pivot_wider(
-    unique(eatRep_prepped_trend[, c("state_var", "subgroup_var", "trend", "comparison_split", "est_comparison", "se_comparison", "sig_comparison", "p_comparison", "es_comparison")]),
+    unique(eatRep_prepped_trend[, c("state_var", "subgroup_var", "kb", "trend", "comparison_split", "est_comparison", "se_comparison", "sig_comparison", "p_comparison", "es_comparison")]),
     names_from = c("comparison_split", "trend"),
     values_from =  c("est_comparison", "se_comparison", "p_comparison", "es_comparison", "sig_comparison")
   )
 
   trend_wide <- merge(noTrend_wide_year, trend_wide_year)
 }else{
-  trend_wide <- noTrend_wide_year[, c("state_var", "subgroup_var", colnames(noTrend_wide_year)[grepl("_comparison", colnames(noTrend_wide_year)) ])]
+  trend_wide <- noTrend_wide_year[, c("state_var", "subgroup_var", "kb", colnames(noTrend_wide_year)[grepl("_comparison", colnames(noTrend_wide_year)) ])]
 }
 
   return(trend_wide)

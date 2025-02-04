@@ -44,7 +44,10 @@ prep_tablebarplot <- function(eatRep_dat,
                                       old = "year",
                                       new = "year",
                                       fill_value = NA)
-
+  eatRep_dat$group <- build_column(eatRep_dat$group,
+                                   old = "kb",
+                                   new = "kb",
+                                   fill_value = NA)
 
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)

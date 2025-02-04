@@ -21,35 +21,18 @@ library(eatPlot)
 First we prepare the data:
 
 ```{r}
-mw_prepped <- prep_tablebarplot(trend_mw,
-  subgroup_var = "geschlecht"
-)
+
+gender_prepped <- do.call(rbind, lapply(trend_gender, prep_tablebarplot, subgroup_var = "Kgender"))
+  
+ 
 ```
 
+Now, we only want to plot the comparison of männlich vs. weiblich. 
 
 ```{r}
-#| eval: false
-
-View(trend_mw$plain)
+gender_prepped_sub <- subset(gender_prepped, subgroup_var == "maennlich")
 ```
 
-Now, the plot we want to build has some special requirements which demand some further preparation of the data. 
-First of all, the example data only contains one domain, I add a second one manually. Of course you don't have to do this, its just for demonstration purposes. 
-
-```{r}
-#| code-fold: true
-
-mw_prepped_lesen <- mw_prepped
-mw_prepped_lesen$domain <- "Leseverstehen"
-
-mw_prepped_hören <- mw_prepped
-mw_prepped_hören$domain <- "Hörverstehen"
-
-mw_prepped <- rbind(mw_prepped_lesen, mw_prepped_hören)
-```
-
-
-Now we can easily plot the barplot, after sorting the data.frame and adding a y-axis:
 
 ```{r}
 mw_prepped <- mw_prepped[order(mw_prepped$state_var), ]
