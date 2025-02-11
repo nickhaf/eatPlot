@@ -13,7 +13,6 @@
 #' @examples # tbd
 prep_tablebarplot <- function(eatRep_dat,
                               subgroup_var = NULL,
-                              names_from = c("year", "comparison", "parameter"),
                               parameter = "mean",
                               facet_var = "TR_BUNDESLAND",
                               total_facet = "total",
