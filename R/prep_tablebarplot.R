@@ -59,7 +59,7 @@ prep_tablebarplot <- function(eatRep_dat,
   dat_unnested <- unnest_eatRep(eatRep_dat)
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
-  dat_wide <- pivot_eatRep(dat_prepped)
+  dat_wide <- pivot_eatRep(dat_prepped, names_from)
   dat_wide <- dat_wide[order(dat_wide$state_var), ]
   dat_wide <- dat_wide[, colSums(!is.na(dat_wide)) > 0]
   dat_wide$y_axis <- 1:nrow(dat_wide)

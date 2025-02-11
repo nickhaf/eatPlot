@@ -97,7 +97,7 @@ tableplot_6.5 <- plot_tablebarplot(
     headers_nudge_y = c(rep(0, 7), 0.5),
     columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
     columns_width = c(0.15, rep(0.1, 6), 0.25),
-    bar_nudge_y = rep(c(-0.1, 0.1), nrow(gender_prepped_final) / 2),
+    bar_nudge_y = rep(c(-0.1, 0.1), nrow(gender_prepped_lh_final) / 2),
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
     bar_background_lines = "scale_breaks",
@@ -125,26 +125,24 @@ tableplot_6.5
 First the data has to be prepared:
 
 ```{r}
-dat_6.6 <- prep_tablebarplot(
-  trend_gender,
-  subgroup_var = "geschlecht",
-  par = c("mean", "sd"), ## We need both mean and sd for the plot
-  comparisons = c("none", "trend", "trend_crossDiff") ## Set for smaller output-table
-)
+gender_prepped_mean_sd <- do.call(rbind, 
+                                  lapply(trend_gender, 
+                                         prep_tablebarplot, 
+                                         subgroup_var = "Kgender", 
+                                         par = c("mean", "sd")))
+
 ```
 
 Afterwards, we have to bring it in the format we want to plot it in:
 
 ```{r}
-dat_6.6 <- subset(dat_6.6, geschlecht %in% c("m", "w"))
-dat_6.6$geschlecht <- gsub("m", "Jungen", dat_6.6$geschlecht)
-dat_6.6$geschlecht <- gsub("w", "Mädchen", dat_6.6$geschlecht)
+gender_prepped_mean_sd <- subset(gender_prepped_mean_sd, subgroup_var %in% c("maennlich", "weiblich"))
 
-dat_6.6_a <- dat_6.6[order(dat_6.6$TR_BUNDESLAND), ]
+gender_prepped_mean_sd <- gender_prepped_mean_sd[order(gender_prepped_mean_sd$state_var), ]
 
-dat_6.6_a$TR_BUNDESLAND[duplicated(dat_6.6_a$TR_BUNDESLAND)] <- " "
-dat_6.6_a$TR_BUNDESLAND <- gsub("total", "Deutschland", dat_6.6_a$TR_BUNDESLAND)
-dat_6.6_a <- process_bundesland(dat_6.6_a)
+gender_prepped_mean_sd$state_var[duplicated(gender_prepped_mean_sd$state_var)] <- " "
+gender_prepped_mean_sd$state_var <- gsub("total", "Deutschland", gender_prepped_mean_sd$state_var)
+gender_prepped_mean_sd$state_var <- process_bundesland(gender_prepped_mean_sd$state_var)
 ```
 
 We will have to plot multiple plots and combine them. 
@@ -164,10 +162,10 @@ We can just use this object in the plot-settings to adjust the column widths.
 
 ```{r}
 p_1 <- plot_tablebarplot(
-  dat = dat_6.6_a,
-  bar_est = "est_2015 - 2009_trend_mean",
+  dat = gender_prepped_mean_sd,
+  bar_est = "est_comparison_trend_sameFacet_sameSubgroup_2009_2015",
   bar_label = NULL,
-  bar_sig = "sig_2015 - 2009_trend_mean",
+  bar_sig = "sig_comparison_trend_sameFacet_sameSubgroup_2009_2015",
   bar_fill = "geschlecht",
   column_spanners = list(
     "**2009**<sup>a</sup>" = c(3, 4),
