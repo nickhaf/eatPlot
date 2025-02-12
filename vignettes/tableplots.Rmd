@@ -70,22 +70,22 @@ Now we can plot the table like usual, with one exception: I can nudge the table 
 ```{r}
 tableplot_6.5 <- plot_tablebarplot(
   dat = gender_prepped_lh_final,
-  bar_est = "est_comparison_groupDiff_sameFacet_weiblichSubgroup_2022",
+  bar_est = "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
   bar_fill = "kb",
-  bar_sig = "sig_comparison_groupDiff_sameFacet_weiblichSubgroup_2022",
+  bar_sig = "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
   columns_table = list(
     "state_var_lesen",
-    "est_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
-    "se_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
-    "es_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
-    "est_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
-    "se_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
-    "es_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
   ),
-  columns_table_sig_bold = list(NULL, "sig_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, "sig_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", "sig_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL, "sig_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_hören"),
+  columns_table_sig_bold = list(NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"),
   # columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
-  columns_table_se = list(NULL, NULL, "se_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, NULL, "se_comparison_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL),
+  columns_table_se = list(NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL),
   headers = list("Land", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
