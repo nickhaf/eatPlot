@@ -31,9 +31,6 @@ The direction is always the same, we can look that up in the plain data, therefo
 gender_prepped_sub <- subset(gender_prepped, subgroup_var == "maennlich")
 ```
 
-
-
-
 ```{r}
 gender_prepped <- gender_prepped_sub[order(gender_prepped_sub$state_var), ]
 gender_prepped$y_axis <- 1:nrow(gender_prepped)
@@ -57,7 +54,9 @@ gender_prepped_hoeren[gender_prepped_hoeren$kb == "lesen",!colnames(gender_prepp
 
 gender_prepped_lh <- merge(gender_prepped_lesen, gender_prepped_hoeren, by = c( "y_axis", "kb"), suffixes = c("_lesen", "_hören"))
 gender_prepped_lh_final <- merge(gender_prepped_lh, 
-                                 gender_prepped[, c("y_axis", "est_comparison_groupDiff_sameFacet_weiblichSubgroup_2022", "sig_comparison_groupDiff_sameFacet_weiblichSubgroup_2022")])
+                                 gender_prepped[, c("y_axis", 
+                                                    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+                                                    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022")])
 
 
 gender_prepped_lh_final <- gender_prepped_lh_final[order(gender_prepped_lh_final$y_axis), ]
