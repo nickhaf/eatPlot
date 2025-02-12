@@ -16,51 +16,19 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
                           facet_var = "TR_BUNDESLAND", total_facet = "total", parameter = "mean",
                           sig_niveau = 0.05) {
 
-  browser()
-  # Check input -------------------------------------------------------------
-  check_eatRep_dat(eatRep_dat)
-  check_columns(eatRep_dat$estimate, cols = c("p"))
-
-  if (is.null(subgroup_var)) {
-    message("Are you sure you don't have a subgroup_var? If you do,  please set it.")
-  }
-
-  eatRep_dat$group <- build_column(eatRep_dat$group, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
-
-  # Filtering ---------------------------------------------------------------
-
-  ## Prep needs to be a bit different (years in a column)
-  ##
-
-  eatRep_dat <- rename_comparisons_total(eatRep_dat,
-    facet_var = facet_var,
-    total_facet = total_facet,
-    total_subgroup = total_subgroup
-  )
-  eatRep_dat$plain <- NULL
-  eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter == parameter, ]
-
-  eatRep_dat$group$year <- as.numeric(eatRep_dat$group$year)
-
-  # Merge Data --------------------------------------------------------------
-  check_no_columns(eatRep_dat$estimate, cols = "sig")
-  eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
-
-  plot_dat_wide <- build_plot_dat(eatRep_dat, facet_var, total_facet, total_subgroup)
+  dat_wide <- prep_plot(eatRep_dat = eatRep_dat,
+                        subgroup_var = subgroup_var,
+                        parameter = parameter,
+                        facet_var = facet_var,
+                        total_facet = total_facet,
+                        sig_niveau = sig_niveau,
+                        total_subgroup = total_subgroup,
+                        names_from_none = c("parameter_comp_none"),
+                        names_from_comp = c("comparison_split", "parameter_comp")
+                        )
 
 
-
-  for (i in colnames(plot_dat_wide)[grep("sig", colnames(plot_dat_wide))]) {
-    plot_dat_wide[, i] <- ifelse(is.na(plot_dat_wide[, i]), FALSE, plot_dat_wide[, i])
-  }
-
-
-  # Order columns -----------------------------------------------------------
-  auxillary_colnames <- grep("^est_|^es_|^p_|^sig_|^se_", colnames(plot_dat_wide), invert = TRUE, value = TRUE)
-  value_colnames <- sort(grep("^est_|^es_|^p_|^sig_|^se", colnames(plot_dat_wide), value = TRUE))
-  plot_dat_wide <- plot_dat_wide[, c(auxillary_colnames, value_colnames)]
-
-  return(plot_dat_wide)
+  return(dat_wide)
 }
 
 

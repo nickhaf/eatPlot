@@ -23,7 +23,7 @@ This is needed to bring the `eatRep` data into the correct format for plotting.
 ```{r}
 dat_lineplot_1 <- prep_lineplot(
   trend_gender[[1]],
-  subgroup_var = "geschlecht" ## Leave this argument if you have only one subgroup
+  subgroup_var = "Kgender" ## Leave this argument if you have only one subgroup
 )
 ```
 
@@ -34,7 +34,7 @@ It might be necessary to do some slight manual data preparation:
 dat_lineplot_1 <- subset(dat_lineplot_1, subgroup_var == "total")
 
 ## For correctly displaying the state names:
-dat_lineplot_1 <- process_bundesland(dat_lineplot_1)
+dat_lineplot_1$state_var <- process_bundesland(dat_lineplot_1$state_var)
 ```
 
 And then we can already plot:
