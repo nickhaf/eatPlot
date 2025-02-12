@@ -16,7 +16,6 @@ prep_tablebarplot <- function(eatRep_dat,
                               parameter = "mean",
                               facet_var = "TR_BUNDESLAND",
                               total_facet = "total",
-                              comparisons = NULL,
                               sig_niveau = 0.05,
                               total_subgroup = "total") {
   # Check input -------------------------------------------------------------
@@ -52,9 +51,8 @@ prep_tablebarplot <- function(eatRep_dat,
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
   # Filtering ---------------------------------------------------------------
-  if (!is.null(comparisons)) {
-    eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% comparisons, ]
-  }
+eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter , ]
+
   dat_unnested <- unnest_eatRep(eatRep_dat)
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
