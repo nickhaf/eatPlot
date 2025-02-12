@@ -24,8 +24,8 @@
 plot_lineplot <- function(eatPlot_dat,
                           facet_var = "state_var",
                           point_est = "est_mean_comp_none",
-                          point_sig = "est_mean_comp_crossDiff_totalFacet_sameSubgroup",
-                          line_sig = "est_mean_comp_trend_sameFacet_sameSubgroup",
+                          point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup",
+                          line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup",
                           line_se = "se_mean_comp_none",
                           brace_label_est = "est_mean_comp_trend_sameFacet_sameSubgroup",
                           brace_label_se = "se_mean_comp_trend_sameFacet_sameSubgroup",
@@ -129,6 +129,7 @@ if(is.null(background_subgroup)){
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
 
+    browser()
     p_state <- ggplot2::ggplot(
       dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
@@ -138,6 +139,7 @@ if(is.null(background_subgroup)){
         colour = .data$subgroup_var
       )
     ) +
+      # ggplot2::geom_point(ggplot2::aes(shape = .data$point_sig))
       plot_single_lineplot(dat_p_facet) +
       plot_title(sub_dash(i), title_superscripts) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
