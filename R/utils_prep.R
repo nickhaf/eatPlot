@@ -113,8 +113,6 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
 }
 
 pivot_eatRep <- function(eatRep_prepped, names_from){
-  browser()
-
   value_cols <- c("est_comparison", "se_comparison", "p_comparison", "es_comparison", "sig_comparison")
 
   eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comparison|parameter", colnames(eatRep_prepped))]
@@ -131,16 +129,13 @@ pivot_eatRep <- function(eatRep_prepped, names_from){
   )
 
   eatRep_prepped_comp_wide <-  tidyr::pivot_wider(
-    unique(subset(eatRep_prepped_comp, select = -c(comparison, year))),
+    unique(eatRep_prepped_comp[, colnames(eatRep_prepped_comp) != "comparison"]),
     names_from = c("parameter_comparison", "trend", "comparison_split"),
     values_from = value_cols
   )
 
 ## year und trend, das muss noch geändert werden
-  trend_wide <- merge(eatRep_prepped, eatRep_prepped_comp_wide)
-}else{
-  trend_wide <- noTrend_wide_year[, c("state_var", "subgroup_var", "kb", colnames(noTrend_wide_year)[grepl("_comparison", colnames(noTrend_wide_year)) ])]
-}
+  trend_wide <- merge(eatRep_prepped_none_wide, eatRep_prepped_comp_wide)
 
   return(trend_wide)
 }
