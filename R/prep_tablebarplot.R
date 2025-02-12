@@ -27,31 +27,36 @@ prep_tablebarplot <- function(eatRep_dat,
   }
 
   eatRep_dat$group <- build_column(eatRep_dat$group,
-                                   old = subgroup_var,
-                                   new = "subgroup_var",
-                                   fill_value = "total")
+    old = subgroup_var,
+    new = "subgroup_var",
+    fill_value = "total"
+  )
   eatRep_dat$group <- build_column(eatRep_dat$group,
-                                   old = facet_var,
-                                   new = "state_var",
-                                   fill_value = "total")
+    old = facet_var,
+    new = "state_var",
+    fill_value = "total"
+  )
   eatRep_dat$estimate <- build_column(eatRep_dat$estimate,
-                                   old = "es",
-                                   new = "es",
-                                   fill_value = NA)
+    old = "es",
+    new = "es",
+    fill_value = NA
+  )
   eatRep_dat$group <- build_column(eatRep_dat$group,
-                                      old = "year",
-                                      new = "year",
-                                      fill_value = NA)
+    old = "year",
+    new = "year",
+    fill_value = NA
+  )
   eatRep_dat$group <- build_column(eatRep_dat$group,
-                                   old = "kb",
-                                   new = "kb",
-                                   fill_value = NA)
+    old = "kb",
+    new = "kb",
+    fill_value = NA
+  )
 
   check_no_columns(eatRep_dat$estimate, cols = "sig")
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
 
   # Filtering ---------------------------------------------------------------
-eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter , ]
+  eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]
 
   dat_unnested <- unnest_eatRep(eatRep_dat)
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
@@ -60,5 +65,5 @@ eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% pa
   dat_wide <- dat_wide[order(dat_wide$state_var), ]
   dat_wide <- dat_wide[, colSums(!is.na(dat_wide)) > 0]
   dat_wide$y_axis <- 1:nrow(dat_wide)
-return(as.data.frame(dat_wide))
+  return(as.data.frame(dat_wide))
 }
