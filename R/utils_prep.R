@@ -91,10 +91,7 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
       for(i in 1:nrow(x)){
         res[i] <- possible_subgroups[possible_subgroups != x[i, "subgroup_var"]]
       }
-
-
       x$comparison_split <- paste0(x$comparison_split, "_", res, "Subgroup")
-
     }
 
     # Remove all comparisons that start with total! They are duplicates

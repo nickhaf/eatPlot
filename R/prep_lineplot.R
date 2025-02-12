@@ -14,29 +14,24 @@
 #' @examples # tbd
 prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "total",
                           facet_var = "TR_BUNDESLAND", total_facet = "total", parameter = "mean",
-                          sig_niveau = 0.05, comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")) {
+                          sig_niveau = 0.05) {
+
+  browser()
   # Check input -------------------------------------------------------------
   check_eatRep_dat(eatRep_dat)
   check_columns(eatRep_dat$estimate, cols = c("p"))
-
-  unsupported_comp <- comparisons[!(comparisons %in% c("none", "crossDiff", "trend", "trend_crossDiff"))]
-  if (length(unsupported_comp) > 0) {
-    stop(paste("Comparison '", unsupported_comp, "' is not supported. Please contact the package author."))
-  }
 
   if (is.null(subgroup_var)) {
     message("Are you sure you don't have a subgroup_var? If you do,  please set it.")
   }
 
   eatRep_dat$group <- build_column(eatRep_dat$group, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
-  eatRep_dat$plain <- build_column(eatRep_dat$plain, old = subgroup_var, new = "subgroup_var", fill_value = "total") ## set to total so the background_line can be plotted
-
-
 
   # Filtering ---------------------------------------------------------------
-  if (!is.null(comparisons)) {
-    eatRep_dat$comparisons <- eatRep_dat$comparisons[eatRep_dat$comparisons$comparison %in% c(comparisons, paste0(comparisons, "Total")), ]
-  }
+
+  ## Prep needs to be a bit different (years in a column)
+  ##
+
   eatRep_dat <- rename_comparisons_total(eatRep_dat,
     facet_var = facet_var,
     total_facet = total_facet,

@@ -22,7 +22,7 @@ This is needed to bring the `eatRep` data into the correct format for plotting.
 
 ```{r}
 dat_lineplot_1 <- prep_lineplot(
-  trend_mw,
+  trend_gender[[1]],
   subgroup_var = "geschlecht" ## Leave this argument if you have only one subgroup
 )
 ```
