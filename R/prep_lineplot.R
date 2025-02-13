@@ -15,6 +15,7 @@
 prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "total",
                           facet_var = "TR_BUNDESLAND", total_facet = "total", parameter = "mean",
                           sig_niveau = 0.05) {
+
   dat_wide <- prep_plot(eatRep_dat = eatRep_dat,
                         subgroup_var = subgroup_var,
                         parameter = parameter,
@@ -23,7 +24,8 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
                         sig_niveau = sig_niveau,
                         total_subgroup = total_subgroup,
                         names_from_none = c("parameter_comp_none"),
-                        names_from_comp = c("comparison_split", "parameter_comp")
+                        names_from_comp = c("comparison_split", "parameter_comp"),
+                        plot_type = "line"
                         )
 dat_wide$year <- as.numeric(dat_wide$year)
 
