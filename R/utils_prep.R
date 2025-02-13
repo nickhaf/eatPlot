@@ -178,7 +178,6 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
 pivot_eatRep <- function(eatRep_prepped, names_from_none = c("year", "parameter_comp_none"), names_from_comp = c("comparison_split", "trend", "parameter_comp")) {
   value_cols <- c("est_comp", "se_comp", "p_comp", "es_comp", "sig_comp")
 
-browser() ## somewhere here the total+total group gets removed
   eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp|parameter", colnames(eatRep_prepped))]
 
   ## Split into comparions und comparison_none
@@ -189,7 +188,7 @@ browser() ## somewhere here the total+total group gets removed
     unique(subset(eatRep_prepped_none, select = -c(trend))),
     names_from = names_from_none,
     values_from = paste0(value_cols, "_none")
-  )
+  ) ## hier gibts noch total
 
   ## Nochmal nach Trend aufteilen
 
@@ -201,16 +200,15 @@ browser() ## somewhere here the total+total group gets removed
     unique(eatRep_comp_trend),
     names_from = names_from_comp,
     values_from = value_cols
-  )
+  ) ## hier auch
 
   eatRep_comp_noTrend_wide <- tidyr::pivot_wider(
     unique(eatRep_comp_noTrend),
     names_from = names_from_comp,
     values_from = value_cols
   )
-
-  eatPlot_dat_noTrend <- merge(eatRep_prepped_none_wide, eatRep_comp_noTrend_wide)
-eatPlot_dat <- merge(eatRep_comp_trend_wide, eatPlot_dat_noTrend)
+  eatPlot_dat_noTrend <- merge(eatRep_prepped_none_wide, eatRep_comp_noTrend_wide, all.x = TRUE)
+eatPlot_dat <- merge(eatPlot_dat_noTrend, eatRep_comp_trend_wide, all.x = TRUE)
 
   colnames(eatPlot_dat)[grep("_comp_", colnames(eatPlot_dat))] <- vapply(colnames(eatPlot_dat)[grep("_comp_", colnames(eatPlot_dat))], function(col) {
     parameter <- unlist(regmatches(col, gregexpr("[^_]+$", col)))
