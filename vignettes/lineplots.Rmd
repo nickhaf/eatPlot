@@ -76,8 +76,10 @@ lineplot_2 <- plot_lineplot(
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   background_subgroup = "total",
-  plot_settings = plotsettings_lineplot(subgroup_colours = c(weiblich = "#000000", maennlich = "#999999"), ## Here we determine the colours of the subgroups
-                                        default_list = lineplot_4x4)
+  plot_settings = plotsettings_lineplot(
+    subgroup_colours = c(weiblich = "#000000", maennlich = "#999999"), ## Here we determine the colours of the subgroups
+    default_list = lineplot_4x4
+  )
 )
 ```
 
@@ -139,4 +141,3 @@ lineplot_2
 <!-- ```{r} -->
 <!-- lineplot_germany_2 -->
 <!-- ``` -->
-
