@@ -69,7 +69,7 @@ dat_lineplot_2$state_var <- process_bundesland(dat_lineplot_2$state_var)
 
 
 ## We can set the order of the brace labels by setting the factor levels of the subgroup_var:
-dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("weiblich", "maennich", "total"), ordered = TRUE)
+dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
 
 lineplot_2 <- plot_lineplot(
   dat_lineplot_2,

@@ -73,6 +73,8 @@ if(is.null(background_subgroup)){
 
   # Prepare Subsets ---------------------------------------------------------
   ## Hier auch subsetten wenn background_subgroup = NULL
+  browser()
+
   if (!is.null(background_facet) & !is.null(background_subgroup)) {
     background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet & eatPlot_dat$subgroup_var == background_subgroup, ]
   } else if (!is.null(background_facet) & is.null(background_subgroup)) {
@@ -80,7 +82,6 @@ if(is.null(background_subgroup)){
   } else {
     background_line_dat <- data.frame()
   }
-
 
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
   if (!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1) {
@@ -129,7 +130,6 @@ if(is.null(background_subgroup)){
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
 
-    browser()
     p_state <- ggplot2::ggplot(
       dat_p_facet$plot_dat,
       mapping = ggplot2::aes(

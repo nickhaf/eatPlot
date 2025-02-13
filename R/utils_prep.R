@@ -47,7 +47,6 @@ prep_plot <- function(
 
   # Filtering ---------------------------------------------------------------
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]
-
   dat_unnested <- unnest_eatRep(eatRep_dat)
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
@@ -179,27 +178,40 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
 pivot_eatRep <- function(eatRep_prepped, names_from_none = c("year", "parameter_comp_none"), names_from_comp = c("comparison_split", "trend", "parameter_comp")) {
   value_cols <- c("est_comp", "se_comp", "p_comp", "es_comp", "sig_comp")
 
+browser() ## somewhere here the total+total group gets removed
   eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp|parameter", colnames(eatRep_prepped))]
 
   ## Split into comparions und comparison_none
   eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp_none", colnames(eatRep_prepped))]
-  eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "trend", "comparison_split") | grepl("comp$", colnames(eatRep_prepped))]
+  eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split") | grepl("comp$", colnames(eatRep_prepped))]
 
-  ## Die jetzt gesondert nach wide ziehen?
   eatRep_prepped_none_wide <- tidyr::pivot_wider(
     unique(subset(eatRep_prepped_none, select = -c(trend))),
     names_from = names_from_none,
     values_from = paste0(value_cols, "_none")
   )
 
-  eatRep_prepped_comp_wide <- tidyr::pivot_wider(
-    unique(eatRep_prepped_comp[, colnames(eatRep_prepped_comp) != "comparison"]),
+  ## Nochmal nach Trend aufteilen
+
+  eatRep_comp_trend <- eatRep_prepped_comp[grep("_", eatRep_prepped_comp$trend), ]
+  eatRep_comp_noTrend <- subset(eatRep_prepped_comp, !grepl("_", eatRep_prepped_comp$trend,), select = -c(trend))
+
+
+  eatRep_comp_trend_wide <- tidyr::pivot_wider(
+    unique(eatRep_comp_trend),
     names_from = names_from_comp,
     values_from = value_cols
   )
 
-  ## year und trend, das muss noch geändert werden
-  eatPlot_dat <- merge(eatRep_prepped_none_wide, eatRep_prepped_comp_wide)
+  eatRep_comp_noTrend_wide <- tidyr::pivot_wider(
+    unique(eatRep_comp_noTrend),
+    names_from = names_from_comp,
+    values_from = value_cols
+  )
+
+  eatPlot_dat_noTrend <- merge(eatRep_prepped_none_wide, eatRep_comp_noTrend_wide)
+eatPlot_dat <- merge(eatRep_comp_trend_wide, eatPlot_dat_noTrend)
+
   colnames(eatPlot_dat)[grep("_comp_", colnames(eatPlot_dat))] <- vapply(colnames(eatPlot_dat)[grep("_comp_", colnames(eatPlot_dat))], function(col) {
     parameter <- unlist(regmatches(col, gregexpr("[^_]+$", col)))
     col <- gsub(paste0("_", parameter, "$"), "", col)
