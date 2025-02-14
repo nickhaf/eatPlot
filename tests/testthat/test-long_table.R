@@ -21,6 +21,17 @@ long <- trend_gender[[1]]$plain %>%
   mutate(y_axis = as.numeric(as.factor(y_axis))) %>%
   mutate(value_label = ifelse(.$bar == 1, "", .$value_label))
 
+id_cols <- c("TR_BUNDESLAND", "Kgender")
+
+## Die ID-cols müssen als eigene Columns ganz vorne ran.
+
+id_cols <- unique(long[, c(id_cols, "y_axis")]) %>%
+  pivot_longer(cols = all_of(id_cols))
+
+long_2 <- long %>%
+  mutate(value = as.character(value)) %>%
+  dplyr::bind_rows(id_cols)
+
 colnumber <- length(unique(long$x_axis)) - 1
 
 accuracy = 10
