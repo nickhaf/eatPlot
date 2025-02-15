@@ -10,34 +10,50 @@ library(ggtext)
 long <- trend_gender[[1]]$plain %>%
   mutate(sig = ifelse(p < 0.05, "TRUE", "FALSE")) %>%
   pivot_longer(cols = c("est", "se", "es")) %>%
-  filter(parameter %in% c("mean", "sd"), comparison %in% c("none", "trend"), Kgender %in% c("weiblich", "maennlich"), name %in% c("est", "sd") ) %>%
-  mutate(id_col = paste(.$parameter, .$name, .$year, sep = "_")) %>%
-  mutate(y_axis = paste(.$TR_BUNDESLAND, .$Kgender, sep = "_")) %>%
+  filter(parameter %in% c("mean", "sd"), comparison %in% c("none", "trend"), Kgender %in% c("weiblich", "maennlich"), name %in% c("est", "se") ) %>%
   mutate(value_label = ifelse(.$sig, paste0("**", .$value, "**"), .$value)) %>%
-  mutate(x_axis = as.numeric(as.factor(id_col))) %>%
-  arrange(x_axis) %>%
-  mutate(bar = ifelse(.$id_col == "mean_est_2015 - 2009", 1, 0))%>%
-  mutate(width = ifelse(bar == 1, 70, 6.363636)) %>%
-  mutate(y_axis = as.numeric(as.factor(y_axis))) %>%
-  mutate(value_label = ifelse(.$bar == 1, "", .$value_label))
+  mutate(y_axis = paste(.$TR_BUNDESLAND, .$Kgender, sep = "_"))  %>%
+  mutate(y_axis = as.numeric(as.factor(y_axis)))
+
 
 id_cols <- c("TR_BUNDESLAND", "Kgender")
+
 
 ## Die ID-cols müssen als eigene Columns ganz vorne ran.
 
 id_cols <- unique(long[, c(id_cols, "y_axis")]) %>%
-  pivot_longer(cols = all_of(id_cols))
+  pivot_longer(cols = all_of(id_cols), values_to = "value_label") %>%
+  group_by(value_label) %>%
+  mutate(value_label = if_else(name == "TR_BUNDESLAND" & duplicated(value_label), "", value_label)) %>%
+  ungroup()
 
 long_2 <- long %>%
-  mutate(value = as.character(value)) %>%
-  dplyr::bind_rows(id_cols)
+  dplyr::bind_rows(id_cols) %>%
+  mutate(id_col = paste(.$parameter, .$name, .$year, sep = "_")) %>%
+  mutate(x_axis = as.numeric(as.factor(id_col))) %>%
+  arrange(x_axis) %>%
+  mutate(bar = ifelse(.$id_col == "mean_est_2015 - 2009", 1, 0))%>%
+  mutate(value_label = ifelse(.$bar == 1, "", .$value_label)) %>%
+  mutate(x_axis = case_when(name == "TR_BUNDESLAND" ~ 1,
+                            name == "Kgender" ~ 2,
+                            year == 2009 & parameter == "mean" & comparison == "none" & name == "est" ~ 3,
+                            year == 2009 & parameter == "sd" & comparison == "none" &  name == "est" ~ 4,
+                            year == 2015 & parameter == "mean" & comparison == "none"  & name == "est" ~ 5,
+                            year == 2015 & parameter == "sd" & comparison == "none"  & name == "est"~ 6,
+                            year == 2022 & parameter == "mean" & comparison == "none" & name == "est" ~ 7,
+                            year == 2022 & parameter == "sd" & comparison == "none" & name == "est" ~ 8,
+                            year == "2022 - 2015" & parameter == "mean" & comparison == "trend"  & name == "est" ~ 9)) %>%
+  filter(!is.na(x_axis)) %>%
+  mutate(bar = ifelse(comparison == "trend", 1, 0 )) %>%
+  mutate(width = ifelse(bar != 1 |is.na(bar) , 6.25, 50))
 
-colnumber <- length(unique(long$x_axis)) - 1
+colnumber <- length(unique(long_2$x_axis)) - 1
 
 accuracy = 10
-long_bar <- long %>%
+long_bar <- long_2 %>%
   filter(bar == 1, name == "est") %>%
   group_by(bar)
+
 
 
 x_lims <- long_bar %>%
@@ -59,17 +75,21 @@ col_range <- (total_range - bar_1_range)/colnumber
 ## Set x-axis according to this!! Afterwards I can adjust depending on the column width
 ## Just start at 0. Then cummulate!
 
-position_width <- long %>%
+position_width <- long_2 %>%
   group_by(x_axis) %>%
   summarise(total_width = mean(width)) %>%
   mutate(col_min = lag(cumsum(total_width), default = 0),
          col_max = cumsum(total_width)) %>%
   mutate(col_mean = (col_min + col_max)/2)
 
-long_pos <- long %>%
+## Es hängt davon ab,  wo der 0-Punkt gesetzt werden soll, ob alle Werte negativ oder manch postiv und negativ sind.
+## Und auch davon, wie die Aufteilung auf der Achse ist. Ob sie von -30 - 40 oder von -50 - 0 etc. geht.
+## Okay, auf dieser Achse ist der Startpunkt immer NULL.
+
+long_pos <- long_2 %>%
   left_join(position_width, by = "x_axis") %>%
-  mutate(bar_value = ifelse(bar == 1, .$value + col_mean, 0)) %>%
-  mutate(bar_zero =  ifelse(bar == 1, 0 + col_mean, 0))
+  mutate(bar_value = ifelse(bar == 1, col_max + .$value, 0)) %>%
+  mutate(bar_zero =  ifelse(bar == 1, col_max, 0))
 
 
 ## For the barplot: Just add everything before to the bars. Might need to use geom_rect?
@@ -84,6 +104,7 @@ p1 <- ggplot(dat = long_pos,
   geom_richtext(    label.padding = grid::unit(rep(0, 4), "pt"),
                     fill = NA,
                     label.color = NA) +
+  ## evtl. diese dann gesondert hinzufügen in die Lücken, mit gesonderten Daten:
   ggpattern::geom_rect_pattern(
     aes(xmin = bar_zero , xmax = bar_value,
         ymin = .data$y_axis -0.25, ymax = .data$y_axis + 0.25))
