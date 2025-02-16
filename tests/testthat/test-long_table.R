@@ -99,7 +99,7 @@ y_max <- max(long_pos$y_axis)
 
 header_dat <- unique(long_pos[, c("id_col", "col_mean")]) %>%
   mutate(y_axis = y_max + 1) %>%
-  mutate(value_label = id_col)
+  mutate(value_label = paste0("**", id_col, "**"))
 
   ## specify header-col in function.
 ## Check if x_axis is single. If not, there are some duplicates.
@@ -116,60 +116,39 @@ p1 <- ggplot(dat = long_pos,
   ggpattern::geom_rect_pattern(
     aes(xmin = bar_zero , xmax = bar_value,
         ymin = .data$y_axis -0.25, ymax = .data$y_axis + 0.25)) +
+  geom_header(dat = header_dat, aes(text = value_label))
+
+
+
+
+# Header grob -------------------------------------------------------------
+
+
+ggplot(dat = long_pos,
+             aes(
+               x = col_mean,
+               y = y_axis,
+               text = value_label)) +
+  geom_table() +
   geom_header(dat = header_dat)
 
-
-draw_header <- function(data, panel_scales, coord) {
-  ## Transform the data first
-  coords <- coord$transform(data, panel_scales)
-
-  text <- ggtext::GeomRichText(
-    x = coords$x,
-    y = coords$y,
-    label = coords$label)
-
-  # background <- grid::rectGrob(
-  #   xmin = coords$xmin,
-  #   xmax = coords$xmax,
-  #   ymin = coords$ymin,
-  #   ymax = coords$ymax
-  # )
-
-}
-
-GeomHeader <- ggproto("GeomHeader", Geom,
-                               required_aes = c("x", "y", "label"),
-                               default_aes = aes(xmin = -Inf, xmax = Inf),
-                               draw_panel = draw_header)
-
-
-geom_header <- function(mapping = NULL, data = NULL, stat = "identity",
-                             position = "identity", na.rm = FALSE,
-                             show.legend = NA, inherit.aes = TRUE, ...) {
-  ggplot2::layer(
-    geom = GeomHeader, mapping = mapping,
-    data = data, stat = stat, position = position,
-    show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
-  )
-}
-
-geom_headers <- function(){
-  list(
-  ggplot2::geom_rect(
-    ggplot2::aes(
-      xmin = -Inf, xmax = Inf,
-      ymin = max(.data$y_axis) + 0.5, ymax = max(.data$y_axis) + 1.5
-    ),
-    colour = NA,
-    fill = "green"
-  ) ,
-    geom_richtext(dat = header_dat,
-                  label.padding = grid::unit(rep(0, 4), "pt"),
-                  fill = NA,
-                  label.color = NA)
-  )
-}
+#
+# geom_header <- function(){
+#   list(
+#   ggplot2::geom_rect(
+#     ggplot2::aes(
+#       xmin = -Inf, xmax = Inf,
+#       ymin = max(.data$y_axis) + 0.5, ymax = max(.data$y_axis) + 1.5
+#     ),
+#     colour = NA,
+#     fill = "green"
+#   ) ,
+#     geom_richtext(dat = header_dat,
+#                   label.padding = grid::unit(rep(0, 4), "pt"),
+#                   fill = NA,
+#                   label.color = NA)
+#   )
+# }
 
 
 ## Kann ich den dan weiter bearbeiten, um die Headers etc. zu adden?
