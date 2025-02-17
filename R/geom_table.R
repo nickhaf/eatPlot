@@ -21,14 +21,16 @@ draw_table <- function(data, panel_scales, coord) {
     y = (coords$ymin + coords$ymax)/2,
     width = coords$xmax - coords$xmin,
     height = coords$ymax - coords$ymin,
-    default.units = "native"
+    default.units = "native",
+    gp = grid::gpar(fill = coords$fill,
+                    col = coords$colour)
   )
   grid::gTree(children = grid::gList(background, text))
 }
 
 GeomTable <- ggproto("GeomTable", Geom,
                       required_aes = c("group", "text"),
-                      default_aes = aes(xmin = -Inf, xmax = Inf),
+                      #default_aes = aes(xmin = -Inf, xmax = Inf),
                       draw_panel = draw_table)
 
 ## What if other stats are used? In that case, xmin and xmax for each col, and y have to be provided!!

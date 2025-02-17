@@ -153,7 +153,8 @@ long_pos <- long_pos %>%
                                                             "sd_est_2015",
                                                             "sd_est_2022"))) %>%
   mutate(width = ifelse(id_col == "NA_TR_BUNDESLAND_NA", 0.4, 0.6/8)) %>%
-  mutate(adjustment = 0)
+  mutate(adjustment = 0) %>%
+  mutate(background_colour = ifelse(id_col == "NA_TR_BUNDESLAND_NA", "red", "green"))
 
 ## I need a factor of the row-goups.
 
@@ -163,7 +164,9 @@ ggplot(
     text = value_label,
     group = id_col,
     col_width = width,
-    hjust = adjustment
+    hjust = adjustment,
+    fill = background_colour,
+    colour = background_colour
   )
 ) +
   geom_table(stat = StatTableDebug) +
