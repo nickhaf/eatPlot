@@ -154,7 +154,7 @@ long_pos <- long_pos %>%
                                                             "sd_est_2022"))) %>%
   mutate(width = ifelse(id_col == "NA_TR_BUNDESLAND_NA", 0.4, 0.6/8)) %>%
   mutate(adjustment = 0) %>%
-  mutate(background_colour = ifelse(id_col == "NA_TR_BUNDESLAND_NA", "red", "green"))
+  mutate(background_colour = ifelse(id_col == "NA_TR_BUNDESLAND_NA", "red", "green")) %>% mutate(xmin = 0.2, xmax = 0.3)
 
 ## I need a factor of the row-goups.
 
@@ -169,9 +169,24 @@ ggplot(
     colour = background_colour
   )
 ) +
-  geom_table(stat = StatTableDebug) +
+  geom_table(stat = StatTableDebugg) +
   ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
-  ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0)))
+  ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
+  ggpattern::geom_bar_pattern(
+    dat = long_pos %>% filter(id_col == "mean_est_2015"),
+    mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax),
+    stat = StatTableColumn,
+    colour = "black")
+
+## irgendwie müssen die werte aus den Definitionen darüber ja übergeben werden. Vielleicht kann man dann einfach die Grupe matchen,
+## um xmax und xmin zu bekommen?
+## Vielleicht sollten sie auch xmin_col und xmax_col heißen, um Verwirrung mit anderen geoms zu vermeiden
+
+## currently it only fills the column. I need it to go from rescaled 0 to the rescaled value
+
+## From the xmin to the xmax of the column, build the scale.
+## use some stat to transform the values to fit within this range.
+
 
 
 # geom_header(dat = header_dat)

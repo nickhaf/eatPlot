@@ -1,7 +1,7 @@
 ## Eventuell nur nötig wegen stats-Umformung!
 
 draw_table <- function(data, panel_scales, coord) {
-  ## Transform the data first
+
   coords <- coord$transform(data, panel_scales)
 
   coords <- coords %>%
@@ -13,7 +13,7 @@ draw_table <- function(data, panel_scales, coord) {
   text <- gridtext::richtext_grob(
     text = coords$text,
     x = coords$x,
-    y = (coords$ymin + coords$ymax)/2,
+    y = coords$y,
     hjust = coords$hjust)
 
   background <- grid::rectGrob(
