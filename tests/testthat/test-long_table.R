@@ -12,8 +12,8 @@ long <- trend_gender[[1]]$plain %>%
   pivot_longer(cols = c("est", "se", "es")) %>%
   filter(parameter %in% c("mean", "sd"), comparison %in% c("none", "trend"), Kgender %in% c("weiblich", "maennlich"), name %in% c("est", "se") ) %>%
   mutate(value_label = ifelse(.$sig, paste0("**", .$value, "**"), .$value)) %>%
-  mutate(y_axis = paste(.$TR_BUNDESLAND, .$Kgender, sep = "_"))  %>%
-  mutate(y_axis = as.numeric(as.factor(y_axis)))
+  mutate(group_id = paste(.$TR_BUNDESLAND, .$Kgender, sep = "_"))  %>%
+  mutate(y_axis = as.numeric(as.factor(group_id)))
 
 
 id_cols <- c("TR_BUNDESLAND", "Kgender")
@@ -120,19 +120,22 @@ p1 <- ggplot(dat = long_pos,
 
 
 
+long_pos %>%
+  stat_table(mapping = aes(group = col_mean, label = "value_label"))
 
 # Header grob -------------------------------------------------------------
-
-
 ggplot(dat = long_pos,
              aes(
                x = col_mean,
-               y = y_axis,
-               text = value_label)) +
-  geom_table() +
-  geom_header(dat = header_dat)
+             #  y = y_axis,
+               text = value_label,
+             group = y_axis)) +
+  geom_table(stat=StatTableDebug) #+
+  #geom_header(dat = header_dat)
 
-#
+  cdata <- ggdebug::get_data_cache()
+  head(cdata$compute_layer$args$data)
+  cdata$finish_layer$return
 # geom_header <- function(){
 #   list(
 #   ggplot2::geom_rect(

@@ -24,7 +24,7 @@ GeomTable <- ggproto("GeomTable", Geom,
                       draw_panel = draw_table)
 
 
-geom_table <- function(mapping = NULL, data = NULL, stat = "identity",
+geom_table <- function(mapping = NULL, data = NULL, stat = "table",
                         position = "identity", na.rm = FALSE,
                         show.legend = NA, inherit.aes = TRUE, ...) {
   ggplot2::layer(
