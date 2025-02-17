@@ -172,10 +172,10 @@ ggplot(
   geom_table(stat = StatTableDebugg) +
   ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
-  ggpattern::geom_bar_pattern(
+  ggpattern::geom_rect_pattern(
     dat = long_pos %>% filter(id_col == "mean_est_2015"),
     mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax),
-    stat = StatTableColumn,
+    stat = StatTableColumnDebugg,
     colour = "black")
 
 ## irgendwie müssen die werte aus den Definitionen darüber ja übergeben werden. Vielleicht kann man dann einfach die Grupe matchen,
@@ -193,7 +193,7 @@ ggplot(
 
 cdata <- ggdebug::get_data_cache()
 head(cdata$compute_layer$args$data)
-cdata$finish_layer$return
+cdata$finish_layer[[1]]$return
 # geom_header <- function(){
 #   list(
 #   ggplot2::geom_rect(
