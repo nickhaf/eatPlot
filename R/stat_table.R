@@ -7,24 +7,39 @@
 
 # Create an example data frame
 data <- data.frame(
-  group = c("A", "A", "B", "B", "B", "C", "C", "C", "C"),
-  text = c(5, 3, 2, 4, 1, 7, 6, 3, 2)
+  group = factor(c("A", "A", "B", "B", "B", "C", "C", "C", "C"), ordered = TRUE, levels = c("B", "A", "C")),
+  text = c(5, 3, 2, 4, 1, 7, 6, 3, 2),
+  col_width = 1/3
 )
 
 # View the data
 data
 
-calc_table_coords <- function(data, scales) {
- data_y <- data %>%
-    mutate(y = as.integer(factor(group)) - 1)
+calc_table_coords <- function(data, scales) { ## remove scales?
 
- return(data_y)
+## Calc x axis
+## Standardisieren von 0 bis 1? Oder nutzen der tatsächlichen Value range? Maybe it would be better to use an own coordinate system?
+## If not specified correctly, do what? Warning and set to same width?
+
+  position_width <- data %>%
+    select(group, col_width) %>%
+    unique() %>%
+    arrange(as.numeric(group)) %>%
+    mutate(xmin = lag(cumsum(col_width), default = 0),
+           xmax = cumsum(col_width))
+
+ data <- merge(data, position_width) %>%
+   group_by(group) %>%
+   mutate(ymin = row_number() - 1, ymax = row_number() ) %>%
+   ungroup()
+
+ return(data)
 #  mutate(x_axis = as.numeric(as.factor(id_col)))
 }
 
 StatTable <- ggproto("StatTable", Stat,
                          compute_panel = calc_table_coords,
-                         required_aes = c("text", "group") ## x and y are optional, if provided the respective values are not computed
+                         required_aes = c("text", "group", "col_width") ## x and y are optional, if provided the respective values are not computed
 )
 
 StatTableDebug <- ggdebug::create_stat_with_caching(

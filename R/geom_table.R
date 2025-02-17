@@ -4,25 +4,34 @@ draw_table <- function(data, panel_scales, coord) {
   ## Transform the data first
   coords <- coord$transform(data, panel_scales)
 
-  gridtext::richtext_grob(
+  coords <- coords %>%
+    mutate(x = case_when(hjust == 0 ~ xmin,
+                         hjust == 1 ~ xmax,
+                         TRUE ~ (coords$xmin + coords$xmax)/2
+                         ))
+
+  text <- gridtext::richtext_grob(
     text = coords$text,
     x = coords$x,
-    y = coords$y)
+    y = (coords$ymin + coords$ymax)/2,
+    hjust = coords$hjust)
 
-  # background <- grid::rectGrob(
-  #   xmin = coords$xmin,
-  #   xmax = coords$xmax,
-  #   ymin = coords$ymin,
-  #   ymax = coords$ymax
-  # )
-
+  background <- grid::rectGrob(
+    x = (coords$xmin + coords$xmax)/2,
+    y = (coords$ymin + coords$ymax)/2,
+    width = coords$xmax - coords$xmin,
+    height = coords$ymax - coords$ymin,
+    default.units = "native"
+  )
+  grid::gTree(children = grid::gList(background, text))
 }
 
 GeomTable <- ggproto("GeomTable", Geom,
-                      required_aes = c("x", "y", "text"),
+                      required_aes = c("group", "text"),
                       default_aes = aes(xmin = -Inf, xmax = Inf),
                       draw_panel = draw_table)
 
+## What if other stats are used? In that case, xmin and xmax for each col, and y have to be provided!!
 
 geom_table <- function(mapping = NULL, data = NULL, stat = "table",
                         position = "identity", na.rm = FALSE,
