@@ -29,11 +29,9 @@ draw_table <- function(data, panel_scales, coord) {
 }
 
 GeomTable <- ggproto("GeomTable", Geom,
-                      required_aes = c("group", "text"),
+                      required_aes = c("column", "text"),
                       #default_aes = aes(xmin = -Inf, xmax = Inf),
                       draw_panel = draw_table)
-
-## What if other stats are used? In that case, xmin and xmax for each col, and y have to be provided!!
 
 geom_table <- function(mapping = NULL, data = NULL, stat = "table",
                         position = "identity", na.rm = FALSE,

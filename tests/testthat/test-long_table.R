@@ -102,39 +102,6 @@ long_pos <- long_2 %>%
 ## Also: leave space in the plot tablebar function, and add the plot manually. This enables to add other plottypes as well, eg. distribution etc.
 y_max <- max(long_pos$y_axis)
 
-header_dat <- unique(long_pos[, c("id_col", "col_mean")]) %>%
-  mutate(y_axis = y_max + 1) %>%
-  mutate(value_label = paste0("**", id_col, "**"))
-
-## specify header-col in function.
-## Check if x_axis is single. If not, there are some duplicates.
-
-p1 <- ggplot(
-  dat = long_pos,
-  aes(
-    x = col_mean,
-    y = y_axis,
-    label = value_label
-  )
-) +
-  geom_richtext(
-    label.padding = grid::unit(rep(0, 4), "pt"),
-    fill = NA,
-    label.color = NA
-  ) +
-  ## evtl. diese dann gesondert hinzufügen in die Lücken, mit gesonderten Daten:
-  ggpattern::geom_rect_pattern(
-    aes(
-      xmin = bar_zero, xmax = bar_value,
-      ymin = .data$y_axis - 0.25, ymax = .data$y_axis + 0.25
-    )
-  ) +
-  geom_header(dat = header_dat, aes(text = value_label))
-
-
-
-long_pos %>%
-  stat_table(mapping = aes(group = col_mean, label = "value_label"))
 
 # Header grob -------------------------------------------------------------
 
@@ -156,13 +123,17 @@ long_pos <- long_pos %>%
   mutate(adjustment = 0) %>%
   mutate(background_colour = ifelse(id_col == "NA_TR_BUNDESLAND_NA", "red", "green")) %>% mutate(xmin = 0.2, xmax = 0.3)
 
+header_dat <- unique(long_pos[, c("id_col", "col_mean", "width", "adjustment", "background_colour")]) %>%
+  mutate(y_axis = y_max + 1) %>%
+  mutate(value_label = paste0("**", id_col, "**"))
+
 ## I need a factor of the row-goups.
 
 ggplot(
   dat = long_pos,
   aes(
     text = value_label,
-    group = id_col,
+    column = id_col,
     col_width = width,
     hjust = adjustment,
     fill = background_colour,
@@ -170,7 +141,8 @@ ggplot(
   )
 ) +
   geom_table(stat = StatTable) +
-  ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
+  geom_header(stat = StatTableDebugg) +
+  ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
   ggpattern::geom_rect_pattern(
     dat = long_pos %>% filter(id_col == "mean_est_2022 - 2015"),
@@ -179,23 +151,7 @@ ggplot(
     colour = "black")
 
 
+
 cdata <- ggdebug::get_data_cache()
 head(cdata$compute_layer$args$data)
 head(cdata$finish_layer$return)
-# geom_header <- function(){
-#   list(
-#   ggplot2::geom_rect(
-#     ggplot2::aes(
-#       xmin = -Inf, xmax = Inf,
-#       ymin = max(.data$y_axis) + 0.5, ymax = max(.data$y_axis) + 1.5
-#     ),
-#     colour = NA,
-#     fill = "green"
-#   ) ,
-#     geom_richtext(dat = header_dat,
-#                   label.padding = grid::unit(rep(0, 4), "pt"),
-#                   fill = NA,
-#                   label.color = NA)
-#   )
-# }
-
