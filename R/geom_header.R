@@ -3,7 +3,7 @@ draw_header <- function(data, panel_scales, coord) {
   data_header <- data %>%
     select(-c(text, ymin, ymax)) %>%
     mutate(y = max(data$ymax) + 1) %>%
-    mutate(group = as.numeric(factor(column))) %>%
+    mutate(group = as.numeric(factor(column_header))) %>%
     unique
 
   coords <- unique(coord$transform(data_header, panel_scales))
@@ -15,14 +15,14 @@ draw_header <- function(data, panel_scales, coord) {
     ))
 
   gridtext::richtext_grob(
-    text = coords$column, ## search for original group levels in data
+    text = coords$column_header, ## search for original group levels in data
     x = coords$x,
     y = max(coords$y),
     hjust = coords$hjust)
 }
 
 GeomHeader <- ggproto("GeomTable", Geom,
-                     required_aes = c("column", "text"),
+                     required_aes = c("column_header", "text"),
                      #default_aes = aes(xmin = -Inf, xmax = Inf),
                      draw_panel = draw_header)
 

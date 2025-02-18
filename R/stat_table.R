@@ -1,7 +1,7 @@
 
 calc_y_coords <- function(data){
   data <- data %>%
-  group_by(column) %>%
+  group_by(group) %>%
     mutate(ymin = row_number() - 1, ymax = row_number() ) %>%
     ungroup() %>%
     mutate(y = (ymin + ymax)/2)
@@ -10,9 +10,9 @@ calc_y_coords <- function(data){
 
 calc_table_coords <- function(data, scales) {
   position_width <- data %>%
-    select(column, col_width) %>%
+    select(group, col_width) %>%
     unique() %>%
-    arrange(as.numeric(column)) %>%
+    arrange(as.numeric(group)) %>%
     mutate(xmin = lag(cumsum(col_width), default = 0),
            xmax = cumsum(col_width))
 
@@ -25,7 +25,7 @@ calc_table_coords <- function(data, scales) {
 
 StatTable <- ggproto("StatTable", Stat,
                          compute_panel = calc_table_coords,
-                         required_aes = c("text", "column", "col_width") ## x and y are optional, if provided the respective values are not computed
+                         required_aes = c("text", "group", "col_width") ## x and y are optional, if provided the respective values are not computed
 )
 
 StatTableDebugg <- ggdebug::create_stat_with_caching(

@@ -29,7 +29,7 @@ draw_table <- function(data, panel_scales, coord) {
 }
 
 GeomTable <- ggproto("GeomTable", Geom,
-                      required_aes = c("column", "text"),
+                      required_aes = c("group", "text"),
                       #default_aes = aes(xmin = -Inf, xmax = Inf),
                       draw_panel = draw_table)
 

@@ -133,15 +133,15 @@ ggplot(
   dat = long_pos,
   aes(
     text = value_label,
-    column = id_col,
+    group = id_col,
     col_width = width,
     hjust = adjustment,
     fill = background_colour,
     colour = background_colour
   )
 ) +
-  geom_table(stat = StatTable) +
-  geom_header(stat = StatTableDebugg) +
+  geom_table( stat = StatTable) +
+  geom_header(aes(column_header = id_col),stat = StatTableDebugg) +
   ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
   ggpattern::geom_rect_pattern(
