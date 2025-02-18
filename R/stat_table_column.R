@@ -1,16 +1,16 @@
-transform_table_column_values <- function(x, xmin_col, xmax_col, xmin_old = min(x), xmax_old = max(x)) {
-  (x - xmin_old) / (xmax_old - xmin_old) * (xmax_col - xmin_col) + xmin_col
-}
-
-
-
+scales::rescale(0, to = c(0.33, 0.66), from = c(-30, 40))
 
 # Define the custom ggplot2 stat
 StatTableColumn <- ggproto("StatTableColumn", Stat,
                      compute_panel =  function(data, scales) { ## remove scales?
+
+                       old_min <- min(data$x, na.rm = TRUE)
+                       old_max <- max(data$x, na.rm = TRUE)
+
+
                        data <- data %>%
-                         mutate(x = transform_table_column_values(x, xmin_col, xmax_col)) %>%
-                         mutate(xmin = transform_table_column_values(0, xmin_col, xmax_col, old_min, old_max),
+                         mutate(x = scales::rescale(x, to =  c(unique(xmin_col), unique(xmax_col)), from = c(old_min, old_max))) %>%
+                         mutate(xmin = scales::rescale(0, to = c(unique(xmin_col), unique(xmax_col)), from = c(old_min, old_max)), ## Not perfekt: min max values of the original scale )
                                 xmax = x)
                        data <- calc_y_coords(data)
 

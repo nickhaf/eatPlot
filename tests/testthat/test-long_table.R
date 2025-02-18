@@ -169,31 +169,19 @@ ggplot(
     colour = background_colour
   )
 ) +
-  geom_table(stat = StatTableDebugg) +
+  geom_table(stat = StatTable) +
   ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
   ggpattern::geom_rect_pattern(
-    dat = long_pos %>% filter(id_col == "mean_est_2015"),
+    dat = long_pos %>% filter(id_col == "mean_est_2022 - 2015"),
     mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax),
     stat = StatTableColumnDebugg,
     colour = "black")
 
-## irgendwie müssen die werte aus den Definitionen darüber ja übergeben werden. Vielleicht kann man dann einfach die Grupe matchen,
-## um xmax und xmin zu bekommen?
-## Vielleicht sollten sie auch xmin_col und xmax_col heißen, um Verwirrung mit anderen geoms zu vermeiden
-
-## currently it only fills the column. I need it to go from rescaled 0 to the rescaled value
-
-## From the xmin to the xmax of the column, build the scale.
-## use some stat to transform the values to fit within this range.
-
-
-
-# geom_header(dat = header_dat)
 
 cdata <- ggdebug::get_data_cache()
 head(cdata$compute_layer$args$data)
-cdata$finish_layer[[1]]$return
+head(cdata$finish_layer$return)
 # geom_header <- function(){
 #   list(
 #   ggplot2::geom_rect(
@@ -211,17 +199,3 @@ cdata$finish_layer[[1]]$return
 #   )
 # }
 
-
-## Kann ich den dan weiter bearbeiten, um die Headers etc. zu adden?
-#- evtl. ließe sich ein dritter Plot darüber legen.
-
-## How to add the bars? That's what might get annoying
-## - The values are just another column, just like the values.
-## - x_axis is numeric as well. But: It has to be build, depending on the ranges of the barplots.
-## So: Another column with bar = true/false is  needed.
-## I filter for it in the function first. Then I have to bring the column Abstände und the Bar Abstände ontot the same scale.
-
-
-## 1) calculate the axis lims for the plot. If no barplot is there, not necessary
-## 2) calcualte the column coordinates, depending on the barplot coordinates. (just add them to the data frame - can be used for setting the y-axis)
-## 3) Instead of nudging, I can just write the correct x-value into the data.frame directly
