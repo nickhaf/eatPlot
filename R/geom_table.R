@@ -1,7 +1,6 @@
 ## Eventuell nur nötig wegen stats-Umformung!
 
 draw_table <- function(data, panel_scales, coord) {
-
   coords <- coord$transform(data, panel_scales)
 
   coords <- coords %>%
@@ -29,7 +28,7 @@ draw_table <- function(data, panel_scales, coord) {
 }
 
 GeomTable <- ggproto("GeomTable", Geom,
-                      required_aes = c("group", "text"),
+                      required_aes = c("group", "text", "column", "row"),
                       #default_aes = aes(xmin = -Inf, xmax = Inf),
                       draw_panel = draw_table)
 

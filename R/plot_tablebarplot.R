@@ -235,6 +235,7 @@ plot_tablebarplot <- function(dat,
   x_right_lim <- max(column_x_coords$right) +
     plot_settings$space_right
 
+  browser()
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -378,11 +379,11 @@ plot_tablebarplot <- function(dat,
   if (any(!is.null(columns_table))) {
     res_plot <- res_plot +
       build_columns_3(dat,
-        cols = rev(new_colnames),
-        column_x_coords = column_x_coords,
-        headers = rev(headers),
-        plot_borders = plot_borders,
-        plot_settings = plot_settings
+                      cols = rev(new_colnames),
+                      column_x_coords = column_x_coords,
+                      headers = rev(headers),
+                      plot_borders = plot_borders,
+                      plot_settings = plot_settings
       ) +
       plot_column_spanners(
         y_axis = dat$y_axis,
@@ -468,11 +469,11 @@ build_columns_3 <- function(df,
           nudge_y = rev(plot_settings$columns_nudge_y)[i]
         ),
         add_superscript(df,
-          column_name,
-          x_coord = x_axis_i,
-          i,
-          x_range = x_range,
-          plot_settings
+                        column_name,
+                        x_coord = x_axis_i,
+                        i,
+                        x_range = x_range,
+                        plot_settings
         )
       )
     })
@@ -544,13 +545,13 @@ build_background_stripes <- function(dat,
       bar_border <- column_x_coords[column_x_coords$column == "bar", ]
 
       left_table_border <- ifelse(left_table_border < column_x_coords[column_x_coords$column == "bar", ]$left,
-        -Inf,
-        left_table_border <- bar_border$right
+                                  -Inf,
+                                  left_table_border <- bar_border$right
       )
 
       right_table_border <- ifelse(right_table_border < column_x_coords[column_x_coords$column == "bar", ]$right,
-        right_table_border,
-        Inf
+                                   right_table_border,
+                                   Inf
       )
     }
 
@@ -735,26 +736,15 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
 
 # capped axis line
 plot_capped_x_axis <- function(scale_breaks) {
-  if (!is.null(scale_breaks)) {
     ggplot2::annotate("segment",
       x = min(scale_breaks),
       xend = max(scale_breaks),
-      y = 0.4,
-      yend = 0.4,
-      linewidth = 0.1,
+      y = 0,
+      yend = 0,
+      linewidth = 0.3,
       color = "black"
     )
-  } else {
-    ## Plot something invisible, so the y axis is the same over all plots:
-    ggplot2::annotate("segment",
-      x = 0,
-      xend = 0,
-      y = 0.4,
-      yend = 0.4,
-      linewidth = 0.00000001
-    )
   }
-}
 
 check_linebreak <- function(vec) {
   logical_break <- any(sapply(vec, function(vec) {

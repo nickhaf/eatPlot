@@ -1,157 +1,116 @@
-# Try long format ---------------------------------------------------------
-
 library(tidyverse)
 library(ggtext)
+library(ggdebug)
 
+prep_table <- function(eatRep_dat, row_ids = "TR_BUNDESLAND", parameters = c("")) {
+  long <- eatRep_dat[[1]]$plain %>%
+    mutate(sig = ifelse(p < 0.05, "TRUE", "FALSE")) %>%
+    pivot_longer(cols = c("est", "se", "es")) %>%
+    mutate(value_label = ifelse(.$sig, paste0("**", .$value, "**"), .$value)) %>%
+    mutate(row_id = paste(.$TR_BUNDESLAND, .$Kgender, sep = "_")) %>%
+    ## How to make more functional?
+    filter(
+      parameter %in% c("mean", "sd"),
+      comparison %in% c("none", "trend"),
+      Kgender %in% c("weiblich", "maennlich"),
+      name %in% c("est", "se", "es")
+    )
 
-## Argument: Bar-cols, where you have to provide the column ids for all bar cols.
+  column_ids <- long %>%
+    select(all_of(row_ids), row_id) %>%
+    unique() %>%
+    pivot_longer(cols = all_of(row_ids), values_to = "value_label") %>%
+    bind_rows(long) %>%
+    mutate(column_id = paste(.$parameter, .$name, .$year, sep = "_"))
 
-long <- trend_gender[[1]]$plain %>%
-  mutate(sig = ifelse(p < 0.05, "TRUE", "FALSE")) %>%
-  pivot_longer(cols = c("est", "se", "es")) %>%
-  filter(parameter %in% c("mean", "sd"), comparison %in% c("none", "trend"), Kgender %in% c("weiblich", "maennlich"), name %in% c("est", "se")) %>%
-  mutate(value_label = ifelse(.$sig, paste0("**", .$value, "**"), .$value)) %>%
-  mutate(group_id = paste(.$TR_BUNDESLAND, .$Kgender, sep = "_")) %>%
-  mutate(y_axis = as.numeric(as.factor(group_id)))
+  return(column_ids)
+}
 
-
-id_cols <- c("TR_BUNDESLAND", "Kgender")
-
-
-## Die ID-cols müssen als eigene Columns ganz vorne ran.
-
-id_cols <- unique(long[, c(id_cols, "y_axis")]) %>%
-  pivot_longer(cols = all_of(id_cols), values_to = "value_label") %>%
+dat_prepped <- prep_table(trend_gender, row_ids = c("TR_BUNDESLAND", "Kgender")) %>%
   group_by(value_label) %>%
   mutate(value_label = if_else(name == "TR_BUNDESLAND" & duplicated(value_label), "", value_label)) %>%
   ungroup()
 
-long_2 <- long %>%
-  dplyr::bind_rows(id_cols) %>%
-  mutate(id_col = paste(.$parameter, .$name, .$year, sep = "_")) %>%
-  mutate(x_axis = as.numeric(as.factor(id_col))) %>%
-  arrange(x_axis) %>%
-  mutate(bar = ifelse(.$id_col == "mean_est_2015 - 2009", 1, 0)) %>%
-  mutate(value_label = ifelse(.$bar == 1, "", .$value_label)) %>%
-  mutate(x_axis = case_when(
-    name == "TR_BUNDESLAND" ~ 1,
-    name == "Kgender" ~ 2,
-    year == 2009 & parameter == "mean" & comparison == "none" & name == "est" ~ 3,
-    year == 2009 & parameter == "sd" & comparison == "none" & name == "est" ~ 4,
-    year == 2015 & parameter == "mean" & comparison == "none" & name == "est" ~ 5,
-    year == 2015 & parameter == "sd" & comparison == "none" & name == "est" ~ 6,
-    year == 2022 & parameter == "mean" & comparison == "none" & name == "est" ~ 7,
-    year == 2022 & parameter == "sd" & comparison == "none" & name == "est" ~ 8,
-    year == "2022 - 2015" & parameter == "mean" & comparison == "trend" & name == "est" ~ 9
-  )) %>%
-  filter(!is.na(x_axis)) %>%
-  mutate(bar = ifelse(comparison == "trend", 1, 0)) %>%
-  mutate(width = ifelse(bar != 1 | is.na(bar), 6.25, 50))
-
-colnumber <- length(unique(long_2$x_axis)) - 1
-
-accuracy <- 10
-long_bar <- long_2 %>%
-  filter(bar == 1, name == "est") %>%
-  group_by(bar)
-
-
-
-x_lims <- long_bar %>%
-  summarize(
-    min = plyr::round_any(min(value), accuracy = accuracy, floor),
-    max = plyr::round_any(max(value), accuracy = accuracy, ceiling)
-  )
-
-bar_1_range <- diff(range(x_lims$min, x_lims$max))
-
-
-## Same for other bars
-total_range <- bar_1_range / 0.5 ## Das muss die range vom ersten bar-Plot sein. der wird zur Justierung genommen.
-
-## WArning: Range set for multiple bars. Only using the first one to keep them on the same scale
-
-## now, give each column the same range:
-
-col_range <- (total_range - bar_1_range) / colnumber
-
-## Set x-axis according to this!! Afterwards I can adjust depending on the column width
-## Just start at 0. Then cummulate!
-
-position_width <- long_2 %>%
-  group_by(x_axis) %>%
-  summarise(total_width = mean(width)) %>%
-  mutate(
-    col_min = lag(cumsum(total_width), default = 0),
-    col_max = cumsum(total_width)
-  ) %>%
-  mutate(col_mean = (col_min + col_max) / 2)
-
-## Es hängt davon ab,  wo der 0-Punkt gesetzt werden soll, ob alle Werte negativ oder manch postiv und negativ sind.
-## Und auch davon, wie die Aufteilung auf der Achse ist. Ob sie von -30 - 40 oder von -50 - 0 etc. geht.
-## Okay, auf dieser Achse ist der Startpunkt immer NULL.
-
-long_pos <- long_2 %>%
-  left_join(position_width, by = "x_axis") %>%
-  mutate(bar_value = ifelse(bar == 1, col_max + .$value, 0)) %>%
-  mutate(bar_zero = ifelse(bar == 1, col_max, 0))
-
-
-## For the barplot: Just add everything before to the bars. Might need to use geom_rect?
-## Also: Calc column min and max, so I can set cell colours.
-## Also: leave space in the plot tablebar function, and add the plot manually. This enables to add other plottypes as well, eg. distribution etc.
-y_max <- max(long_pos$y_axis)
 
 
 # Header grob -------------------------------------------------------------
 
-## y-Achse wieder falsch, sollte nicht übeinander liegen!
-## y-Achse: Zählen der Elemente in Gruppe. Aber wie Zuordnung zur selben Zeile? ERst einmal Alphabetisch vorgehen!
-## Eigenes erstellen der y-Achse soll ja auch noch möglich gemacht werden (am besten mit stat = Identity?)
-## Besser wäre aber vielleicht noch ein factor?
-long_pos <- long_pos %>%
-  mutate(id_col = factor(id_col, levels = column_names <- c("NA_TR_BUNDESLAND_NA",
-                                                            "NA_Kgender_NA",
-                                                            "mean_est_2009",
-                                                            "mean_est_2015",
-                                                            "mean_est_2022",
-                                                            "mean_est_2022 - 2015",
-                                                            "sd_est_2009",
-                                                            "sd_est_2015",
-                                                            "sd_est_2022"))) %>%
-  mutate(width = ifelse(id_col == "NA_TR_BUNDESLAND_NA", 0.4, 0.6/8)) %>%
+dat_prepped <- dat_prepped %>%
+  mutate(column_id = factor(column_id,
+                            levels = c(
+    "NA_TR_BUNDESLAND_NA",
+    "NA_Kgender_NA",
+    "mean_est_2009",
+    "sd_est_2009",
+    "mean_est_2015",
+    "sd_est_2015",
+    "mean_est_2022",
+    "sd_est_2022",
+    "mean_est_2015 - 2009",
+    "mean_se_2015 - 2009",
+    "mean_es_2015 - 2009",
+    "mean_est_2015 - 2009_bar"
+  ),
+  ordered = TRUE)) %>%
+  filter(!is.na(column_id)) %>%
+  mutate(width = ifelse(column_id == "NA_TR_BUNDESLAND_NA", 1/12, 1/12)) %>%
   mutate(adjustment = 0) %>%
-  mutate(background_colour = ifelse(id_col == "NA_TR_BUNDESLAND_NA", "red", "green")) %>% mutate(xmin = 0.2, xmax = 0.3)
+  mutate(background_colour = ifelse(column_id == "NA_TR_BUNDESLAND_NA", "red", "green")) %>%
+  mutate(xmin = 0.9166667, xmax = 1)
 
-header_dat <- unique(long_pos[, c("id_col", "col_mean", "width", "adjustment", "background_colour")]) %>%
-  mutate(y_axis = y_max + 1) %>%
-  mutate(value_label = paste0("**", id_col, "**"))
+column_id_levels <- levels(dat_prepped$column_id)
+
+dat_bar <- dat_prepped %>% filter(column_id == "mean_est_2015 - 2009") %>%
+  mutate(column_id = paste0(column_id, "_bar")) %>%
+  mutate(column_id = factor(column_id, levels = column_id_levels)) %>%
+  mutate(value_label = "") %>%
+  rbind(dat_prepped)
+
+
+header_dat <- unique(dat_prepped[, c("column_id", "width", "adjustment", "background_colour", "row_id")]) %>%
+  mutate(value_label = paste0("**", column_id, "**"))
 
 ## I need a factor of the row-goups.
 
-ggplot(
-  dat = long_pos,
+dat_bar$column_id
+
+p <- ggplot(
+  dat = dat_bar,
   aes(
     text = value_label,
-    group = id_col,
+    column = column_id,
+    row = row_id,
     col_width = width,
     hjust = adjustment,
     fill = background_colour,
     colour = background_colour
   )
 ) +
-  geom_table( stat = StatTable) +
-  geom_header(aes(column_header = id_col),stat = StatTableDebugg) +
-  ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
+  geom_table(stat = StatTableDebugg) +
+  geom_header(aes(column_header = column_id), stat = StatTableDebugg) +
+  # ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
-  ggpattern::geom_rect_pattern(
-    dat = long_pos %>% filter(id_col == "mean_est_2022 - 2015"),
-    mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax),
+   ggpattern::geom_rect_pattern(
+    dat = dat_bar,
+    mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax), ## use column instead. Can the measures be extracted from before?
     stat = StatTableColumnDebugg,
-    colour = "black")
+    colour = "black"
+  ) +
+  plot_capped_x_axis(c(0.7, 0.9)) ## AUch hier müssen die Werte wieder umgerechnet weren
 
 
+## Optimally, I'd have a own scale_x_continuous only for this plot. Alternatively, I could of course just draw the
+## y axis again
 
+p
+
+## next: Build scale for col width.
+
+## Zurodnung zur Spalte einfach über Gruppe. Aber gruppe ist vdann weg oder? Wie kann ich die Zuordnung über
 cdata <- ggdebug::get_data_cache()
 head(cdata$compute_layer$args$data)
-head(cdata$finish_layer$return)
+View(cdata$finish_layer$return)
+
+## Okay, obviously ther is only one group in the data now. I somehow need to pass the coordinates of the previous
+## column. Easiest way would be to just use the same data, with all values but the ones that should be plotted set to zero.
+## Then the statTable would be enough.

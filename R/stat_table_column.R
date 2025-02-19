@@ -2,10 +2,11 @@ scales::rescale(0, to = c(0.33, 0.66), from = c(-30, 40))
 
 # Define the custom ggplot2 stat
 StatTableColumn <- ggproto("StatTableColumn", Stat,
-                     compute_panel =  function(data, scales) { ## remove scales?
+                           compute_panel =  function(data, scales) { ## remove scales?
 
-                       old_min <- min(data$x, na.rm = TRUE)
-                       old_max <- max(data$x, na.rm = TRUE)
+                             ## Here I need the scale values of the plot. How to set the scale anyways?
+                             old_min <- min(data$x, na.rm = TRUE)
+                             old_max <- max(data$x, na.rm = TRUE)
 
 
                        data <- data %>%
