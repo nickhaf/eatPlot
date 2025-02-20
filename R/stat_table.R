@@ -25,7 +25,12 @@ calc_table_coords <- function(data, scales) {
 }
 
 StatTable <- ggproto("StatTable", Stat,
-  compute_panel = calc_table_coords,
+  setup_data = function(data, params) {
+    calc_table_coords(data)
+  },
+  compute_panel = function(data, scales) {
+    data
+  },
   required_aes = c("text", "column", "row", "col_width") ## x and y are optional, if provided the respective values are not computed
 )
 

@@ -143,19 +143,19 @@ p <- ggplot(
     colour = background_colour
   )
 ) +
-  geom_table(stat = StatTableDebugg) +
+  geom_table(stat = StatTableDebugg, fill = "white") +
   geom_header(aes(column_header = column_names), stat = StatTable, fill = "white") +
   scale_fill_manual(values = c("#20D479", "#8DEBBC")) +
   scale_colour_manual(values = c("#20D479", "#8DEBBC")) +
-   ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
+   ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(2, 2))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
-   ggpattern::geom_rect_pattern(
-    dat = dat_bar,
+  ggpattern::geom_rect_pattern(
     mapping = aes(x = value, scale_min = scale_min, scale_max = scale_max),
     stat = StatTableColumnDebugg,
-    colour = "black"
+    colour = "black",
+    na.rm = FALSE
   ) +
-  ## Spanner
+    ## Spanner
    add_column_spanner(label = "**2009<sup>a</sup>**", xmin_col = 0.3, xmax_col = 0.5)
 
 

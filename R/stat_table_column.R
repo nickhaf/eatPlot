@@ -1,7 +1,12 @@
 # Define the custom ggplot2 stat
 StatTableColumn <- ggproto("StatTableColumn", Stat,
+                           setup_data = function(data, params) {
+                             calc_table_coords(data)
+                           },
   compute_panel = function(data, scales) {
-    data <- calc_table_coords(data) %>%
+
+    ## I think the nas are automatically removed?
+    data <- data %>%
       group_by(column) %>%
       mutate(x = scales::rescale(x, to = c(unique(xmin_col), unique(xmax_col)), from = c(unique(scale_min), unique(scale_max)))) %>%
       mutate(
@@ -25,7 +30,7 @@ StatTableColumn <- ggproto("StatTableColumn", Stat,
 # Custom function to use the StatTableColumn stat
 stat_table_column <- function(mapping = NULL, data = NULL, geom = "bar",
                               position = "identity", show.legend = NA,
-                              inherit.aes = TRUE, ...) {
+                              inherit.aes = TRUE, na.rm = FALSE, ...) {
   ggplot2::layer(
     stat = StatTableColumn,
     data = data,
@@ -34,8 +39,7 @@ stat_table_column <- function(mapping = NULL, data = NULL, geom = "bar",
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
-    params = list(...)
-  )
+    params = list(na.rm = na.rm, ...)  )
 }
 
 StatTableColumnDebugg <- ggdebug::create_stat_with_caching(
