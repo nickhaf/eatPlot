@@ -2,6 +2,31 @@ library(tidyverse)
 library(ggtext)
 library(ggdebug)
 
+
+add_column_spanner <- function(label, xmin_col, xmax_col, ...){
+  list(ggplot2::annotate("segment",
+                         x = xmin_col,
+                         xend = xmax_col,
+                         y = 36,
+                         yend = 36,
+                         linewidth = 0.15
+  ),
+  ggtext::geom_richtext(
+    data = data.frame(),
+    ggplot2::aes(
+      x = (xmin_col + xmax_col)/2,
+      y = 36.5
+    ),
+    inherit.aes = FALSE,
+    label.padding = grid::unit(rep(0, 4), "pt"),
+    fill = NA,
+    label.color = NA,
+    label = label)
+  )
+
+}
+
+
 prep_table <- function(eatRep_dat, row_ids = "TR_BUNDESLAND", parameters = c("")) {
   long <- eatRep_dat[[1]]$plain %>%
     mutate(sig = ifelse(p < 0.05, "TRUE", "FALSE")) %>%
@@ -95,16 +120,16 @@ dat_bar <- dat_prepped %>%
   mutate(xmin = ifelse(column_id == "mean_est_2015 - 2009_bar", 0.9, 0.95),
          xmax = ifelse(column_id == "mean_est_2015 - 2009_bar", 0.95, 1)) %>%
   mutate(scale_min = ifelse(column_id == "mean_est_2015 - 2009_bar", -40, -30),
-         scale_max = ifelse(column_id == "mean_est_2022 - 2015_bar", 20, 20))
+         scale_max = ifelse(column_id == "mean_est_2022 - 2015_bar", 20, 20)) %>%
+  mutate(value = ifelse(column_id %in% c("mean_est_2015 - 2009_bar", "mean_est_2022 - 2015_bar"), value, NA))
 
 
 
 header_dat <- unique(dat_prepped[, c("column_id", "width", "adjustment", "background_colour", "row_id")]) %>%
   mutate(value_label = paste0("**", column_id, "**"))
 
-## I need a factor of the row-goups.
 
-dat_bar$column_id
+## How to add another row on top, if the geom_header is used?
 
 p <- ggplot(
   dat = dat_bar,
@@ -118,44 +143,21 @@ p <- ggplot(
     colour = background_colour
   )
 ) +
-  geom_table(stat = StatTable) +
+  geom_table(stat = StatTableDebugg) +
   geom_header(aes(column_header = column_names), stat = StatTable, fill = "white") +
   scale_fill_manual(values = c("#20D479", "#8DEBBC")) +
   scale_colour_manual(values = c("#20D479", "#8DEBBC")) +
-  # ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
+   ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
    ggpattern::geom_rect_pattern(
-    dat = dat_bar %>% mutate(value = ifelse(column_id %in% c("mean_est_2015 - 2009_bar", "mean_est_2022 - 2015_bar"), value, NA)),
-    mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax, scale_min = scale_min, scale_max = scale_max),
+    dat = dat_bar,
+    mapping = aes(x = value, scale_min = scale_min, scale_max = scale_max),
     stat = StatTableColumnDebugg,
     colour = "black"
   ) +
   ## Spanner
    add_column_spanner(label = "**2009<sup>a</sup>**", xmin_col = 0.3, xmax_col = 0.5)
 
-
-add_column_spanner <- function(label, xmin_col, xmax_col, ...){
- list(ggplot2::annotate("segment",
-                        x = xmin_col,
-                        xend = xmax_col,
-                        y = 36,
-                        yend = 36,
-                        linewidth = 0.15
- ),
- ggtext::geom_richtext(
-   data = data.frame(),
-   ggplot2::aes(
-     x = (xmin_col + xmax_col)/2,
-     y = 36.5
-   ),
-   inherit.aes = FALSE,
-   label.padding = grid::unit(rep(0, 4), "pt"),
-   fill = NA,
-   label.color = NA,
-   label = label)
- )
-
-}
 
 # ggplot2::annotate(
 #   "segment",
@@ -185,7 +187,7 @@ p
 ## Zurodnung zur Spalte einfach über Gruppe. Aber gruppe ist vdann weg oder? Wie kann ich die Zuordnung über
 cdata <- ggdebug::get_data_cache()
 head(cdata$compute_layer$args$data)
-View(cdata$finish_layer$return)
+head(cdata$finish_layer$return)
 
 ## Okay, obviously ther is only one group in the data now. I somehow need to pass the coordinates of the previous
 ## column. Easiest way would be to just use the same data, with all values but the ones that should be plotted set to zero.

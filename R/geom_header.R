@@ -1,18 +1,18 @@
 draw_header <- function(data, panel_scales, coord) {
 
   data_header <- data %>%
-    select(-c(text, ymin, ymax, row)) %>%
-    mutate(y = max(data$ymax) + 1) %>%
+    select(-c(text, ymin_row, ymax_row, row)) %>%
+    mutate(y = max(data$ymax_row) + 1) %>%
     mutate(group = as.numeric(factor(column_header))) %>%
     unique() %>%
-    mutate(ymin = y - 1, ymax = y + 1)
+    mutate(ymin_row = y - 1, ymax_row = y + 1)
 
   coords <- unique(coord$transform(data_header, panel_scales))
 
   coords <- coords %>%
-    mutate(x = case_when(hjust == 0 ~ xmin,
-                         hjust == 1 ~ xmax,
-                         TRUE ~ (coords$xmin + coords$xmax) / 2
+    mutate(x = case_when(hjust == 0 ~ xmin_col,
+                         hjust == 1 ~ xmax_col,
+                         TRUE ~ (coords$xmin_col + coords$xmax_col) / 2
     ))
 
   text <- gridtext::richtext_grob(
@@ -23,10 +23,10 @@ draw_header <- function(data, panel_scales, coord) {
   )
 
   background <- grid::rectGrob(
-    x = (coords$xmin + coords$xmax) / 2,
-    y = (coords$ymin + coords$ymax) / 2,
-    width = coords$xmax - coords$xmin,
-    height = coords$ymax - coords$ymin,
+    x = (coords$xmin_col + coords$xmax_col) / 2,
+    y = (coords$ymin_row + coords$ymax_row) / 2,
+    width = coords$xmax_col - coords$xmin_col,
+    height = coords$ymax_row - coords$ymin_row,
     default.units = "native",
     gp = grid::gpar(fill = unique(data$fill),  # Use the fill parameter
                     col = coords$colour)

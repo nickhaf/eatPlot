@@ -1,10 +1,9 @@
 draw_table <- function(data, panel_scales, coord) {
   coords <- coord$transform(data, panel_scales)
-
   coords <- coords %>%
-    mutate(x = case_when(hjust == 0 ~ xmin,
-                         hjust == 1 ~ xmax,
-                         TRUE ~ (coords$xmin + coords$xmax)/2
+    mutate(x = case_when(hjust == 0 ~ xmin_col,
+                         hjust == 1 ~ xmax_col,
+                         TRUE ~ (coords$xmin_col + coords$xmax_col)/2
     ))
 
   text <- gridtext::richtext_grob(
@@ -14,10 +13,10 @@ draw_table <- function(data, panel_scales, coord) {
     hjust = coords$hjust)
 
   background <- grid::rectGrob(
-    x = (coords$xmin + coords$xmax)/2,
-    y = (coords$ymin + coords$ymax)/2,
-    width = coords$xmax - coords$xmin,
-    height = coords$ymax - coords$ymin,
+    x = (coords$xmin_col + coords$xmax_col)/2,
+    y = (coords$ymin_row + coords$ymax_row)/2,
+    width = coords$xmax_col - coords$xmin_col,
+    height = coords$ymax_row - coords$ymin_row,
     default.units = "native",
     gp = grid::gpar(fill = coords$fill,
                     col = coords$colour)
