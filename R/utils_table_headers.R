@@ -180,11 +180,11 @@ plot_column_spanners <- function(y_axis, spanners, column_x_coords, x_axis_range
     annotations <- c(
       ## Column Spanner line:
       ggplot2::annotate("segment",
-        x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
-        xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
-        y = spanner_line_y,
-        yend = spanner_line_y,
-        linewidth = 0.15
+                        x = column_x_coords_rev[min_col, "left"] + 0.01 * x_axis_range,
+                        xend = column_x_coords_rev[max_col, "right"] - 0.01 * x_axis_range,
+                        y = spanner_line_y,
+                        yend = spanner_line_y,
+                        linewidth = 0.15
       ),
       ggtext::geom_richtext(
         data = data.frame(),

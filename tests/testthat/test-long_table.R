@@ -53,23 +53,25 @@ dat_prepped <- dat_prepped %>%
     "mean_est_2022",
     "sd_est_2022",
     "mean_est_2015 - 2009",
+    "mean_est_2022 - 2015",
     "mean_se_2015 - 2009",
     "mean_es_2015 - 2009",
-    "mean_est_2015 - 2009_bar"
+    "mean_est_2015 - 2009_bar",
+    "mean_est_2022 - 2015_bar"
   ),
   ordered = TRUE)) %>%
   filter(!is.na(column_id)) %>%
-  mutate(width = ifelse(column_id == "NA_TR_BUNDESLAND_NA", 1/12, 1/12)) %>%
-  mutate(adjustment = 0) %>%
+  mutate(width = ifelse(column_id == "NA_TR_BUNDESLAND_NA", 1/13, 1/13)) %>%
+  mutate(adjustment = 0.5) %>%
   group_by(TR_BUNDESLAND) %>%
   mutate(group_id = cur_group_id()) %>%  # Assigns a unique ID per row_id
   ungroup() %>%
-  mutate(background_colour = ifelse(group_id %% 2 == 1, "A", "B"))  %>%
-  mutate(xmin = 0.9166667, xmax = 1)
+  mutate(background_colour = ifelse(group_id %% 2 == 1, "A", "B"))
 
  column_id_levels <- levels(dat_prepped$column_id)
 
-dat_bar <- dat_prepped %>% filter(column_id == "mean_est_2015 - 2009") %>%
+dat_bar <- dat_prepped %>%
+  filter(column_id %in% c("mean_est_2015 - 2009", "mean_est_2022 - 2015")) %>%
   mutate(column_id = paste0(column_id, "_bar")) %>%
   mutate(column_id = factor(column_id, levels = column_id_levels)) %>%
   mutate(value_label = "")  %>%
@@ -87,8 +89,11 @@ dat_bar <- dat_prepped %>% filter(column_id == "mean_est_2015 - 2009") %>%
       column_id == "mean_est_2015 - 2009" ~ "*M<sub>2015</sub> - M<sub>2009</sub>*",
       column_id == "mean_se_2015 - 2009" ~ "*SE*",
       column_id == "mean_es_2015 - 2009" ~ "*d*",
-      column_id == "mean_est_2015 - 2009_bar" ~ ""),
-  )
+      column_id == "mean_est_2015 - 2009_bar" ~ "",
+      column_id == "mean_est_2022 - 2015_bar" ~ ""),
+  ) %>%
+  mutate(xmin = ifelse(column_id == "mean_est_2015 - 2009_bar", 0.9, 0.95),
+         xmax = ifelse(column_id == "mean_est_2022 - 2015_bar", 0.95, 1))
 
 
 header_dat <- unique(dat_prepped[, c("column_id", "width", "adjustment", "background_colour", "row_id")]) %>%
@@ -111,31 +116,60 @@ p <- ggplot(
   )
 ) +
   geom_table(stat = StatTable) +
-  geom_header(aes(column_header = column_names), stat = StatTable, fill = "red") +
+  geom_header(aes(column_header = column_names), stat = StatTable, fill = "white") +
   scale_fill_manual(values = c("#20D479", "#8DEBBC")) +
   scale_colour_manual(values = c("#20D479", "#8DEBBC")) +
   # ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(0, 2))) +
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
    ggpattern::geom_rect_pattern(
-    dat = dat_bar %>% mutate(value = ifelse(column_id == "mean_est_2015 - 2009", value, NA)),
+    dat = dat_bar %>% mutate(value = ifelse(column_id %in% c("mean_est_2015 - 2009_bar", "mean_est_2022 - 2015_bar"), value, NA)),
     mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax), ## use column instead. Can the measures be extracted from before?
     stat = StatTableColumn,
     colour = "black"
   ) +
-  # ggplot2::annotate(
-  #   "segment",
-  #   x = x_intercepts,
-  #   xend = x_intercepts,
-  #   y = y_1 + 0.2,
-  #   yend = y_2 - 0.2,
-  #   colour = plot_settings$bar_background_lines_colour,
-  #   linetype = plot_settings$bar_background_lines_linetype,
-  #   linewidth = 0.1
-  # ) +
+  ## Spanner
+   add_column_spanner(label = "**2009<sup>a</sup>**", xmin_col = 0.3, xmax_col = 0.5)
+
+
+add_column_spanner <- function(label, xmin_col, xmax_col, ...){
+ list(ggplot2::annotate("segment",
+                        x = xmin_col,
+                        xend = xmax_col,
+                        y = 36,
+                        yend = 36,
+                        linewidth = 0.15
+ ),
+ ggtext::geom_richtext(
+   data = data.frame(),
+   ggplot2::aes(
+     x = (xmin_col + xmax_col)/2,
+     y = 36.5
+   ),
+   inherit.aes = FALSE,
+   label.padding = grid::unit(rep(0, 4), "pt"),
+   fill = NA,
+   label.color = NA,
+   label = label)
+ )
+
+}
+
+# ggplot2::annotate(
+#   "segment",
+#   x = x_intercepts,
+#   xend = x_intercepts,
+#   y = y_1 + 0.2,
+#   yend = y_2 - 0.2,
+#   colour = plot_settings$bar_background_lines_colour,
+#   linetype = plot_settings$bar_background_lines_linetype,
+#   linewidth = 0.1
+# ) +
 #   ggplot2::geom_segment(stat = StatTableColumnDebugg,
 #                         mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax),
 #                         colour= "black") +
-  plot_capped_x_axis(c(0.91, 1)) ## AUch hier müssen die Werte wieder umgerechnet weren
+plot_capped_x_axis(c(0.91, 1)) ## AUch hier müssen die Werte wieder umgerechnet weren
+
+
 
 
 ## Optimally, I'd have a own scale_x_continuous only for this plot. Alternatively, I could of course just draw the
