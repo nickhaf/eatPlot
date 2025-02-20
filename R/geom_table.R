@@ -1,5 +1,3 @@
-## Eventuell nur nötig wegen stats-Umformung!
-
 draw_table <- function(data, panel_scales, coord) {
   coords <- coord$transform(data, panel_scales)
 
@@ -7,7 +5,7 @@ draw_table <- function(data, panel_scales, coord) {
     mutate(x = case_when(hjust == 0 ~ xmin,
                          hjust == 1 ~ xmax,
                          TRUE ~ (coords$xmin + coords$xmax)/2
-                         ))
+    ))
 
   text <- gridtext::richtext_grob(
     text = coords$text,
@@ -28,13 +26,12 @@ draw_table <- function(data, panel_scales, coord) {
 }
 
 GeomTable <- ggproto("GeomTable", Geom,
-                      required_aes = c("group", "text", "column", "row"),
-                      #default_aes = aes(xmin = -Inf, xmax = Inf),
-                      draw_panel = draw_table)
+                     required_aes = c("group", "text", "column", "row"),
+                     draw_panel = draw_table)
 
 geom_table <- function(mapping = NULL, data = NULL, stat = "table",
-                        position = "identity", na.rm = FALSE,
-                        show.legend = NA, inherit.aes = TRUE, ...) {
+                       position = "identity", na.rm = FALSE,
+                       show.legend = NA, inherit.aes = TRUE, ...) {
   ggplot2::layer(
     geom = GeomTable, mapping = mapping,
     data = data, stat = stat, position = position,

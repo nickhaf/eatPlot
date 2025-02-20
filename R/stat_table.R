@@ -44,6 +44,7 @@ stat_table <- function(mapping = NULL, data = NULL, geom = "table",
     geom = geom,
     position = position,
     show.legend = show.legend,
-    inherit.aes = inherit.aes
+    inherit.aes = inherit.aes,
+    params = list(...)
   )
 }
