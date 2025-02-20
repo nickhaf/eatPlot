@@ -143,12 +143,14 @@ p <- ggplot(
     colour = background_colour
   )
 ) +
-  geom_table(stat = StatTableDebugg, fill = "white") +
+  geom_table(stat = StatTableDebugg) +
   geom_header(aes(column_header = column_names), stat = StatTable, fill = "white") +
-  scale_fill_manual(values = c("#20D479", "#8DEBBC")) +
+  scale_fill_manual(values = c(A = "#20D479", B = "#8DEBBC")) +
   scale_colour_manual(values = c("#20D479", "#8DEBBC")) +
    ggplot2::scale_y_continuous(expand = ggplot2::expansion(add = c(2, 2))) +
-  ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
+  ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0)),
+                              breaks = c(0.9, 0.95),
+                              labels = c(-30, -25)) +
   ggpattern::geom_rect_pattern(
     mapping = aes(x = value, scale_min = scale_min, scale_max = scale_max),
     stat = StatTableColumnDebugg,
@@ -156,7 +158,8 @@ p <- ggplot(
     na.rm = FALSE
   ) +
     ## Spanner
-   add_column_spanner(label = "**2009<sup>a</sup>**", xmin_col = 0.3, xmax_col = 0.5)
+   add_column_spanner(label = "**2009<sup>a</sup>**", xmin_col = 0.3, xmax_col = 0.5) +
+  theme_classic()
 
 
 # ggplot2::annotate(
@@ -174,21 +177,9 @@ p <- ggplot(
 #                         colour= "black") +
 plot_capped_x_axis(c(0.91, 1)) ## AUch hier müssen die Werte wieder umgerechnet weren
 
-
-
-
-## Optimally, I'd have a own scale_x_continuous only for this plot. Alternatively, I could of course just draw the
-## y axis again
-
 p
 
-## next: Build scale for col width.
-
-## Zurodnung zur Spalte einfach über Gruppe. Aber gruppe ist vdann weg oder? Wie kann ich die Zuordnung über
 cdata <- ggdebug::get_data_cache()
 head(cdata$compute_layer$args$data)
 head(cdata$finish_layer$return)
 
-## Okay, obviously ther is only one group in the data now. I somehow need to pass the coordinates of the previous
-## column. Easiest way would be to just use the same data, with all values but the ones that should be plotted set to zero.
-## Then the statTable would be enough.
