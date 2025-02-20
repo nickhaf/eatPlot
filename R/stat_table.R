@@ -1,8 +1,10 @@
 
 calc_y_coords <- function(data){
   data <- data %>%
+    group_by(column) %>%
   mutate(ymin = as.numeric(factor(row)) - 1, ymax = as.numeric(factor(row))) %>%
-    mutate(y = (ymin + ymax)/2)
+    mutate(y = (ymin + ymax)/2) %>%
+    ungroup
   return(data)
 }
 

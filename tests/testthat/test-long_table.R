@@ -61,7 +61,7 @@ dat_prepped <- dat_prepped %>%
   ),
   ordered = TRUE)) %>%
   filter(!is.na(column_id)) %>%
-  mutate(width = ifelse(column_id == "NA_TR_BUNDESLAND_NA", 1/13, 1/13)) %>%
+  mutate(width = ifelse(column_id == "NA_TR_BUNDESLAND_NA", 1/14, 1/14)) %>%
   mutate(adjustment = 0.5) %>%
   group_by(TR_BUNDESLAND) %>%
   mutate(group_id = cur_group_id()) %>%  # Assigns a unique ID per row_id
@@ -93,7 +93,10 @@ dat_bar <- dat_prepped %>%
       column_id == "mean_est_2022 - 2015_bar" ~ ""),
   ) %>%
   mutate(xmin = ifelse(column_id == "mean_est_2015 - 2009_bar", 0.9, 0.95),
-         xmax = ifelse(column_id == "mean_est_2022 - 2015_bar", 0.95, 1))
+         xmax = ifelse(column_id == "mean_est_2015 - 2009_bar", 0.95, 1)) %>%
+  mutate(scale_min = ifelse(column_id == "mean_est_2015 - 2009_bar", -40, -30),
+         scale_max = ifelse(column_id == "mean_est_2022 - 2015_bar", 20, 20))
+
 
 
 header_dat <- unique(dat_prepped[, c("column_id", "width", "adjustment", "background_colour", "row_id")]) %>%
@@ -123,8 +126,8 @@ p <- ggplot(
   ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0, 0))) +
    ggpattern::geom_rect_pattern(
     dat = dat_bar %>% mutate(value = ifelse(column_id %in% c("mean_est_2015 - 2009_bar", "mean_est_2022 - 2015_bar"), value, NA)),
-    mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax), ## use column instead. Can the measures be extracted from before?
-    stat = StatTableColumn,
+    mapping = aes(x = value, xmin_col = xmin, xmax_col = xmax, scale_min = scale_min, scale_max = scale_max),
+    stat = StatTableColumnDebugg,
     colour = "black"
   ) +
   ## Spanner
@@ -182,7 +185,7 @@ p
 ## Zurodnung zur Spalte einfach über Gruppe. Aber gruppe ist vdann weg oder? Wie kann ich die Zuordnung über
 cdata <- ggdebug::get_data_cache()
 head(cdata$compute_layer$args$data)
-head(cdata$finish_layer$return)
+View(cdata$finish_layer$return)
 
 ## Okay, obviously ther is only one group in the data now. I somehow need to pass the coordinates of the previous
 ## column. Easiest way would be to just use the same data, with all values but the ones that should be plotted set to zero.

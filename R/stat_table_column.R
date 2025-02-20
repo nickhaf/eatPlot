@@ -2,24 +2,22 @@
 StatTableColumn <- ggproto("StatTableColumn", Stat,
                            compute_panel =  function(data, scales) {
 
-                             ## Here I need the scale values of the plot. How to set the scale anyways?
-                             old_min <- min(data$x, na.rm = TRUE)
-                             old_max <- max(data$x, na.rm = TRUE)
-
-
                        data <- data %>%
-                         mutate(x = scales::rescale(x, to =  c(unique(xmin_col), unique(xmax_col)), from = c(old_min, old_max))) %>%
-                         mutate(xmin = scales::rescale(0, to = c(unique(xmin_col), unique(xmax_col)), from = c(old_min, old_max)), ## Not perfekt: min max values of the original scale )
+                         ## Can I put this into the compute_group argument?
+                         group_by(column) %>%
+                         mutate(x = scales::rescale(x, to =  c(unique(xmin_col), unique(xmax_col)), from = c(unique(scale_min), unique(scale_max)))) %>%
+                         mutate(xmin = scales::rescale(0, to = c(unique(xmin_col), unique(xmax_col)), from = c(unique(scale_min), unique(scale_max))),
                                 xmax = x,
                                 xintercept = xmin)
                        data <- calc_y_coords(data) %>%
                          mutate(ymin = ymin + 0.25, ymax = ymax - 0.25,
                                 yend = max(ymax),
-                                y = min(ymin))
+                                y = min(ymin)) %>%
+                         ungroup()
 
                        return(data)
                      },
-                     required_aes = c("x", "xmin_col", "xmax_col")
+                     required_aes = c("x", "xmin_col", "xmax_col", "scale_min", "scale_max", "column")
 )
 
 # Custom function to use the StatTableColumn stat
