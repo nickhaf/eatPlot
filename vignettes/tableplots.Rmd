@@ -48,13 +48,17 @@ gender_prepped_lesen <- gender_prepped
 gender_prepped_lesen[gender_prepped_lesen$kb == "hoeren", !colnames(gender_prepped) %in% c("y_axis", "kb")] <- NA
 
 gender_prepped_hoeren <- gender_prepped
-gender_prepped_hoeren[gender_prepped_hoeren$kb == "lesen",!colnames(gender_prepped) %in% c("y_axis", "kb")] <- NA
+gender_prepped_hoeren[gender_prepped_hoeren$kb == "lesen", !colnames(gender_prepped) %in% c("y_axis", "kb")] <- NA
 
-gender_prepped_lh <- merge(gender_prepped_lesen, gender_prepped_hoeren, by = c( "y_axis", "kb"), suffixes = c("_lesen", "_hören"))
-gender_prepped_lh_final <- merge(gender_prepped_lh, 
-                                 gender_prepped[, c("y_axis", 
-                                                    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
-                                                    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022")])
+gender_prepped_lh <- merge(gender_prepped_lesen, gender_prepped_hoeren, by = c("y_axis", "kb"), suffixes = c("_lesen", "_hören"))
+gender_prepped_lh_final <- merge(
+  gender_prepped_lh,
+  gender_prepped[, c(
+    "y_axis",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
+  )]
+)
 
 
 gender_prepped_lh_final <- gender_prepped_lh_final[order(gender_prepped_lh_final$y_axis), ]
@@ -89,9 +93,9 @@ tableplot_6.5 <- plot_tablebarplot(
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-5, 40),
-    columns_alignment = c(0, rep(2, 6)), 
+    columns_alignment = c(0, rep(2, 6)),
     headers_alignment = c(0, rep(0.5, 6), 0.5),
-    headers_nudge_x = c(0, rep(1.5, 6), 0), 
+    headers_nudge_x = c(0, rep(1.5, 6), 0),
     headers_nudge_y = c(rep(0, 7), 0.5),
     columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
     columns_width = c(0.15, rep(0.1, 6), 0.25),
@@ -123,10 +127,11 @@ tableplot_6.5
 First the data has to be prepared:
 
 ```{r}
-gender_prepped_mean_sd <- lapply(trend_gender, 
-                                         prep_tablebarplot, 
-                                         subgroup_var = "Kgender", 
-                                         par = c("mean", "sd"))
+gender_prepped_mean_sd <- lapply(trend_gender,
+  prep_tablebarplot,
+  subgroup_var = "Kgender",
+  par = c("mean", "sd")
+)
 
 ## Let's focus on:
 
@@ -143,7 +148,8 @@ gender_lesen <- gender_lesen[order(gender_lesen$state_var), ]
 gender_lesen$state_var[duplicated(gender_lesen$state_var)] <- " "
 gender_lesen$state_var <- gsub("total", "Deutschland", gender_lesen$state_var)
 gender_lesen$state_var <- process_bundesland(gender_lesen$state_var)
-gender_lesen$subgroup_var <- gsub("maennlich", "männlich", gender_lesen$subgroup_var)
+gender_lesen$subgroup_var <- gsub("maennlich", "Jungen", gender_lesen$subgroup_var)
+gender_lesen$subgroup_var <- gsub("weiblich", "Mädchen", gender_lesen$subgroup_var)
 ```
 
 We will have to plot multiple plots and combine them. 
@@ -189,9 +195,11 @@ p_1 <- plot_tablebarplot(
     bar_pattern_spacing = 0.0138, ## We calculated this below in standardize_pattern_spacing()
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
-    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2, 2),
+    columns_alignment = c(0, 0, rep(2, 9)),
     columns_width = column_widths_stand$p1, ## This is the column-width object we set above
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
+    bar_background_lines = "scale_breaks",
+    bar_background_lines_linetype = "dotted",
     default_list = barplot_table_plot_pattern
   )
 )
@@ -216,7 +224,7 @@ p_2 <- plot_tablebarplot(
     "se_mean_comp_trend_sameFacet_sameSubgroup_2015_2022",
     "es_mean_comp_trend_sameFacet_sameSubgroup_2015_2022"
   ),
-  columns_table_se = list(NULL,"se_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", NULL),
+  columns_table_se = list(NULL, "se_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", NULL),
   columns_table_sig_bold = list("sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022"),
   columns_table_sig_superscript = list("sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup_2015_2022", NULL, NULL),
   y_axis = "y_axis",
@@ -226,9 +234,11 @@ p_2 <- plot_tablebarplot(
     bar_pattern_spacing = 0.0362, ## We calculated this below in standardize_pattern_spacing()
     background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
     bar_fill_colour = c("#20D479", "#8DEBBC"),
-    columns_alignment = c(0.5,2, 2),
+    columns_alignment = c(0.5, 2, 2),
     columns_width = column_widths_stand$p2, ## This is the column-width object we set above
     headers_alignment = c(0.5, 0.5, 0.5, 0),
+    bar_background_lines = "scale_breaks",
+    bar_background_lines_linetype = "dotted",
     default_list = barplot_table_plot_pattern
   )
 )
@@ -268,10 +278,9 @@ tableplot_6.6
 Currently use the `gender_trend` data because thats better. 
 
 ```{r}
-gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen",]
+gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen", ]
 gender_prepped_2$empty <- "" ## Needes as a empty space between column spanners
 gender_prepped_2$state_var <- process_bundesland(gender_prepped_2$state_var)
-
 ```
 
 ```{r}
@@ -320,7 +329,7 @@ p_1 <- plot_tablebarplot(
     NULL,
     "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2009",
     "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2015",
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022", 
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
     NULL,
     "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
   ),
@@ -435,8 +444,7 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 ```
 
 ```{r}
-save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf", width = 320,  height = 226.2 / 2)
-
+save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf", width = 320, height = 226.2 / 2)
 ```
 
 
