@@ -108,6 +108,7 @@ unnest_eatRep <- function(eatRep_dat) {
 }
 
 merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
+
   dat_group <- merge(eatRep_unnested,
     eatRep_dat$group,
     all = TRUE,
@@ -129,7 +130,6 @@ merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
   if (nrow(eatRep_dat$comparisons) == 0) {
     dat_group_long[, grep("_comp$", colnames(dat_group_long))] <- NA
   }
-
   dat_group_long_t <- do.call(rbind, lapply(split(dat_group_long, dat_group_long$id), create_trend))
 
   return(dat_group_long_t)

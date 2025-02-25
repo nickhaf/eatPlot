@@ -65,6 +65,7 @@ dat_lineplot_2 <- prep_lineplot(
   trend_gender[[1]],
   subgroup_var = "Kgender"
 )
+
 dat_lineplot_2$state_var <- process_bundesland(dat_lineplot_2$state_var)
 
 
@@ -92,52 +93,42 @@ save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.
 lineplot_2
 ```
 
-<!-- ## Lineplot for whole Germany -->
 
 
-<!-- ```{r lineplot_germany}  -->
 
-<!-- trend_ger <- prep_lineplot( -->
-<!--   trend_mw, -->
-<!--   subgroup_var = "geschlecht" -->
-<!-- ) -->
+## Lineplot for whole Germany -->
 
-<!-- ## This is data preperation for the example and will be updated as soon as I have example data with multiple Kompetenzbereichen: -->
 
-<!-- trend_ger_lesen <- trend_ger -->
-<!-- trend_ger_lesen$kb <- "Lesen" -->
+```{r}
 
-<!-- trend_total <- rbind(trend_ger, trend_ger_lesen) -->
-<!-- trend_total$kb <- gsub("hoeren", "Hören", trend_total$kb) -->
+trend_ger <- do.call(rbind, lapply(trend_gender, prep_lineplot, subgroup_var = "Kgender"))
+trend_ger <- subset(trend_ger, state_var == "total")
+trend_ger$subgroup_var <- factor(trend_ger$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
+trend_ger$kb <- gsub("hoeren", "Hören", trend_ger$kb)
+trend_ger$kb <- gsub("lesen", "Lesen", trend_ger$kb)
+```
 
-<!-- trend_total <- subset(trend_total, TR_BUNDESLAND == "total") -->
+```{r}
+lineplot_germany <- plot_lineplot(
+  trend_ger,
+ point_sig = NULL,
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  facet_var = "kb",
+  background_facet = "total",
+  background_subgroup = "total",
+  plot_settings = plotsettings_lineplot(
+    brace_label_nudge_x = 0.3,
+    split_plot = FALSE,
+    background_lines = FALSE,
+    subgroup_colours = c(weiblich = "#000000", maennlich = "#999999"), ## Here we determine the colours of the subgroups
+    margin_top = 0.05,
+    default_list = lineplot_4x4
+  )
+)
+```
 
-<!-- trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-
-<!-- ## Hier fehlt noch der Hintergrund für ganz Deutschland -->
-<!-- lineplot_germany_2 <- plot_lineplot(trend_total, -->
-<!--   years_lines = list(c(2009, 2015), c(2015, 2022)), -->
-<!--   years_braces = list(c(2009, 2015), c(2015, 2022)), -->
-<!--   facet_var = "kb", -->
-<!--   background_facet = NULL, -->
-<!--   background_subgroup = "total", -->
-<!--   plot_settings = plotsettings_lineplot( -->
-<!--     brace_label_nudge_x = 0.3, -->
-<!--     split_plot = FALSE, -->
-<!--     background_lines = FALSE, -->
-<!--     default_list = lineplot_4x4 -->
-<!--   ) -->
-<!-- ) -->
-<!-- ``` -->
-
-<!-- ```{r save lineplot_germany_2_groups} -->
-<!-- #| eval: false -->
-<!-- save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2 / 4) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- lineplot_germany_2 -->
-<!-- ``` -->
+```{r}
+#| eval: false
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 226.2/4)
+```
