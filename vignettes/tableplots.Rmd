@@ -407,8 +407,8 @@ p_3 <- plot_tablebarplot(
   ),
   columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"),
   headers = list(
-    "\u0394 *M*<sub>2015</sub>-<br> \u0394 *M*<sub>2009</sub>",
-    "*(SE)*",
+   "Delta * M[j]",
+    "(SE)",
     " "
   ),
   columns_table = c(
@@ -453,7 +453,7 @@ save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf", w
 #| eval: false
 save_plot(tableplot_8.4, filename = "/home/nick/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
 
-save_plot(tableplot_8.4, filename = "/home/nick/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2)
+save_plot(p_3, filename = "/home/nick/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2)
 
 # options(device = function(file, width = 7, height = 7, ...) {
 #   windows(width = width, height = height, ...)
