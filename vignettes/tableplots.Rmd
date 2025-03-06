@@ -35,7 +35,7 @@ gender_prepped_sub <- subset(gender_prepped, subgroup_var == "maennlich")
 gender_prepped <- gender_prepped_sub[order(gender_prepped_sub$state_var), ]
 gender_prepped$y_axis <- 1:nrow(gender_prepped)
 
-gender_prepped$state_var <- process_bundesland(gender_prepped$state_var)
+gender_prepped$state_var <- process_bundesland(gender_prepped$state_var, linebreak = TRUE)
 ```
 
 The tables need some more work, because they need to be connected with the barplot, but only have half the rows.
@@ -101,7 +101,7 @@ Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf")
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 210, width = 297, scaling = 0.6)
 ```
 
 ```{r}
@@ -133,11 +133,16 @@ gender_lesen <- subset(gender_lesen, subgroup_var %in% c("maennlich", "weiblich"
 
 gender_lesen <- gender_lesen[order(gender_lesen$state_var), ]
 
+## Mädchen sollen nach oben
+gender_lesen <- gender_lesen[order(gender_lesen$subgroup_var, decreasing = TRUE), ]
+gender_lesen <- gender_lesen[order(gender_lesen$state_var), ]
+
 gender_lesen$state_var[duplicated(gender_lesen$state_var)] <- " "
 gender_lesen$state_var <- gsub("total", "Deutschland", gender_lesen$state_var)
-gender_lesen$state_var <- process_bundesland(gender_lesen$state_var)
+gender_lesen$state_var <- process_bundesland(gender_lesen$state_var, linebreak = TRUE)
 gender_lesen$subgroup_var <- gsub("maennlich", "Jungen", gender_lesen$subgroup_var)
 gender_lesen$subgroup_var <- gsub("weiblich", "Mädchen", gender_lesen$subgroup_var)
+
 ```
 
 We will have to plot multiple plots and combine them. 
@@ -146,8 +151,8 @@ To do that, we will have to set the column widths, so they are identical over th
 ```{r}
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.1, rep(0.04, 7), 0.05, rep(0.04, 2), NA),
-    p2 = c(0.05, rep(0.04, 2), NA)
+    p1 = c(0.085, 0.05, rep(0.04, 6), 0.06, rep(0.04, 2), NA),
+    p2 = c(0.07, rep(0.04, 2), NA)
   ),
   plot_ranges = c(65, 45) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
@@ -243,7 +248,7 @@ And save the result:
 ```{r}
 #| eval: false
 
-save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 320)
+save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", height = 210,  width = 297)
 ```
 
 ```{r plot.width = 15}
@@ -267,7 +272,7 @@ gender_prepped_2$state_var <- process_bundesland(gender_prepped_2$state_var)
 column_widths_stand <- standardize_column_width(
   column_widths = list(
     p1 = c(0.1, rep(0.035, 5), NA),
-    p2 = c(0.025, 0.05, 0.035, NA),
+    p2 = c(0.01, 0.05, 0.035, NA),
     p3 = c(0.05, 0.035, NA)
   ),
   plot_ranges = c(40, 50, 30) # Range of the x-axes of both plots set in 'axis_x_lims'.
@@ -417,7 +422,7 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 #| eval: false
 save_plot(tableplot_8.4,
   filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf",
-  width = 320, height = 226.2 / 2
+  width = 320, height = 226.2
 )
 ```
 

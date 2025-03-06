@@ -1,5 +1,6 @@
 ## code to prepare `barplot_table_plot_pattern` dataset goes here
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
+  axis_x_label_size = 6,
   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3)),
   bar_background_lines = "scale_breaks",
   bar_background_lines_linetype = "dotted",
@@ -13,7 +14,7 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   bar_pattern_fill_colour = "white",
   bar_pattern_type = c("FALSE" = "stripe", "TRUE" = "none"),
   bar_sig_type = "pattern",
-  bar_width = 0.7,
+  bar_width = 0.6,
   columns_table_sig_superscript_letter = "b",
   columns_table_sig_superscript_letter_nudge_x = 3,
   headers_background_colour = cmyk(40, 0, 20, 8),
@@ -31,9 +32,10 @@ abb_6.5 <- plotsettings_tablebarplot(
   headers_alignment = c(0, rep(0.5, 6), 0.5),
   headers_nudge_x = c(0, rep(1.5, 6), 0),
   headers_nudge_y = c(rep(0, 7), 0.5),
-  headers_row_height = 3,
+  headers_row_height = 2,
+  column_spanners_row_height = 1.5,
   columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
-  columns_width = c(0.15, rep(0.1, 6), 0.25),
+  columns_width = c(0.1, rep(0.075, 6), 0.45),
   background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
   default_list = barplot_table_plot_pattern
@@ -43,6 +45,7 @@ usethis::use_data(abb_6.5, overwrite = TRUE)
 
 
 abb_6.6 <- plotsettings_tablebarplot(
+  bar_nudge_y = rep(c(-0.125, 0.125), 34 / 2),
   background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
   default_list = barplot_table_plot_pattern

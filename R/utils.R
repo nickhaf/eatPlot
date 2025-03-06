@@ -671,14 +671,21 @@ filter_years <- function(dat, years) {
 #'
 #' @param eatPlot_dat Data.frame coming from [prep_lineplot()] or [prep_tablebarplot()].
 #' @param column Character string of the column containing the bundesländer. Defaults to `TR_BUNDESLAND`.
+#' @param linebreak Logical. If `TRUE`, a linebreak is added after the '-'. Defaults to `FALSE`.
 #'
 #' @return The eatPlot_data data.frame with the bundesländer column processed.
 #' @export
 #'
 #' @examples # tbd
-process_bundesland <- function(vec){
-  vec <- gsub("([a-z])([A-Z])", "\\1\uad\\2", vec)
+process_bundesland <- function(vec, linebreak = FALSE){
   vec <- gsub("ue", "\u00fc", vec )
+
+  if(linebreak){
+    vec <- gsub("([a-z])([A-Z])", "\\1\uad <br> \\2", vec)
+  }else{
+    vec <- gsub("([a-z])([A-Z])", "\\1\uad\\2", vec)
+
+}
 
   return(vec)
 }
