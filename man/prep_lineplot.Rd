@@ -11,8 +11,7 @@ prep_lineplot(
   facet_var = "TR_BUNDESLAND",
   total_facet = "total",
   parameter = "mean",
-  sig_niveau = 0.05,
-  comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")
+  sig_niveau = 0.05
 )
 }
 \arguments{

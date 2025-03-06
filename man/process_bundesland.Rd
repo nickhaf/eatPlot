@@ -4,7 +4,7 @@
 \alias{process_bundesland}
 \title{Process the data in the Bundesland column.}
 \usage{
-process_bundesland(eatPlot_dat, column = "TR_BUNDESLAND")
+process_bundesland(vec)
 }
 \arguments{
 \item{eatPlot_dat}{Data.frame coming from \code{\link[=prep_lineplot]{prep_lineplot()}} or \code{\link[=prep_tablebarplot]{prep_tablebarplot()}}.}

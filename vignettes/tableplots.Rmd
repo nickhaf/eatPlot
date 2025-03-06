@@ -92,20 +92,7 @@ tableplot_6.5 <- plot_tablebarplot(
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-5, 40),
-    columns_alignment = c(0, rep(2, 6)),
-    headers_alignment = c(0, rep(0.5, 6), 0.5),
-    headers_nudge_x = c(0, rep(1.5, 6), 0),
-    headers_nudge_y = c(rep(0, 7), 0.5),
-    headers_row_height = 3,
-    columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
-    columns_width = c(0.15, rep(0.1, 6), 0.25),
-    bar_nudge_y = rep(c(-0.1, 0.1), nrow(gender_prepped_lh_final) / 2),
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),
-    bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "dotted",
-    default_list = barplot_table_plot_pattern
+    default_list = abb_6.5
   )
 )
 ```
@@ -194,14 +181,10 @@ p_1 <- plot_tablebarplot(
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-35, 30),
     bar_pattern_spacing = 0.0138, ## We calculated this below in standardize_pattern_spacing()
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),
     columns_alignment = c(0, 0, rep(2, 9)),
     columns_width = column_widths_stand$p1, ## This is the column-width object we set above
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
-    bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "dotted",
-    default_list = barplot_table_plot_pattern
+    default_list = abb_6.6
   )
 )
 
@@ -233,14 +216,10 @@ p_2 <- plot_tablebarplot(
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(-40, 5),
     bar_pattern_spacing = 0.0362, ## We calculated this below in standardize_pattern_spacing()
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),
     columns_alignment = c(0.5, 2, 2),
     columns_width = column_widths_stand$p2, ## This is the column-width object we set above
     headers_alignment = c(0.5, 0.5, 0.5, 0),
-    bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "dotted",
-    default_list = barplot_table_plot_pattern
+    default_list = abb_6.6
   )
 )
 ``` 
@@ -279,7 +258,7 @@ tableplot_6.6
 Currently use the `gender_trend` data. 
 
 ```{r}
-gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen", ] 
+gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen", ]
 gender_prepped_2$empty <- "" ## Needes as a empty space between column spanners
 gender_prepped_2$state_var <- process_bundesland(gender_prepped_2$state_var)
 ```
@@ -337,17 +316,11 @@ p_1 <- plot_tablebarplot(
   y_axis = "y_axis",
   columns_round = c(0, 0, 0, 0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
-    column_spanners_2_row_height = 2,
-    axis_x_lims = c(0, 40),
-    bar_pattern_spacing = 0.0274,
-    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
-    # bar_fill_colour = c("#20D479", "#8DEBBC"),
-    bar_background_lines = "scale_breaks",
-    columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
+     axis_x_lims = c(0, 40),
+  bar_pattern_spacing = 0.0274,
+  columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
     columns_width = column_widths_stand$p1,
-    headers_row_height = 2,
-    headers_ggtext = FALSE,
-    default_list = barplot_table_plot_pattern
+    default_list = abb_8.4
   )
 )
 ```
@@ -366,7 +339,7 @@ p_2 <- plot_tablebarplot(
   columns_table_se = list(NULL, NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"),
   headers = list(
     " ",
-    "atop(paste(italic(Delta * M[2015]), \"\U2212\"), 
+    "atop(paste(italic(Delta * M[2015]), \"\U2212\"),
           italic(Delta * M[2009]))",
     "italic((SE))",
     " "
@@ -380,20 +353,16 @@ p_2 <- plot_tablebarplot(
     NULL, "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015", NULL
   ),
   y_axis = "y_axis",
-  plot_settings = plotsettings_tablebarplot(
-    column_spanners_2_row_height = 2,
-    axis_x_lims = c(-10, 40),
-    bar_pattern_spacing = 0.0334,
-    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
-    bar_background_lines = "scale_breaks",
-    columns_alignment = c(2, 2, 2),
-    headers_alignment = c(0, 0, 2, 0),
-    headers_nudge_x = c(0, 4, 0, 0),
-    columns_width = column_widths_stand$p2,
-    headers_row_height = 2,
-    headers_ggtext = FALSE,
-    default_list = barplot_table_plot_pattern
-  )
+  plot_settings = 
+plotsettings_tablebarplot(
+  axis_x_lims = c(-10, 40),
+  bar_pattern_spacing = 0.0334,
+  columns_alignment = c(2, 2, 2),
+  headers_alignment = c(0, 0, 2, 0),
+  headers_nudge_x = c(0, 4, 0, 0),
+  columns_width = column_widths_stand$p2,
+  default_list = abb_8.4
+)
 )
 ```
 
@@ -410,7 +379,7 @@ p_3 <- plot_tablebarplot(
   ),
   columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"),
   headers = list(
-   "atop(paste(italic(Delta * M[2022]), \"\U2212\"), 
+    "atop(paste(italic(Delta * M[2022]), \"\U2212\"),
           italic(Delta * M[2015]))",
     "italic((SE))",
     " "
@@ -425,17 +394,12 @@ p_3 <- plot_tablebarplot(
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
     bar_pattern_spacing = 0.0392,
-    column_spanners_2_row_height = 2,
     axis_x_lims = c(-15, 15),
-    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
-    bar_background_lines = "scale_breaks",
     columns_alignment = c(2, 2),
     headers_alignment = c(0, 2, 0),
     headers_nudge_x = c(4, 0, 0),
     columns_width = column_widths_stand$p3,
-    headers_row_height = 2,
-    headers_ggtext = FALSE, 
-    default_list = barplot_table_plot_pattern
+    default_list = abb_8.4
   )
 )
 ```
@@ -451,33 +415,14 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 
 ```{r}
 #| eval: false
-save_plot(tableplot_8.4, 
-          filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf", 
-          width = 320, height = 226.2 / 2)
+save_plot(tableplot_8.4,
+  filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf",
+  width = 320, height = 226.2 / 2
+)
 ```
 
 
 ```{r}
-#| eval: false
-save_plot(tableplot_8.4, filename = "/home/nick/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
-
-save_plot(p_3, filename = "/home/nick/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2)
-
-# options(device = function(file, width = 7, height = 7, ...) {
-#   windows(width = width, height = height, ...)
-# })
-# options()$device
-
-ggplot2::ggsave(
-  filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf", tableplot_8.4,
-  width = 320, height = 226.2 / 2, units = "mm",
-  device = cairo_pdf
-)
-
-save_plot(tableplot_8.4,
-  filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320,
-  encoding = "Greek.enc"
-)
-
-## Okay, so either the letters are not rendered corretly, or the color model is wrong.
+tableplot_8.4
 ```
+
