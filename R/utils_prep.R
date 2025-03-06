@@ -135,7 +135,8 @@ merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
 }
 
 prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgroup = NULL) {
-  dat_hardest <- eatRep_merged[eatRep_merged$comparison != "trend_crossDiff_of_groupDiff", ]
+  #dat_hardest <- eatRep_merged[eatRep_merged$comparison != "trend_crossDiff_of_groupDiff", ]
+  dat_hardest <- eatRep_merged
   id_list <- split(dat_hardest, dat_hardest$id)
 
   df_list <- lapply(id_list, function(x) {

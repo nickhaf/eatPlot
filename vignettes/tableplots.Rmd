@@ -276,10 +276,10 @@ tableplot_6.6
 
 # Zuwanderungskapitel
 
-Currently use the `gender_trend` data because thats better. 
+Currently use the `gender_trend` data. 
 
 ```{r}
-gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen", ]
+gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen", ] 
 gender_prepped_2$empty <- "" ## Needes as a empty space between column spanners
 gender_prepped_2$state_var <- process_bundesland(gender_prepped_2$state_var)
 ```
@@ -451,7 +451,9 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 
 ```{r}
 #| eval: false
-save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf", width = 320, height = 226.2 / 2)
+save_plot(tableplot_8.4, 
+          filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf", 
+          width = 320, height = 226.2 / 2)
 ```
 
 
