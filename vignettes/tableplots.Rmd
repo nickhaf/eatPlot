@@ -311,11 +311,11 @@ p_1 <- plot_tablebarplot(
   columns_table_se = list(NULL, NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022", NULL),
   headers = list(
     "Land",
-    "\u0394 *M*",
-    "\u0394 *M*",
-    "\u0394 *M*",
-    "*(SE)*",
-    "*d*",
+    "italic(Delta * M)",
+    "Delta * M",
+    "Delta * M",
+    "italic((SE))",
+    "italic(d)",
     " "
   ),
   columns_table = c(
@@ -345,7 +345,8 @@ p_1 <- plot_tablebarplot(
     bar_background_lines = "scale_breaks",
     columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
     columns_width = column_widths_stand$p1,
-    headers_row_height = 1.5,
+    headers_row_height = 2,
+    headers_ggtext = FALSE,
     default_list = barplot_table_plot_pattern
   )
 )
@@ -365,8 +366,9 @@ p_2 <- plot_tablebarplot(
   columns_table_se = list(NULL, NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"),
   headers = list(
     " ",
-    "\u0394 *M*<sub>2015</sub>-<br> \u0394 *M*<sub>2009</sub>",
-    "*(SE)*",
+    "atop(paste(italic(Delta * M[2015]), \"\U2212\"), 
+          italic(Delta * M[2009]))",
+    "italic((SE))",
     " "
   ),
   columns_table = c(
@@ -388,7 +390,8 @@ p_2 <- plot_tablebarplot(
     headers_alignment = c(0, 0, 2, 0),
     headers_nudge_x = c(0, 4, 0, 0),
     columns_width = column_widths_stand$p2,
-    headers_row_height = 1.5,
+    headers_row_height = 2,
+    headers_ggtext = FALSE,
     default_list = barplot_table_plot_pattern
   )
 )
@@ -407,8 +410,9 @@ p_3 <- plot_tablebarplot(
   ),
   columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"),
   headers = list(
-   "Delta * M[j]",
-    "(SE)",
+   "atop(paste(italic(Delta * M[2022]), \"\U2212\"), 
+          italic(Delta * M[2015]))",
+    "italic((SE))",
     " "
   ),
   columns_table = c(
@@ -429,7 +433,7 @@ p_3 <- plot_tablebarplot(
     headers_alignment = c(0, 2, 0),
     headers_nudge_x = c(4, 0, 0),
     columns_width = column_widths_stand$p3,
-    headers_row_height = 1.5,
+    headers_row_height = 2,
     headers_ggtext = FALSE, 
     default_list = barplot_table_plot_pattern
   )
