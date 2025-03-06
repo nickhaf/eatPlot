@@ -26,7 +26,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   margin_bottom = 0,
   margin_left = 0.004, ## has to be slightly smaller, because somehow the plot margin goes wider here.
   margin_right = 0.01,
-  margin_top = 0.01,
+  margin_top = -5,
   n_cols = 4,
   point_label_nudge = FALSE,
   point_label_nudge_direction = NULL,

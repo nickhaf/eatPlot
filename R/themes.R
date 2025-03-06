@@ -98,7 +98,7 @@ theme_line <- function(plot_settings = plotsettings_lineplot()) {
         size = 7,
         hjust = 0.5,
         vjust = 0,
-        margin = ggplot2::margin(-3.5, 0, 3.5, 0)
+        margin = ggplot2::margin(-6, 0, -3, 0)
       )
     )
 }
