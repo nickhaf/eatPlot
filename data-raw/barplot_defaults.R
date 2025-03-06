@@ -26,7 +26,7 @@ usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 abb_6.5 <- plotsettings_tablebarplot(
   axis_x_lims = c(-5, 40),
-  bar_nudge_y = rep(c(-0.1, 0.1), nrow(gender_prepped_lh_final) / 2),
+  bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
   columns_alignment = c(0, rep(2, 6)),
   headers_alignment = c(0, rep(0.5, 6), 0.5),
   headers_nudge_x = c(0, rep(1.5, 6), 0),
