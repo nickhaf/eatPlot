@@ -430,6 +430,7 @@ p_3 <- plot_tablebarplot(
     headers_nudge_x = c(4, 0, 0),
     columns_width = column_widths_stand$p3,
     headers_row_height = 1.5,
+    headers_ggtext = FALSE, 
     default_list = barplot_table_plot_pattern
   )
 )
@@ -445,6 +446,7 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 ```
 
 ```{r}
+#| eval: false
 save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf", width = 320, height = 226.2 / 2)
 ```
 
