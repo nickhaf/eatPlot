@@ -39,7 +39,6 @@ plot_lineplot <- function(eatPlot_dat,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
-
   check_plotsettings_lineplot(plot_settings)
   check_columns(eatPlot_dat,
     cols = c(facet_var)
@@ -95,7 +94,7 @@ plot_lineplot <- function(eatPlot_dat,
     brace_dat <- brace_dat_list$brace_dat
   }
   brace_coordinates <- brace_dat_list$brace_coords
-  if (length(brace_dat) > 0) {
+  if (!is.null(brace_dat[[1]])) {
     brace_dat <- filter_years(brace_dat, years = years_braces)
 
     if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {

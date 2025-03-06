@@ -80,7 +80,6 @@ unnest_eatRep <- function(eatRep_dat) {
   comp_long_noComps <- comp_long[grep("comp_", comp_long$value, invert = TRUE), ] ## these are done, rbind!
   comp_long_comps <- comp_long[grep("comp_", comp_long$value), ]
 
-
   while (length(grep("comp_", comp_long_comps$value)) > 0) {
     comp_long_m <- merge(comp_long_comps,
       eatRep_dat$comparisons[, c("id", "unit_1", "unit_2")],
@@ -192,7 +191,7 @@ pivot_eatRep <- function(eatRep_prepped,
 
   eatRep_prepped_none_wide <- tidyr::pivot_wider(
     unique(subset(eatRep_prepped_none, select = -c(trend))),
-    names_from = names_from_none,
+    names_from = tidyr::all_of(names_from_none),
     values_from = paste0(value_cols, "_none")
   )
 
@@ -206,14 +205,14 @@ pivot_eatRep <- function(eatRep_prepped,
 
   eatRep_comp_trend_wide <- tidyr::pivot_wider(
     unique(eatRep_comp_trend),
-    names_from = names_from_comp,
-    values_from = value_cols
+    names_from = tidyr::all_of(names_from_comp),
+    values_from = tidyr::all_of(value_cols)
   )
 
   eatRep_comp_noTrend_wide <- tidyr::pivot_wider(
     unique(eatRep_comp_noTrend),
-    names_from = names_from_comp,
-    values_from = value_cols
+    names_from = tidyr::all_of(names_from_comp),
+    values_from = tidyr::all_of(value_cols)
   )
 
   eatPlot_dat_noTrend <- merge(eatRep_prepped_none_wide, eatRep_comp_noTrend_wide, all.x = TRUE)
