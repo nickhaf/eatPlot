@@ -1,6 +1,6 @@
 ## code to prepare `barplot_table_plot_pattern` dataset goes here
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
-  axis_x_label_size = 6,
+  axis_x_label_size = 4,
   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3)),
   bar_background_lines = "scale_breaks",
   bar_background_lines_linetype = "dotted",
@@ -19,7 +19,9 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   columns_table_sig_superscript_letter_nudge_x = 3,
   headers_background_colour = cmyk(40, 0, 20, 8),
   bar_pattern_spacing = 0.015,
-  bar_pattern_width = 0.4
+  bar_pattern_width = 0.4,
+  font_size = 1.55,
+  headers_font_size = 1.55,
 )
 
 usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
@@ -34,7 +36,6 @@ abb_6.5 <- plotsettings_tablebarplot(
   headers_nudge_y = c(rep(0, 7), 0.5),
   headers_row_height = 2,
   column_spanners_row_height = 1.5,
-  columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
   columns_width = c(0.1, rep(0.075, 6), 0.45),
   background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
@@ -45,7 +46,7 @@ usethis::use_data(abb_6.5, overwrite = TRUE)
 
 
 abb_6.6 <- plotsettings_tablebarplot(
-  bar_nudge_y = rep(c(-0.125, 0.125), 34 / 2),
+  bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
   background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
   default_list = barplot_table_plot_pattern

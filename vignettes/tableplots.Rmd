@@ -92,6 +92,7 @@ tableplot_6.5 <- plot_tablebarplot(
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
+    columns_nudge_y = c(-0.25, rep(-0.5, 3), rep(0.5, 3)),
     default_list = abb_6.5
   )
 )
@@ -101,7 +102,7 @@ Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", height = 140, width = 297, scaling = 0.8)
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 210, height = 297/3, scaling = 0.9)
 ```
 
 ```{r}
@@ -248,7 +249,7 @@ And save the result:
 ```{r}
 #| eval: false
 
-save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", height = 210,  width = 297, scaling = 0.8)
+save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf",  width = 210, height = 297/2, scaling = 0.9)
 ```
 
 ```{r plot.width = 15}
@@ -423,8 +424,7 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 #| eval: false
 save_plot(tableplot_8.4,
   filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf",
-  height = 190,  width = 297,
-)
+ width = 210, height = 297/3, scaling = 0.9)
 ```
 
 

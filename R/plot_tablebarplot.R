@@ -449,7 +449,6 @@ build_columns_3 <- function(df,
       column_name <- cols[i]
 
       df$y_axis <- df$y_axis - ifelse(grepl("<br>", df[, column_name]), 0.25, 0)
-
       c(
         ggtext::geom_richtext(
           data = df,

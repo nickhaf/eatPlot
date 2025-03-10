@@ -50,7 +50,7 @@ default_list = lineplot_4x4)
 
 ```{r save lineplot_1_group}
 #| eval: false
-save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf")
+save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf", scaling = 0.7)
 ```
 
 ```{r}
@@ -87,7 +87,7 @@ lineplot_2 <- plot_lineplot(
 
 ```{r}
 #| eval: false
-save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
+save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf", scaling = 0.7)
 ```
 
 ```{r}
@@ -131,5 +131,5 @@ lineplot_germany <- plot_lineplot(
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 226.2/4)
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 297/4, scaling = 0.7)
 ```

@@ -4,9 +4,11 @@
 \alias{process_bundesland}
 \title{Process the data in the Bundesland column.}
 \usage{
-process_bundesland(vec)
+process_bundesland(vec, linebreak = FALSE)
 }
 \arguments{
+\item{linebreak}{Logical. If \code{TRUE}, a linebreak is added after the '-'. Defaults to \code{FALSE}.}
+
 \item{eatPlot_dat}{Data.frame coming from \code{\link[=prep_lineplot]{prep_lineplot()}} or \code{\link[=prep_tablebarplot]{prep_tablebarplot()}}.}
 
 \item{column}{Character string of the column containing the bundesländer. Defaults to \code{TR_BUNDESLAND}.}

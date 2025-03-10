@@ -7,10 +7,10 @@
 save_plot(
   p,
   filename,
-  width = 160,
-  height = 226.2,
+  width = 210,
+  height = 297,
   colormodel = "cmyk",
-  scaling = 1,
+  scaling = 0.75,
   ...
 )
 }
