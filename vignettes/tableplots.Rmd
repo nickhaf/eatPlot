@@ -432,3 +432,40 @@ save_plot(tableplot_8.4,
 tableplot_8.4
 ```
 
+## Stacked barplot
+
+```{r}
+stacked_bar_dat <- readRDS("C:/Users/hafiznij/Documents/GitHub/eatPlot/anteil.rds")
+
+
+stacked_bar_dat <- data.frame(
+  bundesland = c(rep("Selbstkonzept", 3), rep("Interesse", 3)),
+  stacked_grouping_var = c("niedrig", "mittel", "hoch"), 
+                              est = c(0.25, 0.5, 0.25, 0.1, 0.7, 0.2), 
+  y_axis = c(1, 1,1,2,2,2)) 
+
+## Es gibt eine gruppierungsvariable (in diesem Fall parameter)
+## Diese wird am besten als Faktor soritert. Unten könnte auch eine kleine Legende hinzugefügt werden. 
+## bartype = "stacked"
+## Stacking-variable as extra argument
+
+stacked_bar_dat$x_axis_end <- ave(stacked_bar_dat$est, stacked_bar_dat$bundesland, FUN = cumsum)
+stacked_bar_dat$x_axis_start <-  stacked_bar_dat$x_axis_end - stacked_bar_dat$est
+
+    
+  ggplot2::ggplot() +
+  ggplot2::geom_rect(
+          data = stacked_bar_dat,
+          ggplot2::aes(
+            fill = stacked_grouping_var,
+            xmin = .data$x_axis_start,
+            xmax = .data$x_axis_end,
+            ymin = .data$y_axis -0.5,
+            ymax = .data$y_axis + 0.5
+          )
+        )
+
+
+
+```
+

@@ -97,7 +97,7 @@ lineplot_2
 
 
 
-## Lineplot for whole Germany -->
+## Lineplot for whole Germany 
 
 
 ```{r}
