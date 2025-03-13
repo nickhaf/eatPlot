@@ -453,29 +453,6 @@ plot_tablebarplot(dat,
                   plot_settings = plotsettings_tablebarplot(bar_type = "stacked", 
                                                             bar_fill_colour = c("niedrig" = "red", "mittel" = "blue", "hoch" = "green")))
 
-
-## Es gibt eine gruppierungsvariable (in diesem Fall parameter)
-## Diese wird am besten als Faktor soritert. Unten könnte auch eine kleine Legende hinzugefügt werden. 
-## bartype = "stacked"
-## Stacking-variable as extra argument
-
-dat$x_axis_end <- ave(dat$est, dat$Kgender, FUN = cumsum)
-dat$x_axis_start <-  dat$x_axis_end - dat$est
-
-    
-  ggplot2::ggplot() +
-  ggplot2::geom_rect(
-          data = dat,
-          ggplot2::aes(
-            fill = parameter,
-            xmin = .data$x_axis_start,
-            xmax = .data$x_axis_end,
-            ymin = .data$y_axis -0.5,
-            ymax = .data$y_axis + 0.5
-          )
-        )
-
-  
   
 ```
 
