@@ -13,7 +13,7 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
   bar_line_width = 0.1,
   bar_pattern_fill_colour = "white",
   bar_pattern_type = c("FALSE" = "stripe", "TRUE" = "none"),
-  bar_sig_type = "pattern",
+  bar_type = "pattern",
   bar_width = 0.6,
   columns_table_sig_superscript_letter = "b",
   columns_table_sig_superscript_letter_nudge_x = 3,
@@ -89,7 +89,7 @@ barplot_plot_frame <- plotsettings_tablebarplot(
   bar_label_size = 1.75,
   bar_line_width = 0.25,
   bar_pattern_fill_colour = c("yellow"),
-  bar_sig_type = "frame",
+  bar_type = "frame",
   bar_width = 0.4,
   default_list = barplot_table_plot_pattern
 )

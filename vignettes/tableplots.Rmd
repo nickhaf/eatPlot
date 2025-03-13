@@ -441,7 +441,13 @@ prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "m
 dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
 dat$y_axis <- c(rep(1, 3), rep(2, 3), rep(3, 3))
 
-
+plot_tablebarplot(dat, 
+                  bar_est = "est", 
+                  bar_fill = "parameter", 
+                    columns_table = c("bundesland", "est"), 
+                  y_axis = "y_axis", 
+                  plot_settings = plotsettings_tablebarplot()
+)
 
 stacked_bar_dat <- data.frame(
   bundesland = c(rep("Selbstkonzept", 3), rep("Interesse", 3)),
@@ -470,7 +476,7 @@ dat$x_axis_start <-  dat$x_axis_end - dat$est
           )
         )
 
-
-
+  
+  
 ```
 

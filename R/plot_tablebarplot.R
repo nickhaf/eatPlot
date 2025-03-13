@@ -53,7 +53,7 @@ plot_tablebarplot <- function(dat,
   if (is.null(y_axis)) {
     stop("Please provide a y-axis.")
   }
-  if (any(duplicated(dat[, y_axis]))) {
+  if (plotsettings$bartype != "stacked" & any(duplicated(dat[, y_axis]))) {
     stop("Your y-axis has to contain only unique values. Maybe you have to paste state_var and grouping_var into unique values?")
   }
   if (!is.numeric(dat[, bar_est]) & !is.null(bar_est)) {
@@ -214,6 +214,7 @@ plot_tablebarplot <- function(dat,
 
 
 
+
   ## Umgang mit Tabellen ohne Plot?
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
 
@@ -315,7 +316,7 @@ plot_tablebarplot <- function(dat,
         ) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         NULL
-    } else if (plot_settings$bar_sig_type == "pattern") {
+    } else if (plot_settings$bar_type == "pattern") {
       ## ggpattern can't deal with NAs, therefore convert them to FALSE (not significant):
 
       for (i in c(columns_table_sig_bold, columns_table_sig_superscript, bar_label_sig, "bar_sig")) {
@@ -348,7 +349,7 @@ plot_tablebarplot <- function(dat,
           pattern_key_scale_factor = 0.6 # legend adjustment
         ) +
         NULL
-    } else if (plot_settings$bar_sig_type == "frame") {
+    } else if (plot_settings$bar_type == "frame") {
       res_plot <- res_plot +
         ggnewscale::new_scale_fill() +
         ggplot2::geom_rect(
@@ -367,7 +368,11 @@ plot_tablebarplot <- function(dat,
         ggplot2::scale_linetype_manual(values = plot_settings$bar_frame_linetype) +
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         NULL
-    } else {
+    } else if (plot_settings$bartype == "stacked"{
+
+    })
+
+    else {
       message("`sig_type` must be either \"frame\" or \"pattern\"")
     }
   }
