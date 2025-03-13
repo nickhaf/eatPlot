@@ -435,7 +435,12 @@ tableplot_8.4
 ## Stacked barplot
 
 ```{r}
-stacked_bar_dat <- readRDS("C:/Users/hafiznij/Documents/GitHub/eatPlot/anteil.rds")
+
+prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "mittel", "hoch")) ## Gar nicht nötig?
+
+dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
+dat$y_axis <- c(rep(1, 3), rep(2, 3), rep(3, 3))
+
 
 
 stacked_bar_dat <- data.frame(
@@ -449,15 +454,15 @@ stacked_bar_dat <- data.frame(
 ## bartype = "stacked"
 ## Stacking-variable as extra argument
 
-stacked_bar_dat$x_axis_end <- ave(stacked_bar_dat$est, stacked_bar_dat$bundesland, FUN = cumsum)
-stacked_bar_dat$x_axis_start <-  stacked_bar_dat$x_axis_end - stacked_bar_dat$est
+dat$x_axis_end <- ave(dat$est, dat$Kgender, FUN = cumsum)
+dat$x_axis_start <-  dat$x_axis_end - dat$est
 
     
   ggplot2::ggplot() +
   ggplot2::geom_rect(
-          data = stacked_bar_dat,
+          data = dat,
           ggplot2::aes(
-            fill = stacked_grouping_var,
+            fill = parameter,
             xmin = .data$x_axis_start,
             xmax = .data$x_axis_end,
             ymin = .data$y_axis -0.5,
