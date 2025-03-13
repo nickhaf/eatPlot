@@ -608,6 +608,10 @@ sub_dash <- function(vec) {
 # Colours should be displayed in the order they are put in:
 construct_colour_scale <- function(colours, dat, colname) {
   if (is.null(names(colours)) & colname %in% colnames(dat)) {
+    if(length(colours) < length(unique(dat[, colname]))){
+      stop("You need to provide as many colours in `plotsettings$bar_fill_colour` as there are uinque values in your `bar_fill` column.")
+    }
+
     names(colours) <- unique(dat[, colname])
   }
   return(colours)

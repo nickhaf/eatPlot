@@ -70,7 +70,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$bar_nudge_y))
   stopifnot(all(is_colour(settings_list$bar_pattern_fill_colour)))
   stopifnot(is.character(settings_list$bar_pattern_type))
-  stopifnot(settings_list$bar_type %in% c("pattern", "frame", "stacked"))
+  stopifnot(settings_list$bar_type %in% c("default", "pattern", "frame", "stacked"))
   stopifnot(is.numeric(settings_list$bar_width))
   stopifnot(is.numeric(settings_list$column_spanners_nudge_y))
   stopifnot(is.numeric(settings_list$column_spanners_row_height))
@@ -118,7 +118,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_pattern_spacing Numeric for the gap between patterns.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
 #' @param bar_pattern_width Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the `bar_pattern_width` parameter will increase the thickness of the white stripes.
-#' @param bar_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern"), line type ("frame") or stacked barplot ("stacked").
+#' @param bar_type Character string defining the bar type. There are "default", pattern fill ("pattern"), "frame" or "stacked" barplot.
 #' @param bar_width Numeric between `0` and `1` specifying the width of the bar. Defaults to `0.4`.
 #' @param column_spanners_nudge_y Numeric vector to increase or decrease the space between column spanners text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to `-0.2`.
 #' @param column_spanners_row_height Numeric for the row height of the row the first level of column spanners is written in. Defaults to `1`.
@@ -237,7 +237,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "bar_nudge_y" = 0,
       "bar_pattern_fill_colour" = "white",
       "bar_pattern_type" = "none",
-      "bar_type" = "frame",
+      "bar_type" = "default",
       "bar_width" = 0.4,
       "column_spanners_nudge_y" = -0.2,
       "column_spanners_row_height" = 1,
