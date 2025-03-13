@@ -175,3 +175,29 @@ test_that("Vlines are plotted correctly", {
       )
   )
 })
+
+test_that("Stacked barplot works", {
+  prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "mittel", "hoch")) ## Gar nicht nötig?
+
+  dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
+  dat$y_axis <- c(rep(1, 3), rep(2, 3), rep(3, 3))
+  dat$subgroup_var <- dat$Kgender
+  dat$est <- dat$est * 100
+  dat$label <- paste0(dat$est, "%")
+
+p_stacked <- plot_tablebarplot(dat,
+                    bar_est = "est",
+                    bar_label = "label",
+                    bar_fill = "parameter",
+                    columns_table = c("subgroup_var"),
+                    y_axis = "y_axis",
+                    plot_settings = plotsettings_tablebarplot(bar_type = "stacked",
+                                                              bar_fill_colour = c("niedrig" = "red", "mittel" = "blue", "hoch" = "green")))
+
+vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
+
+
+
+})
+
+
