@@ -224,6 +224,7 @@ scale_breaks <- unique(c(
   x_axis_range <- diff(range(plot_borders))
 
   if (plot_settings$bar_type == "stacked") {
+    dat <- dat[with(dat, order(y_axis, bar_fill)), ]
     dat$x_axis_end <- ave(dat$bar_est, dat$subgroup_var, FUN = cumsum)
     dat$x_axis_start <- dat$x_axis_end - dat$est
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start)/2

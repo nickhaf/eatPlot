@@ -180,19 +180,34 @@ test_that("Stacked barplot works", {
   prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "mittel", "hoch")) ## Gar nicht nötig?
 
   dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
-  dat$y_axis <- c(rep(1, 3), rep(2, 3), rep(3, 3))
   dat$subgroup_var <- dat$Kgender
   dat$est <- dat$est * 100
   dat$label <- paste0(dat$est, "%")
+
+
+  na_row <- as.data.frame(matrix(NA, nrow = 1, ncol = ncol(dat)))
+  colnames(na_row) <- colnames(dat)
+  dat <- rbind(na_row, dat)
+dat[1, "var"] <- "**Deutsch**"
+
+dat$y_axis <- c(rep(1, 3), rep(2, 3), rep(3, 3), 4)
+
+#Currently, the order is steered by the bar_fill argument.
+dat$parameter <- factor(dat$parameter, levels = c("niedrig", "mittel", "hoch"), ordered = TRUE)
+
 
 p_stacked <- plot_tablebarplot(dat,
                     bar_est = "est",
                     bar_label = "label",
                     bar_fill = "parameter",
-                    columns_table = c("subgroup_var"),
+                    columns_table = c("var", "subgroup_var"),
+                    headers = c("**Merkmal**", "", ""),
                     y_axis = "y_axis",
-                    plot_settings = plotsettings_tablebarplot(bar_type = "stacked",
-                                                              bar_fill_colour = c("niedrig" = "red", "mittel" = "blue", "hoch" = "green")))
+                    plot_settings = plotsettings_tablebarplot(
+                      bar_type = "stacked",
+                      bar_fill_colour = c("niedrig" = "red", "mittel" = "blue", "hoch" = "green")))
+
+
 
 vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
 
