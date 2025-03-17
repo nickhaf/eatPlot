@@ -94,10 +94,7 @@ plot_tablebarplot <- function(dat,
   columns_round <- check_length(columns_round, length(columns_table), fill = columns_round)
   columns_table_sig_bold <- check_length(columns_table_sig_bold, length(columns_table), leng_1 = FALSE)
   columns_table_sig_superscript <- check_length(columns_table_sig_superscript, length(columns_table), leng_1 = FALSE)
-
   columns_table_se <- check_length(columns_table_se, length(columns_table), leng_1 = FALSE)
-
-
 
   plot_settings$columns_alignment <- check_length(plot_settings$columns_alignment, length(columns_table), fill = plot_settings$columns_alignment[1])
   plot_settings$columns_nudge_x <- check_length(plot_settings$columns_nudge_x, length(columns_table), fill = plot_settings$columns_nudge_x[1])
@@ -189,10 +186,13 @@ plot_tablebarplot <- function(dat,
 
   # Build data --------------------------------------------------------------
   dat$x_min <- rep(0, nrow(dat))
+
+  ## Build the y_axis by position in the given data.
   if (!is.factor(dat$y_axis)) {
     dat$y_axis <- factor(dat$y_axis, levels = unique(dat$y_axis))
   }
-  dat$y_axis <- rev(as.integer(dat$y_axis))
+
+  dat$y_axis <- max(as.integer(dat$y_axis)) + 1 - as.integer(dat$y_axis)
   dat$background_colour <- plot_settings$background_stripes_colour
 
   if (length(plot_settings$bar_nudge_y) != 1 & length(plot_settings$bar_nudge_y) != nrow(dat)) {
@@ -224,11 +224,34 @@ scale_breaks <- unique(c(
   x_axis_range <- diff(range(plot_borders))
 
   if (plot_settings$bar_type == "stacked") {
-    dat$x_axis_end <- ave(dat$bar_est, dat$subgroup_var, FUN = cumsum)
+    ## Remove duplicates: within each group
+    # Split data by y_axis, remove duplicates in each group, and combine back
+
+    ## and check for duplicates before
+    remove_column_duplicates <- function(df, cols) {
+      df[, cols] <- lapply(df[ , cols], function(col) {
+        duplicated_mask <- duplicated(col)  # Find duplicates
+        col[duplicated_mask] <- NA          # Replace duplicates with NA
+        return(col)
+      })
+      return(df)
+    }
+    # Apply function to each y_axis group
+    ## RN,it seems like the rows get reordered.
+    dat$row_id <- 1:nrow(dat)
+    dat2 <- do.call(rbind, lapply(split(dat, dat$y_axis), remove_column_duplicates, !colnames(dat) %in% c("bar_nudge_y", "y_axis")))
+
+dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
+    # Reset row names
+    rownames(dat) <- NULL
+
+    dat <- dat[with(dat, order(y_axis, bar_fill)), ]
+    dat$x_axis_end <- ave(dat$bar_est, dat$y_axis, FUN = cumsum)
     dat$x_axis_start <- dat$x_axis_end - dat$est
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start)/2
-  }
 
+
+  }
 
   ## Umgang mit Tabellen ohne Plot?
   ## Angabe benötigt was die range für den Plot ist, dann relativ easy berechenbar.
@@ -369,7 +392,6 @@ scale_breaks <- unique(c(
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         NULL
     } else if (plot_settings$bar_type == "stacked") {
-
       res_plot <- res_plot +
         ggnewscale::new_scale_fill() +
         ggplot2::geom_rect(

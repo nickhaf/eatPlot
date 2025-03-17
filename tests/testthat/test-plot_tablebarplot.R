@@ -179,20 +179,79 @@ test_that("Vlines are plotted correctly", {
 test_that("Stacked barplot works", {
   prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "mittel", "hoch")) ## Gar nicht nötig?
 
+  ## Zur not muss man sich die benötigten Parameter selbst zusammenfiltern und dann cbinden
+
   dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
-  dat$y_axis <- c(rep(1, 3), rep(2, 3), rep(3, 3))
   dat$subgroup_var <- dat$Kgender
   dat$est <- dat$est * 100
   dat$label <- paste0(dat$est, "%")
 
+
+
+  na_row <- as.data.frame(matrix(NA, nrow = 1, ncol = ncol(dat)))
+  colnames(na_row) <- colnames(dat)
+  dat <- rbind(na_row, dat)
+dat[1, "var"] <- "**Deutsch**"
+
+dat$y_axis <- c(4, rep(1, 3), rep(2, 3), rep(3, 3))
+dat <- dat[order(dat$y_axis, decreasing = TRUE), ]
+dat$mean <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
+dat$sd <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
+
+#Currently, the order is steered by the bar_fill argument.
+dat$parameter <- factor(dat$parameter, levels = c("niedrig", "mittel", "hoch"), ordered = TRUE)
+
+
+## Everything that is in a stacked group needs to be duplicated per group and therefore, duplicates can be removed.
+
+column_widths_stand <- standardize_column_width(
+  column_widths = list(
+    p1 = c(0.25, 0.25, NA),
+    p2 = c(0.25, 0.25),
+  ),
+  plot_ranges = c(40, 50, 20) # Range of the x-axes of both plots set in 'axis_x_lims'.
+)
+
+library(ggview)
 p_stacked <- plot_tablebarplot(dat,
                     bar_est = "est",
                     bar_label = "label",
                     bar_fill = "parameter",
-                    columns_table = c("subgroup_var"),
+                    columns_table = c("var", "subgroup_var"),
+                    headers = c("**Merkmal**", "", ""),
                     y_axis = "y_axis",
-                    plot_settings = plotsettings_tablebarplot(bar_type = "stacked",
-                                                              bar_fill_colour = c("niedrig" = "red", "mittel" = "blue", "hoch" = "green")))
+                    plot_settings = plotsettings_tablebarplot(
+                      bar_type = "stacked",
+                      bar_fill_colour = c("niedrig" =  "#EBFDF3", "mittel" = "#8DEBBC", "hoch" = "#20D479"),
+                      columns_alignment = c(0, 0.5),
+                    default_list = barplot_table_plot_pattern)) +
+  canvas(210, 226.2/3,  units = "mm")
+
+## Remove duplicates in relevant rows
+dat_table <- dat[!duplicated(dat[, c("mean", "sd", "y_axis")]), c("y_axis","mean", "sd")]
+
+p_table <- plot_tablebarplot(
+  dat_table,
+  columns_table = c("mean", "sd"),
+  headers = c("**M**", "**SD**"),
+  y_axis = "y_axis",
+  plot_settings = plotsettings_tablebarplot(
+      columns_alignment = c(0, 0.5),
+    columns_width = c(0.5, 0.5),
+  default_list = barplot_table_plot_pattern))
+
+
+
+## This doesn't work because thhe axis of both plots is not the same because the second one doesn't have a
+## bar
+## 1) Check how the axis is set, if no bar is present.
+
+## Great, just by providing plot_width, I can set the width manually.
+## In the function for calculating the table widths, I can also implement an optional argument, where the manually set plot_width can be provided to standardize the column widths.
+p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.5, 0.5))
+
+save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 226.2 / 3)
+
 
 vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
 
