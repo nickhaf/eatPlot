@@ -187,7 +187,6 @@ test_that("Stacked barplot works", {
   dat$label <- paste0(dat$est, "%")
 
 
-
   na_row <- as.data.frame(matrix(NA, nrow = 1, ncol = ncol(dat)))
   colnames(na_row) <- colnames(dat)
   dat <- rbind(na_row, dat)
