@@ -196,10 +196,18 @@ dat$y_axis <- c(4, rep(1, 3), rep(2, 3), rep(3, 3))
 dat <- dat[order(dat$y_axis, decreasing = TRUE), ]
 dat$mean <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
 dat$sd <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
+dat$diff <- c(NA, NA, NA, NA, 0.18, 0.18, 0.18, NA, NA, NA)
+dat$se <- c(NA, NA, NA, NA, 0.08, 0.08, 0.08, NA, NA, NA)
+dat$d <- c(NA, NA, NA, NA, 0.28, 0.28, 0.28, NA, NA, NA)
 
 #Currently, the order is steered by the bar_fill argument.
 dat$parameter <- factor(dat$parameter, levels = c("niedrig", "mittel", "hoch"), ordered = TRUE)
 
+dat_eng <- dat
+dat_eng[1, "var"] <-  "**Englisch**"
+dat_eng$y_axis <- c(8, rep(5, 3), rep(6, 3), rep(7, 3))
+
+dat <- rbind(dat, dat_eng)
 
 ## Everything that is in a stacked group needs to be duplicated per group and therefore, duplicates can be removed.
 
@@ -223,20 +231,24 @@ p_stacked <- plot_tablebarplot(dat,
                       bar_type = "stacked",
                       bar_fill_colour = c("niedrig" =  "#EBFDF3", "mittel" = "#8DEBBC", "hoch" = "#20D479"),
                       columns_alignment = c(0, 0.5),
-                    default_list = barplot_table_plot_pattern)) +
-  canvas(210, 226.2/3,  units = "mm")
+                      background_stripes_colour =  c("white", rep("#EBFDF3", 3), rep("white", 3), rep("#EBFDF3", 3)), columns_width = c(0.2, 0.15, 0.65),
+                      bar_label_size = 1.4,
+                      bar_label_nudge_x =rep(0.5, 20),
+                    default_list = barplot_table_plot_pattern))
 
 ## Remove duplicates in relevant rows
-dat_table <- dat[!duplicated(dat[, c("mean", "sd", "y_axis")]), c("y_axis","mean", "sd")]
+dat_table <- dat[!duplicated(dat[,  c("mean", "sd", "diff", "se", "d", "y_axis")]), c("y_axis","mean", "sd", "diff", "se", "d")]
 
 p_table <- plot_tablebarplot(
   dat_table,
-  columns_table = c("mean", "sd"),
-  headers = c("**M**", "**SD**"),
+  columns_table = c("mean", "sd", "diff", "se", "d"),
+  headers = c("***M***", "***SD***", "***M<sub>M</sub> - M<sub>J</sub>***", "***(SE)***", "***d***"),
   y_axis = "y_axis",
+  columns_round = c(2, 2, 2, 2,2),
   plot_settings = plotsettings_tablebarplot(
-      columns_alignment = c(0, 0.5),
-    columns_width = c(0.5, 0.5),
+      columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
+    columns_width = rep(0.2, 5),
+    background_stripes_colour =  c("white", "#EBFDF3", "white",  "#EBFDF3"),
   default_list = barplot_table_plot_pattern))
 
 
@@ -247,9 +259,10 @@ p_table <- plot_tablebarplot(
 
 ## Great, just by providing plot_width, I can set the width manually.
 ## In the function for calculating the table widths, I can also implement an optional argument, where the manually set plot_width can be provided to standardize the column widths.
-p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.5, 0.5))
+p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  #+
+  #canvas(210, 297.2/4,  units = "mm")
 
-save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 226.2 / 3)
+save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/4, width = 210)
 
 
 vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
