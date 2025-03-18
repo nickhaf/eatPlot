@@ -253,7 +253,7 @@ p_stacked <- plot_tablebarplot(dat,
   ggplot2::theme(axis.ticks.x = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
 
 ## Remove duplicates in relevant rows
-dat_table <- dat[!duplicated(dat[,  c("mean", "sd", "diff", "se", "d", "y_axis")]), c("y_axis","mean", "sd", "diff", "se", "d")]
+dat_table <- dat[!duplicated(dat[,  c("mean", "sd", "diff", "se", "d", "y_axis", "sig")]), c("y_axis","mean", "sd", "diff", "se", "d", "sig")]
 
 p_table <- plot_tablebarplot(
   dat_table,
@@ -262,7 +262,7 @@ p_table <- plot_tablebarplot(
   columns_table_se = list(NULL, NULL, NULL, "se", NULL),
   y_axis = "y_axis",
   columns_round = c(2, 2, 2, 2,2),
-  columns_table_sig_bold = c(NULL, NULL, 'sig', NULL, 'sig'),
+  columns_table_sig_bold = list(NULL, NULL, 'sig', NULL, 'sig'),
   plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
     columns_width = rep(0.2, 5),
@@ -271,21 +271,13 @@ p_table <- plot_tablebarplot(
   default_list = barplot_table_plot_pattern))
 
 
-
-## This doesn't work because thhe axis of both plots is not the same because the second one doesn't have a
-## bar
-## 1) Check how the axis is set, if no bar is present.
-
-## Great, just by providing plot_width, I can set the width manually.
-## In the function for calculating the table widths, I can also implement an optional argument, where the manually set plot_width can be provided to standardize the column widths.
 p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  +
   canvas(210, 297.2/4,  units = "mm")
 
-# save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/4, width = 210)
+save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/6, width = 210)
 
 
 vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
-
 
 
 })
