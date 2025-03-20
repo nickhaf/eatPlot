@@ -35,7 +35,7 @@ gender_prepped_sub <- subset(gender_prepped, subgroup_var == "maennlich")
 gender_prepped <- gender_prepped_sub[order(gender_prepped_sub$state_var), ]
 gender_prepped$y_axis <- 1:nrow(gender_prepped)
 
-gender_prepped$state_var <- process_bundesland(gender_prepped$state_var, linebreak = TRUE)
+gender_prepped$state_var <- process_bundesland(gender_prepped$state_var, linebreak = FALSE)
 ```
 
 The tables need some more work, because they need to be connected with the barplot, but only have half the rows.
@@ -85,24 +85,33 @@ tableplot_6.5 <- plot_tablebarplot(
     "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
   ),
   columns_table_sig_bold = list(NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"),
-  # columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"),
+  columns_table_sig_superscript = list(NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen", 
+                                       NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
   columns_table_se = list(NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL),
   headers = list("Land", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    columns_nudge_y = c(-0.25, rep(-0.5, 3), rep(0.5, 3)),
+    axis_x_lims = c(-3, 40),
+    columns_nudge_y = c(-0.5, rep(-0.5, 3), rep(0.5, 3)),
+    font_size = 2.5, 
+    headers_alignment = c(0, rep(2, 6), 0.5),
+    headers_nudge_x = rep(0, 8),
+    headers_font_size = 2.5, 
+    columns_width = c(0.17, rep(0.075, 6), 0.38),
     default_list = abb_6.5
   )
-)
+) +
+  canvas(160, 100,  units = "mm")
+  
 ```
 
 Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 210, height = 297/3, scaling = 0.9)
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 160, height = 100, scaling =1)
 ```
 
 ```{r}
