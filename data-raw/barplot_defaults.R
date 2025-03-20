@@ -49,6 +49,8 @@ abb_6.6 <- plotsettings_tablebarplot(
   bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
   background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
+  font_size = 2,
+  headers_font_size = 2,
   default_list = barplot_table_plot_pattern
 )
 usethis::use_data(abb_6.6, overwrite = TRUE)
@@ -56,9 +58,11 @@ usethis::use_data(abb_6.6, overwrite = TRUE)
 
 abb_8.4 <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
-  column_spanners_2_row_height = 2,
+  column_spanners_2_row_height = 1.5,
   headers_row_height = 2,
   headers_ggtext = FALSE,
+  font_size = 2.2,
+  headers_font_size = 2.2,
   default_list = barplot_table_plot_pattern
 )
 
