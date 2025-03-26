@@ -148,7 +148,7 @@ lineplot_germany <- plot_lineplot(
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 185, width = 118, scaling = 1)
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf", height = 185, width = 118, scaling = 1)
 ```
 
 
@@ -178,6 +178,6 @@ lineplot_germany <- plot_lineplot(
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 185, width = 118, scaling = 1)
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185, width = 118, scaling = 1)
 ```
 
