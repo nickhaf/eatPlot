@@ -45,12 +45,13 @@ lineplot_1 <- plot_lineplot(dat_lineplot_1,
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   plot_settings = plotsettings_lineplot(
 default_list = lineplot_4x4)
-)
+) #+
+  #ggview:: canvas(160, 180, units = "mm")
 ```
 
 ```{r save lineplot_1_group}
 #| eval: false
-save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf", scaling = 0.7)
+save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf", width = 160, height = 185, ,scaling = 1)
 ```
 
 ```{r}
@@ -79,15 +80,15 @@ lineplot_2 <- plot_lineplot(
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    subgroup_colours = c(weiblich = "#000000", maennlich = "#999999"), ## Here we determine the colours of the subgroups
+    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     default_list = lineplot_4x4
   )
-)
+) 
 ```
 
 ```{r}
 #| eval: false
-save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf", scaling = 0.7)
+save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf", width = 160, height = 185, scaling = 1)
 ```
 
 ```{r}
@@ -97,7 +98,7 @@ lineplot_2
 
 
 
-## Lineplot for whole Germany 
+## Lineplot for whole Germany 3x2
 
 
 ```{r}
@@ -107,29 +108,76 @@ trend_ger <- subset(trend_ger, state_var == "total")
 trend_ger$subgroup_var <- factor(trend_ger$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
 trend_ger$kb <- gsub("hoeren", "Hören", trend_ger$kb)
 trend_ger$kb <- gsub("lesen", "Lesen", trend_ger$kb)
+
+trend_ger_2 <- trend_ger
+trend_ger_3 <- trend_ger
+
+trend_ger_2$kb <- gsub("Lesen", "Englisch: Reading", trend_ger_2$kb)
+trend_ger_2$kb <- gsub("Hören", "Englisch: Listening", trend_ger_2$kb)
+
+
+trend_ger_3$kb <- gsub("Lesen", "Biologie: Fachwissen", trend_ger_3$kb)
+trend_ger_3$kb <- gsub("Hören", "Biologie: Erkenntnisgewinnung", trend_ger_3$kb)
+
+
+trend_total <- rbind(trend_ger, trend_ger_2, trend_ger_3)
 ```
 
 ```{r}
 lineplot_germany <- plot_lineplot(
-  trend_ger,
+  trend_total,
  point_sig = NULL,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   facet_var = "kb",
-  background_facet = "total",
+  # background_facet = "total",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    brace_label_nudge_x = 0.3,
+    brace_label_nudge_x = 0.21,
     split_plot = FALSE,
-    background_lines = FALSE,
-    subgroup_colours = c(weiblich = "#000000", maennlich = "#999999"), ## Here we determine the colours of the subgroups
-    margin_top = 0.05,
+    background_lines = TRUE,
+    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+   # margin_top = 0,
+  # margin_bottom = 0,
+    n_cols = 2, 
     default_list = lineplot_4x4
   )
-)
+) +
+  ggview:: canvas(118, 185, units = "mm")
 ```
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 297/4, scaling = 0.7)
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 185, width = 118, scaling = 1)
 ```
+
+
+## Lineplot for whole Germany 2x3 with split plot
+```{r}
+lineplot_germany <- plot_lineplot(
+  trend_total,
+ point_sig = NULL,
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  facet_var = "kb",
+  # background_facet = "total",
+  background_subgroup = "total",
+  plot_settings = plotsettings_lineplot(
+    brace_label_nudge_x = 0.21,
+    split_plot = FALSE,
+    background_lines = TRUE,
+    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+   # margin_top = 0,
+  # margin_bottom = 0,
+    n_cols = 3, 
+    default_list = lineplot_4x4
+  )
+) +
+  ggview:: canvas(160, 185*2/3, units = "mm")
+```
+
+```{r}
+#| eval: false
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany.pdf", height = 185, width = 118, scaling = 1)
+```
+

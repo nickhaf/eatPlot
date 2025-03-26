@@ -25,7 +25,6 @@ kap6Dat <- getTrendGADS(
 datK6Trend <- extractData2(kap6Dat,
                            labels2character = c("TR_BUNDESLAND", "kb", "TR_SCHULFORM", "Kgender"))
 
-
 trend_gender <- lapply(c("lesen", "hoeren"), function(my_kb) {
   datK6.Trend.auswahl <- subset(datK6Trend, kb == my_kb)
 

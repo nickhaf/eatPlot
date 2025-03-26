@@ -37,7 +37,7 @@ abb_6.5 <- plotsettings_tablebarplot(
   headers_row_height = 2,
   column_spanners_row_height = 1.5,
   columns_width = c(0.1, rep(0.075, 6), 0.45),
-  background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
+  background_stripes_colour = c(rep(c("white", "white", cmyk(7,0,4,1), cmyk(7,0,4,1)), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
   default_list = barplot_table_plot_pattern
 )
@@ -47,7 +47,7 @@ usethis::use_data(abb_6.5, overwrite = TRUE)
 
 abb_6.6 <- plotsettings_tablebarplot(
   bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
-  background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
+  background_stripes_colour = c(rep(c("white", "white", cmyk(7,0,4,1), cmyk(7,0,4,1)), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
   font_size = 2,
   headers_font_size = 2,
@@ -57,7 +57,7 @@ usethis::use_data(abb_6.6, overwrite = TRUE)
 
 
 abb_8.4 <- plotsettings_tablebarplot(
-  background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
+  background_stripes_colour = c(rep(c("white", cmyk(7,0,4,1)), 8), "grey"),
   column_spanners_2_row_height = 1.5,
   headers_row_height = 2,
   headers_ggtext = FALSE,
