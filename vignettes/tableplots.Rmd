@@ -200,6 +200,7 @@ p_1 <- plot_tablebarplot(
     columns_width = column_widths_stand$p1, ## This is the column-width object we set above
     columns_table_sig_superscript_letter = "a",
     columns_table_sig_superscript_letter_nudge_x = 5.5,
+    columns_nudge_y = c(-0.5, rep(0, 11)),
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     headers_row_height = 1.75,
     default_list = abb_6.6
