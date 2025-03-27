@@ -164,7 +164,7 @@ column_widths_stand <- standardize_column_width(
     p1 = c(0.085, 0.05, rep(0.035, 6), 0.015, rep(0.035, 3), NA),
     p2 = c(rep(0.035, 3), NA)
   ),
-  plot_ranges = c(140, 140) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  plot_ranges = c(140, 142) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 ```
 
@@ -233,7 +233,7 @@ p_2 <- plot_tablebarplot(
   y_axis = "y_axis",
   columns_round = c(0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-70, 70),
+    axis_x_lims = c(-70, 72),
     bar_pattern_spacing = 0.0362, ## We calculated this below in standardize_pattern_spacing()
     columns_alignment = c(0.5, 2, 2),
     columns_width = column_widths_stand$p2, ## This is the column-width object we set above

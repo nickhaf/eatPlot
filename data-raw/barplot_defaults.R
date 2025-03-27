@@ -1,7 +1,8 @@
 ## code to prepare `barplot_table_plot_pattern` dataset goes here
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
-  axis_x_label_size = 4,
+  axis_x_label_size = 5,
   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3)),
+  bar_background_lines_colour = "grey55",
   bar_background_lines = "scale_breaks",
   bar_background_lines_linetype = "dotted",
   bar_fill_colour = c(
