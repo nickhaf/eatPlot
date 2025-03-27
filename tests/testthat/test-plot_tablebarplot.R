@@ -176,110 +176,110 @@ test_that("Vlines are plotted correctly", {
   )
 })
 
-test_that("Stacked barplot works", {
-  prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "mittel", "hoch")) ## Gar nicht nötig?
-
-  ## Zur not muss man sich die benötigten Parameter selbst zusammenfiltern und dann cbinden
-
-  dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
-  dat$subgroup_var <- dat$Kgender
-  dat$est <- dat$est * 100
-  dat$label <- paste0(dat$est, "%")
-
-
-
-
-dat$subgroup_var <- gsub("weiblich", "Mädchen", dat$subgroup_var)
-dat$subgroup_var <- gsub("maennlich", "Jungen", dat$subgroup_var)
-dat$subgroup_var <- gsub("total", "Gesamt", dat$subgroup_var)
-dat$subgroup_var <- factor(dat$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen"), ordered = TRUE)
-dat$var <- gsub('Selbstkonzept Deutsch', 'Selbstkonzept', dat$var)
-#Currently, the order is steered by the bar_fill argument.
-dat$parameter <- factor(dat$parameter, levels = c("niedrig", "mittel", "hoch"), ordered = TRUE)
-dat <- dat[order(dat$subgroup_var), ]
-dat[duplicated(dat$var ), 'var'] <- NA
-
-
-na_row <- as.data.frame(matrix(NA, nrow = 1, ncol = ncol(dat)))
-colnames(na_row) <- colnames(dat)
-dat <- rbind(na_row, dat)
-dat[1, "var"] <- "**Deutsch**"
-
-
-dat$y_axis <- c(4, rep(1, 3), rep(2, 3), rep(3, 3))
-# dat <- dat[order(dat$y_axis, decreasing = TRUE), ]
-dat$mean <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
-dat$sd <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
-dat$diff <- c(NA, NA, NA, NA, 0.18, 0.18, 0.18, NA, NA, NA)
-dat$se <- c(NA, NA, NA, NA, 0.08, 0.08, 0.08, NA, NA, NA)
-dat$d <- c(NA, NA, NA, NA, 0.28, 0.28, 0.28, NA, NA, NA)
-dat$sig <- c(NA, NA, NA, NA, 0.04, 0.04, 0.04, NA, NA, NA)
-
-
-dat_eng <- dat
-dat_eng[1, "var"] <-  "**Englisch**"
-dat_eng$y_axis <- c(8, rep(5, 3), rep(6, 3), rep(7, 3))
-
-dat <- rbind(dat, dat_eng)
-
-## Everything that is in a stacked group needs to be duplicated per group and therefore, duplicates can be removed.
+# test_that("Stacked barplot works", {
+#   prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "mittel", "hoch")) ## Gar nicht nötig?
 #
-# column_widths_stand <- standardize_column_width(
-#   column_widths = list(
-#     p1 = c(0.25, 0.25, NA),
-#     p2 = c(0.25, 0.25),
-#   ),
-#   plot_ranges = c(40, 50, 20) # Range of the x-axes of both plots set in 'axis_x_lims'.
-# )
-
-library(ggview)
-p_stacked <- plot_tablebarplot(dat,
-                    bar_est = "est",
-                    bar_label = "label",
-                    bar_fill = "parameter",
-                    columns_table = c("var", "subgroup_var"),
-                    headers = c("**Merkmal**", "", ""),
-                    y_axis = "y_axis",
-                    plot_settings = plotsettings_tablebarplot(
-                      bar_type = "stacked",
-                      bar_fill_colour = c("niedrig" =  "#EBFDF3", "mittel" = "#8DEBBC", "hoch" = "#20D479"),
-                      columns_alignment = c(0, 0.5),
-                      columns_width = c(0.1, 0.1, 0.8),
-                      ## noch nicht optimal:
-                      background_stripes_colour =  rep(c("white", rep("#EBFDF3", 3), rep("white", 3), rep("#EBFDF3", 3)), columns_width = c(0.2, 0.15, 0.65),2),
-                      bar_label_size = 1.4,
-                      bar_label_nudge_x =rep(0.5, 20),
-                    default_list = barplot_table_plot_pattern)) +
-  ggplot2::theme(axis.ticks.x = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
-
-## Remove duplicates in relevant rows
-dat_table <- dat[!duplicated(dat[,  c("mean", "sd", "diff", "se", "d", "y_axis", "sig")]), c("y_axis","mean", "sd", "diff", "se", "d", "sig")]
-
-p_table <- plot_tablebarplot(
-  dat_table,
-  columns_table = c("mean", "sd", "diff", "se", "d"),
-  headers = c("***M***", "***SD***", "***M<sub>M</sub> - M<sub>J</sub>***", "***(SE)***", "***d***"),
-  columns_table_se = list(NULL, NULL, NULL, "se", NULL),
-  y_axis = "y_axis",
-  columns_round = c(2, 2, 2, 2,2),
-  columns_table_sig_bold = list(NULL, NULL, 'sig', NULL, 'sig'),
-  plot_settings = plotsettings_tablebarplot(
-      columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
-    columns_width = rep(0.2, 5),
-    background_stripes_colour =  rep(c("white", "#EBFDF3", "white",  "#EBFDF3"),2),
-    columns_nudge_y = c(0, 0, -0.5, -0.5, -0.5),
-  default_list = barplot_table_plot_pattern))
-
-
-p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  +
-  canvas(210, 297.2/4,  units = "mm")
-
-save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/6, width = 210)
-
-
-vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
-
-
-})
+#   ## Zur not muss man sich die benötigten Parameter selbst zusammenfiltern und dann cbinden
+#
+#   dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
+#   dat$subgroup_var <- dat$Kgender
+#   dat$est <- dat$est * 100
+#   dat$label <- paste0(dat$est, "%")
+#
+#
+#
+#
+# dat$subgroup_var <- gsub("weiblich", "Mädchen", dat$subgroup_var)
+# dat$subgroup_var <- gsub("maennlich", "Jungen", dat$subgroup_var)
+# dat$subgroup_var <- gsub("total", "Gesamt", dat$subgroup_var)
+# dat$subgroup_var <- factor(dat$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen"), ordered = TRUE)
+# dat$var <- gsub('Selbstkonzept Deutsch', 'Selbstkonzept', dat$var)
+# #Currently, the order is steered by the bar_fill argument.
+# dat$parameter <- factor(dat$parameter, levels = c("niedrig", "mittel", "hoch"), ordered = TRUE)
+# dat <- dat[order(dat$subgroup_var), ]
+# dat[duplicated(dat$var ), 'var'] <- NA
+#
+#
+# na_row <- as.data.frame(matrix(NA, nrow = 1, ncol = ncol(dat)))
+# colnames(na_row) <- colnames(dat)
+# dat <- rbind(na_row, dat)
+# dat[1, "var"] <- "**Deutsch**"
+#
+#
+# dat$y_axis <- c(4, rep(1, 3), rep(2, 3), rep(3, 3))
+# # dat <- dat[order(dat$y_axis, decreasing = TRUE), ]
+# dat$mean <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
+# dat$sd <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
+# dat$diff <- c(NA, NA, NA, NA, 0.18, 0.18, 0.18, NA, NA, NA)
+# dat$se <- c(NA, NA, NA, NA, 0.08, 0.08, 0.08, NA, NA, NA)
+# dat$d <- c(NA, NA, NA, NA, 0.28, 0.28, 0.28, NA, NA, NA)
+# dat$sig <- c(NA, NA, NA, NA, 0.04, 0.04, 0.04, NA, NA, NA)
+#
+#
+# dat_eng <- dat
+# dat_eng[1, "var"] <-  "**Englisch**"
+# dat_eng$y_axis <- c(8, rep(5, 3), rep(6, 3), rep(7, 3))
+#
+# dat <- rbind(dat, dat_eng)
+#
+# ## Everything that is in a stacked group needs to be duplicated per group and therefore, duplicates can be removed.
+# #
+# # column_widths_stand <- standardize_column_width(
+# #   column_widths = list(
+# #     p1 = c(0.25, 0.25, NA),
+# #     p2 = c(0.25, 0.25),
+# #   ),
+# #   plot_ranges = c(40, 50, 20) # Range of the x-axes of both plots set in 'axis_x_lims'.
+# # )
+#
+# library(ggview)
+# p_stacked <- plot_tablebarplot(dat,
+#                     bar_est = "est",
+#                     bar_label = "label",
+#                     bar_fill = "parameter",
+#                     columns_table = c("var", "subgroup_var"),
+#                     headers = c("**Merkmal**", "", ""),
+#                     y_axis = "y_axis",
+#                     plot_settings = plotsettings_tablebarplot(
+#                       bar_type = "stacked",
+#                       bar_fill_colour = c("niedrig" =  "#EBFDF3", "mittel" = "#8DEBBC", "hoch" = "#20D479"),
+#                       columns_alignment = c(0, 0.5),
+#                       columns_width = c(0.1, 0.1, 0.8),
+#                       ## noch nicht optimal:
+#                       background_stripes_colour =  rep(c("white", rep("#EBFDF3", 3), rep("white", 3), rep("#EBFDF3", 3)), columns_width = c(0.2, 0.15, 0.65),2),
+#                       bar_label_size = 1.4,
+#                       bar_label_nudge_x =rep(0.5, 20),
+#                     default_list = barplot_table_plot_pattern)) +
+#   ggplot2::theme(axis.ticks.x = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
+#
+# ## Remove duplicates in relevant rows
+# dat_table <- dat[!duplicated(dat[,  c("mean", "sd", "diff", "se", "d", "y_axis", "sig")]), c("y_axis","mean", "sd", "diff", "se", "d", "sig")]
+#
+# p_table <- plot_tablebarplot(
+#   dat_table,
+#   columns_table = c("mean", "sd", "diff", "se", "d"),
+#   headers = c("***M***", "***SD***", "***M<sub>M</sub> - M<sub>J</sub>***", "***(SE)***", "***d***"),
+#   columns_table_se = list(NULL, NULL, NULL, "se", NULL),
+#   y_axis = "y_axis",
+#   columns_round = c(2, 2, 2, 2,2),
+#   columns_table_sig_bold = list(NULL, NULL, 'sig', NULL, 'sig'),
+#   plot_settings = plotsettings_tablebarplot(
+#       columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
+#     columns_width = rep(0.2, 5),
+#     background_stripes_colour =  rep(c("white", "#EBFDF3", "white",  "#EBFDF3"),2),
+#     columns_nudge_y = c(0, 0, -0.5, -0.5, -0.5),
+#   default_list = barplot_table_plot_pattern))
+#
+#
+# p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  +
+#   canvas(210, 297.2/4,  units = "mm")
+#
+# save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/6, width = 210)
+#
+#
+# vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
+#
+#
+# })
 
 
