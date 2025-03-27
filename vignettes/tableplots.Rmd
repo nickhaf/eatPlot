@@ -85,32 +85,33 @@ tableplot_6.5 <- plot_tablebarplot(
     "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
   ),
   columns_table_sig_bold = list(NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"),
-  columns_table_sig_superscript = list(NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen", 
-                                       NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"),
+  columns_table_sig_superscript = list(
+    NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen",
+    NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"
+  ),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
   columns_table_se = list(NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL),
-  headers = list("Land", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
+  headers = list("**Land**", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
     axis_x_lims = c(0, 70),
     columns_nudge_y = c(-0.5, rep(-0.5, 3), rep(0.5, 3)),
-    font_size = 2.3, 
+    font_size = 2.3,
     headers_alignment = c(0, rep(2, 6), 0.5),
     headers_nudge_x = rep(0, 8),
-    headers_font_size = 2.3, 
+    headers_font_size = 2.3,
     columns_width = c(0.17, rep(0.075, 6), 0.38),
     default_list = abb_6.5
   )
 )
-  
 ```
 
 Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 160, height = 90, scaling =1)
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 160, height = 90, scaling = 1)
 ```
 
 ```{r}
@@ -160,7 +161,7 @@ To do that, we will have to set the column widths, so they are identical over th
 ```{r}
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.085, 0.05, rep(0.035, 6), 0.015, rep(0.035, 3),  NA),
+    p1 = c(0.085, 0.05, rep(0.035, 6), 0.015, rep(0.035, 3), NA),
     p2 = c(rep(0.035, 3), NA)
   ),
   plot_ranges = c(140, 140) # Range of the x-axes of both plots set in 'axis_x_lims'.
@@ -182,14 +183,14 @@ p_1 <- plot_tablebarplot(
     "**2022**" = c(7, 8),
     "**Differenz 2015-2009**" = c(10, 13)
   ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL),
   headers = list("**Land**", " ", "*M*", "*SD*", "*M*", "*SD*", "*M*", "*SD*", "", "*M<sub>2015</sub>-<br>M<sub>2009</sub>* ", "*(SE)*", "*d*", " "),
   columns_table = c("state_var", "subgroup_var", "est_mean_comp_none_2009", "est_sd_comp_none_2009", "est_mean_comp_none_2015", "est_sd_comp_none_2015", "est_mean_comp_none_2022", "est_sd_comp_none_2022", "empty", "est_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", "es_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"),
   columns_table_sig_bold = list(
     NULL, NULL, "sig_mean_comp_none_2009",
     NULL, "sig_mean_comp_none_2015", NULL, "sig_mean_comp_none_2022", NULL, NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"
   ),
-  columns_table_sig_superscript = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup_2009_2015", NULL, NULL),
+  columns_table_sig_superscript = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup_2009_2015", NULL, NULL),
   y_axis = "y_axis",
   columns_round = c(rep(0, 11), 2),
   plot_settings = plotsettings_tablebarplot(
@@ -197,8 +198,8 @@ p_1 <- plot_tablebarplot(
     bar_pattern_spacing = 0.0138, ## We calculated this below in standardize_pattern_spacing()
     columns_alignment = c(0, 0, rep(2, 10)),
     columns_width = column_widths_stand$p1, ## This is the column-width object we set above
-        columns_table_sig_superscript_letter  = "a",
-    columns_table_sig_superscript_letter_nudge_x= 5.5,
+    columns_table_sig_superscript_letter = "a",
+    columns_table_sig_superscript_letter_nudge_x = 5.5,
     headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
     headers_row_height = 1.75,
     default_list = abb_6.6
@@ -235,8 +236,8 @@ p_2 <- plot_tablebarplot(
     bar_pattern_spacing = 0.0362, ## We calculated this below in standardize_pattern_spacing()
     columns_alignment = c(0.5, 2, 2),
     columns_width = column_widths_stand$p2, ## This is the column-width object we set above
-    columns_table_sig_superscript_letter  = "a",
-    columns_table_sig_superscript_letter_nudge_x= 5.5,
+    columns_table_sig_superscript_letter = "a",
+    columns_table_sig_superscript_letter_nudge_x = 5.5,
     headers_alignment = c(0.5, 0.5, 0.5, 0),
     headers_row_height = 1.75,
     default_list = abb_6.6
@@ -256,14 +257,14 @@ These values have to be set in the plot-settings above.
 Now we can combine the plots:
 
 ```{r}
-tableplot_6.6 <- combine_plots(list(p_1, p_2)) 
+tableplot_6.6 <- combine_plots(list(p_1, p_2))
 ```
 
 And save the result:
 ```{r}
 #| eval: false
 
-save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf",  width = 235, height = 130, scaling = 1)
+save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 235, height = 130, scaling = 1)
 ```
 
 
@@ -310,7 +311,7 @@ p_1 <- plot_tablebarplot(
   ),
   columns_table_se = list(NULL, NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022", NULL),
   headers = list(
-    "Land",
+    "bold(Land)",
     "italic(Delta * M)",
     "italic(Delta * M)",
     "italic(Delta * M)",
@@ -337,9 +338,9 @@ p_1 <- plot_tablebarplot(
   y_axis = "y_axis",
   columns_round = c(0, 0, 0, 0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
-     axis_x_lims =  c(-20, 40),
-  bar_pattern_spacing = 0.0274,
-  columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
+    axis_x_lims = c(-20, 40),
+    bar_pattern_spacing = 0.0274,
+    columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
     columns_width = column_widths_stand$p1,
     default_list = abb_8.4
   )
@@ -374,16 +375,16 @@ p_2 <- plot_tablebarplot(
     NULL, "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015", NULL
   ),
   y_axis = "y_axis",
-  plot_settings = 
-plotsettings_tablebarplot(
-  axis_x_lims = c(-20, 40),
-  bar_pattern_spacing = 0.0334,
-  columns_alignment = c(2, 2, 2),
-  headers_alignment = c(0, 0, 2, 0),
-  headers_nudge_x = c(0, 4, 0, 0),
-  columns_width = column_widths_stand$p2,
-  default_list = abb_8.4
-)
+  plot_settings =
+    plotsettings_tablebarplot(
+      axis_x_lims = c(-20, 40),
+      bar_pattern_spacing = 0.0334,
+      columns_alignment = c(2, 2, 2),
+      headers_alignment = c(0, 0, 2, 0),
+      headers_nudge_x = c(0, 4, 0, 0),
+      columns_width = column_widths_stand$p2,
+      default_list = abb_8.4
+    )
 )
 ```
 
@@ -431,14 +432,15 @@ bar_pattern_spacing_stand <- standardize_pattern_spacing(list(p_1, p_2, p_3), pa
 
 
 ```{r}
-tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3)) 
+tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 ```
 
 ```{r}
 #| eval: false
 save_plot(tableplot_8.4,
   filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf",
- width = 160, height = 100, scaling = 1)
+  width = 160, height = 100, scaling = 1
+)
 ```
 
 
@@ -449,8 +451,4 @@ tableplot_8.4
 ## Stacked barplot
 
 ```{r}
-
-
-  
 ```
-
