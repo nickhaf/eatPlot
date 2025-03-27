@@ -142,8 +142,7 @@ lineplot_germany <- plot_lineplot(
     n_cols = 2, 
     default_list = lineplot_4x4
   )
-) +
-  ggview:: canvas(118, 185, units = "mm")
+) 
 ```
 
 ```{r}
@@ -170,14 +169,14 @@ lineplot_germany <- plot_lineplot(
    # margin_top = 0,
   # margin_bottom = 0,
     n_cols = 3, 
+  equal_trend_line_length = TRUE,
     default_list = lineplot_4x4
   )
-) +
-  ggview:: canvas(160, 185*2/3, units = "mm")
+) 
 ```
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185, width = 118, scaling = 1)
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185*2/3, width = 160, scaling = 1)
 ```
 
