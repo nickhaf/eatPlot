@@ -248,11 +248,18 @@ extract_gsub_values <- function(plot_dat) {
 
 calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_settings) {
   check_columns(plot_dat, c("facet_var", "point_est", "year"))
+
+  ## I need the following coordinates:
+  # - Start and end point of the plotted y-axis. That already works.
+  # - Start of the brace (a bit below the lowest y-axis point)
+  # - Start of the x-axis, look up how I calculated it!
+  # - start and Endpoint of the whole plot, from lowest brace label to the top of the x-axis.
+
   ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
     y_range <- range(plot_dat$point_est, na.rm = TRUE)
 
-    ## Coords are the min and max value of the points in the plot, but withs some added space below/above. Thes can be set with the nudge_param in calc_y_value_coords.
+    ## Coords are the min and max value of the points in the plot, but with some added space below/above. Thes can be set with the nudge_param in calc_y_value_coords.
     coords <- calc_y_value_coords(y_range)
   }
   # else {
@@ -271,8 +278,6 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   } else {
     subgroup_lvls <- levels(plot_dat$subgroup_var)
   }
-
-## Hier ist schon was falsch, weil die Brace coords zu weit oben liegen. Sie sollten dort anfangen, wo die y-Achse aufhört, also am niedrigsten Punkt dieser. Die y-Achse sollte nach dem letzten Punkt noch etwas platz lassen, um platz für die Labels zu schaffen.
 
 y_axis_lims <- calc_y_lims(coords, plot_settings)
 
