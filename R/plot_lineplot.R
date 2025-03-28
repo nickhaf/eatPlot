@@ -154,6 +154,11 @@ plot_lineplot <- function(eatPlot_dat,
     y_axis_plot <- ggplot2::ggplot() +
       plot_y_axis(
         dat_p_facet,
+       plot_y_axis(
+        y_axis_min = dat_p$plot_lims$y_axis_lims[1],
+        y_axis_max = dat_p$plot_lims$y_axis_lims[2],
+        tick_distance = dat_p$plot_settings$axis_y_tick_distance,
+        y_axis_lims = dat_p$plot_lims$y_axis_lims,
         plot_settings = dat_p$plot_settings
       ) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(
