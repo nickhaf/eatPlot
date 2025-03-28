@@ -172,7 +172,9 @@ lineplot_germany <- plot_lineplot(
   equal_trend_line_length = TRUE,
     default_list = lineplot_4x4
   )
-) 
+) +
+  ggplot2::theme_classic() +
+  ggplot2::scale_y_continuous(breaks = seq(420, 540, 10))
 ```
 
 ```{r}

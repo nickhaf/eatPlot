@@ -11,9 +11,9 @@
 plot_x_axis <- function(plot_dat) {
   plot_dat$plot_settings$axis_x_label_nudge_y <- plot_dat$plot_settings$axis_x_background_width_y / 2
 
-  y_max <- plot_dat$plot_lims$coords[2]
+  y_max <- plot_dat$plot_lims$y_axis_lims[2]
 
-  coord_diff <- diff(range(plot_dat$plot_lims$coords))
+  coord_diff <- diff(range(plot_dat$plot_lims$y_axis_lims))
 
   dat_coords <- unique(plot_dat$plot_dat[, c("year", "trend")])
 

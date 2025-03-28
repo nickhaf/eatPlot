@@ -10,8 +10,7 @@
 #' @return [ggplot2] plot that can be used as a y-axis.
 #'
 #' @examples # tbd
-plot_y_axis <- function(y_axis_min, y_axis_max, tick_distance, y_axis_lims, plot_settings) {
-
+plot_y_axis <- function(y_axis_min, y_axis_max, y_total_min, y_total_max, tick_distance, plot_settings) {
   list(
     # Y-Line ------------------------------------------------------------------
     ggplot2::annotate("segment",
@@ -19,24 +18,25 @@ plot_y_axis <- function(y_axis_min, y_axis_max, tick_distance, y_axis_lims, plot
       xend = 0,
       y = y_axis_min, #- diff(plot_dat$plot_lims$y_range) * 0.002425, # Without this, the axis tick will be plotted a bit over the y-line.
       yend = y_axis_max #+ diff(plot_dat$plot_lims$y_range) * 0.002425
-    ) ,
+    ),
     ggplot2::scale_x_continuous(
       limits = c(
         0, 1
       ),
       expand = c(0, 0)
     ),
-    ggplot2::scale_y_continuous(
-      breaks = seq_over(
-        from = y_axis_min,
-        to = y_axis_max,
-        by = tick_distance
-      ),
-      limits = c(y_axis_min, y_axis_max),
-      expand = c(0, 0)
+    set_y_scale(
+      y_axis_min = y_axis_min,
+      y_axis_max = y_axis_max,
+      y_total_min = y_total_min,
+      y_total_max = y_total_max,
+      tick_distance = tick_distance,
+      margin_top = plot_settings$margin_top,
+      margin_left = plot_settings$margin_left,
+      margin_bottom = plot_settings$margin_bottom,
+      margin_right = plot_settings$margin_right
     ),
-    # ggplot2::coord_cartesian(ylim = y_axis_lims, clip = "off"),
-     theme_y_axis(plot_settings)
+    theme_y_axis(plot_settings)
   )
 }
 
@@ -46,9 +46,8 @@ plot_y_axis <- function(y_axis_min, y_axis_max, tick_distance, y_axis_lims, plot
 
 
 
-calc_y_lims <- function(coords, plot_settings){
-
-## Set the nudging parameter lower when calculating the coords in order to decrease the distance from the end of the y_axis to the nearest point.
+calc_y_lims <- function(coords, plot_settings) {
+  ## Set the nudging parameter lower when calculating the coords in order to decrease the distance from the end of the y_axis to the nearest point.
 
   y_axis_lims <- c()
   y_axis_lims[1] <- plyr::round_any(coords[1], 10, floor)

@@ -135,13 +135,7 @@ plot_lineplot <- function(eatPlot_dat,
     ) +
       # ggplot2::geom_point(ggplot2::aes(shape = .data$point_sig))
       plot_single_lineplot(dat_p_facet) +
-      plot_title(sub_dash(i), title_superscripts) +
-      ggplot2::theme(plot.margin = ggplot2::unit(c(
-        dat_p$plot_settings$margin_top,
-        dat_p$plot_settings$margin_right,
-        dat_p$plot_settings$margin_bottom,
-        dat_p$plot_settings$margin_left
-      ), "npc"))
+      plot_title(sub_dash(i), title_superscripts)
 
     plot_list[[i]] <- p_state
     position <- position + 1
@@ -151,29 +145,22 @@ plot_lineplot <- function(eatPlot_dat,
 
   # Add y axis as seperate plot --------------------------------------------------------------
   if (dat_p$plot_settings$axis_y == TRUE) {
+
     y_axis_plot <- ggplot2::ggplot() +
       plot_y_axis(
-        dat_p_facet,
-       plot_y_axis(
         y_axis_min = dat_p$plot_lims$y_axis_lims[1],
         y_axis_max = dat_p$plot_lims$y_axis_lims[2],
+        y_total_min = dat_p$plot_lims$y_lims_total[1],
+        y_total_max = dat_p$plot_lims$y_lims_total[2],
         tick_distance = dat_p$plot_settings$axis_y_tick_distance,
-        y_axis_lims = dat_p$plot_lims$y_axis_lims,
         plot_settings = dat_p$plot_settings
-      ) +
-      ggplot2::theme(plot.margin = ggplot2::unit(c(
-        plot_settings$margin_top,
-        0,
-        plot_settings$margin_bottom,
-        0
-      ), "npc"))
+      )
 
     positions_y_axis <- calc_y_positions(facet_values, dat_p$plot_settings$n_cols)
 
     for (i in positions_y_axis) {
       plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
     }
-
     widths_setting <- c(0.02, rep(1 - 0.02 / dat_p$plot_settings$n_cols, times = dat_p$plot_settings$n_cols))
     dat_p$plot_settings$n_cols <- dat_p$plot_settings$n_cols + 1
   } else {
@@ -264,6 +251,8 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   ## Axis limits can be set manually. If not, calculate by range.
   if (is.null(plot_settings$axis_y_lims)) {
     y_range <- range(plot_dat$point_est, na.rm = TRUE)
+
+    ## Coords are the min and max value of the points in the plot, but withs some added space below/above. Thes can be set with the nudge_param in calc_y_value_coords.
     coords <- calc_y_value_coords(y_range)
   }
   # else {
@@ -283,23 +272,34 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
     subgroup_lvls <- levels(plot_dat$subgroup_var)
   }
 
+## Hier ist schon was falsch, weil die Brace coords zu weit oben liegen. Sie sollten dort anfangen, wo die y-Achse aufhört, also am niedrigsten Punkt dieser. Die y-Achse sollte nach dem letzten Punkt noch etwas platz lassen, um platz für die Labels zu schaffen.
+
+y_axis_lims <- calc_y_lims(coords, plot_settings)
+
 
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
-    coords,
+    y_axis_lims,
     years_list,
     plot_settings = plot_settings
   )
 
   unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
   x_range <- range(unique_years)
+
+  # Why set the limits here a bit lower again? There are so many different nudges it is impossible to see through everything!
+
   y_lims_total <- c(min(brace_coords$group_labels$label_pos_y) - diff(range(coords)) * 0.06, max(coords))
+
+  ## The y_axis_lims are set by calculating from which point to which around the coords, we can do a sequence.
+## The brace and x-axis starts are set in calc_y_value_space (new name!). They should use the axis lims, instead of the coords, so it is always clear how much away from the y-axis-ticks they should ly!
 
   coord_list <- list(
     x_range = x_range,
     y_range = y_range,
     y_lims_total = y_lims_total,
     coords = coords,
+    y_axis_lims = y_axis_lims,
     brace_coords = brace_coords
   )
 

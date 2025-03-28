@@ -61,7 +61,7 @@ p <- plot_lineplot(test_data_lineplot,
 ) +
   ggplot2::theme_classic() +
   common_y_scale +
-  ylim(400, 600)
+  NULL
 
 layer_scales(p)$y$range$range
 layer_scales(y_plot)$y$range$range
