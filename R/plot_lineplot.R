@@ -155,7 +155,13 @@ plot_lineplot <- function(eatPlot_dat,
       plot_y_axis(
         dat_p_facet,
         plot_settings = dat_p$plot_settings
-      )
+      ) +
+      ggplot2::theme(plot.margin = ggplot2::unit(c(
+        plot_settings$margin_top,
+        0,
+        plot_settings$margin_bottom,
+        0
+      ), "npc"))
 
     positions_y_axis <- calc_y_positions(facet_values, dat_p$plot_settings$n_cols)
 
