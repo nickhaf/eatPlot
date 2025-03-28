@@ -35,7 +35,16 @@ plot_single_lineplot <- function(plot_dat) {
     if (length(plot_dat$brace_dat$brace_label) > 0) {
       draw_brace_label(plot_dat$brace_dat$brace_label, plot_dat$plot_settings)
     },
-    ggplot2::coord_cartesian(ylim = plot_dat$plot_lims$y_lims_total, clip = "off"),
+    ggplot2::scale_y_continuous(
+      breaks = seq_over(
+        from = plot_dat$plot_lims$y_axis_lims[1],
+        to = plot_dat$plot_lims$y_axis_lims[2],
+        by = plot_dat$plot_settings$axis_y_tick_distance
+      ),
+      limits = plot_dat$plot_lims$y_axis_lims,
+      expand = c(0, 0)
+    ),
+    #ggplot2::coord_cartesian(ylim = plot_dat$plot_lims$y_lims_total, clip = "off"),
     set_scales(plot_dat$plot_settings),
     plot_x_axis(plot_dat)
   )
