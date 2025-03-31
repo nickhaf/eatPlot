@@ -261,7 +261,6 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   # - Start of the x-axis, look up how I calculated it!
   # - start and Endpoint of the whole plot, from lowest brace label to the top of the x-axis.
 
-
   if (is.null(plot_settings$axis_y_lims)) {
     y_value_range <- range(plot_dat$point_est, na.rm = TRUE)
     y_value_space <- calc_y_value_space(y_value_range)

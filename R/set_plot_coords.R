@@ -33,8 +33,8 @@ set_y_scale <- function(y_axis_min, y_axis_max, y_total_min, y_total_max, tick_d
 #'
 #' @examples calc_y_value_coords(c(0, 30))
 calc_y_value_space <- function(y_value_range,
-                                nudge_param_upper = 0.45,
-                                nudge_param_lower = 0.3) { # nudge_param increases the distance between lowest/highest point and braces/x axis
+                                nudge_param_upper = 0.35,
+                                nudge_param_lower = 0.2) { # nudge_param increases the distance between lowest/highest point and braces/x axis
   y_range_diff <- diff(y_value_range)
 
   value_space <- c(
