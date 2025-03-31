@@ -16,7 +16,6 @@ plot_points <- function(plot_dat) {
   nudge_val <- calc_y_nudge(plot_dat,
     plot_settings = plot_dat$plot_settings
   )
-
   plot_dat$dat_final <- within(plot_dat$plot_dat, {
     nudge_y <- ifelse(point_est == ave(point_est, year, FUN = min),
       -nudge_val,
@@ -25,7 +24,7 @@ plot_points <- function(plot_dat) {
   })
 
   plot_dat$dat_final <- calc_x_nudge(plot_dat,
-    nudge_x = plot_dat$plot_settings$point_label_nudge_x,
+                                     nudge_x = plot_dat$plot_settings$point_label_nudge_x,
     plot_settings = plot_dat$plot_settings
   )
 

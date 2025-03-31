@@ -46,7 +46,7 @@ plot_y_axis <- function(y_axis_min, y_axis_max, y_total_min, y_total_max, tick_d
 
 
 
-calc_y_lims <- function(coords, plot_settings) {
+calc_y_ticks_min_max <- function(coords, plot_settings) {
   ## Set the nudging parameter lower when calculating the coords in order to decrease the distance from the end of the y_axis to the nearest point.
 
   y_axis_lims <- c()

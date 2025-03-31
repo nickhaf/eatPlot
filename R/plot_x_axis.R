@@ -9,16 +9,15 @@
 #'
 #' @examples # tbd
 plot_x_axis <- function(plot_dat) {
+
   plot_dat$plot_settings$axis_x_label_nudge_y <- plot_dat$plot_settings$axis_x_background_width_y / 2
 
-  y_max <- plot_dat$plot_lims$y_axis_lims[2]
 
-  coord_diff <- diff(range(plot_dat$plot_lims$y_axis_lims))
 
   dat_coords <- unique(plot_dat$plot_dat[, c("year", "trend")])
 
   dat_coords$x_labels <- as.character(dat_coords$year)
-  dat_coords$y_coords <- y_max - (coord_diff * plot_dat$plot_settings$axis_x_label_nudge_y)
+  dat_coords$y_coords <- plot_dat$plot_lims$y_lims_total[2] - (plot_dat$plot_lims$y_value_space_diff * plot_dat$plot_settings$axis_x_label_nudge_y)
 
   # calc x-axis  ------------------------------------------------------------
   ## x-axis labels should be centered a bit more. So the larger year in the smaller trend and the smaller year in the larger trend need to go into the center more:
@@ -32,19 +31,20 @@ plot_x_axis <- function(plot_dat) {
       geom = "rect",
       xmin = -Inf,
       xmax = Inf,
-      ymin = y_max - (coord_diff * plot_dat$plot_settings$axis_x_background_width_y), # Increase, so the x-axis background reaches lower.
-      ymax = y_max,
+      ## Go from the top of the value plotting space to the top of the plot:
+      ymin = plot_dat$plot_lims$y_value_range[2],
+      ymax = plot_dat$plot_lims$y_lims_total[2],
       fill = plot_dat$plot_settings$axis_x_background_colour
     ),
     ggplot2::geom_text(dat_coords,
-      mapping = ggplot2::aes(
-        x = .data$x_coords,
-        y = .data$y_coords,
-        label = .data$x_labels,
-        group = .data$trend
-      ),
-      size = plot_dat$plot_settings$axis_x_label_size,
-      colour = "black"
+                       mapping = ggplot2::aes(
+                         x = .data$x_coords,
+                         y = .data$y_coords,
+                         label = .data$x_labels,
+                         group = .data$trend
+                       ),
+                       size = plot_dat$plot_settings$axis_x_label_size,
+                       colour = "black"
     ),
     ggplot2::theme(
       axis.line = ggplot2::element_blank(),

@@ -35,8 +35,8 @@ plot_single_lineplot <- function(plot_dat) {
     if (length(plot_dat$brace_dat$brace_label) > 0) {
       draw_brace_label(plot_dat$brace_dat$brace_label, plot_dat$plot_settings)
     },
-    set_y_scale(y_axis_min = plot_dat$plot_lims$y_axis_lims[1],
-                y_axis_max = plot_dat$plot_lims$y_axis_lims[2],
+    set_y_scale(y_axis_min = plot_dat$plot_lims$y_ticks_min_max[1],
+                y_axis_max = plot_dat$plot_lims$y_ticks_min_max[2],
                 y_total_min = plot_dat$plot_lims$y_lims_total[1],
                 y_total_max = plot_dat$plot_lims$y_lims_total[2],
                 tick_distance = plot_dat$plot_settings$axis_y_tick_distance,

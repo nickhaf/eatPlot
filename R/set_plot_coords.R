@@ -20,44 +20,45 @@ set_y_scale <- function(y_axis_min, y_axis_max, y_total_min, y_total_max, tick_d
 }
 
 
-#' Calculate the plot-space between first brace and top of the plot.
+#' Calculate the plot-space between first brace and top of the plot. Here, the empty space bettween the highest/lowest point and the x-axis-header or the brace label is set.
 #'
 #' @keywords internal
 #' @noRd
 #'
-#' @param y_range Numeric vector containing the minimum and maximum of the plotted values.
+#' @param y_value_range Numeric vector containing the minimum and maximum of the plotted values.
 #' @param nudge_param_upper Numeric for increasing/decreasing the distance between highest plotted value and upper x-axis.
 #' @param nudge_param_lower Numeric for increasing/decreasing the distance between lowest plotted value and first brace.
 #'
 #' @return Numeric vector containing the y-range between brace and upper x-axis.
 #'
 #' @examples calc_y_value_coords(c(0, 30))
-calc_y_value_coords <- function(y_range,
+calc_y_value_space <- function(y_value_range,
                                 nudge_param_upper = 0.45,
                                 nudge_param_lower = 0.3) { # nudge_param increases the distance between lowest/highest point and braces/x axis
-  y_range_diff <- diff(y_range)
+  y_range_diff <- diff(y_value_range)
 
-  coords <- c(
+  value_space <- c(
     ## Lower y limit
-    y_range[1] - y_range_diff * nudge_param_lower,
+    y_value_range[1] - y_range_diff * nudge_param_lower,
     # ## upper y limit
-    y_range[2] + y_range_diff * nudge_param_upper
+    y_value_range[2] + y_range_diff * nudge_param_upper
   )
-  return(coords)
+
+  return(value_space)
 }
 
 
-calc_y_value_space <- function(coords, range_y, plot_settings) {
-
-  x_axis_start_y <- coords[2] - (coords[2] * plot_settings$axis_x_background_width_y)
-  brace_start_y <- coords[1]
-  y_axis_start <- round(brace_start_y, -1)
-  y_axis_end <- calc_y_value_coords(range_y, 0, 0)[2]
-
-  y_coords <- c(y_axis_start, y_axis_end)
-
-  return(y_coords)
-}
+# calc_y_value_space <- function(coords, range_y, plot_settings) {
+#
+#   x_axis_start_y <- coords[2] - (coords[2] * plot_settings$axis_x_background_width_y)
+#   brace_start_y <- coords[1]
+#   y_axis_start <- round(brace_start_y, -1)
+#   y_axis_end <- calc_y_value_coords(range_y, 0, 0)[2]
+#
+#   y_coords <- c(y_axis_start, y_axis_end)
+#
+#   return(y_coords)
+# }
 
 
 # Utils -------------------------------------------------------------------
