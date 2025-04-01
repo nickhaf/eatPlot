@@ -10,8 +10,8 @@
 #' @examples # tbd
 plot_x_axis <- function(plot_dat) {
 
-
   dat_coords <- unique(plot_dat$plot_dat[, c("year", "trend")])
+
 
   dat_coords$x_labels <- as.character(dat_coords$year)
   dat_coords$y_coords <-  plot_dat$plot_lims$y_value_space[2] + ((plot_dat$plot_lims$y_lims_total[2] - plot_dat$plot_lims$y_value_space[2])/2) + (plot_dat$plot_lims$y_value_space_diff * plot_dat$plot_settings$axis_x_label_nudge_y)

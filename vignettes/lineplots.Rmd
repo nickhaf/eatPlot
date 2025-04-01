@@ -44,11 +44,10 @@ lineplot_1 <- plot_lineplot(dat_lineplot_1,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   plot_settings = plotsettings_lineplot(
-    axis_x_background_width_y = 0.05, ## Label should always be in the middle.
-    axis_x_label_nudge_y = 0,
+    axis_x_background_width_y = 0.12, 
 default_list = lineplot_4x4)
-) #+
-  #ggview:: canvas(160, 180, units = "mm")
+) +
+  ggview:: canvas(160, 180, units = "mm")
 ```
 
 ```{r save lineplot_1_group}
@@ -85,7 +84,8 @@ lineplot_2 <- plot_lineplot(
     subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     default_list = lineplot_4x4
   )
-) 
+) +
+  ggview:: canvas(160, 180, units = "mm")
 ```
 
 ```{r}
