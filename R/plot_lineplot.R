@@ -263,18 +263,17 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
 
   if (is.null(plot_settings$axis_y_lims)) {
     y_value_range <- range(plot_dat$point_est, na.rm = TRUE)
-    y_value_space <- calc_y_value_space(y_value_range)
   }
-  #  else {
-  #    y_value_range <- range(seq_over(
-  #      from = plot_settings$axis_y_lims[1],
-  #      to = plot_settings$axis_y_lims[2],
-  #      by = plot_settings$axis_y_tick_distance
-  #    ))
-  #    y_value_space <- calc_y_value_coords(y_value_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
-  # }
+   else {
+     y_value_range <- range(seq_over(
+       from = plot_settings$axis_y_lims[1],
+       to = plot_settings$axis_y_lims[2],
+       by = plot_settings$axis_y_tick_distance
+     ))
+  }
 
   y_ticks_min_max <- calc_y_ticks_min_max(y_value_range, plot_settings)
+  y_value_space <- calc_y_value_space(y_ticks_min_max)
 
   ## Currently, brace starts at same level as y-axis ends. Could nudge abit HERE.
   subgroup_lvls <- get_subgroup_levels(plot_dat, background_subgroup)
