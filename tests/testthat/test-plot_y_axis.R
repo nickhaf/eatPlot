@@ -8,14 +8,14 @@ test_that("position is calculated correctly", {
 
 test_that("y-axis can be plotted", {
 y_plot <- ggplot2::ggplot() +
-  plot_y_axis(y_axis_min = 0, y_axis_max = 10, tick_distance = 2, plot_settings = plotsettings_lineplot())
+  plot_y_axis(y_axis_min = 0, y_axis_max = 10, y_total_min =0, y_total_max = 10, tick_distance = 2, plot_settings = plotsettings_lineplot())
 
 vdiffr::expect_doppelganger("y-axis", y_plot)
 
 })
 
 
-test_that("y-axis can be combined with single lineplot")
+test_that("y-axis can be combined with single lineplot", {
 
 test_data_lineplot <- data.frame(
   id = c("comp_1", "comp_1"),
@@ -39,9 +39,7 @@ common_y_scale <-  ggplot2::scale_y_continuous(
 )
 
 y_plot <- ggplot2::ggplot() +
-  plot_y_axis(y_axis_min = 500, y_axis_max = 560, tick_distance = 10, y_axis_lims = c(475, 600), plot_settings = plotsettings_lineplot()) +
-  common_y_scale +
-  ylim(400,600) +
+  plot_y_axis(y_axis_min = 450, y_axis_max = 550, y_total_min = 400, y_total_max = 600, tick_distance = 10, plot_settings = plotsettings_lineplot()) +
   ggplot2::theme(plot.margin = ggplot2::unit(c(
     plotsettings_lineplot()$margin_top,
     0,
@@ -63,18 +61,16 @@ p <- plot_lineplot(test_data_lineplot,
   common_y_scale +
   NULL
 
-layer_scales(p)$y$range$range
-layer_scales(y_plot)$y$range$range
-p$coordinates$limits
-y_plot$coordinates$limits
 
 
 plot_list <- list(y_plot, p)
 
 ## I need to set the same width for both!
 
-patchwork::wrap_plots(plot_list,
+p_patched <- patchwork::wrap_plots(plot_list,
                       ncol = 2,
                       widths = c(0.01, 0.99))
 
-cowplot::plot_grid(p, y_plot, align = "h", axis = "lrtb", ncol = 2)
+vdiffr::expect_doppelganger("aligned y-axis", p_patched)
+
+})

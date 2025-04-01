@@ -188,7 +188,7 @@ plot_lineplot <- function(eatPlot_dat,
                         ncol = dat_p$plot_settings$n_cols,
                         widths = widths_setting
   ) +
-    patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.01, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
+    patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.001, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 }
 
 

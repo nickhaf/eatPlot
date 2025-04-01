@@ -16,8 +16,8 @@ plot_y_axis <- function(y_axis_min, y_axis_max, y_total_min, y_total_max, tick_d
     ggplot2::annotate("segment",
       x = 0,
       xend = 0,
-      y = y_axis_min, #- diff(plot_dat$plot_lims$y_range) * 0.002425, # Without this, the axis tick will be plotted a bit over the y-line.
-      yend = y_axis_max #+ diff(plot_dat$plot_lims$y_range) * 0.002425
+      y = y_axis_min - ((y_total_max - y_total_min) * 0.001825), # Without this, the axis tick will be plotted a bit over the y-line.
+      yend = y_axis_max + ((y_total_max - y_total_min) * 0.001825)
     ),
     ggplot2::scale_x_continuous(
       limits = c(

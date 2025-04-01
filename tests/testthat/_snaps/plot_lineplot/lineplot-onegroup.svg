@@ -21,31 +21,40 @@
 <rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
 </g>
 <defs>
-  <clipPath id='cpMy45Nnw3MTguNzh8MjMuMDZ8NTcyLjI4'>
-    <rect x='3.96' y='23.06' width='714.81' height='549.22' />
+  <clipPath id='cpMy45Nnw3MTguNzh8MzAuMTN8NTcyLjI4'>
+    <rect x='3.96' y='30.13' width='714.81' height='542.15' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMy45Nnw3MTguNzh8MjMuMDZ8NTcyLjI4)'>
+<g clip-path='url(#cpMy45Nnw3MTguNzh8MzAuMTN8NTcyLjI4)'>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <defs>
-  <clipPath id='cpMS4yMnwxODIuNjd8MjMuMDZ8NTc1LjAy'>
-    <rect x='1.22' y='23.06' width='181.44' height='551.96' />
+  <clipPath id='cpMS4yMnwxODIuNjd8MTcuODh8NTc1LjAy'>
+    <rect x='1.22' y='17.88' width='181.44' height='557.14' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMS4yMnwxODIuNjd8MjMuMDZ8NTc1LjAy)'>
+<g clip-path='url(#cpMS4yMnwxODIuNjd8MTcuODh8NTc1LjAy)'>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<polyline points='12.09,121.24 174.54,70.75 ' style='stroke-width: 2.13; stroke: #F8766D; stroke-linecap: butt;' />
-<polygon points='12.09,118.20 14.72,122.76 9.45,122.76 ' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
-<circle cx='174.54' cy='70.75' r='1.95' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
-<text x='12.09' y='123.20' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>500</text>
-<text x='174.54' y='72.71' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>560</text>
-<rect x='3.96' y='48.03' width='178.70' height='3.53' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
-<text x='12.09' y='51.75' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2000</text>
-<text x='174.54' y='51.75' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2005</text>
-<text x='93.32' y='26.05' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='17.90px' lengthAdjust='spacingAndGlyphs'>Berlin</text>
-<text x='1.22' y='14.84' style='font-size: 13.20px; font-family: sans;' textLength='107.89px' lengthAdjust='spacingAndGlyphs'>lineplot_oneGroup</text>
+</g>
+<defs>
+  <clipPath id='cpMy45NnwxODIuNjd8MzAuMTN8NTcyLjI4'>
+    <rect x='3.96' y='30.13' width='178.70' height='542.15' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMy45NnwxODIuNjd8MzAuMTN8NTcyLjI4)'>
+<polyline points='12.09,100.52 174.54,44.48 ' style='stroke-width: 2.13; stroke: #F8766D; stroke-linecap: butt;' />
+<polygon points='12.09,97.48 14.72,102.04 9.45,102.04 ' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
+<circle cx='174.54' cy='44.48' r='1.95' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
+<text x='12.09' y='102.48' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>500</text>
+<text x='174.54' y='46.43' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>560</text>
+<rect x='3.96' y='30.13' width='178.70' height='3.14' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
+<text x='12.09' y='33.66' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2000</text>
+<text x='174.54' y='33.66' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2005</text>
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<text x='93.32' y='27.14' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='17.90px' lengthAdjust='spacingAndGlyphs'>Berlin</text>
+<text x='1.22' y='9.66' style='font-size: 13.20px; font-family: sans;' textLength='107.89px' lengthAdjust='spacingAndGlyphs'>lineplot_oneGroup</text>
 </g>
 </svg>

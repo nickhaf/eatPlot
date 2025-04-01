@@ -47,20 +47,6 @@ calc_y_value_space <- function(y_value_range,
   return(value_space)
 }
 
-
-# calc_y_value_space <- function(coords, range_y, plot_settings) {
-#
-#   x_axis_start_y <- coords[2] - (coords[2] * plot_settings$axis_x_background_width_y)
-#   brace_start_y <- coords[1]
-#   y_axis_start <- round(brace_start_y, -1)
-#   y_axis_end <- calc_y_value_coords(range_y, 0, 0)[2]
-#
-#   y_coords <- c(y_axis_start, y_axis_end)
-#
-#   return(y_coords)
-# }
-
-
 # Utils -------------------------------------------------------------------
 
 set_cartesian_coords <- function(y_lims_total) {
