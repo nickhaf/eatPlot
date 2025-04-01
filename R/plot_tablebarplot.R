@@ -497,7 +497,7 @@ build_columns_3 <- function(df,
       } else if (rev(plot_settings$columns_alignment)[i] == 1) {
         x_axis_i <- column_x_coords_cols$right[i]
       } else if (rev(plot_settings$columns_alignment)[i] == 2) { ## right align, but in the middle of the table:
-        x_axis_i <- (column_x_coords_cols$middle[i] + column_x_coords_cols$right[i]) / 2
+        x_axis_i <- (column_x_coords_cols$middle[i] + column_x_coords_cols$right[i]) / 2 # + (column_x_coords_cols$left[i] - column_x_coords_cols$right[i])*0.035
         columns_alignment[length(columns_alignment) - i + 1] <- 1
       }
 

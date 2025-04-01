@@ -681,7 +681,7 @@ filter_years <- function(dat, years) {
 #' @export
 #'
 #' @examples # tbd
-process_bundesland <- function(vec, linebreak = FALSE){
+process_bundesland <- function(vec, linebreak = FALSE, total_group = "total"){
   vec <- gsub("ue", "\u00fc", vec )
 
   if(linebreak){
@@ -690,6 +690,8 @@ process_bundesland <- function(vec, linebreak = FALSE){
     vec <- gsub("([a-z])([A-Z])", "\\1\uad\\2", vec)
 
 }
+
+  vec <- gsub(total_group, "Deutschland", vec)
 
   return(vec)
 }

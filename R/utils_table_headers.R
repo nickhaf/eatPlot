@@ -120,7 +120,7 @@ set_headers_alignment <- function(header_pos, column_x_coords_headers, plot_sett
   } else if (rev(plot_settings$headers_alignment)[header_pos] == 1) {
     x_axis_i_header <- column_x_coords_headers$right[header_pos]
   } else {
-    x_axis_i_header <- (column_x_coords_headers$middle[header_pos] + column_x_coords_headers$right[header_pos]) / 2
+    x_axis_i_header <- (column_x_coords_headers$middle[header_pos] + column_x_coords_headers$right[header_pos]) / 1.2
   }
   return(x_axis_i_header)
 }
