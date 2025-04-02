@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
 <span>  bar_pattern_spacing <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_pattern_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_pattern_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bar_sig_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_spanners_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_spanners_row_height <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -79,6 +79,7 @@
 <span>  headers_alignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_background_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_font_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  headers_ggtext <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headers_row_height <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -172,8 +173,8 @@
 <dd><p>Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the <code>bar_pattern_width</code> parameter will increase the thickness of the white stripes.</p></dd>
 
 
-<dt id="arg-bar-sig-type">bar_sig_type<a class="anchor" aria-label="anchor" href="#arg-bar-sig-type"></a></dt>
-<dd><p>Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").</p></dd>
+<dt id="arg-bar-type">bar_type<a class="anchor" aria-label="anchor" href="#arg-bar-type"></a></dt>
+<dd><p>Character string defining the bar type. There are "default", pattern fill ("pattern"), "frame" or "stacked" barplot.</p></dd>
 
 
 <dt id="arg-bar-width">bar_width<a class="anchor" aria-label="anchor" href="#arg-bar-width"></a></dt>
@@ -230,6 +231,10 @@
 
 <dt id="arg-headers-font-size">headers_font_size<a class="anchor" aria-label="anchor" href="#arg-headers-font-size"></a></dt>
 <dd><p>Numeric for the font size that will be used for the headers and column_spanners. Defaults to <code>2.5</code>.</p></dd>
+
+
+<dt id="arg-headers-ggtext">headers_ggtext<a class="anchor" aria-label="anchor" href="#arg-headers-ggtext"></a></dt>
+<dd><p>Logical indicating whether the headers should be drawn with ggtext::geom_richtext. Defaults to <code>TRUE</code>. Only set to <code>FALSE</code> if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.</p></dd>
 
 
 <dt id="arg-headers-nudge-x">headers_nudge_x<a class="anchor" aria-label="anchor" href="#arg-headers-nudge-x"></a></dt>
@@ -319,8 +324,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_sig_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "frame"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "default"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4</span>
@@ -363,6 +368,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_font_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_ggtext</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
@@ -452,8 +460,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_sig_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "frame"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "default"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4</span>
@@ -496,6 +504,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_font_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_ggtext</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
@@ -587,8 +598,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_pattern_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_sig_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "frame"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "default"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4</span>
@@ -631,6 +642,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_font_size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $headers_ggtext</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $headers_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
