@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 40
+      length(settings_list) == 41
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -27,7 +27,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_pattern_spacing",
         "bar_pattern_type",
         "bar_pattern_width",
-        "bar_sig_type",
+        "bar_type",
         "bar_width",
         "column_spanners_nudge_y",
         "column_spanners_row_height",
@@ -42,6 +42,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "headers_alignment",
         "headers_background_colour",
         "headers_font_size",
+        "headers_ggtext",
         "headers_nudge_x",
         "headers_nudge_y",
         "headers_row_height",
@@ -69,7 +70,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$bar_nudge_y))
   stopifnot(all(is_colour(settings_list$bar_pattern_fill_colour)))
   stopifnot(is.character(settings_list$bar_pattern_type))
-  stopifnot(settings_list$bar_sig_type %in% c("pattern", "frame"))
+  stopifnot(settings_list$bar_type %in% c("default", "pattern", "frame", "stacked"))
   stopifnot(is.numeric(settings_list$bar_width))
   stopifnot(is.numeric(settings_list$column_spanners_nudge_y))
   stopifnot(is.numeric(settings_list$column_spanners_row_height))
@@ -84,6 +85,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$headers_alignment) | is.null(settings_list$headers_alignment))
   stopifnot(is_colour(settings_list$headers_background_colour) | is.null(settings_list$headers_background_colour))
   stopifnot(is.numeric(settings_list$headers_font_size))
+  stopifnot(is.logical(settings_list$headers_ggtext))
   stopifnot(is.numeric(settings_list$headers_nudge_x))
   stopifnot(is.numeric(settings_list$headers_nudge_y))
   stopifnot(is.numeric(settings_list$headers_row_height))
@@ -116,7 +118,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_pattern_spacing Numeric for the gap between patterns.
 #' @param bar_pattern_type Named vector with the pattern types for the barpattern.
 #' @param bar_pattern_width Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the `bar_pattern_width` parameter will increase the thickness of the white stripes.
-#' @param bar_sig_type Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").
+#' @param bar_type Character string defining the bar type. There are "default", pattern fill ("pattern"), "frame" or "stacked" barplot.
 #' @param bar_width Numeric between `0` and `1` specifying the width of the bar. Defaults to `0.4`.
 #' @param column_spanners_nudge_y Numeric vector to increase or decrease the space between column spanners text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to `-0.2`.
 #' @param column_spanners_row_height Numeric for the row height of the row the first level of column spanners is written in. Defaults to `1`.
@@ -131,6 +133,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
 #' @param headers_background_colour Colour of the background of the headers.
 #' @param headers_font_size Numeric for the font size that will be used for the headers and column_spanners. Defaults to `2.5`.
+#' @param headers_ggtext Logical indicating whether the headers should be drawn with ggtext::geom_richtext. Defaults to `TRUE`. Only set to `FALSE` if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
@@ -191,7 +194,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
                                       bar_pattern_spacing = NULL,
                                       bar_pattern_type = NULL,
                                       bar_pattern_width = NULL,
-                                      bar_sig_type = NULL,
+                                      bar_type = NULL,
                                       bar_width = NULL,
                                       column_spanners_nudge_y = NULL,
                                       column_spanners_row_height = NULL,
@@ -206,6 +209,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
                                       headers_alignment = NULL,
                                       headers_background_colour = NULL,
                                       headers_font_size = NULL,
+                                      headers_ggtext = NULL,
                                       headers_nudge_x = NULL,
                                       headers_nudge_y = NULL,
                                       headers_row_height = NULL,
@@ -233,7 +237,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "bar_nudge_y" = 0,
       "bar_pattern_fill_colour" = "white",
       "bar_pattern_type" = "none",
-      "bar_sig_type" = "frame",
+      "bar_type" = "default",
       "bar_width" = 0.4,
       "column_spanners_nudge_y" = -0.2,
       "column_spanners_row_height" = 1,
@@ -248,6 +252,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "headers_alignment" = NULL,
       "headers_background_colour" = "white",
       "headers_font_size" = 2.5,
+      "headers_ggtext" = TRUE,
       "headers_nudge_x" = 0,
       "headers_nudge_y" = 0,
       "headers_row_height" = 1,

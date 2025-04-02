@@ -11,8 +11,7 @@ prep_lineplot(
   facet_var = "TR_BUNDESLAND",
   total_facet = "total",
   parameter = "mean",
-  sig_niveau = 0.05,
-  comparisons = c("none", "crossDiff", "trend", "trend_crossDiff")
+  sig_niveau = 0.05
 )
 }
 \arguments{
@@ -29,8 +28,6 @@ prep_lineplot(
 \item{parameter}{Character string. Contains the value in column \code{parameter} that is used for plotting the lines.  Defaults to \code{"mean"}.}
 
 \item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
-
-\item{comparisons}{Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to \code{c("none", "crossDiff", "trend", "trend_crossDiff")}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.

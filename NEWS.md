@@ -1,3 +1,7 @@
+# eatPlot 1.1.0
+* Internally changed the data preperation workflow. 
+* Prepared the plot default lists for BT24. 
+
 # eatPlot 1.0.1
 * Renamed the `grouping_var` argument in `plotsettings_lineplot()` to `subgroup_var`. 
 

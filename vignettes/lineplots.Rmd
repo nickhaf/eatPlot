@@ -22,8 +22,8 @@ This is needed to bring the `eatRep` data into the correct format for plotting.
 
 ```{r}
 dat_lineplot_1 <- prep_lineplot(
-  trend_mw,
-  subgroup_var = "geschlecht" ## Leave this argument if you have only one subgroup
+  trend_gender[[1]],
+  subgroup_var = "Kgender" ## Leave this argument if you have only one subgroup
 )
 ```
 
@@ -34,7 +34,7 @@ It might be necessary to do some slight manual data preparation:
 dat_lineplot_1 <- subset(dat_lineplot_1, subgroup_var == "total")
 
 ## For correctly displaying the state names:
-dat_lineplot_1 <- process_bundesland(dat_lineplot_1)
+dat_lineplot_1$state_var <- process_bundesland(dat_lineplot_1$state_var)
 ```
 
 And then we can already plot:
@@ -43,13 +43,14 @@ And then we can already plot:
 lineplot_1 <- plot_lineplot(dat_lineplot_1,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
-  plot_settings = plotsettings_lineplot(default_list = lineplot_4x4)
-)
+  plot_settings = plotsettings_lineplot(
+default_list = lineplot_4x4)
+) 
 ```
 
 ```{r save lineplot_1_group}
 #| eval: false
-save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf")
+save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf", width = 160, height = 185, ,scaling = 1)
 ```
 
 ```{r}
@@ -62,81 +63,121 @@ lineplot_1
 
 ```{r lineplot_states} 
 dat_lineplot_2 <- prep_lineplot(
-  trend_mw,
-  subgroup_var = "geschlecht"
+  trend_gender[[1]],
+  subgroup_var = "Kgender"
 )
-dat_lineplot_2 <- process_bundesland(dat_lineplot_2)
+
+dat_lineplot_2$state_var <- process_bundesland(dat_lineplot_2$state_var)
 
 
 ## We can set the order of the brace labels by setting the factor levels of the subgroup_var:
-dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("w", "m", "total"), ordered = TRUE)
+dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
 
 lineplot_2 <- plot_lineplot(
   dat_lineplot_2,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   background_subgroup = "total",
-  plot_settings = plotsettings_lineplot(subgroup_colours = c(w = "#000000", m = "#999999"), ## Here we determine the colours of the subgroups
-                                        default_list = lineplot_4x4)
-)
+  plot_settings = plotsettings_lineplot(
+    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+    default_list = lineplot_4x4
+  )
+) 
 ```
 
 ```{r}
 #| eval: false
-save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf")
+save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf", width = 160, height = 185, scaling = 1)
 ```
 
 ```{r}
 lineplot_2
 ```
 
-<!-- ## Lineplot for whole Germany -->
 
 
-<!-- ```{r lineplot_germany}  -->
 
-<!-- trend_ger <- prep_lineplot( -->
-<!--   trend_mw, -->
-<!--   subgroup_var = "geschlecht" -->
-<!-- ) -->
+## Lineplot for whole Germany 3x2
 
-<!-- ## This is data preperation for the example and will be updated as soon as I have example data with multiple Kompetenzbereichen: -->
 
-<!-- trend_ger_lesen <- trend_ger -->
-<!-- trend_ger_lesen$kb <- "Lesen" -->
+```{r}
 
-<!-- trend_total <- rbind(trend_ger, trend_ger_lesen) -->
-<!-- trend_total$kb <- gsub("hoeren", "Hören", trend_total$kb) -->
+trend_ger <- do.call(rbind, lapply(trend_gender, prep_lineplot, subgroup_var = "Kgender"))
+trend_ger <- subset(trend_ger, state_var == "total")
+trend_ger$subgroup_var <- factor(trend_ger$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
+trend_ger$kb <- gsub("hoeren", "Hören", trend_ger$kb)
+trend_ger$kb <- gsub("lesen", "Lesen", trend_ger$kb)
 
-<!-- trend_total <- subset(trend_total, TR_BUNDESLAND == "total") -->
+trend_ger_2 <- trend_ger
+trend_ger_3 <- trend_ger
 
-<!-- trend_total$TR_BUNDESLAND <- gsub("ue", "ü", trend_total$TR_BUNDESLAND) -->
-<!-- ``` -->
+trend_ger_2$kb <- gsub("Lesen", "Englisch: Reading", trend_ger_2$kb)
+trend_ger_2$kb <- gsub("Hören", "Englisch: Listening", trend_ger_2$kb)
 
-<!-- ```{r} -->
 
-<!-- ## Hier fehlt noch der Hintergrund für ganz Deutschland -->
-<!-- lineplot_germany_2 <- plot_lineplot(trend_total, -->
-<!--   years_lines = list(c(2009, 2015), c(2015, 2022)), -->
-<!--   years_braces = list(c(2009, 2015), c(2015, 2022)), -->
-<!--   facet_var = "kb", -->
-<!--   background_facet = NULL, -->
-<!--   background_subgroup = "total", -->
-<!--   plot_settings = plotsettings_lineplot( -->
-<!--     brace_label_nudge_x = 0.3, -->
-<!--     split_plot = FALSE, -->
-<!--     background_lines = FALSE, -->
-<!--     default_list = lineplot_4x4 -->
-<!--   ) -->
-<!-- ) -->
-<!-- ``` -->
+trend_ger_3$kb <- gsub("Lesen", "Biologie: Fachwissen", trend_ger_3$kb)
+trend_ger_3$kb <- gsub("Hören", "Biologie: Erkenntnisgewinnung", trend_ger_3$kb)
 
-<!-- ```{r save lineplot_germany_2_groups} -->
-<!-- #| eval: false -->
-<!-- save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_deutschland.pdf", height = 226.2 / 4) -->
-<!-- ``` -->
 
-<!-- ```{r} -->
-<!-- lineplot_germany_2 -->
-<!-- ``` -->
+trend_total <- rbind(trend_ger, trend_ger_2, trend_ger_3)
+```
+
+```{r}
+lineplot_germany <- plot_lineplot(
+  trend_total,
+ point_sig = NULL,
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  facet_var = "kb",
+  # background_facet = "total",
+  background_subgroup = "total",
+  plot_settings = plotsettings_lineplot(
+    brace_label_nudge_x = 0.21,
+    split_plot = FALSE,
+    background_lines = TRUE,
+    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+   # margin_top = 0,
+  # margin_bottom = 0,
+    n_cols = 2, 
+    default_list = lineplot_4x4
+  )
+) 
+```
+
+```{r}
+#| eval: false
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf", height = 185, width = 118, scaling = 1)
+```
+
+
+## Lineplot for whole Germany 2x3 with split plot
+```{r}
+lineplot_germany <- plot_lineplot(
+  trend_total,
+ point_sig = NULL,
+  years_lines = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  facet_var = "kb",
+  # background_facet = "total",
+  background_subgroup = "total",
+  plot_settings = plotsettings_lineplot(
+    brace_label_nudge_x = 0.21,
+    split_plot = FALSE,
+    background_lines = TRUE,
+    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+   # margin_top = 0,
+  # margin_bottom = 0,
+    n_cols = 3, 
+  equal_trend_line_length = TRUE,
+    default_list = lineplot_4x4
+  )
+) +
+  ggplot2::theme_classic() +
+  ggplot2::scale_y_continuous(breaks = seq(420, 540, 10))
+```
+
+```{r}
+#| eval: false
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185*2/3, width = 160, scaling = 1)
+```
 

@@ -25,7 +25,7 @@ plotsettings_tablebarplot(
   bar_pattern_spacing = NULL,
   bar_pattern_type = NULL,
   bar_pattern_width = NULL,
-  bar_sig_type = NULL,
+  bar_type = NULL,
   bar_width = NULL,
   column_spanners_nudge_y = NULL,
   column_spanners_row_height = NULL,
@@ -40,6 +40,7 @@ plotsettings_tablebarplot(
   headers_alignment = NULL,
   headers_background_colour = NULL,
   headers_font_size = NULL,
+  headers_ggtext = NULL,
   headers_nudge_x = NULL,
   headers_nudge_y = NULL,
   headers_row_height = NULL,
@@ -89,7 +90,7 @@ plotsettings_tablebarplot(
 
 \item{bar_pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{bar_pattern_width} parameter will increase the thickness of the white stripes.}
 
-\item{bar_sig_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").}
+\item{bar_type}{Character string defining the bar type. There are "default", pattern fill ("pattern"), "frame" or "stacked" barplot.}
 
 \item{bar_width}{Numeric between \code{0} and \code{1} specifying the width of the bar. Defaults to \code{0.4}.}
 
@@ -118,6 +119,8 @@ plotsettings_tablebarplot(
 \item{headers_background_colour}{Colour of the background of the headers.}
 
 \item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{2.5}.}
+
+\item{headers_ggtext}{Logical indicating whether the headers should be drawn with ggtext::geom_richtext. Defaults to \code{TRUE}. Only set to \code{FALSE} if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 

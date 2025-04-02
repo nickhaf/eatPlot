@@ -10,24 +10,14 @@
 #' @return [ggplot2] plot that can be used as a y-axis.
 #'
 #' @examples # tbd
-plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
-  plot_lims <- plot_dat$plot_lims
-
-  y_coords <- calc_y_value_space(plot_lims$coords, plot_lims$y_range, plot_settings)
-
-  y_coords[2] <- max(seq_over(
-    from = y_coords[1],
-    to = y_coords[2],
-    by = plot_settings$axis_y_tick_distance
-  ))
-
+plot_y_axis <- function(y_axis_min, y_axis_max, y_total_min, y_total_max, tick_distance, plot_settings) {
   list(
     # Y-Line ------------------------------------------------------------------
     ggplot2::annotate("segment",
       x = 0,
       xend = 0,
-      y = y_coords[1] - diff(y_coords) * 0.002425, # Without this, the axis tick will be plotted a bit over the y-line.
-      yend = y_coords[2] + diff(y_coords) * 0.002425
+      y = y_axis_min - ((y_total_max - y_total_min) * 0.001825), # Without this, the axis tick will be plotted a bit over the y-line.
+      yend = y_axis_max + ((y_total_max - y_total_min) * 0.001825)
     ),
     ggplot2::scale_x_continuous(
       limits = c(
@@ -35,8 +25,17 @@ plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
       ),
       expand = c(0, 0)
     ),
-    set_y_coords(plot_dat, y_coords, plot_lims, plot_settings),
-    ## Use same coordinate system as the braces, so the plots can be aligned.
+    set_y_scale(
+      y_axis_min = y_axis_min,
+      y_axis_max = y_axis_max,
+      y_total_min = y_total_min,
+      y_total_max = y_total_max,
+      tick_distance = tick_distance,
+      margin_top = plot_settings$margin_top,
+      margin_left = plot_settings$margin_left,
+      margin_bottom = plot_settings$margin_bottom,
+      margin_right = plot_settings$margin_right
+    ),
     theme_y_axis(plot_settings)
   )
 }
@@ -45,6 +44,22 @@ plot_y_axis <- function(plot_dat, plot_settings = plotsettings_lineplot()) {
 
 # Utils -------------------------------------------------------------------
 
+
+
+calc_y_ticks_min_max <- function(coords, plot_settings) {
+  ## Set the nudging parameter lower when calculating the coords in order to decrease the distance from the end of the y_axis to the nearest point.
+
+  y_axis_lims <- c()
+  y_axis_lims[1] <- plyr::round_any(coords[1], 10, floor)
+  ## Now, go in equal steps until a somehow defined top, so the steps gor from one full value to another full value.
+  y_axis_lims[2] <- max(seq_over(
+    from = y_axis_lims[1],
+    to = coords[2], ## Alternatively to top of y-range. But I think that's not necessary, if I set the nudging par for the coords low enough
+    by = plot_settings$axis_y_tick_distance
+  ))
+
+  return(y_axis_lims)
+}
 
 calc_y_positions <- function(facets, n_cols) {
   n_rows <- ceiling(length(facets) / n_cols)

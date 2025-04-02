@@ -1,12 +1,12 @@
 ## code to prepare `lineplot_4x4` dataset goes here
 
 lineplot_4x4 <- plotsettings_lineplot(
-  axis_x_background_colour = cmyk(30, 0, 15, 6),
+  axis_x_background_colour = cmyk(40, 0, 20, 8),
   axis_x_background_width_x = 0.1,
-  axis_x_background_width_y = 0.1,
+  axis_x_background_width_y = 0.13,
   axis_x_label_centralize = 0.05,
   axis_x_label_size = 2,
-  background_line_colour = cmyk(30, 0, 15, 6),
+  background_line_colour = cmyk(7,0,4,1), #cmyk(20, 0, 10, 4), #cmyk(30, 0, 15, 6),
   brace_label_gap_y = 0.08,
   brace_label_nudge_x = 0.3225,
   brace_label_nudge_y = 0.05,
@@ -16,7 +16,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   equal_trend_line_length = TRUE,
   subgroup_colours = c(
     cmyk(0, 0, 0, 100),
-    cmyk(0, 0, 0, 40)
+    cmyk(0, 0, 0, 60)
   ),
   line_type = c(
     "TRUE" = "solid",
@@ -26,7 +26,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   margin_bottom = 0,
   margin_left = 0.004, ## has to be slightly smaller, because somehow the plot margin goes wider here.
   margin_right = 0.01,
-  margin_top = 0.01,
+  margin_top = -5,
   n_cols = 4,
   point_label_nudge = FALSE,
   point_label_nudge_direction = NULL,
@@ -40,7 +40,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   point_size = 1.7,
   split_plot = FALSE,
   split_plot_gap_width = 0.03,
-  axis_y = FALSE
+  axis_y = TRUE
 )
 
 usethis::use_data(lineplot_4x4, overwrite = TRUE)
@@ -50,8 +50,8 @@ usethis::use_data(lineplot_4x4, overwrite = TRUE)
 lineplot_4x4_3groups <- plotsettings_lineplot(
   subgroup_colours = c(
     cmyk(0, 0, 0, 100),
-    cmyk(0, 0, 0, 40),
-    cmyk(0, 0, 0, 20)
+    cmyk(0, 0, 0, 60),
+    cmyk(0, 0, 0, 40)
   ),
   default_list = lineplot_4x4
 )

@@ -450,7 +450,7 @@ check_column_warn <- function(dat, column) {
 #'
 #' @examples # tbd
 build_column <- function(dat, old, new, fill_value = NA) {
-  check_no_columns(dat, new)
+  if(!test_no_columns(dat, new)){return(dat)}
   if (is.null(old) | test_no_columns(dat, old)) {
     dat[, new] <- fill_value
     return(dat)
@@ -608,6 +608,10 @@ sub_dash <- function(vec) {
 # Colours should be displayed in the order they are put in:
 construct_colour_scale <- function(colours, dat, colname) {
   if (is.null(names(colours)) & colname %in% colnames(dat)) {
+    if(length(colours) < length(unique(dat[, colname]))){
+      stop("You need to provide as many colours in `plotsettings$bar_fill_colour` as there are uinque values in your `bar_fill` column.")
+    }
+
     names(colours) <- unique(dat[, colname])
   }
   return(colours)
@@ -669,16 +673,25 @@ filter_years <- function(dat, years) {
 #'
 #' This changes `ue` to `ü` and adds a `-` between bundesländer consisting of two words.
 #'
-#' @param eatPlot_dat Data.frame coming from [prep_lineplot()] or [prep_tablebarplot()].
-#' @param column Character string of the column containing the bundesländer. Defaults to `TR_BUNDESLAND`.
+#' @param vec Character vector that contains Bunesländer that should be processed.
+#' @param linebreak Logical. If `TRUE`, a linebreak is added after the '-'. Defaults to `FALSE`.
+#' @param total_group Character string that should be replaced by `Deutschland`. Defaults to `"total"`.
 #'
 #' @return The eatPlot_data data.frame with the bundesländer column processed.
 #' @export
 #'
 #' @examples # tbd
-process_bundesland <- function(eatPlot_dat, column = "TR_BUNDESLAND"){
-  eatPlot_dat[, column] <- gsub("([a-z])([A-Z])", "\\1\uad\\2", eatPlot_dat[, column])
-  eatPlot_dat[, column] <- gsub("ue", "\u00fc", eatPlot_dat[, column] )
+process_bundesland <- function(vec, linebreak = FALSE, total_group = "total"){
+  vec <- gsub("ue", "\u00fc", vec )
 
-  return(eatPlot_dat)
+  if(linebreak){
+    vec <- gsub("([a-z])([A-Z])", "\\1\uad <br> \\2", vec)
+  }else{
+    vec <- gsub("([a-z])([A-Z])", "\\1\uad\\2", vec)
+
+}
+
+  vec <- gsub(total_group, "Deutschland", vec)
+
+  return(vec)
 }

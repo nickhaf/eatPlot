@@ -22,37 +22,32 @@
 #'
 #' @examples # tbd
 plot_lineplot <- function(eatPlot_dat,
-                          facet_var = "TR_BUNDESLAND",
-                          point_est = "est_comparison_none",
-                          point_sig = "sig_comparison_crossDiffTotal",
-                          line_sig = "sig_comparison_trend",
-                          line_se = "se_comparison_none",
-                          brace_label_est = "est_comparison_trend",
-                          brace_label_se = "se_comparison_trend",
-                          brace_label_sig_superscript = NULL,
-                          brace_label_sig_bold = "sig_comparison_trend",
+                          facet_var = "state_var",
+                          point_est = "est_mean_comp_none",
+                          point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup",
+                          line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup",
+                          line_se = "se_mean_comp_none",
+                          brace_label_est = "est_mean_comp_trend_sameFacet_sameSubgroup",
+                          brace_label_se = "se_mean_comp_trend_sameFacet_sameSubgroup",
+                          brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup",
+                          brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup",
                           years_lines = list(),
                           years_braces = list(),
-                          background_facet = "total",
-                          background_subgroup = NULL,
+                          background_facet = "Deutschland",
+                          background_subgroup = "total",
                           box_facet = NULL,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
-
   check_plotsettings_lineplot(plot_settings)
   check_columns(eatPlot_dat,
-    cols = c(facet_var)
+                cols = c(facet_var)
   )
   eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
   if (plot_settings$split_plot) {
     warning("Split lineplot currently not supported. Set to non-split.")
     plot_settings$split_plot <- FALSE
   }
-
-if(is.null(background_subgroup)){
-  message("You haven't set a background_subgroup. This might lead to unexpected behaviour, if actually one group should be plotted in the background. Most times this will be the 'total' group.")
-}
 
   # Rename/Build needed columns ---------------------------------------------
   years_list <- prep_years_list(years_lines, years_braces)
@@ -73,6 +68,7 @@ if(is.null(background_subgroup)){
 
   # Prepare Subsets ---------------------------------------------------------
   ## Hier auch subsetten wenn background_subgroup = NULL
+
   if (!is.null(background_facet) & !is.null(background_subgroup)) {
     background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet & eatPlot_dat$subgroup_var == background_subgroup, ]
   } else if (!is.null(background_facet) & is.null(background_subgroup)) {
@@ -81,13 +77,13 @@ if(is.null(background_subgroup)){
     background_line_dat <- data.frame()
   }
 
-
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
   if (!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1) {
     line_dat <- eatPlot_dat[eatPlot_dat$facet_var != background_facet & eatPlot_dat$subgroup_var != background_subgroup, ]
   } else {
     line_dat <- eatPlot_dat
   }
+
   line_dat <- filter_years(line_dat, years = years_lines)
   brace_dat_list <- prep_brace(line_dat, plot_lims, plot_settings)
 
@@ -99,7 +95,7 @@ if(is.null(background_subgroup)){
     brace_dat <- brace_dat_list$brace_dat
   }
   brace_coordinates <- brace_dat_list$brace_coords
-  if (length(brace_dat) > 0) {
+  if (!is.null(brace_dat[[1]])) {
     brace_dat <- filter_years(brace_dat, years = years_braces)
 
     if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
@@ -111,7 +107,11 @@ if(is.null(background_subgroup)){
     stop("Some of the trends you provided in 'years_lines' are not in the data.")
   }
 
-  dat_p <- list(plot_dat = line_dat, brace_dat = brace_dat_list, background_line_dat = background_line_dat, plot_lims = plot_lims, plot_settings = plot_settings)
+  dat_p <- list(plot_dat = line_dat,
+                brace_dat = brace_dat_list,
+                background_line_dat = background_line_dat,
+                plot_lims = plot_lims,
+                plot_settings = plot_settings)
 
   plot_list <- list()
   position <- 1
@@ -138,14 +138,9 @@ if(is.null(background_subgroup)){
         colour = .data$subgroup_var
       )
     ) +
+      # ggplot2::geom_point(ggplot2::aes(shape = .data$point_sig))
       plot_single_lineplot(dat_p_facet) +
-      plot_title(sub_dash(i), title_superscripts) +
-      ggplot2::theme(plot.margin = ggplot2::unit(c(
-        dat_p$plot_settings$margin_top,
-        dat_p$plot_settings$margin_right,
-        dat_p$plot_settings$margin_bottom,
-        dat_p$plot_settings$margin_left
-      ), "npc"))
+      plot_title(sub_dash(i), title_superscripts)
 
     plot_list[[i]] <- p_state
     position <- position + 1
@@ -157,7 +152,11 @@ if(is.null(background_subgroup)){
   if (dat_p$plot_settings$axis_y == TRUE) {
     y_axis_plot <- ggplot2::ggplot() +
       plot_y_axis(
-        dat_p_facet,
+        y_axis_min = dat_p$plot_lims$y_ticks_min_max[1],
+        y_axis_max = dat_p$plot_lims$y_ticks_min_max[2],
+        y_total_min = dat_p$plot_lims$y_lims_total[1],
+        y_total_max = dat_p$plot_lims$y_lims_total[2],
+        tick_distance = dat_p$plot_settings$axis_y_tick_distance,
         plot_settings = dat_p$plot_settings
       )
 
@@ -166,7 +165,6 @@ if(is.null(background_subgroup)){
     for (i in positions_y_axis) {
       plot_list <- append(plot_list, list(y_axis_plot), after = i - 1)
     }
-
     widths_setting <- c(0.02, rep(1 - 0.02 / dat_p$plot_settings$n_cols, times = dat_p$plot_settings$n_cols))
     dat_p$plot_settings$n_cols <- dat_p$plot_settings$n_cols + 1
   } else {
@@ -187,10 +185,10 @@ if(is.null(background_subgroup)){
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list,
-    ncol = dat_p$plot_settings$n_cols,
-    widths = widths_setting
+                        ncol = dat_p$plot_settings$n_cols,
+                        widths = widths_setting
   ) +
-    patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.0017, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
+    patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.001, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 }
 
 
@@ -254,45 +252,52 @@ extract_gsub_values <- function(plot_dat) {
 
 calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_settings) {
   check_columns(plot_dat, c("facet_var", "point_est", "year"))
-  ## Axis limits can be set manually. If not, calculate by range.
+
+  x_value_range <- get_year_range(years_list)
+
+  ## The following coordinates are needed:
+  # - Start and end point of the plotted y-axis. That already works.
+  # - Start of the brace (a bit below the lowest y-axis point)
+  # - Start of the x-axis, look up how I calculated it!
+  # - start and Endpoint of the whole plot, from lowest brace label to the top of the x-axis.
+
   if (is.null(plot_settings$axis_y_lims)) {
-    y_range <- range(plot_dat$point_est, na.rm = TRUE)
-    coords <- calc_y_value_coords(y_range)
+    y_value_range <- range(plot_dat$point_est, na.rm = TRUE)
   }
-  # else {
-  #   y_range <- range(seq_over(
-  #     from = plot_settings$axis_y_lims[1],
-  #     to = plot_settings$axis_y_lims[2],
-  #     by = plot_settings$axis_y_tick_distance
-  #   ))
-  #   coords <- calc_y_value_coords(y_range, nudge_param_lower = 0, nudge_param_upper = 0.3) # In this case, the brace starts at the lowest provided value, and the upper value is reduced.
-  # }
-
-  if(!is.factor(plot_dat$subgroup_var)){plot_dat$subgroup_var <- as.factor(plot_dat$subgroup_var)}
-
-  if (!is.null(background_subgroup) & length(levels(plot_dat$subgroup_var)) > 1) {
-    subgroup_lvls <- levels(plot_dat$subgroup_var)[levels(plot_dat$subgroup_var) != background_subgroup]
-  } else {
-    subgroup_lvls <- levels(plot_dat$subgroup_var)
+   else {
+     y_value_range <- range(seq_over(
+       from = plot_settings$axis_y_lims[1],
+       to = plot_settings$axis_y_lims[2],
+       by = plot_settings$axis_y_tick_distance
+     ))
   }
 
+  y_ticks_min_max <- calc_y_ticks_min_max(y_value_range, plot_settings)
+  y_value_space <- calc_y_value_space(y_ticks_min_max)
 
+  ## Currently, brace starts at same level as y-axis ends. Could nudge abit HERE.
+  subgroup_lvls <- get_subgroup_levels(plot_dat, background_subgroup)
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
-    coords,
+    y_value_space,
     years_list,
     plot_settings = plot_settings
   )
 
-  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
-  x_range <- range(unique_years)
-  y_lims_total <- c(min(brace_coords$group_labels$label_pos_y) - diff(range(coords)) * 0.06, max(coords))
+  ## Needed for scaling
+  y_value_space_diff <- diff(range(y_value_space))
+  y_lims_total <- c(
+    min(brace_coords$group_labels$label_pos_y) - y_value_space_diff * 0.06, ## Leave some space below the last label!
+    max(y_value_space) + (y_value_space_diff * plot_settings$axis_x_background_width_y)
+  )
 
   coord_list <- list(
-    x_range = x_range,
-    y_range = y_range,
-    y_lims_total = y_lims_total,
-    coords = coords,
+    x_value_range = x_value_range,
+    y_value_range = y_value_range,
+    y_ticks_min_max = y_ticks_min_max,
+    y_value_space = y_value_space, ## Some space added for labels. EXCLUDING the x-axis/header and the braces with their labels
+    y_value_space_diff = y_value_space_diff, ## Used for adjusting nudges proportional to plot size
+    y_lims_total = y_lims_total, ## Whole space of the plot, INCLUDING the x-axis/header and the braces with their labels
     brace_coords = brace_coords
   )
 
@@ -309,4 +314,24 @@ prep_years <- function(years) {
 
   colnames(years_df) <- c("year_start", "year_end")
   return(years_df)
+}
+
+
+
+get_subgroup_levels <- function(plot_dat, background_subgroup) {
+  if (!is.factor(plot_dat$subgroup_var)) {
+    plot_dat$subgroup_var <- as.factor(plot_dat$subgroup_var)
+  }
+
+  if (!is.null(background_subgroup) & length(levels(plot_dat$subgroup_var)) > 1) {
+    subgroup_lvls <- levels(plot_dat$subgroup_var)[levels(plot_dat$subgroup_var) != background_subgroup]
+  } else {
+    subgroup_lvls <- levels(plot_dat$subgroup_var)
+  }
+}
+
+get_year_range <- function(years_list) {
+  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
+  x_range <- range(unique_years)
+  return(x_range)
 }

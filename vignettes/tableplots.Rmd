@@ -21,96 +21,87 @@ library(eatPlot)
 First we prepare the data:
 
 ```{r}
-mw_prepped <- prep_tablebarplot(trend_mw,
-  subgroup_var = "geschlecht",
-  comparisons = c("groupDiff", "crossDiff_of_groupDiff")
-)
+gender_prepped <- do.call(rbind, lapply(trend_gender, prep_tablebarplot, subgroup_var = "Kgender"))
 ```
 
-It makes our live a lot easier if we set the `comparions` argument in the above column. 
-This dramatically reduces the output, as only the relevant columns are prepared. 
-To see which comparisons we actually need, we can take a look at the `plain` data.frame:
+Now, we only want to plot the comparison of männlich vs. weiblich. 
+The direction is always the same, we can look that up in the plain data, therefore it doesn't matter which one we filter:
 
 ```{r}
-#| eval: false
-
-View(trend_mw$plain)
+gender_prepped_sub <- subset(gender_prepped, subgroup_var == "maennlich")
 ```
 
-Now, the plot we want to build has some special requirements which demand some further preparation of the data. 
-First of all, the example data only contains one domain, I add a second one manually. Of course you don't have to do this, its just for demonstration purposes. 
-
 ```{r}
-#| code-fold: true
+gender_prepped <- gender_prepped_sub[order(gender_prepped_sub$state_var), ]
+gender_prepped$y_axis <- 1:nrow(gender_prepped)
 
-mw_prepped_lesen <- mw_prepped
-mw_prepped_lesen$domain <- "Leseverstehen"
-
-mw_prepped_hören <- mw_prepped
-mw_prepped_hören$domain <- "Hörverstehen"
-
-mw_prepped <- rbind(mw_prepped_lesen, mw_prepped_hören)
-```
-
-
-Now we can easily plot the barplot, after sorting the data.frame and adding a y-axis:
-
-```{r}
-mw_prepped <- mw_prepped[order(mw_prepped$TR_BUNDESLAND), ]
-mw_prepped$y_axis <- 1:nrow(mw_prepped)
-
-## Rename "total" to "Deutschland"
-mw_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", mw_prepped$TR_BUNDESLAND)
-mw_prepped$TR_BUNDESLAND <- gsub("ue", "ü", mw_prepped$TR_BUNDESLAND)
+gender_prepped$state_var <- process_bundesland(gender_prepped$state_var, linebreak = FALSE)
 ```
 
 The tables need some more work, because they need to be connected with the barplot, but only have half the rows.
 Therefore we need to build separate variables for each table part, with the respective rows of the domain not plotted in the table half set to empty strings. 
+Because we want to plot both competence areas next to each other, we have to do some minor data wrangling first:
+
 
 ```{r}
-mw_prepped_lesen <- mw_prepped
-mw_prepped_lesen[mw_prepped_lesen$domain == "Hörverstehen", colnames(mw_prepped) != "y_axis"] <- NA
+gender_prepped_lesen <- gender_prepped
+gender_prepped_lesen[gender_prepped_lesen$kb == "hoeren", !colnames(gender_prepped) %in% c("y_axis", "kb")] <- NA
 
-mw_prepped_hören <- mw_prepped
-mw_prepped_hören[mw_prepped_hören$domain == "Leseverstehen", colnames(mw_prepped) != "y_axis"] <- NA
+gender_prepped_hoeren <- gender_prepped
+gender_prepped_hoeren[gender_prepped_hoeren$kb == "lesen", !colnames(gender_prepped) %in% c("y_axis", "kb")] <- NA
+
+gender_prepped_lh <- merge(gender_prepped_lesen, gender_prepped_hoeren, by = c("y_axis", "kb"), suffixes = c("_lesen", "_hören"))
+gender_prepped_lh_final <- merge(
+  gender_prepped_lh,
+  gender_prepped[, c(
+    "y_axis",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
+  )]
+)
 
 
-mw_preped_lh <- merge(mw_prepped_lesen, mw_prepped_hören, by = c("y_axis"), suffixes = c("_lesen", "_hören"))
-mw_prepped_final <- merge(mw_prepped, mw_preped_lh, by = c("y_axis"))
+gender_prepped_lh_final <- gender_prepped_lh_final[order(gender_prepped_lh_final$y_axis), ]
 ```
+
+
 
 Now we can plot the table like usual, with one exception: I can nudge the table contents a bit downwards, so they also fill the empty row. 
 
 
 ```{r}
 tableplot_6.5 <- plot_tablebarplot(
-  dat = mw_prepped_final,
-  bar_est = "est_2022_groupDiff_mean",
-  bar_fill = "domain",
-  bar_sig = "sig_2022_groupDiff_mean",
+  dat = gender_prepped_lh_final,
+  bar_est = "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+  bar_fill = "kb",
+  bar_sig = "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
   columns_table = list(
-    "TR_BUNDESLAND_lesen", "est_2022_groupDiff_mean_lesen", "se_2022_groupDiff_mean_lesen", "es_2022_groupDiff_mean_lesen", "est_2022_groupDiff_mean_hören", "se_2022_groupDiff_mean_hören", "es_2022_groupDiff_mean_hören"
+    "state_var_lesen",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
   ),
-  columns_table_sig_bold = list(NULL, "sig_2022_groupDiff_mean_lesen", NULL, "sig_2022_groupDiff_mean_lesen", "sig_2022_groupDiff_mean_hören", NULL, "sig_2022_groupDiff_mean_hören"),
-  columns_table_sig_superscript = list(NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", NULL, "sig_2022_crossDiff_of_groupDiffTotal_mean_lesen", "sig_2022_crossDiff_of_groupDiffTotal_mean_hören", NULL, "est_2022_crossDiff_of_groupDiffTotal_mean_hören"),
+  columns_table_sig_bold = list(NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"),
+  columns_table_sig_superscript = list(
+    NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen",
+    NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"
+  ),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
-  columns_table_se = list(NULL, NULL, "se_2022_groupDiff_mean_lesen", NULL, NULL, "se_2022_groupDiff_mean_hören", NULL),
-  headers = list("Land", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
+  columns_table_se = list(NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL),
+  headers = list("**Land**", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-5, 70),
-    columns_alignment = c(0, rep(2, 6), NULL), # NULL evtl. nicht optimal, oder in die Message mit rein.
-    headers_alignment = c(rep(0.5, 2), 2, rep(0.5, 2), 2, 0.5, 0.5),
-    headers_nudge_y = c(rep(0, 7), 0.5),
-    columns_nudge_y = c(rep(-0.5, 4), rep(0.5, 3)),
-    columns_width = c(0.15, rep(0.1, 6), 0.25),
-    bar_nudge_y = rep(c(-0.1, 0.1), nrow(mw_prepped_lesen) / 2),
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),
-    bar_background_lines = "scale_breaks",
-    bar_background_lines_linetype = "solid",
-    default_list = barplot_table_plot_pattern
+    axis_x_lims = c(0, 70),
+    columns_nudge_y = c(-0.5, rep(-0.5, 3), rep(0.5, 3)),
+    font_size = 2.3,
+    headers_nudge_x = rep(0.5, 8),
+    headers_font_size = 2.3,
+    columns_width = c(0.17, rep(0.075, 6), 0.38),
+    default_list = abb_6.5
   )
 )
 ```
@@ -119,7 +110,11 @@ Finally we can save the plot:
 
 ```{r}
 #| eval: false
-save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf")
+save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 160, height = 90, scaling = 1)
+```
+
+```{r}
+tableplot_6.5
 ```
 
 
@@ -129,27 +124,34 @@ save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf")
 First the data has to be prepared:
 
 ```{r}
-dat_6.6 <- prep_tablebarplot(
-  trend_mw,
-  subgroup_var = "geschlecht",
-  par = c("mean", "sd"), ## We need both mean and sd for the plot
-  comparisons = c("none", "trend", "trend_crossDiff") ## Set for smaller output-table
+gender_prepped_mean_sd <- lapply(trend_gender,
+  prep_tablebarplot,
+  subgroup_var = "Kgender",
+  par = c("mean", "sd")
 )
+
+## Let's focus on:
+
+gender_lesen <- gender_prepped_mean_sd[[1]]
 ```
 
 Afterwards, we have to bring it in the format we want to plot it in:
 
 ```{r}
-dat_6.6 <- subset(dat_6.6, geschlecht %in% c("m", "w"))
-dat_6.6$geschlecht <- gsub("m", "Jungen", dat_6.6$geschlecht)
-dat_6.6$geschlecht <- gsub("w", "Mädchen", dat_6.6$geschlecht)
+gender_lesen <- subset(gender_lesen, subgroup_var %in% c("maennlich", "weiblich"))
 
-dat_6.6_a <- dat_6.6[order(dat_6.6$TR_BUNDESLAND), ]
+gender_lesen <- gender_lesen[order(gender_lesen$state_var), ]
 
-dat_6.6_a$TR_BUNDESLAND[duplicated(dat_6.6_a$TR_BUNDESLAND)] <- " "
-dat_6.6_a$TR_BUNDESLAND <- gsub("total", "Deutschland", dat_6.6_a$TR_BUNDESLAND)
-dat_6.6_a <- process_bundesland(dat_6.6_a)
+## Mädchen sollen nach oben
+gender_lesen <- gender_lesen[order(gender_lesen$subgroup_var, decreasing = TRUE), ]
+gender_lesen <- gender_lesen[order(gender_lesen$state_var), ]
 
+gender_lesen$state_var[duplicated(gender_lesen$state_var)] <- " "
+gender_lesen$state_var <- gsub("total", "Deutschland", gender_lesen$state_var)
+gender_lesen$state_var <- process_bundesland(gender_lesen$state_var, linebreak = TRUE)
+gender_lesen$subgroup_var <- gsub("maennlich", "Jungen", gender_lesen$subgroup_var)
+gender_lesen$subgroup_var <- gsub("weiblich", "Mädchen", gender_lesen$subgroup_var)
+gender_lesen$empty <- ""
 ```
 
 We will have to plot multiple plots and combine them. 
@@ -158,10 +160,10 @@ To do that, we will have to set the column widths, so they are identical over th
 ```{r}
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.1, rep(0.04, 7), 0.05, rep(0.04, 2), NA),
-    p2 = c(0.05, rep(0.04, 2), NA)
+    p1 = c(0.085, 0.05, rep(0.035, 6), 0.015, rep(0.035, 3), NA),
+    p2 = c(rep(0.035, 3), NA)
   ),
-  plot_ranges = c(75, 75) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  plot_ranges = c(140, 142) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 ```
 
@@ -169,83 +171,87 @@ We can just use this object in the plot-settings to adjust the column widths.
 
 ```{r}
 p_1 <- plot_tablebarplot(
-  dat = dat_6.6_a,
-  bar_est = "est_2015 - 2009_trend_mean",
+  dat = gender_lesen,
+  bar_est = "est_mean_comp_trend_sameFacet_sameSubgroup_2009_2015",
   bar_label = NULL,
-  bar_sig = "sig_2015 - 2009_trend_mean",
-  bar_fill = "geschlecht",
+  bar_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015",
+  bar_fill = "subgroup_var",
   column_spanners = list(
-    "**2009**<sup>a</sup>" = c(3, 4),
-    "**2015**<sup>a</sup>" = c(5, 6),
-    "**2022**<sup>a</sup>" = c(7, 8),
-    "**Differenz 2015-2009<sup>a</sup>**" = c(9, 12)
+    "**2009**" = c(3, 4),
+    "**2015**" = c(5, 6),
+    "**2022**" = c(7, 8),
+    "**Differenz 2015-2009**" = c(10, 13)
   ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "se_2015 - 2009_trend_mean", NULL),
-  headers = list("**Land**", " ", "*M*", "*SD*", "*M*", "*SD*", "*M*", "*SD*", "*M<sub>2015</sub>-M<sub>2009</sub>*", "*(SE)*", "*d*", " "),
-  columns_table = c("TR_BUNDESLAND", "geschlecht", "est_2009_none_mean", "est_2009_none_sd", "est_2015_none_mean", "est_2015_none_sd", "est_2022_none_mean", "est_2022_none_sd", "est_2015 - 2009_trend_mean", "se_2015 - 2009_trend_mean", "es_2015 - 2009_trend_mean"),
-  columns_table_sig_bold = list(NULL, NULL, "sig_2009_none_mean",
-    NULL, "sig_2015_none_mean", NULL, "sig_2022_none_mean", NULL, "sig_2015 - 2009_trend_mean", NULL, "sig_2015 - 2009_trend_mean"),
-  columns_table_sig_superscript = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "sig_2015 - 2009_trend_crossDiffTotal_mean", NULL,NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL),
+  headers = list("**Land**", " ", "*M*", "*SD*", "*M*", "*SD*", "*M*", "*SD*", "", "*M<sub>2015</sub>-<br>M<sub>2009</sub>* ", "*(SE)*", "*d*", " "),
+  columns_table = c("state_var", "subgroup_var", "est_mean_comp_none_2009", "est_sd_comp_none_2009", "est_mean_comp_none_2015", "est_sd_comp_none_2015", "est_mean_comp_none_2022", "est_sd_comp_none_2022", "empty", "est_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", "es_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"),
+  columns_table_sig_bold = list(
+    NULL, NULL, "sig_mean_comp_none_2009",
+    NULL, "sig_mean_comp_none_2015", NULL, "sig_mean_comp_none_2022", NULL, NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"
+  ),
+  columns_table_sig_superscript = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup_2009_2015", NULL, NULL),
   y_axis = "y_axis",
-  columns_round = c(rep(0, 10), 2),
+  columns_round = c(rep(0, 11), 2),
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-5, 70),
-    bar_pattern_spacing = 0.0154, ## We calculated this below in standardize_pattern_spacing()
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),
-    columns_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2),
+    axis_x_lims = c(-70, 70),
+    bar_pattern_spacing = 0.0138, ## We calculated this below in standardize_pattern_spacing()
+    columns_alignment = c(0, 0, rep(2, 10)),
     columns_width = column_widths_stand$p1, ## This is the column-width object we set above
-    headers_alignment = c(0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0),
-    default_list = barplot_table_plot_pattern
+    columns_table_sig_superscript_letter = "a",
+    columns_table_sig_superscript_letter_nudge_x = 5.5,
+    columns_nudge_y = c(-0.5, rep(0, 11)),
+    headers_alignment = c(0, 0, rep(0.5, 7), 0, 0.5, 0.5, 0),
+    headers_row_height = 1.75,
+    headers_nudge_x = c(rep(0, 9), 2, rep(0, 3)), 
+    default_list = abb_6.6
   )
 )
 
 p_2 <- plot_tablebarplot(
-  dat = dat_6.6_a,
-  bar_est = "est_2022 - 2015_trend_mean",
+  dat = gender_lesen,
+  bar_est = "est_mean_comp_trend_sameFacet_sameSubgroup_2015_2022",
   bar_label = NULL,
-  bar_sig = "sig_2022 - 2015_trend_mean",
-  bar_fill = "geschlecht",
+  bar_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015",
+  bar_fill = "subgroup_var",
   column_spanners = list(
     "**Differenz 2022-2015**" = c(1, 4)
   ),
   headers = list(
-    "*M<sub>2022</sub>-M<sub>2015</sub>*",
+    "*M<sub>2022</sub>-<br>M<sub>2015</sub>* ",
     "*(SE)*",
     "*d*",
     " "
   ),
   columns_table = c(
-    "est_2022 - 2015_trend_mean",
-    "se_2022 - 2015_trend_mean",
-    "es_2022 - 2015_trend_mean"
+    "est_mean_comp_trend_sameFacet_sameSubgroup_2015_2022",
+    "se_mean_comp_trend_sameFacet_sameSubgroup_2015_2022",
+    "es_mean_comp_trend_sameFacet_sameSubgroup_2015_2022"
   ),
-  columns_table_se = list(NULL, "se_2022 - 2015_trend_mean", NULL),
-  columns_table_sig_bold = list("sig_2022 - 2015_trend_mean", NULL, "sig_2022 - 2015_trend_mean"),
-  columns_table_sig_superscript = list("sig_2022 - 2015_trend_crossDiffTotal_mean", NULL, NULL),
+  columns_table_se = list(NULL, "se_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", NULL),
+  columns_table_sig_bold = list("sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022"),
+  columns_table_sig_superscript = list("sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup_2015_2022", NULL, NULL),
   y_axis = "y_axis",
   columns_round = c(0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
-    axis_x_lims = c(-5, 70),
-    bar_pattern_spacing = 0.0346, ## We calculated this below in standardize_pattern_spacing()
-    background_stripes_colour = c(rep(c("white", "white", "#EBFDF3", "#EBFDF3"), 8), "grey", "grey"),
-    bar_fill_colour = c("#20D479", "#8DEBBC"),   
-    columns_alignment = c(rep(0.5, 2), 2),
+    axis_x_lims = c(-70, 72),
+    bar_pattern_spacing = 0.0362, ## We calculated this below in standardize_pattern_spacing()
+    columns_alignment = c(0.5, 2, 2),
     columns_width = column_widths_stand$p2, ## This is the column-width object we set above
-    headers_alignment = c(0.5, 0.5, 0.5, 0),
-    default_list = barplot_table_plot_pattern
+    columns_table_sig_superscript_letter = "a",
+    columns_table_sig_superscript_letter_nudge_x = 5.5,
+    headers_nudge_x = c(2, 0, 0, 0),
+    headers_alignment = c(0, 0.5, 0.5, 0),
+    headers_row_height = 1.75,
+    default_list = abb_6.6
   )
 )
-
 ``` 
 
 It might be necessary to standardize the pattern spacing over the plots:
 
 ```{r}
-
 bar_pattern_spacing_stand <- standardize_pattern_spacing(list(p_1, p_2), pattern_spacing = 0.05)
 bar_pattern_spacing_stand
-
 ```
 
 These values have to be set in the plot-settings above.  
@@ -260,52 +266,43 @@ And save the result:
 ```{r}
 #| eval: false
 
-save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 320)
-
+save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 235, height = 130, scaling = 1)
 ```
 
-```{r}
+
+```{r plot.width = 15}
 #| echo: false
 
 tableplot_6.6
-
 ```
 
 
 # Zuwanderungskapitel
+
+Currently use the `gender_trend` data. 
+
 ```{r}
-zwh_prepped <- prep_tablebarplot(trend_zwh,
-  subgroup_var = "zwh",
-  comparisons = c("groupDiff", "trend_groupDiff")
-)
-zwh_prepped <- zwh_prepped[order(zwh_prepped$TR_BUNDESLAND), ]
-zwh_prepped$TR_BUNDESLAND <- gsub("total", "Deutschland", zwh_prepped$TR_BUNDESLAND)
-
-zwh_prepped$TR_BUNDESLAND <- gsub("ue", "ü", zwh_prepped$TR_BUNDESLAND)
-zwh_prepped$TR_BUNDESLAND <- gsub("Berlin", "Berlin<sup>2<sup>", zwh_prepped$TR_BUNDESLAND)
-zwh_prepped$TR_BUNDESLAND <- gsub("Nordrhein-Westfalen", "Nordrhein-Westfalen<sup>3<sup>", zwh_prepped$TR_BUNDESLAND)
-
-## I add an empty column for being able to easily adjust the sapce between subplots:
-zwh_prepped$empty <- NA
+gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen", ]
+gender_prepped_2$empty <- "" ## Needes as a empty space between column spanners
+gender_prepped_2$state_var <- process_bundesland(gender_prepped_2$state_var, linebreak = FALSE)
 ```
-
 
 ```{r}
 column_widths_stand <- standardize_column_width(
   column_widths = list(
-    p1 = c(0.1, rep(0.035, 5), NA),
-    p2 = c(0.025, 0.05, 0.035, NA),
-    p3 = c(0.05, 0.035, NA)
+    p1 = c(0.16, rep(0.045, 5), NA),
+    p2 = c(0.015, 0.07, 0.045, NA),
+    p3 = c(0.07, 0.045, NA)
   ),
-  plot_ranges = c(65, 65, 65) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  plot_ranges = c(60, 60, 65) # Range of the x-axes of both plots set in 'axis_x_lims'.
 )
 ```
 
 ```{r}
 p_1 <- plot_tablebarplot(
-  dat = zwh_prepped,
-  bar_est = "est_2022_groupDiff_mean",
-  bar_sig = "sig_2022_groupDiff_mean",
+  dat = gender_prepped_2,
+  bar_est = "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+  bar_sig = "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
   column_spanners = list(
     "**2009**" = c(2),
     "**2015**" = c(3),
@@ -314,129 +311,120 @@ p_1 <- plot_tablebarplot(
   column_spanners_2 = list(
     "**Differenz Schüler:innen mit - Schüler:innen ohne <br> Zuwanderungshintergrund**" = c(2, 7)
   ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, "se_2022_groupDiff_mean", NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022", NULL),
   headers = list(
-    "Land",
-    "\u0394 *M*",
-    "\u0394 *M*",
-    "\u0394 *M*",
-    "*(SE)*",
-    "*d*",
+    "bold(Land)",
+    "italic(Delta * M)",
+    "italic(Delta * M)",
+    "italic(Delta * M)",
+    "italic((SE))",
+    "italic(d)",
     " "
   ),
   columns_table = c(
-    "TR_BUNDESLAND",
-    "est_2009_groupDiff_mean",
-    "est_2015_groupDiff_mean",
-    "est_2022_groupDiff_mean",
-    "se_2022_groupDiff_mean",
-    "es_2022_groupDiff_mean"
+    "state_var",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2009",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2015",
+    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
   ),
   columns_table_sig_bold = list(
     NULL,
-    "sig_2009_groupDiff_mean",
-    "sig_2015_groupDiff_mean",
-    "sig_2022_groupDiff_mean",
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2009",
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2015",
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
     NULL,
-    "sig_2022_groupDiff_mean"
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
   ),
   y_axis = "y_axis",
   columns_round = c(0, 0, 0, 0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
-    column_spanners_2_row_height = 2,
-    axis_x_lims = c(0, 65),
-    bar_pattern_spacing = 0.0249,
-    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
-    # bar_fill_colour = c("#20D479", "#8DEBBC"),
-    bar_background_lines = "scale_breaks",
-    columns_alignment = c(0, 0.5, 0.5, 0.5, 2, 0.5),
+    axis_x_lims = c(-20, 40),
+    bar_pattern_spacing = 0.0274,
+    columns_alignment = c(0, 0.5, 0.5, 0.5, 0.5, 0.5),
     columns_width = column_widths_stand$p1,
-    headers_row_height = 1.5,
-    default_list = barplot_table_plot_pattern
+    default_list = abb_8.4
   )
 )
 ```
 
 ```{r}
 p_2 <- plot_tablebarplot(
-  dat = zwh_prepped,
-  bar_est = "est_2015 - 2009_trend_groupDiff_mean",
-  bar_sig = "sig_2015 - 2009_trend_groupDiff_mean",
+  dat = gender_prepped_2,
+  bar_est = "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015",
+  bar_sig = "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015",
   column_spanners = list(
-    "**2015 - 2009**" = c(2, 4)
+    "**2015-2009**" = c(2, 4)
   ),
   column_spanners_2 = list(
     "**Veränderung der Differenz<br>**" = c(2, 4)
   ),
-  columns_table_se = list(NULL, NULL, "est_2015 - 2009_trend_groupDiff_mean"),
+  columns_table_se = list(NULL, NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"),
   headers = list(
     " ",
-    "\u0394 *M*<sub>2015</sub>-<br> \u0394 *M*<sub>2009</sub>",
-    "*(SE)*",
+    "atop(paste(italic(Delta * M[2015]), \"\U2212\"),
+          italic(Delta * M[2009]))",
+    # "*\u0394 M*",
+    "italic((SE))",
     " "
   ),
   columns_table = c(
     "empty",
-    "est_2015 - 2009_trend_groupDiff_mean",
-    "se_2015 - 2009_trend_groupDiff_mean"
+    "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015",
+    "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"
   ),
   columns_table_sig_bold = list(
-    NULL, "sig_2015 - 2009_trend_groupDiff_mean", NULL
+    NULL, "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015", NULL
   ),
   y_axis = "y_axis",
-  plot_settings = plotsettings_tablebarplot(
-    column_spanners_2_row_height = 2,
-    axis_x_lims = c(0, 65),
-    bar_pattern_spacing = 0.0375,
-    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
-    bar_background_lines = "scale_breaks",
-    columns_alignment = c(0.5, 0.5, 2),
-    headers_alignment = c(0, 0, 2, 0),
-    headers_nudge_x = c(0, 4, 0, 0),
-    columns_width = column_widths_stand$p2,
-    headers_row_height = 1.5,
-    default_list = barplot_table_plot_pattern
-  )
+  plot_settings =
+    plotsettings_tablebarplot(
+      axis_x_lims = c(-20, 40),
+      bar_pattern_spacing = 0.0334,
+      columns_alignment = c(2, 2, 2),
+      headers_alignment = c(0, 1, 0.5, 0),
+      headers_nudge_x = c(0, 4, 0, 0),
+      columns_width = column_widths_stand$p2,
+      default_list = abb_8.4
+    )
 )
 ```
 
 ```{r}
 p_3 <- plot_tablebarplot(
-  dat = zwh_prepped,
-  bar_est = "est_2022 - 2015_trend_groupDiff_mean",
-  bar_sig = "sig_2022 - 2015_trend_groupDiff_mean",
+  dat = gender_prepped_2,
+  bar_est = "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022",
+  bar_sig = "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022",
   column_spanners = list(
     "**2022-2015**" = c(1, 3)
   ),
   column_spanners_2 = list(
     "**Veränderung der Differenz<br>**" = c(1, 3)
   ),
-  columns_table_se = list(NULL, "est_2022 - 2015_trend_groupDiff_mean"),
+  columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"),
   headers = list(
-    "\u0394 *M*<sub>2015</sub>-<br> \u0394 *M*<sub>2009</sub>",
-    "*(SE)*",
+    "atop(paste(italic(Delta * M[2022]), \"\U2212\"),
+          italic(Delta * M[2015]))",
+    "italic((SE))",
     " "
   ),
   columns_table = c(
-    "est_2022 - 2015_trend_groupDiff_mean",
-    "se_2022 - 2015_trend_groupDiff_mean"
+    "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022",
+    "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"
   ),
   columns_table_sig_bold = list(
-    "sig_2022 - 2015_trend_groupDiff_mean", NULL
+    "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022", NULL
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
-    bar_pattern_spacing = 0.0375,
-    column_spanners_2_row_height = 2,
-    axis_x_lims = c(0, 65),
-    background_stripes_colour = c(rep(c("white", "#EBFDF3"), 8), "grey"),
-    bar_background_lines = "scale_breaks",
-    columns_alignment = c(0.5, 2),
-    headers_alignment = c(0, 2, 0),
+    bar_pattern_spacing = 0.0392,
+    axis_x_lims = c(-20, 45),
+    columns_alignment = c(2, 2),
+    headers_alignment = c(1, 0.5, 0),
     headers_nudge_x = c(4, 0, 0),
     columns_width = column_widths_stand$p3,
-    headers_row_height = 1.5,
-    default_list = barplot_table_plot_pattern
+    default_list = abb_8.4
   )
 )
 ```
@@ -452,21 +440,18 @@ tableplot_8.4 <- combine_plots(list(p_1, p_2, p_3))
 
 ```{r}
 #| eval: false
-save_plot(tableplot_8.4, filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek_cmyk.pdf", width = 320, height = 226.2 / 2, encoding = "Greek.enc")
-
-
-ggplot2::ggsave(
-  filename = "C:/Users/hafiznij/Downloads/abb_8.4_greek.pdf", tableplot_8.4,
-  width = 320, height = 226.2 / 2, units = "mm",
-  device = cairo_pdf
-)
-
 save_plot(tableplot_8.4,
-  filename = "C:/Users/hafiznij/Downloads/test_table_greek.pdf", width = 320,
-  encoding = "Greek.enc"
+  filename = "C:/Users/hafiznij/Downloads/abb_8.4.pdf",
+  width = 160, height = 100, scaling = 1
 )
-
-## Okay, so either the letters are not rendered corretly, or the color model is wrong.
 ```
 
 
+```{r}
+tableplot_8.4
+```
+
+## Stacked barplot
+
+```{r}
+```

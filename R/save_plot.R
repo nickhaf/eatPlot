@@ -24,7 +24,7 @@
 #   )
 # }
 ## pdf for the correct colomodel cmyk:
-save_plot <- function(p, filename, width = 160, height = 226.2, colormodel = "cmyk", scaling = 1, ...) {
+save_plot <- function(p, filename, width = 210, height = 297, colormodel = "cmyk", scaling = 0.9, ...) {
   width_inch <- width / 25.4
   height_inch <- height / 25.4
 

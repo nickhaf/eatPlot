@@ -34,6 +34,7 @@ plot_column_headers <- function(column_x_coords_headers,
       if (hjust_header == 2) {
         hjust_header <- 1
       }
+    if(plot_settings$headers_ggtext){
       ggtext::geom_richtext(
         data = data.frame(),
         ggplot2::aes(
@@ -51,7 +52,26 @@ plot_column_headers <- function(column_x_coords_headers,
         hjust = hjust_header,
         nudge_x = rev(plot_settings$headers_nudge_x)[i]
       )
+    }else{
+      ggplot2::geom_text(
+        data = data.frame(),
+        ggplot2::aes(
+          x = x_axis_i_header,
+          y = header_y_coords$header_area_start +
+            header_y_coords$row_height_headers / 2 +
+            rev(plot_settings$headers_nudge_y)[i]
+        ),
+        colour = "#000000",
+        label = rev(headers)[[i]],
+        size = plot_settings$headers_font_size,
+        hjust = hjust_header,
+        nudge_x = rev(plot_settings$headers_nudge_x)[i],
+        parse = TRUE
+      )
     }
+}
+
+
   })
 }
 
