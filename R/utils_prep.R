@@ -190,18 +190,23 @@ pivot_eatRep <- function(eatRep_prepped,
   eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp_none", colnames(eatRep_prepped))]
   eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split") | grepl("comp$", colnames(eatRep_prepped))]
 
+  eatRep_prepped_none$trend <- NULL
   eatRep_prepped_none_wide <- tidyr::pivot_wider(
-    unique(subset(eatRep_prepped_none, select = -c(trend))),
+    unique(eatRep_prepped_none),
     names_from = tidyr::all_of(names_from_none),
     values_from = paste0(value_cols, "_none")
   )
 
   if(plot_type == "line"){
   eatRep_comp_trend <- subset(eatRep_prepped_comp, grepl("_", eatRep_prepped_comp$trend))
-  eatRep_comp_noTrend <- subset(eatRep_prepped_comp, !grepl("_", eatRep_prepped_comp$trend), select = -trend)
+  eatRep_comp_noTrend <- subset(eatRep_prepped_comp, !grepl("_", eatRep_prepped_comp$trend))
+  eatRep_comp_noTrend$trend <- NULL
+
   }else{
-    eatRep_comp_trend <- subset(eatRep_prepped_comp, grepl("_", eatRep_prepped_comp$trend), select = -year)
-    eatRep_comp_noTrend <- subset(eatRep_prepped_comp, !grepl("_", eatRep_prepped_comp$trend,), select = -c(year))
+    eatRep_comp_trend <- subset(eatRep_prepped_comp, grepl("_", eatRep_prepped_comp$trend))
+    eatRep_comp_trend$year <- NULL
+    eatRep_comp_noTrend <- subset(eatRep_prepped_comp, !grepl("_", eatRep_prepped_comp$trend))
+    eatRep_comp_noTrend$year <- NULL
   }
 
   eatRep_comp_trend_wide <- tidyr::pivot_wider(

@@ -4,14 +4,14 @@
 \alias{process_bundesland}
 \title{Process the data in the Bundesland column.}
 \usage{
-process_bundesland(vec, linebreak = FALSE)
+process_bundesland(vec, linebreak = FALSE, total_group = "total")
 }
 \arguments{
+\item{vec}{Character vector that contains Bunesländer that should be processed.}
+
 \item{linebreak}{Logical. If \code{TRUE}, a linebreak is added after the '-'. Defaults to \code{FALSE}.}
 
-\item{eatPlot_dat}{Data.frame coming from \code{\link[=prep_lineplot]{prep_lineplot()}} or \code{\link[=prep_tablebarplot]{prep_tablebarplot()}}.}
-
-\item{column}{Character string of the column containing the bundesländer. Defaults to \code{TR_BUNDESLAND}.}
+\item{total_group}{Character string that should be replaced by \code{Deutschland}. Defaults to \code{"total"}.}
 }
 \value{
 The eatPlot_data data.frame with the bundesländer column processed.

@@ -12,11 +12,23 @@ A list with four elements.
 ...
 }
 }
+
+\subsection{\code{trend_2}}{
+
+A list with four elements.
+\describe{
+...
+}
+}
 }
 \usage{
 trend_2
+
+trend_2
 }
 \description{
+Default plot settings for mean-barplot without trend.
+
 Default plot settings for mean-barplot without trend.
 }
 \keyword{datasets}

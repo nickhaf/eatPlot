@@ -245,7 +245,7 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
     rownames(dat) <- NULL
 
     dat <- dat[with(dat, order(y_axis, bar_fill)), ]
-    dat$x_axis_end <- ave(dat$bar_est, dat$y_axis, FUN = cumsum)
+    dat$x_axis_end <- stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum)
     dat$x_axis_start <- dat$x_axis_end - dat$est
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start)/2
 

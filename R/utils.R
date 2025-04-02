@@ -673,9 +673,9 @@ filter_years <- function(dat, years) {
 #'
 #' This changes `ue` to `ü` and adds a `-` between bundesländer consisting of two words.
 #'
-#' @param eatPlot_dat Data.frame coming from [prep_lineplot()] or [prep_tablebarplot()].
-#' @param column Character string of the column containing the bundesländer. Defaults to `TR_BUNDESLAND`.
+#' @param vec Character vector that contains Bunesländer that should be processed.
 #' @param linebreak Logical. If `TRUE`, a linebreak is added after the '-'. Defaults to `FALSE`.
+#' @param total_group Character string that should be replaced by `Deutschland`. Defaults to `"total"`.
 #'
 #' @return The eatPlot_data data.frame with the bundesländer column processed.
 #' @export

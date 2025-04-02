@@ -7,7 +7,6 @@
 #' @param facet_var Character string of the name of the variable that should be used for faceting the plot. Defaults to `"TR_BUNDESLAND"`.
 #' @param total_facet Character string of the name of the total groups containing all other groups of the facet var. Defaults to `"total"`.
 #' @param sig_niveau Numeric indicating the border below which p-values will be considered significant. Defaults to `0.05`.
-#' @param comparisons Character string that can be used to filter the needed comparions. This can drastically reduce the output of the prepared data. Defaults to `c("none", "crossDiff", "trend", "trend_crossDiff")`.
 #' @return Data prepared for plotting the BT-lineplots.
 #' @export
 #'
@@ -72,7 +71,7 @@ build_plot_dat <- function(eatRep_dat, facet_var, total_facet, total_subgroup) {
 
 
   # nested comparisons ------------------------------------------------------
-  eatRep_dat_unnested <- unnest_eatRep(eatRep_dat_long, eatRep_dat)
+  eatRep_dat_unnested <- unnest_eatRep(eatRep_dat_long)
 
   eatRep_dat_merged <- merge(
     eatRep_dat_unnested,

@@ -28,10 +28,6 @@ prep_tablebarplot(
 \item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
 
 \item{total_subgroup}{Character string indicating the subgroup containing all other groups of the subgroup_var. Defaults to \code{"total"}.}
-
-\item{par}{Character vector of the parameters that should be used for the data preperation. Defaults to \code{mean}.}
-
-\item{names_from}{Character vector of the variables that should be used to create the wide format. Defaults to \code{c("year", "comparison", "parameter")}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.

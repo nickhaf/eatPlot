@@ -90,7 +90,7 @@ plotsettings_tablebarplot(
 
 \item{bar_pattern_width}{Numeric for the width of the pattern stripes. Note that by default the pattern are the whit stripes, so an increase of the \code{bar_pattern_width} parameter will increase the thickness of the white stripes.}
 
-\item{bar_type}{Character string indicating whether levels of the grouping variable should be visualized by pattern fill ("pattern") or line type ("frame").}
+\item{bar_type}{Character string defining the bar type. There are "default", pattern fill ("pattern"), "frame" or "stacked" barplot.}
 
 \item{bar_width}{Numeric between \code{0} and \code{1} specifying the width of the bar. Defaults to \code{0.4}.}
 

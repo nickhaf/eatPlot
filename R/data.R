@@ -160,6 +160,57 @@
 
 
 
+#' BT24 default plot settings.
+#'
+#' Default plot settings Abbildung 6.5 from BT22.
+#'
+#' @format ## `abb_6.5`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"abb_6.5"
+
+
+#' BT24 default plot settings.
+#'
+#' Default plot settings Abbildung 6.6 from BT22.
+#'
+#' @format ## `abb_6.6`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"abb_6.6"
+
+
+#' BT24 default plot settings.
+#'
+#' Default plot settings Abbildung 8.4 from BT22.
+#'
+#' @format ## `abb_8.4`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"abb_8.4"
+
+#' BT24 example data.
+#'
+#' Default plot settings for mean-barplot without trend.
+#'
+#' @format ## `trend_2`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"trend_2"
+
+
+
 #' BT24 example data.
 #'
 #' Example data with male/female subgroup_var.
@@ -192,3 +243,25 @@
 #'   ...
 #' }
 "trend_3"
+
+#' BT24 example data.
+#'
+#' Example data for stacked bar charts.
+#'
+#' @format ## `anteile`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"anteile"
+
+#' BT24 example data.
+#'
+#' Example data with grouping var with multiple levels.
+#'
+#' @format ## `trend_gender`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"trend_gender"
