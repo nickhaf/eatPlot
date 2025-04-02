@@ -8,7 +8,7 @@ test_that("position is calculated correctly", {
 
 test_that("y-axis can be plotted", {
 y_plot <- ggplot2::ggplot() +
-  plot_y_axis(y_axis_min = 0, y_axis_max = 10, y_total_min =0, y_total_max = 10, tick_distance = 2, plot_settings = plotsettings_lineplot())
+  plot_y_axis(y_axis_min = 0, y_axis_max = 10, y_total_min =-1, y_total_max = 11, tick_distance = 2, plot_settings = plotsettings_lineplot())
 
 vdiffr::expect_doppelganger("y-axis", y_plot)
 
@@ -64,8 +64,6 @@ p <- plot_lineplot(test_data_lineplot,
 
 
 plot_list <- list(y_plot, p)
-
-## I need to set the same width for both!
 
 p_patched <- patchwork::wrap_plots(plot_list,
                       ncol = 2,

@@ -213,52 +213,52 @@ test_that("scale breaks are calculated correctly", {
   expect_equal(set_scale_breaks(c(0, 10)), c(0, 10))
 })
 
-test_that("Delta can be manually plotted over ggtext", {
-  test_dat <- data.frame(label = c("*\u0394 M*", "*\u0394 M <sub>1997</sub> - <br> \u0394 M <sub>1997</sub>*"), x = c(0.5, 0), y = c(0.5, 0.5))
-
-  if (any(grepl("\u0394", test_dat$label))) {
-    test_dat2 <- test_dat
-    test_dat$label <- sub("\u0394 ", "", test_dat$label)
-    test_dat2$label <- sub("\\*", "italic(", test_dat2$label)
-    test_dat2$label <- sub("\\*", "\\)", test_dat2$label)
-    test_dat2$label <- gsub("[^\u0394]", " ", test_dat2$label)
-    test_dat2$label <- gsub("\u0394", "Delta", test_dat2$label)
-  }
-
-  if (any(grepl("<br>", test_dat$label))){
-
-    ## Split string at <br>
-    split_label <- strsplit(test_dat$label, "<br>")
-
-    res_vec <- c()
-    for(i in 1:length(split_label)){
-      if(length(split_label[[i]]) > 1){
-        res_vec <- c(res_vec, i)
-      }
-    }
-
-
-})
-
-    ## add second row as new row to data
-
-
-    ## Adjust the y-values
-  }
-
-  ggplot2::ggplot(test_dat, ggplot2::aes(x, y, label = label)) +
-    ggtext::geom_richtext(
-      hjust = 0
-    ) +
-    ggplot2::geom_text(
-      data = test_dat2,
-      # nudge_x = -0.01,
-      parse = TRUE,
-      hjust = 0
-    ) +
-    ggplot2::scale_x_continuous(limits = c(0, 1)) +
-    ggplot2::scale_y_continuous(limits = c(0, 1))
-
-}
-
+# test_that("Delta can be manually plotted over ggtext", {
+#   test_dat <- data.frame(label = c("*\u0394 M*", "*\u0394 M <sub>1997</sub> - <br> \u0394 M <sub>1997</sub>*"), x = c(0.5, 0), y = c(0.5, 0.5))
+#
+#   if (any(grepl("\u0394", test_dat$label))) {
+#     test_dat2 <- test_dat
+#     test_dat$label <- sub("\u0394 ", "", test_dat$label)
+#     test_dat2$label <- sub("\\*", "italic(", test_dat2$label)
+#     test_dat2$label <- sub("\\*", "\\)", test_dat2$label)
+#     test_dat2$label <- gsub("[^\u0394]", " ", test_dat2$label)
+#     test_dat2$label <- gsub("\u0394", "Delta", test_dat2$label)
+#   }
+#
+#   if (any(grepl("<br>", test_dat$label))){
+#
+#     ## Split string at <br>
+#     split_label <- strsplit(test_dat$label, "<br>")
+#
+#     res_vec <- c()
+#     for(i in 1:length(split_label)){
+#       if(length(split_label[[i]]) > 1){
+#         res_vec <- c(res_vec, i)
+#       }
+#     }
+#
+#
+# })
+#
+#     ## add second row as new row to data
+#
+#
+#     ## Adjust the y-values
+#   }
+#
+#   ggplot2::ggplot(test_dat, ggplot2::aes(x, y, label = label)) +
+#     ggtext::geom_richtext(
+#       hjust = 0
+#     ) +
+#     ggplot2::geom_text(
+#       data = test_dat2,
+#       # nudge_x = -0.01,
+#       parse = TRUE,
+#       hjust = 0
+#     ) +
+#     ggplot2::scale_x_continuous(limits = c(0, 1)) +
+#     ggplot2::scale_y_continuous(limits = c(0, 1))
+#
+# }
+#
 

@@ -2,9 +2,9 @@
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
   axis_x_label_size = 5,
   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3)),
-  bar_background_lines_colour = "grey55",
+  bar_background_lines_colour = cmyk(0, 0, 0, 60),
   bar_background_lines = "scale_breaks",
-  bar_background_lines_linetype = "dotted",
+  bar_background_lines_linetype = "dashed",
   bar_fill_colour = c(
     cmyk(85, 0, 43, 17),
     cmyk(40, 0, 20, 8),
@@ -60,7 +60,7 @@ abb_8.4 <- plotsettings_tablebarplot(
   background_stripes_colour = c(rep(c("white", cmyk(7,0,4,1)), 8), "grey"),
   column_spanners_2_row_height = 1.5,
   headers_row_height = 2,
-  #headers_ggtext = FALSE,
+  headers_ggtext = FALSE,
   font_size = 2.2,
   headers_font_size = 2.2,
   default_list = barplot_table_plot_pattern
