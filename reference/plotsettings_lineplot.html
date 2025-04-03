@@ -55,6 +55,7 @@
 <span>  axis_y_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_line_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  box_facet_linewidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_label_gap_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_label_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_label_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -62,9 +63,10 @@
 <span>  brace_line_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  brace_span_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  equal_trend_line_length <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  subgroup_colours <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  margin_below_y_axis <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  margin_above_y_axis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  margin_bottom <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  margin_left <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  margin_right <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -77,9 +79,9 @@
 <span>  point_label_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  point_label_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  point_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  box_facet_linewidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split_plot <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split_plot_gap_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subgroup_colours <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  default_list <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -128,6 +130,10 @@
 <dd><p>Colour of the background line.</p></dd>
 
 
+<dt id="arg-box-facet-linewidth">box_facet_linewidth<a class="anchor" aria-label="anchor" href="#arg-box-facet-linewidth"></a></dt>
+<dd><p>Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).</p></dd>
+
+
 <dt id="arg-brace-label-gap-y">brace_label_gap_y<a class="anchor" aria-label="anchor" href="#arg-brace-label-gap-y"></a></dt>
 <dd><p>Numeric for the size of the vertical gap between brace labels.</p></dd>
 
@@ -156,16 +162,16 @@
 <dd><p>Logical. If true, all trend lines will have the same length, even if the actual distance between the year is differently. E.g., the distance between the years of the trends 2010 - 2011 and 2011 - 2020 would be equal, even though the first trend only takes 1 year, and the second one 9 years. Please use with care, as it will distort the x-axis and results in misleading line lengths. Defaults to <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-subgroup-colours">subgroup_colours<a class="anchor" aria-label="anchor" href="#arg-subgroup-colours"></a></dt>
-<dd><p>Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.</p></dd>
-
-
 <dt id="arg-line-type">line_type<a class="anchor" aria-label="anchor" href="#arg-line-type"></a></dt>
 <dd><p>Named vector containing the linetypes for the plots. The names must be either <code>"TRUE"</code> or <code>"FALSE"</code>, as the linetpyes represent significances. See <a href="https://ggplot2.tidyverse.org/reference/scale_linetype.html" class="external-link">ggplot2::scale_linetype</a>.</p></dd>
 
 
 <dt id="arg-line-width">line_width<a class="anchor" aria-label="anchor" href="#arg-line-width"></a></dt>
 <dd><p>Numeric for the thicknes of the plotted lines.</p></dd>
+
+
+<dt id="arg-margin-below-y-axis-maring-above-y-axis">margin_below_y_axis, maring_above_y_axis<a class="anchor" aria-label="anchor" href="#arg-margin-below-y-axis-maring-above-y-axis"></a></dt>
+<dd><p>Numeric to scale the area between the y-axis and the braces/the x-axis-header.</p></dd>
 
 
 <dt id="arg-margin-bottom-margin-left-margin-right-margin-top">margin_bottom, margin_left, margin_right, margin_top<a class="anchor" aria-label="anchor" href="#arg-margin-bottom-margin-left-margin-right-margin-top"></a></dt>
@@ -200,16 +206,16 @@
 <dd><p>Numeric for the size of plotted points.</p></dd>
 
 
-<dt id="arg-box-facet-linewidth">box_facet_linewidth<a class="anchor" aria-label="anchor" href="#arg-box-facet-linewidth"></a></dt>
-<dd><p>Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).</p></dd>
-
-
 <dt id="arg-split-plot">split_plot<a class="anchor" aria-label="anchor" href="#arg-split-plot"></a></dt>
 <dd><p>Logical, indicating whether the different trends should be split or not.</p></dd>
 
 
 <dt id="arg-split-plot-gap-width">split_plot_gap_width<a class="anchor" aria-label="anchor" href="#arg-split-plot-gap-width"></a></dt>
 <dd><p>Numeric for the width of the gap in a split plot in npc.</p></dd>
+
+
+<dt id="arg-subgroup-colours">subgroup_colours<a class="anchor" aria-label="anchor" href="#arg-subgroup-colours"></a></dt>
+<dd><p>Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.</p></dd>
 
 
 <dt id="arg-default-list">default_list<a class="anchor" aria-label="anchor" href="#arg-default-list"></a></dt>
