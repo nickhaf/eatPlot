@@ -44,14 +44,14 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMy45NnwxODIuNjd8MzAuMTN8NTcyLjI4)'>
-<polyline points='12.09,100.52 174.54,44.48 ' style='stroke-width: 2.13; stroke: #F8766D; stroke-linecap: butt;' />
-<polygon points='12.09,97.48 14.72,102.04 9.45,102.04 ' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
-<circle cx='174.54' cy='44.48' r='1.95' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
-<text x='12.09' y='102.48' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>500</text>
-<text x='174.54' y='46.43' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>560</text>
-<rect x='3.96' y='30.13' width='178.70' height='3.14' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
-<text x='12.09' y='33.66' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2000</text>
-<text x='174.54' y='33.66' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2005</text>
+<polyline points='12.09,95.28 174.54,38.53 ' style='stroke-width: 2.13; stroke: #F8766D; stroke-linecap: butt;' />
+<polygon points='12.09,92.24 14.72,96.80 9.45,96.80 ' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
+<circle cx='174.54' cy='38.53' r='1.95' style='stroke-width: 0.71; stroke: none; fill: #F8766D;' />
+<text x='12.09' y='97.24' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>500</text>
+<text x='174.54' y='40.49' text-anchor='middle' style='font-size: 5.69px; fill: #F8766D; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>560</text>
+<rect x='3.96' y='30.13' width='178.70' height='2.72' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D3D3D3;' />
+<text x='12.09' y='33.45' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2000</text>
+<text x='174.54' y='33.45' text-anchor='middle' style='font-size: 5.69px; font-family: sans;' textLength='12.66px' lengthAdjust='spacingAndGlyphs'>2005</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='93.32' y='27.14' text-anchor='middle' style='font-size: 7.00px; font-family: sans;' textLength='17.90px' lengthAdjust='spacingAndGlyphs'>Berlin</text>

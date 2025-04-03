@@ -16,6 +16,7 @@ plotsettings_lineplot(
   axis_y_lims = NULL,
   background_lines = NULL,
   background_line_colour = NULL,
+  box_facet_linewidth = NULL,
   brace_label_gap_y = NULL,
   brace_label_nudge_x = NULL,
   brace_label_size = NULL,
@@ -23,9 +24,10 @@ plotsettings_lineplot(
   brace_line_width = NULL,
   brace_span_y = NULL,
   equal_trend_line_length = NULL,
-  subgroup_colours = NULL,
   line_type = NULL,
   line_width = NULL,
+  margin_below_y_axis = NULL,
+  margin_above_y_axis = NULL,
   margin_bottom = NULL,
   margin_left = NULL,
   margin_right = NULL,
@@ -38,9 +40,9 @@ plotsettings_lineplot(
   point_label_nudge_x = NULL,
   point_label_nudge_y = NULL,
   point_size = NULL,
-  box_facet_linewidth = NULL,
   split_plot = NULL,
   split_plot_gap_width = NULL,
+  subgroup_colours = NULL,
   default_list = NULL
 )
 }
@@ -65,6 +67,8 @@ plotsettings_lineplot(
 
 \item{background_line_colour}{Colour of the background line.}
 
+\item{box_facet_linewidth}{Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).}
+
 \item{brace_label_gap_y}{Numeric for the size of the vertical gap between brace labels.}
 
 \item{brace_label_nudge_x}{Numeric. The brace labels will be shifted along the x-axis by this amount. Increase to shift the labels further to the right.}
@@ -79,11 +83,11 @@ plotsettings_lineplot(
 
 \item{equal_trend_line_length}{Logical. If true, all trend lines will have the same length, even if the actual distance between the year is differently. E.g., the distance between the years of the trends 2010 - 2011 and 2011 - 2020 would be equal, even though the first trend only takes 1 year, and the second one 9 years. Please use with care, as it will distort the x-axis and results in misleading line lengths. Defaults to \code{FALSE}.}
 
-\item{subgroup_colours}{Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.}
-
 \item{line_type}{Named vector containing the linetypes for the plots. The names must be either \code{"TRUE"} or \code{"FALSE"}, as the linetpyes represent significances. See \link[ggplot2:scale_linetype]{ggplot2::scale_linetype}.}
 
 \item{line_width}{Numeric for the thicknes of the plotted lines.}
+
+\item{margin_below_y_axis, maring_above_y_axis}{Numeric to scale the area between the y-axis and the braces/the x-axis-header.}
 
 \item{margin_bottom, margin_left, margin_right, margin_top}{Numeric for the area around the plot. See \code{\link[ggplot2:theme]{ggplot2::theme()}}.}
 
@@ -101,11 +105,11 @@ plotsettings_lineplot(
 
 \item{point_size}{Numeric for the size of plotted points.}
 
-\item{box_facet_linewidth}{Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).}
-
 \item{split_plot}{Logical, indicating whether the different trends should be split or not.}
 
 \item{split_plot_gap_width}{Numeric for the width of the gap in a split plot in npc.}
+
+\item{subgroup_colours}{Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.}
 
 \item{default_list}{Named list with predefined settings. Defaults to a list with all settings set to \code{0}.}
 }
