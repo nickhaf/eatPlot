@@ -87,7 +87,7 @@ plotsettings_lineplot(
 
 \item{line_width}{Numeric for the thicknes of the plotted lines.}
 
-\item{margin_below_y_axis, maring_above_y_axis}{Numeric to scale the area between the y-axis and the braces/the x-axis-header.}
+\item{margin_below_y_axis, margin_above_y_axis}{Numeric to scale the area between the y-axis and the braces/the x-axis-header.}
 
 \item{margin_bottom, margin_left, margin_right, margin_top}{Numeric for the area around the plot. See \code{\link[ggplot2:theme]{ggplot2::theme()}}.}
 

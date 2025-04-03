@@ -110,7 +110,7 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param subgroup_colours Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.
 #' @param line_type Named vector containing the linetypes for the plots. The names must be either `"TRUE"` or `"FALSE"`, as the linetpyes represent significances. See [ggplot2::scale_linetype].
 #' @param line_width Numeric for the thicknes of the plotted lines.
-#' @param margin_below_y_axis,maring_above_y_axis Numeric to scale the area between the y-axis and the braces/the x-axis-header.
+#' @param margin_below_y_axis,margin_above_y_axis Numeric to scale the area between the y-axis and the braces/the x-axis-header.
 #' @param margin_bottom,margin_left,margin_right,margin_top Numeric for the area around the plot. See [ggplot2::theme()].
 #' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have.
 #' @param point_label_nudge Logical. If `TRUE`, the point labels will be nudged automatically by [ggrepel::geom_text_repel] to try and avoid them overlapping with lines and/or points. Might interfere with other point-label settings, so use at your own risk. Alternatively, you could try to use `point_label_nudge_direction` to get some controll over the point labels.
