@@ -144,15 +144,22 @@ lineplot_germany <- plot_lineplot(
 ) 
 ```
 
+
 ```{r}
 #| eval: false
 save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf", height = 185, width = 118, scaling = 1)
 ```
 
 
+```{r}
+#| echo: false
+lineplot_germany
+```
+
+
 ## Lineplot for whole Germany 2x3 with split plot
 ```{r}
-lineplot_germany <- plot_lineplot(
+lineplot_germany_2 <- plot_lineplot(
   trend_total,
  point_sig = NULL,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
@@ -171,13 +178,18 @@ lineplot_germany <- plot_lineplot(
   equal_trend_line_length = TRUE,
     default_list = lineplot_4x4
   )
-) +
-  ggplot2::theme_classic() +
-  ggplot2::scale_y_continuous(breaks = seq(420, 540, 10))
+) 
 ```
+
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185*2/3, width = 160, scaling = 1)
+save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185*2/3, width = 160, scaling = 1)
+```
+
+
+```{r}
+#| echo: false
+lineplot_germany
 ```
 
