@@ -273,7 +273,7 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
   }
 
   y_ticks_min_max <- calc_y_ticks_min_max(y_value_range, plot_settings)
-  y_value_space <- calc_y_value_space(y_ticks_min_max)
+  y_value_space <- calc_y_value_space(y_ticks_min_max, plot_settings$margin_above_y_axis, plot_settings$margin_below_y_axis)
 
   ## Currently, brace starts at same level as y-axis ends. Could nudge abit HERE.
   subgroup_lvls <- get_subgroup_levels(plot_dat, background_subgroup)

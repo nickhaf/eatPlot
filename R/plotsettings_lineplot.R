@@ -2,7 +2,7 @@
 check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 36
+      length(settings_list) == 38
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -28,6 +28,8 @@ check_plotsettings_lineplot <- function(settings_list) {
         "subgroup_colours",
         "line_type",
         "line_width",
+        "margin_below_y_axis",
+        "margin_above_y_axis",
         "margin_bottom",
         "margin_left",
         "margin_right",
@@ -66,6 +68,8 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.logical(settings_list$equal_trend_line_length))
   stopifnot(is_colour(settings_list$subgroup_colours) | is.null(settings_list$subgroup_colours))
   stopifnot(is.numeric(settings_list$line_width))
+  stopifnot(is.numeric(settings_list$margin_below_y_axis))
+  stopifnot(is.numeric(settings_list$margin_above_y_axis))
   stopifnot(is.numeric(settings_list$margin_bottom))
   stopifnot(is.numeric(settings_list$margin_left))
   stopifnot(is.numeric(settings_list$margin_right))
@@ -106,6 +110,7 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param subgroup_colours Named vector with the colours for different grouping_var groups. The names of the vector have to be equivalent to the factorlevels of your grouping_var.
 #' @param line_type Named vector containing the linetypes for the plots. The names must be either `"TRUE"` or `"FALSE"`, as the linetpyes represent significances. See [ggplot2::scale_linetype].
 #' @param line_width Numeric for the thicknes of the plotted lines.
+#' @param margin_below_y_axis,maring_above_y_axis Numeric to scale the area between the y-axis and the braces/the x-axis-header.
 #' @param margin_bottom,margin_left,margin_right,margin_top Numeric for the area around the plot. See [ggplot2::theme()].
 #' @param n_cols Numeric, indicating how many columns of smaller plots the final lineplot should have.
 #' @param point_label_nudge Logical. If `TRUE`, the point labels will be nudged automatically by [ggrepel::geom_text_repel] to try and avoid them overlapping with lines and/or points. Might interfere with other point-label settings, so use at your own risk. Alternatively, you could try to use `point_label_nudge_direction` to get some controll over the point labels.
@@ -135,6 +140,7 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   axis_y_lims = NULL,
                                   background_lines = NULL,
                                   background_line_colour = NULL,
+                                  box_facet_linewidth = NULL,
                                   brace_label_gap_y = NULL,
                                   brace_label_nudge_x = NULL,
                                   brace_label_size = NULL,
@@ -142,9 +148,10 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   brace_line_width = NULL,
                                   brace_span_y = NULL,
                                   equal_trend_line_length = NULL,
-                                  subgroup_colours = NULL,
                                   line_type = NULL,
                                   line_width = NULL,
+                                  margin_below_y_axis = NULL,
+                                  margin_above_y_axis = NULL,
                                   margin_bottom = NULL,
                                   margin_left = NULL,
                                   margin_right = NULL,
@@ -157,9 +164,9 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   point_label_nudge_x = NULL,
                                   point_label_nudge_y = NULL,
                                   point_size = NULL,
-                                  box_facet_linewidth = NULL,
                                   split_plot = NULL,
                                   split_plot_gap_width = NULL,
+                                  subgroup_colours = NULL,
                                   default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
@@ -185,6 +192,8 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
       "subgroup_colours" = NULL,
       "line_type" = NULL,
       "line_width" = 1,
+      "margin_below_y_axis" = 0.1,
+      "margin_above_y_axis" = 0.1,
       "margin_bottom" = 0,
       "margin_left" = 0,
       "margin_right" = 0,

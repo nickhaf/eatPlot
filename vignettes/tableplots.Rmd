@@ -140,14 +140,11 @@ Afterwards, we have to bring it in the format we want to plot it in:
 ```{r}
 gender_lesen <- subset(gender_lesen, subgroup_var %in% c("maennlich", "weiblich"))
 
-gender_lesen <- gender_lesen[order(gender_lesen$state_var), ]
-
 ## Mädchen sollen nach oben
 gender_lesen <- gender_lesen[order(gender_lesen$subgroup_var, decreasing = TRUE), ]
 gender_lesen <- gender_lesen[order(gender_lesen$state_var), ]
 
 gender_lesen$state_var[duplicated(gender_lesen$state_var)] <- " "
-gender_lesen$state_var <- gsub("total", "Deutschland", gender_lesen$state_var)
 gender_lesen$state_var <- process_bundesland(gender_lesen$state_var, linebreak = TRUE)
 gender_lesen$subgroup_var <- gsub("maennlich", "Jungen", gender_lesen$subgroup_var)
 gender_lesen$subgroup_var <- gsub("weiblich", "Mädchen", gender_lesen$subgroup_var)
@@ -163,7 +160,7 @@ column_widths_stand <- standardize_column_width(
     p1 = c(0.085, 0.05, rep(0.035, 6), 0.015, rep(0.035, 3), NA),
     p2 = c(rep(0.035, 3), NA)
   ),
-  plot_ranges = c(140, 142) # Range of the x-axes of both plots set in 'axis_x_lims'.
+  plot_ranges = c(140, 142) # Ranges of the x-axes of both plots set in 'axis_x_lims'.
 )
 ```
 

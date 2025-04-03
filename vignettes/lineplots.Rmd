@@ -44,6 +44,7 @@ lineplot_1 <- plot_lineplot(dat_lineplot_1,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   plot_settings = plotsettings_lineplot(
+    axis_y_lims = c(420, 540),
 default_list = lineplot_4x4)
 ) 
 ```
@@ -80,6 +81,7 @@ lineplot_2 <- plot_lineplot(
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
     subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+    axis_y_lims = c(410, 560),
     default_list = lineplot_4x4
   )
 ) 
@@ -132,13 +134,14 @@ lineplot_germany <- plot_lineplot(
   # background_facet = "total",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    brace_label_nudge_x = 0.21,
+    brace_label_nudge_x = 0.22,
     split_plot = FALSE,
     background_lines = TRUE,
     subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
    # margin_top = 0,
   # margin_bottom = 0,
     n_cols = 2, 
+  axis_y_lims = c(430, 550),
     default_list = lineplot_4x4
   )
 ) 
@@ -168,13 +171,14 @@ lineplot_germany_2 <- plot_lineplot(
   # background_facet = "total",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    brace_label_nudge_x = 0.21,
+    brace_label_nudge_x = 0.23,
     split_plot = FALSE,
     background_lines = TRUE,
     subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
    # margin_top = 0,
   # margin_bottom = 0,
     n_cols = 3, 
+    axis_y_lims = c(430, 550),
   equal_trend_line_length = TRUE,
     default_list = lineplot_4x4
   )
