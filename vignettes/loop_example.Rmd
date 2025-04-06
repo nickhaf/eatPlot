@@ -513,7 +513,15 @@ tableplot_6.6
 ```{r}
 list_prepped <- lapply(dispar, prepare_6.6_data)
 list_plots <- lapply(list_prepped, plot_6.6)
+
 ```
 
+```{r}
+list_plots$read
+```
+
+```{r}
+list_plots$listen
+```
 
 
