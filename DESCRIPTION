@@ -15,7 +15,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    vdiffr
+    vdiffr,
+    ggview
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.3)

@@ -228,6 +228,8 @@ You have to look at the plot in the right format so the changes are shown in the
 Either save them as PDF, or use the `ggview` package:
 
 ```{r}
+#| eval: false
+
 p <- tableplot_6.6 +
   ggview::canvas(
     235, 130,
@@ -242,6 +244,7 @@ If everything is satisfactory, we can save the plot.
 
 
 ```{r}
+#| eval: false
 save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", width = 235, height = 130, scaling = 1)
 ```
 
