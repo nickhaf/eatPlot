@@ -13,19 +13,6 @@
 "adjusted_means"
 
 
-#' BT21 Books trend
-#'
-#' BT21 data set that contains some results published in the social disparities chapter.
-#'
-#' @format ## `trend_books`
-#' A data frame with 2904 rows and 32 columns:
-#' \describe{
-#'   \item{kb}{Competence}
-#'   ...
-#' }
-#' @source <"Q:/BT2021/BT/60_Bericht/06_Soziale_Disparitäten/01_Rechnungen/KAS/Abb65Buecher_mitTrend.csv">
-"trend_books"
-
 #' BT21 minimum standards.
 #'
 #' BT21 data set that contains data for the mindest-standards.
@@ -210,29 +197,6 @@
 "trend_2"
 
 
-
-#' BT24 example data.
-#'
-#' Example data with male/female subgroup_var.
-#'
-#' @format ## `trend_mw`
-#' A list with four elements.
-#' \describe{
-#'   ...
-#' }
-"trend_mw"
-
-#' BT24 example data.
-#'
-#' Example data with zuwanderungshintergrund as subgroup_var.
-#'
-#' @format ## `trend_zwh`
-#' A list with four elements.
-#' \describe{
-#'   ...
-#' }
-"trend_zwh"
-
 #' BT24 example data.
 #'
 #' Example data with grouping var with multiple levels.
@@ -265,3 +229,14 @@
 #'   ...
 #' }
 "trend_gender"
+
+#' BT24 example data.
+#'
+#' Example data with multiple competence areas.
+#'
+#' @format ## `dispar`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"dispar"
