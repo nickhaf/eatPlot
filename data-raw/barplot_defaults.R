@@ -29,11 +29,15 @@ usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 
 abb_6.5 <- plotsettings_tablebarplot(
-  axis_x_lims = c(-5, 40),
+  axis_x_lims = c(0, 70),
   bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
   columns_alignment = c(0, rep(2, 6)),
+  columns_nudge_y = c(-0.5, rep(-0.5, 3), rep(0.5, 3)),
+  columns_width = c(0.17, rep(0.075, 6), 0.38),
+  font_size = 2.3,
   headers_alignment = c(0, rep(0.5, 7)),
-#  headers_nudge_x = c(0, rep(1.5, 6), 0),
+  headers_font_size = 2.3,
+  headers_nudge_x = rep(0.5, 8),
   headers_nudge_y = c(rep(0, 7), 0.5),
   headers_row_height = 2,
   column_spanners_row_height = 1.5,
@@ -46,9 +50,13 @@ usethis::use_data(abb_6.5, overwrite = TRUE)
 
 
 abb_6.6 <- plotsettings_tablebarplot(
+  axis_x_lims = c(-70, 72),
   bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
   background_stripes_colour = c(rep(c("white", "white", cmyk(7,0,4,1), cmyk(7,0,4,1)), 8), "grey", "grey"),
   bar_fill_colour = c("#20D479", "#8DEBBC"),
+  columns_table_sig_superscript_letter = "a",
+  columns_table_sig_superscript_letter_nudge_x = 5.5,
+  headers_row_height = 1.75,
   font_size = 2,
   headers_font_size = 2,
   default_list = barplot_table_plot_pattern
@@ -57,6 +65,7 @@ usethis::use_data(abb_6.6, overwrite = TRUE)
 
 
 abb_8.4 <- plotsettings_tablebarplot(
+  axis_x_lims = c(-20, 40),
   background_stripes_colour = c(rep(c("white", cmyk(7,0,4,1)), 8), "grey"),
   column_spanners_2_row_height = 1.5,
   headers_row_height = 2,
