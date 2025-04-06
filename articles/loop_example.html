@@ -681,6 +681,12 @@ with <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">la
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">dispar</span>, <span class="va">prepare_6.6_data</span><span class="op">)</span></span>
 <span><span class="va">list_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">list_prepped</span>, <span class="va">plot_6.6</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">list_plots</span><span class="op">$</span><span class="va">read</span></span></code></pre></div>
+<p><img src="loop_example_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">list_plots</span><span class="op">$</span><span class="va">listen</span></span></code></pre></div>
+<p><img src="loop_example_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
