@@ -344,7 +344,7 @@ plot_6.6 <- function(dat_prepped) {
     dat = dat_prepped,
     bar_est = "est_mean_comp_trend_sameFacet_sameSubgroup_2015_2022",
     bar_label = NULL,
-    bar_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015",
+    bar_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022",
     bar_fill = "subgroup_var",
     column_spanners = list(
       "**Differenz 2022-2015**" = c(1, 4)
