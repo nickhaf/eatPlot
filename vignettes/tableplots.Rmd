@@ -84,14 +84,44 @@ tableplot_6.5 <- plot_tablebarplot(
     "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
     "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
   ),
-  columns_table_sig_bold = list(NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"),
+  columns_table_sig_bold = list(
+    NULL,
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    NULL,
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    NULL,
+    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
+  ),
   columns_table_sig_superscript = list(
-    NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen",
-    NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen", "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören", NULL, "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"
+    NULL,
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen",
+    NULL,
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen",
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören",
+    NULL,
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"
   ),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
-  columns_table_se = list(NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen", NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören", NULL),
-  headers = list("**Land**", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "*M<sub>M</sub>-M<sub>J</sub>*", "(*SE*)", "*d*", "**Vorsprung zugunsten der<br>Mädchen**"),
+  columns_table_se = list(
+    NULL,
+    NULL,
+    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    NULL,
+    NULL,
+    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    NULL
+  ),
+  headers = list(
+    "**Land**",
+    "*M<sub>M</sub>-M<sub>J</sub>*",
+    "(*SE*)",
+    "*d*",
+    "*M<sub>M</sub>-M<sub>J</sub>*",
+    "(*SE*)",
+    "*d*",
+    "**Vorsprung zugunsten der<br>Mädchen**"
+  ),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
@@ -175,10 +205,33 @@ p_1 <- plot_tablebarplot(
   ),
   columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL),
   headers = list("**Land**", " ", "*M*", "*SD*", "*M*", "*SD*", "*M*", "*SD*", "", "*M<sub>2015</sub>-<br>M<sub>2009</sub>* ", "*(SE)*", "*d*", " "),
-  columns_table = c("state_var", "subgroup_var", "est_mean_comp_none_2009", "est_sd_comp_none_2009", "est_mean_comp_none_2015", "est_sd_comp_none_2015", "est_mean_comp_none_2022", "est_sd_comp_none_2022", "empty", "est_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", "es_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"),
+  columns_table = c(
+    "state_var",
+    "subgroup_var",
+    "est_mean_comp_none_2009",
+    "est_sd_comp_none_2009",
+    "est_mean_comp_none_2015",
+    "est_sd_comp_none_2015",
+    "est_mean_comp_none_2022",
+    "est_sd_comp_none_2022",
+    "empty",
+    "est_mean_comp_trend_sameFacet_sameSubgroup_2009_2015",
+    "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015",
+    "es_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"
+  ),
   columns_table_sig_bold = list(
-    NULL, NULL, "sig_mean_comp_none_2009",
-    NULL, "sig_mean_comp_none_2015", NULL, "sig_mean_comp_none_2022", NULL, NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"
+    NULL,
+    NULL,
+    "sig_mean_comp_none_2009",
+    NULL,
+    "sig_mean_comp_none_2015",
+    NULL,
+    "sig_mean_comp_none_2022",
+    NULL,
+    NULL,
+    "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015",
+    NULL,
+    "sig_mean_comp_trend_sameFacet_sameSubgroup_2009_2015"
   ),
   columns_table_sig_superscript = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup_2009_2015", NULL, NULL),
   y_axis = "y_axis",
@@ -189,7 +242,7 @@ p_1 <- plot_tablebarplot(
     columns_width = column_widths_stand$p1, ## This is the column-width object we set above
     columns_nudge_y = c(-0.5, rep(0, 11)),
     headers_alignment = c(0, 0, rep(0.5, 7), 0, 0.5, 0.5, 0),
-    headers_nudge_x = c(rep(0, 9), 2, rep(0, 3)), 
+    headers_nudge_x = c(rep(0, 9), 2, rep(0, 3)),
     default_list = abb_6.6
   )
 )
@@ -215,7 +268,9 @@ p_2 <- plot_tablebarplot(
     "es_mean_comp_trend_sameFacet_sameSubgroup_2015_2022"
   ),
   columns_table_se = list(NULL, "se_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", NULL),
-  columns_table_sig_bold = list("sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", NULL, "sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022"),
+  columns_table_sig_bold = list("sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022", 
+                                NULL, 
+                                "sig_mean_comp_trend_sameFacet_sameSubgroup_2015_2022"),
   columns_table_sig_superscript = list("sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup_2015_2022", NULL, NULL),
   y_axis = "y_axis",
   columns_round = c(0, 0, 2),
