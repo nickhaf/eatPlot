@@ -43,15 +43,17 @@ And then we can already plot:
 lineplot_1 <- plot_lineplot(dat_lineplot_1,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
+  background_facet = "Deutschland",
   plot_settings = plotsettings_lineplot(
     axis_y_lims = c(420, 540),
-default_list = lineplot_4x4)
-) 
+    default_list = lineplot_4x4
+  )
+)
 ```
 
 ```{r save lineplot_1_group}
 #| eval: false
-save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf", width = 160, height = 185, ,scaling = 1)
+save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf", width = 160, height = 185, , scaling = 1)
 ```
 
 ```{r}
@@ -78,13 +80,14 @@ lineplot_2 <- plot_lineplot(
   dat_lineplot_2,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
+  background_facet = "Deutschland",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
     subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     axis_y_lims = c(410, 560),
     default_list = lineplot_4x4
   )
-) 
+)
 ```
 
 ```{r}
@@ -103,7 +106,6 @@ lineplot_2
 
 
 ```{r}
-
 trend_ger <- do.call(rbind, lapply(trend_gender, prep_lineplot, subgroup_var = "Kgender"))
 trend_ger <- subset(trend_ger, state_var == "total")
 trend_ger$subgroup_var <- factor(trend_ger$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
@@ -127,30 +129,27 @@ trend_total <- rbind(trend_ger, trend_ger_2, trend_ger_3)
 ```{r}
 lineplot_germany <- plot_lineplot(
   trend_total,
- point_sig = NULL,
+  point_sig = NULL,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   facet_var = "kb",
-  # background_facet = "total",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
     brace_label_nudge_x = 0.22,
     split_plot = FALSE,
     background_lines = TRUE,
-    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
-   # margin_top = 0,
-  # margin_bottom = 0,
-    n_cols = 2, 
-  axis_y_lims = c(430, 550),
+    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)),
+    n_cols = 2,
+    axis_y_lims = c(430, 550),
     default_list = lineplot_4x4
   )
-) 
+)
 ```
 
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf", height = 185, width = 118, scaling = 1)
+save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf", height = 185, width = 108, scaling = 1)
 ```
 
 
@@ -164,31 +163,30 @@ lineplot_germany
 ```{r}
 lineplot_germany_2 <- plot_lineplot(
   trend_total,
- point_sig = NULL,
+  point_sig = NULL,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   facet_var = "kb",
-  # background_facet = "total",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
     brace_label_nudge_x = 0.23,
     split_plot = FALSE,
     background_lines = TRUE,
     subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
-   # margin_top = 0,
-  # margin_bottom = 0,
-    n_cols = 3, 
+    # margin_top = 0,
+    # margin_bottom = 0,
+    n_cols = 3,
     axis_y_lims = c(430, 550),
-  equal_trend_line_length = TRUE,
+    equal_trend_line_length = TRUE,
     default_list = lineplot_4x4
   )
-) 
+)
 ```
 
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185*2/3, width = 160, scaling = 1)
+save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf", height = 185 * 2 / 3, width = 160, scaling = 1)
 ```
 
 
@@ -196,4 +194,3 @@ save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2
 #| echo: false
 lineplot_germany
 ```
-

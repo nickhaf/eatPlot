@@ -13,8 +13,8 @@
 #' @param title_superscripts Named list for superscripts at the plot_titles. The name of the list element has to be equal to the title, the value of the list element has to be the superscript. Defaults to `NULL`.
 #' @param years_lines  List of numeric vectors containing the start and end year, between which a trend line should be plotted. Per default, lines are drawn from every year to the next consecutive year.
 #' @param years_braces List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.
-#' @param background_facet Character string in the `facet_var` column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to `"Deutschland"`.
-#' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to `NULL`.
+#' @param background_facet Character string in the `facet_var` column that is assigned to the total group. It will not plotted as extra facet, but as background line. Defaults to `"Deutschland"`.
+#' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the total group. It will not plotted as extra facet, but in the background line. Defaults to `NULL`, which should be kept if you only want to plot one group (without a total group).
 #' @param box_facet Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
 #' @return [ggplot2] object.
@@ -33,16 +33,17 @@ plot_lineplot <- function(eatPlot_dat,
                           brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup",
                           years_lines = list(),
                           years_braces = list(),
-                          background_facet = "Deutschland",
-                          background_subgroup = "total",
+                          background_facet = NULL,
+                          background_subgroup = NULL,
                           box_facet = NULL,
                           title_superscripts = NULL,
                           plot_settings = plotsettings_lineplot()) {
   # Check ----------------------------------------------------------------
   check_plotsettings_lineplot(plot_settings)
   check_columns(eatPlot_dat,
-                cols = c(facet_var)
+    cols = c(facet_var)
   )
+
   eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
   if (plot_settings$split_plot) {
     warning("Split lineplot currently not supported. Set to non-split.")
@@ -73,16 +74,25 @@ plot_lineplot <- function(eatPlot_dat,
     background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet & eatPlot_dat$subgroup_var == background_subgroup, ]
   } else if (!is.null(background_facet) & is.null(background_subgroup)) {
     background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet, ]
+  } else if (is.null(background_facet) & !is.null(background_subgroup)) {
+    background_line_dat <- eatPlot_dat[eatPlot_dat$subgroup_var == background_subgroup, ]
   } else {
     background_line_dat <- data.frame()
   }
 
   background_line_dat <- filter_years(background_line_dat, years = years_lines)
-  if (!is.null(background_facet) & !is.null(background_subgroup) & length(unique(eatPlot_dat$subgroup_var)) > 1) {
-    line_dat <- eatPlot_dat[eatPlot_dat$facet_var != background_facet & eatPlot_dat$subgroup_var != background_subgroup, ]
-  } else {
-    line_dat <- eatPlot_dat
+
+  line_dat <- eatPlot_dat
+
+  if (!is.null(background_facet)) {
+    line_dat <- line_dat[line_dat$facet_var != background_facet, ]
   }
+
+  if (!is.null(background_subgroup)) {
+  message("Removing background_subgroup. If you only have one subgroup, set background_subgroup = NULL.")
+    line_dat <- line_dat[line_dat$subgroup_var != background_subgroup, ]
+  }
+
 
   line_dat <- filter_years(line_dat, years = years_lines)
   brace_dat_list <- prep_brace(line_dat, plot_lims, plot_settings)
@@ -95,7 +105,8 @@ plot_lineplot <- function(eatPlot_dat,
     brace_dat <- brace_dat_list$brace_dat
   }
   brace_coordinates <- brace_dat_list$brace_coords
-  if (!is.null(brace_dat[[1]])) {
+
+  if (length(years_braces) != 0) {
     brace_dat <- filter_years(brace_dat, years = years_braces)
 
     if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
@@ -107,11 +118,13 @@ plot_lineplot <- function(eatPlot_dat,
     stop("Some of the trends you provided in 'years_lines' are not in the data.")
   }
 
-  dat_p <- list(plot_dat = line_dat,
-                brace_dat = brace_dat_list,
-                background_line_dat = background_line_dat,
-                plot_lims = plot_lims,
-                plot_settings = plot_settings)
+  dat_p <- list(
+    plot_dat = line_dat,
+    brace_dat = brace_dat_list,
+    background_line_dat = background_line_dat,
+    plot_lims = plot_lims,
+    plot_settings = plot_settings
+  )
 
   plot_list <- list()
   position <- 1
@@ -128,6 +141,10 @@ plot_lineplot <- function(eatPlot_dat,
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[!is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$plot_dat <- dat_p_facet$plot_dat[dat_p_facet$plot_dat[, "facet_var"] == i & !is.na(dat_p_facet$plot_dat[, "facet_var"]), ]
     dat_p_facet$brace_dat$brace_label <- dat_p_facet$brace_dat$brace_label[dat_p_facet$brace_dat$brace_label[, "facet_var"] == i & !is.na(dat_p_facet$brace_dat$brace_label[, "facet_var"]), ]
+
+    if(is.null(background_facet) & plot_settings$background_lines == TRUE) {
+      dat_p_facet$background_line_dat <- dat_p_facet$background_line_dat[dat_p_facet$background_line_dat[, "facet_var"] == i, ]
+    }
 
     p_state <- ggplot2::ggplot(
       dat_p_facet$plot_dat,
@@ -185,8 +202,8 @@ plot_lineplot <- function(eatPlot_dat,
 
   ## Build the finished plot:
   patchwork::wrap_plots(plot_list,
-                        ncol = dat_p$plot_settings$n_cols,
-                        widths = widths_setting
+    ncol = dat_p$plot_settings$n_cols,
+    widths = widths_setting
   ) +
     patchwork::plot_annotation(theme = ggplot2::theme(plot.margin = ggplot2::margin(0.001, 0.0017, 0.0017, 0.0017, "npc"))) # keep small margin, so the box isn't cut off
 }
@@ -263,13 +280,12 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
 
   if (is.null(plot_settings$axis_y_lims)) {
     y_value_range <- range(plot_dat$point_est, na.rm = TRUE)
-  }
-   else {
-     y_value_range <- range(seq_over(
-       from = plot_settings$axis_y_lims[1],
-       to = plot_settings$axis_y_lims[2],
-       by = plot_settings$axis_y_tick_distance
-     ))
+  } else {
+    y_value_range <- range(seq_over(
+      from = plot_settings$axis_y_lims[1],
+      to = plot_settings$axis_y_lims[2],
+      by = plot_settings$axis_y_tick_distance
+    ))
   }
 
   y_ticks_min_max <- calc_y_ticks_min_max(y_value_range, plot_settings)

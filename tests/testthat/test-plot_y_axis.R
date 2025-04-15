@@ -55,7 +55,10 @@ p <- plot_lineplot(test_data_lineplot,
                    point_sig = "sig_point",
                    line_sig = "sig_line",
                    years_lines = list(c(2000, 2005)),
-                   facet_var = "state_var"
+                   facet_var = "state_var",
+                   plot_settings = plotsettings_lineplot(
+                     background_lines = FALSE
+                   )
 ) +
   ggplot2::theme_classic() +
   common_y_scale +

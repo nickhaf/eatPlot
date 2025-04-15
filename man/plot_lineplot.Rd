@@ -17,8 +17,8 @@ plot_lineplot(
   brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup",
   years_lines = list(),
   years_braces = list(),
-  background_facet = "Deutschland",
-  background_subgroup = "total",
+  background_facet = NULL,
+  background_subgroup = NULL,
   box_facet = NULL,
   title_superscripts = NULL,
   plot_settings = plotsettings_lineplot()
@@ -49,9 +49,9 @@ plot_lineplot(
 
 \item{years_braces}{List of numeric vectors containing the start and end year, between which a brace should be plotted. Per default, braces are drawn from the last year to every other year included in the data.}
 
-\item{background_facet}{Character string in the \code{facet_var} column that is assigned to the whole group. It will not plotted as extra facet, but as background line. Defaults to \code{"Deutschland"}.}
+\item{background_facet}{Character string in the \code{facet_var} column that is assigned to the total group. It will not plotted as extra facet, but as background line. Defaults to \code{"Deutschland"}.}
 
-\item{background_subgroup}{Character string in the \code{subgroup_var} column that is assigned to the whole group. It will not plotted as extra facet, but in the background line. Defaults to \code{NULL}.}
+\item{background_subgroup}{Character string in the \code{subgroup_var} column that is assigned to the total group. It will not plotted as extra facet, but in the background line. Defaults to \code{NULL}, which should be kept if you only want to plot one group (without a total group).}
 
 \item{box_facet}{Character vector, containing strings from the \code{seperate_plot_var}-column, that should get a box drawn around them.}
 

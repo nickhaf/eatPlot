@@ -37,7 +37,7 @@ abb_6.5 <- plotsettings_tablebarplot(
   font_size = 2.3,
   headers_alignment = c(0, rep(0.5, 7)),
   headers_font_size = 2.3,
-  headers_nudge_x = rep(0.5, 8),
+  headers_nudge_x = c(0, rep(0.5, 7)),
   headers_nudge_y = c(rep(0, 7), 0.5),
   headers_row_height = 2,
   column_spanners_row_height = 1.5,
