@@ -277,7 +277,7 @@ p_2 <- plot_tablebarplot(
   columns_round = c(0, 0, 2),
   plot_settings = plotsettings_tablebarplot(
     bar_pattern_spacing = 0.0341, ## We calculated this below in standardize_pattern_spacing()
-    columns_alignment = c(0.5, 2, 2),
+    columns_alignment = c(2, 2, 2),
     columns_width = column_widths_stand$p2, ## This is the column-width object we set above
     headers_nudge_x = c(2, 0, 0, 0),
     headers_alignment = c(0, 0.5, 0.5, 0),
