@@ -106,7 +106,7 @@ plotsettings_tablebarplot(
 
 \item{columns_nudge_x}{Numeric vector to nudge the column text in x direction. Defaults to \code{0}.}
 
-\item{columns_nudge_y}{Numeric vector to nudge the column texts in y direction. Defaults to \code{0}.}
+\item{columns_nudge_y}{Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Defaults to \code{0}.}
 
 \item{columns_table_sig_superscript_letter}{Character, that will be added on significant values defined by \code{columns_table_sig_superscript}.}
 
