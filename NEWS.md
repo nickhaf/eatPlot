@@ -1,3 +1,6 @@
+# eatPlot (development version)
+* `columns_nudge_y` in `plotsettings_tablebarplot()` now works rowwise as well. 
+
 # eatPlot 1.1.0
 * Internally changed the data preperation workflow. 
 * Prepared the plot default lists for BT24. 
