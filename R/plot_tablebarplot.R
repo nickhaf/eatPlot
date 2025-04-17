@@ -505,6 +505,7 @@ build_columns_3 <- function(df,
       column_name <- cols[i]
 
       df$y_axis <- df$y_axis - ifelse(grepl("<br>", df[, column_name]), 0.25, 0)
+
       c(
         ggtext::geom_richtext(
           data = df,
@@ -520,7 +521,7 @@ build_columns_3 <- function(df,
           label.color = NA,
           hjust = rev(columns_alignment)[i],
           nudge_x = rev(plot_settings$columns_nudge_x)[i],
-          nudge_y = rev(plot_settings$columns_nudge_y)[i]
+          nudge_y = if(is.list(plot_settings$columns_nudge_y)){rev(plot_settings$columns_nudge_y)[[i]]}else{rev(plot_settings$columns_nudge_y)[i]}
         ),
         add_superscript(df,
           column_name,
