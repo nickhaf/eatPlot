@@ -35,6 +35,8 @@ dat_lineplot_1 <- subset(dat_lineplot_1, subgroup_var == "total")
 
 ## For correctly displaying the state names:
 dat_lineplot_1$state_var <- process_bundesland(dat_lineplot_1$state_var)
+
+dat_lineplot_1$subgroup_var <- as.factor(dat_lineplot_1$subgroup_var)
 ```
 
 And then we can already plot:

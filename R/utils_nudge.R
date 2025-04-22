@@ -227,31 +227,26 @@ nudge_x_axis_labels <- function(dat, plot_settings) {
   return(dat)
 }
 
-calc_y_nudge <- function(plot_dat, plot_settings) {
+calc_y_nudge <- function(plot_dat, plot_settings){
   nudge_val <- plot_dat$plot_lims$y_value_space_diff * plot_settings$point_label_nudge_y
 
-  # The smallest value in each year_axis is nudged lower, the bigger ones are nudged higher.
-  # For facetted plots, the trend has to be taken into account as well.
+  if (!is.null(plot_settings$point_label_nudge_direction)) {
+    ## Checks
+    stopifnot(all(names(plot_settings$point_label_nudge_direction) %in% levels(plot_dat$plot_dat$subgroup_var)))
 
-  ## Wenn in plot_settings ein named vector angegeben wurde mit "+" oder "-", dann das nutzen, sonst versuchen selber zu berechnen:
-
-  # if (!is.null(plot_settings$point_label_nudge_direction)) {
-  #   ## Checks
-  #   stopifnot(all(names(plot_settings$point_label_nudge_direction) %in% levels(plot_points_dat$grouping_var)))
-  #
-  #
-  #   res_frame_1 <- data.frame(
-  #     years_Trend = plot_points_dat$years_Trend,
-  #     year_axis = plot_points_dat$year_axis,
-  #     grouping_var = plot_points_dat$grouping_var
-  #   )
-  #
-  #   res_frame <- nudge_by_level(res_frame_1, plot_settings = plot_settings, nudge_val = nudge_val)
-  # } else {
+    res_frame <- nudge_by_level(plot_dat$plot_dat, plot_settings = plot_settings, nudge_val = nudge_val)
 
 
+  }else{
 
-  return(nudge_val)
+    res_frame <- within(plot_dat$plot_dat, {
+      nudge_y <- ifelse(point_est == ave(point_est, year, FUN = min) & length(levels(subgroup_var)) > 1,
+                        -nudge_val,
+                        nudge_val
+       )
+})
+  }
+  return(res_frame)
 }
 
 
@@ -259,8 +254,8 @@ calc_y_nudge <- function(plot_dat, plot_settings) {
 
 
 nudge_by_level <- function(df, plot_settings, nudge_val) {
-  for (i in levels(df$grouping_var)) {
-    df[df$grouping_var == i, "nudge_y"] <- nudge_val * as.numeric(paste0(plot_settings$point_label_nudge_direction[[i]], "1"))
+  for (i in levels(df$subgroup_var)) {
+    df[df$subgroup_var == i, "nudge_y"] <- nudge_val * as.numeric(paste0(plot_settings$point_label_nudge_direction[[i]], "1"))
   }
   return(df)
 }
