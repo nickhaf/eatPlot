@@ -68,7 +68,7 @@ abb_8.4 <- plotsettings_tablebarplot(
   axis_x_lims = c(-20, 40),
   background_stripes_colour = c(rep(c("white", cmyk(7,0,4,1)), 8), "grey"),
   column_spanners_2_row_height = 1.5,
-  headers_row_height = 2,
+  headers_row_height = 1.5,
   headers_ggtext = FALSE,
   font_size = 2.2,
   headers_font_size = 2.2,

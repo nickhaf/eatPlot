@@ -120,7 +120,7 @@ tableplot_6.5 <- plot_tablebarplot(
     "*M<sub>M</sub>-M<sub>J</sub>*",
     "(*SE*)",
     "*d*",
-    "**Vorsprung zugunsten der<br>Mädchen**"
+    "**Vorsprung zugunsten der<br>Mädchen** \u0394"
   ),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
@@ -407,9 +407,8 @@ p_2 <- plot_tablebarplot(
   columns_table_se = list(NULL, NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"),
   headers = list(
     " ",
-    "atop(paste(italic(Delta * M[2015]), \"\U2212\"),
-          italic(Delta * M[2009]))",
-    # "*\u0394 M*",
+    list("paste(italic(Delta * M[2015]), '-')",
+          "italic(Delta * M[2009])"),
     "(italic(SE))",
     " "
   ),
@@ -426,8 +425,8 @@ p_2 <- plot_tablebarplot(
     plotsettings_tablebarplot(
       bar_pattern_spacing = 0.0334,
       columns_alignment = c(2, 2, 2),
-      headers_alignment = c(0, 1, 0.5, 0),
-      headers_nudge_x = c(0, 4, 0, 0),
+      headers_alignment = c(0, 0, 0.5, 0),
+      headers_nudge_x = c(0, 10, 0, 0),
       columns_width = column_widths_stand$p2,
       default_list = abb_8.4
     )
@@ -447,8 +446,8 @@ p_3 <- plot_tablebarplot(
   ),
   columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"),
   headers = list(
-    "atop(paste(italic(Delta * M[2022]), \"\U2212\"),
-          italic(Delta * M[2015]))",
+    list("paste(italic(Delta * M[2022]), '-')",
+          "italic(Delta * M[2015])"),
     "(italic(SE))",
     " "
   ),
@@ -464,8 +463,8 @@ p_3 <- plot_tablebarplot(
     bar_pattern_spacing = 0.0392,
     axis_x_lims = c(-20, 45),
     columns_alignment = c(2, 2),
-    headers_alignment = c(1, 0.5, 0),
-    headers_nudge_x = c(4, 0, 0),
+    headers_alignment = c(0, 0.5, 0),
+    headers_nudge_x = c(10, 0, 0),
     columns_width = column_widths_stand$p3,
     default_list = abb_8.4
   )
