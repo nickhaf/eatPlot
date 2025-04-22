@@ -120,7 +120,7 @@ tableplot_6.5 <- plot_tablebarplot(
     "*M<sub>M</sub>-M<sub>J</sub>*",
     "(*SE*)",
     "*d*",
-    "**Vorsprung zugunsten der<br>Mädchen** \u0394"
+    "**Vorsprung zugunsten der<br>Mädchen**"
   ),
   column_spanners = list("**Leseverstehen**" = c(2, 4), "**Hörverstehen**" = c(5, 7)),
   y_axis = "y_axis",
