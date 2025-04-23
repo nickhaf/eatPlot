@@ -80,21 +80,20 @@ plot_lineplot <- function(eatPlot_dat,
     background_line_dat <- data.frame()
   }
 
-  background_line_dat <- filter_years(background_line_dat, years = years_lines)
+  # background_line_dat <- filter_years(background_line_dat, years = years_lines)
 
   line_dat <- eatPlot_dat
 
-  if (!is.null(background_facet)) {
+  if (!is.null(background_facet) & plot_settings$background_facet_remove) {
     line_dat <- line_dat[line_dat$facet_var != background_facet, ]
   }
 
-  if (!is.null(background_subgroup)) {
-  message("Removing background_subgroup. If you only have one subgroup, set background_subgroup = NULL.")
+  if (!is.null(background_subgroup) & plot_settings$background_subgroup_remove) {
     line_dat <- line_dat[line_dat$subgroup_var != background_subgroup, ]
   }
 
 
-  line_dat <- filter_years(line_dat, years = years_lines)
+  # line_dat <- filter_years(line_dat, years = years_lines)
   brace_dat_list <- prep_brace(line_dat, plot_lims, plot_settings)
 
 
@@ -106,17 +105,17 @@ plot_lineplot <- function(eatPlot_dat,
   }
   brace_coordinates <- brace_dat_list$brace_coords
 
-  if (length(years_braces) != 0) {
-    brace_dat <- filter_years(brace_dat, years = years_braces)
-
-    if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-      stop("Some of the trends you provided in 'years_braces' are not in the data.")
-    }
-  }
-
-  if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
-    stop("Some of the trends you provided in 'years_lines' are not in the data.")
-  }
+  # if (length(years_braces) != 0) {
+  #   brace_dat <- filter_years(brace_dat, years = years_braces)
+  #
+  #   if (!checkmate::test_subset(vapply(years_braces, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+  #     stop("Some of the trends you provided in 'years_braces' are not in the data.")
+  #   }
+  # }
+  #
+  # if (!checkmate::test_subset(vapply(years_lines, paste0, collapse = "_", FUN.VALUE = character(1)), choices = line_dat$trend)) {
+  #   stop("Some of the trends you provided in 'years_lines' are not in the data.")
+  # }
 
   dat_p <- list(
     plot_dat = line_dat,
@@ -129,7 +128,7 @@ plot_lineplot <- function(eatPlot_dat,
   plot_list <- list()
   position <- 1
 
-  if (!is.null(background_facet)) {
+  if (!is.null(background_facet) & plot_settings$background_facet_remove) {
     facet_values <- levels(dat_p$plot_dat[, "facet_var"])[levels(dat_p$plot_dat[, "facet_var"]) != background_facet]
   } else {
     facet_values <- levels(dat_p$plot_dat[, "facet_var"])
@@ -145,6 +144,8 @@ plot_lineplot <- function(eatPlot_dat,
     if(is.null(background_facet) & plot_settings$background_lines == TRUE) {
       dat_p_facet$background_line_dat <- dat_p_facet$background_line_dat[dat_p_facet$background_line_dat[, "facet_var"] == i, ]
     }
+
+    dat_p_facet$line_dat <- filter_years(dat_p_facet$plot_dat, years_lines[[i]])
 
     p_state <- ggplot2::ggplot(
       dat_p_facet$plot_dat,
