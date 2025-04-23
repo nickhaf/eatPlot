@@ -44,6 +44,7 @@ plot_lineplot <- function(eatPlot_dat,
     cols = c(facet_var)
   )
 
+
   eatPlot_dat <- check_facets(eatPlot_dat, facet_var)
   if (plot_settings$split_plot) {
     warning("Split lineplot currently not supported. Set to non-split.")
@@ -64,8 +65,36 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = facet_var, new = "facet_var") |>
     build_column(old = line_se, new = "line_se")
 
+
+  if(is.null(names(years_lines))){
+    years_lines <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_lines), state_levels)
+  }else{
+    if(length(years_lines) != length(levels(eatPlot_dat$facet_var))){
+      stop("Length of 'years_lines' does not match number of facets. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
+    }
+
+    if(any(!(names(years_lines)) %in% levels(eatPlot_dat$facet_var))){
+      stop("Some of the names in 'years_lines' do not match the levels of 'facet_var'. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
+    }
+  }
+
+  if(is.null(names(years_braces))){
+    years_braces <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_braces), state_levels)
+  }else{
+    if(length(years_braces) != length(levels(eatPlot_dat$facet_var))){
+      stop("Length of 'years_braces' does not match number of facets. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
+    }
+
+    if(any(!(names(years_braces)) %in% levels(eatPlot_dat$facet_var))){
+      stop("Some of the names in 'years_braces' do not match the levels of 'facet_var'. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
+    }
+  }
+
+
+
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
+
 
   # Prepare Subsets ---------------------------------------------------------
   ## Hier auch subsetten wenn background_subgroup = NULL
@@ -91,7 +120,6 @@ plot_lineplot <- function(eatPlot_dat,
   if (!is.null(background_subgroup) & plot_settings$background_subgroup_remove) {
     line_dat <- line_dat[line_dat$subgroup_var != background_subgroup, ]
   }
-
 
   # line_dat <- filter_years(line_dat, years = years_lines)
   brace_dat_list <- prep_brace(line_dat, plot_lims, plot_settings)
@@ -146,6 +174,17 @@ plot_lineplot <- function(eatPlot_dat,
     }
 
     dat_p_facet$line_dat <- filter_years(dat_p_facet$plot_dat, years_lines[[i]])
+
+
+  dat_p_facet$brace_dat[c("brace_dat", "brace_label")] <- lapply(
+    dat_p_facet$brace_dat[c("brace_dat", "brace_label")], function(x){
+      filter_years(x, years_braces[[i]])
+    })
+  dat_p_facet$brace_dat$brace_coords[c("coord_dat", "coord_dat_2")] <- lapply(
+    dat_p_facet$brace_dat$brace_coords[c("coord_dat", "coord_dat_2")], function(x){
+      filter_years(x, years_braces[[i]])
+    })
+
 
     p_state <- ggplot2::ggplot(
       dat_p_facet$plot_dat,
@@ -270,7 +309,6 @@ extract_gsub_values <- function(plot_dat) {
 
 calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_settings) {
   check_columns(plot_dat, c("facet_var", "point_est", "year"))
-
   x_value_range <- get_year_range(years_list)
 
   ## The following coordinates are needed:
@@ -323,13 +361,22 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
 
 
 prep_years <- function(years) {
-  years_df <- data.frame(do.call("rbind", years))
+
+  # Flatten the nested list into a data frame
+  years_df <- do.call(rbind, lapply(names(years), function(region) {
+    ranges <- years_lines_list[[region]]
+    data.frame(
+      country = region,
+      start_year = sapply(ranges, `[[`, 1),
+      end_year = sapply(ranges, `[[`, 2),
+      stringsAsFactors = FALSE
+    )
+  }))
 
   if (ncol(years_df) == 0) {
     years_df <- data.frame("year_start" = numeric(), "year_end" = numeric())
   }
 
-  colnames(years_df) <- c("year_start", "year_end")
   return(years_df)
 }
 
@@ -348,7 +395,7 @@ get_subgroup_levels <- function(plot_dat, background_subgroup) {
 }
 
 get_year_range <- function(years_list) {
-  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df))))
+  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df[, c("start_year", "end_year")]))))
   x_range <- range(unique_years)
   return(x_range)
 }

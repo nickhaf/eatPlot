@@ -238,7 +238,7 @@ years_lines_list$`Baden−Württemberg`[[1]] <- NULL
 lineplot_2 <- plot_lineplot(
   dat_lineplot_2,
   years_lines = years_lines_list,
-  years_braces = list(c(2009, 2015), c(2015, 2022)),
+  years_braces = years_lines_list,
   background_facet = "Deutschland",
   background_subgroup = "total",
   box_facet = "Deutschland",
