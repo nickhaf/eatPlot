@@ -1,5 +1,5 @@
 ---
-title: "Plot settings"
+title: "Default lists"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Plot settings}

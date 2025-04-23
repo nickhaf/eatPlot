@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
 library(eatPlot)
 ```
 
-Hier sind die wichtigsten Richtlinien zur Vereinheitlichung der Abbildungen im Bildungstrend 24 gesammelt, zusammen mit Umsetzungsvorschlägen in `eatPlot`. 
+Hier sind die wichtigsten Richtlinien zur Vereinheitlichung der Abbildungen im Bildungstrend 24 gesammelt, zusammen mit Umsetzungsvorschlägen in `eatPlot`.  
+Die meisten Punkte sind bereits in den sogenannten [Default lists](https://nickhaf.github.io/eatPlot/articles/default_lists.html) umgesetzt, die in `plotsettings_lineplot()` und `plotsettings_tablebarplot()` angegeben werden können. 
 
 
 # Plotübergreifend
@@ -43,7 +44,9 @@ Eventuell muss mit
 
 nachjustiert werden, um die Spalteninhalte so zu rücken, dass es stimmig aussieht. 
 
-### Wich dash
+
+
+### Wich dash???
 Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen, z. B. *M~M~–M~J~* oder *M~2024–~M~2018~*   **Code für den entsprechenden Dash eingeben!**
 
 ### Delta
