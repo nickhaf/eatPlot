@@ -20,6 +20,49 @@ library(eatPlot)
 
 ## Allgemeine Richtlinien
 
-### Exportieren als PDF und im Farbprofil cmyk 
-Voreingestellt in `save_plot()`
 
+
+### Ausrichtung von Kennwerten 
+Ausrichtung erfolgt am Dezimalpunkt // rechtsbündig (wg. unterschiedlicher Stellenanzahlen und negativen vs. positiven Werten). Setzen von [`plotsettings_tablebarplot(columns_alignment = 2)`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html). Eventull muss mit [`plotsettings_tablebarplot(columns_nudge_x = ... )`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html) noch leicht nachgerückt werden, damit es gut aussieht.
+
+### Wich dash
+Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen, z. B. *M~M~–M~J~* oder *M~2024–~M~2018~*   **Code für den entsprechenden Dash eingeben!**
+
+### Delta
+Nach Delta-Zeichen kein Leerzeichen und nur M kursiv "Delta * italic(M)"
+
+### Schriftgröße
+Schriftgröße kann nicht einheitlich festgelegt werden, weil sie von der Größe der finalen Abbildung abhängt. Einstellung über [`plotsettings_tablebarplot(font_size = ...)`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage). Die aktuellen Einstellungen können aus den jeweiligen Default-Lists ausgelesen werden, die ihr für eure Abbildung verwendet, z.B: 
+
+```{r}
+abb_6.6$font_size
+```
+
+. Falls eure Abbildung eine andere Größe hat, als die entsprechende Vorlage, könnt ihr hierrüber die Schriftgröße so justieren, dass es gut aussieht und die Schrift ähnlich groß wie in den Vorlagen ist. Gleiches für [`plotsettings_tablebarplot(headers_font_size = ...)`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage) |
+
+### Farben 
+Sind voreingestllt. Ansonsten hier die Liste:
+
+### Bold/italic headers
+„Land“ und oberste Zeile(n) im Tabellenkopf fettgedruckt; Zeile mit M, SD etc. nicht fett, dafür kursiv
+[`plot_tablebarplot(headers = c("**Land**", "*M*", ...)`](https://nickhaf.github.io/eatPlot/reference/plot_tablebarplot.html). Besonderheit bei griechischen Bustaben: Da muss plotmath verwendet werden, deshalb: [`plot_tablebarplot(headers = c("bold(Land)", "Delta * italic(M)", ...), plotsetttings_tablebarplot(headers_ggtext = FALSE))`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage)  
+
+### Zeilenumbruch
+Zeilenumbruch in Ländernamen nur dann, wenn Zeile aus anderen Gründen breiter sind (z.B. weil je Land zwei Ergebniszeilen berichtet werden). Zeilenumbrüche für die Bundeslandnamen werden vor dem Plotten eingefügt, am einfachsten mit `my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)`|
+
+
+## Export
+### Exporttyp
+Exportieren als PDF und im Farbprofil cmyk. Voreingestellt in `save_plot()`
+
+### Exportmaße
+
+Die Exportmaße können in `save_plot(height = ..., widht = ...)` eingestellt werden. 
+Dabei bitte an den Vorlagen orientieren: 
+
+- Ganzseitige Abbildung/Tabelle im Hochformat: 
+- Ganzseitige Abbildung/Tabelle im Querformat: z.B. [Linienplot für 2 Gruppen](https://nickhaf.github.io/eatPlot/articles/lineplots.html#lineplot-for-two-groups)
+- Teilseitige Abbildung/Tabelle im Hochformat:
+
+
+## Sonderzeichen
