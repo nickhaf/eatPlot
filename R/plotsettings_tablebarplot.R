@@ -133,7 +133,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
 #' @param headers_background_colour Colour of the background of the headers.
 #' @param headers_font_size Numeric for the font size that will be used for the headers and column_spanners. Defaults to `2.5`.
-#' @param headers_ggtext Logical indicating whether the headers should be drawn with ggtext::geom_richtext. Defaults to `TRUE`. Only set to `FALSE` if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.
+#' @param headers_ggtext Logical indicating whether the headers should be drawn with `ggtext::geom_richtext()`. Defaults to `TRUE`. Only set to `FALSE` if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
