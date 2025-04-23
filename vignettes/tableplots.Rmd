@@ -359,9 +359,9 @@ p_1 <- plot_tablebarplot(
   columns_table_se = list(NULL, NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022", NULL),
   headers = list(
     "bold(Land)",
-    "italic(Delta * M)",
-    "italic(Delta * M)",
-    "italic(Delta * M)",
+    "Delta * italic(M)",
+    "Delta * italic(M)",
+    "Delta * italic(M)",
     "(italic(SE))",
     "italic(d)",
     " "
@@ -407,8 +407,8 @@ p_2 <- plot_tablebarplot(
   columns_table_se = list(NULL, NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"),
   headers = list(
     " ",
-    list("paste(italic(Delta * M[2015]), '-')",
-          "italic(Delta * M[2009])"),
+    list("paste(Delta * italic(M[2015]), '-')",
+          "Delta * italic(M[2009])"),
     "(italic(SE))",
     " "
   ),
@@ -446,8 +446,8 @@ p_3 <- plot_tablebarplot(
   ),
   columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"),
   headers = list(
-    list("paste(italic(Delta * M[2022]), '-')",
-          "italic(Delta * M[2015])"),
+    list("paste(Delta * italic(M[2022]), '-')",
+          "Delta * italic(M[2015])"),
     "(italic(SE))",
     " "
   ),
