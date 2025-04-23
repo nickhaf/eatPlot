@@ -79,10 +79,94 @@
 <h2 id="allgemeine-richtlinien">Allgemeine Richtlinien<a class="anchor" aria-label="anchor" href="#allgemeine-richtlinien"></a>
 </h2>
 <div class="section level3">
-<h3 id="exportieren-als-pdf-und-im-farbprofil-cmyk">Exportieren als PDF und im Farbprofil cmyk<a class="anchor" aria-label="anchor" href="#exportieren-als-pdf-und-im-farbprofil-cmyk"></a>
+<h3 id="ausrichtung-von-kennwerten">Ausrichtung von Kennwerten<a class="anchor" aria-label="anchor" href="#ausrichtung-von-kennwerten"></a>
 </h3>
-<p>Voreingestellt in <code><a href="../reference/save_plot.html">save_plot()</a></code></p>
+<p>Ausrichtung erfolgt am Dezimalpunkt // rechtsbündig (wg.
+unterschiedlicher Stellenanzahlen und negativen vs. positiven Werten).
+Setzen von <a href="https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html"><code>plotsettings_tablebarplot(columns_alignment = 2)</code></a>.
+Eventull muss mit <a href="https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html"><code>plotsettings_tablebarplot(columns_nudge_x = ... )</code></a>
+noch leicht nachgerückt werden, damit es gut aussieht.</p>
 </div>
+<div class="section level3">
+<h3 id="wich-dash">Wich dash<a class="anchor" aria-label="anchor" href="#wich-dash"></a>
+</h3>
+<p>Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen,
+z. B. <em>M<sub>M</sub>–M<sub>J</sub></em> oder
+<em>M<sub>2024–</sub>M<sub>2018</sub></em> <strong>Code für den
+entsprechenden Dash eingeben!</strong></p>
+</div>
+<div class="section level3">
+<h3 id="delta">Delta<a class="anchor" aria-label="anchor" href="#delta"></a>
+</h3>
+<p>Nach Delta-Zeichen kein Leerzeichen und nur M kursiv “Delta *
+italic(M)”</p>
+</div>
+<div class="section level3">
+<h3 id="schriftgröße">Schriftgröße<a class="anchor" aria-label="anchor" href="#schriftgr%C3%B6%C3%9Fe"></a>
+</h3>
+<p>Schriftgröße kann nicht einheitlich festgelegt werden, weil sie von
+der Größe der finalen Abbildung abhängt. Einstellung über <a href="https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage"><code>plotsettings_tablebarplot(font_size = ...)</code></a>.
+Die aktuellen Einstellungen können aus den jeweiligen Default-Lists
+ausgelesen werden, die ihr für eure Abbildung verwendet, z.B:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">abb_6.6</span><span class="op">$</span><span class="va">font_size</span></span>
+<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
+<p>. Falls eure Abbildung eine andere Größe hat, als die entsprechende
+Vorlage, könnt ihr hierrüber die Schriftgröße so justieren, dass es gut
+aussieht und die Schrift ähnlich groß wie in den Vorlagen ist. Gleiches
+für <a href="https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage"><code>plotsettings_tablebarplot(headers_font_size = ...)</code></a>
+|</p>
+</div>
+<div class="section level3">
+<h3 id="farben">Farben<a class="anchor" aria-label="anchor" href="#farben"></a>
+</h3>
+<p>Sind voreingestllt. Ansonsten hier die Liste:</p>
+</div>
+<div class="section level3">
+<h3 id="bolditalic-headers">Bold/italic headers<a class="anchor" aria-label="anchor" href="#bolditalic-headers"></a>
+</h3>
+<p>„Land“ und oberste Zeile(n) im Tabellenkopf fettgedruckt; Zeile mit
+M, SD etc. nicht fett, dafür kursiv <a href="https://nickhaf.github.io/eatPlot/reference/plot_tablebarplot.html"><code>plot_tablebarplot(headers = c("**Land**", "*M*", ...)</code></a>.
+Besonderheit bei griechischen Bustaben: Da muss plotmath verwendet
+werden, deshalb: <a href="https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage"><code>plot_tablebarplot(headers = c("bold(Land)", "Delta * italic(M)", ...), plotsetttings_tablebarplot(headers_ggtext = FALSE))</code></a></p>
+</div>
+<div class="section level3">
+<h3 id="zeilenumbruch">Zeilenumbruch<a class="anchor" aria-label="anchor" href="#zeilenumbruch"></a>
+</h3>
+<p>Zeilenumbruch in Ländernamen nur dann, wenn Zeile aus anderen Gründen
+breiter sind (z.B. weil je Land zwei Ergebniszeilen berichtet werden).
+Zeilenumbrüche für die Bundeslandnamen werden vor dem Plotten eingefügt,
+am einfachsten mit
+<code>my_dat$state_var &lt;- process_bundesland(my_dat$state_var, linebreak = TRUE)</code>|</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="export">Export<a class="anchor" aria-label="anchor" href="#export"></a>
+</h2>
+<div class="section level3">
+<h3 id="exporttyp">Exporttyp<a class="anchor" aria-label="anchor" href="#exporttyp"></a>
+</h3>
+<p>Exportieren als PDF und im Farbprofil cmyk. Voreingestellt in
+<code><a href="../reference/save_plot.html">save_plot()</a></code></p>
+</div>
+<div class="section level3">
+<h3 id="exportmaße">Exportmaße<a class="anchor" aria-label="anchor" href="#exportma%C3%9Fe"></a>
+</h3>
+<p>Die Exportmaße können in
+<code>save_plot(height = ..., widht = ...)</code> eingestellt werden.
+Dabei bitte an den Vorlagen orientieren:</p>
+<ul>
+<li>Ganzseitige Abbildung/Tabelle im Hochformat:</li>
+<li>Ganzseitige Abbildung/Tabelle im Querformat: z.B. <a href="https://nickhaf.github.io/eatPlot/articles/lineplots.html#lineplot-for-two-groups">Linienplot
+für 2 Gruppen</a>
+</li>
+<li>Teilseitige Abbildung/Tabelle im Hochformat:</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="sonderzeichen">Sonderzeichen<a class="anchor" aria-label="anchor" href="#sonderzeichen"></a>
+</h2>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
