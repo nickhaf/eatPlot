@@ -2,12 +2,12 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  default_lists: default_lists.html
   faq_bt24: faq_bt24.html
   lineplots: lineplots.html
   loop_example: loop_example.html
-  plot_settings: plot_settings.html
   tableplots: tableplots.html
-last_built: 2025-04-23T11:07Z
+last_built: 2025-04-23T11:11Z
 urls:
   reference: https://nickhaf.github.io/eatPlot/reference
   article: https://nickhaf.github.io/eatPlot/articles

@@ -39,10 +39,10 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/faq_bt24.html">FAQ BT24</a></li>
+<li><a class="dropdown-item" href="../articles/default_lists.html">Default lists</a></li>
+    <li><a class="dropdown-item" href="../articles/faq_bt24.html">FAQ BT24</a></li>
     <li><a class="dropdown-item" href="../articles/lineplots.html">Lineplots</a></li>
     <li><a class="dropdown-item" href="../articles/loop_example.html">Mehrere Kompetenzbereiche: Schleifen</a></li>
-    <li><a class="dropdown-item" href="../articles/plot_settings.html">Plot settings</a></li>
     <li><a class="dropdown-item" href="../articles/tableplots.html">Tableplots</a></li>
   </ul>
 </li>
@@ -79,7 +79,10 @@ Ploterstellung im BT24</h3>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nickhaf.github.io/eatPlot/">eatPlot</a></span><span class="op">)</span></span></code></pre></div>
 <p>Hier sind die wichtigsten Richtlinien zur Vereinheitlichung der
 Abbildungen im Bildungstrend 24 gesammelt, zusammen mit
-Umsetzungsvorschlägen in <code>eatPlot</code>.</p>
+Umsetzungsvorschlägen in <code>eatPlot</code>.<br>
+Die meisten Punkte sind bereits in den sogenannten <a href="https://nickhaf.github.io/eatPlot/articles/default_lists.html">Default
+lists</a> umgesetzt, die in <code><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot()</a></code> und
+<code><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot()</a></code> angegeben werden können.</p>
 <div class="section level2">
 <h2 id="plotübergreifend">Plotübergreifend<a class="anchor" aria-label="anchor" href="#plot%C3%BCbergreifend"></a>
 </h2>
@@ -100,7 +103,7 @@ von</p>
 stimmig aussieht.</p>
 </div>
 <div class="section level4">
-<h4 id="wich-dash">Wich dash<a class="anchor" aria-label="anchor" href="#wich-dash"></a>
+<h4 id="wich-dash">Wich dash???<a class="anchor" aria-label="anchor" href="#wich-dash"></a>
 </h4>
 <p>Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen,
 z. B. <em>M<sub>M</sub>–M<sub>J</sub></em> oder
