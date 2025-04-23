@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/lineplots.html">Lineplots</a></li>
+<li><a class="dropdown-item" href="../articles/faq_bt24.html">faq_bt24</a></li>
+    <li><a class="dropdown-item" href="../articles/lineplots.html">Lineplots</a></li>
     <li><a class="dropdown-item" href="../articles/loop_example.html">Mehrere Kompetenzbereiche: Schleifen</a></li>
     <li><a class="dropdown-item" href="../articles/plot_settings.html">Plot settings</a></li>
     <li><a class="dropdown-item" href="../articles/tableplots.html">Tableplots</a></li>
@@ -213,8 +214,12 @@ in:</p>
 <span><span class="va">gender_lesen</span> <span class="op">&lt;-</span> <span class="va">gender_lesen</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="va">gender_lesen</span> <span class="op">&lt;-</span> <span class="va">gender_lesen</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
-<span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">" "</span></span>
+<span></span>
 <span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span>, linebreak <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## Depending on whether a column has a linebreak, they have to be nudged down. I define the according vector here already, because it might get confusing furhter down:</span></span>
+<span><span class="va">nudge_col1_y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"&lt;br&gt;"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span>, <span class="op">-</span><span class="fl">0.25</span>, <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">" "</span></span>
 <span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"maennlich"</span>, <span class="st">"Jungen"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span></span>
 <span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"weiblich"</span>, <span class="st">"Mädchen"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span></span>
 <span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">empty</span> <span class="op">&lt;-</span> <span class="st">""</span></span></code></pre></div>
@@ -282,7 +287,7 @@ widths.</p>
 <span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p1</span>, <span class="co">## This is the column-width object we set above</span></span>
 <span>    columns_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">9</span><span class="op">)</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>    columns_nudge_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">11</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    columns_nudge_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">nudge_col1_y</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fl">11</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">7</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>    headers_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">9</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    default_list <span class="op">=</span> <span class="va">abb_6.6</span></span>
@@ -376,9 +381,9 @@ plots:</p>
 <span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"bold(Land)"</span>,</span>
-<span>    <span class="st">"italic(Delta * M)"</span>,</span>
-<span>    <span class="st">"italic(Delta * M)"</span>,</span>
-<span>    <span class="st">"italic(Delta * M)"</span>,</span>
+<span>    <span class="st">"Delta * italic(M)"</span>,</span>
+<span>    <span class="st">"Delta * italic(M)"</span>,</span>
+<span>    <span class="st">"Delta * italic(M)"</span>,</span>
 <span>    <span class="st">"(italic(SE))"</span>,</span>
 <span>    <span class="st">"italic(d)"</span>,</span>
 <span>    <span class="st">" "</span></span>
@@ -422,9 +427,8 @@ plots:</p>
 <span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"</span><span class="op">)</span>,</span>
 <span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">" "</span>,</span>
-<span>    <span class="st">"atop(paste(italic(Delta * M[2015]), \"\U2212\"),</span></span>
-<span><span class="st">          italic(Delta * M[2009]))"</span>,</span>
-<span>    <span class="co"># "*\u0394 M*",</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"paste(Delta * italic(M[2015]), '-')"</span>,</span>
+<span>          <span class="st">"Delta * italic(M[2009])"</span><span class="op">)</span>,</span>
 <span>    <span class="st">"(italic(SE))"</span>,</span>
 <span>    <span class="st">" "</span></span>
 <span>  <span class="op">)</span>,</span>
@@ -441,8 +445,8 @@ plots:</p>
 <span>    <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>      bar_pattern_spacing <span class="op">=</span> <span class="fl">0.0334</span>,</span>
 <span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>      headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>      headers_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>      headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>      headers_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>      columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p2</span>,</span>
 <span>      default_list <span class="op">=</span> <span class="va">abb_8.4</span></span>
 <span>    <span class="op">)</span></span>
@@ -460,8 +464,8 @@ plots:</p>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"</span><span class="op">)</span>,</span>
 <span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"atop(paste(italic(Delta * M[2022]), \"\U2212\"),</span></span>
-<span><span class="st">          italic(Delta * M[2015]))"</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"paste(Delta * italic(M[2022]), '-')"</span>,</span>
+<span>          <span class="st">"Delta * italic(M[2015])"</span><span class="op">)</span>,</span>
 <span>    <span class="st">"(italic(SE))"</span>,</span>
 <span>    <span class="st">" "</span></span>
 <span>  <span class="op">)</span>,</span>
@@ -477,8 +481,8 @@ plots:</p>
 <span>    bar_pattern_spacing <span class="op">=</span> <span class="fl">0.0392</span>,</span>
 <span>    axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">45</span><span class="op">)</span>,</span>
 <span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>    headers_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    headers_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    headers_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p3</span>,</span>
 <span>    default_list <span class="op">=</span> <span class="va">abb_8.4</span></span>
 <span>  <span class="op">)</span></span>
