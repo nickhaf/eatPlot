@@ -1,0 +1,25 @@
+---
+title: "faq_bt24"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{faq_bt24}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(eatPlot)
+```
+
+## Allgemeine Richtlinien
+
+### Exportieren als PDF und im Farbprofil cmyk 
+Voreingestellt in `save_plot()`
+
