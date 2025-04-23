@@ -15,7 +15,7 @@ test_that("simple lineplot with one group", {
   test_data_lineplot <- data.frame(
     id = c("comp_1", "comp_1"),
     state_var = c("Berlin", "Berlin"),
-    subgroup_var = c("m", "m"),
+    subgroup_var = factor(c("m", "m")),
     year = c(2000, 2005),
     trend = c("2000_2005", "2000_2005"),
     est_point = c(500, 560),
@@ -31,6 +31,8 @@ test_that("simple lineplot with one group", {
     years_lines = list(c(2000, 2005)),
     facet_var = "state_var",
     plot_settings = plotsettings_lineplot(
+      point_label_nudge_y  = 0.3,
+      point_label_nudge_direction = list('m' = "-"),
       background_lines = FALSE
     )
   )

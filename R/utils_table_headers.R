@@ -31,9 +31,9 @@ plot_column_headers <- function(column_x_coords_headers,
 
     if (!is.null(headers)) {
       hjust_header <- rev(plot_settings$headers_alignment)[i]
-      if (hjust_header == 2) {
-        hjust_header <- 1
-      }
+      # if (hjust_header == 2) {
+      #   hjust_header <- 0
+      # }
     if(plot_settings$headers_ggtext){
       ggtext::geom_richtext(
         data = data.frame(),
@@ -53,6 +53,43 @@ plot_column_headers <- function(column_x_coords_headers,
         nudge_x = rev(plot_settings$headers_nudge_x)[i]
       )
     }else{
+
+current_header <- rev(headers)[[i]]
+if(is.list(current_header)){
+
+  current_header <- unlist(current_header)
+
+
+  ## Put into the final list!
+  lapply(seq_along(current_header), function(j){
+
+    ## Add the linebreak manually. Space gets automatically adjusted, depending on the number of lines.
+    manual_linebreak <-  0.25 * (length(current_header) -1) - 0.5 * (j-1)
+
+  p <- ggplot2::geom_text(
+      data = data.frame(),
+      ggplot2::aes(
+        x = x_axis_i_header,
+        y = header_y_coords$header_area_start +
+          header_y_coords$row_height_headers / 2 +
+          rev(plot_settings$headers_nudge_y)[i] + manual_linebreak
+      ),
+      colour = "#000000",
+      label = current_header[j],
+      size = plot_settings$headers_font_size,
+      hjust = hjust_header,
+      nudge_x = rev(plot_settings$headers_nudge_x)[i],
+      parse = TRUE
+    )
+
+  return(p)
+
+  })
+
+
+}else{
+
+
       ggplot2::geom_text(
         data = data.frame(),
         ggplot2::aes(
@@ -62,13 +99,14 @@ plot_column_headers <- function(column_x_coords_headers,
             rev(plot_settings$headers_nudge_y)[i]
         ),
         colour = "#000000",
-        label = rev(headers)[[i]],
+        label = current_header,
         size = plot_settings$headers_font_size,
         hjust = hjust_header,
         nudge_x = rev(plot_settings$headers_nudge_x)[i],
         parse = TRUE
       )
-    }
+}
+}
 }
 
 

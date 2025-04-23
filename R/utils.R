@@ -684,10 +684,11 @@ filter_years <- function(dat, years) {
 process_bundesland <- function(vec, linebreak = FALSE, total_group = "total"){
   vec <- gsub("ue", "\u00fc", vec )
 
+
   if(linebreak){
-    vec <- gsub("([a-z])([A-Z])", "\\1\uad <br> \\2", vec)
+    vec <- gsub("([a-z])([A-Z])", "\\1\u2212 <br> \\2", vec)
   }else{
-    vec <- gsub("([a-z])([A-Z])", "\\1\uad\\2", vec)
+    vec <- gsub("([a-z])([A-Z])", "\\1\u2212\\2", vec)
 
 }
 

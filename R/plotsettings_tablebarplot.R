@@ -78,7 +78,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$column_spanners_2_row_height))
   stopifnot(is.numeric(settings_list$columns_alignment))
   stopifnot(is.numeric(settings_list$columns_nudge_x))
-  stopifnot(is.numeric(settings_list$columns_nudge_y))
+  stopifnot(is.numeric(settings_list$columns_nudge_y) | is.list(settings_list$columns_nudge_y) & all(sapply(settings_list$columns_nudge_y, is.numeric)))
   stopifnot(is.character(settings_list$columns_table_sig_superscript_letter))
   stopifnot(is.numeric(settings_list$columns_table_sig_superscript_letter_nudge_x))
   stopifnot(is.numeric(settings_list$columns_width) | is.null(settings_list$columns_width))
@@ -124,16 +124,16 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param column_spanners_row_height Numeric for the row height of the row the first level of column spanners is written in. Defaults to `1`.
 #' @param column_spanners_2_nudge_y Numeric vector to increase or decrease the space between column spanners level 2 text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to `-0.2`.
 #' @param column_spanners_2_row_height Numeric for the row height of the row the second level of column spanners is written in. Defaults to `1`
-#' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `0.5`.
+#' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), `1` (right-aligned), or `2` (right-aligned, but in the middle of the column). Defaults to `0.5`.
 #' @param columns_nudge_x Numeric vector to nudge the column text in x direction. Defaults to `0`.
-#' @param columns_nudge_y Numeric vector to nudge the column texts in y direction. Defaults to `0`.
+#' @param columns_nudge_y Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Defaults to `0`.
 #' @param columns_table_sig_superscript_letter Character, that will be added on significant values defined by `columns_table_sig_superscript`.
 #' @param columns_table_sig_superscript_letter_nudge_x Numeric for nudging the superscript towards or away from a number.
 #' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
 #' @param headers_alignment Numeric vector with one element for each column, determining the text adjustement of the headers. Can be `0` (left-aligned), `0.5` (central-aligned), or `1` (right-aligned). Defaults to `NULL`, in which case the alignment of the columns will be adopted.
 #' @param headers_background_colour Colour of the background of the headers.
 #' @param headers_font_size Numeric for the font size that will be used for the headers and column_spanners. Defaults to `2.5`.
-#' @param headers_ggtext Logical indicating whether the headers should be drawn with ggtext::geom_richtext. Defaults to `TRUE`. Only set to `FALSE` if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.
+#' @param headers_ggtext Logical indicating whether the headers should be drawn with `ggtext::geom_richtext()`. Defaults to `TRUE`. Only set to `FALSE` if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.
 #' @param headers_nudge_x Numeric to nudge the column_headers in x direction. Defaults to `0`.
 #' @param headers_nudge_y Numeric to nudge the column_headers in y direction. Defaults to `0`.
 #' @param headers_row_height Numeric for the row height of the row the headers are written in. Defaults to `1`.
