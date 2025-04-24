@@ -142,10 +142,8 @@ lineplot_germany <- plot_lineplot(
   facet_var = "kb",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
+    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     brace_label_nudge_x = 0.22,
-    split_plot = FALSE,
-    background_lines = TRUE,
-    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)),
     n_cols = 2,
     axis_y_lims = c(430, 550),
     default_list = lineplot_4x4
@@ -175,15 +173,10 @@ lineplot_germany_2 <- plot_lineplot(
   facet_var = "kb",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
+    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     brace_label_nudge_x = 0.23,
-    split_plot = FALSE,
-    background_lines = TRUE,
-    subgroup_colours = c(weiblich = "#000000", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
-    # margin_top = 0,
-    # margin_bottom = 0,
     n_cols = 3,
     axis_y_lims = c(430, 550),
-    equal_trend_line_length = TRUE,
     default_list = lineplot_4x4
   )
 )

@@ -3,7 +3,7 @@
 \docType{data}
 \name{lineplot_4x4}
 \alias{lineplot_4x4}
-\title{BT22 default plot settings.}
+\title{BT24 default plot settings.}
 \format{
 \subsection{\code{lineplot_4x4}}{
 

@@ -1,7 +1,6 @@
 ## code to prepare `barplot_table_plot_pattern` dataset goes here
 barplot_table_plot_pattern <- plotsettings_tablebarplot(
   axis_x_label_size = 5,
-  background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3)),
   bar_background_lines_colour = cmyk(0, 0, 0, 60),
   bar_background_lines = "scale_breaks",
   bar_background_lines_linetype = "dashed",
@@ -30,6 +29,7 @@ usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 abb_6.5 <- plotsettings_tablebarplot(
   axis_x_lims = c(0, 70),
+  background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3)),
   bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
   columns_alignment = c(0, rep(2, 6)),
   columns_nudge_y = c(-0.5, rep(-0.5, 3), rep(0.5, 3)),
