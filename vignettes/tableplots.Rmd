@@ -141,7 +141,7 @@ Finally we can save the plot:
 save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 160, height = 90, scaling = 1)
 ```
 
-```{r fig.width = 160, fig.height = 90}
+```{r fig.width = 160, fig.height = 90, dpi=300}
 tableplot_6.5
 ```
 
@@ -319,7 +319,7 @@ save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", w
 ```
 
 
-```{r fig.width = 235, fig.height = 130}
+```{r fig.width = 235, fig.height = 130, dpi=300}
 #| echo: false
 
 tableplot_6.6
@@ -493,7 +493,7 @@ save_plot(tableplot_8.4,
 ```
 
 
-```{r fig.width = 160, fig.height = 100}
+```{r fig.width = 160, fig.height = 100, dpi=300}
 tableplot_8.4
 ```
 
