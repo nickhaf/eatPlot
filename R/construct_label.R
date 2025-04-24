@@ -91,12 +91,14 @@ construct_label <- function(dat,
     ""
   )
 
-
   label_out <- paste0(
     label_est,
     label_superscript,
     label_se
   )
+
+  label_out <- gsub("\\(\\)|\\( \\)", "", label_out)
+
   # } else {
   #   ## For alignment it is necessary to first plot the numbers and then add the superscript. Therefore it is saved in an additional column.
   #   if (any(dat$label_sig != "")) {
