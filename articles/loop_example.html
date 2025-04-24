@@ -441,7 +441,7 @@ website:</p>
 <span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
 <span>  columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">11</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>    bar_pattern_spacing <span class="op">=</span> <span class="fl">0.0159</span>, <span class="co">## We calculated this below in standardize_pattern_spacing()</span></span>
+<span>    bar_pattern_spacing <span class="op">=</span> <span class="fl">0.0159</span>,</span>
 <span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p1</span>, <span class="co">## This is the column-width object we set above</span></span>
 <span>    columns_nudge_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">11</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -479,7 +479,7 @@ website:</p>
 <span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
 <span>  columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
-<span>    bar_pattern_spacing <span class="op">=</span> <span class="fl">0.0341</span>, <span class="co">## We calculated this below in standardize_pattern_spacing()</span></span>
+<span>    bar_pattern_spacing <span class="op">=</span> <span class="fl">0.0341</span>,</span>
 <span>    columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>    columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p2</span>, <span class="co">## This is the column-width object we set above</span></span>
 <span>    headers_nudge_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
@@ -488,16 +488,8 @@ website:</p>
 <span>    default_list <span class="op">=</span> <span class="va">abb_6.6</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>For the patterns in the bars to have the same widht, we need to set
-the spacing between them:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bar_pattern_spacing_stand</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_pattern_spacing.html">standardize_pattern_spacing</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_1</span>, <span class="va">p_2</span><span class="op">)</span>, pattern_spacing <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Next Step: Update the bar_pattern_spacing values in your respective plots with the output values.</span></span>
-<span><span class="va">bar_pattern_spacing_stand</span></span>
-<span><span class="co">#&gt; [1] 0.0159 0.0341</span></span></code></pre></div>
-<p>(Rebuild the plot with these pattern spacings)</p>
 <p>Finally, we can combine the plots:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tableplot_6.6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_plots.html">combine_plots</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p_1</span>, <span class="va">p_2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -508,7 +500,7 @@ the spacing between them:</p>
 the headers into the right position, etc. You have to look at the plot
 in the right format so the changes are shown in the correct proportions.
 Either save them as PDF, or use the <code>ggview</code> package:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">tableplot_6.6</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggview/man/canvas.html" class="external-link">canvas</a></span><span class="op">(</span></span>
 <span>    <span class="fl">235</span>, <span class="fl">130</span>,</span>
@@ -518,7 +510,7 @@ Either save them as PDF, or use the <code>ggview</code> package:</p>
 <p>(You have to re-evaluate the plot without the <code>canvas()</code>
 function before saving it though.)</p>
 <p>If everything is satisfactory, we can save the plot.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">tableplot_6.6</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/abb_6.6.pdf"</span>, width <span class="op">=</span> <span class="fl">235</span>, height <span class="op">=</span> <span class="fl">130</span>, scaling <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -526,7 +518,7 @@ function before saving it though.)</p>
 </h2>
 <p>As soon as the plot basis works, we can put the code into a dedicated
 function, to pack it away:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Data Prep</span></span>
 <span><span class="va">prepare_6.6_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat_kb</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">dat_6.6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_tablebarplot.html">prep_tablebarplot</a></span><span class="op">(</span></span>
@@ -599,7 +591,7 @@ function, to pack it away:</p>
 <span>    columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">11</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>      axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="fl">70</span><span class="op">)</span>,</span>
-<span>      bar_pattern_spacing <span class="op">=</span> <span class="fl">0.016</span>, <span class="co">## We calculated this below in standardize_pattern_spacing()</span></span>
+<span>      bar_pattern_spacing <span class="op">=</span> <span class="fl">0.016</span>,</span>
 <span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>      columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p1</span>, <span class="co">## This is the column-width object we set above</span></span>
 <span>      columns_table_sig_superscript_letter <span class="op">=</span> <span class="st">"a"</span>,</span>
@@ -641,7 +633,7 @@ function, to pack it away:</p>
 <span>    columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>    plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>      axis_x_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="fl">72</span><span class="op">)</span>,</span>
-<span>      bar_pattern_spacing <span class="op">=</span> <span class="fl">0.034</span>, <span class="co">## We calculated this below in standardize_pattern_spacing()</span></span>
+<span>      bar_pattern_spacing <span class="op">=</span> <span class="fl">0.034</span>, </span>
 <span>      columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>      columns_width <span class="op">=</span> <span class="va">column_widths_stand</span><span class="op">$</span><span class="va">p2</span>, <span class="co">## This is the column-width object we set above</span></span>
 <span>      columns_table_sig_superscript_letter <span class="op">=</span> <span class="st">"a"</span>,</span>
@@ -670,7 +662,7 @@ function, to pack it away:</p>
 <span><span class="op">}</span></span></code></pre></div>
 <p>These function now do the same thing we have done above, but we can
 easily exchange the data set:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prepped_hoeren</span> <span class="op">&lt;-</span> <span class="fu">prepare_6.6_data</span><span class="op">(</span><span class="va">kap_06</span><span class="op">$</span><span class="va">hoeren</span><span class="op">)</span></span>
 <span><span class="va">plot_hoeren</span> <span class="op">&lt;-</span> <span class="fu">plot_6.6</span><span class="op">(</span><span class="va">prepped_hoeren</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -679,15 +671,15 @@ easily exchange the data set:</p>
 </h2>
 <p>Now we can use that function for looping over all competence areas
 with <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">dispar</span>, <span class="va">prepare_6.6_data</span><span class="op">)</span></span>
 <span><span class="va">list_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">list_prepped</span>, <span class="va">plot_6.6</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_plots</span><span class="op">$</span><span class="va">read</span></span></code></pre></div>
-<p><img src="loop_example_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<p><img src="loop_example_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_plots</span><span class="op">$</span><span class="va">listen</span></span></code></pre></div>
-<p><img src="loop_example_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
+<p><img src="loop_example_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
