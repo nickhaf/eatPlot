@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,17 +142,16 @@ format for plotting.</p>
 <span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Removing background_subgroup. If you only have one subgroup, set background_subgroup = NULL.</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_2</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf"</span>, width <span class="op">=</span> <span class="fl">160</span>, height <span class="op">=</span> <span class="fl">185</span>, scaling <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lineplot_2</span></span></code></pre></div>
 <p><img src="lineplots_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="lineplot-for-whole-germany-3x2">Lineplot for whole Germany 3x2<a class="anchor" aria-label="anchor" href="#lineplot-for-whole-germany-3x2"></a>
 </h2>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trend_ger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">trend_gender</span>, <span class="va">prep_lineplot</span>, subgroup_var <span class="op">=</span> <span class="st">"Kgender"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">trend_ger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">trend_ger</span>, <span class="va">state_var</span> <span class="op">==</span> <span class="st">"total"</span><span class="op">)</span></span>
 <span><span class="va">trend_ger</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">trend_ger</span><span class="op">$</span><span class="va">subgroup_var</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"weiblich"</span>, <span class="st">"maennlich"</span>, <span class="st">"total"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -171,7 +170,7 @@ format for plotting.</p>
 <span></span>
 <span></span>
 <span><span class="va">trend_total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">trend_ger</span>, <span class="va">trend_ger_2</span>, <span class="va">trend_ger_3</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lineplot_germany</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">trend_total</span>,</span>
 <span>  point_sig <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -189,15 +188,14 @@ format for plotting.</p>
 <span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Removing background_subgroup. If you only have one subgroup, set background_subgroup = NULL.</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_germany</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf"</span>, height <span class="op">=</span> <span class="fl">185</span>, width <span class="op">=</span> <span class="fl">108</span>, scaling <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lineplots_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="lineplot-for-whole-germany-2x3-with-split-plot">Lineplot for whole Germany 2x3 with split plot<a class="anchor" aria-label="anchor" href="#lineplot-for-whole-germany-2x3-with-split-plot"></a>
 </h2>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lineplot_germany_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">trend_total</span>,</span>
 <span>  point_sig <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -218,10 +216,112 @@ format for plotting.</p>
 <span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Removing background_subgroup. If you only have one subgroup, set background_subgroup = NULL.</span></span></code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_germany_2</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_2_groups_germany2x3.pdf"</span>, height <span class="op">=</span> <span class="fl">185</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">/</span> <span class="fl">3</span>, width <span class="op">=</span> <span class="fl">160</span>, scaling <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lineplots_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="lineplot-with-missing-values">Lineplot with missing values<a class="anchor" aria-label="anchor" href="#lineplot-with-missing-values"></a>
+</h2>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat_lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_lineplot.html">prep_lineplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">trend_gender</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  subgroup_var <span class="op">=</span> <span class="st">"Kgender"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">est_mean_comp_none</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">==</span> <span class="st">"Berlin"</span> <span class="op">&amp;</span> <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2015</span>, <span class="cn">NA</span>, <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">est_mean_comp_none</span><span class="op">)</span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">est_mean_comp_none</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">==</span> <span class="st">"Brandenburg"</span> <span class="op">&amp;</span> <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2009</span> <span class="op">&amp;</span> <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">==</span> <span class="st">"weiblich"</span>, <span class="cn">NA</span>, <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">est_mean_comp_none</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">est_mean_comp_trend_sameFacet_sameSubgroup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">==</span> <span class="st">"Brandenburg"</span> <span class="op">&amp;</span> <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">trend</span> <span class="op">==</span> <span class="st">"2009_2015"</span> <span class="op">&amp;</span> <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">==</span> <span class="st">"weiblich"</span>, <span class="cn">NA</span>, <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">est_mean_comp_trend_sameFacet_sameSubgroup</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">se_mean_comp_trend_sameFacet_sameSubgroup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">==</span> <span class="st">"Brandenburg"</span> <span class="op">&amp;</span> <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">trend</span> <span class="op">==</span> <span class="st">"2009_2015"</span> <span class="op">&amp;</span> <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">==</span> <span class="st">"weiblich"</span>, <span class="cn">NA</span>, <span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">se_mean_comp_trend_sameFacet_sameSubgroup</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat_lineplot_2</span> <span class="op">&lt;-</span> <span class="va">dat_lineplot_2</span><span class="op">[</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">!=</span> <span class="st">"Niedersachsen"</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co">## Dritte Gruppe separat</span></span>
+<span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Relevel, so Deutschland comes at the end</span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html" class="external-link">fct_relevel</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span>, <span class="st">"Deutschland"</span>, after <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## We can set the order of the brace labels by setting the factor levels of the subgroup_var:</span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"weiblich"</span>, <span class="st">"maennlich"</span>, <span class="st">"total"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">state_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">years_lines_list</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">state_levels</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="va">state_levels</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">years_lines_list</span><span class="op">$</span><span class="va">`Baden−Württemberg`</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">years_lines_list</span><span class="op">$</span><span class="va">`Deutschland`</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span><span class="va">lineplot_na</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat_lineplot_2</span>,</span>
+<span>  years_lines <span class="op">=</span> <span class="va">years_lines_list</span>,</span>
+<span>  years_braces <span class="op">=</span> <span class="va">years_lines_list</span>,</span>
+<span>  background_facet <span class="op">=</span> <span class="st">"Deutschland"</span>,</span>
+<span>  background_subgroup <span class="op">=</span> <span class="st">"total"</span>,</span>
+<span>  box_facet <span class="op">=</span> <span class="st">"Deutschland"</span>,</span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
+<span>    subgroup_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>weiblich <span class="op">=</span> <span class="st">"black"</span>, maennlich <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">60</span><span class="op">)</span><span class="op">)</span>, <span class="co">## Here we determine the colours of the subgroups</span></span>
+<span>    axis_y_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">410</span>, <span class="fl">560</span><span class="op">)</span>,</span>
+<span>    background_facet_remove <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Because Deuschland is also our background-facet, the years we removed there are also not plotted in the background. </span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_na</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_na.pdf"</span>, width <span class="op">=</span> <span class="fl">160</span>, height <span class="op">=</span> <span class="fl">185</span>, scaling <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lineplot_na</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_line()`).</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: Removed 4 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_point()`).</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_text()`).</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_line()`).</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_point()`).</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_text()`).</span></span></code></pre>
+<p><img src="lineplots_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="lineplot-with-long-trend">Lineplot with long trend<a class="anchor" aria-label="anchor" href="#lineplot-with-long-trend"></a>
+</h2>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dat_lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_lineplot.html">prep_lineplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">trend_gender</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  subgroup_var <span class="op">=</span> <span class="st">"Kgender"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">## We can set the order of the brace labels by setting the factor levels of the subgroup_var:</span></span>
+<span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat_lineplot_2</span><span class="op">$</span><span class="va">subgroup_var</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"weiblich"</span>, <span class="st">"maennlich"</span>, <span class="st">"total"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lineplot_2_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat_lineplot_2</span>,</span>
+<span>  years_lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2015</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  years_braces <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">2022</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>, <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  background_facet <span class="op">=</span> <span class="st">"Deutschland"</span>,</span>
+<span>  background_subgroup <span class="op">=</span> <span class="st">"total"</span>,</span>
+<span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
+<span>    subgroup_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>weiblich <span class="op">=</span> <span class="st">"black"</span>, maennlich <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">60</span><span class="op">)</span><span class="op">)</span>, <span class="co">## Here we determine the colours of the subgroups</span></span>
+<span>    axis_y_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">410</span>, <span class="fl">560</span><span class="op">)</span>,</span>
+<span>    brace_label_nudge_x <span class="op">=</span> <span class="fl">0.175</span>, </span>
+<span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">lineplot_2_long</span>, filename <span class="op">=</span> <span class="st">"C:/Users/hafiznij/Downloads/lineplot_2_groups_long.pdf"</span>, width <span class="op">=</span> <span class="fl">160</span>, height <span class="op">=</span> <span class="fl">185</span>, scaling <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lineplot_2_long</span></span></code></pre></div>
+<p><img src="lineplots_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

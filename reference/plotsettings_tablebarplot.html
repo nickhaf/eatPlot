@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -200,7 +200,7 @@
 
 
 <dt id="arg-columns-alignment">columns_alignment<a class="anchor" aria-label="anchor" href="#arg-columns-alignment"></a></dt>
-<dd><p>Numeric vector with one element for each column, determining the text adjustement within the column. Can be <code>0</code> (left-aligned), <code>0.5</code> (central-aligned), or <code>1</code> (right-aligned). Defaults to <code>0.5</code>.</p></dd>
+<dd><p>Numeric vector with one element for each column, determining the text adjustement within the column. Can be <code>0</code> (left-aligned), <code>0.5</code> (central-aligned), <code>1</code> (right-aligned), or <code>2</code> (right-aligned, but in the middle of the column). Defaults to <code>0.5</code>.</p></dd>
 
 
 <dt id="arg-columns-nudge-x">columns_nudge_x<a class="anchor" aria-label="anchor" href="#arg-columns-nudge-x"></a></dt>
@@ -236,7 +236,7 @@
 
 
 <dt id="arg-headers-ggtext">headers_ggtext<a class="anchor" aria-label="anchor" href="#arg-headers-ggtext"></a></dt>
-<dd><p>Logical indicating whether the headers should be drawn with ggtext::geom_richtext. Defaults to <code>TRUE</code>. Only set to <code>FALSE</code> if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.</p></dd>
+<dd><p>Logical indicating whether the headers should be drawn with <code><a href="https://wilkelab.org/ggtext/reference/geom_richtext.html" class="external-link">ggtext::geom_richtext()</a></code>. Defaults to <code>TRUE</code>. Only set to <code>FALSE</code> if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards. When set to FALSE,<code><a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">grDevices::plotmath()</a></code> will be used for plotting the special characters, so refer to the documentation of the <code><a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">grDevices::plotmath()</a></code>-function for the syntax.</p></dd>
 
 
 <dt id="arg-headers-nudge-x">headers_nudge_x<a class="anchor" aria-label="anchor" href="#arg-headers-nudge-x"></a></dt>

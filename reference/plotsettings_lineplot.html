@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,8 @@
 <span>  axis_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_y_tick_distance <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_y_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  background_facet_remove <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  background_subgroup_remove <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_line_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  box_facet_linewidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -122,6 +124,14 @@
 
 <dt id="arg-axis-y-lims">axis_y_lims<a class="anchor" aria-label="anchor" href="#arg-axis-y-lims"></a></dt>
 <dd><p>Numeric for the y-axis limits. Defaults to <code>NULL</code>, in which case the limits will be set automatically.</p></dd>
+
+
+<dt id="arg-background-facet-remove">background_facet_remove<a class="anchor" aria-label="anchor" href="#arg-background-facet-remove"></a></dt>
+<dd><p>Logical, indicating whether the <code>background_facet</code> should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-background-subgroup-remove">background_subgroup_remove<a class="anchor" aria-label="anchor" href="#arg-background-subgroup-remove"></a></dt>
+<dd><p>Logical, indicating whether the <code>background_subgroup</code> should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-background-lines">background_lines<a class="anchor" aria-label="anchor" href="#arg-background-lines"></a></dt>
@@ -258,6 +268,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_y_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $background_facet_remove</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $background_subgroup_remove</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_lines</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
