@@ -2,7 +2,7 @@
 check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 38
+      length(settings_list) == 40
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -16,6 +16,8 @@ check_plotsettings_lineplot <- function(settings_list) {
         "axis_y",
         "axis_y_tick_distance",
         "axis_y_lims",
+        "background_facet_remove",
+        "background_subgroup_remove",
         "background_lines",
         "background_line_colour",
         "brace_label_gap_y",
@@ -57,6 +59,8 @@ check_plotsettings_lineplot <- function(settings_list) {
   stopifnot(is.logical(settings_list$axis_y))
   stopifnot(is.numeric(settings_list$axis_y_tick_distance) | is.null(settings_list$axis_y_tick_distance))
   stopifnot(is.numeric(settings_list$axis_y_lims) | is.null(settings_list$axis_y_lims))
+  stopifnot(is.logical(settings_list$background_facet_remove))
+  stopifnot(is.logical(settings_list$background_subgroup_remove))
   stopifnot(is.logical(settings_list$background_lines))
   stopifnot(is_colour(settings_list$background_line_colour))
   stopifnot(is.numeric(settings_list$brace_label_gap_y))
@@ -100,6 +104,8 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param axis_y_lims Numeric for the y-axis limits. Defaults to `NULL`, in which case the limits will be set automatically.
 #' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background. Defaults to `TRUE`.
 #' @param background_line_colour Colour of the background line.
+#' @param background_facet_remove Logical, indicating whether the `background_facet` should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to `TRUE`.
+#' @param background_subgroup_remove Logical, indicating whether the `background_subgroup` should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to `TRUE`.
 #' @param brace_label_gap_y Numeric for the size of the vertical gap between brace labels.
 #' @param brace_label_nudge_x Numeric. The brace labels will be shifted along the x-axis by this amount. Increase to shift the labels further to the right.
 #' @param brace_label_nudge_y Numeric. The brace labels will be shifted along the y-axis by this amount. Increase to let the labels start further below.
@@ -138,6 +144,8 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
                                   axis_y = NULL,
                                   axis_y_tick_distance = NULL,
                                   axis_y_lims = NULL,
+                                  background_facet_remove = NULL,
+                                  background_subgroup_remove = NULL,
                                   background_lines = NULL,
                                   background_line_colour = NULL,
                                   box_facet_linewidth = NULL,
@@ -180,6 +188,8 @@ plotsettings_lineplot <- function(axis_x_background_colour = NULL,
       "axis_y" = FALSE,
       "axis_y_tick_distance" = 20,
       "axis_y_lims" = NULL,
+      "background_facet_remove" = TRUE,
+      "background_subgroup_remove" = TRUE,
       "background_lines" = TRUE,
       "background_line_colour" = "black",
       "brace_label_gap_y" = 0.08,

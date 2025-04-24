@@ -1,6 +1,6 @@
 Package: eatPlot
 Title: Plot eatRep output
-Version: 1.1.0.9001
+Version: 1.1.0.9002
 Authors@R: c(
     person("Nicklas", "Hafiz", email = "hafiznij@hu-berlin.de", role = c("aut", "cre")),
     person("Philipp", "Franikowski", role = c("ctb"))
@@ -16,7 +16,8 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     vdiffr,
-    ggview
+    ggview,
+    forcats
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.3)

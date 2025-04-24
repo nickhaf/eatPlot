@@ -14,6 +14,8 @@ plotsettings_lineplot(
   axis_y = NULL,
   axis_y_tick_distance = NULL,
   axis_y_lims = NULL,
+  background_facet_remove = NULL,
+  background_subgroup_remove = NULL,
   background_lines = NULL,
   background_line_colour = NULL,
   box_facet_linewidth = NULL,
@@ -62,6 +64,10 @@ plotsettings_lineplot(
 \item{axis_y_tick_distance}{Numeric, for which distance should lie between tick marks. The first tick will start at the lower end of \code{axis_y_lims} or be calculated automatically. The following ticks will be added in distances defined by \code{axis_y_tick_distance}. Defaults to \code{20}.}
 
 \item{axis_y_lims}{Numeric for the y-axis limits. Defaults to \code{NULL}, in which case the limits will be set automatically.}
+
+\item{background_facet_remove}{Logical, indicating whether the \code{background_facet} should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to \code{TRUE}.}
+
+\item{background_subgroup_remove}{Logical, indicating whether the \code{background_subgroup} should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to \code{TRUE}.}
 
 \item{background_lines}{Logical, indicating whether the whole group trend should be plotted in the background. Defaults to \code{TRUE}.}
 

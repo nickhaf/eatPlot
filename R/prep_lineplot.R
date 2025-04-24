@@ -28,6 +28,13 @@ prep_lineplot <- function(eatRep_dat, subgroup_var = NULL, total_subgroup = "tot
                         )
 dat_wide$year <- as.numeric(dat_wide$year)
 
+for(i in colnames(dat_wide)){
+  if(grepl("^sig_", i)){
+
+    dat_wide[, i] <- ifelse(is.na(dat_wide[,i]), FALSE, dat_wide[, i])
+  }
+}
+
   return(dat_wide)
 }
 
@@ -100,6 +107,8 @@ build_plot_dat <- function(eatRep_dat, facet_var, total_facet, total_subgroup) {
 }
 
 prep_years_list <- function(years_lines, years_braces) {
+
+
   years_list <- lapply(list(years_lines, years_braces), prep_years)
 
 

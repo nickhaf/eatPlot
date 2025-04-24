@@ -18,6 +18,11 @@ test_that("lineplot with one group works", {
   vdiffr::expect_doppelganger("lineplot_1", lineplot_1)
 })
 
+test_that("lineplot with NAs works", {
+  suppressWarnings(vdiffr::expect_doppelganger("lineplot_na", lineplot_na))
+})
+
+
 test_that("tableplot 6.5 works", {
   vdiffr::expect_doppelganger("tableplot_6.5", tableplot_6.5)
 })
@@ -29,3 +34,4 @@ test_that("tableplot 6.6 works", {
 test_that("tableplot 8.4 works", {
      vdiffr::expect_doppelganger("tableplot_8.4", tableplot_8.4)
 })
+

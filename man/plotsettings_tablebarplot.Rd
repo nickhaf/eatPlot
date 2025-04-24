@@ -102,7 +102,7 @@ plotsettings_tablebarplot(
 
 \item{column_spanners_2_row_height}{Numeric for the row height of the row the second level of column spanners is written in. Defaults to \code{1}}
 
-\item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), or \code{1} (right-aligned). Defaults to \code{0.5}.}
+\item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), \code{1} (right-aligned), or \code{2} (right-aligned, but in the middle of the column). Defaults to \code{0.5}.}
 
 \item{columns_nudge_x}{Numeric vector to nudge the column text in x direction. Defaults to \code{0}.}
 
@@ -120,7 +120,7 @@ plotsettings_tablebarplot(
 
 \item{headers_font_size}{Numeric for the font size that will be used for the headers and column_spanners. Defaults to \code{2.5}.}
 
-\item{headers_ggtext}{Logical indicating whether the headers should be drawn with ggtext::geom_richtext. Defaults to \code{TRUE}. Only set to \code{FALSE} if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards.}
+\item{headers_ggtext}{Logical indicating whether the headers should be drawn with \code{ggtext::geom_richtext()}. Defaults to \code{TRUE}. Only set to \code{FALSE} if you want to plot greek letters in the headers AND save the plot in cmyk color format afterwards. When set to FALSE,\code{grDevices::plotmath()} will be used for plotting the special characters, so refer to the documentation of the \code{grDevices::plotmath()}-function for the syntax.}
 
 \item{headers_nudge_x}{Numeric to nudge the column_headers in x direction. Defaults to \code{0}.}
 

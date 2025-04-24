@@ -28,38 +28,57 @@ Die meisten Punkte sind bereits in den sogenannten [Default lists](https://nickh
 
 ### Ausrichtung von Kennwerten 
 Ausrichtung erfolgt am Dezimalpunkt sowie rechtsbündig. 
-Setzen von 
+
+In `eatPlot` kann das so erreicht werden: 
 
 ```{r}
 #| eval: FALSE
 plotsettings_tablebarplot(columns_alignment = 2)
 ```
 
-Eventuell muss mit 
+
+Eventuell muss ein wenig nachjustiert werden, um die Spalteninhalte so zu rücken, dass es stimmig aussieht:
 
 ```{r}
 #| eval: FALSE
-`plotsettings_tablebarplot(columns_nudge_x = ... )`
+plotsettings_tablebarplot(columns_nudge_x = ... )
 ```
-
-nachjustiert werden, um die Spalteninhalte so zu rücken, dass es stimmig aussieht. 
-
 
 
 ### Wich dash???
-Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen, z. B. *M~M~–M~J~* oder *M~2024–~M~2018~*   **Code für den entsprechenden Dash eingeben!**
+Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen, z. B. 
+
+- *M~M~–M~J~* 
+- *M~2024–~M~2018~*   
+
+
+**Code für den entsprechenden Dash eingeben! Außerdem: Was ist mit den Zahlen?**
 
 ### Delta
-Nach Delta-Zeichen kein Leerzeichen und nur M kursiv "Delta * italic(M)"
+Nach Delta-Zeichen kein Leerzeichen setzen. 
+
+
+und nur M kursiv "Delta * italic(M)"
 
 ### Schriftgröße
-Schriftgröße kann nicht einheitlich festgelegt werden, weil sie von der Größe der finalen Abbildung abhängt. Einstellung über [`plotsettings_tablebarplot(font_size = ...)`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage). Die aktuellen Einstellungen können aus den jeweiligen Default-Lists ausgelesen werden, die ihr für eure Abbildung verwendet, z.B: 
+Die Schriftgröße kann nicht einheitlich festgelegt werden, weil sie von der Größe der finalen Abbildung abhängt. 
+Falls euer Plot die gleiche Größe hat wie eine der Vorlagen, könnt ihr einfach die Default list verwenden. 
+Hier orientiert ihr euch am besten an den Vorlagen, die in etwa die gleiche Größe haben wie eure Abbildung, und justiert dann 
+in:
+
+```{r}
+#| eval: false
+
+plotsettings_tablebarplot(font_size = ..., 
+                          header_font_size = ...
+                          )
+```
+
+Die Schriftgröße könnt ihr aus den Default lists auslesen, die ihr für eure Abbildung verwendet, z.B mit:
 
 ```{r}
 abb_6.6$font_size
 ```
-
-. Falls eure Abbildung eine andere Größe hat, als die entsprechende Vorlage, könnt ihr hierrüber die Schriftgröße so justieren, dass es gut aussieht und die Schrift ähnlich groß wie in den Vorlagen ist. Gleiches für [`plotsettings_tablebarplot(headers_font_size = ...)`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage) |
 
 ### Farben 
 Sind voreingestllt. Ansonsten hier die Liste:
@@ -70,9 +89,6 @@ Sind voreingestllt. Ansonsten hier die Liste:
 ### Bold/italic headers
 „Land“ und oberste Zeile(n) im Tabellenkopf fettgedruckt; Zeile mit M, SD etc. nicht fett, dafür kursiv
 [`plot_tablebarplot(headers = c("**Land**", "*M*", ...)`](https://nickhaf.github.io/eatPlot/reference/plot_tablebarplot.html). Besonderheit bei griechischen Bustaben: Da muss plotmath verwendet werden, deshalb: [`plot_tablebarplot(headers = c("bold(Land)", "Delta * italic(M)", ...), plotsetttings_tablebarplot(headers_ggtext = FALSE))`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage)  
-
-### Zeilenumbruch
-Zeilenumbruch in Ländernamen nur dann, wenn Zeile aus anderen Gründen breiter sind (z.B. weil je Land zwei Ergebniszeilen berichtet werden). Zeilenumbrüche für die Bundeslandnamen werden vor dem Plotten eingefügt, am einfachsten mit `my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)`|
 
 
 ## Export
@@ -90,6 +106,31 @@ Dabei bitte an den Vorlagen orientieren:
 
 
 ## Sonderzeichen
+
+## $\Delta$
+Ein String der Delta enthält kann in `eatPlot` auf zwei Arten erzeugt werden:
+
+### ggtext
+Uses the package [`ggtext`](https://wilkelab.org/ggtext/) for easy HTML support. 
+
+``
+
+### plotmath
+`"Delta"`
+
+Diese Einstellung **ist nötig**, wenn die Plots am Ende als PDF mit cmyk-Farbschema `abgespeichert` werden sollen.  
+Dafür muss 
+
+```{r}
+#| eval: FALSE
+
+plotsettings_tablebarplot(headers_ggtext = FALSE)
+```
+
+gesetzt werden! 
+
+
+
 
 
 ## Balkendiagramme
@@ -119,6 +160,18 @@ in schwarz (0/0/0/100)
 grau (), gestichelt (dashed)
 
 
+### Zeilenumbruch
+Zeilenumbrüche werden in Ländernamen nur dann gesetzt, wenn die Zeilen aus anderen Gründen breiter sind (z.B. weil je Land zwei Ergebniszeilen berichtet werden). 
+Zeilenumbrüche für die Bundeslandnamen werden vor dem Plotten eingefügt, am einfachsten mit:
+
+```{r}
+#| eval: FALSE
+
+my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)
+```
+
+
+
 ## Liniendiagramm
 -	Referenzband mit +/- 2 SE anzeigen
 -	Wenn SE einstellig, dann ein zusätzliches Leerzeichen vor der Klammer einfügen, sodass sowohl (SE) als auch der Wert der Mittelwertsdifferenz rechtsbündig zueinanderstehen
@@ -138,3 +191,6 @@ o	Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (p <
 o	Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
 -	Ausgefülltes Dreieck für Wert, der statistisch signifikant (p < .05) vom Wert der Gesamtpopulation abweicht
 -	Ausgefüllter Kreis für Wert, der statistisch nicht signifikant vom Wert der Gesamtpopulation abweicht
+
+
+

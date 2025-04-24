@@ -21,6 +21,7 @@ plot_single_lineplot <- function(plot_dat) {
       )
     },
     ggplot2::geom_line(
+      data = plot_dat$line_dat,
       ggplot2::aes(
         linetype = .data$line_sig
       ),

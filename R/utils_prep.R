@@ -44,7 +44,8 @@ prep_plot <- function(
   )
 
   check_no_columns(eatRep_dat$estimate, cols = "sig")
-  eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau, TRUE, FALSE)
+
+  eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau & !is.na(eatRep_dat$estimate$p), TRUE, FALSE)
 
   # Filtering ---------------------------------------------------------------
   eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]

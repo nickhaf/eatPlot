@@ -64,7 +64,7 @@ test_that("NAs are converted to empty strings", {
       column_est = "label_est",
       column_se = "label_se"
     ),
-    c("20 ()", "35<span style='white-space: pre;'> </span> (2.3)", " ()", "<span style='white-space: pre;'> </span> (0.6)")
+    c("20 ", "35<span style='white-space: pre;'> </span> (2.3)", " ", "<span style='white-space: pre;'> </span> (0.6)")
   )
 
   expect_equal(
@@ -73,7 +73,7 @@ test_that("NAs are converted to empty strings", {
       column_se = "label_se",
       column_sig_bold = "p_est",
     ),
-    c("**20** ()", "35<span style='white-space: pre;'> </span> (2.3)", " ()", "<span style='white-space: pre;'> </span> (0.6)")
+    c("**20** ", "35<span style='white-space: pre;'> </span> (2.3)", " ", "<span style='white-space: pre;'> </span> (0.6)")
   )
 
   expect_equal(
@@ -83,7 +83,7 @@ test_that("NAs are converted to empty strings", {
       column_sig_superscript = "p_est",
       sig_superscript_letter = "a"
     ),
-    c("20<sup>a</sup> ()", "35<span style='white-space: pre;'> </span> (2.3)", " ()", "<span style='white-space: pre;'> </span> (0.6)")
+    c("20<sup>a</sup> ", "35<span style='white-space: pre;'> </span> (2.3)", " ", "<span style='white-space: pre;'> </span> (0.6)")
   )
 })
 
