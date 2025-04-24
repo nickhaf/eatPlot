@@ -6,7 +6,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-```{r echo=false}
+```{r echo=FALSE}
 chunkhooks::hook_figure_unit("mm")
 ```
 

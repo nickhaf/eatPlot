@@ -67,7 +67,7 @@ Hier orientiert ihr euch am besten an den Vorlagen, die in etwa die gleiche Grö
 in:
 
 ```{r}
-#| eval: false
+#| eval: FALSE
 
 plotsettings_tablebarplot(font_size = ..., 
                           header_font_size = ...
