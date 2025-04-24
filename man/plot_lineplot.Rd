@@ -60,7 +60,7 @@ plot_lineplot(
 \item{plot_settings}{Named list constructed with \code{plotsettings_lineplot()}. Defaults to a list with all settings set to \code{0}. There are several predefined lists with optimized settings for different plots. See \code{plotsettings_lineplot()} for an overview.}
 }
 \value{
-\link{ggplot2} object.
+\code{ggplot2} object.
 }
 \description{
 Plot a lineplot.

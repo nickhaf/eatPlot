@@ -104,6 +104,8 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param axis_y_lims Numeric for the y-axis limits. Defaults to `NULL`, in which case the limits will be set automatically.
 #' @param background_lines Logical, indicating whether the whole group trend should be plotted in the background. Defaults to `TRUE`.
 #' @param background_line_colour Colour of the background line.
+#' @param background_facet_remove Logical, indicating whether the `background_facet` should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to `TRUE`.
+#' @param background_subgroup_remove Logical, indicating whether the `background_subgroup` should be removed. If not, it will be plotted as extra facet additionally to the background line. Defaults to `TRUE`.
 #' @param brace_label_gap_y Numeric for the size of the vertical gap between brace labels.
 #' @param brace_label_nudge_x Numeric. The brace labels will be shifted along the x-axis by this amount. Increase to shift the labels further to the right.
 #' @param brace_label_nudge_y Numeric. The brace labels will be shifted along the y-axis by this amount. Increase to let the labels start further below.

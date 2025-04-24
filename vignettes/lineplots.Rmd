@@ -230,10 +230,10 @@ dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("w
 
 state_levels <- levels(dat_lineplot_2$state_var)
 
-years_lines_list <- setNames(lapply(state_levels, function(x) list(c(2009, 2015), c(2015, 2022))), state_levels)
+years_lines_list <- stats::setNames(lapply(state_levels, function(x) list(c(2009, 2015), c(2015, 2022))), state_levels)
 
 years_lines_list$`Baden−Württemberg`[[1]] <- NULL
-
+years_lines_list$`Deutschland`[[2]] <- NULL
 
 lineplot_na <- plot_lineplot(
   dat_lineplot_2,
@@ -250,7 +250,7 @@ lineplot_na <- plot_lineplot(
   )
 )
 
-
+## Because Deuschland is also our background-facet, the years we removed there are also not plotted in the background. 
 
 ```
 

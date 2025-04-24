@@ -17,7 +17,7 @@
 #' @param background_subgroup Character string in the `subgroup_var` column that is assigned to the total group. It will not plotted as extra facet, but in the background line. Defaults to `NULL`, which should be kept if you only want to plot one group (without a total group).
 #' @param box_facet Character vector, containing strings from the `seperate_plot_var`-column, that should get a box drawn around them.
 #' @param plot_settings Named list constructed with `plotsettings_lineplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_lineplot()` for an overview.
-#' @return [ggplot2] object.
+#' @return `ggplot2` object.
 #' @export
 #'
 #' @examples # tbd
@@ -65,7 +65,7 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = line_se, new = "line_se")
 
   if(is.null(names(years_lines))){
-    years_lines <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_lines), levels(eatPlot_dat$facet_var))
+    years_lines <- stats::setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_lines), levels(eatPlot_dat$facet_var))
   }else{
     if(length(years_lines) != length(levels(eatPlot_dat$facet_var))){
       stop("Length of 'years_lines' does not match number of facets. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
@@ -77,7 +77,7 @@ plot_lineplot <- function(eatPlot_dat,
   }
 
   if(is.null(names(years_braces))){
-    years_braces <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_braces), levels(eatPlot_dat$facet_var))
+    years_braces <- stats::setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_braces), levels(eatPlot_dat$facet_var))
   }else{
     if(length(years_braces) != length(levels(eatPlot_dat$facet_var))){
       stop("Length of 'years_braces' does not match number of facets. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
@@ -96,7 +96,6 @@ plot_lineplot <- function(eatPlot_dat,
 
   # Prepare Subsets ---------------------------------------------------------
   ## Hier auch subsetten wenn background_subgroup = NULL
-
   if (!is.null(background_facet) & !is.null(background_subgroup)) {
     background_line_dat <- eatPlot_dat[eatPlot_dat$facet_var == background_facet & eatPlot_dat$subgroup_var == background_subgroup, ]
   } else if (!is.null(background_facet) & is.null(background_subgroup)) {
@@ -107,7 +106,12 @@ plot_lineplot <- function(eatPlot_dat,
     background_line_dat <- data.frame()
   }
 
-  # background_line_dat <- filter_years(background_line_dat, years = years_lines)
+  ## Nimm hier years lines von der Bakcground facet.
+
+  background_line_dat <- do.call(rbind, lapply(levels(background_line_dat$facet_var), function(x){
+    filter_years(background_line_dat[background_line_dat$facet_var == x, ], years = years_lines[[x]])
+  }))
+
 
   line_dat <- eatPlot_dat
 
