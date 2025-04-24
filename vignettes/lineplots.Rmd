@@ -6,6 +6,9 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+```{r echo=false}
+chunkhooks::hook_figure_unit("mm")
+```
 
 This vignette shows you how to plot lineplots from `eatRep` data. The workflow is optimized for Bildungstrend-graphs, but can be expanded for plotting other `eatRep` data as well. 
 
@@ -41,7 +44,9 @@ dat_lineplot_1$subgroup_var <- as.factor(dat_lineplot_1$subgroup_var)
 
 And then we can already plot:
 
-```{r}
+```{r }
+
+
 lineplot_1 <- plot_lineplot(dat_lineplot_1,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
@@ -58,7 +63,7 @@ lineplot_1 <- plot_lineplot(dat_lineplot_1,
 save_plot(lineplot_1, filename = "C:/Users/hafiznij/Downloads/lineplot_1_group.pdf", width = 160, height = 185, , scaling = 1)
 ```
 
-```{r}
+```{r fig.width = 160, fig.height = 185}
 #| echo: false
 lineplot_1
 ```
@@ -92,12 +97,12 @@ lineplot_2 <- plot_lineplot(
 )
 ```
 
-```{r}
+```{r }
 #| eval: false
 save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf", width = 160, height = 185, scaling = 1)
 ```
 
-```{r}
+```{r  fig.width = 160, fig.height = 185}
 lineplot_2
 ```
 
@@ -155,8 +160,7 @@ save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_g
 ```
 
 
-```{r}
-#| echo: false
+```{r  fig.width = 108, fig.height = 185}
 lineplot_germany
 ```
 
@@ -192,9 +196,8 @@ save_plot(lineplot_germany_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2
 ```
 
 
-```{r}
-#| echo: false
-lineplot_germany
+```{r  fig.width = 160, fig.height = 123.3333}
+lineplot_germany_2
 ```
 
 
@@ -259,7 +262,7 @@ lineplot_na <- plot_lineplot(
 save_plot(lineplot_na, filename = "C:/Users/hafiznij/Downloads/lineplot_na.pdf", width = 160, height = 185, scaling = 1)
 ```
 
-```{r}
+```{r fig.width = 160, fig.height = 185}
 lineplot_na
 ```
 
@@ -299,7 +302,7 @@ lineplot_2_long <- plot_lineplot(
 save_plot(lineplot_2_long, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_long.pdf", width = 160, height = 185, scaling = 1)
 ```
 
-```{r}
+```{r fig.width = 160, fig.height = 185}
 lineplot_2_long
 ```
 
