@@ -7,10 +7,10 @@
 save_plot(
   p,
   filename,
-  width = 210,
-  height = 297,
+  width = 160,
+  height = 185,
   colormodel = "cmyk",
-  scaling = 0.9,
+  scaling = 1,
   ...
 )
 }
@@ -21,11 +21,11 @@ save_plot(
 
 \item{width}{Width of the new plot file in mm. Defaults to \code{160}.}
 
-\item{height}{Height of the new plot file in mm. Defaults to \code{226.2}}
+\item{height}{Height of the new plot file in mm. Defaults to \code{185}}
 
 \item{colormodel}{Colormodel for saving the plot. See \code{\link[grDevices:pdf]{grDevices::pdf()}} for more information. Defaults to "cmyk".}
 
-\item{scaling}{Scaling parameter for changing height in widht relationally.}
+\item{scaling}{Scaling parameter for changing height in widht relationally. Defaults to \code{1}.}
 
 \item{...}{Further arguments passed to \code{\link[grDevices:pdf]{grDevices::pdf()}}.}
 }
