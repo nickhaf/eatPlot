@@ -6,6 +6,10 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+```{r echo=false}
+chunkhooks::hook_figure_unit("mm")
+```
+
 
 This vignette shows you how to plot tableplots from `eatRep` data. 
 The workflow is optimized for Bildungstrend-graphs, but can be expanded for plotting other `eatRep` data as well. 
@@ -137,7 +141,7 @@ Finally we can save the plot:
 save_plot(tableplot_6.5, filename = "C:/Users/hafiznij/Downloads/abb6.5.pdf", width = 160, height = 90, scaling = 1)
 ```
 
-```{r}
+```{r fig.width = 160, fig.height = 90}
 tableplot_6.5
 ```
 
@@ -315,7 +319,7 @@ save_plot(tableplot_6.6, filename = "C:/Users/hafiznij/Downloads/abb_6.6.pdf", w
 ```
 
 
-```{r plot.width = 15}
+```{r fig.width = 235, fig.height = 130}
 #| echo: false
 
 tableplot_6.6
@@ -489,7 +493,7 @@ save_plot(tableplot_8.4,
 ```
 
 
-```{r}
+```{r fig.width = 160, fig.height = 100}
 tableplot_8.4
 ```
 
