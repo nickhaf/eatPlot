@@ -42,7 +42,8 @@ plot_points <- function(plot_dat) {
         direction = "y"
       )
     } else {
-    ggplot2::geom_text(
+
+      ggplot2::geom_text(
       data = plot_label,
       ggplot2::aes(
         x = .data$x_coords,

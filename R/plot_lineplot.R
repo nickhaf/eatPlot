@@ -52,7 +52,6 @@ plot_lineplot <- function(eatPlot_dat,
   }
 
   # Rename/Build needed columns ---------------------------------------------
-  years_list <- prep_years_list(years_lines, years_braces)
   # plot_dat <- equalize_line_length(plot_dat, plot_settings)
   eatPlot_dat <- eatPlot_dat |>
     build_column(old = point_est, new = "point_est") |>
@@ -65,9 +64,8 @@ plot_lineplot <- function(eatPlot_dat,
     build_column(old = facet_var, new = "facet_var") |>
     build_column(old = line_se, new = "line_se")
 
-
   if(is.null(names(years_lines))){
-    years_lines <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_lines), state_levels)
+    years_lines <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_lines), levels(eatPlot_dat$facet_var))
   }else{
     if(length(years_lines) != length(levels(eatPlot_dat$facet_var))){
       stop("Length of 'years_lines' does not match number of facets. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
@@ -79,7 +77,7 @@ plot_lineplot <- function(eatPlot_dat,
   }
 
   if(is.null(names(years_braces))){
-    years_braces <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_braces), state_levels)
+    years_braces <- setNames(lapply(levels(eatPlot_dat$facet_var), function(x) years_braces), levels(eatPlot_dat$facet_var))
   }else{
     if(length(years_braces) != length(levels(eatPlot_dat$facet_var))){
       stop("Length of 'years_braces' does not match number of facets. Please make sure, you have one entry for each facet, or provide unnamed entries that are used for all facets.")
@@ -90,7 +88,7 @@ plot_lineplot <- function(eatPlot_dat,
     }
   }
 
-
+  years_list <- prep_years_list(years_lines, years_braces)
 
   # Calculate Coordinates ---------------------------------------------------
   plot_lims <- calc_plot_lims(eatPlot_dat, years_list, background_subgroup, plot_settings)
@@ -309,6 +307,7 @@ extract_gsub_values <- function(plot_dat) {
 
 calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_settings) {
   check_columns(plot_dat, c("facet_var", "point_est", "year"))
+
   x_value_range <- get_year_range(years_list)
 
   ## The following coordinates are needed:
@@ -362,19 +361,23 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
 
 prep_years <- function(years) {
 
-  # Flatten the nested list into a data frame
   years_df <- do.call(rbind, lapply(names(years), function(region) {
-    ranges <- years_lines_list[[region]]
+
+    if(length(years[[region]]) == 0){
+      return(data.frame(country = region, year_start = NA, year_end = NA))
+    }else{
+
+    ranges <- years[[region]]
     data.frame(
       country = region,
-      start_year = sapply(ranges, `[[`, 1),
-      end_year = sapply(ranges, `[[`, 2),
+      year_start = sapply(ranges, `[[`, 1),
+      year_end = sapply(ranges, `[[`, 2),
       stringsAsFactors = FALSE
     )
+    }
   }))
-
   if (ncol(years_df) == 0) {
-    years_df <- data.frame("year_start" = numeric(), "year_end" = numeric())
+    years_df <- data.frame("country" = character(), "year_start" = numeric(), "year_end" = numeric())
   }
 
   return(years_df)
@@ -395,7 +398,7 @@ get_subgroup_levels <- function(plot_dat, background_subgroup) {
 }
 
 get_year_range <- function(years_list) {
-  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df[, c("start_year", "end_year")]))))
-  x_range <- range(unique_years)
+  unique_years <- unique(unlist(lapply(years_list, function(df) unlist(df[, c("year_start", "year_end")]))))
+  x_range <- range(unique_years, na.rm = TRUE)
   return(x_range)
 }

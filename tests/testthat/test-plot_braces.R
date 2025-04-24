@@ -1,6 +1,6 @@
 years_list <- prep_years_list(
-  years_lines = list(c(2009, 2015), c(2015, 2022)),
-  years_braces = list(c(2009, 2015), c(2009, 2022))
+  years_lines = list(Berlin = list(c(2009, 2015), c(2015, 2022))),
+  years_braces = list(Berlin = list(c(2009, 2015), c(2009, 2022)))
 )
 plot_dat <- data.frame(
   facet_var = rep("Berlin", 12),

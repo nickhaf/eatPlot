@@ -203,7 +203,7 @@ lineplot_germany
 
 
 
-```{r lineplot_states} 
+```{r lineplot_na} 
 dat_lineplot_2 <- prep_lineplot(
   trend_gender[[1]],
   subgroup_var = "Kgender"
@@ -235,7 +235,7 @@ years_lines_list <- setNames(lapply(state_levels, function(x) list(c(2009, 2015)
 years_lines_list$`Baden−Württemberg`[[1]] <- NULL
 
 
-lineplot_2 <- plot_lineplot(
+lineplot_na <- plot_lineplot(
   dat_lineplot_2,
   years_lines = years_lines_list,
   years_braces = years_lines_list,
@@ -256,9 +256,9 @@ lineplot_2 <- plot_lineplot(
 
 ```{r}
 #| eval: false
-save_plot(lineplot_2, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf", width = 160, height = 185, scaling = 1)
+save_plot(lineplot_na, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups.pdf", width = 160, height = 185, scaling = 1)
 ```
 
 ```{r}
-lineplot_2
+lineplot_na
 ```

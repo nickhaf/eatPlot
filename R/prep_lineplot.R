@@ -107,6 +107,8 @@ build_plot_dat <- function(eatRep_dat, facet_var, total_facet, total_subgroup) {
 }
 
 prep_years_list <- function(years_lines, years_braces) {
+
+
   years_list <- lapply(list(years_lines, years_braces), prep_years)
 
 

@@ -23,8 +23,8 @@ calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settin
   ## Check if any braces overlap. If that's the case, they have to plotted below each other
 
   overlap <- calc_overlap(
-    year_start = years_braces$start_year,
-    year_end = years_braces$end_year
+    year_start = years_braces$year_start,
+    year_end = years_braces$year_end
   )
 
 
@@ -54,7 +54,6 @@ calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settin
 
 
   ## For each brace, save where it should be indented, and where it's position relative to the other braces is
-  browser()
   brace_positions <- calc_brace_position(years_list, overlap)
 
   if ("lower_brace_y_a" %in% names(starting_points)) { # in this case we have an overlap of braces
@@ -97,12 +96,11 @@ calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settin
 calc_brace_position <- function(years_list, overlap) {
   ## Don't do this stuff df wise, only once for all year combinations.
   ## I only need one coordinate for each possible brace, that's it!
-
   years_braces_df <- years_list$years_braces
   ## Calculate the range between all year combinations:
-  years_braces_df$range <- apply(years_braces_df, 1, function(x) {
-    diff(range(x))
-  })
+
+  years_braces_df$range <- years_braces_df$year_end - years_braces_df$year_start
+
 
   if (overlap == TRUE) {
     if (all(years_braces_df$range == years_braces_df$range[1])) { ## All braces have the same range
@@ -120,6 +118,7 @@ calc_brace_position <- function(years_list, overlap) {
       )
     } else {
       # The smaller brace won't get any indention.
+
       years_braces_df$brace_position_x <- ifelse(years_braces_df$range == max(years_braces_df$range),
                                                  yes = ifelse(years_braces_df$year_start == min(years_braces_df$year_start),
                                                               yes = "left",
@@ -166,7 +165,6 @@ calc_brace_position <- function(years_list, overlap) {
 
 # Plot_points -------------------------------------------------------------
 calc_x_nudge <- function(dat, nudge_x, plot_settings) {
-
   x_value_range <- diff(dat$plot_lims$x_value_range)
   min_max_trend <- get_min_max(dat$dat_final)
 
