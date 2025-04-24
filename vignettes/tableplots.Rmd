@@ -118,10 +118,10 @@ tableplot_6.5 <- plot_tablebarplot(
   ),
   headers = list(
     "**Land**",
-    "*M<sub>M</sub>-M<sub>J</sub>*",
+    "*M*<sub>M</sub>-*M*<sub>J</sub>",
     "(*SE*)",
     "*d*",
-    "*M<sub>M</sub>-M<sub>J</sub>*",
+    "*M*<sub>M</sub>-*M*<sub>J</sub>",
     "(*SE*)",
     "*d*",
     "**Vorsprung zugunsten der<br>Mädchen**"
@@ -214,7 +214,7 @@ p_1 <- plot_tablebarplot(
     "**Differenz 2015-2009**" = c(10, 13)
   ),
   columns_table_se = list(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, "se_mean_comp_trend_sameFacet_sameSubgroup_2009_2015", NULL),
-  headers = list("**Land**", " ", "*M*", "*SD*", "*M*", "*SD*", "*M*", "*SD*", "", "*M<sub>2015</sub>-<br>M<sub>2009</sub>* ", "(*SE*)", "*d*", " "),
+  headers = list("**Land**", " ", "*M*", "*SD*", "*M*", "*SD*", "*M*", "*SD*", "", "*M*<sub>2015</sub>-<br>*M*<sub>2009</sub> ", "(*SE*)", "*d*", " "),
   columns_table = c(
     "state_var",
     "subgroup_var",
@@ -268,7 +268,7 @@ p_2 <- plot_tablebarplot(
     "**Differenz 2022-2015**" = c(1, 4)
   ),
   headers = list(
-    "*M<sub>2022</sub>-<br>M<sub>2015</sub>* ",
+    "*M*<sub>2022</sub>-<br>*M*<sub>2015</sub> ",
     "(*SE*)",
     "*d*",
     " "
