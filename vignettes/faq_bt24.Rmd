@@ -27,7 +27,7 @@ Die meisten Punkte sind bereits in den sogenannten [Default lists](https://nickh
 ## Allgemeine Richtlinien
 
 ### Ausrichtung von Kennwerten 
-Ausrichtung erfolgt am Dezimalpunkt sowie rechtsbündig. 
+Ausrichtung von Zahlen erfolgt am Dezimalpunkt sowie rechtsbündig. 
 
 In `eatPlot` kann das so erreicht werden: 
 
@@ -45,26 +45,46 @@ plotsettings_tablebarplot(columns_nudge_x = ... )
 ```
 
 
-### Wich dash???
-Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen, z. B. 
+### Darstellung von Überschriften
+Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen. Subscripts werden nicht kursiv dargestellt:
 
-- *M~M~–M~J~* 
-- *M~2024–~M~2018~*   
+- *M*~M~–*M*~J~ 
+- *M*~2024–~*M*~2018~
 
+Nach $\Delta$ wird ebenfalls kein Leerzeichen gesetzt, $\Delta$ wird auch nicht kursiv dargestellt:
 
-**Code für den entsprechenden Dash eingeben! Außerdem: Was ist mit den Zahlen?**
-
-### Delta
-Nach Delta-Zeichen kein Leerzeichen setzen. 
+- `"Delta * italic(M)"`
 
 
-und nur M kursiv "Delta * italic(M)"
+„Land“ und die oberen Zeile(n) im Tabellenkopf (`column_spanners` in `eatPlot` genannt) werden fettgedruckt; die Zeile mit M, SD etc. wird nicht fettgedruckt, dafür aber kursiv:
+
+```{r}
+#|eval: FALSE
+
+plot_tablebarplot(
+  headers = c("**Land**", "*M*", "*SD*", "*N*", "*p*"),
+  column_spanners =  column_spanners = list(
+    "**2009**" = c(2, 3),
+    "**2015**" = c(4, 5))
+)
+```
+
+Falls griechische Buchstaben in den Überschriften verwendet werden, müssen diese in `plotmath`-Notation angegeben werden. 
+Dadurch ändert sich die gesamte Syntax:
+
+```{r}
+plot_tablebarplot(headers = c("bold(Land)", "italic(M)", "Delta * italic(M)"), 
+                  plotsetttings_tablebarplot(headers_ggtext = FALSE) ## Muss für plotmath-Notation gesetzt werden 
+                  )
+```
+
+Syntax kann in der Hilfe abgerufen werden: `?plotmath`
+
 
 ### Schriftgröße
 Die Schriftgröße kann nicht einheitlich festgelegt werden, weil sie von der Größe der finalen Abbildung abhängt. 
-Falls euer Plot die gleiche Größe hat wie eine der Vorlagen, könnt ihr einfach die Default list verwenden. 
-Hier orientiert ihr euch am besten an den Vorlagen, die in etwa die gleiche Größe haben wie eure Abbildung, und justiert dann 
-in:
+Falls euer Plot die gleiche Größe hat wie eine der Vorlagen, könnt ihr einfach die Default-list verwenden. 
+Ansonsten orientiert ihr euch am besten an den Vorlagen, die in etwa die gleiche Größe haben wie eure Abbildung, und justiert die Schriftgröße dann:
 
 ```{r}
 #| eval: FALSE
@@ -81,28 +101,23 @@ abb_6.6$font_size
 ```
 
 ### Farben 
-Sind voreingestllt. Ansonsten hier die Liste:
-
-
-
-
-### Bold/italic headers
-„Land“ und oberste Zeile(n) im Tabellenkopf fettgedruckt; Zeile mit M, SD etc. nicht fett, dafür kursiv
-[`plot_tablebarplot(headers = c("**Land**", "*M*", ...)`](https://nickhaf.github.io/eatPlot/reference/plot_tablebarplot.html). Besonderheit bei griechischen Bustaben: Da muss plotmath verwendet werden, deshalb: [`plot_tablebarplot(headers = c("bold(Land)", "Delta * italic(M)", ...), plotsetttings_tablebarplot(headers_ggtext = FALSE))`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage)  
+Sind eigentlich voreingestellt. 
+In den Kapiteln zu den einzelnen Abbildungstypen gibt es noch einmal Zusammenfassungen. 
 
 
 ## Export
 ### Exporttyp
-Exportieren als PDF und im Farbprofil cmyk. Voreingestellt in `save_plot()`
+Exportieren als PDF und im Farbprofil cmyk. 
+Voreingestellt in `save_plot()`
 
 ### Exportmaße
 
 Die Exportmaße können in `save_plot(height = ..., widht = ...)` eingestellt werden. 
 Dabei bitte an den Vorlagen orientieren: 
 
-- Ganzseitige Abbildung/Tabelle im Hochformat: 
-- Ganzseitige Abbildung/Tabelle im Querformat: z.B. [Linienplot für 2 Gruppen](https://nickhaf.github.io/eatPlot/articles/lineplots.html#lineplot-for-two-groups)
-- Teilseitige Abbildung/Tabelle im Hochformat:
+- Ganzseitige Abbildung/Tabelle im Hochformat: z.B. [Linienplot](https://nickhaf.github.io/eatPlot/articles/lineplots.html#lineplot-for-two-groups)
+- Ganzseitige Abbildung/Tabelle im Querformat: z.B. [große Tabelle](https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-6)
+- Teilseitige Abbildung/Tabelle im Hochformat: z.B. [kleiner Tabelle](https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-5)
 
 
 ## Sonderzeichen
@@ -111,15 +126,11 @@ Dabei bitte an den Vorlagen orientieren:
 Ein String der Delta enthält kann in `eatPlot` auf zwei Arten erzeugt werden:
 
 ### ggtext
-Uses the package [`ggtext`](https://wilkelab.org/ggtext/) for easy HTML support. 
-
-``
+Nutzt das Paket [`ggtext`](https://wilkelab.org/ggtext/) für HTML support.  
+Sonderzeichen können leider nicht immer in PDF mit cmyk-Farbschema exportiert werden, weshalb dann `plotmath` verwendet werden muss: 
 
 ### plotmath
 `"Delta"`
-
-Diese Einstellung **ist nötig**, wenn die Plots am Ende als PDF mit cmyk-Farbschema `abgespeichert` werden sollen.  
-Dafür muss 
 
 ```{r}
 #| eval: FALSE
@@ -136,28 +147,66 @@ gesetzt werden!
 ## Balkendiagramme
 
 ### Balkenfüllung
--	Statistisch signifikante Werte (p < .05) mit ausgefüllten Balken darstellen
-- Statistisch nicht signifikante Werte mit schraffierten Balken darstellen (Schraffur von oben links nach unten rechts)
-- Größe des Balkenmusters. 
--	Balkenfarben
--	Erste Gruppe bzw. erster Kompetenzbereich in dunklem türkis (Farbcode)
--	Zweite Gruppe bzw. zweiter Kompetenzbereich in mittlerem türkis (Farbcode)
+-	Statistisch signifikante Werte (p < .05) werden mit **ausgefüllten** Balken dargestellt.
+- Statistisch nicht signifikante Werte werden mit schraffierten Balken dargestellt (Schraffur von oben links nach unten rechts).
+- Größe des Balkenmusters muss manuell nachjustiert werden, da es wieder von der Größe der Abbildung beim Abspeichern abhängt. Hier die Größe bitte ungefähr den Vorlagen anpassen, und auch darauf achten, dass die  Muster vor allem innerhalb eines Plots gleich groß sind. Bei zusammengesetzten Plots aus mehreren Balkendiagrammen kann die Mustergröße sich leicht unterscheiden, selbst wenn man die selben Werte angibt. Hier nochmal manuell nachjustieren, bis es einheitlich aussieht.  
+
+
+### Balkenfarbe
+-	Erste Gruppe bzw. erster Kompetenzbereich in dunklem türkis (`cmyk(85, 0, 43, 17)`)
+-	Zweite Gruppe bzw. zweiter Kompetenzbereich in mittlerem türkis (`cmyk(40, 0, 20, 8)`)
+- Dritte Gruppe bzw. dritter Kompetenzbereich in hellem türkis (`cmyk(7, 0, 4, 1)`)
+
+
+Farben sind voreingestllt, können aber so gesetzt werden:
+
+```{r}
+#| eval: FALSE
+
+plotsettings_tablebarplot(
+  bar_fill_colour = c("Gruppe 1" = cmyk(85, 0, 43, 17), 
+                      "Gruppe 2" = cmyk(40, 0, 20, 8))
+)
+```
+
 
 
 ### Farben
 
 
 #### Farben zur Zeilenorientierung
-Farbliche Hinterlegungen zur Zeilenorientierung (wechselnd weiß / türkis) wird wie im Tabellenteil hinter dem Balkendiagramm weitergeführt
+Farbliche Hinterlegungen zur Zeilenorientierung (wechselnd weiß / türkis) wird wie im Tabellenteil hinter dem Balkendiagramm weitergeführt. Die Deutschland-Zeile wird grau dargestellt:
+
+```{r}
+#| eval: FALSE
+
+plotsettings_tablebarplot(
+   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3))
+)
+```
+
 
 #### x-Achse unterhalb der Balken 
-in schwarz (0/0/0/100)
+In schwarz `cmyk(0, 0, 0, 100)`.
+Bereits voreingestellt.
 
 #### Nulllinie
-in schwarz (0/0/0/100)
+In schwarz `cmyk(0, 0, 0, 100)`. 
+Bereits voreingestellt.
 
 #### Hilfslinien vertikal
-grau (), gestichelt (dashed)
+Grau und gestichelt. 
+Ist bereits vorgeingestellt, könnte aber so geändert werden:
+
+```{r}
+#| eval: FALSE
+
+plotsettings_tablebarplot(
+  bar_background_lines_colour = cmyk(0, 0, 0, 60),
+  bar_background_lines = "scale_breaks",
+  bar_background_lines_linetype = "dashed"
+)
+```
 
 
 ### Zeilenumbruch
@@ -173,24 +222,60 @@ my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)
 
 
 ## Liniendiagramm
--	Referenzband mit +/- 2 SE anzeigen
--	Wenn SE einstellig, dann ein zusätzliches Leerzeichen vor der Klammer einfügen, sodass sowohl (SE) als auch der Wert der Mittelwertsdifferenz rechtsbündig zueinanderstehen
--	die Spitze der geschwiffenen Klammer auf das erste Leerzeichen zwischen M und (SE) ausrichten
--	Farbliche Hinterlegung der Jahre in dunklem türkis (Farbcode: )
--	Skala links von den Linien in schwarz (0/0/0/100)
--	Geschwiffene Klammern in schwarz (0/0/0/100)
--	Linien für Gruppen
-o	erste Gruppe schwarz (0/0/0/100)
-o	zweite Gruppe dunkelgrau (0/0/0/60)
-o	dritte Gruppe mittelgrau (0/0/0/40)
--	Referenzband in hellem türkis (7/0/4/1)
--	Statistisch signifikante Veränderung (p < .05) mit durchgezogener Linie darstellen
+
+### Referenzband
+-	Das Referenzband wird mit `+/- 2 SE` angezeigt. Ist bereits voreingestellt. 
+
+### Label
+
+-	Wenn SE einstellig ist, dann wird automatisch ein zusätzliches Leerzeichen vor der Klammer eingefügt, sodass sowohl (SE) als auch der Wert der Mittelwertsdifferenz rechtsbündig zueinanderstehen
+-	Die Spitze der geschwiffenen Klammer zeigt auf das erste Leerzeichen zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not nachjustiert werden:
+
+```{r}
+
+plotsettings_lineplot(
+  brace_label_nudge_x = 0.1
+)
+```
+
+
+### Farben
+Die Farben sind alle voreingestellt, die Farbcodes können hier ausgelesen werden:
+
+```{r}
+lineplot_4x4
+```
+
+
+### Signifikanzen
+-	Statistisch signifikante Veränderung (p < .05) mit durchgezogener Linie darstellen.
 -	Statistisch nicht signifikante Veränderung mit gestrichelter Linie darstellen
--	Hochgestelltes a
-o	Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen in Deutschland insgesamt
-o	Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
+
+Ist bereits vorgeingestellt, kann zur Not so geändert werden:
+
+```{r}
+plotsettings_lineplot(line_type = c(
+    "TRUE" = "solid",
+    "FALSE" = "dashed"
+  ))
+```
+
+
+-	Hochgestelltes `a`:
+  - Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen in Deutschland insgesamt
+  -	Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
 -	Ausgefülltes Dreieck für Wert, der statistisch signifikant (p < .05) vom Wert der Gesamtpopulation abweicht
 -	Ausgefüllter Kreis für Wert, der statistisch nicht signifikant vom Wert der Gesamtpopulation abweicht
 
+Ist bereits voreingestellt, kann zur Not so geändert werden:
+
+```{r}
+plotsettings_lineplot(
+   point_shapes = c(
+    "TRUE" = 17,
+    "FALSE" = 16
+  )
+)
+```
 
 

@@ -16,7 +16,8 @@ lineplot_4x4 <- plotsettings_lineplot(
   equal_trend_line_length = TRUE,
   subgroup_colours = c(
     cmyk(0, 0, 0, 100),
-    cmyk(0, 0, 0, 60)
+    cmyk(0, 0, 0, 60),
+    cmyk(0, 0, 0, 40)
   ),
   line_type = c(
     "TRUE" = "solid",
