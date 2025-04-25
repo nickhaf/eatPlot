@@ -46,15 +46,3 @@ lineplot_4x4 <- plotsettings_lineplot(
 
 usethis::use_data(lineplot_4x4, overwrite = TRUE)
 
-
-
-lineplot_4x4_3groups <- plotsettings_lineplot(
-  subgroup_colours = c(
-    cmyk(0, 0, 0, 100),
-    cmyk(0, 0, 0, 60),
-    cmyk(0, 0, 0, 40)
-  ),
-  default_list = lineplot_4x4
-)
-
-usethis::use_data(lineplot_4x4_3groups, overwrite = TRUE)
