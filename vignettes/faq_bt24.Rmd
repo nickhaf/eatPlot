@@ -59,7 +59,7 @@ Nach $\Delta$ wird ebenfalls kein Leerzeichen gesetzt, $\Delta$ wird auch nicht 
 „Land“ und die oberen Zeile(n) im Tabellenkopf (`column_spanners` in `eatPlot` genannt) werden fettgedruckt; die Zeile mit M, SD etc. wird nicht fettgedruckt, dafür aber kursiv:
 
 ```{r}
-#|eval: FALSE
+#| eval: FALSE
 
 plot_tablebarplot(
   headers = c("**Land**", "*M*", "*SD*", "*N*", "*p*"),
@@ -73,6 +73,8 @@ Falls griechische Buchstaben in den Überschriften verwendet werden, müssen die
 Dadurch ändert sich die gesamte Syntax:
 
 ```{r}
+#| eval: FALSE
+
 plot_tablebarplot(headers = c("bold(Land)", "italic(M)", "Delta * italic(M)"), 
                   plotsetttings_tablebarplot(headers_ggtext = FALSE) ## Muss für plotmath-Notation gesetzt werden 
                   )
@@ -232,6 +234,7 @@ my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)
 -	Die Spitze der geschwiffenen Klammer zeigt auf das erste Leerzeichen zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not nachjustiert werden:
 
 ```{r}
+#| eval: FALSE
 
 plotsettings_lineplot(
   brace_label_nudge_x = 0.1
@@ -254,6 +257,8 @@ lineplot_4x4
 Ist bereits vorgeingestellt, kann zur Not so geändert werden:
 
 ```{r}
+#| eval: FALSE
+
 plotsettings_lineplot(line_type = c(
     "TRUE" = "solid",
     "FALSE" = "dashed"
@@ -270,6 +275,8 @@ plotsettings_lineplot(line_type = c(
 Ist bereits voreingestellt, kann zur Not so geändert werden:
 
 ```{r}
+#| eval: FALSE
+
 plotsettings_lineplot(
    point_shapes = c(
     "TRUE" = 17,
