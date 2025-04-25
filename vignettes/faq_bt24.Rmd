@@ -232,6 +232,7 @@ my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)
 -	Die Spitze der geschwiffenen Klammer zeigt auf das erste Leerzeichen zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not nachjustiert werden:
 
 ```{r}
+#| eval: FALSE
 
 plotsettings_lineplot(
   brace_label_nudge_x = 0.1
@@ -254,6 +255,8 @@ lineplot_4x4
 Ist bereits vorgeingestellt, kann zur Not so geändert werden:
 
 ```{r}
+#| eval: FALSE
+
 plotsettings_lineplot(line_type = c(
     "TRUE" = "solid",
     "FALSE" = "dashed"
@@ -270,6 +273,8 @@ plotsettings_lineplot(line_type = c(
 Ist bereits voreingestellt, kann zur Not so geändert werden:
 
 ```{r}
+#| eval: FALSE
+
 plotsettings_lineplot(
    point_shapes = c(
     "TRUE" = 17,
