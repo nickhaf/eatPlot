@@ -92,7 +92,8 @@ lists</a> umgesetzt, die in <code><a href="../reference/plotsettings_lineplot.ht
 <div class="section level4">
 <h4 id="ausrichtung-von-kennwerten">Ausrichtung von Kennwerten<a class="anchor" aria-label="anchor" href="#ausrichtung-von-kennwerten"></a>
 </h4>
-<p>Ausrichtung erfolgt am Dezimalpunkt sowie rechtsbündig.</p>
+<p>Ausrichtung von Zahlen erfolgt am Dezimalpunkt sowie
+rechtsbündig.</p>
 <p>In <code>eatPlot</code> kann das so erreicht werden:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>columns_alignment <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -102,54 +103,69 @@ so zu rücken, dass es stimmig aussieht:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>columns_nudge_x <span class="op">=</span> <span class="va">...</span> <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="wich-dash">Wich dash???<a class="anchor" aria-label="anchor" href="#wich-dash"></a>
+<h4 id="darstellung-von-überschriften">Darstellung von Überschriften<a class="anchor" aria-label="anchor" href="#darstellung-von-%C3%BCberschriften"></a>
 </h4>
-<p>Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen,
-z. B.</p>
+<p>Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen.
+Subscripts werden nicht kursiv dargestellt:</p>
 <ul>
-<li><em>M<sub>M</sub>–M<sub>J</sub></em></li>
-<li><em>M<sub>2024–</sub>M<sub>2018</sub></em></li>
+<li>
+<em>M</em><sub>M</sub>–<em>M</em><sub>J</sub>
+</li>
+<li>
+<em>M</em><sub>2024–</sub><em>M</em><sub>2018</sub>
+</li>
 </ul>
-<p><strong>Code für den entsprechenden Dash eingeben! Außerdem: Was ist
-mit den Zahlen?</strong></p>
-</div>
-<div class="section level4">
-<h4 id="delta">Delta<a class="anchor" aria-label="anchor" href="#delta"></a>
-</h4>
-<p>Nach Delta-Zeichen kein Leerzeichen setzen.</p>
-<p>und nur M kursiv “Delta * italic(M)”</p>
+<p>Nach
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math>
+wird ebenfalls kein Leerzeichen gesetzt,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math>
+wird auch nicht kursiv dargestellt:</p>
+<ul>
+<li><code>"Delta * italic(M)"</code></li>
+</ul>
+<p>„Land“ und die oberen Zeile(n) im Tabellenkopf
+(<code>column_spanners</code> in <code>eatPlot</code> genannt) werden
+fettgedruckt; die Zeile mit M, SD etc. wird nicht fettgedruckt, dafür
+aber kursiv:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">plot_tablebarplot</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="at">headers =</span> <span class="fu">c</span>(<span class="st">"**Land**"</span>, <span class="st">"*M*"</span>, <span class="st">"*SD*"</span>, <span class="st">"*N*"</span>, <span class="st">"*p*"</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="at">column_spanners =</span>  <span class="at">column_spanners =</span> <span class="fu">list</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="st">"**2009**"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="st">"**2015**"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>)</span></code></pre></div>
+<p>Falls griechische Buchstaben in den Überschriften verwendet werden,
+müssen diese in <code>plotmath</code>-Notation angegeben werden. Dadurch
+ändert sich die gesamte Syntax:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span>headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bold(Land)"</span>, <span class="st">"italic(M)"</span>, <span class="st">"Delta * italic(M)"</span><span class="op">)</span>, </span>
+<span>                  <span class="fu">plotsetttings_tablebarplot</span><span class="op">(</span>headers_ggtext <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co">## Muss für plotmath-Notation gesetzt werden </span></span>
+<span>                  <span class="op">)</span></span></code></pre></div>
+<p>Syntax kann in der Hilfe abgerufen werden: <code><a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">?plotmath</a></code></p>
 </div>
 <div class="section level4">
 <h4 id="schriftgröße">Schriftgröße<a class="anchor" aria-label="anchor" href="#schriftgr%C3%B6%C3%9Fe"></a>
 </h4>
 <p>Die Schriftgröße kann nicht einheitlich festgelegt werden, weil sie
 von der Größe der finalen Abbildung abhängt. Falls euer Plot die gleiche
-Größe hat wie eine der Vorlagen, könnt ihr einfach die Default list
-verwenden. Hier orientiert ihr euch am besten an den Vorlagen, die in
-etwa die gleiche Größe haben wie eure Abbildung, und justiert dann
-in:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+Größe hat wie eine der Vorlagen, könnt ihr einfach die Default-list
+verwenden. Ansonsten orientiert ihr euch am besten an den Vorlagen, die
+in etwa die gleiche Größe haben wie eure Abbildung, und justiert die
+Schriftgröße dann:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="va">...</span>, </span>
 <span>                          header_font_size <span class="op">=</span> <span class="va">...</span></span>
 <span>                          <span class="op">)</span></span></code></pre></div>
 <p>Die Schriftgröße könnt ihr aus den Default lists auslesen, die ihr
 für eure Abbildung verwendet, z.B mit:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">abb_6.6</span><span class="op">$</span><span class="va">font_size</span></span>
 <span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="farben">Farben<a class="anchor" aria-label="anchor" href="#farben"></a>
 </h4>
-<p>Sind voreingestllt. Ansonsten hier die Liste:</p>
-</div>
-<div class="section level4">
-<h4 id="bolditalic-headers">Bold/italic headers<a class="anchor" aria-label="anchor" href="#bolditalic-headers"></a>
-</h4>
-<p>„Land“ und oberste Zeile(n) im Tabellenkopf fettgedruckt; Zeile mit
-M, SD etc. nicht fett, dafür kursiv <a href="https://nickhaf.github.io/eatPlot/reference/plot_tablebarplot.html"><code>plot_tablebarplot(headers = c("**Land**", "*M*", ...)</code></a>.
-Besonderheit bei griechischen Bustaben: Da muss plotmath verwendet
-werden, deshalb: <a href="https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.html#ref-usage"><code>plot_tablebarplot(headers = c("bold(Land)", "Delta * italic(M)", ...), plotsetttings_tablebarplot(headers_ggtext = FALSE))</code></a></p>
+<p>Sind eigentlich voreingestellt. In den Kapiteln zu den einzelnen
+Abbildungstypen gibt es noch einmal Zusammenfassungen.</p>
 </div>
 </div>
 <div class="section level3">
@@ -168,11 +184,14 @@ werden, deshalb: <a href="https://nickhaf.github.io/eatPlot/reference/plotsettin
 <code>save_plot(height = ..., widht = ...)</code> eingestellt werden.
 Dabei bitte an den Vorlagen orientieren:</p>
 <ul>
-<li>Ganzseitige Abbildung/Tabelle im Hochformat:</li>
-<li>Ganzseitige Abbildung/Tabelle im Querformat: z.B. <a href="https://nickhaf.github.io/eatPlot/articles/lineplots.html#lineplot-for-two-groups">Linienplot
-für 2 Gruppen</a>
+<li>Ganzseitige Abbildung/Tabelle im Hochformat: z.B. <a href="https://nickhaf.github.io/eatPlot/articles/lineplots.html#lineplot-for-two-groups">Linienplot</a>
 </li>
-<li>Teilseitige Abbildung/Tabelle im Hochformat:</li>
+<li>Ganzseitige Abbildung/Tabelle im Querformat: z.B. <a href="https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-6">große
+Tabelle</a>
+</li>
+<li>Teilseitige Abbildung/Tabelle im Hochformat: z.B. <a href="https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-5">kleiner
+Tabelle</a>
+</li>
 </ul>
 </div>
 </div>
@@ -181,27 +200,25 @@ für 2 Gruppen</a>
 </h3>
 </div>
 <div class="section level3">
-<h3 id="delta-1">
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#delta-1"></a>
+<h3 id="delta">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#delta"></a>
 </h3>
 <p>Ein String der Delta enthält kann in <code>eatPlot</code> auf zwei
 Arten erzeugt werden:</p>
 <div class="section level4">
 <h4 id="ggtext">ggtext<a class="anchor" aria-label="anchor" href="#ggtext"></a>
 </h4>
-<p>Uses the package <a href="https://wilkelab.org/ggtext/" class="external-link"><code>ggtext</code></a> for easy
-HTML support.</p>
-<p>``</p>
+<p>Nutzt das Paket <a href="https://wilkelab.org/ggtext/" class="external-link"><code>ggtext</code></a> für HTML
+support.<br>
+Sonderzeichen können leider nicht immer in PDF mit cmyk-Farbschema
+exportiert werden, weshalb dann <code>plotmath</code> verwendet werden
+muss:</p>
 </div>
 <div class="section level4">
 <h4 id="plotmath">plotmath<a class="anchor" aria-label="anchor" href="#plotmath"></a>
 </h4>
 <p><code>"Delta"</code></p>
-<p>Diese Einstellung <strong>ist nötig</strong>, wenn die Plots am Ende
-als PDF mit cmyk-Farbschema <code>abgespeichert</code> werden
-sollen.<br>
-Dafür muss</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>headers_ggtext <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>gesetzt werden!</p>
 </div>
@@ -213,17 +230,37 @@ Dafür muss</p>
 <h4 id="balkenfüllung">Balkenfüllung<a class="anchor" aria-label="anchor" href="#balkenf%C3%BCllung"></a>
 </h4>
 <ul>
-<li>Statistisch signifikante Werte (p &lt; .05) mit ausgefüllten Balken
-darstellen</li>
-<li>Statistisch nicht signifikante Werte mit schraffierten Balken
-darstellen (Schraffur von oben links nach unten rechts)</li>
-<li>Größe des Balkenmusters.</li>
-<li>Balkenfarben</li>
-<li>Erste Gruppe bzw. erster Kompetenzbereich in dunklem türkis
-(Farbcode)</li>
-<li>Zweite Gruppe bzw. zweiter Kompetenzbereich in mittlerem türkis
-(Farbcode)</li>
+<li>Statistisch signifikante Werte (p &lt; .05) werden mit
+<strong>ausgefüllten</strong> Balken dargestellt.</li>
+<li>Statistisch nicht signifikante Werte werden mit schraffierten Balken
+dargestellt (Schraffur von oben links nach unten rechts).</li>
+<li>Größe des Balkenmusters muss manuell nachjustiert werden, da es
+wieder von der Größe der Abbildung beim Abspeichern abhängt. Hier die
+Größe bitte ungefähr den Vorlagen anpassen, und auch darauf achten, dass
+die Muster vor allem innerhalb eines Plots gleich groß sind. Bei
+zusammengesetzten Plots aus mehreren Balkendiagrammen kann die
+Mustergröße sich leicht unterscheiden, selbst wenn man die selben Werte
+angibt. Hier nochmal manuell nachjustieren, bis es einheitlich
+aussieht.</li>
 </ul>
+</div>
+<div class="section level4">
+<h4 id="balkenfarbe">Balkenfarbe<a class="anchor" aria-label="anchor" href="#balkenfarbe"></a>
+</h4>
+<ul>
+<li>Erste Gruppe bzw. erster Kompetenzbereich in dunklem türkis
+(<code>cmyk(85, 0, 43, 17)</code>)</li>
+<li>Zweite Gruppe bzw. zweiter Kompetenzbereich in mittlerem türkis
+(<code>cmyk(40, 0, 20, 8)</code>)</li>
+<li>Dritte Gruppe bzw. dritter Kompetenzbereich in hellem türkis
+(<code>cmyk(7, 0, 4, 1)</code>)</li>
+</ul>
+<p>Farben sind voreingestllt, können aber so gesetzt werden:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
+<span>  bar_fill_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gruppe 1"</span> <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">85</span>, <span class="fl">0</span>, <span class="fl">43</span>, <span class="fl">17</span><span class="op">)</span>, </span>
+<span>                      <span class="st">"Gruppe 2"</span> <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="farben-1">Farben<a class="anchor" aria-label="anchor" href="#farben-1"></a>
@@ -233,22 +270,35 @@ darstellen (Schraffur von oben links nach unten rechts)</li>
 </h5>
 <p>Farbliche Hinterlegungen zur Zeilenorientierung (wechselnd weiß /
 türkis) wird wie im Tabellenteil hinter dem Balkendiagramm
-weitergeführt</p>
+weitergeführt. Die Deutschland-Zeile wird grau dargestellt:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
+<span>   background_stripes_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"white"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="x-achse-unterhalb-der-balken">x-Achse unterhalb der Balken<a class="anchor" aria-label="anchor" href="#x-achse-unterhalb-der-balken"></a>
 </h5>
-<p>in schwarz (0/0/0/100)</p>
+<p>In schwarz <code>cmyk(0, 0, 0, 100)</code>. Bereits
+voreingestellt.</p>
 </div>
 <div class="section level5">
 <h5 id="nulllinie">Nulllinie<a class="anchor" aria-label="anchor" href="#nulllinie"></a>
 </h5>
-<p>in schwarz (0/0/0/100)</p>
+<p>In schwarz <code>cmyk(0, 0, 0, 100)</code>. Bereits
+voreingestellt.</p>
 </div>
 <div class="section level5">
 <h5 id="hilfslinien-vertikal">Hilfslinien vertikal<a class="anchor" aria-label="anchor" href="#hilfslinien-vertikal"></a>
 </h5>
-<p>grau (), gestichelt (dashed)</p>
+<p>Grau und gestichelt. Ist bereits vorgeingestellt, könnte aber so
+geändert werden:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
+<span>  bar_background_lines_colour <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">60</span><span class="op">)</span>,</span>
+<span>  bar_background_lines <span class="op">=</span> <span class="st">"scale_breaks"</span>,</span>
+<span>  bar_background_lines_linetype <span class="op">=</span> <span class="st">"dashed"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level4">
@@ -258,34 +308,187 @@ weitergeführt</p>
 Zeilen aus anderen Gründen breiter sind (z.B. weil je Land zwei
 Ergebniszeilen berichtet werden). Zeilenumbrüche für die Bundeslandnamen
 werden vor dem Plotten eingefügt, am einfachsten mit:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_dat</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">my_dat</span><span class="op">$</span><span class="va">state_var</span>, linebreak <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="liniendiagramm">Liniendiagramm<a class="anchor" aria-label="anchor" href="#liniendiagramm"></a>
 </h3>
+<div class="section level4">
+<h4 id="referenzband">Referenzband<a class="anchor" aria-label="anchor" href="#referenzband"></a>
+</h4>
 <ul>
-<li>Referenzband mit +/- 2 SE anzeigen</li>
-<li>Wenn SE einstellig, dann ein zusätzliches Leerzeichen vor der
-Klammer einfügen, sodass sowohl (SE) als auch der Wert der
-Mittelwertsdifferenz rechtsbündig zueinanderstehen</li>
-<li>die Spitze der geschwiffenen Klammer auf das erste Leerzeichen
-zwischen M und (SE) ausrichten</li>
-<li>Farbliche Hinterlegung der Jahre in dunklem türkis (Farbcode: )</li>
-<li>Skala links von den Linien in schwarz (0/0/0/100)</li>
-<li>Geschwiffene Klammern in schwarz (0/0/0/100)</li>
-<li>Linien für Gruppen o erste Gruppe schwarz (0/0/0/100) o zweite
-Gruppe dunkelgrau (0/0/0/60) o dritte Gruppe mittelgrau (0/0/0/40)</li>
-<li>Referenzband in hellem türkis (7/0/4/1)</li>
+<li>Das Referenzband wird mit <code>+/- 2 SE</code> angezeigt. Ist
+bereits voreingestellt.</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="label">Label<a class="anchor" aria-label="anchor" href="#label"></a>
+</h4>
+<ul>
+<li>Wenn SE einstellig ist, dann wird automatisch ein zusätzliches
+Leerzeichen vor der Klammer eingefügt, sodass sowohl (SE) als auch der
+Wert der Mittelwertsdifferenz rechtsbündig zueinanderstehen</li>
+<li>Die Spitze der geschwiffenen Klammer zeigt auf das erste Leerzeichen
+zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not
+nachjustiert werden:</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
+<span>  brace_label_nudge_x <span class="op">=</span> <span class="fl">0.1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="farben-2">Farben<a class="anchor" aria-label="anchor" href="#farben-2"></a>
+</h4>
+<p>Die Farben sind alle voreingestellt, die Farbcodes können hier
+ausgelesen werden:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lineplot_4x4</span></span>
+<span><span class="co">#&gt; $axis_x_background_colour</span></span>
+<span><span class="co">#&gt; [1] "#8DEBBC"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_x_background_width_x</span></span>
+<span><span class="co">#&gt; [1] 0.1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_x_background_width_y</span></span>
+<span><span class="co">#&gt; [1] 0.13</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_x_label_centralize</span></span>
+<span><span class="co">#&gt; [1] 0.05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_x_label_nudge_y</span></span>
+<span><span class="co">#&gt; [1] 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_x_label_size</span></span>
+<span><span class="co">#&gt; [1] 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_y</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_y_tick_distance</span></span>
+<span><span class="co">#&gt; [1] 20</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $axis_y_lims</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $background_facet_remove</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $background_subgroup_remove</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $background_lines</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $background_line_colour</span></span>
+<span><span class="co">#&gt; [1] "#EBFDF3"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $brace_label_gap_y</span></span>
+<span><span class="co">#&gt; [1] 0.08</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $brace_label_nudge_x</span></span>
+<span><span class="co">#&gt; [1] 0.3225</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $brace_label_nudge_y</span></span>
+<span><span class="co">#&gt; [1] 0.05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $brace_label_size</span></span>
+<span><span class="co">#&gt; [1] 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $brace_line_width</span></span>
+<span><span class="co">#&gt; [1] 0.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $brace_span_y</span></span>
+<span><span class="co">#&gt; [1] 0.1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $equal_trend_line_length</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $subgroup_colours</span></span>
+<span><span class="co">#&gt; [1] "#000000" "#666666" "#999999"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $line_type</span></span>
+<span><span class="co">#&gt;     TRUE    FALSE </span></span>
+<span><span class="co">#&gt;  "solid" "dashed" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $line_width</span></span>
+<span><span class="co">#&gt; [1] 0.7</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $margin_below_y_axis</span></span>
+<span><span class="co">#&gt; [1] 0.1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $margin_above_y_axis</span></span>
+<span><span class="co">#&gt; [1] 0.1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $margin_bottom</span></span>
+<span><span class="co">#&gt; [1] 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $margin_left</span></span>
+<span><span class="co">#&gt; [1] 0.004</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $margin_right</span></span>
+<span><span class="co">#&gt; [1] 0.01</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $margin_top</span></span>
+<span><span class="co">#&gt; [1] -5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $n_cols</span></span>
+<span><span class="co">#&gt; [1] 4</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $point_label_nudge</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $point_label_nudge_direction</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $point_label_nudge_x</span></span>
+<span><span class="co">#&gt; [1] 0.02</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $point_label_nudge_y</span></span>
+<span><span class="co">#&gt; [1] 0.09</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $point_label_size</span></span>
+<span><span class="co">#&gt; [1] 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $point_shapes</span></span>
+<span><span class="co">#&gt;  TRUE FALSE </span></span>
+<span><span class="co">#&gt;    17    16 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $point_size</span></span>
+<span><span class="co">#&gt; [1] 1.7</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $box_facet_linewidth</span></span>
+<span><span class="co">#&gt; [1] 0.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $split_plot</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $split_plot_gap_width</span></span>
+<span><span class="co">#&gt; [1] 0.03</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="signifikanzen">Signifikanzen<a class="anchor" aria-label="anchor" href="#signifikanzen"></a>
+</h4>
+<ul>
 <li>Statistisch signifikante Veränderung (p &lt; .05) mit durchgezogener
-Linie darstellen</li>
+Linie darstellen.</li>
 <li>Statistisch nicht signifikante Veränderung mit gestrichelter Linie
 darstellen</li>
-<li>Hochgestelltes a o Bei bundesweiten Trends für Gruppen: Statistisch
-signifikante Abweichung (p &lt; .05) zum Trend in der Gesamtpopulation
-aller Neuntklässler:innen in Deutschland insgesamt o Bei
-länderspezifischen Trends für Gruppen: Statistisch signifikante
+</ul>
+<p>Ist bereits vorgeingestellt, kann zur Not so geändert werden:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>line_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"TRUE"</span> <span class="op">=</span> <span class="st">"solid"</span>,</span>
+<span>    <span class="st">"FALSE"</span> <span class="op">=</span> <span class="st">"dashed"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<ul>
+<li>Hochgestelltes <code>a</code>:</li>
+<li>Bei bundesweiten Trends für Gruppen: Statistisch signifikante
+Abweichung (p &lt; .05) zum Trend in der Gesamtpopulation aller
+Neuntklässler:innen in Deutschland insgesamt</li>
+<li>Bei länderspezifischen Trends für Gruppen: Statistisch signifikante
 Abweichung (p &lt; .05) zum Trend der jeweiligen Schüler:innengruppe in
 Deutschland insgesamt</li>
 <li>Ausgefülltes Dreieck für Wert, der statistisch signifikant (p &lt;
@@ -293,6 +496,15 @@ Deutschland insgesamt</li>
 <li>Ausgefüllter Kreis für Wert, der statistisch nicht signifikant vom
 Wert der Gesamtpopulation abweicht</li>
 </ul>
+<p>Ist bereits voreingestellt, kann zur Not so geändert werden:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
+<span>   point_shapes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"TRUE"</span> <span class="op">=</span> <span class="fl">17</span>,</span>
+<span>    <span class="st">"FALSE"</span> <span class="op">=</span> <span class="fl">16</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
