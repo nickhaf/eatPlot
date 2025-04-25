@@ -322,7 +322,7 @@ tableplot_6.6
 
 # Zuwanderungskapitel
 
-Currently use the `gender_trend` data. 
+Currently use the `gender_trend` data for demonstration purposes, the subgroups are of course named differently for the actual chapter. 
 
 ```{r}
 gender_prepped_2 <- gender_prepped[gender_prepped$kb == "lesen", ]
