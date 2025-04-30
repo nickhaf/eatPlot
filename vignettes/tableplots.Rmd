@@ -28,11 +28,11 @@ First we prepare the data:
 gender_prepped <- do.call(rbind, lapply(trend_gender, prep_tablebarplot, subgroup_var = "Kgender"))
 ```
 
-Now, we only want to plot the comparison of männlich vs. weiblich. 
+Now, we only want to plot the comparison of männlich vs. female. 
 The direction is always the same, we can look that up in the plain data, therefore it doesn't matter which one we filter:
 
 ```{r}
-gender_prepped_sub <- subset(gender_prepped, subgroup_var == "maennlich")
+gender_prepped_sub <- subset(gender_prepped, subgroup_var == "male")
 ```
 
 ```{r}
@@ -59,8 +59,8 @@ gender_prepped_lh_final <- merge(
   gender_prepped_lh,
   gender_prepped[, c(
     "y_axis",
-    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
+    "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"
   )]
 )
 
@@ -76,44 +76,44 @@ Now we can plot the table like usual, with one exception: I can nudge the table 
 ```{r}
 tableplot_6.5 <- plot_tablebarplot(
   dat = gender_prepped_lh_final,
-  bar_est = "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+  bar_est = "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
   bar_fill = "kb",
-  bar_sig = "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+  bar_sig = "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
   columns_table = list(
     "state_var_lesen",
-    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
-    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
-    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
-    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
-    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
-    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
+    "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen",
+    "se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen",
+    "es_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen",
+    "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören",
+    "se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören",
+    "es_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"
   ),
   columns_table_sig_bold = list(
     NULL,
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen",
     NULL,
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen",
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören",
     NULL,
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"
   ),
   columns_table_sig_superscript = list(
     NULL,
-    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen",
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_lesen",
     NULL,
-    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen",
-    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören",
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_lesen",
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_hören",
     NULL,
-    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"
+    "sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_hören"
   ),
   columns_round = list(NULL, 0, 1, 2, 0, 1, 2),
   columns_table_se = list(
     NULL,
     NULL,
-    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen",
+    "se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen",
     NULL,
     NULL,
-    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören",
+    "se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören",
     NULL
   ),
   headers = list(
@@ -166,7 +166,7 @@ gender_lesen <- gender_prepped_mean_sd[[1]]
 Afterwards, we have to bring it in the format we want to plot it in:
 
 ```{r}
-gender_lesen <- subset(gender_lesen, subgroup_var %in% c("maennlich", "weiblich"))
+gender_lesen <- subset(gender_lesen, subgroup_var %in% c("male", "female"))
 
 ## Mädchen sollen nach oben
 gender_lesen <- gender_lesen[order(gender_lesen$subgroup_var, decreasing = TRUE), ]
@@ -178,8 +178,8 @@ gender_lesen$state_var <- process_bundesland(gender_lesen$state_var, linebreak =
 nudge_col1_y <- ifelse(grepl("<br>", gender_lesen$state_var), -0.25, -0.5)
   
 gender_lesen$state_var[duplicated(gender_lesen$state_var)] <- " "
-gender_lesen$subgroup_var <- gsub("maennlich", "Jungen", gender_lesen$subgroup_var)
-gender_lesen$subgroup_var <- gsub("weiblich", "Mädchen", gender_lesen$subgroup_var)
+gender_lesen$subgroup_var <- gsub("male", "Jungen", gender_lesen$subgroup_var)
+gender_lesen$subgroup_var <- gsub("female", "Mädchen", gender_lesen$subgroup_var)
 gender_lesen$empty <- ""
 ```
 
@@ -344,8 +344,8 @@ column_widths_stand <- standardize_column_width(
 ```{r}
 p_1 <- plot_tablebarplot(
   dat = gender_prepped_2,
-  bar_est = "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
-  bar_sig = "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+  bar_est = "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
+  bar_sig = "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
   column_spanners = list(
     "**2009**" = c(2),
     "**2015**" = c(3),
@@ -354,7 +354,7 @@ p_1 <- plot_tablebarplot(
   column_spanners_2 = list(
     "**Differenz Schüler:innen mit - Schüler:innen ohne <br> Zuwanderungshintergrund**" = c(2, 7)
   ),
-  columns_table_se = list(NULL, NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022", NULL),
+  columns_table_se = list(NULL, NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022", NULL),
   headers = list(
     "bold(Land)",
     "Delta * italic(M)",
@@ -366,19 +366,19 @@ p_1 <- plot_tablebarplot(
   ),
   columns_table = c(
     "state_var",
-    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2009",
-    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2015",
-    "est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
-    "se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
-    "es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
+    "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2009",
+    "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2015",
+    "est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
+    "se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
+    "es_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"
   ),
   columns_table_sig_bold = list(
     NULL,
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2009",
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2015",
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022",
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2009",
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2015",
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022",
     NULL,
-    "sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"
+    "sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"
   ),
   y_axis = "y_axis",
   columns_round = c(0, 0, 0, 0, 0, 2),
@@ -394,15 +394,15 @@ p_1 <- plot_tablebarplot(
 ```{r}
 p_2 <- plot_tablebarplot(
   dat = gender_prepped_2,
-  bar_est = "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015",
-  bar_sig = "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015",
+  bar_est = "est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015",
+  bar_sig = "sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015",
   column_spanners = list(
     "**2015-2009**" = c(2, 4)
   ),
   column_spanners_2 = list(
     "**Veränderung der Differenz<br>**" = c(2, 4)
   ),
-  columns_table_se = list(NULL, NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"),
+  columns_table_se = list(NULL, NULL, "se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"),
   headers = list(
     " ",
     list("paste(Delta * italic(M[2015]), '-')",
@@ -412,11 +412,11 @@ p_2 <- plot_tablebarplot(
   ),
   columns_table = c(
     "empty",
-    "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015",
-    "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"
+    "est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015",
+    "se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"
   ),
   columns_table_sig_bold = list(
-    NULL, "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015", NULL
+    NULL, "sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015", NULL
   ),
   y_axis = "y_axis",
   plot_settings =
@@ -434,15 +434,15 @@ p_2 <- plot_tablebarplot(
 ```{r}
 p_3 <- plot_tablebarplot(
   dat = gender_prepped_2,
-  bar_est = "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022",
-  bar_sig = "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022",
+  bar_est = "est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022",
+  bar_sig = "sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022",
   column_spanners = list(
     "**2022-2015**" = c(1, 3)
   ),
   column_spanners_2 = list(
     "**Veränderung der Differenz<br>**" = c(1, 3)
   ),
-  columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"),
+  columns_table_se = list(NULL, "se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"),
   headers = list(
     list("paste(Delta * italic(M[2022]), '-')",
           "Delta * italic(M[2015])"),
@@ -450,11 +450,11 @@ p_3 <- plot_tablebarplot(
     " "
   ),
   columns_table = c(
-    "est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022",
-    "se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"
+    "est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022",
+    "se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"
   ),
   columns_table_sig_bold = list(
-    "sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022", NULL
+    "sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022", NULL
   ),
   y_axis = "y_axis",
   plot_settings = plotsettings_tablebarplot(
