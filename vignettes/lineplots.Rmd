@@ -81,7 +81,7 @@ dat_lineplot_2$state_var <- process_bundesland(dat_lineplot_2$state_var)
 
 
 ## We can set the order of the brace labels by setting the factor levels of the subgroup_var:
-dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
+dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("female", "male", "total"), ordered = TRUE)
 
 lineplot_2 <- plot_lineplot(
   dat_lineplot_2,
@@ -90,7 +90,7 @@ lineplot_2 <- plot_lineplot(
   background_facet = "Deutschland",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+    subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     axis_y_lims = c(410, 560),
     default_list = lineplot_4x4
   )
@@ -115,7 +115,7 @@ lineplot_2
 ```{r}
 trend_ger <- do.call(rbind, lapply(trend_gender, prep_lineplot, subgroup_var = "Kgender"))
 trend_ger <- subset(trend_ger, state_var == "total")
-trend_ger$subgroup_var <- factor(trend_ger$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
+trend_ger$subgroup_var <- factor(trend_ger$subgroup_var, levels = c("female", "male", "total"), ordered = TRUE)
 trend_ger$kb <- gsub("hoeren", "Hören", trend_ger$kb)
 trend_ger$kb <- gsub("lesen", "Lesen", trend_ger$kb)
 
@@ -142,7 +142,7 @@ lineplot_germany <- plot_lineplot(
   facet_var = "kb",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+    subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     brace_label_nudge_x = 0.22,
     n_cols = 2,
     axis_y_lims = c(430, 550),
@@ -173,7 +173,7 @@ lineplot_germany_2 <- plot_lineplot(
   facet_var = "kb",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+    subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     brace_label_nudge_x = 0.23,
     n_cols = 3,
     axis_y_lims = c(430, 550),
@@ -206,11 +206,11 @@ dat_lineplot_2 <- prep_lineplot(
 )
 
 dat_lineplot_2$est_mean_comp_none <- ifelse(dat_lineplot_2$state_var == "Berlin" & dat_lineplot_2$year == 2015, NA, dat_lineplot_2$est_mean_comp_none)
-dat_lineplot_2$est_mean_comp_none <- ifelse(dat_lineplot_2$state_var == "Brandenburg" & dat_lineplot_2$year == 2009 & dat_lineplot_2$subgroup_var == "weiblich", NA, dat_lineplot_2$est_mean_comp_none)
+dat_lineplot_2$est_mean_comp_none <- ifelse(dat_lineplot_2$state_var == "Brandenburg" & dat_lineplot_2$year == 2009 & dat_lineplot_2$subgroup_var == "female", NA, dat_lineplot_2$est_mean_comp_none)
 
-dat_lineplot_2$est_mean_comp_trend_sameFacet_sameSubgroup <- ifelse(dat_lineplot_2$state_var == "Brandenburg" & dat_lineplot_2$trend == "2009_2015" & dat_lineplot_2$subgroup_var == "weiblich", NA, dat_lineplot_2$est_mean_comp_trend_sameFacet_sameSubgroup)
+dat_lineplot_2$est_mean_comp_trend_sameFacet_sameSubgroup <- ifelse(dat_lineplot_2$state_var == "Brandenburg" & dat_lineplot_2$trend == "2009_2015" & dat_lineplot_2$subgroup_var == "female", NA, dat_lineplot_2$est_mean_comp_trend_sameFacet_sameSubgroup)
 
-dat_lineplot_2$se_mean_comp_trend_sameFacet_sameSubgroup <- ifelse(dat_lineplot_2$state_var == "Brandenburg" & dat_lineplot_2$trend == "2009_2015" & dat_lineplot_2$subgroup_var == "weiblich", NA, dat_lineplot_2$se_mean_comp_trend_sameFacet_sameSubgroup)
+dat_lineplot_2$se_mean_comp_trend_sameFacet_sameSubgroup <- ifelse(dat_lineplot_2$state_var == "Brandenburg" & dat_lineplot_2$trend == "2009_2015" & dat_lineplot_2$subgroup_var == "female", NA, dat_lineplot_2$se_mean_comp_trend_sameFacet_sameSubgroup)
 
 dat_lineplot_2 <- dat_lineplot_2[dat_lineplot_2$state_var != "Niedersachsen", ]
 
@@ -222,7 +222,7 @@ dat_lineplot_2$state_var <- process_bundesland(dat_lineplot_2$state_var)
 dat_lineplot_2$state_var <- forcats::fct_relevel(dat_lineplot_2$state_var, "Deutschland", after = Inf)
 
 ## We can set the order of the brace labels by setting the factor levels of the subgroup_var:
-dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
+dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("female", "male", "total"), ordered = TRUE)
 
 state_levels <- levels(dat_lineplot_2$state_var)
 
@@ -239,7 +239,7 @@ lineplot_na <- plot_lineplot(
   background_subgroup = "total",
   box_facet = "Deutschland",
   plot_settings = plotsettings_lineplot(
-    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+    subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     axis_y_lims = c(410, 560),
     background_facet_remove = FALSE,
     default_list = lineplot_4x4
@@ -273,7 +273,7 @@ dat_lineplot_2$state_var <- process_bundesland(dat_lineplot_2$state_var)
 
 
 ## We can set the order of the brace labels by setting the factor levels of the subgroup_var:
-dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("weiblich", "maennlich", "total"), ordered = TRUE)
+dat_lineplot_2$subgroup_var <- factor(dat_lineplot_2$subgroup_var, levels = c("female", "male", "total"), ordered = TRUE)
 
 lineplot_2_long <- plot_lineplot(
   dat_lineplot_2,
@@ -282,7 +282,7 @@ lineplot_2_long <- plot_lineplot(
   background_facet = "Deutschland",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
-    subgroup_colours = c(weiblich = "black", maennlich = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
+    subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     axis_y_lims = c(410, 560),
     brace_label_nudge_x = 0.175, 
     default_list = lineplot_4x4
