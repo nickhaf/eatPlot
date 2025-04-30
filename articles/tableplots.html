@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Tableplots • eatPlot</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -88,11 +87,11 @@ Bildungstrend-graphs, but can be expanded for plotting other
 <p>First we prepare the data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gender_prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">trend_gender</span>, <span class="va">prep_tablebarplot</span>, subgroup_var <span class="op">=</span> <span class="st">"Kgender"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Now, we only want to plot the comparison of männlich vs. weiblich.
-The direction is always the same, we can look that up in the plain data,
+<p>Now, we only want to plot the comparison of male vs. female. The
+direction is always the same, we can look that up in the plain data,
 therefore it doesn’t matter which one we filter:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gender_prepped_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">gender_prepped</span>, <span class="va">subgroup_var</span> <span class="op">==</span> <span class="st">"maennlich"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gender_prepped_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">gender_prepped</span>, <span class="va">subgroup_var</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gender_prepped</span> <span class="op">&lt;-</span> <span class="va">gender_prepped_sub</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">gender_prepped_sub</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="va">gender_prepped</span><span class="op">$</span><span class="va">y_axis</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">gender_prepped</span><span class="op">)</span></span>
@@ -116,8 +115,8 @@ have to do some minor data wrangling first:</p>
 <span>  <span class="va">gender_prepped_lh</span>,</span>
 <span>  <span class="va">gender_prepped</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"y_axis"</span>,</span>
-<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span></span>
+<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span></span>
 <span>  <span class="op">)</span><span class="op">]</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -128,44 +127,44 @@ the table contents a bit downwards, so they also fill the empty row.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tableplot_6.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span></span>
 <span>  dat <span class="op">=</span> <span class="va">gender_prepped_lh_final</span>,</span>
-<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
+<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
 <span>  bar_fill <span class="op">=</span> <span class="st">"kb"</span>,</span>
-<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
+<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
 <span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"state_var_lesen"</span>,</span>
-<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen"</span>,</span>
-<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen"</span>,</span>
-<span>    <span class="st">"es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen"</span>,</span>
-<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"</span>,</span>
-<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"</span>,</span>
-<span>    <span class="st">"es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"</span></span>
+<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"es_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"</span>,</span>
+<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"</span>,</span>
+<span>    <span class="st">"es_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen"</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen"</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"</span></span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table_sig_superscript <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_lesen"</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_lesen"</span>,</span>
-<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_hören"</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_weiblichSubgroup_2022_hören"</span></span>
+<span>    <span class="st">"sig_mean_comp_crossDiff_of_groupDiff_totalFacet_femaleSubgroup_2022_hören"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="cn">NULL</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_lesen"</span>,</span>
+<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_lesen"</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022_hören"</span>,</span>
+<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022_hören"</span>,</span>
 <span>    <span class="cn">NULL</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -208,10 +207,10 @@ the table contents a bit downwards, so they also fill the empty row.</p>
 <p>Afterwards, we have to bring it in the format we want to plot it
 in:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gender_lesen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">gender_lesen</span>, <span class="va">subgroup_var</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"maennlich"</span>, <span class="st">"weiblich"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gender_lesen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">gender_lesen</span>, <span class="va">subgroup_var</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Mädchen sollen nach oben</span></span>
-<span><span class="va">gender_lesen</span> <span class="op">&lt;-</span> <span class="va">gender_lesen</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="co">## females should be the first row always:</span></span>
+<span><span class="va">gender_lesen</span> <span class="op">&lt;-</span> <span class="va">gender_lesen</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="va">gender_lesen</span> <span class="op">&lt;-</span> <span class="va">gender_lesen</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
 <span></span>
@@ -219,9 +218,10 @@ in:</p>
 <span><span class="co">## Depending on whether a column has a linebreak, they have to be nudged down. I define the according vector here already, because it might get confusing furhter down:</span></span>
 <span><span class="va">nudge_col1_y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"&lt;br&gt;"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span>, <span class="op">-</span><span class="fl">0.25</span>, <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span></span>
 <span>  </span>
+<span></span>
 <span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">state_var</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">" "</span></span>
-<span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"maennlich"</span>, <span class="st">"Jungen"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span></span>
-<span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"weiblich"</span>, <span class="st">"Mädchen"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span></span>
+<span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"^male"</span>, <span class="st">"Jungen"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span></span>
+<span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"Mädchen"</span>, <span class="va">gender_lesen</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span></span>
 <span><span class="va">gender_lesen</span><span class="op">$</span><span class="va">empty</span> <span class="op">&lt;-</span> <span class="st">""</span></span></code></pre></div>
 <p>We will have to plot multiple plots and combine them. To do that, we
 will have to set the column widths, so they are identical over the
@@ -362,8 +362,8 @@ chapter.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span></span>
 <span>  dat <span class="op">=</span> <span class="va">gender_prepped_2</span>,</span>
-<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
-<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
+<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
+<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
 <span>  column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"**2009**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>    <span class="st">"**2015**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>,</span>
@@ -372,7 +372,7 @@ chapter.</p>
 <span>  column_spanners_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"**Differenz Schüler:innen mit - Schüler:innen ohne &lt;br&gt; Zuwanderungshintergrund**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
-<span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"bold(Land)"</span>,</span>
 <span>    <span class="st">"Delta * italic(M)"</span>,</span>
@@ -384,19 +384,19 @@ chapter.</p>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"state_var"</span>,</span>
-<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2009"</span>,</span>
-<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2015"</span>,</span>
-<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
-<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
-<span>    <span class="st">"es_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span></span>
+<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2009"</span>,</span>
+<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2015"</span>,</span>
+<span>    <span class="st">"est_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
+<span>    <span class="st">"se_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
+<span>    <span class="st">"es_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2009"</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2015"</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2009"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2015"</span>,</span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span>,</span>
 <span>    <span class="cn">NULL</span>,</span>
-<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_weiblichSubgroup_2022"</span></span>
+<span>    <span class="st">"sig_mean_comp_groupDiff_sameFacet_femaleSubgroup_2022"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
 <span>  columns_round <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span>
@@ -410,15 +410,15 @@ chapter.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span></span>
 <span>  dat <span class="op">=</span> <span class="va">gender_prepped_2</span>,</span>
-<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"</span>,</span>
-<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"</span>,</span>
+<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"</span>,</span>
+<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"</span>,</span>
 <span>  column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"**2015-2009**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  column_spanners_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"**Veränderung der Differenz&lt;br&gt;**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
-<span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"</span><span class="op">)</span>,</span>
+<span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span>, <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"</span><span class="op">)</span>,</span>
 <span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">" "</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"paste(Delta * italic(M[2015]), '-')"</span>,</span>
@@ -428,11 +428,11 @@ chapter.</p>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"empty"</span>,</span>
-<span>    <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"</span>,</span>
-<span>    <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"</span></span>
+<span>    <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"</span>,</span>
+<span>    <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="cn">NULL</span>, <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2009_2015"</span>, <span class="cn">NULL</span></span>
+<span>    <span class="cn">NULL</span>, <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2009_2015"</span>, <span class="cn">NULL</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
 <span>  plot_settings <span class="op">=</span></span>
@@ -448,15 +448,15 @@ chapter.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span></span>
 <span>  dat <span class="op">=</span> <span class="va">gender_prepped_2</span>,</span>
-<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"</span>,</span>
-<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"</span>,</span>
+<span>  bar_est <span class="op">=</span> <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"</span>,</span>
+<span>  bar_sig <span class="op">=</span> <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"</span>,</span>
 <span>  column_spanners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"**2022-2015**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  column_spanners_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"**Veränderung der Differenz&lt;br&gt;**"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
-<span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"</span><span class="op">)</span>,</span>
+<span>  columns_table_se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"</span><span class="op">)</span>,</span>
 <span>  headers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"paste(Delta * italic(M[2022]), '-')"</span>,</span>
 <span>          <span class="st">"Delta * italic(M[2015])"</span><span class="op">)</span>,</span>
@@ -464,11 +464,11 @@ chapter.</p>
 <span>    <span class="st">" "</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"</span>,</span>
-<span>    <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"</span></span>
+<span>    <span class="st">"est_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"</span>,</span>
+<span>    <span class="st">"se_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  columns_table_sig_bold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_weiblichSubgroup_2015_2022"</span>, <span class="cn">NULL</span></span>
+<span>    <span class="st">"sig_mean_comp_trend_groupDiff_sameFacet_femaleSubgroup_2015_2022"</span>, <span class="cn">NULL</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  y_axis <span class="op">=</span> <span class="st">"y_axis"</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
@@ -507,7 +507,7 @@ chapter.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
