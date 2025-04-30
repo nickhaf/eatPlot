@@ -25,6 +25,10 @@ kap6Dat <- getTrendGADS(
 datK6Trend <- extractData2(kap6Dat,
                            labels2character = c("TR_BUNDESLAND", "kb", "TR_SCHULFORM", "Kgender"))
 
+datK6Trend$Kgender <- gsub("weiblich", "female", datK6Trend$Kgender)
+datK6Trend$Kgender <- gsub("maennlich", "male", datK6Trend$Kgender)
+
+
 trend_gender <- lapply(c("lesen", "hoeren"), function(my_kb) {
   datK6.Trend.auswahl <- subset(datK6Trend, kb == my_kb)
 
@@ -40,5 +44,7 @@ trend_gender <- lapply(c("lesen", "hoeren"), function(my_kb) {
   resDisp <- report2(disp, add = list(kb = my_kb))
   return(resDisp)
 })
+
+
 
 usethis::use_data(trend_gender, overwrite = TRUE)
