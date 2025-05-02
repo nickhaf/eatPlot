@@ -48,7 +48,9 @@ prep_plot <- function(
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau & !is.na(eatRep_dat$estimate$p), TRUE, FALSE)
 
   # Filtering ---------------------------------------------------------------
-  eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]
+  if(!is.null(parameter)){
+    eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]
+  }
   dat_unnested <- unnest_eatRep(eatRep_dat)
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)

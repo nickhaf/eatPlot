@@ -16,7 +16,8 @@ prep_tablebarplot <- function(eatRep_dat,
                               facet_var = "TR_BUNDESLAND",
                               total_facet = "total",
                               sig_niveau = 0.05,
-                              total_subgroup = "total") {
+                              total_subgroup = "total",
+                              ...) {
   dat_wide <- prep_plot(
     eatRep_dat = eatRep_dat,
     subgroup_var = subgroup_var,
@@ -25,7 +26,8 @@ prep_tablebarplot <- function(eatRep_dat,
     total_facet = total_facet,
     sig_niveau = sig_niveau,
     total_subgroup = total_subgroup,
-    plot_type = "table"
+    plot_type = "table",
+    ...
   )
   dat_wide$y_axis <- 1:nrow(dat_wide)
   return(as.data.frame(dat_wide))
