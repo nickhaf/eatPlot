@@ -48,12 +48,26 @@ prep_plot <- function(
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau & !is.na(eatRep_dat$estimate$p), TRUE, FALSE)
 
   # Filtering ---------------------------------------------------------------
+  merge_by <- c("id", "parameter")
   if(!is.null(parameter)){
     eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]
+    merge_by <- c("id")
   }
+
   dat_unnested <- unnest_eatRep(eatRep_dat)
-  dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
+
+  ## Don't loose any comparisons!
+  no_comp_anywhere <- data.frame(id = 1:nrow(eatRep_dat$group),
+                                 comparison = "none",
+                                 unit = "unit_1",
+                                 value = eatRep_dat$group[!eatRep_dat$group$id %in% dat_unnested$value, "id" ])
+
+
+  dat_unnested <- rbind(dat_unnested, no_comp_anywhere)
+
+  dat_merged <- merge_eatRep(dat_unnested, eatRep_dat, by = merge_by)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
+
   dat_wide <- pivot_eatRep(dat_prepped,
                            names_from_none = names_from_none,
                            names_from_comp = names_from_comp,
@@ -64,6 +78,7 @@ prep_plot <- function(
 
 
 unnest_eatRep <- function(eatRep_dat) {
+
   if (nrow(eatRep_dat$comparisons) == 0) {
     eatRep_out <- data.frame(
       "id" = eatRep_dat$group[, "id"],
@@ -109,7 +124,7 @@ unnest_eatRep <- function(eatRep_dat) {
   return(comp_long_noComps)
 }
 
-merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
+merge_eatRep <- function(eatRep_unnested, eatRep_dat, by, stacked = TRUE) {
 
   dat_group <- merge(eatRep_unnested,
     eatRep_dat$group,
@@ -118,17 +133,36 @@ merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
     by.y = "id"
   )
 
+
   dat_group_est <- merge(dat_group,
     eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
     by.x = "value",
     by.y = "id"
   )
 
-  dat_group_long <- merge(dat_group_est,
-    eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
-    by = "id",
-    suffixes = c("_comp_none", "_comp")
-  )
+  ## Up to here totao_subgroup is still in it, IF total_subgroup is set to "" outside
+
+
+  ## Ncases gets removed here, bad?
+  if(stacked){
+    dat_group_long <- merge(dat_group_est,
+                            eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
+                            by = by,
+                            suffixes = c("_comp_none", "_comp"),
+                            all = TRUE
+    )
+
+    dat_group_long <- dat_group_long[!is.na(dat_group_long$subgroup_var), ]
+
+  }else{
+    dat_group_long <- merge(dat_group_est,
+                            eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
+                            by = by,
+                            suffixes = c("_comp_none", "_comp")
+    )
+
+  }
+
   if (nrow(eatRep_dat$comparisons) == 0) {
     dat_group_long[, grep("_comp$", colnames(dat_group_long))] <- NA
   }
@@ -138,6 +172,7 @@ merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
 }
 
 prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgroup = NULL) {
+
   #dat_hardest <- eatRep_merged[eatRep_merged$comparison != "trend_crossDiff_of_groupDiff", ]
   dat_hardest <- eatRep_merged
   id_list <- split(dat_hardest, dat_hardest$id)
@@ -189,11 +224,20 @@ pivot_eatRep <- function(eatRep_prepped,
 
   eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp|parameter", colnames(eatRep_prepped))]
 
-  ## Split into comparions und comparison_none
-  eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp_none", colnames(eatRep_prepped))]
-  eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split") | grepl("comp$", colnames(eatRep_prepped))]
+  ## If parameter is not put into column names, it has to be filtered so we have unique rows for pivoting
+  if(!grepl("parameter", names_from_none)){
+    eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "parameter") | grepl("comp_none", colnames(eatRep_prepped))]
+    eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split", "parameter") | grepl("comp$", colnames(eatRep_prepped))]
+
+   }else{
+     eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp_none", colnames(eatRep_prepped))]
+     eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split") | grepl("comp$", colnames(eatRep_prepped))]
+        }
+
 
   eatRep_prepped_none$trend <- NULL
+
+  ## Hier muss parameter in diesem Fall auch rein, damit Identifikation stimmt!!
   eatRep_prepped_none_wide <- tidyr::pivot_wider(
     unique(eatRep_prepped_none),
     names_from = tidyr::all_of(names_from_none),
