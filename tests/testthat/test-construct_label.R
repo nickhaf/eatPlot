@@ -95,5 +95,5 @@ test_that("NAs are converted to empty strings without ()", {
     p_est = c(TRUE, FALSE, TRUE, FALSE)
   )
 
-  expect_equal(construct_label_2(dat = df, label_se = "label_se")$label, c("", " (2.3)", "", " (0.6)"))
+  expect_equal(construct_label_2(dat = df, label_se = "label_se", round_est = 1)$label, c("", " (2.3)", "", " (0.6)"))
 })
