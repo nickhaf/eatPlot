@@ -200,7 +200,6 @@ dat_prepped$var <- rep('Selbstkonzept Deutsch', nrow(dat_prepped))
   dat_prepped$subgroup_var <- gsub("weiblich", "Mädchen", dat_prepped$subgroup_var)
   dat_prepped$subgroup_var <- gsub("maennlich", "Jungen", dat_prepped$subgroup_var)
   dat_prepped$subgroup_var <- gsub("total", "Gesamt", dat_prepped$subgroup_var)
-  dat_prepped$subgroup_var <- factor(dat_prepped$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen"), ordered = TRUE)
 
   # Currently, the order is steered by the bar_fill argument.
   dat_prepped <- subset(dat_prepped, parameter != "Ncases")
@@ -217,14 +216,40 @@ dat_prepped$label <- paste0(dat_prepped$est_NA_comp_none, "%")
 dat_prepped <- dat_prepped[dat_prepped$state_var == "total", ]
 
 
-dat_prepped$y_axis <- c(4, rep(1, 3), rep(2, 3), rep(3, 3))
-dat_prepped[1, "var"] <- "**Deutsch**"
 
-dat_eng <- dat_prepped
+
+dat_prepped_other_groups <- subset(dat_prepped[-1, ], subgroup_var != "Gesamt")
+dat_prepped_other_groups$subgroup_var <- gsub("Jungen","Max. 100 Bücher",  dat_prepped_other_groups$subgroup_var)
+dat_prepped_other_groups$subgroup_var <- gsub("Mädchen", "Mehr als 100 Bücher", dat_prepped_other_groups$subgroup_var)
+
+dat_prepped_other_groups2 <- subset(dat_prepped[-1, ], subgroup_var != "Gesamt")
+dat_prepped_other_groups2$subgroup_var <- gsub( "Jungen", "ZWH", dat_prepped_other_groups2$subgroup_var)
+dat_prepped_other_groups2$subgroup_var <- gsub( "Mädchen", "ohne ZWH", dat_prepped_other_groups2$subgroup_var)
+
+dat_prepped_3 <- rbind(dat_prepped, dat_prepped_other_groups, dat_prepped_other_groups2)
+
+dat_prepped_3$y_axis <- c(8, rep(1, 3), rep(2, 3), rep(3, 3), rep(4, 3), rep(5, 3), rep(6, 3), rep(7, 3))
+dat_prepped_3[1, "var"] <- "**Deutsch**"
+
+dat_eng <- dat_prepped_3
 dat_eng[1, "var"] <-  "**Englisch**"
-dat_eng$y_axis <- c(8, rep(5, 3), rep(6, 3), rep(7, 3))
+dat_eng$y_axis <- c(16, rep(9, 3), rep(10, 3), rep(11, 3), rep(12, 3), rep(13, 3), rep(14, 3), rep(15, 3))
 
-dat <- rbind(dat_prepped, dat_eng)
+
+dat_eng_2 <- dat_eng
+dat_eng[1, "var"] <-  "**Biologie**"
+dat_eng$y_axis <- c(24, rep(17, 3), rep(18, 3), rep(19, 3), rep(20, 3), rep(21, 3), rep(22, 3), rep(23,3))
+
+dat_eng_3 <- dat_eng
+dat_eng[1, "var"] <-  "**Mathe**"
+dat_eng$y_axis <- c(32, rep(25, 3), rep(26, 3), rep(27, 3), rep(28, 3), rep(29,3), rep(30, 3), rep(31,3))
+
+
+
+dat <- rbind(dat_prepped_3, dat_eng, dat_eng_2, dat_eng_3)
+
+#dat$subgroup_var <- factor(dat$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen", ""), ordered = TRUE)
+
 
 ## Everything that is in a stacked group needs to be duplicated per group and therefore, duplicates can be removed.
 
@@ -245,12 +270,12 @@ p_stacked <- plot_tablebarplot(dat,
                       bar_background_lines = "none",
                       bar_fill_colour = c("niedrig" =  "#20D479", "mittel" = "#8DEBBC", "hoch" = "#EBFDF3"),
                       bar_label_colour = c("niedrig" =  "white", "mittel" = "black", "hoch" = "black"),
-                      columns_alignment = c(0, 0.5),
+                      columns_alignment = c(0, 0),
                       columns_width = c(0.1, 0.1, 0.8),
                       ## noch nicht optimal:
-                      background_stripes_colour =  rep("white", 20),
+                      background_stripes_colour =  rep("white", nrow(dat)),
                       bar_label_size = 1.4,
-                      bar_label_nudge_x =rep(0.5, 20),
+                      bar_label_nudge_x =rep(0.5, nrow(dat)),
                     default_list = barplot_table_plot_pattern)) +
   ggplot2::theme(axis.ticks.x = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
 
@@ -269,11 +294,25 @@ dat_prepped_means$subgroup_var <- gsub("maennlich", "Jungen", dat_prepped_means$
 dat_prepped_means$subgroup_var <- gsub("total", "Gesamt", dat_prepped_means$subgroup_var)
 dat_prepped_means$subgroup_var <- factor(dat_prepped_means$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen"), ordered = TRUE)
 
-dat$subgroup_var[is.na(dat$subgroup_var)] <- ""
+dat_table_2 <- subset(dat_prepped_means, subgroup_var != "Gesamt")
+
+dat_table_3 <- subset(dat_prepped_means, subgroup_var != "Gesamt")
+
+dat_table_2$subgroup_var <- gsub( "Jungen", "ZWH", dat_table_2$subgroup_var)
+dat_table_2$subgroup_var <- gsub( "Mädchen", "ohne ZWH", dat_table_2$subgroup_var)
+
+dat_table_3$subgroup_var <- gsub("Jungen","Max. 100 Bücher", dat_table_3$subgroup_var)
+dat_table_3$subgroup_var <- gsub("Mädchen", "Mehr als 100 Bücher", dat_table_3$subgroup_var)
+
+dat2 <- rbind(dat_prepped_means, dat_table_2, dat_table_3)
+
+dat2
+
+# dat$subgroup_var[is.na(dat$subgroup_var)] <- ""
 
 ## Using join to preserve the order
 dat_table <- dat |>
-  dplyr::left_join(dat_prepped_means[, c("subgroup_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA" )])
+  dplyr::left_join(dat2[, c("subgroup_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA" )])
 
 ## remove duplicates
 dat_table_2 <- dat_table[, c("subgroup_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "var", "y_axis")]
@@ -296,15 +335,15 @@ p_table <- plot_tablebarplot(
     bar_background_lines = NULL,
     columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
     columns_width = rep(0.2, 5),
-    background_stripes_colour =  rep("white", 20),
-    columns_nudge_y = c(0, 0, -0.5, -0.5, -0.5),
+    background_stripes_colour =  rep("white", nrow(dat_table_u)),
+    columns_nudge_y = c(0, 0, 0.5, 0.5, 0.5),
   default_list = barplot_table_plot_pattern))
 
 
 p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  #+
   #canvas(210, 297.2/4,  units = "mm")
 
-save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/6, width = 210)
+save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4, width = 210)
 
 
 vdiffr::expect_doppelganger("Stacked barplot", p_stacked)
