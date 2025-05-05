@@ -173,8 +173,9 @@ construct_label_2 <- function(dat,
     )
     dat$label_est[dat$label_est == "NA"] <- ""
   }
+
   if (is.numeric(dat$label_se) & !is.null(round_se)) {
-    dat$label_se <- format(round(dat$label_se, round_se),
+    dat$label_se <- format(round(dat$label_se, round_est),
       trim = TRUE,
       nsmall = round_se
     )

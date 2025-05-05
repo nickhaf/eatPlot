@@ -57,13 +57,14 @@ prep_plot <- function(
   dat_unnested <- unnest_eatRep(eatRep_dat)
 
   ## Don't loose any comparisons!
-  no_comp_anywhere <- data.frame(id = 1:nrow(eatRep_dat$group),
-                                 comparison = "none",
-                                 unit = "unit_1",
-                                 value = eatRep_dat$group[!eatRep_dat$group$id %in% dat_unnested$value, "id" ])
+  if(any(!eatRep_dat$group$id %in% dat_unnested$value)){
+    no_comp_anywhere <- data.frame(id = 1:nrow(eatRep_dat$group),
+                                   comparison = "none",
+                                   unit = "unit_1",
+                                   value = eatRep_dat$group[!eatRep_dat$group$id %in% dat_unnested$value, "id" ])
 
-
-  dat_unnested <- rbind(dat_unnested, no_comp_anywhere)
+    dat_unnested <- rbind(dat_unnested, no_comp_anywhere)
+  }
 
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat, by = merge_by)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
@@ -225,7 +226,7 @@ pivot_eatRep <- function(eatRep_prepped,
   eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp|parameter", colnames(eatRep_prepped))]
 
   ## If parameter is not put into column names, it has to be filtered so we have unique rows for pivoting
-  if(!grepl("parameter", names_from_none)){
+  if(!any(grepl("parameter", names_from_none))){
     eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "parameter") | grepl("comp_none", colnames(eatRep_prepped))]
     eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split", "parameter") | grepl("comp$", colnames(eatRep_prepped))]
 

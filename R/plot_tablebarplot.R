@@ -164,6 +164,7 @@ plot_tablebarplot <- function(dat,
       dat <- construct_label_2(
         dat,
         new_name = new_colnames[i],
+        round_est = columns_round[[i]],
         label_se = columns_table_se[[i]]
       )
     }

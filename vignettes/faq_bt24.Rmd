@@ -27,8 +27,8 @@ Die meisten Punkte sind bereits in den sogenannten [Default lists](https://nickh
 ## Allgemeine Richtlinien
 
 Ganz generell ist wichtig zu wissen, dass die finalen Ausrichtungen, Schriftgrößen etc. immer davon abhängen, wie groß der Plot abgespeichert wird. 
-Schaut euch den Plot also in der finalen Größë (abgespeichert als PDF) an, bevor ihr Text einrückt oder die Schriftgröße ändert. 
-In der RStudio-Umgebung wird alles eventuell etwas verzogen dargestellt, weshalb ihr immer mit der finalen PDF-Größë abgleichen solltet. 
+Schaut euch den Plot also in der finalen Größe (abgespeichert als PDF) an, bevor ihr Text einrückt oder die Schriftgröße ändert. 
+In der RStudio-Umgebung wird alles eventuell etwas verzogen dargestellt, weshalb ihr immer mit der finalen PDF-Größe abgleichen solltet. 
 
 
 ### Ausrichtung von Kennwerten 
@@ -280,11 +280,11 @@ plotsettings_lineplot(line_type = c(
 
 
 -	Hochgestelltes `a`:
-    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen in Deutschland insgesamt
+    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen der seblen Gruppe in Deutschland
     * Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
   
--	Ausgefülltes Dreieck für Werte, die statistisch signifikant (p < .05) vom Wert der Gesamtpopulation abweichen.
--	Ausgefüllter Kreis für Werte, die statistisch nicht signifikant vom Wert der Gesamtpopulation abweichen.
+-	Ausgefülltes Dreieck für Werte, die statistisch signifikant (p < .05) vom Wert der selben Gruppe in der Gesamtpopulation abweichen.
+-	Ausgefüllter Kreis für Werte, die statistisch nicht signifikant vom Wert der selben Gruppe in der Gesamtpopulation abweichen.
 
 Ist bereits voreingestellt, kann zur Not so geändert werden:
 

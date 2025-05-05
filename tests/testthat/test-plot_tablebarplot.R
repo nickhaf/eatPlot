@@ -183,6 +183,9 @@ test_that("Stacked barplot works", {
   dat_prepped <- prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = NULL, names_from_none = c("year"),
                                    names_from_comp = c("comparison_split", "trend"), total_subgroup = "total") ## set to total!?
 
+  dat_prepped_means <- prep_tablebarplot(means, subgroup_var = "Kgender", parameter = c("mean", "sd"), total_subgroup = "total") ## set to total!?
+
+
   # dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
   # dat$subgroup_var <- dat$Kgender
   # dat$est <- dat$est * 100
@@ -227,6 +230,8 @@ dat <- rbind(dat_prepped, dat_eng)
 
 dat$est_NA_comp_none <- dat$est_NA_comp_none * 100
 
+### Abbildung 9.1
+
 library(ggview)
 p_stacked <- plot_tablebarplot(dat,
                     bar_est = "est_NA_comp_none",
@@ -237,7 +242,8 @@ p_stacked <- plot_tablebarplot(dat,
                     y_axis = "y_axis",
                     plot_settings = plotsettings_tablebarplot(
                       bar_type = "stacked",
-                      bar_fill_colour = c("niedrig" =  "#EBFDF3", "mittel" = "#8DEBBC", "hoch" = "#20D479"),
+                      bar_background_lines = "none",
+                      bar_fill_colour = c("niedrig" =  "#20D479", "mittel" = "#8DEBBC", "hoch" = "#EBFDF3"),
                       columns_alignment = c(0, 0.5),
                       columns_width = c(0.1, 0.1, 0.8),
                       ## noch nicht optimal:
@@ -247,27 +253,55 @@ p_stacked <- plot_tablebarplot(dat,
                     default_list = barplot_table_plot_pattern)) +
   ggplot2::theme(axis.ticks.x = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
 
-## Remove duplicates in relevant rows
-dat_table <- dat[!duplicated(dat[,  c("mean", "sd", "diff", "se", "d", "y_axis", "sig")]), c("y_axis","mean", "sd", "diff", "se", "d", "sig")]
+
+## The means are from a seperate analysis. Its important that the resulting table has the same number of rows as the stacked one.
+## Because in the stacked table we multiple rows in the data frame per row in the plot, we have to deal with the data accordingly:
+
+dat_prepped_means <- subset(dat_prepped_means, state_var == "total")
+
+## To be safe, we merge. This will keep the order:
+
+
+
+dat_prepped_means$subgroup_var <- gsub("weiblich", "Mädchen", dat_prepped_means$subgroup_var)
+dat_prepped_means$subgroup_var <- gsub("maennlich", "Jungen", dat_prepped_means$subgroup_var)
+dat_prepped_means$subgroup_var <- gsub("total", "Gesamt", dat_prepped_means$subgroup_var)
+dat_prepped_means$subgroup_var <- factor(dat_prepped_means$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen"), ordered = TRUE)
+
+dat$subgroup_var[is.na(dat$subgroup_var)] <- ""
+
+## Using join to preserve the order
+dat_table <- dat |>
+  dplyr::left_join(dat_prepped_means[, c("subgroup_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA" )])
+
+## remove duplicates
+dat_table_2 <- dat_table[, c("subgroup_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "var", "y_axis")]
+
+dat_table_u <- unique(dat_table_2)
+
+
+## Round auf zwei Stellen:
+dat_table_u$se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA
 
 p_table <- plot_tablebarplot(
-  dat_table,
-  columns_table = c("mean", "sd", "diff", "se", "d"),
-  headers = c("***M***", "***SD***", "***M<sub>M</sub> - M<sub>J</sub>***", "***(SE)***", "***d***"),
-  columns_table_se = list(NULL, NULL, NULL, "se", NULL),
+  dat_table_u,
+  columns_table = c("est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA"),
+  headers = c("***M***", "***SD***", "***M<sub>M</sub>-M<sub>J</sub>***", "***(SE)***", "***d***"),
+  columns_round = c(2, 2, 2, 2, 2),
+  columns_table_se = list(NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", NULL),
   y_axis = "y_axis",
-  columns_round = c(2, 2, 2, 2,2),
-  columns_table_sig_bold = list(NULL, NULL, 'sig', NULL, 'sig'),
+  columns_table_sig_bold = list(NULL, NULL, 'sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA', NULL, 'sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA'),
   plot_settings = plotsettings_tablebarplot(
-      columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
+    bar_background_lines = NULL,
+    columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
     columns_width = rep(0.2, 5),
     background_stripes_colour =  rep("white", 20),
     columns_nudge_y = c(0, 0, -0.5, -0.5, -0.5),
   default_list = barplot_table_plot_pattern))
 
 
-p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  +
-  canvas(210, 297.2/4,  units = "mm")
+p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  #+
+  #canvas(210, 297.2/4,  units = "mm")
 
 save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/6, width = 210)
 
