@@ -44,3 +44,8 @@ anteile <- report2(ant_Sskde22, add = list ( var = "Selbstkonzept Deutsch"))
 
 usethis::use_data(anteile, overwrite = TRUE)
 
+
+means_Sskde22 <- repMean(datL = datK9.d, ID="IDSTUD", wgt="totwgt", type="jk2", PSU="jkzone", repInd = "jkrep", imp = "imp",
+                        groups = c("TR_BUNDESLAND", "Kgender"), group.splits = 0:2, dependent = "Sfskde_kurz_imp", group.differences.by = "Kgender")
+means <- report2(means_Sskde22, add = list ( var = "Selbstkonzept Deutsch"))
+usethis::use_data(means, overwrite = TRUE)
