@@ -62,7 +62,6 @@ plot_tablebarplot <- function(dat,
   }
   check_columns(dat, c(bar_est, bar_label, bar_label_sig, bar_sig, bar_fill, unlist(columns_table), unlist(columns_table_sig_bold), unlist(columns_table_sig_superscript), unlist(columns_table_se), y_axis))
 
-
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
@@ -204,7 +203,6 @@ plot_tablebarplot <- function(dat,
   if (!is.null(bar_est)) {
     if(plot_settings$bar_type == "stacked") {
 plot_borders = c(0, 100)
-
 scale_breaks <- unique(c(
   seq(0, plot_borders[1], by = -10),
   seq(0, plot_borders[2], by = 10)
@@ -243,10 +241,9 @@ scale_breaks <- unique(c(
 dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
     # Reset row names
     rownames(dat) <- NULL
-
     dat <- dat[with(dat, order(y_axis, bar_fill)), ]
-    dat$x_axis_end <- stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum)
-    dat$x_axis_start <- dat$x_axis_end - dat$est
+    dat$x_axis_end <- round(stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum), 4)
+    dat$x_axis_start <- round(dat$x_axis_end - dat$bar_est, 4)
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start)/2
 
 

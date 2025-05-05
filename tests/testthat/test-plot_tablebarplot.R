@@ -189,7 +189,7 @@ test_that("Stacked barplot works", {
   #
   #
 
-  ## Umgang mit var? Wird aktuell entfernt!
+## If I wanted to keep var, I could put it into a merged subgroup column for now!
 
 dat_prepped$var <- rep('Selbstkonzept Deutsch', nrow(dat_prepped))
 
@@ -215,22 +215,17 @@ dat_prepped <- dat_prepped[dat_prepped$state_var == "total", ]
 
 
 dat_prepped$y_axis <- c(4, rep(1, 3), rep(2, 3), rep(3, 3))
-# dat <- dat[order(dat$y_axis, decreasing = TRUE), ]
-dat$mean <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
-dat$sd <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
-dat$diff <- c(NA, NA, NA, NA, 0.18, 0.18, 0.18, NA, NA, NA)
-dat$se <- c(NA, NA, NA, NA, 0.08, 0.08, 0.08, NA, NA, NA)
-dat$d <- c(NA, NA, NA, NA, 0.28, 0.28, 0.28, NA, NA, NA)
-dat$sig <- c(NA, NA, NA, NA, 0.04, 0.04, 0.04, NA, NA, NA)
+dat_prepped[1, "var"] <- "**Deutsch**"
 
-
-dat_eng <- dat
+dat_eng <- dat_prepped
 dat_eng[1, "var"] <-  "**Englisch**"
 dat_eng$y_axis <- c(8, rep(5, 3), rep(6, 3), rep(7, 3))
 
-dat <- rbind(dat, dat_eng)
+dat <- rbind(dat_prepped, dat_eng)
 
 ## Everything that is in a stacked group needs to be duplicated per group and therefore, duplicates can be removed.
+
+dat$est_NA_comp_none <- dat$est_NA_comp_none * 100
 
 library(ggview)
 p_stacked <- plot_tablebarplot(dat,
@@ -246,7 +241,7 @@ p_stacked <- plot_tablebarplot(dat,
                       columns_alignment = c(0, 0.5),
                       columns_width = c(0.1, 0.1, 0.8),
                       ## noch nicht optimal:
-                      background_stripes_colour =  rep(c("white", rep("#EBFDF3", 3), rep("white", 3), rep("#EBFDF3", 3)), columns_width = c(0.2, 0.15, 0.65),2),
+                      background_stripes_colour =  rep("white", 20),
                       bar_label_size = 1.4,
                       bar_label_nudge_x =rep(0.5, 20),
                     default_list = barplot_table_plot_pattern)) +
@@ -266,7 +261,7 @@ p_table <- plot_tablebarplot(
   plot_settings = plotsettings_tablebarplot(
       columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
     columns_width = rep(0.2, 5),
-    background_stripes_colour =  rep(c("white", "#EBFDF3", "white",  "#EBFDF3"),2),
+    background_stripes_colour =  rep("white", 20),
     columns_nudge_y = c(0, 0, -0.5, -0.5, -0.5),
   default_list = barplot_table_plot_pattern))
 
