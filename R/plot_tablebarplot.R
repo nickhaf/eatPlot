@@ -264,6 +264,12 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
     colname = "bar_fill"
   )
 
+  plot_settings$bar_label_colour <- construct_colour_scale(
+    colours = plot_settings$bar_label_colour,
+    dat = dat,
+    colname = "bar_fill"
+  )
+
   # Plot --------------------------------------------------------------------
   x_right_lim <- max(column_x_coords$right) +
     plot_settings$space_right
@@ -413,18 +419,20 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
   if (!is.null(bar_label)) {
 
       res_plot <- res_plot +
+        ggnewscale::new_scale_colour() +
       ggtext::geom_richtext(
         ggplot2::aes(
           x = .data$bar_label,
-          label = .data$bar_label_text
+          label = .data$bar_label_text,
+          colour = .data$bar_fill
         ),
-        colour = "#000000",
         label.padding = grid::unit(rep(0, 4), "pt"),
         fill = NA,
         label.color = NA,
         hjust = plot_settings$bar_label_nudge_x,
         size = plot_settings$bar_label_size
-      )
+      ) +
+        ggplot2::scale_colour_manual(values = plot_settings$bar_label_colour)
     }
   # Column spanners ---------------------------------------------------------
   plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)

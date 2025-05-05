@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 41
+      length(settings_list) == 42
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -19,6 +19,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_background_lines_spanners",
         "bar_fill_colour",
         "bar_frame_linetype",
+        "bar_label_colour",
         "bar_label_nudge_x",
         "bar_label_size",
         "bar_line_width",
@@ -64,6 +65,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(unlist(settings_list$bar_background_lines_spanners)) | is.null(settings_list$bar_background_lines_spanners))
   stopifnot(all(is_colour(settings_list$bar_fill_colour)))
   stopifnot(is.character(settings_list$bar_frame_linetype))
+  stopifnot(all(is_colour(settings_list$bar_label_colour)))
   stopifnot(is.numeric(settings_list$bar_label_nudge_x))
   stopifnot(is.numeric(settings_list$bar_label_size))
   stopifnot(is.numeric(settings_list$bar_line_width))
@@ -186,6 +188,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
                                       bar_background_lines_spanners = NULL,
                                       bar_fill_colour = NULL,
                                       bar_frame_linetype = NULL,
+                                      bar_label_colour = NULL,
                                       bar_label_nudge_x = NULL,
                                       bar_label_size = NULL,
                                       bar_line_width = NULL,
@@ -231,6 +234,7 @@ plotsettings_tablebarplot <- function(axis_x_label_size = NULL,
       "bar_background_lines_spanners" = NULL,
       "bar_fill_colour" = "white",
       "bar_frame_linetype" = "solid",
+      "bar_label_colour" = "black",
       "bar_label_size" = 2,
       "bar_label_nudge_x" = 0,
       "bar_line_width" = 0.5,

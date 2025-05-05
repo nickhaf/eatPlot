@@ -244,6 +244,7 @@ p_stacked <- plot_tablebarplot(dat,
                       bar_type = "stacked",
                       bar_background_lines = "none",
                       bar_fill_colour = c("niedrig" =  "#20D479", "mittel" = "#8DEBBC", "hoch" = "#EBFDF3"),
+                      bar_label_colour = c("niedrig" =  "white", "mittel" = "black", "hoch" = "black"),
                       columns_alignment = c(0, 0.5),
                       columns_width = c(0.1, 0.1, 0.8),
                       ## noch nicht optimal:
