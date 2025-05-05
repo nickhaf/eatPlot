@@ -318,10 +318,21 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
       fill = plot_settings$headers_background_colour
     ) +
     theme_table(plot_settings) +
-    plot_capped_x_axis(scale_breaks) +
     ## Horizontal background lines around header box:
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max_y, yend = max_y, linewidth = 0.1)
+
+    if(!plot_settings$axis_x){
+
+    res_plot <- res_plot +
+      ggplot2::theme(axis.title.x = ggplot2::element_blank(),
+                     axis.text.x = ggplot2::element_blank(),
+                     axis.ticks.x = ggplot2::element_blank(),
+                     axis.line = ggplot2::element_blank())
+  }else{
+    res_plot <- res_plot +
+      plot_capped_x_axis(scale_breaks)
+  }
 
   if (!is.null(bar_est)) {
 
@@ -476,6 +487,8 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
       n_table_cols,
       plot_settings
     )
+
+
   return(res_plot)
 }
 

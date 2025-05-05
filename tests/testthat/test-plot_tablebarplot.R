@@ -266,6 +266,7 @@ p_stacked <- plot_tablebarplot(dat,
                     headers = c("**Merkmal**", "", ""),
                     y_axis = "y_axis",
                     plot_settings = plotsettings_tablebarplot(
+                      axis_x = FALSE,
                       bar_type = "stacked",
                       bar_background_lines = "none",
                       bar_fill_colour = c("niedrig" =  "#20D479", "mittel" = "#8DEBBC", "hoch" = "#EBFDF3"),
@@ -276,9 +277,7 @@ p_stacked <- plot_tablebarplot(dat,
                       background_stripes_colour =  rep("white", nrow(dat)),
                       bar_label_size = 1.4,
                       bar_label_nudge_x =rep(0.5, nrow(dat)),
-                    default_list = barplot_table_plot_pattern)) +
-  ggplot2::theme(axis.ticks.x = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
-
+                    default_list = barplot_table_plot_pattern))
 
 ## The means are from a seperate analysis. Its important that the resulting table has the same number of rows as the stacked one.
 ## Because in the stacked table we multiple rows in the data frame per row in the plot, we have to deal with the data accordingly:
