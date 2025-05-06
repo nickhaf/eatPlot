@@ -139,6 +139,7 @@ lineplot_germany <- plot_lineplot(
   point_sig = NULL,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
+  brace_label_sig_superscript = NULL, 
   facet_var = "kb",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
@@ -172,6 +173,7 @@ lineplot_germany_2 <- plot_lineplot(
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   facet_var = "kb",
   background_subgroup = "total",
+    brace_label_sig_superscript = NULL, 
   plot_settings = plotsettings_lineplot(
     subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     brace_label_nudge_x = 0.23,

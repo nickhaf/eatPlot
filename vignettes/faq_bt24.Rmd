@@ -304,9 +304,28 @@ Hier findet sich eine Übersicht über die Signifikanzen der Vergleiche, die auf
 
 ## Linienplots
 
-|Darstellung|Bedeutung|Werte|Umsetzung in `eatPlot`|Name in `eatRep`|
-|-------------------------------------------------------------------|
-|Punktform|Vergleich der Gruppe im Bundesland zur gleichen Gruppe in Gesamtdeutschland|rund: nicht signifikant, eckig: signifikant|`point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup"`|`crossDiff (Berlin_female - total_female)  for year 2009`|
-|Linienart|Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im anderen Jahr|durchgezogen: signifikant, gestrichelt: nicht signifikant|`line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`|`trend (2015 - 2009) for BadenWuerttemberg_female`|
-|Stärke des Labels unter den Klammern|So wie Linienart|Fett: signifikant, normal: nicht signifikant|`brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`|`trend (2015 - 2009) for BadenWuerttemberg_female` |
-|Hochgestellter Buchstabe im Label unter den Klammern|So wie Punktform, nur als Trend: Vergleich des Trends in einer Gruppe zum gleichen Trend in der selben Gruppe, aber in Gesamtdeutschland|`brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"`|trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)|
+Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung von der Linie!
+
+| Darstellung                           | Bedeutung                                                                                                     | Werte                                                                                           | Umsetzung in `eatPlot`                                                  | Name in `eatRep`                                                    |
+|--------------------------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------|
+| Punktform                            | Vergleich der Gruppe im Bundesland zur gleichen Gruppe in Gesamtdeutschland                                  | rund: nicht signifikant, eckig: signifikant                                                     | `point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup"`          | `crossDiff (Berlin_female - total_female) for year 2009`            |
+| Linienart                            | Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant                                       | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                | `trend (2015 - 2009) for BadenWuerttemberg_female`                  |
+| Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`                  |
+| Hochgestellter Buchstabe im Label    | So wie Punktform, nur als Trend: Vergleich des Trends in einer Gruppe zum gleichen Trend in Gesamtdeutschland | —                                                                                                | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"` | `trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)` |
+ 
+ 
+### Gesamtdeutschland-Plots
+| Darstellung                           | Bedeutung                                                                                                     | Werte                                                                                           | Umsetzung in `eatPlot`                                                  | Name in `eatRep`                                                    |
+|--------------------------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------
+|Punktform| Nicht gentutzt| | |
+|Linienart| Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant                                       | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                | `trend (2015 - 2009) for BadenWuerttemberg_female`|
+| Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`   
+|Hochgestellter Buchstabe im Label| Nicht genutzt| | |
+
+### Deutschland-Kachel in Länderplots
+Genau das gleiche wie in den normalen Linienplots. 
+Im alten BT hatten wir ja nicht die Gruppen verglichen, sondern vs. Deutschland insgesamt. 
+
+
+## Tableplots
+Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt immer von der jeweiligen Abbildung ab. 

@@ -35,8 +35,8 @@ lineplot_4x4 <- plotsettings_lineplot(
   point_label_nudge_y = 0.09,
   point_label_size = 2,
   point_shapes = c(
-    "TRUE" = 17,
-    "FALSE" = 16
+    "TRUE" = 17, ## Triangle
+    "FALSE" = 16 ## Circle
   ),
   point_size = 1.7,
   split_plot = FALSE,
