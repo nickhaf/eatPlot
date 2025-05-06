@@ -179,18 +179,11 @@ test_that("Vlines are plotted correctly", {
 # test_that("Stacked barplot works", {
 #
 #
-#   ## Einstellungen noch unter "stacked" = TRUE zusammenführen
+  ## Einstellungen noch unter "stacked" = TRUE zusammenführen
 #   dat_prepped <- prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = NULL, names_from_none = c("year"),
 #                                    names_from_comp = c("comparison_split", "trend"), total_subgroup = "total") ## set to total!?
 #
 #   dat_prepped_means <- prep_tablebarplot(means, subgroup_var = "Kgender", parameter = c("mean", "sd"), total_subgroup = "total") ## set to total!?
-#
-#
-#   # dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
-#   # dat$subgroup_var <- dat$Kgender
-#   # dat$est <- dat$est * 100
-#   #
-#   #
 #
 # ## If I wanted to keep var, I could put it into a merged subgroup column for now!
 #

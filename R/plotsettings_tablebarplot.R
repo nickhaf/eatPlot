@@ -115,6 +115,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_background_lines_spanners List containing of numeric vectors of two elements for indicating over which rows the background_lines in the barplot should span. Each vector contains the start and end row for the background line. Defaults to `NULL`, in which case The background_lines will be drawn from top to bottom.
 #' @param bar_fill_colour Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in `bar_fill`. If no names are provided for the vector, the order of the factor levels of `bar_fill` will be used for determining the colour assignment.
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebarplot()`. Defaults to `solid`.
+#' @param bar_label_colour Colour of the bar labels. Can either be a single colour, or a named vector that contains the colour for each group defined in `bar_fill`. Defaults to `"black"`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_width Numeric for the line-size around the bar.

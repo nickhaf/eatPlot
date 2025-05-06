@@ -5,6 +5,7 @@
 #'
 
 #' @param facet_var Character string of the variable containing information on groups some of the comparisons are made against. This is needed to decosntruct comparisons like `crossDiff` into `crossDiff` and `crossDiffTotal` (so a crossDiff comparison against the total group). Name might be a bit confusing, but is the same as in `prep_lineplot`. Defaults to `TR_BUNDESLAND`.
+#' @param ... Further arguments to be passed through, needed for pivoting the data internally. Only temporary, will be removed.
 #'
 #' @return Data prepared for plotting the BT-lineplots.
 #' @export

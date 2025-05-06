@@ -113,6 +113,20 @@
 #' }
 "anteile"
 
+
+#' BT24 example data.
+#'
+#' Example data that goes with the `anteile` data, but calculates its means.
+#'
+#' @format ## `means`
+#' A list with four elements.
+#' \describe{
+#'   ...
+#' }
+"means"
+
+
+
 #' BT24 example data.
 #'
 #' Example data with grouping var with multiple levels.

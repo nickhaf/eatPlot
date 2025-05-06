@@ -1,9 +1,12 @@
-# eatPlot (development version)
+# eatPlot 1.1.1
+* Bugfix in `prep_tableplot()`: groups that didn't have any comparison were removed in the prepping process, this is changed now. 
+* Implemented stacked barplots. 
 * `columns_nudge_y` in `plotsettings_tablebarplot()` now works rowwise as well. 
 * Improved rendering of greek letters with linebreak, using lists instead of ´atop()´.
 * Implemented more modular options for plotting lines for different years over different facets in `plot_lineplot()`. 
 * Removed `standardize_pattern_spacing()`, as it did not work as expected. 
 Try around with the pattern spacing instead, and take the template plots as orientation. 
+
 
 # eatPlot 1.1.0
 * Internally changed the data preperation workflow. 
