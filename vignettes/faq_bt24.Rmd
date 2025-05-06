@@ -324,6 +324,7 @@ Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung v
 
 ### Deutschland-Kachel in Länderplots
 Genau das gleiche wie in den normalen Linienplots. 
+Die Vergleiche vs. Deutschland sind hier automatisch nicht signifikant gesetzt. 
 Im alten BT hatten wir ja nicht die Gruppen verglichen, sondern vs. Deutschland insgesamt. 
 
 
