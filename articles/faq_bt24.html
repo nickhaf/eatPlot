@@ -420,25 +420,125 @@ werden.</p>
 <div class="section level3">
 <h3 id="linienplots">Linienplots<a class="anchor" aria-label="anchor" href="#linienplots"></a>
 </h3>
+<p>Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi
+Abweichung von der Linie!</p>
 <table class="table">
+<colgroup>
+<col width="9%">
+<col width="28%">
+<col width="25%">
+<col width="18%">
+<col width="17%">
+</colgroup>
 <thead><tr class="header">
 <th>Darstellung</th>
+<th>Bedeutung</th>
+<th>Werte</th>
+<th>Umsetzung in <code>eatPlot</code>
+</th>
+<th>Name in <code>eatRep</code>
+</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td>Punktform</td>
+<td>Vergleich der Gruppe im Bundesland zur gleichen Gruppe in
+Gesamtdeutschland</td>
+<td>rund: nicht signifikant, eckig: signifikant</td>
+<td><code>point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup"</code></td>
+<td><code>crossDiff (Berlin_female - total_female) for year 2009</code></td>
 </tr>
 <tr class="even">
 <td>Linienart</td>
+<td>Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen
+Jahr zu der gleichen Gruppe im anderen Jahr</td>
+<td>durchgezogen: signifikant, gestrichelt: nicht signifikant</td>
+<td><code>line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"</code></td>
+<td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
 </tr>
 <tr class="odd">
 <td>Stärke des Labels unter den Klammern</td>
+<td>So wie Linienart</td>
+<td>Fett: signifikant, normal: nicht signifikant</td>
+<td><code>brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"</code></td>
+<td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
 </tr>
 <tr class="even">
-<td>Hochgestellter Buchstabe im Label unter den Klammern</td>
+<td>Hochgestellter Buchstabe im Label</td>
+<td>So wie Punktform, nur als Trend: Vergleich des Trends in einer
+Gruppe zum gleichen Trend in Gesamtdeutschland</td>
+<td>—</td>
+<td><code>brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"</code></td>
+<td><code>trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)</code></td>
 </tr>
 </tbody>
 </table>
+<div class="section level4">
+<h4 id="gesamtdeutschland-plots">Gesamtdeutschland-Plots<a class="anchor" aria-label="anchor" href="#gesamtdeutschland-plots"></a>
+</h4>
+<table class="table">
+<colgroup>
+<col width="9%">
+<col width="28%">
+<col width="25%">
+<col width="18%">
+<col width="17%">
+</colgroup>
+<thead><tr class="header">
+<th>Darstellung</th>
+<th>Bedeutung</th>
+<th>Werte</th>
+<th>Umsetzung in <code>eatPlot</code>
+</th>
+<th>Name in <code>eatRep</code>
+</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Punktform</td>
+<td>Nicht gentutzt</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Linienart</td>
+<td>Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen
+Jahr zu der gleichen Gruppe im anderen Jahr</td>
+<td>durchgezogen: signifikant, gestrichelt: nicht signifikant</td>
+<td><code>line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"</code></td>
+<td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
+</tr>
+<tr class="odd">
+<td>Stärke des Labels unter den Klammern</td>
+<td>So wie Linienart</td>
+<td>Fett: signifikant, normal: nicht signifikant</td>
+<td><code>brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"</code></td>
+<td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
+</tr>
+<tr class="even">
+<td>Hochgestellter Buchstabe im Label</td>
+<td>Nicht genutzt</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level4">
+<h4 id="deutschland-kachel-in-länderplots">Deutschland-Kachel in Länderplots<a class="anchor" aria-label="anchor" href="#deutschland-kachel-in-l%C3%A4nderplots"></a>
+</h4>
+<p>Genau das gleiche wie in den normalen Linienplots. Im alten BT hatten
+wir ja nicht die Gruppen verglichen, sondern vs. Deutschland
+insgesamt.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="tableplots">Tableplots<a class="anchor" aria-label="anchor" href="#tableplots"></a>
+</h3>
+<p>Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt
+immer von der jeweiligen Abbildung ab.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
