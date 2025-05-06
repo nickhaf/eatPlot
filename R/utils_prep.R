@@ -48,20 +48,61 @@ prep_plot <- function(
   eatRep_dat$estimate$sig <- ifelse(eatRep_dat$estimate$p < sig_niveau & !is.na(eatRep_dat$estimate$p), TRUE, FALSE)
 
   # Filtering ---------------------------------------------------------------
-  eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]
+  merge_by <- c("id", "parameter")
+  if(!is.null(parameter)){
+    eatRep_dat$estimate <- eatRep_dat$estimate[eatRep_dat$estimate$parameter %in% parameter, ]
+    merge_by <- c("id")
+  }
+
   dat_unnested <- unnest_eatRep(eatRep_dat)
-  dat_merged <- merge_eatRep(dat_unnested, eatRep_dat)
+
+  ## Don't loose any comparisons!
+  if(any(!eatRep_dat$group$id %in% dat_unnested$value)){
+    no_comp_anywhere <- data.frame(id = 1:nrow(eatRep_dat$group),
+                                   comparison = "none",
+                                   unit = "unit_1",
+                                   value = eatRep_dat$group[!eatRep_dat$group$id %in% dat_unnested$value, "id" ])
+
+    dat_unnested <- rbind(dat_unnested, no_comp_anywhere)
+  }
+
+  dat_merged <- merge_eatRep(dat_unnested, eatRep_dat, by = merge_by)
+
+  ## Warum gibt es keine comparison = none mehr?
+  ## Das muss gesondert ran und darf dann unten nicht mehr entfernt werden!
+  ## Und warum hat es bei meinem Stacked beispiel geklappt?
+  ## Weil es da noch eine comparison mit total gab!
+  ## Also: in prep_comparisons reingehen, alle Gruppen die vorher drin waren und jetzt nicht mehr drin sind identifizieren und nohcmal ranhängen, ABER: Ohne irgendwelche comparisons!
+
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
+
+  dat_merged$value[!dat_merged$value %in% dat_prepped$value]
+
+  ## WEnn hier noch etwas fehlt, gab es dafür keinen Vergleich, aber eine non-comparison.
+  ## Die wurde jetzt entfernt, weil letztendlich nur die comparisons interessant waren bisher.
+  ## Also:: Identifizieren der group_1 in einem non-comparison context und dann ranhängen.
+
+
+
+  ## Hier ist total dann nicht mehr drin.
+  ## Das liegt daran, dass es in keiner comparison vorkommt.
+  ## Das wiederum kommt daher, dass total als duplicate entfernt wird.
+  ## Da total aber entweder nur als Vergleich oder gänzlich ohne Vergleich vorkommt, wird es hier nicht rangemerged
+  ## Ich muss also irgendwo von NoComp commen, und total ranmergen!
+
+
   dat_wide <- pivot_eatRep(dat_prepped,
                            names_from_none = names_from_none,
                            names_from_comp = names_from_comp,
                            plot_type = plot_type)
+
   dat_wide <- dat_wide[order(dat_wide$state_var), ]
   dat_wide <- dat_wide[, colSums(!is.na(dat_wide)) > 0]
 }
 
 
 unnest_eatRep <- function(eatRep_dat) {
+
   if (nrow(eatRep_dat$comparisons) == 0) {
     eatRep_out <- data.frame(
       "id" = eatRep_dat$group[, "id"],
@@ -107,7 +148,7 @@ unnest_eatRep <- function(eatRep_dat) {
   return(comp_long_noComps)
 }
 
-merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
+merge_eatRep <- function(eatRep_unnested, eatRep_dat, by, stacked = TRUE) {
 
   dat_group <- merge(eatRep_unnested,
     eatRep_dat$group,
@@ -116,17 +157,36 @@ merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
     by.y = "id"
   )
 
+
   dat_group_est <- merge(dat_group,
     eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
     by.x = "value",
     by.y = "id"
   )
 
-  dat_group_long <- merge(dat_group_est,
-    eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
-    by = "id",
-    suffixes = c("_comp_none", "_comp")
-  )
+  ## Up to here totao_subgroup is still in it, IF total_subgroup is set to "" outside
+
+
+  ## Ncases gets removed here, bad?
+  if(stacked){
+    dat_group_long <- merge(dat_group_est,
+                            eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
+                            by = by,
+                            suffixes = c("_comp_none", "_comp"),
+                            all = TRUE
+    )
+
+    dat_group_long <- dat_group_long[!is.na(dat_group_long$subgroup_var), ]
+
+  }else{
+    dat_group_long <- merge(dat_group_est,
+                            eatRep_dat$estimate[, c("id", "est", "se", "p", "es", "sig", "parameter")],
+                            by = by,
+                            suffixes = c("_comp_none", "_comp")
+    )
+
+  }
+
   if (nrow(eatRep_dat$comparisons) == 0) {
     dat_group_long[, grep("_comp$", colnames(dat_group_long))] <- NA
   }
@@ -136,10 +196,10 @@ merge_eatRep <- function(eatRep_unnested, eatRep_dat) {
 }
 
 prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgroup = NULL) {
+
   #dat_hardest <- eatRep_merged[eatRep_merged$comparison != "trend_crossDiff_of_groupDiff", ]
   dat_hardest <- eatRep_merged
   id_list <- split(dat_hardest, dat_hardest$id)
-
   df_list <- lapply(id_list, function(x) {
     ## Split the facet comparisons
     if (length(unique(x$state_var)) == 1) {
@@ -174,8 +234,16 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
     return(x)
   })
 
+
   dat_comp <- do.call(rbind, df_list)
-  return(dat_comp)
+
+  ## All groups that aren't anywhere in the data now were lost.
+
+  missing_groups <- unique(eatRep_merged[!eatRep_merged$value %in% dat_comp$value, c("value", "state_var", "subgroup_var", "year", grep("comp_none", colnames(eatRep_merged), value = TRUE))])
+
+  dat_comp_2 <- dplyr::bind_rows(dat_comp, missing_groups)
+
+  return(dat_comp_2)
 }
 
 pivot_eatRep <- function(eatRep_prepped,
@@ -187,11 +255,20 @@ pivot_eatRep <- function(eatRep_prepped,
 
   eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp|parameter", colnames(eatRep_prepped))]
 
-  ## Split into comparions und comparison_none
-  eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp_none", colnames(eatRep_prepped))]
-  eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split") | grepl("comp$", colnames(eatRep_prepped))]
+  ## If parameter is not put into column names, it has to be filtered so we have unique rows for pivoting
+  if(!any(grepl("parameter", names_from_none))){
+    eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "parameter") | grepl("comp_none", colnames(eatRep_prepped))]
+    eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split", "parameter") | grepl("comp$", colnames(eatRep_prepped))]
+
+   }else{
+     eatRep_prepped_none <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend") | grepl("comp_none", colnames(eatRep_prepped))]
+     eatRep_prepped_comp <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "comparison_split") | grepl("comp$", colnames(eatRep_prepped))]
+        }
+
 
   eatRep_prepped_none$trend <- NULL
+
+  ## Hier muss parameter in diesem Fall auch rein, damit Identifikation stimmt!!
   eatRep_prepped_none_wide <- tidyr::pivot_wider(
     unique(eatRep_prepped_none),
     names_from = tidyr::all_of(names_from_none),

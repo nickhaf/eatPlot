@@ -10,6 +10,7 @@ barplot_table_plot_pattern <- plotsettings_tablebarplot(
     cmyk(20, 0, 10, 4)
   ),
   bar_frame_linetype = c(`TRUE` = "solid", `FALSE` = "dashed"),
+  bar_label_colour = "black",
   bar_line_width = 0.1,
   bar_pattern_fill_colour = "white",
   bar_pattern_type = c("FALSE" = "stripe", "TRUE" = "none"),
@@ -29,7 +30,6 @@ usethis::use_data(barplot_table_plot_pattern, overwrite = TRUE)
 
 abb_6.5 <- plotsettings_tablebarplot(
   axis_x_lims = c(0, 70),
-  background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3)),
   bar_nudge_y = rep(c(-0.1, 0.1), 34 / 2),
   columns_alignment = c(0, rep(2, 6)),
   columns_nudge_y = c(-0.5, rep(-0.5, 3), rep(0.5, 3)),

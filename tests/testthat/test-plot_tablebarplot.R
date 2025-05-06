@@ -177,104 +177,165 @@ test_that("Vlines are plotted correctly", {
 })
 
 # test_that("Stacked barplot works", {
-#   prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = c("niedrig", "mittel", "hoch")) ## Gar nicht nötig?
-#
-#   ## Zur not muss man sich die benötigten Parameter selbst zusammenfiltern und dann cbinden
-#
-#   dat <- anteile$plain[anteile$plain$parameter != "Ncases", ]
-#   dat$subgroup_var <- dat$Kgender
-#   dat$est <- dat$est * 100
-#   dat$label <- paste0(dat$est, "%")
 #
 #
+  ## Einstellungen noch unter "stacked" = TRUE zusammenführen
+#   dat_prepped <- prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = NULL, names_from_none = c("year"),
+#                                    names_from_comp = c("comparison_split", "trend"), total_subgroup = "total") ## set to total!?
+#
+#   dat_prepped_means <- prep_tablebarplot(means, subgroup_var = "Kgender", parameter = c("mean", "sd"), total_subgroup = "total") ## set to total!?
+#
+# ## If I wanted to keep var, I could put it into a merged subgroup column for now!
+#
+# dat_prepped$var <- rep('Selbstkonzept Deutsch', nrow(dat_prepped))
 #
 #
-# dat$subgroup_var <- gsub("weiblich", "Mädchen", dat$subgroup_var)
-# dat$subgroup_var <- gsub("maennlich", "Jungen", dat$subgroup_var)
-# dat$subgroup_var <- gsub("total", "Gesamt", dat$subgroup_var)
-# dat$subgroup_var <- factor(dat$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen"), ordered = TRUE)
-# dat$var <- gsub('Selbstkonzept Deutsch', 'Selbstkonzept', dat$var)
-# #Currently, the order is steered by the bar_fill argument.
-# dat$parameter <- factor(dat$parameter, levels = c("niedrig", "mittel", "hoch"), ordered = TRUE)
-# dat <- dat[order(dat$subgroup_var), ]
-# dat[duplicated(dat$var ), 'var'] <- NA
+#   dat_prepped$subgroup_var <- gsub("weiblich", "Mädchen", dat_prepped$subgroup_var)
+#   dat_prepped$subgroup_var <- gsub("maennlich", "Jungen", dat_prepped$subgroup_var)
+#   dat_prepped$subgroup_var <- gsub("total", "Gesamt", dat_prepped$subgroup_var)
+#
+#   # Currently, the order is steered by the bar_fill argument.
+#   dat_prepped <- subset(dat_prepped, parameter != "Ncases")
+#   dat_prepped$parameter <- factor(  dat_prepped$parameter, levels = c("niedrig", "mittel", "hoch"), ordered = TRUE)
+#   dat_prepped <-   dat_prepped[order(  dat_prepped$subgroup_var), ]
+#   dat_prepped[duplicated(  dat_prepped$var ), 'var'] <- NA
 #
 #
-# na_row <- as.data.frame(matrix(NA, nrow = 1, ncol = ncol(dat)))
-# colnames(na_row) <- colnames(dat)
-# dat <- rbind(na_row, dat)
-# dat[1, "var"] <- "**Deutsch**"
+# na_row <- as.data.frame(matrix(NA, nrow = 1, ncol = ncol(dat_prepped)))
+# colnames(na_row) <- colnames(dat_prepped)
+# dat_prepped <- rbind(na_row, dat_prepped)
+# dat_prepped[1, "var"] <- "**Deutsch**"
+# dat_prepped$label <- paste0(dat_prepped$est_NA_comp_none, "%")
+# dat_prepped <- dat_prepped[dat_prepped$state_var == "total", ]
 #
 #
-# dat$y_axis <- c(4, rep(1, 3), rep(2, 3), rep(3, 3))
-# # dat <- dat[order(dat$y_axis, decreasing = TRUE), ]
-# dat$mean <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
-# dat$sd <- c(NA, rep(1, 3), rep(2, 3), rep(3, 3))
-# dat$diff <- c(NA, NA, NA, NA, 0.18, 0.18, 0.18, NA, NA, NA)
-# dat$se <- c(NA, NA, NA, NA, 0.08, 0.08, 0.08, NA, NA, NA)
-# dat$d <- c(NA, NA, NA, NA, 0.28, 0.28, 0.28, NA, NA, NA)
-# dat$sig <- c(NA, NA, NA, NA, 0.04, 0.04, 0.04, NA, NA, NA)
 #
 #
-# dat_eng <- dat
+# dat_prepped_other_groups <- subset(dat_prepped[-1, ], subgroup_var != "Gesamt")
+# dat_prepped_other_groups$subgroup_var <- gsub("Jungen","Max. 100 Bücher",  dat_prepped_other_groups$subgroup_var)
+# dat_prepped_other_groups$subgroup_var <- gsub("Mädchen", "Mehr als 100 Bücher", dat_prepped_other_groups$subgroup_var)
+#
+# dat_prepped_other_groups2 <- subset(dat_prepped[-1, ], subgroup_var != "Gesamt")
+# dat_prepped_other_groups2$subgroup_var <- gsub( "Jungen", "ZWH", dat_prepped_other_groups2$subgroup_var)
+# dat_prepped_other_groups2$subgroup_var <- gsub( "Mädchen", "ohne ZWH", dat_prepped_other_groups2$subgroup_var)
+#
+# dat_prepped_3 <- rbind(dat_prepped, dat_prepped_other_groups, dat_prepped_other_groups2)
+#
+# dat_prepped_3$y_axis <- c(8, rep(1, 3), rep(2, 3), rep(3, 3), rep(4, 3), rep(5, 3), rep(6, 3), rep(7, 3))
+# dat_prepped_3[1, "var"] <- "**Deutsch**"
+#
+# dat_eng <- dat_prepped_3
 # dat_eng[1, "var"] <-  "**Englisch**"
-# dat_eng$y_axis <- c(8, rep(5, 3), rep(6, 3), rep(7, 3))
+# dat_eng$y_axis <- c(16, rep(9, 3), rep(10, 3), rep(11, 3), rep(12, 3), rep(13, 3), rep(14, 3), rep(15, 3))
 #
-# dat <- rbind(dat, dat_eng)
+#
+# dat_eng_2 <- dat_eng
+# dat_eng[1, "var"] <-  "**Biologie**"
+# dat_eng$y_axis <- c(24, rep(17, 3), rep(18, 3), rep(19, 3), rep(20, 3), rep(21, 3), rep(22, 3), rep(23,3))
+#
+# dat_eng_3 <- dat_eng
+# dat_eng[1, "var"] <-  "**Mathe**"
+# dat_eng$y_axis <- c(32, rep(25, 3), rep(26, 3), rep(27, 3), rep(28, 3), rep(29,3), rep(30, 3), rep(31,3))
+#
+#
+#
+# dat <- rbind(dat_prepped_3, dat_eng, dat_eng_2, dat_eng_3)
+#
+# #dat$subgroup_var <- factor(dat$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen", ""), ordered = TRUE)
+#
 #
 # ## Everything that is in a stacked group needs to be duplicated per group and therefore, duplicates can be removed.
-# #
-# # column_widths_stand <- standardize_column_width(
-# #   column_widths = list(
-# #     p1 = c(0.25, 0.25, NA),
-# #     p2 = c(0.25, 0.25),
-# #   ),
-# #   plot_ranges = c(40, 50, 20) # Range of the x-axes of both plots set in 'axis_x_lims'.
-# # )
+#
+# dat$est_NA_comp_none <- dat$est_NA_comp_none * 100
+#
+# ### Abbildung 9.1
 #
 # library(ggview)
 # p_stacked <- plot_tablebarplot(dat,
-#                     bar_est = "est",
+#                     bar_est = "est_NA_comp_none",
 #                     bar_label = "label",
 #                     bar_fill = "parameter",
 #                     columns_table = c("var", "subgroup_var"),
 #                     headers = c("**Merkmal**", "", ""),
 #                     y_axis = "y_axis",
 #                     plot_settings = plotsettings_tablebarplot(
+#                       axis_x = FALSE,
 #                       bar_type = "stacked",
-#                       bar_fill_colour = c("niedrig" =  "#EBFDF3", "mittel" = "#8DEBBC", "hoch" = "#20D479"),
-#                       columns_alignment = c(0, 0.5),
+#                       bar_background_lines = "none",
+#                       bar_fill_colour = c("niedrig" =  "#20D479", "mittel" = "#8DEBBC", "hoch" = "#EBFDF3"),
+#                       bar_label_colour = c("niedrig" =  "white", "mittel" = "black", "hoch" = "black"),
+#                       columns_alignment = c(0, 0),
 #                       columns_width = c(0.1, 0.1, 0.8),
 #                       ## noch nicht optimal:
-#                       background_stripes_colour =  rep(c("white", rep("#EBFDF3", 3), rep("white", 3), rep("#EBFDF3", 3)), columns_width = c(0.2, 0.15, 0.65),2),
+#                       background_stripes_colour =  rep("white", nrow(dat)),
 #                       bar_label_size = 1.4,
-#                       bar_label_nudge_x =rep(0.5, 20),
-#                     default_list = barplot_table_plot_pattern)) +
-#   ggplot2::theme(axis.ticks.x = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
+#                       bar_label_nudge_x =rep(0.5, nrow(dat)),
+#                     default_list = barplot_table_plot_pattern))
 #
-# ## Remove duplicates in relevant rows
-# dat_table <- dat[!duplicated(dat[,  c("mean", "sd", "diff", "se", "d", "y_axis", "sig")]), c("y_axis","mean", "sd", "diff", "se", "d", "sig")]
+# ## The means are from a seperate analysis. Its important that the resulting table has the same number of rows as the stacked one.
+# ## Because in the stacked table we multiple rows in the data frame per row in the plot, we have to deal with the data accordingly:
+#
+# dat_prepped_means <- subset(dat_prepped_means, state_var == "total")
+#
+# ## To be safe, we merge. This will keep the order:
+#
+#
+#
+# dat_prepped_means$subgroup_var <- gsub("weiblich", "Mädchen", dat_prepped_means$subgroup_var)
+# dat_prepped_means$subgroup_var <- gsub("maennlich", "Jungen", dat_prepped_means$subgroup_var)
+# dat_prepped_means$subgroup_var <- gsub("total", "Gesamt", dat_prepped_means$subgroup_var)
+# dat_prepped_means$subgroup_var <- factor(dat_prepped_means$subgroup_var, levels = c("Gesamt",  "Mädchen",  "Jungen"), ordered = TRUE)
+#
+# dat_table_2 <- subset(dat_prepped_means, subgroup_var != "Gesamt")
+#
+# dat_table_3 <- subset(dat_prepped_means, subgroup_var != "Gesamt")
+#
+# dat_table_2$subgroup_var <- gsub( "Jungen", "ZWH", dat_table_2$subgroup_var)
+# dat_table_2$subgroup_var <- gsub( "Mädchen", "ohne ZWH", dat_table_2$subgroup_var)
+#
+# dat_table_3$subgroup_var <- gsub("Jungen","Max. 100 Bücher", dat_table_3$subgroup_var)
+# dat_table_3$subgroup_var <- gsub("Mädchen", "Mehr als 100 Bücher", dat_table_3$subgroup_var)
+#
+# dat2 <- rbind(dat_prepped_means, dat_table_2, dat_table_3)
+#
+# dat2
+#
+# # dat$subgroup_var[is.na(dat$subgroup_var)] <- ""
+#
+# ## Using join to preserve the order
+# dat_table <- dat |>
+#   dplyr::left_join(dat2[, c("subgroup_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA" )])
+#
+# ## remove duplicates
+# dat_table_2 <- dat_table[, c("subgroup_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "var", "y_axis")]
+#
+# dat_table_u <- unique(dat_table_2)
+#
+#
+# ## Round auf zwei Stellen:
+# dat_table_u$se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA
 #
 # p_table <- plot_tablebarplot(
-#   dat_table,
-#   columns_table = c("mean", "sd", "diff", "se", "d"),
-#   headers = c("***M***", "***SD***", "***M<sub>M</sub> - M<sub>J</sub>***", "***(SE)***", "***d***"),
-#   columns_table_se = list(NULL, NULL, NULL, "se", NULL),
+#   dat_table_u,
+#   columns_table = c("est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", "es_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA"),
+#   headers = c("***M***", "***SD***", "***M<sub>M</sub>-M<sub>J</sub>***", "***(SE)***", "***d***"),
+#   columns_round = c(2, 2, 2, 2, 2),
+#   columns_table_se = list(NULL, NULL, NULL, "se_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA", NULL),
 #   y_axis = "y_axis",
-#   columns_round = c(2, 2, 2, 2,2),
-#   columns_table_sig_bold = list(NULL, NULL, 'sig', NULL, 'sig'),
+#   columns_table_sig_bold = list(NULL, NULL, 'sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA', NULL, 'sig_mean_comp_groupDiff_sameFacet_maennlichSubgroup_NA'),
 #   plot_settings = plotsettings_tablebarplot(
-#       columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
+#     bar_background_lines = NULL,
+#     columns_alignment = c(0.5, 0.5, 0.5, 0.5, 0.5),
 #     columns_width = rep(0.2, 5),
-#     background_stripes_colour =  rep(c("white", "#EBFDF3", "white",  "#EBFDF3"),2),
-#     columns_nudge_y = c(0, 0, -0.5, -0.5, -0.5),
+#     background_stripes_colour =  rep("white", nrow(dat_table_u)),
+#     columns_nudge_y = c(0, 0, 0.5, 0.5, 0.5),
 #   default_list = barplot_table_plot_pattern))
 #
 #
-# p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  +
-#   canvas(210, 297.2/4,  units = "mm")
+# p_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.8, 0.2))  #+
+#   #canvas(210, 297.2/4,  units = "mm")
 #
-# save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4/6, width = 210)
+# save_plot(p_combined, "C:/Users/hafiznij/Downloads/stacked.pdf",  height = 297.4, width = 210)
 #
 #
 # vdiffr::expect_doppelganger("Stacked barplot", p_stacked)

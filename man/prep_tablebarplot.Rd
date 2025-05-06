@@ -11,7 +11,8 @@ prep_tablebarplot(
   facet_var = "TR_BUNDESLAND",
   total_facet = "total",
   sig_niveau = 0.05,
-  total_subgroup = "total"
+  total_subgroup = "total",
+  ...
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ prep_tablebarplot(
 \item{sig_niveau}{Numeric indicating the border below which p-values will be considered significant. Defaults to \code{0.05}.}
 
 \item{total_subgroup}{Character string indicating the subgroup containing all other groups of the subgroup_var. Defaults to \code{"total"}.}
+
+\item{...}{Further arguments to be passed through, needed for pivoting the data internally. Only temporary, will be removed.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.

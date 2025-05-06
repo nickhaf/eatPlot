@@ -5,6 +5,7 @@
 \title{Set parameters for the barplots.}
 \usage{
 plotsettings_tablebarplot(
+  axis_x = NULL,
   axis_x_label_size = NULL,
   axis_x_lims = NULL,
   background_stripes_border = NULL,
@@ -17,6 +18,7 @@ plotsettings_tablebarplot(
   bar_background_lines_spanners = NULL,
   bar_fill_colour = NULL,
   bar_frame_linetype = NULL,
+  bar_label_colour = NULL,
   bar_label_nudge_x = NULL,
   bar_label_size = NULL,
   bar_line_width = NULL,
@@ -50,6 +52,8 @@ plotsettings_tablebarplot(
 )
 }
 \arguments{
+\item{axis_x}{Logical indicating whether the x-axis should be drawn. Defaults to \code{TRUE}.}
+
 \item{axis_x_label_size}{Numeric for the size of the x axis labels. Defaults to \code{5}.}
 
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, \code{NULL} (default).}
@@ -73,6 +77,8 @@ plotsettings_tablebarplot(
 \item{bar_fill_colour}{Colour of the bar filling. Can be either one colour for all bars, or a (named) vector with the names of the groups specified in \code{bar_fill}. If no names are provided for the vector, the order of the factor levels of \code{bar_fill} will be used for determining the colour assignment.}
 
 \item{bar_frame_linetype}{Named vector with the bar frame linetypes. Names have to be found in the column defined in the \code{bar_sig}-argument of\code{plot_tablebarplot()}. Defaults to \code{solid}.}
+
+\item{bar_label_colour}{Colour of the bar labels. Can either be a single colour, or a named vector that contains the colour for each group defined in \code{bar_fill}. Defaults to \code{"black"}.}
 
 \item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
 

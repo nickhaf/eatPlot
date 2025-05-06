@@ -62,7 +62,6 @@ plot_tablebarplot <- function(dat,
   }
   check_columns(dat, c(bar_est, bar_label, bar_label_sig, bar_sig, bar_fill, unlist(columns_table), unlist(columns_table_sig_bold), unlist(columns_table_sig_superscript), unlist(columns_table_se), y_axis))
 
-
   dat <- fill_column(dat, column_name = bar_sig, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_fill, filling = "FALSE")
   dat <- fill_column(dat, column_name = bar_est, filling = NA)
@@ -165,6 +164,7 @@ plot_tablebarplot <- function(dat,
       dat <- construct_label_2(
         dat,
         new_name = new_colnames[i],
+        round_est = columns_round[[i]],
         label_se = columns_table_se[[i]]
       )
     }
@@ -204,7 +204,6 @@ plot_tablebarplot <- function(dat,
   if (!is.null(bar_est)) {
     if(plot_settings$bar_type == "stacked") {
 plot_borders = c(0, 100)
-
 scale_breaks <- unique(c(
   seq(0, plot_borders[1], by = -10),
   seq(0, plot_borders[2], by = 10)
@@ -243,10 +242,9 @@ scale_breaks <- unique(c(
 dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
     # Reset row names
     rownames(dat) <- NULL
-
     dat <- dat[with(dat, order(y_axis, bar_fill)), ]
-    dat$x_axis_end <- stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum)
-    dat$x_axis_start <- dat$x_axis_end - dat$est
+    dat$x_axis_end <- round(stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum), 4)
+    dat$x_axis_start <- round(dat$x_axis_end - dat$bar_est, 4)
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start)/2
 
 
@@ -262,6 +260,12 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
   # Set colours -------------------------------------------------------------
   plot_settings$bar_fill_colour <- construct_colour_scale(
     colours = plot_settings$bar_fill_colour,
+    dat = dat,
+    colname = "bar_fill"
+  )
+
+  plot_settings$bar_label_colour <- construct_colour_scale(
+    colours = plot_settings$bar_label_colour,
     dat = dat,
     colname = "bar_fill"
   )
@@ -314,10 +318,21 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
       fill = plot_settings$headers_background_colour
     ) +
     theme_table(plot_settings) +
-    plot_capped_x_axis(scale_breaks) +
     ## Horizontal background lines around header box:
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max(dat$y_axis) + 0.5, yend = max(dat$y_axis) + 0.5, linewidth = 0.1) +
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max_y, yend = max_y, linewidth = 0.1)
+
+    if(!plot_settings$axis_x){
+
+    res_plot <- res_plot +
+      ggplot2::theme(axis.title.x = ggplot2::element_blank(),
+                     axis.text.x = ggplot2::element_blank(),
+                     axis.ticks.x = ggplot2::element_blank(),
+                     axis.line = ggplot2::element_blank())
+  }else{
+    res_plot <- res_plot +
+      plot_capped_x_axis(scale_breaks)
+  }
 
   if (!is.null(bar_est)) {
 
@@ -415,18 +430,20 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
   if (!is.null(bar_label)) {
 
       res_plot <- res_plot +
+        ggnewscale::new_scale_colour() +
       ggtext::geom_richtext(
         ggplot2::aes(
           x = .data$bar_label,
-          label = .data$bar_label_text
+          label = .data$bar_label_text,
+          colour = .data$bar_fill
         ),
-        colour = "#000000",
         label.padding = grid::unit(rep(0, 4), "pt"),
         fill = NA,
         label.color = NA,
         hjust = plot_settings$bar_label_nudge_x,
         size = plot_settings$bar_label_size
-      )
+      ) +
+        ggplot2::scale_colour_manual(values = plot_settings$bar_label_colour)
     }
   # Column spanners ---------------------------------------------------------
   plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)
@@ -470,6 +487,8 @@ dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
       n_table_cols,
       plot_settings
     )
+
+
   return(res_plot)
 }
 
