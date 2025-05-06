@@ -36,9 +36,9 @@
 <rect x='-0.095' y='24.96' width='720.09' height='229.78' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='-0.095' y='24.96' width='720.09' height='229.78' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
 <rect x='-0.095' y='24.96' width='720.09' height='229.78' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFFFF;' />
-<line x1='358.18' y1='568.78' x2='712.94' y2='568.78' style='stroke-width: 0.21; stroke-linecap: butt;' />
 <line x1='-0.095' y1='254.75' x2='720.00' y2='254.75' style='stroke-width: 0.21; stroke-linecap: butt;' />
 <line x1='-0.095' y1='24.96' x2='720.00' y2='24.96' style='stroke-width: 0.21; stroke-linecap: butt;' />
+<line x1='358.18' y1='568.78' x2='712.94' y2='568.78' style='stroke-width: 0.21; stroke-linecap: butt;' />
 <rect x='358.18' y='277.72' width='141.90' height='30.64' style='stroke-width: 0.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FF0000;' />
 <rect x='358.18' y='354.32' width='141.90' height='30.64' style='stroke-width: 0.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0000FF;' />
 <rect x='358.18' y='430.91' width='177.38' height='30.64' style='stroke-width: 0.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFFF00;' />

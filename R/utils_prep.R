@@ -67,12 +67,35 @@ prep_plot <- function(
   }
 
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat, by = merge_by)
+
+  ## Warum gibt es keine comparison = none mehr?
+  ## Das muss gesondert ran und darf dann unten nicht mehr entfernt werden!
+  ## Und warum hat es bei meinem Stacked beispiel geklappt?
+  ## Weil es da noch eine comparison mit total gab!
+  ## Also: in prep_comparisons reingehen, alle Gruppen die vorher drin waren und jetzt nicht mehr drin sind identifizieren und nohcmal ranhängen, ABER: Ohne irgendwelche comparisons!
+
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
+
+  dat_merged$value[!dat_merged$value %in% dat_prepped$value]
+
+  ## WEnn hier noch etwas fehlt, gab es dafür keinen Vergleich, aber eine non-comparison.
+  ## Die wurde jetzt entfernt, weil letztendlich nur die comparisons interessant waren bisher.
+  ## Also:: Identifizieren der group_1 in einem non-comparison context und dann ranhängen.
+
+
+
+  ## Hier ist total dann nicht mehr drin.
+  ## Das liegt daran, dass es in keiner comparison vorkommt.
+  ## Das wiederum kommt daher, dass total als duplicate entfernt wird.
+  ## Da total aber entweder nur als Vergleich oder gänzlich ohne Vergleich vorkommt, wird es hier nicht rangemerged
+  ## Ich muss also irgendwo von NoComp commen, und total ranmergen!
+
 
   dat_wide <- pivot_eatRep(dat_prepped,
                            names_from_none = names_from_none,
                            names_from_comp = names_from_comp,
                            plot_type = plot_type)
+
   dat_wide <- dat_wide[order(dat_wide$state_var), ]
   dat_wide <- dat_wide[, colSums(!is.na(dat_wide)) > 0]
 }
@@ -177,7 +200,6 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
   #dat_hardest <- eatRep_merged[eatRep_merged$comparison != "trend_crossDiff_of_groupDiff", ]
   dat_hardest <- eatRep_merged
   id_list <- split(dat_hardest, dat_hardest$id)
-
   df_list <- lapply(id_list, function(x) {
     ## Split the facet comparisons
     if (length(unique(x$state_var)) == 1) {
@@ -212,8 +234,16 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
     return(x)
   })
 
+
   dat_comp <- do.call(rbind, df_list)
-  return(dat_comp)
+
+  ## All groups that aren't anywhere in the data now were lost.
+
+  missing_groups <- unique(eatRep_merged[!eatRep_merged$value %in% dat_comp$value, c("value", "state_var", "subgroup_var", "year", grep("comp_none", colnames(eatRep_merged), value = TRUE))])
+
+  dat_comp_2 <- dplyr::bind_rows(dat_comp, missing_groups)
+
+  return(dat_comp_2)
 }
 
 pivot_eatRep <- function(eatRep_prepped,
