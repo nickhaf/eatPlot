@@ -25,6 +25,7 @@ Depends:
 LazyData: true
 Imports: 
     checkmate,
+    dplyr,
     ggbrace (>= 0.1.1),
     ggnewscale,
     ggpattern,

@@ -299,4 +299,8 @@ plotsettings_lineplot(
 )
 ```
 
+# Signifikanzen
+Hier findet sich eine Übersicht über die Signifikanzen der Vergleiche, die auf verschiedene Arten in den Plots dargestellt werden.
+
+## Linienplots
 
