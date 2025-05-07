@@ -370,8 +370,8 @@ calc_overlap <- function(year_start, year_end) {
 
   ## Doing this leads to other errors, so leave out for now
 
-  # year_start <- year_start[!is.na(year_start)]
-  # year_end <- year_end[!is.na(year_end)]
+  year_start <- year_start[!is.na(year_start)]
+  year_end <- year_end[!is.na(year_end)]
   for (i in 1:length(year_start)) {
     overlap[i] <- any((year_start[i] > year_start[-i]) & (year_start[i] < year_end[-i]) |
       any((year_end[i] > year_start[-i]) & (year_end[i] < year_end[-i])))

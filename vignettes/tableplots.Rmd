@@ -491,7 +491,7 @@ tableplot_8.4
 
 ## Stacked barplot
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = FALSE}
 
 
 # Einstellungen noch unter "stacked" = TRUE zusammenführen
