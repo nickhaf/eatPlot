@@ -119,6 +119,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebarplot()`. Defaults to `solid`.
 #' @param bar_label_colour Colour of the bar labels. Can either be a single colour, or a named vector that contains the colour for each group defined in `bar_fill`. Defaults to `"black"`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
+#' @param bar_label_nudge_y Numeric for nudging the bar labels in y direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_width Numeric for the line-size around the bar.
 #' @param bar_nudge_y Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to `0`.
