@@ -206,6 +206,8 @@ plot_tablebarplot <- function(dat,
 
   ## Hier reingehen: column that is a barplot should be added here! If there is one!
   dat$bar_nudge_y <- plot_settings$bar_nudge_y
+  dat$bar_label_nudge_y <- plot_settings$bar_label_nudge_y
+
 
   if (!is.null(bar_est)) {
     if (plot_settings$bar_type == "stacked") {
@@ -244,11 +246,11 @@ plot_tablebarplot <- function(dat,
     # Apply function to each y_axis group
     ## RN,it seems like the rows get reordered.
     dat$row_id <- 1:nrow(dat)
-    dat2 <- do.call(rbind, lapply(split(dat, dat$y_axis), remove_column_duplicates, !colnames(dat) %in% c("bar_nudge_y", "y_axis", "background_stripes_colour")))
+    dat2 <- do.call(rbind, lapply(split(dat, dat$y_axis), remove_column_duplicates, !colnames(dat) %in% c("bar_nudge_y", "bar_label_nudge_y", "y_axis", "background_stripes_colour")))
     dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
 
     rownames(dat) <- NULL
-    dat <- dat[with(dat, order(y_axis, bar_fill)), ]
+    dat <- dat[with(dat, order(y_axis, decreasing = TRUE)), ]
     dat$x_axis_end <- round(stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum), 4)
     dat$x_axis_start <- round(dat$x_axis_end - dat$bar_est, 4)
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start) / 2
@@ -430,13 +432,12 @@ plot_tablebarplot <- function(dat,
   }
 
   if (!is.null(bar_label)) {
-   # browser()
     res_plot <- res_plot +
       ggnewscale::new_scale_colour() +
       ggtext::geom_richtext(
         ggplot2::aes(
           x = .data$bar_label,
-          y = .data$y_axis + rev(plot_settings$bar_label_nudge_y),
+          y = .data$y_axis + .data$bar_label_nudge_y,
           label = .data$bar_label_text,
           colour = .data$bar_fill
         ),
@@ -543,12 +544,12 @@ build_columns_3 <- function(df,
           label.color = NA,
           hjust = rev(columns_alignment)[i],
           nudge_x = rev(plot_settings$columns_nudge_x)[i],
-          ## Not pretty, two reverses needed, one for the columns and one for the rows
-          nudge_y = if (is.list(plot_settings$columns_nudge_y)) {
 
-            rev(rev(plot_settings$columns_nudge_y)[[i]])
+          ## Hier stimmt es manchmal nicht mit der reihenfolge der rows überein!
+          nudge_y = if (is.list(plot_settings$columns_nudge_y)) {
+            rev(plot_settings$columns_nudge_y)[[i]]
           } else {
-            rev(rev(plot_settings$columns_nudge_y)[i])
+            rev(plot_settings$columns_nudge_y)[i]
           }
         ),
         add_superscript(df,
