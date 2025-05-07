@@ -1,3 +1,5 @@
+# eatPlot (development version)
+
 # eatPlot 1.1.1
 * Bugfix in `prep_tableplot()`: groups that didn't have any comparison were removed in the prepping process, this is changed now. 
 * Implemented stacked barplots. 
