@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 43
+      length(settings_list) == 44
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -22,6 +22,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_frame_linetype",
         "bar_label_colour",
         "bar_label_nudge_x",
+        "bar_label_nudge_y",
         "bar_label_size",
         "bar_line_width",
         "bar_nudge_y",
@@ -69,6 +70,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.character(settings_list$bar_frame_linetype))
   stopifnot(all(is_colour(settings_list$bar_label_colour)))
   stopifnot(is.numeric(settings_list$bar_label_nudge_x))
+  stopifnot(is.numeric(settings_list$bar_label_nudge_y))
   stopifnot(is.numeric(settings_list$bar_label_size))
   stopifnot(is.numeric(settings_list$bar_line_width))
   stopifnot(is.numeric(settings_list$bar_nudge_y))
@@ -195,6 +197,7 @@ plotsettings_tablebarplot <- function(axis_x = NULL,
                                       bar_frame_linetype = NULL,
                                       bar_label_colour = NULL,
                                       bar_label_nudge_x = NULL,
+                                      bar_label_nudge_y = NULL,
                                       bar_label_size = NULL,
                                       bar_line_width = NULL,
                                       bar_nudge_y = NULL,
@@ -243,6 +246,7 @@ plotsettings_tablebarplot <- function(axis_x = NULL,
       "bar_label_colour" = "black",
       "bar_label_size" = 2,
       "bar_label_nudge_x" = 0,
+      "bar_label_nudge_y" = 0,
       "bar_line_width" = 0.5,
       "bar_nudge_y" = 0,
       "bar_pattern_fill_colour" = "white",
