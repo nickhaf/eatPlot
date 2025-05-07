@@ -335,6 +335,7 @@ calc_plot_lims <- function(plot_dat, years_list, background_subgroup, plot_setti
 
   ## Currently, brace starts at same level as y-axis ends. Could nudge abit HERE.
   subgroup_lvls <- get_subgroup_levels(plot_dat, background_subgroup)
+
   brace_coords <- calc_brace_coords(
     subgroup_lvls,
     y_value_space,
