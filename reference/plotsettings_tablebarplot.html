@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,7 @@
 <span>  bar_frame_linetype <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_label_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_line_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -157,6 +158,10 @@
 <dd><p>Numeric for nudging the bar labels in x direction.</p></dd>
 
 
+<dt id="arg-bar-label-nudge-y">bar_label_nudge_y<a class="anchor" aria-label="anchor" href="#arg-bar-label-nudge-y"></a></dt>
+<dd><p>Numeric for nudging the bar labels in y direction.</p></dd>
+
+
 <dt id="arg-bar-label-size">bar_label_size<a class="anchor" aria-label="anchor" href="#arg-bar-label-size"></a></dt>
 <dd><p>Numeric for the font size of the bar labels.</p></dd>
 
@@ -214,11 +219,11 @@
 
 
 <dt id="arg-columns-nudge-x">columns_nudge_x<a class="anchor" aria-label="anchor" href="#arg-columns-nudge-x"></a></dt>
-<dd><p>Numeric vector to nudge the column text in x direction. Defaults to <code>0</code>.</p></dd>
+<dd><p>Numeric vector to nudge the column text in x direction. Negativ to nudge left, positive to nudge right. Defaults to <code>0</code>.</p></dd>
 
 
 <dt id="arg-columns-nudge-y">columns_nudge_y<a class="anchor" aria-label="anchor" href="#arg-columns-nudge-y"></a></dt>
-<dd><p>Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Defaults to <code>0</code>.</p></dd>
+<dd><p>Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Negative values to nudge down, positive values to nudge up. Defaults to <code>0</code>.</p></dd>
 
 
 <dt id="arg-columns-table-sig-superscript-letter">columns_table_sig_superscript_letter<a class="anchor" aria-label="anchor" href="#arg-columns-table-sig-superscript-letter"></a></dt>
@@ -328,6 +333,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
@@ -472,6 +480,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -614,6 +625,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>

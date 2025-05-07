@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,9 +103,10 @@ rechtsbündig.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>columns_alignment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Eventuell muss ein wenig nachjustiert werden, um die Spalteninhalte
-so zu rücken, dass es stimmig aussieht:</p>
+so zu rücken, dass es stimmig aussieht (negative Zahl zum Rücken nach
+links, positiv zum Rücken nach rechts):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>columns_nudge_x <span class="op">=</span> <span class="va">...</span> <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>columns_nudge_x <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span> <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="darstellung-von-überschriften">Darstellung von Überschriften<a class="anchor" aria-label="anchor" href="#darstellung-von-%C3%BCberschriften"></a>
@@ -117,7 +118,7 @@ Subscripts werden nicht kursiv dargestellt:</p>
 <em>M</em><sub>M</sub>–<em>M</em><sub>J</sub>
 </li>
 <li>
-<em>M</em><sub>2024–</sub><em>M</em><sub>2018</sub>
+<em>M</em><sub>2024</sub>-<em>M</em><sub>2018</sub>
 </li>
 </ul>
 <p>Nach
@@ -157,20 +158,14 @@ verwenden. Ansonsten orientiert ihr euch am besten an den Vorlagen, die
 in etwa die gleiche Größe haben wie eure Abbildung, und justiert die
 Schriftgröße dann:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="va">...</span>, </span>
-<span>                          header_font_size <span class="op">=</span> <span class="va">...</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">2.5</span>, </span>
+<span>                          header_font_size <span class="op">=</span> <span class="fl">2.5</span></span>
 <span>                          <span class="op">)</span></span></code></pre></div>
 <p>Die Schriftgröße könnt ihr aus den Default lists auslesen, die ihr
 für eure Abbildung verwendet, z.B mit:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">abb_6.6</span><span class="op">$</span><span class="va">font_size</span></span>
 <span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="farben">Farben<a class="anchor" aria-label="anchor" href="#farben"></a>
-</h4>
-<p>Sind eigentlich voreingestellt. In den Kapiteln zu den einzelnen
-Abbildungstypen gibt es noch einmal Zusammenfassungen.</p>
 </div>
 </div>
 <div class="section level3">
@@ -215,7 +210,7 @@ Arten erzeugt werden:</p>
 support.<br>
 Sonderzeichen können leider nicht immer in PDF mit cmyk-Farbschema
 exportiert werden, weshalb dann <code>plotmath</code> verwendet werden
-muss:</p>
+muss. Das ist für den BT eigentlich immer der Fall:</p>
 </div>
 <div class="section level5">
 <h5 id="plotmath">plotmath<a class="anchor" aria-label="anchor" href="#plotmath"></a>
@@ -248,7 +243,7 @@ erzeugt werden. Im <code>plotmath</code>-Modus durch
 <h4 id="balkenfüllung">Balkenfüllung<a class="anchor" aria-label="anchor" href="#balkenf%C3%BCllung"></a>
 </h4>
 <ul>
-<li>Statistisch signifikante Werte (p &lt; .05) werden mit
+<li>Statistisch signifikante Werte (<em>p</em> &lt; .05) werden mit
 <strong>ausgefüllten</strong> Balken dargestellt.</li>
 <li>Statistisch nicht signifikante Werte werden mit
 <strong>schraffierten</strong> Balken dargestellt (Schraffur von oben
@@ -282,7 +277,7 @@ aussieht.</li>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="farben-1">Farben<a class="anchor" aria-label="anchor" href="#farben-1"></a>
+<h4 id="farben">Farben<a class="anchor" aria-label="anchor" href="#farben"></a>
 </h4>
 <div class="section level5">
 <h5 id="farben-zur-zeilenorientierung">Farben zur Zeilenorientierung<a class="anchor" aria-label="anchor" href="#farben-zur-zeilenorientierung"></a>
@@ -310,8 +305,8 @@ voreingestellt.</p>
 <div class="section level5">
 <h5 id="hilfslinien-vertikal">Hilfslinien vertikal<a class="anchor" aria-label="anchor" href="#hilfslinien-vertikal"></a>
 </h5>
-<p>Grau und gestichelt. Ist bereits vorgeingestellt, könnte aber so
-geändert werden:</p>
+<p>Grau <code>cmyk(0, 0, 0, 60)</code> und gestrichelt. Ist bereits
+vorgeingestellt, könnte aber so geändert werden:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>  bar_background_lines_colour <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">60</span><span class="op">)</span>,</span>
@@ -325,14 +320,14 @@ geändert werden:</p>
 </h4>
 <p>Zeilenumbrüche werden in Ländernamen nur dann gesetzt, wenn die
 Zeilen aus anderen Gründen breiter sind (z.B. weil je Land zwei
-Ergebniszeilen berichtet werden). Zeilenumbrüche für die Bundeslandnamen
+Ergebniszeilen berichtet werden). Zeilenumbrüche für die Ländernamen
 werden vor dem Plotten eingefügt, am einfachsten mit:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_dat</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">my_dat</span><span class="op">$</span><span class="va">state_var</span>, linebreak <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="liniendiagramm">Liniendiagramm<a class="anchor" aria-label="anchor" href="#liniendiagramm"></a>
+<h3 id="liniendiagramme">Liniendiagramme<a class="anchor" aria-label="anchor" href="#liniendiagramme"></a>
 </h3>
 <div class="section level4">
 <h4 id="referenzband">Referenzband<a class="anchor" aria-label="anchor" href="#referenzband"></a>
@@ -357,7 +352,7 @@ nachjustiert werden:</li>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="farben-2">Farben<a class="anchor" aria-label="anchor" href="#farben-2"></a>
+<h4 id="farben-1">Farben<a class="anchor" aria-label="anchor" href="#farben-1"></a>
 </h4>
 <p>Die Farben sind alle voreingestellt, die Farbcodes können hier
 ausgelesen werden:</p>
@@ -373,8 +368,8 @@ ausgelesen werden:</p>
 <h4 id="signifikanzen">Signifikanzen<a class="anchor" aria-label="anchor" href="#signifikanzen"></a>
 </h4>
 <ul>
-<li>Statistisch signifikante Veränderung (p &lt; .05) mit durchgezogener
-Linie darstellen.</li>
+<li>Statistisch signifikante Veränderung (<em>p</em> &lt; .05) mit
+durchgezogener Linie darstellen.</li>
 <li>Statistisch nicht signifikante Veränderung mit gestrichelter Linie
 darstellen</li>
 </ul>
@@ -388,15 +383,16 @@ darstellen</li>
 <li>Hochgestelltes <code>a</code>:
 <ul>
 <li>Bei bundesweiten Trends für Gruppen: Statistisch signifikante
-Abweichung (p &lt; .05) zum Trend in der Gesamtpopulation aller
+Abweichung (<em>p</em> &lt; .05) zum Trend in der Gesamtpopulation aller
 Neuntklässler:innen der seblen Gruppe in Deutschland</li>
 <li>Bei länderspezifischen Trends für Gruppen: Statistisch signifikante
-Abweichung (p &lt; .05) zum Trend der jeweiligen Schüler:innengruppe in
-Deutschland insgesamt</li>
+Abweichung (<em>p</em> &lt; .05) zum Trend der jeweiligen
+Schüler:innengruppe in Deutschland insgesamt</li>
 </ul>
 </li>
-<li>Ausgefülltes Dreieck für Werte, die statistisch signifikant (p &lt;
-.05) vom Wert der selben Gruppe in der Gesamtpopulation abweichen.</li>
+<li>Ausgefülltes Dreieck für Werte, die statistisch signifikant
+(<em>p</em> &lt; .05) vom Wert der selben Gruppe in der Gesamtpopulation
+abweichen.</li>
 <li>Ausgefüllter Kreis für Werte, die statistisch nicht signifikant vom
 Wert der selben Gruppe in der Gesamtpopulation abweichen.</li>
 </ul>
@@ -465,8 +461,8 @@ Jahr zu der gleichen Gruppe im anderen Jahr</td>
 </tr>
 <tr class="even">
 <td>Hochgestellter Buchstabe im Label</td>
-<td>So wie Punktform, nur als Trend: Vergleich des Trends in einer
-Gruppe zum gleichen Trend in Gesamtdeutschland</td>
+<td>Trend des Vergleichs einer Gruppe zur gleichen Gruppe in
+Gesamtdeutschland</td>
 <td>—</td>
 <td><code>brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"</code></td>
 <td><code>trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)</code></td>
@@ -529,16 +525,21 @@ Jahr zu der gleichen Gruppe im anderen Jahr</td>
 <div class="section level4">
 <h4 id="deutschland-kachel-in-länderplots">Deutschland-Kachel in Länderplots<a class="anchor" aria-label="anchor" href="#deutschland-kachel-in-l%C3%A4nderplots"></a>
 </h4>
-<p>Genau das gleiche wie in den normalen Linienplots. Im alten BT hatten
-wir ja nicht die Gruppen verglichen, sondern vs. Deutschland
-insgesamt.</p>
+<p>Genau das gleiche wie in den normalen Linienplots. Die Vergleiche
+vs. Deutschland sind hier automatisch nicht signifikant gesetzt, da in
+<code>eatRep</code> hierfür kein Wert ausgegeben wird.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="tableplots">Tableplots<a class="anchor" aria-label="anchor" href="#tableplots"></a>
 </h3>
 <p>Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt
-immer von der jeweiligen Abbildung ab.</p>
+immer von der jeweiligen Abbildung ab.<br>
+Generell kann sich hier an den Linienplots orientiert werden: Wenn eine
+Gruppe in einem der Länder (z.B Mädchen) gegen Deutschland verglichen
+wird, soll in der Regel nicht gegen Gesamtdeutschland, sonderen gegen
+diese Gruppe in Deutschland verglichen werden (also alle Mädchen in
+Deutschland).</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
