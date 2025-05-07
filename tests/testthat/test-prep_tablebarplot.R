@@ -17,20 +17,117 @@ test_that("simple data preperation works", {
   expect_equal(dat_prep, dat_out)
 })
 
+test_that("estimates are prepped correctly", {
+  dat_lineplot_1 <- prep_lineplot(
+    trend_gender[[1]],
+    subgroup_var = "Kgender" ## Leave this argument if you have only one subgroup
+  )
 
-# test_that("data preperation with comparions works", {
+  dat_comp <- trend_gender[[1]]$plain
 
-#
-#   dat_prep <- prep_tablebarplot(trend_3)
-# test <- dat_prep %>%
-#   dplyr::filter(mhg == c("einET - total", "total"), comparison %in% c("none"), parameter == "mean")
-# test <- test[grep(" - total", test$TR_BUNDESLAND, invert = TRUE), ]
-#
-# ## This has to become a function.
-# ## But what to do, if there are two different CrossDiff types? -> gesonderte Aufbereitung?
-# test_wide <- test %>%
-#   select(TR_BUNDESLAND, year, comparison, est, p, sig) %>%
-#   pivot_wider(names_from = c(comparison, year), values_from = c(est, p, sig))
-#
-#
-# })
+  dat_berlin <- dat_lineplot_1[dat_lineplot_1$state_var == "Berlin" & dat_lineplot_1$trend == "2009_2015" & dat_lineplot_1$year == 2009 & dat_lineplot_1$subgroup_var == "female", ]
+
+  subset(dat_comp, TR_BUNDESLAND == "Berlin" & Kgender == "female - total" & comparison == "crossDiff" & parameter == "mean" & year == 2009, select = est)
+
+  expect_equal(dat_berlin$est_mean_comp_none, subset(dat_comp, TR_BUNDESLAND == "Berlin" & Kgender == "female" & parameter == "mean" & comparison == "none" & year == 2009, select = est)[[1]])
+
+  expect_equal(
+    dat_berlin$est_mean_comp_crossDiff_sameFacet_totalSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin" & Kgender == "female - total" & comparison == "crossDiff" & parameter == "mean" & year == 2009, select = est)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$est_mean_comp_crossDiff_totalFacet_sameSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female" & comparison == "crossDiff" & parameter == "mean" & year == 2009, select = est)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$est_mean_comp_crossDiff_of_groupDiff_totalFacet_maleSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female - male" & comparison == "crossDiff_of_groupDiff" & parameter == "mean" & year == 2009, select = est)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$est_mean_comp_trend_crossDiff_totalFacet_totalSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female - total" & comparison == "trend_crossDiff" & parameter == "mean" & year == "2015 - 2009", select = est)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$est_mean_comp_trend_crossDiff_totalFacet_sameSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female" & comparison == "trend_crossDiff" & parameter == "mean" & year == "2015 - 2009", select = est)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$est_mean_comp_trend_crossDiff_of_groupDiff_totalFacet_maleSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female - male" & comparison == "trend_crossDiff_of_groupDiff" & parameter == "mean" & year == "2015 - 2009", select = est)[[1]]
+  )
+})
+
+
+
+test_that("p-values are prepped correctly", {
+  dat_lineplot_1 <- prep_lineplot(
+    trend_gender[[1]],
+    subgroup_var = "Kgender" ## Leave this argument if you have only one subgroup
+  )
+
+  dat_comp <- trend_gender[[1]]$plain
+
+  dat_berlin <- dat_lineplot_1[dat_lineplot_1$state_var == "Berlin" & dat_lineplot_1$trend == "2015_2022" & dat_lineplot_1$year == 2015 & dat_lineplot_1$subgroup_var == "female", ]
+
+
+  expect_equal(dat_berlin$p_mean_comp_none, subset(dat_comp, TR_BUNDESLAND == "Berlin" & Kgender == "female" & parameter == "mean" & comparison == "none" & year == 2015, select = p)[[1]])
+
+  expect_equal(
+    dat_berlin$p_mean_comp_crossDiff_sameFacet_totalSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin" & Kgender == "female - total" & comparison == "crossDiff" & parameter == "mean" & year == 2015, select = p)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$p_mean_comp_crossDiff_totalFacet_sameSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female" & comparison == "crossDiff" & parameter == "mean" & year == 2015, select = p)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$p_mean_comp_crossDiff_of_groupDiff_totalFacet_maleSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female - male" & comparison == "crossDiff_of_groupDiff" & parameter == "mean" & year == 2015, select = p)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$p_mean_comp_trend_crossDiff_totalFacet_totalSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female - total" & comparison == "trend_crossDiff" & parameter == "mean" & year == "2022 - 2015", select = p)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$p_mean_comp_trend_crossDiff_totalFacet_sameSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female" & comparison == "trend_crossDiff" & parameter == "mean" & year == "2022 - 2015", select = p)[[1]]
+  )
+
+  expect_equal(
+    dat_berlin$p_mean_comp_trend_crossDiff_of_groupDiff_totalFacet_maleSubgroup,
+    subset(dat_comp, TR_BUNDESLAND == "Berlin - total" & Kgender == "female - male" & comparison == "trend_crossDiff_of_groupDiff" & parameter == "mean" & year == "2022 - 2015", select = p)[[1]]
+  )
+})
+
+
+
+test_that("p-values are prepped correctly for total gropu", {
+  dat_lineplot_1 <- prep_lineplot(
+    trend_gender[[1]],
+    subgroup_var = "Kgender" ## Leave this argument if you have only one subgroup
+  )
+
+  dat_comp <- trend_gender[[1]]$plain
+
+  dat_total <- dat_lineplot_1[dat_lineplot_1$state_var == "total" & dat_lineplot_1$trend == "2015_2022" & dat_lineplot_1$year == 2015 & dat_lineplot_1$subgroup_var == "female", ]
+
+
+  expect_equal(dat_total$p_mean_comp_none, subset(dat_comp, TR_BUNDESLAND == "total" & Kgender == "female" & parameter == "mean" & comparison == "none" & year == 2015, select = p)[[1]])
+
+  expect_equal(dat_total$est_mean_comp_crossDiff_totalFacet_totalSubgroup, as.numeric(NA))
+  expect_equal(
+    dat_total$est_mean_comp_crossDiff_totalFacet_sameSubgroup,
+    as.numeric(NA)
+  )
+  expect_equal(dat_total$p_mean_comp_crossDiff_sameFacet_totalSubgroup, subset(dat_comp, TR_BUNDESLAND == "total" & Kgender == "female - total" & parameter == "mean" & comparison == "crossDiff" & year == 2015, select = p)[[1]])
+  expect_equal(dat_total$est_mean_comp_crossDiff_sameFacet_totalSubgroup, subset(dat_comp, TR_BUNDESLAND == "total" & Kgender == "female - total" & parameter == "mean" & comparison == "crossDiff" & year == 2015, select = est)[[1]])
+})

@@ -21,12 +21,10 @@ calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settin
 
   ## Calculate the y coordinates for the braces and labels:
   ## Check if any braces overlap. If that's the case, they have to plotted below each other
-
   overlap <- calc_overlap(
     year_start = years_braces$year_start,
     year_end = years_braces$year_end
   )
-
 
 
   # calc starting points for braces -----------------------------------------
@@ -77,8 +75,15 @@ calc_brace_coords <- function(grouping_var_lvls, coords, years_list, plot_settin
   range_coords <- diff(range(coords)) ## Take from above!
 
   # calc brace label y ------------------------------------------------------
-  brace_positions$label_pos_x <- brace_positions$year_start + brace_positions$range * brace_positions$brace_position_x + (max(brace_positions$range) * plot_settings$brace_label_nudge_x)
-  label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x) {
+  if(any(!is.na(brace_positions$range))){
+    max_range <- max(brace_positions$range, na.rm = TRUE)
+  }else{
+    max_range <- NA
+  }
+
+  brace_positions$label_pos_x <- brace_positions$year_start + brace_positions$range * brace_positions$brace_position_x + (max_range * plot_settings$brace_label_nudge_x)
+
+label_pos_y <- sapply(seq_along(grouping_var_lvls), function(x) {
     starting_points$upper_label_y - (range_coords * plot_settings$brace_label_gap_y * (x - 1))
   })
 

@@ -42,11 +42,11 @@ plotsettings_tablebarplot(columns_alignment = c(0, 0.5, 2))
 ```
 
 
-Eventuell muss ein wenig nachjustiert werden, um die Spalteninhalte so zu rücken, dass es stimmig aussieht:
+Eventuell muss ein wenig nachjustiert werden, um die Spalteninhalte so zu rücken, dass es stimmig aussieht (negative Zahl zum Rücken nach links, positiv zum Rücken nach rechts):
 
 ```{r}
 #| eval: FALSE
-plotsettings_tablebarplot(columns_nudge_x = ... )
+plotsettings_tablebarplot(columns_nudge_x = -1.5 )
 ```
 
 
@@ -54,7 +54,7 @@ plotsettings_tablebarplot(columns_nudge_x = ... )
 Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen. Subscripts werden nicht kursiv dargestellt:
 
 - *M*~M~–*M*~J~ 
-- *M*~2024–~*M*~2018~
+- *M*~2024~-*M*~2018~
 
 Nach $\Delta$ wird ebenfalls kein Leerzeichen gesetzt, $\Delta$ wird auch nicht kursiv dargestellt:
 
@@ -96,8 +96,8 @@ Ansonsten orientiert ihr euch am besten an den Vorlagen, die in etwa die gleiche
 ```{r}
 #| eval: FALSE
 
-plotsettings_tablebarplot(font_size = ..., 
-                          header_font_size = ...
+plotsettings_tablebarplot(font_size = 2.5, 
+                          header_font_size = 2.5
                           )
 ```
 
@@ -106,11 +106,6 @@ Die Schriftgröße könnt ihr aus den Default lists auslesen, die ihr für eure 
 ```{r}
 abb_6.6$font_size
 ```
-
-### Farben 
-Sind eigentlich voreingestellt. 
-In den Kapiteln zu den einzelnen Abbildungstypen gibt es noch einmal Zusammenfassungen. 
-
 
 ## Export
 ### Exporttyp
@@ -134,7 +129,7 @@ Ein String der Delta enthält kann in `eatPlot` auf zwei Arten erzeugt werden:
 
 #### ggtext
 Nutzt das Paket [`ggtext`](https://wilkelab.org/ggtext/) für HTML support.  
-Sonderzeichen können leider nicht immer in PDF mit cmyk-Farbschema exportiert werden, weshalb dann `plotmath` verwendet werden muss: 
+Sonderzeichen können leider nicht immer in PDF mit cmyk-Farbschema exportiert werden, weshalb dann `plotmath` verwendet werden muss. Das ist für den BT eigentlich immer der Fall: 
 
 #### plotmath
 
@@ -160,7 +155,7 @@ Im `plotmath`-Modus durch `bold(fettgedruckter Text)`.
 ## Balkendiagramme
 
 ### Balkenfüllung
--	Statistisch signifikante Werte (p < .05) werden mit **ausgefüllten** Balken dargestellt.
+-	Statistisch signifikante Werte (*p* < .05) werden mit **ausgefüllten** Balken dargestellt.
 - Statistisch nicht signifikante Werte werden mit **schraffierten** Balken dargestellt (Schraffur von oben links nach unten rechts).
 - Größe des Balkenmusters muss manuell nachjustiert werden, da es wieder von der Größe der Abbildung beim Abspeichern abhängt. Hier die Größe bitte ungefähr den Vorlagen anpassen, und auch darauf achten, dass die  Muster vor allem innerhalb eines Plots gleich groß sind. Bei zusammengesetzten Plots aus mehreren Balkendiagrammen kann die Mustergröße sich leicht unterscheiden, selbst wenn die selben Werte angegeben werden. Hier nochmal manuell nachjustieren, bis es einheitlich aussieht.  
 
@@ -208,7 +203,7 @@ In schwarz `cmyk(0, 0, 0, 100)`.
 Bereits voreingestellt.
 
 #### Hilfslinien vertikal
-Grau und gestichelt. 
+Grau `cmyk(0, 0, 0, 60)` und gestrichelt. 
 Ist bereits vorgeingestellt, könnte aber so geändert werden:
 
 ```{r}
@@ -224,7 +219,7 @@ plotsettings_tablebarplot(
 
 ### Zeilenumbruch
 Zeilenumbrüche werden in Ländernamen nur dann gesetzt, wenn die Zeilen aus anderen Gründen breiter sind (z.B. weil je Land zwei Ergebniszeilen berichtet werden). 
-Zeilenumbrüche für die Bundeslandnamen werden vor dem Plotten eingefügt, am einfachsten mit:
+Zeilenumbrüche für die Ländernamen werden vor dem Plotten eingefügt, am einfachsten mit:
 
 ```{r}
 #| eval: FALSE
@@ -234,7 +229,7 @@ my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)
 
 
 
-## Liniendiagramm
+## Liniendiagramme
 
 ### Referenzband
 Das Referenzband wird mit `+/- 2 SE` angezeigt. Ist bereits voreingestellt. 
@@ -264,7 +259,7 @@ lineplot_4x4$subgroup_colours
 
 
 ### Signifikanzen
--	Statistisch signifikante Veränderung (p < .05) mit durchgezogener Linie darstellen.
+-	Statistisch signifikante Veränderung (*p* < .05) mit durchgezogener Linie darstellen.
 -	Statistisch nicht signifikante Veränderung mit gestrichelter Linie darstellen
 
 Ist bereits vorgeingestellt, kann zur Not so geändert werden:
@@ -280,10 +275,10 @@ plotsettings_lineplot(line_type = c(
 
 
 -	Hochgestelltes `a`:
-    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen der seblen Gruppe in Deutschland
-    * Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (p < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
+    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen der seblen Gruppe in Deutschland
+    * Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
   
--	Ausgefülltes Dreieck für Werte, die statistisch signifikant (p < .05) vom Wert der selben Gruppe in der Gesamtpopulation abweichen.
+-	Ausgefülltes Dreieck für Werte, die statistisch signifikant (*p* < .05) vom Wert der selben Gruppe in der Gesamtpopulation abweichen.
 -	Ausgefüllter Kreis für Werte, die statistisch nicht signifikant vom Wert der selben Gruppe in der Gesamtpopulation abweichen.
 
 Ist bereits voreingestellt, kann zur Not so geändert werden:
@@ -311,7 +306,7 @@ Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung v
 | Punktform                            | Vergleich der Gruppe im Bundesland zur gleichen Gruppe in Gesamtdeutschland                                  | rund: nicht signifikant, eckig: signifikant                                                     | `point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup"`          | `crossDiff (Berlin_female - total_female) for year 2009`            |
 | Linienart                            | Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant                                       | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                | `trend (2015 - 2009) for BadenWuerttemberg_female`                  |
 | Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`                  |
-| Hochgestellter Buchstabe im Label    | So wie Punktform, nur als Trend: Vergleich des Trends in einer Gruppe zum gleichen Trend in Gesamtdeutschland | —                                                                                                | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"` | `trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)` |
+| Hochgestellter Buchstabe im Label    | Trend des Vergleichs einer Gruppe zur gleichen Gruppe in Gesamtdeutschland| —                                                                                                | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"` | `trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)` |
  
  
 ### Gesamtdeutschland-Plots
@@ -324,8 +319,8 @@ Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung v
 
 ### Deutschland-Kachel in Länderplots
 Genau das gleiche wie in den normalen Linienplots. 
-Im alten BT hatten wir ja nicht die Gruppen verglichen, sondern vs. Deutschland insgesamt. 
-
+Die Vergleiche vs. Deutschland sind hier automatisch nicht signifikant gesetzt, da in `eatRep` hierfür kein Wert ausgegeben wird. 
 
 ## Tableplots
-Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt immer von der jeweiligen Abbildung ab. 
+Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt immer von der jeweiligen Abbildung ab.  
+Generell kann sich hier an den Linienplots orientiert werden: Wenn eine Gruppe in einem der Länder (z.B Mädchen) gegen Deutschland verglichen wird, soll in der Regel nicht gegen Gesamtdeutschland, sonderen gegen diese Gruppe in Deutschland verglichen werden (also alle Mädchen in Deutschland). 

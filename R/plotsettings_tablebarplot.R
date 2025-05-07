@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 43
+      length(settings_list) == 44
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -22,6 +22,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_frame_linetype",
         "bar_label_colour",
         "bar_label_nudge_x",
+        "bar_label_nudge_y",
         "bar_label_size",
         "bar_line_width",
         "bar_nudge_y",
@@ -69,6 +70,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.character(settings_list$bar_frame_linetype))
   stopifnot(all(is_colour(settings_list$bar_label_colour)))
   stopifnot(is.numeric(settings_list$bar_label_nudge_x))
+  stopifnot(is.numeric(settings_list$bar_label_nudge_y))
   stopifnot(is.numeric(settings_list$bar_label_size))
   stopifnot(is.numeric(settings_list$bar_line_width))
   stopifnot(is.numeric(settings_list$bar_nudge_y))
@@ -117,6 +119,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebarplot()`. Defaults to `solid`.
 #' @param bar_label_colour Colour of the bar labels. Can either be a single colour, or a named vector that contains the colour for each group defined in `bar_fill`. Defaults to `"black"`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
+#' @param bar_label_nudge_y Numeric for nudging the bar labels in y direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_width Numeric for the line-size around the bar.
 #' @param bar_nudge_y Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to `0`.
@@ -131,8 +134,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param column_spanners_2_nudge_y Numeric vector to increase or decrease the space between column spanners level 2 text and line. Can be either of length 1, or provide a nudging parameter for each column spanner. Defaults to `-0.2`.
 #' @param column_spanners_2_row_height Numeric for the row height of the row the second level of column spanners is written in. Defaults to `1`
 #' @param columns_alignment Numeric vector with one element for each column, determining the text adjustement within the column. Can be `0` (left-aligned), `0.5` (central-aligned), `1` (right-aligned), or `2` (right-aligned, but in the middle of the column). Defaults to `0.5`.
-#' @param columns_nudge_x Numeric vector to nudge the column text in x direction. Defaults to `0`.
-#' @param columns_nudge_y Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Defaults to `0`.
+#' @param columns_nudge_x Numeric vector to nudge the column text in x direction. Negativ to nudge left, positive to nudge right. Defaults to `0`.
+#' @param columns_nudge_y Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Negative values to nudge down, positive values to nudge up. Defaults to `0`.
 #' @param columns_table_sig_superscript_letter Character, that will be added on significant values defined by `columns_table_sig_superscript`.
 #' @param columns_table_sig_superscript_letter_nudge_x Numeric for nudging the superscript towards or away from a number.
 #' @param columns_width Numeric vector with relative column widths. Has to be equal to the number of columns (including the bar chart, if a bar chart is plotted) that are plotted in the table. Defaults to `NULL`, in which case all collumns will get the same width.
@@ -195,6 +198,7 @@ plotsettings_tablebarplot <- function(axis_x = NULL,
                                       bar_frame_linetype = NULL,
                                       bar_label_colour = NULL,
                                       bar_label_nudge_x = NULL,
+                                      bar_label_nudge_y = NULL,
                                       bar_label_size = NULL,
                                       bar_line_width = NULL,
                                       bar_nudge_y = NULL,
@@ -243,6 +247,7 @@ plotsettings_tablebarplot <- function(axis_x = NULL,
       "bar_label_colour" = "black",
       "bar_label_size" = 2,
       "bar_label_nudge_x" = 0,
+      "bar_label_nudge_y" = 0,
       "bar_line_width" = 0.5,
       "bar_nudge_y" = 0,
       "bar_pattern_fill_colour" = "white",

@@ -20,6 +20,7 @@ plotsettings_tablebarplot(
   bar_frame_linetype = NULL,
   bar_label_colour = NULL,
   bar_label_nudge_x = NULL,
+  bar_label_nudge_y = NULL,
   bar_label_size = NULL,
   bar_line_width = NULL,
   bar_nudge_y = NULL,
@@ -82,6 +83,8 @@ plotsettings_tablebarplot(
 
 \item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
 
+\item{bar_label_nudge_y}{Numeric for nudging the bar labels in y direction.}
+
 \item{bar_label_size}{Numeric for the font size of the bar labels.}
 
 \item{bar_line_width}{Numeric for the line-size around the bar.}
@@ -110,9 +113,9 @@ plotsettings_tablebarplot(
 
 \item{columns_alignment}{Numeric vector with one element for each column, determining the text adjustement within the column. Can be \code{0} (left-aligned), \code{0.5} (central-aligned), \code{1} (right-aligned), or \code{2} (right-aligned, but in the middle of the column). Defaults to \code{0.5}.}
 
-\item{columns_nudge_x}{Numeric vector to nudge the column text in x direction. Defaults to \code{0}.}
+\item{columns_nudge_x}{Numeric vector to nudge the column text in x direction. Negativ to nudge left, positive to nudge right. Defaults to \code{0}.}
 
-\item{columns_nudge_y}{Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Defaults to \code{0}.}
+\item{columns_nudge_y}{Either a numeric vector or a list of numeric vectors of the same length as columns in the table (including the bar chart).  Nudges the column texts in y direction, either for all rows in the column the same amount (vector), or each row in each column specifically (list). Negative values to nudge down, positive values to nudge up. Defaults to \code{0}.}
 
 \item{columns_table_sig_superscript_letter}{Character, that will be added on significant values defined by \code{columns_table_sig_superscript}.}
 

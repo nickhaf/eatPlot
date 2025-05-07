@@ -201,11 +201,16 @@ lineplot_germany_2
 
 
 
-```{r lineplot_na} 
+```{r lineplot_na_real} 
 dat_lineplot_2 <- prep_lineplot(
   trend_gender[[1]],
   subgroup_var = "Kgender"
 )
+```
+
+
+```{r code_folding: hide }
+## Einfügen von NAs zur Demonstration
 
 dat_lineplot_2$est_mean_comp_none <- ifelse(dat_lineplot_2$state_var == "Berlin" & dat_lineplot_2$year == 2015, NA, dat_lineplot_2$est_mean_comp_none)
 dat_lineplot_2$est_mean_comp_none <- ifelse(dat_lineplot_2$state_var == "Brandenburg" & dat_lineplot_2$year == 2009 & dat_lineplot_2$subgroup_var == "female", NA, dat_lineplot_2$est_mean_comp_none)
@@ -216,8 +221,9 @@ dat_lineplot_2$se_mean_comp_trend_sameFacet_sameSubgroup <- ifelse(dat_lineplot_
 
 dat_lineplot_2 <- dat_lineplot_2[dat_lineplot_2$state_var != "Niedersachsen", ]
 
-## Dritte Gruppe separat
+```
 
+```{r}
 dat_lineplot_2$state_var <- process_bundesland(dat_lineplot_2$state_var)
 
 ## Relevel, so Deutschland comes at the end
@@ -231,7 +237,11 @@ state_levels <- levels(dat_lineplot_2$state_var)
 years_lines_list <- stats::setNames(lapply(state_levels, function(x) list(c(2009, 2015), c(2015, 2022))), state_levels)
 
 years_lines_list$`Baden−Württemberg`[[1]] <- NULL
-years_lines_list$`Deutschland`[[2]] <- NULL
+
+##
+years_lines_list$`Berlin` <- list()
+
+# years_lines_list$`Berlin`[[2]] <- NULL
 
 lineplot_na <- plot_lineplot(
   dat_lineplot_2,
@@ -251,17 +261,6 @@ lineplot_na <- plot_lineplot(
 ## Because Deuschland is also our background-facet, the years we removed there are also not plotted in the background. 
 
 ```
-
-```{r}
-#| eval: false
-save_plot(lineplot_na, filename = "C:/Users/hafiznij/Downloads/lineplot_na.pdf", width = 160, height = 185)
-```
-
-```{r fig.width = 160, fig.height = 185, dpi=300}
-lineplot_na
-```
-
-
 
 ## Lineplot with long trend
 
