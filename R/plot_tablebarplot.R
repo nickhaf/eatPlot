@@ -159,7 +159,6 @@ plot_tablebarplot <- function(dat,
       round_est = columns_round[[i]],
       plot_settings = plot_settings
     )
-    dat$bar_label <- dat[, bar_label]
 
     if (!is.null(columns_table_se[[i]])) {
       dat <- construct_label_2(
@@ -170,6 +169,7 @@ plot_tablebarplot <- function(dat,
       )
     }
   }
+  dat$bar_label <- dat[, bar_label]
 
   if (!is.null(bar_label)) {
     dat <- construct_label_2(
@@ -277,7 +277,6 @@ plot_tablebarplot <- function(dat,
   # Plot --------------------------------------------------------------------
   x_right_lim <- max(column_x_coords$right) +
     plot_settings$space_right
-
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -446,8 +445,10 @@ plot_tablebarplot <- function(dat,
         label.color = NA,
         hjust = plot_settings$bar_label_nudge_x,
         size = plot_settings$bar_label_size
-      ) +
-      ggplot2::scale_colour_manual(values = plot_settings$bar_label_colour)
+      )
+
+   res_plot <- res_plot +
+      ggplot2::scale_colour_manual(values = c(plot_settings$bar_label_colour, 'black'))
   }
   # Column spanners ---------------------------------------------------------
   plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)
