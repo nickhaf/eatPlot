@@ -177,5 +177,83 @@ test_that("Vlines are plotted correctly", {
 })
 
 
+test_that("labels can be plotted in different combination without error", {
+  p_bar_label_colour <- plot_tablebarplot(
+    dat = test_data,
+    bar_label = 'est_1',
+    bar_sig = "bar_sig",
+    bar_fill = "bar_fill",
+    headers = list("a barplot"),
+    bar_est = "est_1",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      background_stripes_colour = c("white", "lightgrey"),
+      bar_fill_colour = c("red", "blue", "yellow", "green"),
+      bar_label_colour = c("red", "blue", "yellow", "green"),
+      bar_pattern_fill_colour = "white",
+      bar_pattern_type = c("stripe", "none"),
+      bar_type = "pattern",
+      bar_pattern_width = 0.5,
+      bar_pattern_spacing = 0.1,
+      headers_font_size = 5,
+      space_right = 5
+    )
+  )
+
+
+  vdiffr::expect_doppelganger(
+    "bar_labels get colours",
+    p_bar_label_colour
+  )
+
+  p_bar_label_1colour <- plot_tablebarplot(
+    dat = test_data,
+    bar_label = 'est_1',
+    bar_sig = "bar_sig",
+    bar_fill = "bar_fill",
+    headers = list("a barplot"),
+    bar_est = "est_1",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      background_stripes_colour = c("white", "lightgrey"),
+      bar_fill_colour = c("red", "blue", "yellow", "green"),
+      bar_label_colour = c("red"),
+      bar_pattern_fill_colour = "white",
+      bar_pattern_type = c("stripe", "none"),
+      bar_type = "pattern",
+      bar_pattern_width = 0.5,
+      bar_pattern_spacing = 0.1,
+      headers_font_size = 5,
+      space_right = 5
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    "bar_labels get 1 colour",
+    p_bar_label_colour
+  )
+
+
+  expect_error(plot_tablebarplot(
+    dat = test_data,
+    bar_label = 'est_1',
+    bar_sig = "bar_sig",
+    bar_fill = "bar_fill",
+    headers = list("a barplot"),
+    bar_est = "est_1",
+    y_axis = "state_var",
+    plot_settings = plotsettings_tablebarplot(
+      background_stripes_colour = c("white", "lightgrey"),
+      bar_fill_colour = c("red", "blue", "yellow", "green"),
+      bar_label_colour = c("red", 'blue'),
+      bar_pattern_fill_colour = "white",
+      bar_pattern_type = c("stripe", "none"),
+      bar_type = "pattern",
+      bar_pattern_width = 0.5,
+      bar_pattern_spacing = 0.1,
+      headers_font_size = 5,
+      space_right = 5
+    )))
+})
 
 
