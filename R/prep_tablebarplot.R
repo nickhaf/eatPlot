@@ -1,4 +1,4 @@
-#' Prepare lineplot data.
+#' Prepare tableplot data.
 #'
 #' @inheritParams prep_lineplot
 #' @inheritParams plot_lineplot
