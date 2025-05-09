@@ -1,6 +1,6 @@
 #' Plot a table and/or a barchart.
 #'
-#' @param dat Data prepared with [prep_lineplot()].
+#' @param dat Data prepared with [prep_tablebarplot()].
 #' @param y_axis Character string of the columnname used as y-axis. Has to contain unique values.
 #' @param bar_est Character string for the column that contains the values for the bar chart. If `NULL`, no bar chart will be plotted.
 #' @param bar_label Character string for the column that should be used for bar labels on top of the bars. If `NULL`, no labels are printed. Defaults to `NULL`.
