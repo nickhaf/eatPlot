@@ -490,21 +490,28 @@ tableplot_8.4
 ```
 
 ## Stacked Barplot
-
+The data preperation for the stacked barplots is  a bit more complicated. 
+Most likely, we will have to run at least to analyses with `eatRep`, one for the percentages, and one for the means. 
+We prepare both analyses seperately and then merge them:
 
 
 ```{r eval = FALSE, echo = FALSE}
 dat_prepped <- prep_tablebarplot(anteile, 
-                                   subgroup_var = "Kgender", 
+                                 subgroup_var = "Kgender", 
                                    parameter = NULL, 
-                                   paramter_to_colname = FALSE)  
+                                   paramter_to_colname = FALSE)  ## This is important, because our parameter column contains the levels of the dependent Variable. They need to stay in the long format for this one!
 
 dat_prepped_means <- prep_tablebarplot(means, 
                                        subgroup_var = "Kgender", 
-                                       parameter = c("mean", "sd")) 
+                                       parameter = c("mean", "sd"), 
+                                       paramter_to_colname = TRUE) ## Here we don't need the long format for the parameters, so we pivot them wider and create parameter specific columns for each comparison! 
   
-## If I wanted to keep var, I could put it into a merged subgroup column for now!
+```
 
+Now I have to do some extra data prep:
+
+```{r eval = FALSE, echo = FALSE}
+## Create a variable containing the 
 dat_prepped$var <- rep('Selbstkonzept Deutsch', nrow(dat_prepped))
 
 

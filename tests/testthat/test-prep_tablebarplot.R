@@ -2,6 +2,7 @@ test_that("simple data preperation works", {
   dat_prep <- prep_tablebarplot(trend_2, facet_var = "country", parameter = "mean")
 
   dat_out <- data.frame(
+    depVar = "score",
     subgroup_var = rep("total", 4),
     state_var = c("countryA", "countryB", "countryC", "total"),
     est_mean_comp_none_NA = c(511.563, 508.601, 534.234, 522.668),
