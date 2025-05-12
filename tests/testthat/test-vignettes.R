@@ -35,3 +35,6 @@ test_that("tableplot 8.4 works", {
      vdiffr::expect_doppelganger("tableplot_8.4", tableplot_8.4)
 })
 
+test_that("stacked tableplot works", {
+  suppressWarnings(vdiffr::expect_doppelganger("p_stacked_combined", p_stacked_combined))
+})
