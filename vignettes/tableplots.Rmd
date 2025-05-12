@@ -155,7 +155,7 @@ First the data has to be prepared:
 gender_prepped_mean_sd <- lapply(trend_gender,
   prep_tablebarplot,
   subgroup_var = "Kgender",
-  par = c("mean", "sd")
+  parameter = c("mean", "sd")
 )
 
 ## Let's focus on:
@@ -489,17 +489,20 @@ save_plot(tableplot_8.4,
 tableplot_8.4
 ```
 
-## Stacked barplot
+## Stacked Barplot
+
+
 
 ```{r eval = FALSE, echo = FALSE}
+dat_prepped <- prep_tablebarplot(anteile, 
+                                   subgroup_var = "Kgender", 
+                                   parameter = NULL, 
+                                   paramter_to_colname = FALSE)  
 
-
-# Einstellungen noch unter "stacked" = TRUE zusammenführen
-  dat_prepped <- prep_tablebarplot(anteile, subgroup_var = "Kgender", parameter = NULL, names_from_none = c("year"),
-                                   names_from_comp = c("comparison_split", "trend"), total_subgroup = "total") ## set to total!?
-
-  dat_prepped_means <- prep_tablebarplot(means, subgroup_var = "Kgender", parameter = c("mean", "sd"), total_subgroup = "total") ## set to total!?
-
+dat_prepped_means <- prep_tablebarplot(means, 
+                                       subgroup_var = "Kgender", 
+                                       parameter = c("mean", "sd")) 
+  
 ## If I wanted to keep var, I could put it into a merged subgroup column for now!
 
 dat_prepped$var <- rep('Selbstkonzept Deutsch', nrow(dat_prepped))

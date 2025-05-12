@@ -1,5 +1,5 @@
 test_that("simple data preperation works", {
-  dat_prep <- prep_tablebarplot(trend_2, facet_var = "country", par = "mean")
+  dat_prep <- prep_tablebarplot(trend_2, facet_var = "country", parameter = "mean")
 
   dat_out <- data.frame(
     subgroup_var = rep("total", 4),
