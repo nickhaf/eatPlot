@@ -363,7 +363,7 @@ plotting. Of course I have to put my own data into this function:</p>
 <code class="sourceCode R"><span><span class="va">dat_6.6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_tablebarplot.html">prep_tablebarplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">dispar</span><span class="op">$</span><span class="va">hoeren</span>, <span class="co">## My data.frame</span></span>
 <span>  subgroup_var <span class="op">=</span> <span class="st">"Kgender"</span>, <span class="co">## The subgroup variable</span></span>
-<span>  par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span> <span class="co">## We need both mean and sd for the plot</span></span>
+<span>  parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span> <span class="co">## We need both mean and sd for the plot</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This is our prepared data.</p>
 <div class="section level3">
@@ -523,7 +523,7 @@ function, to pack it away:</p>
 <span>  <span class="va">dat_6.6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_tablebarplot.html">prep_tablebarplot</a></span><span class="op">(</span></span>
 <span>    <span class="va">dat_kb</span>,</span>
 <span>    subgroup_var <span class="op">=</span> <span class="st">"Kgender"</span>,</span>
-<span>    par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span> <span class="co">## We need both mean and sd for the plot</span></span>
+<span>    parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span> <span class="co">## We need both mean and sd for the plot</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span></span>
