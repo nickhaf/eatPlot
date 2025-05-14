@@ -66,7 +66,7 @@ Of course I have to put my own data into this function:
 dat_6.6 <- prep_tablebarplot(
   dispar$hoeren, ## My data.frame
   subgroup_var = "Kgender", ## The subgroup variable
-  par = c("mean", "sd") ## We need both mean and sd for the plot
+  parameter = c("mean", "sd") ## We need both mean and sd for the plot
 )
 ```
 
@@ -251,7 +251,7 @@ prepare_6.6_data <- function(dat_kb) {
   dat_6.6 <- prep_tablebarplot(
     dat_kb,
     subgroup_var = "Kgender",
-    par = c("mean", "sd") ## We need both mean and sd for the plot
+    parameter = c("mean", "sd") ## We need both mean and sd for the plot
   )
 
 

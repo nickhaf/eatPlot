@@ -24,7 +24,7 @@ plot_tablebarplot(
 )
 }
 \arguments{
-\item{dat}{Data prepared with \code{\link[=prep_lineplot]{prep_lineplot()}}.}
+\item{dat}{Data prepared with \code{\link[=prep_tablebarplot]{prep_tablebarplot()}}.}
 
 \item{y_axis}{Character string of the columnname used as y-axis. Has to contain unique values.}
 

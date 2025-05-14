@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' tbd
+#' #tbd
 
 merge_cols <- function(dat, type, comparison, facet = "sameFacet"){
 

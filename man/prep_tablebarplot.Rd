@@ -2,7 +2,7 @@
 % Please edit documentation in R/prep_tablebarplot.R
 \name{prep_tablebarplot}
 \alias{prep_tablebarplot}
-\title{Prepare lineplot data.}
+\title{Prepare tableplot data.}
 \usage{
 prep_tablebarplot(
   eatRep_dat,
@@ -12,7 +12,7 @@ prep_tablebarplot(
   total_facet = "total",
   sig_niveau = 0.05,
   total_subgroup = "total",
-  ...
+  parameter_to_colname = TRUE
 )
 }
 \arguments{
@@ -30,13 +30,13 @@ prep_tablebarplot(
 
 \item{total_subgroup}{Character string indicating the subgroup containing all other groups of the subgroup_var. Defaults to \code{"total"}.}
 
-\item{...}{Further arguments to be passed through, needed for pivoting the data internally. Only temporary, will be removed.}
+\item{parameter_to_colname}{Logical that indicates whether the parameter should be also pivoted into wide format, or the parameter column should be kept in the long format. Mainly set to \code{FALSE} for stacked barplots. Defaults to \code{TRUE}.}
 }
 \value{
 Data prepared for plotting the BT-lineplots.
 }
 \description{
-Prepare lineplot data.
+Prepare tableplot data.
 }
 \examples{
 # tbd
