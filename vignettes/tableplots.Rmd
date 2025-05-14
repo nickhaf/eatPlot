@@ -786,6 +786,6 @@ p_stacked_combined <- combine_plots(list(p_stacked, p_table), plot_widths = c(0.
 save_plot(p_stacked_combined, "C:/Users/hafiznij/Downloads/stacked.pdf", height = 140, width = 160)
 ```
 
-```{r echo = FALSE}
+```{r fig.width = 160, fig.height = 140, dpi=300}
 p_stacked_combined
 ```
