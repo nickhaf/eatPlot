@@ -22,5 +22,5 @@ A vector consisting of the merged columns.
 Columns that contain unique values per row can be combined into one. Main usage if multiple different subgroup variables should be plotted in the same column in a plot.
 }
 \examples{
-#tbd
+# tbd
 }

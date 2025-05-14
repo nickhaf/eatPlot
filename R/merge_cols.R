@@ -11,9 +11,7 @@
 #' @return A vector consisting of the merged columns.
 #' @export
 #'
-#' @examples
-#' #tbd
-
+#' @examples # tbd
 merge_cols <- function(dat, type, comparison, facet = "sameFacet"){
 
   ## Test whether there actually are NAs in every other oclumn, if we haf a value somewhere
