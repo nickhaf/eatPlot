@@ -499,9 +499,10 @@ chapter.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tableplot_8.4</span></span></code></pre></div>
 <p><img src="tableplots_files/figure-html/unnamed-chunk-24-1.png"><!-- --></p>
-<div class="section level3">
-<h3 id="stacked-barplot-abbildung-9-1">Stacked Barplot (Abbildung 9.1)<a class="anchor" aria-label="anchor" href="#stacked-barplot-abbildung-9-1"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="stacked-barplot-abbildung-9-1">Stacked Barplot (Abbildung 9.1)<a class="anchor" aria-label="anchor" href="#stacked-barplot-abbildung-9-1"></a>
+</h2>
 <p>The data preperation for the stacked barplots is a bit more
 complicated. Most likely, we will have to run at least to analyses with
 <code>eatRep</code>, one for the percentages, and one for the means. We
@@ -552,7 +553,7 @@ dependent variables, you might need to <code><a href="https://rdrr.io/r/base/cbi
 together to put them together into one plot. I do the same here with my
 copied data.</p>
 <details><summary>
-Toggle answer
+Show Code
 </summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Add additonal subgroups to the data:</span></span>
 <span><span class="va">dat_prepped_other_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_prepped</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>, <span class="op">]</span>, <span class="va">subgroup_var</span> <span class="op">!=</span> <span class="st">"Gesamt"</span><span class="op">)</span></span>
@@ -648,7 +649,9 @@ use the prepped means from the separate analysis.</p>
 <span><span class="va">dat_prepped_means</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat_prepped_means</span><span class="op">$</span><span class="va">subgroup_var</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gesamt"</span>, <span class="st">"Mädchen"</span>, <span class="st">"Jungen"</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Again I need to prepare the data for the example plot. You can ignore
 the next chunk.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<details><summary>
+Show Code
+</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Again, copy the data to simulate other subgroups, that were not actually in the data!</span></span>
 <span><span class="va">dat_table_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dat_prepped_means</span>, <span class="va">subgroup_var</span> <span class="op">!=</span> <span class="st">"Gesamt"</span><span class="op">)</span></span>
 <span><span class="va">dat_table_2</span><span class="op">$</span><span class="va">subgroup_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"Jungen"</span>, <span class="st">"mit Zuwanderungshintergrund"</span>, <span class="va">dat_table_2</span><span class="op">$</span><span class="va">subgroup_var</span><span class="op">)</span></span>
@@ -714,7 +717,7 @@ the next chunk.</p>
 <span></span>
 <span></span>
 <span><span class="va">dat_means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">dat2</span>, <span class="va">dat2_var2</span>, <span class="va">dat2_var3</span>, <span class="va">dat2_var4</span><span class="op">)</span></span></code></pre></div>
-<p>Now that I can merge my mean data with the data I used for the
+</details><p>Now that I can merge my mean data with the data I used for the
 stacked bars. This ensures that every row receives the correct
 values.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
@@ -780,6 +783,8 @@ means:</p>
 <span><span class="co">## x-axis ranges.</span></span></code></pre>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_stacked_combined</span>, <span class="st">"C:/Users/hafiznij/Downloads/stacked.pdf"</span>, height <span class="op">=</span> <span class="fl">140</span>, width <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_stacked_combined</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: Removed 56 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">## (`geom_tile()`).</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: Removed 4 rows containing missing values or values outside the scale range</span></span>
@@ -791,7 +796,6 @@ means:</p>
 <span><span class="co">## Removed 56 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">## (`geom_rich_text()`).</span></span></code></pre>
 <p><img src="tableplots_files/figure-html/unnamed-chunk-34-1.png"><!-- --></p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
