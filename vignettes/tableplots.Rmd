@@ -493,7 +493,7 @@ save_plot(tableplot_8.4,
 tableplot_8.4
 ```
 
-## Stacked Barplot (Abbildung 9.1)
+# Stacked Barplot (Abbildung 9.1)
 The data preperation for the stacked barplots is  a bit more complicated. 
 Most likely, we will have to run at least to analyses with `eatRep`, one for the percentages, and one for the means. 
 We prepare both analyses seperately and then merge them:
@@ -547,7 +547,7 @@ However, if you have multiple `eatRep`-datasets with different dependent variabl
 I do the same here with my copied data. 
 
 <details>
-  <summary>Toggle answer</summary>
+  <summary>Show Code</summary>
 
 ```{r}
 ## Add additonal subgroups to the data:
@@ -655,6 +655,9 @@ dat_prepped_means$subgroup_var <- factor(dat_prepped_means$subgroup_var, levels 
 Again I need to prepare the data for the example plot. 
 You can ignore the next chunk. 
 
+<details>
+  <summary>Show Code</summary>
+
 ```{r}
 ## Again, copy the data to simulate other subgroups, that were not actually in the data!
 dat_table_2 <- subset(dat_prepped_means, subgroup_var != "Gesamt")
@@ -721,6 +724,9 @@ dat2_var4$depVar <- "hyperAkt"
 
 dat_means <- rbind(dat2, dat2_var2, dat2_var3, dat2_var4)
 ```
+
+</details>
+
 
 Now that I can merge my mean data with the data I used for the stacked bars. 
 This ensures that every row receives the correct values. 

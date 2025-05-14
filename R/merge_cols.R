@@ -15,8 +15,7 @@
 merge_cols <- function(dat, type, comparison, facet = "sameFacet"){
 
   ## Test whether there actually are NAs in every other oclumn, if we haf a value somewhere
-
-  cols_to_merge <- grep(paste0("^", type, "_", ".*", facet, ".*", comparison), names(dat), value = TRUE)
+  cols_to_merge <- grep(paste0("^", type, "_", ".*", comparison,  ".*", facet), colnames(dat), value = TRUE)
   res <- apply(dat[ , cols_to_merge], 1, function(row) {
     row[!is.na(row)][1]
   })
