@@ -262,6 +262,18 @@ lineplot_na <- plot_lineplot(
 
 ```
 
+
+```{r}
+#| eval: false
+save_plot(lineplot_na, filename = "C:/Users/hafiznij/Downloads/lineplot_na.pdf", width = 160, height = 185)
+```
+
+
+```{r fig.width = 160, fig.height = 185, dpi=300}
+lineplot_na
+```
+
+
 ## Lineplot with long trend
 
 ```{r lineplot_long} 

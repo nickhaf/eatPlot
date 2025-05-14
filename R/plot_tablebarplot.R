@@ -54,6 +54,10 @@ plot_tablebarplot <- function(dat,
     stop("Please provide a y-axis.")
   }
 
+  if(!y_axis %in% colnames(dat)){
+    stop("Your y-axis column is not in the data frame. Please check the column names.")
+  }
+
   if (plot_settings$bar_type != "stacked" & any(duplicated(dat[, y_axis]))) {
     stop("Your y-axis has to contain only unique values. Maybe you have to paste state_var and grouping_var into unique values?")
   }

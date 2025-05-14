@@ -90,6 +90,18 @@
 #' }
 "abb_8.4"
 
+#' BT24 default plot settings.
+#'
+#' Default plot settings Abbildung 9.1 from BT22 (stacked barplot).
+#'
+#' @format ## `abb_9.1`
+#' A list with two elements.
+#' \describe{
+#'   \item{background_stripes_colour}{Colour of the background stripes.}
+#'   ...
+#' }
+"abb_9.1"
+
 #' BT24 example data.
 #'
 #' Default plot settings for mean-barplot without trend.

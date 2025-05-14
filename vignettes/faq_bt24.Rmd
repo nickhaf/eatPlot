@@ -312,7 +312,7 @@ Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung v
 ### Gesamtdeutschland-Plots
 | Darstellung                           | Bedeutung                                                                                                     | Werte                                                                                           | Umsetzung in `eatPlot`                                                  | Name in `eatRep`                                                    |
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------
-|Punktform| Nicht gentutzt| | |
+|Punktform| Nicht genutzt| | |
 |Linienart| Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant                                       | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                | `trend (2015 - 2009) for BadenWuerttemberg_female`|
 | Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`   
 |Hochgestellter Buchstabe im Label| Nicht genutzt| | |

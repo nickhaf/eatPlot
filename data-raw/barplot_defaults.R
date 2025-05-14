@@ -76,3 +76,18 @@ abb_8.4 <- plotsettings_tablebarplot(
 )
 
 usethis::use_data(abb_8.4, overwrite = TRUE)
+
+
+abb_9.1 <- plotsettings_tablebarplot(
+  axis_x = FALSE,
+  background_stripes_colour = "white",
+  bar_type = "stacked",
+  bar_background_lines = "none",
+  bar_background_0line_linetype = "blank",
+  bar_label_size = 1.8,
+  font_size = 2,
+  headers_font_size = 2,
+  default_list = barplot_table_plot_pattern
+)
+
+usethis::use_data(abb_9.1, overwrite = TRUE)
