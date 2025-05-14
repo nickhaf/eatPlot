@@ -5,7 +5,7 @@
 #'
 
 #' @param facet_var Character string of the variable containing information on groups some of the comparisons are made against. This is needed to decosntruct comparisons like `crossDiff` into `crossDiff` and `crossDiffTotal` (so a crossDiff comparison against the total group). Name might be a bit confusing, but is the same as in `prep_lineplot`. Defaults to `TR_BUNDESLAND`.
-#' @param parameter_to_colnames Logical that indicates whether the parameter should be also pivoted into wide format, or the parameter column should be kept in the long format. Mainly set to `FALSE` for stacked barplots. Defaults to `TRUE`.
+#' @param parameter_to_colname Logical that indicates whether the parameter should be also pivoted into wide format, or the parameter column should be kept in the long format. Mainly set to `FALSE` for stacked barplots. Defaults to `TRUE`.
 #'
 #' @return Data prepared for plotting the BT-lineplots.
 #' @export
@@ -18,10 +18,10 @@ prep_tablebarplot <- function(eatRep_dat,
                               total_facet = "total",
                               sig_niveau = 0.05,
                               total_subgroup = "total",
-                              paramter_to_colname = TRUE) {
+                              parameter_to_colname = TRUE) {
 
 
-  if(!paramter_to_colname){
+  if(!parameter_to_colname){
     dat_wide <- prep_plot(
       eatRep_dat = eatRep_dat,
       subgroup_var = subgroup_var,
