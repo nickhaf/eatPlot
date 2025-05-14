@@ -6,6 +6,15 @@
 \usage{
 merge_cols(dat, type, comparison, facet = "sameFacet")
 }
+\arguments{
+\item{dat}{A data frame prepared by \link{prep_tablebarplot} containing the columns to be merged.}
+
+\item{type}{A string indicating which column type should be merged (e.g., "est", "se", "sig" ...)}
+
+\item{comparison}{A string indicating which comparison should be merged (e.g., "groupDiff").}
+
+\item{facet}{A string indicating which facet should be merged ("sameFacet", "totalFacet").}
+}
 \value{
 A vector consisting of the merged columns.
 }
@@ -13,5 +22,5 @@ A vector consisting of the merged columns.
 Columns that contain unique values per row can be combined into one. Main usage if multiple different subgroup variables should be plotted in the same column in a plot.
 }
 \examples{
-tbd
+#tbd
 }

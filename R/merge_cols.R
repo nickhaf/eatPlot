@@ -3,6 +3,10 @@
 #'
 #' Columns that contain unique values per row can be combined into one. Main usage if multiple different subgroup variables should be plotted in the same column in a plot.
 #'
+#' @param dat A data frame prepared by [prep_tablebarplot] containing the columns to be merged.
+#' @param type A string indicating which column type should be merged (e.g., "est", "se", "sig" ...)
+#' @param comparison A string indicating which comparison should be merged (e.g., "groupDiff").
+#' @param facet A string indicating which facet should be merged ("sameFacet", "totalFacet").
 #'
 #' @return A vector consisting of the merged columns.
 #' @export
