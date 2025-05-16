@@ -237,7 +237,7 @@ Das Referenzband wird mit `+/- 2 SE` angezeigt. Ist bereits voreingestellt.
 ### Label
 
 -	Wenn SE einstellig ist, dann wird automatisch ein zusätzliches Leerzeichen vor der Klammer eingefügt, sodass sowohl (SE) als auch der Wert der Mittelwertsdifferenz rechtsbündig zueinanderstehen
--	Die Spitze der geschwiffenen Klammer zeigt auf das erste Leerzeichen zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not nachjustiert werden:
+-	Die Spitze der geschweiften Klammer zeigt auf das erste Leerzeichen zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not nachjustiert werden:
 
 ```{r}
 #| eval: FALSE
@@ -275,11 +275,11 @@ plotsettings_lineplot(line_type = c(
 
 
 -	Hochgestelltes `a`:
-    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen der seblen Gruppe in Deutschland
+    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen derselben Gruppe in Deutschland
     * Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
   
--	Ausgefülltes Dreieck für Werte, die statistisch signifikant (*p* < .05) vom Wert der selben Gruppe in der Gesamtpopulation abweichen.
--	Ausgefüllter Kreis für Werte, die statistisch nicht signifikant vom Wert der selben Gruppe in der Gesamtpopulation abweichen.
+-	Ausgefülltes Dreieck für Werte, die statistisch signifikant (*p* < .05) vom Wert derselben Gruppe in der Gesamtpopulation abweichen.
+-	Ausgefüllter Kreis für Werte, die statistisch nicht signifikant vom Wert derselben Gruppe in der Gesamtpopulation abweichen.
 
 Ist bereits voreingestellt, kann zur Not so geändert werden:
 
@@ -297,9 +297,9 @@ plotsettings_lineplot(
 # Signifikanzen
 Hier findet sich eine Übersicht über die Signifikanzen der Vergleiche, die auf verschiedene Arten in den Plots dargestellt werden.
 
-## Linienplots
+## Länderspezifische Linienplots
 
-Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung von der Linie!
+Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Also quasi Abweichung von der Linie!
 
 | Darstellung                           | Bedeutung                                                                                                     | Werte                                                                                           | Umsetzung in `eatPlot`                                                  | Name in `eatRep`                                                    |
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------|
@@ -308,8 +308,11 @@ Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung v
 | Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`                  |
 | Hochgestellter Buchstabe im Label    | Trend des Vergleichs einer Gruppe zur gleichen Gruppe in Gesamtdeutschland| —                                                                                                | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"` | `trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)` |
  
+### Deutschland-Kachel in Länderplots
+Genau das gleiche wie in den normalen Linienplots. 
+Die Vergleiche vs. Deutschland sind hier automatisch nicht signifikant gesetzt, da in `eatRep` hierfür kein Wert ausgegeben wird. 
  
-### Gesamtdeutschland-Plots
+## Gesamtdeutschland-Plots
 | Darstellung                           | Bedeutung                                                                                                     | Werte                                                                                           | Umsetzung in `eatPlot`                                                  | Name in `eatRep`                                                    |
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------
 |Punktform| Nicht genutzt| | |
@@ -317,9 +320,6 @@ Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Alo quasi Abweichung v
 | Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`   
 |Hochgestellter Buchstabe im Label| Nicht genutzt| | |
 
-### Deutschland-Kachel in Länderplots
-Genau das gleiche wie in den normalen Linienplots. 
-Die Vergleiche vs. Deutschland sind hier automatisch nicht signifikant gesetzt, da in `eatRep` hierfür kein Wert ausgegeben wird. 
 
 ## Tableplots
 Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt immer von der jeweiligen Abbildung ab.  
