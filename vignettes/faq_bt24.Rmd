@@ -121,6 +121,7 @@ Dabei bitte an den Vorlagen orientieren:
 - Ganzseitige Abbildung/Tabelle im Querformat: z.B. [große Tabelle](https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-6)
 - Teilseitige Abbildung/Tabelle im Hochformat: z.B. [kleinere Tabelle](https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-5)
 
+Dabei bitte die Breite bei Hochformat bzw. die Höhe bei Querformat immer beibehalten. Die Höhe kann sich je nach Plot unterscheiden. 
 
 ## Sonderzeichen
 
@@ -324,3 +325,7 @@ Die Vergleiche vs. Deutschland sind hier automatisch nicht signifikant gesetzt, 
 ## Tableplots
 Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt immer von der jeweiligen Abbildung ab.  
 Generell kann sich hier an den Linienplots orientiert werden: Wenn eine Gruppe in einem der Länder (z.B Mädchen) gegen Deutschland verglichen wird, soll in der Regel nicht gegen Gesamtdeutschland, sonderen gegen diese Gruppe in Deutschland verglichen werden (also alle Mädchen in Deutschland). 
+
+
+# Anmerkungstexte
+Vorlagen finden sich hier: `Q:\BT2024\BT\60_Bericht\_Vorlagen_Richtlinien\BT2024_Vorlage_Tab-Abb_Anmerkungen.docx`

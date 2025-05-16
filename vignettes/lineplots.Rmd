@@ -45,8 +45,6 @@ dat_lineplot_1$subgroup_var <- as.factor(dat_lineplot_1$subgroup_var)
 And then we can already plot:
 
 ```{r }
-
-
 lineplot_1 <- plot_lineplot(dat_lineplot_1,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
@@ -133,13 +131,15 @@ trend_ger_3$kb <- gsub("Hören", "Biologie: Erkenntnisgewinnung", trend_ger_3$kb
 trend_total <- rbind(trend_ger, trend_ger_2, trend_ger_3)
 ```
 
+Her we have to add other significance columns for `point_sig` and `brace_label_sig_superscript`!
+
 ```{r}
-lineplot_germany <- plot_lineplot(
+lineplot_germany_1 <- plot_lineplot(
   trend_total,
-  point_sig = NULL,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
-  brace_label_sig_superscript = NULL, 
+  point_sig = "sig_mean_comp_crossDiff_sameFacet_totalSubgroup",
+  brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_sameFacet_totalSubgroup", 
   facet_var = "kb",
   background_subgroup = "total",
   plot_settings = plotsettings_lineplot(
@@ -147,7 +147,7 @@ lineplot_germany <- plot_lineplot(
     brace_label_nudge_x = 0.22,
     n_cols = 2,
     axis_y_lims = c(430, 550),
-    default_list = lineplot_4x4
+    default_list = lineplot_germany
   )
 )
 ```
@@ -168,19 +168,18 @@ lineplot_germany
 ```{r}
 lineplot_germany_2 <- plot_lineplot(
   trend_total,
-  point_sig = NULL,
   years_lines = list(c(2009, 2015), c(2015, 2022)),
   years_braces = list(c(2009, 2015), c(2015, 2022)),
   facet_var = "kb",
   background_subgroup = "total",
-    brace_label_sig_superscript = NULL, 
+  point_sig = "sig_mean_comp_crossDiff_sameFacet_totalSubgroup",
+  brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_sameFacet_totalSubgroup", 
   plot_settings = plotsettings_lineplot(
     subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     brace_label_nudge_x = 0.23,
     n_cols = 3,
     axis_y_lims = c(430, 550),
-    default_list = lineplot_4x4
-  )
+        default_list = lineplot_germany  )
 )
 ```
 
@@ -238,10 +237,9 @@ years_lines_list <- stats::setNames(lapply(state_levels, function(x) list(c(2009
 
 years_lines_list$`Baden−Württemberg`[[1]] <- NULL
 
-##
 years_lines_list$`Berlin` <- list()
 
-# years_lines_list$`Berlin`[[2]] <- NULL
+
 
 lineplot_na <- plot_lineplot(
   dat_lineplot_2,

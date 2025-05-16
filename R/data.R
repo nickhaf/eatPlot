@@ -13,6 +13,17 @@
 #' }
 "lineplot_4x4"
 
+#' BT24 default plot settings.
+#'
+#' Default plot settings for lineplots of whole germany in the BT_22 for chapter 4.
+#'
+#' @format ## `lineplot_germany`
+#' A list with two elements.
+#' \describe{
+#'   \item{point_shapes}{Point shapes with triangles as significant values.}
+#'   ...
+#' }
+"lineplot_germany"
 
 
 #' BT22 default plot settings.

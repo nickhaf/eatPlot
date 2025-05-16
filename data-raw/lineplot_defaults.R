@@ -35,7 +35,7 @@ lineplot_4x4 <- plotsettings_lineplot(
   point_label_nudge_y = 0.09,
   point_label_size = 2,
   point_shapes = c(
-    "TRUE" = 17, ## Triangle
+    "TRUE" = 15, ## Square
     "FALSE" = 16 ## Circle
   ),
   point_size = 1.7,
@@ -45,4 +45,14 @@ lineplot_4x4 <- plotsettings_lineplot(
 )
 
 usethis::use_data(lineplot_4x4, overwrite = TRUE)
+
+lineplot_germany <- plotsettings_lineplot(
+  point_shapes = c(
+    "TRUE" = 17, ## Triangle
+    "FALSE" = 16 ## Circle
+  ),
+  default_list = lineplot_4x4
+)
+usethis::use_data(lineplot_germany, overwrite = TRUE)
+
 
