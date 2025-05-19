@@ -123,7 +123,7 @@ check_plotsettings_lineplot <- function(settings_list) {
 #' @param point_label_nudge_direction Named list with contents of either "+" or "-". The names have to be the factorlevels of the grouping_var. For "+" the point lables will be printed above the point, for "-" below. If `NULL` is provided, the labels will be printed below the points for the lowest group, and above the points for all others.
 #' @param point_label_nudge_x,point_label_nudge_y Numeric for the amount the pointlabel is nudged in x- or y-direction.
 #' @param point_label_size Numeric for the fontsize of the pointlabels.
-#' @param point_shapes Named numeric vector for the shape of the points. The vectornames must be either `"TRUE"` or `"FALSE"`, as the point-shapes refer to significances. See [ggplot2::scale_shape].
+#' @param point_shapes Named numeric vector for the shape of the points. The vectornames must refer to the levels in the point_sig column. See [ggplot2::scale_shape].
 #' @param point_size Numeric for the size of plotted points.
 #' @param box_facet_linewidth Numeric for the linewidth of the box around chosen seperate_plot-vars (e.g., states).
 #' @param split_plot Logical, indicating whether the different trends should be split or not.

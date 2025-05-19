@@ -101,7 +101,7 @@ plotsettings_lineplot(
 
 \item{point_label_nudge}{Logical. If \code{TRUE}, the point labels will be nudged automatically by \link[ggrepel:geom_text_repel]{ggrepel::geom_text_repel} to try and avoid them overlapping with lines and/or points. Might interfere with other point-label settings, so use at your own risk. Alternatively, you could try to use \code{point_label_nudge_direction} to get some controll over the point labels.}
 
-\item{point_shapes}{Named numeric vector for the shape of the points. The vectornames must be either \code{"TRUE"} or \code{"FALSE"}, as the point-shapes refer to significances. See \link[ggplot2:scale_shape]{ggplot2::scale_shape}.}
+\item{point_shapes}{Named numeric vector for the shape of the points. The vectornames must refer to the levels in the point_sig column. See \link[ggplot2:scale_shape]{ggplot2::scale_shape}.}
 
 \item{point_label_size}{Numeric for the fontsize of the pointlabels.}
 
