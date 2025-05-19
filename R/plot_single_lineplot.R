@@ -13,8 +13,8 @@
 #' @examples # tbd
 plot_single_lineplot <- function(plot_dat) {
   # Assemble a single lineplot (one "facet" in the whole lineplot).
-  list(
-    if (plot_dat$plot_settings$background_lines) {
+    list(
+    if (plot_dat$plot_settings$background_lines & !is.null(plot_dat$background_line_dat)) {
       plot_background_lines(
         dat_total = plot_dat$background_line_dat,
         plot_settings = plot_dat$plot_settings
