@@ -94,11 +94,10 @@ theme_line <- function(plot_settings = plotsettings_lineplot()) {
       text = ggplot2::element_text(colour = "#000000"),
       panel.spacing = ggplot2::unit(plot_settings$split_plot_gap_width, "npc"), # Gap in split plot
       plot.margin = ggplot2::unit(c(0, 0, 0.25, 0), units = "npc"),
-      plot.title = ggplot2::element_text(
+      plot.title = ggtext::element_markdown(
         size = 7,
         hjust = 0.5,
-        vjust = 0,
-        margin = ggplot2::margin(3, 0,3, 0) ## First one to increase distance to above plot, third one to increase distance of title to plotting area
+        margin = ggplot2::margin(3, 0, 1.5, 0) ## First one to increase distance to above plot, third one to increase distance of title to plotting area
       )
     )
 }

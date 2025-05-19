@@ -53,7 +53,7 @@ lineplot_1 <- plot_lineplot(dat_lineplot_1,
     axis_y_lims = c(420, 540),
     default_list = lineplot_4x4
   )
-)
+) 
 ```
 
 ```{r save lineplot_1_group}

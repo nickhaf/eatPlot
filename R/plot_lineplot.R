@@ -187,7 +187,6 @@ plot_lineplot <- function(eatPlot_dat,
       filter_years(x, years_braces[[i]])
     })
 
-
     p_state <- ggplot2::ggplot(
       dat_p_facet$plot_dat,
       mapping = ggplot2::aes(
