@@ -276,11 +276,12 @@ plotsettings_lineplot(line_type = c(
 
 
 -	Hochgestelltes `a`:
-    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen derselben Gruppe in Deutschland
+    * Bei bundesweiten Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend in der Gesamtpopulation aller Neuntklässler:innen in Deutschland
     * Bei länderspezifischen Trends für Gruppen: Statistisch signifikante Abweichung (*p* < .05) zum Trend der jeweiligen Schüler:innengruppe in Deutschland insgesamt
   
--	Ausgefülltes Dreieck für Werte, die statistisch signifikant (*p* < .05) vom Wert derselben Gruppe in der Gesamtpopulation abweichen.
--	Ausgefüllter Kreis für Werte, die statistisch nicht signifikant vom Wert derselben Gruppe in der Gesamtpopulation abweichen.
+-	Ausgefülltes Dreieck für Werte, die statistisch signifikant (*p* < .05) vom Wert der Gesamptgruppe in der Gesamtpopulation abweichen.
+- Ausgefülltes Quadrat für Werte, die statistisch signifikant (*p* < .05) vom Wert der selben Schüler:innengruppe in der Gesamtpopulation abweichen.
+-	Ausgefüllter Kreis statistisch nicht signifikante Werte. 
 
 Ist bereits voreingestellt, kann zur Not so geändert werden:
 
@@ -307,7 +308,7 @@ Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Also quasi Abweichung 
 | Punktform                            | Vergleich der Gruppe im Bundesland zur gleichen Gruppe in Gesamtdeutschland                                  | rund: nicht signifikant, eckig: signifikant                                                     | `point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup"`          | `crossDiff (Berlin_female - total_female) for year 2009`            |
 | Linienart                            | Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant                                       | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                | `trend (2015 - 2009) for BadenWuerttemberg_female`                  |
 | Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`                  |
-| Hochgestellter Buchstabe im Label    | Trend des Vergleichs einer Gruppe zur gleichen Gruppe in Gesamtdeutschland| —                                                                                                | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"` | `trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)` |
+| Hochgestellter Buchstabe im Label    | Trend des Vergleichs einer Gruppe im Bundesland zur gleichen Gruppe in Gesamtdeutschland| —                                                                                                | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"` | `trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)` |
  
 ### Deutschland-Kachel in Länderplots
 Genau das gleiche wie in den normalen Linienplots. 
@@ -316,10 +317,11 @@ Die Vergleiche vs. Deutschland sind hier automatisch nicht signifikant gesetzt, 
 ## Gesamtdeutschland-Plots
 | Darstellung                           | Bedeutung                                                                                                     | Werte                                                                                           | Umsetzung in `eatPlot`                                                  | Name in `eatRep`                                                    |
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------
-|Punktform| Nicht genutzt| | |
+|Punktform| Vergleich der Gruppe in Gesamtdeutschland zur Gesamtgruppe in Gesamtdeutschland  | `year=2009: (TR_BUNDESLAND=total, Kgender=female) - (TR_BUNDESLAND=total, Kgender=total)`
+| |
 |Linienart| Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant                                       | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                | `trend (2015 - 2009) for BadenWuerttemberg_female`|
 | Stärke des Labels unter den Klammern | So wie Linienart                                                                                              | Fett: signifikant, normal: nicht signifikant                                                    | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`    | `trend (2015 - 2009) for BadenWuerttemberg_female`   
-|Hochgestellter Buchstabe im Label| Nicht genutzt| | |
+|Hochgestellter Buchstabe im Label| Trend des Vergleichs einer Gruppe in Gesamtdeutschland zur Gesamtgruppe in Gesamtdeutschland  | `trend (2022 - 2015) for crossDiff (total_male - total_total) ` | |
 
 
 ## Tableplots

@@ -155,12 +155,12 @@ lineplot_germany_1 <- plot_lineplot(
 
 ```{r}
 #| eval: false
-save_plot(lineplot_germany, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf", height = 185, width = 108)
+save_plot(lineplot_germany_1, filename = "C:/Users/hafiznij/Downloads/lineplot_2_groups_germany_3x2.pdf", height = 185, width = 108)
 ```
 
 
 ```{r  fig.width = 108, fig.height = 185, dpi=300}
-lineplot_germany
+lineplot_germany_1
 ```
 
 
@@ -239,10 +239,38 @@ years_lines_list$`Baden−Württemberg`[[1]] <- NULL
 
 years_lines_list$`Berlin` <- list()
 
+```
+
+One special feature of these plot is the depcition of two significance types: Comparison against subgroup in the whole population for Länder-facets, and comparison against total subgroup for the Germany-facet. 
+Therefore, we have to combine the two respective columns, and give the values different names: 
+
+```{r}
+## Add NAs at the respective rows, so we can combine them afterwards:
+
+dat_lineplot_2$sig_mean_comp_crossDiff_totalFacet_sameSubgroup_2 <- ifelse(dat_lineplot_2$state_var == "Deutschland", NA, dat_lineplot_2$sig_mean_comp_crossDiff_totalFacet_sameSubgroup)
+dat_lineplot_2$sig_mean_comp_crossDiff_sameFacet_totalSubgroup_2 <- ifelse(dat_lineplot_2$state_var == "Deutschland", dat_lineplot_2$sig_mean_comp_crossDiff_sameFacet_totalSubgroup, NA)
+
+## Add distinct values
+dat_lineplot_2$sig_mean_comp_crossDiff_totalFacet_sameSubgroup_2 <- ifelse(!dat_lineplot_2$sig_mean_comp_crossDiff_totalFacet_sameSubgroup_2, "FALSE", paste(dat_lineplot_2$sig_mean_comp_crossDiff_totalFacet_sameSubgroup_2, "subgroup", sep = "_"))
+dat_lineplot_2$sig_mean_comp_crossDiff_sameFacet_totalSubgroup_2 <- ifelse(!dat_lineplot_2$sig_mean_comp_crossDiff_sameFacet_totalSubgroup_2, "FALSE", paste(dat_lineplot_2$sig_mean_comp_crossDiff_sameFacet_totalSubgroup_2, "total", sep = "_"))
+
+dat_lineplot_2$point_sig <- dplyr::coalesce(dat_lineplot_2$sig_mean_comp_crossDiff_totalFacet_sameSubgroup_2, dat_lineplot_2$sig_mean_comp_crossDiff_sameFacet_totalSubgroup_2)
+
+```
+
+Same for the trends. In this case, everything in Deutschland is not significant, so we can leave it at that, but the workflow would be the same:  
+
+```{r}
+dat_lineplot_2$sig_mean_comp_trend_crossDiff_sameFacet_totalSubgroup
+```
 
 
+
+
+```{r}
 lineplot_na <- plot_lineplot(
   dat_lineplot_2,
+  point_sig = point_sig, 
   years_lines = years_lines_list,
   years_braces = years_lines_list,
   background_facet = "Deutschland",
@@ -252,6 +280,7 @@ lineplot_na <- plot_lineplot(
     subgroup_colours = c(female = "black", male = cmyk(0, 0, 0, 60)), ## Here we determine the colours of the subgroups
     axis_y_lims = c(410, 560),
     background_facet_remove = FALSE,
+    point_shapes = c("TRUE_subgroup" = 15, "TRUE_total" = 17, "FALSE" = 16), 
     default_list = lineplot_4x4
   )
 )
