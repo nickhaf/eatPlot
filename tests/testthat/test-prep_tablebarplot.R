@@ -132,3 +132,20 @@ test_that("p-values are prepped correctly for total gropu", {
   expect_equal(dat_total$p_mean_comp_crossDiff_sameFacet_totalSubgroup, subset(dat_comp, TR_BUNDESLAND == "total" & Kgender == "female - total" & parameter == "mean" & comparison == "crossDiff" & year == 2015, select = p)[[1]])
   expect_equal(dat_total$est_mean_comp_crossDiff_sameFacet_totalSubgroup, subset(dat_comp, TR_BUNDESLAND == "total" & Kgender == "female - total" & parameter == "mean" & comparison == "crossDiff" & year == 2015, select = est)[[1]])
 })
+
+
+
+## Hier gabs ein paar Probleme bei Jules Datenaufbereitung
+# ## multiple subgroups
+#
+# dat <- readRDS("Q:/BT2024/BT/60_Bericht/05_Geschlechtsbezogene_Disparitaeten/04_Rechnungen/Hauptrechnungen_Outputs/report2_02_alleKb_Deu_Gy_BT24.rds")[[1]]
+#
+# library(tidyverse)
+# dat$group <- dat$group %>%
+#   filter()
+# ## Wenn zwei subgroup_vars enthalten sind brauchen wir auch noch die Info auf welche subgroup_var es sich bezieht in
+# ## den column names
+# ## Also: Wenn ein Vektor an subgroup_vars provided wird, müssen BEIDE so behandelt werden wie subgroup_vars
+#
+# res <- prep_tablebarplot(dat, facet_var = "TR_Gymnasium_DUMMY", subgroup_var = "TR_SEX")
+
