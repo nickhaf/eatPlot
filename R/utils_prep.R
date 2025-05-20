@@ -68,6 +68,7 @@ prep_plot <- function(
 
   dat_merged <- merge_eatRep(dat_unnested, eatRep_dat, by = merge_by)
   dat_prepped <- prep_comparisons(dat_merged, facet_var, total_facet, total_subgroup)
+
   dat_wide <- pivot_eatRep(dat_prepped,
                            names_from_none = names_from_none,
                            names_from_comp = names_from_comp,
@@ -214,7 +215,7 @@ prep_comparisons <- function(eatRep_merged, facet_var, total_facet, total_subgro
 
   ## All groups that aren't anywhere in the data now were lost.
 
-  missing_groups <- unique(eatRep_merged[!eatRep_merged$value %in% dat_comp$value, c("value", "state_var", "subgroup_var", "year", grep("comp_none", colnames(eatRep_merged), value = TRUE))])
+  missing_groups <- unique(eatRep_merged[!eatRep_merged$value %in% dat_comp$value, c("value", "kb", "state_var", "subgroup_var", "year", grep("comp_none", colnames(eatRep_merged), value = TRUE))])
 
   dat_comp_2 <- dplyr::bind_rows(dat_comp, missing_groups)
 
@@ -225,7 +226,6 @@ pivot_eatRep <- function(eatRep_prepped,
                          names_from_none = c("year", "parameter_comp_none"),
                          names_from_comp = c("comparison_split", "trend", "parameter_comp"),
                          plot_type = c("line", "table")) {
-
   value_cols <- c("est_comp", "se_comp", "p_comp", "es_comp", "sig_comp")
 
   eatRep_prepped <- eatRep_prepped[, colnames(eatRep_prepped) %in% c("state_var", "subgroup_var", "kb", "year", "trend", "depVar") | grepl("comp|parameter", colnames(eatRep_prepped))]
