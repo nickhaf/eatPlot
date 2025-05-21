@@ -51,6 +51,7 @@ lineplot_1 <- plot_lineplot(dat_lineplot_1,
   background_facet = "Deutschland",
   plot_settings = plotsettings_lineplot(
     axis_y_lims = c(420, 540),
+    point_shapes = c("TRUE" = 17, "FALSE" = 16), ## Here we use the triangles 
     default_list = lineplot_4x4
   )
 ) 
@@ -164,7 +165,7 @@ lineplot_germany_1
 ```
 
 
-## Lineplot for whole Germany 2x3 with split plot
+## Lineplot for whole Germany 2x3
 ```{r}
 lineplot_germany_2 <- plot_lineplot(
   trend_total,
@@ -302,6 +303,8 @@ lineplot_na
 
 
 ## Lineplot with long trend
+
+This is only needed for the supplement!
 
 ```{r lineplot_long} 
 dat_lineplot_2 <- prep_lineplot(
