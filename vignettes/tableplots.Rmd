@@ -730,6 +730,8 @@ dat_means <- rbind(dat2, dat2_var2, dat2_var3, dat2_var4)
 
 Now that I can merge my mean data with the data I used for the stacked bars. 
 This ensures that every row receives the correct values. 
+First, I have to merge together the groupDiff columns, so I can plot them within the same column in the table. 
+This is important for displaying the correct values in the table: 
 
 ```{r}
 ## The significances and estimates I want to plot are distributed over multiple columns, because they were group-Diffs.
@@ -738,8 +740,11 @@ dat_means$est_groupDiff <- merge_cols(dat_means, "est", "groupDiff")
 dat_means$sig_groupDiff <- merge_cols(dat_means, "sig", "groupDiff")
 dat_means$es_groupDiff <- merge_cols(dat_means, "es", "groupDiff")
 dat_means$se_groupDiff <- merge_cols(dat_means, "se", "groupDiff")
+```
 
+Afterwards I can merge the means with the data I used for the stacked bars, so the rows are aligned in the table:  
 
+```{r}
 ## Now we can merge the data with the data that we used in the stacked barplot.
 ## By doing this, we can guarantee easily that the position of the values matches the correct rows in the stacked barplot.
 ## Using left_join to preserve the order! BaseR merge doesn't deal with the NAs in the best way here.
