@@ -134,7 +134,6 @@ plot_tablebarplot <- function(dat,
 
 
 
-
   ## check if column names can be found in data
   sapply(unlist(c(
     bar_label,
@@ -512,7 +511,6 @@ build_columns_3 <- function(df,
   # n_cols <- if(!is.null(bar_est)){length(cols) + 1}else{length(cols)}
 
   column_x_coords_cols <- column_x_coords[!is.na(column_x_coords$column) & column_x_coords$column != "bar", ]
-
   columns_alignment <- plot_settings$columns_alignment
   x_range <- diff(range(plot_borders))
   c(
@@ -533,6 +531,7 @@ build_columns_3 <- function(df,
       column_name <- cols[i]
 
       df$y_axis <- df$y_axis - ifelse(grepl("<br>", df[, column_name]), 0.25, 0)
+
 
       c(
         ggtext::geom_richtext(
@@ -743,6 +742,7 @@ calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings
 
 
 add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings) {
+
   if (paste0(column_name, "_sig_superscript") %in% colnames(df)) {
     if (any(df[, paste0(column_name, "_sig_superscript")] != "")) {
       ggtext::geom_richtext(
@@ -759,7 +759,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
         label.color = NA,
         hjust = rev(plot_settings$columns_alignment)[i],
         nudge_x = rev(plot_settings$columns_nudge_x)[i] + plot_settings$columns_table_sig_superscript_letter_nudge_x,
-        nudge_y = rev(plot_settings$columns_nudge_y)[i]
+        nudge_y = rev(plot_settings$columns_nudge_y)[[i]]
       )
     }
   }
