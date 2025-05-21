@@ -107,6 +107,7 @@ format for plotting.</p>
 <span>  background_facet <span class="op">=</span> <span class="st">"Deutschland"</span>,</span>
 <span>  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
 <span>    axis_y_lims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">420</span>, <span class="fl">540</span><span class="op">)</span>,</span>
+<span>    point_shapes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span> <span class="op">=</span> <span class="fl">17</span>, <span class="st">"FALSE"</span> <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>, <span class="co">## Here we use the triangles </span></span>
 <span>    default_list <span class="op">=</span> <span class="va">lineplot_4x4</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span> </span></code></pre></div>
@@ -195,7 +196,7 @@ format for plotting.</p>
 <p><img src="lineplots_files/figure-html/unnamed-chunk-11-1.png"><!-- --></p>
 </div>
 <div class="section level2">
-<h2 id="lineplot-for-whole-germany-2x3-with-split-plot">Lineplot for whole Germany 2x3 with split plot<a class="anchor" aria-label="anchor" href="#lineplot-for-whole-germany-2x3-with-split-plot"></a>
+<h2 id="lineplot-for-whole-germany-2x3">Lineplot for whole Germany 2x3<a class="anchor" aria-label="anchor" href="#lineplot-for-whole-germany-2x3"></a>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lineplot_germany_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_lineplot.html">plot_lineplot</a></span><span class="op">(</span></span>
@@ -339,6 +340,7 @@ same:</p>
 <div class="section level2">
 <h2 id="lineplot-with-long-trend">Lineplot with long trend<a class="anchor" aria-label="anchor" href="#lineplot-with-long-trend"></a>
 </h2>
+<p>This is only needed for the supplement!</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_lineplot_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep_lineplot.html">prep_lineplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">trend_gender</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>

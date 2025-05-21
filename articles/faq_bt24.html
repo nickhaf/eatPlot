@@ -418,10 +418,9 @@ Gesamtpopulation abweichen.</li>
 Vergleiche, die auf verschiedene Arten in den Plots dargestellt
 werden.</p>
 <div class="section level3">
-<h3 id="länderspezifische-linienplots">Länderspezifische Linienplots<a class="anchor" aria-label="anchor" href="#l%C3%A4nderspezifische-linienplots"></a>
+<h3 id="länderspezifische-linienplots-mit-gruppen">Länderspezifische Linienplots mit Gruppen<a class="anchor" aria-label="anchor" href="#l%C3%A4nderspezifische-linienplots-mit-gruppen"></a>
 </h3>
-<p>Achtung: Im letzten BT war es vs. Deutschland insgesamt!! Also quasi
-Abweichung von der Linie!</p>
+<p>Achtung: Im BT22 war es teilweise anders.</p>
 <table class="table">
 <colgroup>
 <col width="9%">
@@ -442,16 +441,16 @@ Abweichung von der Linie!</p>
 <tbody>
 <tr class="odd">
 <td>Punktform</td>
-<td>Vergleich der Gruppe im Bundesland zur gleichen Gruppe in
-Gesamtdeutschland</td>
-<td>rund: nicht signifikant, eckig: signifikant</td>
+<td>Vergleich der MW für eine Gruppe im Bundesland zum MW für die
+gleiche Gruppe in Gesamtdeutschland</td>
+<td>rund: nicht signifikant, eckig (Quadrat): signifikant</td>
 <td><code>point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup"</code></td>
 <td><code>crossDiff (Berlin_female - total_female) for year 2009</code></td>
 </tr>
 <tr class="even">
 <td>Linienart</td>
 <td>Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen
-Jahr zu der gleichen Gruppe im anderen Jahr</td>
+Jahr zu der gleichen Gruppe im gleichen Bundesland im anderen Jahr</td>
 <td>durchgezogen: signifikant, gestrichelt: nicht signifikant</td>
 <td><code>line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"</code></td>
 <td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
@@ -464,9 +463,9 @@ Jahr zu der gleichen Gruppe im anderen Jahr</td>
 <td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
 </tr>
 <tr class="even">
-<td>Hochgestellter Buchstabe im Label</td>
-<td>Trend des Vergleichs einer Gruppe im Bundesland zur gleichen Gruppe
-in Gesamtdeutschland</td>
+<td>Hochgestellter Buchstabe am Label unter der Klammer</td>
+<td>Vergleich des Trends für eine Gruppe im Bundesland zum Trend für die
+gleiche Gruppe in Gesamtdeutschland</td>
 <td></td>
 <td><code>brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"</code></td>
 <td><code>trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)</code></td>
@@ -474,15 +473,21 @@ in Gesamtdeutschland</td>
 </tbody>
 </table>
 <div class="section level4">
-<h4 id="deutschland-kachel-in-länderplots">Deutschland-Kachel in Länderplots<a class="anchor" aria-label="anchor" href="#deutschland-kachel-in-l%C3%A4nderplots"></a>
+<h4 id="länderspezifische-linienplots-mit-gruppen-und-deutschland-kachel">Länderspezifische Linienplots mit Gruppen und
+Deutschland-Kachel<a class="anchor" aria-label="anchor" href="#l%C3%A4nderspezifische-linienplots-mit-gruppen-und-deutschland-kachel"></a>
 </h4>
-<p>Genau das gleiche wie in den normalen Linienplots. Die Vergleiche
-vs. Deutschland sind hier automatisch nicht signifikant gesetzt, da in
-<code>eatRep</code> hierfür kein Wert ausgegeben wird.</p>
+<p>Genau das gleiche wie in den separaten Linienplots. In den
+Länder-Kacheln wird als Vergleichsgruppe jeweils die gleiche Gruppe in
+Deutschland insgesamt herangezogen und signifikante Abweichungen durch
+Quadrate und hochgestellten Buchstaben gekennzeichnet. In der
+Deutschland-Kachel wird als Vergleichsgruppe die Gesamtgruppe aller
+Neuntklässler:innen in Gesamtdeutschland herangezogen und signifikante
+Abweichungen durch Dreieck und hochgestellten Buchstaben
+gekennzeichnet.</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="gesamtdeutschland-plots">Gesamtdeutschland-Plots<a class="anchor" aria-label="anchor" href="#gesamtdeutschland-plots"></a>
+<h3 id="gesamtdeutschland-linienplots-mit-gruppen">Gesamtdeutschland-Linienplots mit Gruppen<a class="anchor" aria-label="anchor" href="#gesamtdeutschland-linienplots-mit-gruppen"></a>
 </h3>
 <table class="table">
 <colgroup>
@@ -504,31 +509,32 @@ vs. Deutschland sind hier automatisch nicht signifikant gesetzt, da in
 <tbody>
 <tr class="odd">
 <td>Punktform</td>
-<td>Vergleich der Gruppe in Gesamtdeutschland zur Gesamtgruppe in
-Gesamtdeutschland</td>
-<td>rund: nicht signifikant, eckig: signifikant</td>
+<td>Vergleich des MW für eine Gruppe in Gesamtdeutschland zum MW für die
+Gesamtgruppe in Gesamtdeutschland</td>
+<td>rund: nicht signifikant, eckig (Dreieck): signifikant</td>
 <td><code>point_sig = "sig_mean_comp_crossDiff_sameFacet_totalSubgroup"</code></td>
 <td><code>year=2009: (TR_BUNDESLAND=total, Kgender=female) - (TR_BUNDESLAND=total, Kgender=total)</code></td>
 </tr>
 <tr class="even">
 <td>Linienart</td>
-<td>Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen
-Jahr zu der gleichen Gruppe im anderen Jahr</td>
+<td>Signifikanz des Trends: Vergleich der Gruppe in Gesamtdeutschland in
+einem Jahr zu der gleichen Gruppe in Gesamtdeutschland im anderen
+Jahr</td>
 <td>durchgezogen: signifikant, gestrichelt: nicht signifikant</td>
 <td><code>line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"</code></td>
-<td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
+<td><code>trend (2015 - 2009) for total_female</code></td>
 </tr>
 <tr class="odd">
 <td>Stärke des Labels unter den Klammern</td>
 <td>So wie Linienart</td>
 <td>Fett: signifikant, normal: nicht signifikant</td>
 <td><code>brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"</code></td>
-<td><code>trend (2015 - 2009) for BadenWuerttemberg_female</code></td>
+<td><code>trend (2015 - 2009) for total_female</code></td>
 </tr>
 <tr class="even">
 <td>Hochgestellter Buchstabe im Label</td>
-<td>Trend des Vergleichs einer Gruppe in Gesamtdeutschland zur
-Gesamtgruppe in Gesamtdeutschland</td>
+<td>Vergleich des Trends für eine Gruppe in Gesamtdeutschland zum Trend
+für die Gesamtgruppe in Gesamtdeutschland</td>
 <td>hochgestelltes a: signifikant</td>
 <td><code>brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_sameFacet_totalSubgroup"</code></td>
 <td><code>trend (2022 - 2015) for crossDiff (total_male - total_total)</code></td>
@@ -542,10 +548,10 @@ Gesamtgruppe in Gesamtdeutschland</td>
 <p>Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt
 immer von der jeweiligen Abbildung ab.<br>
 Generell kann sich hier an den Linienplots orientiert werden: Wenn eine
-Gruppe in einem der Länder (z.B Mädchen) gegen Deutschland verglichen
-wird, soll in der Regel nicht gegen Gesamtdeutschland, sonderen gegen
-diese Gruppe in Deutschland verglichen werden (also alle Mädchen in
-Deutschland).</p>
+Gruppe in einem der Länder (z.B. Mädchen in Berlin) gegen Deutschland
+verglichen wird, soll in der Regel nicht gegen Gesamtdeutschland,
+sonderen gegen diese Gruppe in Deutschland verglichen werden (also
+Mädchen in Deutschland insgesamt).</p>
 </div>
 </div>
 <div class="section level2">
