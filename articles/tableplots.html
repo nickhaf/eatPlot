@@ -718,24 +718,27 @@ Show Code
 <span></span>
 <span><span class="va">dat_means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">dat2</span>, <span class="va">dat2_var2</span>, <span class="va">dat2_var3</span>, <span class="va">dat2_var4</span><span class="op">)</span></span></code></pre></div>
 </details><p>Now that I can merge my mean data with the data I used for the
-stacked bars. This ensures that every row receives the correct
-values.</p>
+stacked bars. This ensures that every row receives the correct values.
+First, I have to merge together the groupDiff columns, so I can plot
+them within the same column in the table. This is important for
+displaying the correct values in the table:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The significances and estimates I want to plot are distributed over multiple columns, because they were group-Diffs.</span></span>
 <span><span class="co">## I therefore have to pull them together into the same column :</span></span>
 <span><span class="va">dat_means</span><span class="op">$</span><span class="va">est_groupDiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/merge_cols.html">merge_cols</a></span><span class="op">(</span><span class="va">dat_means</span>, <span class="st">"est"</span>, <span class="st">"groupDiff"</span><span class="op">)</span></span>
 <span><span class="va">dat_means</span><span class="op">$</span><span class="va">sig_groupDiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/merge_cols.html">merge_cols</a></span><span class="op">(</span><span class="va">dat_means</span>, <span class="st">"sig"</span>, <span class="st">"groupDiff"</span><span class="op">)</span></span>
 <span><span class="va">dat_means</span><span class="op">$</span><span class="va">es_groupDiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/merge_cols.html">merge_cols</a></span><span class="op">(</span><span class="va">dat_means</span>, <span class="st">"es"</span>, <span class="st">"groupDiff"</span><span class="op">)</span></span>
-<span><span class="va">dat_means</span><span class="op">$</span><span class="va">se_groupDiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/merge_cols.html">merge_cols</a></span><span class="op">(</span><span class="va">dat_means</span>, <span class="st">"se"</span>, <span class="st">"groupDiff"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co">## Now we can merge the data with the data that we used in the stacked barplot.</span></span>
+<span><span class="va">dat_means</span><span class="op">$</span><span class="va">se_groupDiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/merge_cols.html">merge_cols</a></span><span class="op">(</span><span class="va">dat_means</span>, <span class="st">"se"</span>, <span class="st">"groupDiff"</span><span class="op">)</span></span></code></pre></div>
+<p>Afterwards I can merge the means with the data I used for the stacked
+bars, so the rows are aligned in the table:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Now we can merge the data with the data that we used in the stacked barplot.</span></span>
 <span><span class="co">## By doing this, we can guarantee easily that the position of the values matches the correct rows in the stacked barplot.</span></span>
 <span><span class="co">## Using left_join to preserve the order! BaseR merge doesn't deal with the NAs in the best way here.</span></span>
 <span><span class="va">dat_table</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">dat_means</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"depVar"</span>, <span class="st">"subgroup_var"</span>, <span class="st">"state_var"</span>, <span class="st">"est_mean_comp_none_NA"</span>, <span class="st">"est_sd_comp_none_NA"</span>, <span class="st">"est_groupDiff"</span>, <span class="st">"se_groupDiff"</span>, <span class="st">"es_groupDiff"</span>, <span class="st">"sig_groupDiff"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Joining with `by = join_by(depVar, subgroup_var, state_var)`</span></span></code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Now we can reduce the data set, because we can be sure every row receives a value, due to the y-axis column!</span></span>
 <span><span class="va">dat_table_u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dat_table</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"depVar"</span>, <span class="st">"subgroup_var"</span>, <span class="st">"state_var"</span>, <span class="st">"est_mean_comp_none_NA"</span>, <span class="st">"est_sd_comp_none_NA"</span>, <span class="st">"est_groupDiff"</span>, <span class="st">"se_groupDiff"</span>, <span class="st">"es_groupDiff"</span>, <span class="st">"sig_groupDiff"</span>, <span class="st">"y_axis"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
@@ -750,14 +753,14 @@ values.</p>
 <span><span class="co">## The following objects are masked from 'package:base':</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     intersect, setdiff, setequal, union</span></span></code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_table_u</span> <span class="op">&lt;-</span> <span class="va">dat_table_u</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">depVar</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"groupDiff"</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="cn">NA</span>, <span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Now that we have our data in the correct format, we can plot the
 means:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nudge_rows_short</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">0.125</span>, <span class="fl">0.125</span>, <span class="op">-</span><span class="fl">0.125</span>, <span class="fl">0.125</span>, <span class="op">-</span><span class="fl">0.125</span>, <span class="fl">0.125</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_tablebarplot.html">plot_tablebarplot</a></span><span class="op">(</span></span>
@@ -781,9 +784,9 @@ means:</p>
 <pre><code><span><span class="co">## Warning: Careful! You have provided plot_widths. Please be beware that the</span></span>
 <span><span class="co">## x-axes might be distorted, if your plot_widths don't account for different</span></span>
 <span><span class="co">## x-axis ranges.</span></span></code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_stacked_combined</span>, <span class="st">"C:/Users/hafiznij/Downloads/stacked.pdf"</span>, height <span class="op">=</span> <span class="fl">140</span>, width <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_plot.html">save_plot</a></span><span class="op">(</span><span class="va">p_stacked_combined</span>, <span class="st">"C:/Users/hafiznij/Downloads/stacked.pdf"</span>, height <span class="op">=</span> <span class="fl">140</span>, width <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_stacked_combined</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: Removed 56 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">## (`geom_tile()`).</span></span></code></pre>
@@ -795,7 +798,7 @@ means:</p>
 <span><span class="co">## (`geom_rich_text()`).</span></span>
 <span><span class="co">## Removed 56 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">## (`geom_rich_text()`).</span></span></code></pre>
-<p><img src="tableplots_files/figure-html/unnamed-chunk-34-1.png"><!-- --></p>
+<p><img src="tableplots_files/figure-html/unnamed-chunk-35-1.png"><!-- --></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
