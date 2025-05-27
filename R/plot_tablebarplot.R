@@ -215,15 +215,17 @@ plot_tablebarplot <- function(dat,
   if (!is.null(bar_est)) {
     if (plot_settings$bar_type == "stacked") {
       plot_borders <- c(0, 100)
-      scale_breaks <- unique(c(
-        seq(0, plot_borders[1], by = -10),
-        seq(0, plot_borders[2], by = 10)
-      ))
+
+        scale_breaks <- unique(c(
+          seq(0, plot_borders[1], by = -1*plot_settings$axis_x_stepsize),
+          seq(0, plot_borders[2], by = plot_settings$axis_x_stepsize)
+        ))
+
     } else {
       plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
       scale_breaks <- unique(c(
-        seq(0, plot_borders[1], by = -10),
-        seq(0, plot_borders[2], by = 10)
+        seq(0, plot_borders[1], by = -1*plot_settings$axis_x_stepsize),
+        seq(0, plot_borders[2], by = plot_settings$axis_x_stepsize)
       ))
     }
   } else {
@@ -573,7 +575,7 @@ build_background_stripes <- function(dat,
                                      columns_table,
                                      plot_borders,
                                      plot_settings = plotsettings_tablebarplot()) {
-  scale_breaks <- set_scale_breaks(plot_borders)
+  scale_breaks <- set_scale_breaks(plot_borders, plot_settings)
 
   if (plot_settings$background_stripes_border == "Inf") {
     stripes <- c(
@@ -768,7 +770,7 @@ add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings)
 
 add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
   if (!is.null(bar_est)) {
-    scale_breaks <- set_scale_breaks(plot_borders)
+    scale_breaks <- set_scale_breaks(plot_borders, plot_settings)
 
     if (is.null(plot_settings$bar_background_lines_spanners)) {
       plot_settings$bar_background_lines_spanners <- list(c(max(y_axis) + 0.3, 0.7))

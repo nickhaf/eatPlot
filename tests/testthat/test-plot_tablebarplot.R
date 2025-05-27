@@ -68,7 +68,8 @@ test_that("column length is checked correctly", {
 
 
 test_that("simple tablebarplot can be plotted", {
-  example_table <- p_bar <- plot_tablebarplot(
+  test_data$est_1 <- test_data$est_1/100
+  example_table <- plot_tablebarplot(
     dat = test_data,
     bar_label = NULL,
     bar_sig = "bar_sig",
@@ -82,10 +83,14 @@ test_that("simple tablebarplot can be plotted", {
     bar_est = "est_1",
     y_axis = "state_var",
     plot_settings = plotsettings_tablebarplot(
+      axis_x_lims = c(-0.5, 0.5),
+      axis_x_stepsize = 0.1,
+      background_stripes_border = "background_line_both",
       background_stripes_colour = c("white", "lightgrey"),
       bar_fill_colour = c("red", "blue", "yellow", "green"),
       bar_pattern_fill_colour = "white",
       bar_pattern_type = c("stripe", "none"),
+      bar_background_lines = "scale_breaks",
       bar_type = "pattern",
       columns_width = c(0.3, 0.2, 0.5),
       bar_pattern_width = 0.5,
@@ -133,6 +138,7 @@ test_that("continous barplot can have a white space", {
 
 test_that("Vlines are plotted correctly", {
   plot_settings_test <- list(
+    axis_x_stepsize = 1,
     bar_background_lines_spanners = list(c(1, 4), c(5, 9)),
     bar_background_lines = "scale_breaks",
     bar_background_lines_linetype = "solid",
@@ -157,6 +163,7 @@ test_that("Vlines are plotted correctly", {
 
 
   plot_settings_test_2 <- list(
+    axis_x_stepsize = 10,
     bar_background_lines_spanners = NULL,
     bar_background_lines = "border",
     bar_background_lines_linetype = "dashed",

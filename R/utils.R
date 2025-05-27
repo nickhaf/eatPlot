@@ -659,10 +659,10 @@ count_words <- function(string, word) {
 #' @return Numeric vector with the scale breaks.
 #'
 #' @examples set_scale_breaks(c(-100, 50))
-set_scale_breaks <- function(plot_borders) {
+set_scale_breaks <- function(plot_borders, plot_settings) {
   scale_breaks <- unique(c(
-    seq(0, plot_borders[1], by = -10),
-    seq(0, plot_borders[2], by = 10)
+    seq(0, plot_borders[1], by = -1 * plot_settings$axis_x_stepsize),
+    seq(0, plot_borders[2], by = plot_settings$axis_x_stepsize)
   ))
   return(scale_breaks)
 }
