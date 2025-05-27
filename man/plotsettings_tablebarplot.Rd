@@ -8,6 +8,7 @@ plotsettings_tablebarplot(
   axis_x = NULL,
   axis_x_label_size = NULL,
   axis_x_lims = NULL,
+  axis_x_stepsize = NULL,
   background_stripes_border = NULL,
   background_stripes_colour = NULL,
   bar_background_lines = NULL,
@@ -58,6 +59,8 @@ plotsettings_tablebarplot(
 \item{axis_x_label_size}{Numeric for the size of the x axis labels. Defaults to \code{5}.}
 
 \item{axis_x_lims}{Numeric vector of length \code{2} for the x-axis limits. Will be set automatically, \code{NULL} (default).}
+
+\item{axis_x_stepsize}{Numeric for the distance between x-axis ticks. Default is \code{10}.}
 
 \item{background_stripes_border}{Character string of either \code{c("Inf", "background_line_both", "background_line_left", "background_line_right", "background_line_table")}. The background stripes will either be drawn over the whole plot (\code{"Inf"}), from the outer left background_line to the outer right background_line (\code{"background_line_both"}), from the outer left background line to the right of the plot (\code{"background_line_left"}), the outer right background line to the left of the plot (\verb{"background_line_right}), or only over the table-part of the plot (\verb{background_line_table"}).}
 

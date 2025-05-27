@@ -209,6 +209,9 @@ test_that("Linebreaks are counted correctly", {
 })
 
 test_that("scale breaks are calculated correctly", {
-  expect_equal(set_scale_breaks(c(-20, 10)), c(0, -10, -20, 10))
-  expect_equal(set_scale_breaks(c(0, 10)), c(0, 10))
+  plot_settings_test <- list()
+  plot_settings_test$axis_x_stepsize <- 1
+  expect_equal(set_scale_breaks(c(-20, 10), plot_settings_test), c(0:-20, 1:10))
+  plot_settings_test$axis_x_stepsize <- 0.2
+  expect_equal(set_scale_breaks(c(0, 10), plot_settings_test), seq(0, 10, 0.2))
 })

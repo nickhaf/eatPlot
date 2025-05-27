@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 44
+      length(settings_list) == 45
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -10,6 +10,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "axis_x",
         "axis_x_label_size",
         "axis_x_lims",
+        "axis_x_stepsize",
         "background_stripes_border",
         "background_stripes_colour",
         "bar_background_lines",
@@ -58,6 +59,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.logical(settings_list$axis_x))
   stopifnot(is.numeric(settings_list$axis_x_label_size))
   stopifnot(is.numeric(settings_list$axis_x_lims) & length(settings_list$axis_x_lims) == 2 | is.null(settings_list$axis_x_lims))
+  stopifnot(is.numeric(settings_list$axis_x_stepsize) | is.null(settings_list$axis_x_stepsize))
   stopifnot(settings_list$background_stripes_border %in% c("Inf", "background_line_both", "background_line_left", "background_line_right"))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
   stopifnot(settings_list$bar_background_lines %in% c("border", "scale_breaks", "none"))
@@ -107,6 +109,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param axis_x Logical indicating whether the x-axis should be drawn. Defaults to `TRUE`.
 #' @param axis_x_label_size Numeric for the size of the x axis labels. Defaults to `5`.
 #' @param axis_x_lims Numeric vector of length `2` for the x-axis limits. Will be set automatically, `NULL` (default).
+#' @param axis_x_stepsize Numeric for the distance between x-axis ticks. Default is `10`.
 #' @param background_stripes_border Character string of either `c("Inf", "background_line_both", "background_line_left", "background_line_right", "background_line_table")`. The background stripes will either be drawn over the whole plot (`"Inf"`), from the outer left background_line to the outer right background_line (`"background_line_both"`), from the outer left background line to the right of the plot (`"background_line_left"`), the outer right background line to the left of the plot (`"background_line_right`), or only over the table-part of the plot (`background_line_table"`).
 #' @param background_stripes_colour Character vector containing the background colour of each row. Defaults to `NULL`.
 #' @param bar_background_lines Character string of either `c("borders", "scale_breaks", "none")`, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.
@@ -186,6 +189,7 @@ check_plotsettings_barplot <- function(settings_list) {
 plotsettings_tablebarplot <- function(axis_x = NULL,
     axis_x_label_size = NULL,
                                       axis_x_lims = NULL,
+    axis_x_stepsize = NULL,
                                       background_stripes_border = NULL,
                                       background_stripes_colour = NULL,
                                       bar_background_lines = NULL,
@@ -234,6 +238,7 @@ plotsettings_tablebarplot <- function(axis_x = NULL,
       "axis_x" = TRUE,
       "axis_x_label_size" = 5,
       "axis_x_lims" = NULL,
+      "axis_x_stepsize" = 10,
       "background_stripes_border" = "Inf",
       "background_stripes_colour" = "white",
       "bar_background_lines" = "none",
