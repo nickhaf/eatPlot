@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,7 @@
 <span>  axis_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_x_label_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  axis_x_lims <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  axis_x_stepsize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_stripes_border <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  background_stripes_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_background_lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -108,6 +109,10 @@
 
 <dt id="arg-axis-x-lims">axis_x_lims<a class="anchor" aria-label="anchor" href="#arg-axis-x-lims"></a></dt>
 <dd><p>Numeric vector of length <code>2</code> for the x-axis limits. Will be set automatically, <code>NULL</code> (default).</p></dd>
+
+
+<dt id="arg-axis-x-stepsize">axis_x_stepsize<a class="anchor" aria-label="anchor" href="#arg-axis-x-stepsize"></a></dt>
+<dd><p>Numeric for the distance between x-axis ticks. Default is <code>10</code>.</p></dd>
 
 
 <dt id="arg-background-stripes-border">background_stripes_border<a class="anchor" aria-label="anchor" href="#arg-background-stripes-border"></a></dt>
@@ -296,6 +301,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_stepsize</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_border</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Inf"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -440,6 +448,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_stepsize</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_border</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Inf"</span>
@@ -587,6 +598,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_lims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $axis_x_stepsize</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $background_stripes_border</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Inf"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -723,7 +737,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
