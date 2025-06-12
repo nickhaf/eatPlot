@@ -190,7 +190,7 @@ Farbliche Hinterlegungen zur Zeilenorientierung (wechselnd weiß / türkis) wird
 #| eval: FALSE
 
 plotsettings_tablebarplot(
-   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 10), 3))
+   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 25), 3))
 )
 ```
 
