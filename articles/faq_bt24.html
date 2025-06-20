@@ -147,6 +147,18 @@ müssen diese in <code>plotmath</code>-Notation angegeben werden. Dadurch
 <span>                  plot_settings <span class="op">=</span> <span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>headers_ggtext <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co">## Muss für plotmath-Notation gesetzt werden </span></span>
 <span>                  <span class="op">)</span></span></code></pre></div>
 <p>Syntax kann in der Hilfe abgerufen werden: <code><a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">?plotmath</a></code></p>
+<p>Falls ein Zeilenumbruch mit plotmath benötigt wird, bitte die jeweils
+obere und untere Zeile in ein eigenes Listenelement setzen, so wie hier
+der 2. header:</p>
+<pre><code><span> <span class="va">headers</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="st">" "</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="st">"paste(Delta * italic(M[2015]), '-')"</span>,</span>
+<span>      <span class="st">"Delta * italic(M[2009])"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="st">"(italic(SE))"</span>,</span>
+<span>    <span class="st">" "</span></span>
+<span>  <span class="op">)</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="schriftgröße">Schriftgröße<a class="anchor" aria-label="anchor" href="#schriftgr%C3%B6%C3%9Fe"></a>
@@ -157,13 +169,13 @@ Größe hat wie eine der Vorlagen, könnt ihr einfach die Default-list
 verwenden. Ansonsten orientiert ihr euch am besten an den Vorlagen, die
 in etwa die gleiche Größe haben wie eure Abbildung, und justiert die
 Schriftgröße dann:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">2.5</span>, </span>
 <span>                          header_font_size <span class="op">=</span> <span class="fl">2.5</span></span>
 <span>                          <span class="op">)</span></span></code></pre></div>
 <p>Die Schriftgröße könnt ihr aus den Default lists auslesen, die ihr
 für eure Abbildung verwendet, z.B mit:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">abb_6.6</span><span class="op">$</span><span class="va">font_size</span></span>
 <span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
 </div>
@@ -219,7 +231,7 @@ muss. Das ist für den BT eigentlich immer der Fall:</p>
 </h5>
 <p><code>"Delta"</code> schreiben und dann
 <code>headers_ggtext = FALSE</code> setzen:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span>headers_ggtext <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -288,7 +300,7 @@ verwenden:</p>
 </ul>
 <p>Farben sind für drei Gruppen voreingestellt, können aber so gesetzt
 werden:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>  bar_fill_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gruppe 1"</span> <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">85</span>, <span class="fl">0</span>, <span class="fl">43</span>, <span class="fl">17</span><span class="op">)</span>, </span>
 <span>                      <span class="st">"Gruppe 2"</span> <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
@@ -303,7 +315,7 @@ werden:</p>
 <p>Farbliche Hinterlegungen zur Zeilenorientierung (wechselnd weiß /
 türkis) wird wie im Tabellenteil hinter dem Balkendiagramm
 weitergeführt. Die Deutschland-Zeile wird grau dargestellt:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>   background_stripes_colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"white"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -325,7 +337,7 @@ voreingestellt.</p>
 </h5>
 <p>Grau <code>cmyk(0, 0, 0, 60)</code> und gestrichelt. Ist bereits
 vorgeingestellt, könnte aber so geändert werden:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot</a></span><span class="op">(</span></span>
 <span>  bar_background_lines_colour <span class="op">=</span> <span class="fu"><a href="../reference/cmyk.html">cmyk</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">60</span><span class="op">)</span>,</span>
 <span>  bar_background_lines <span class="op">=</span> <span class="st">"scale_breaks"</span>,</span>
@@ -340,7 +352,7 @@ vorgeingestellt, könnte aber so geändert werden:</p>
 Zeilen aus anderen Gründen breiter sind (z.B. weil je Land zwei
 Ergebniszeilen berichtet werden). Zeilenumbrüche für die Ländernamen
 werden vor dem Plotten eingefügt, am einfachsten mit:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_dat</span><span class="op">$</span><span class="va">state_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_bundesland.html">process_bundesland</a></span><span class="op">(</span><span class="va">my_dat</span><span class="op">$</span><span class="va">state_var</span>, linebreak <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -364,7 +376,7 @@ Wert der Mittelwertsdifferenz rechtsbündig zueinanderstehen</li>
 zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not
 nachjustiert werden:</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
 <span>  brace_label_nudge_x <span class="op">=</span> <span class="fl">0.1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -374,7 +386,7 @@ nachjustiert werden:</li>
 </h4>
 <p>Die Farben sind alle voreingestellt, die Farbcodes können hier
 ausgelesen werden:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lineplot_4x4</span><span class="op">$</span><span class="va">axis_x_background_colour</span></span>
 <span><span class="co">#&gt; [1] "#8DEBBC"</span></span>
 <span><span class="va">lineplot_4x4</span><span class="op">$</span><span class="va">background_line_colour</span></span>
@@ -392,7 +404,7 @@ durchgezogener Linie darstellen.</li>
 darstellen</li>
 </ul>
 <p>Ist bereits vorgeingestellt, kann zur Not so geändert werden:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span>line_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"TRUE"</span> <span class="op">=</span> <span class="st">"solid"</span>,</span>
 <span>    <span class="st">"FALSE"</span> <span class="op">=</span> <span class="st">"dashed"</span></span>
@@ -417,7 +429,7 @@ Gesamtpopulation abweichen.</li>
 <li>Ausgefüllter Kreis statistisch nicht signifikante Werte.</li>
 </ul>
 <p>Ist bereits voreingestellt, kann zur Not so geändert werden:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotsettings_lineplot.html">plotsettings_lineplot</a></span><span class="op">(</span></span>
 <span>   point_shapes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"TRUE"</span> <span class="op">=</span> <span class="fl">17</span>,</span>
