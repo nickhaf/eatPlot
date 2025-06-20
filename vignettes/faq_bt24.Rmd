@@ -87,6 +87,20 @@ plot_tablebarplot(headers = c("bold(Land)", "italic(M)", "Delta * italic(M)"),
 
 Syntax kann in der Hilfe abgerufen werden: `?plotmath`
 
+Falls ein Zeilenumbruch mit plotmath benötigt wird, bitte die jeweils obere und untere Zeile in ein eigenes Listenelement setzen, so wie hier der 2. header: 
+
+```
+ headers = list(
+    " ",
+    list(
+      "paste(Delta * italic(M[2015]), '-')",
+      "Delta * italic(M[2009])"
+    ),
+    "(italic(SE))",
+    " "
+  )
+```
+
 
 ### Schriftgröße
 Die Schriftgröße kann nicht einheitlich festgelegt werden, weil sie von der Größe der finalen Abbildung abhängt. 
