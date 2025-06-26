@@ -251,7 +251,7 @@ plot_tablebarplot <- function(dat,
     # Apply function to each y_axis group
     ## RN,it seems like the rows get reordered.
     dat$row_id <- 1:nrow(dat)
-    dat2 <- do.call(rbind, lapply(split(dat, dat$y_axis), remove_column_duplicates, !colnames(dat) %in% c("bar_nudge_y", "bar_label_nudge_y", "y_axis", "background_stripes_colour")))
+    dat2 <- do.call(rbind, lapply(split(dat, dat$y_axis), remove_column_duplicates, !colnames(dat) %in% c("bar_est", "bar_label_text", "bar_nudge_y", "bar_label_nudge_y", "y_axis", "background_stripes_colour")))
     dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
 
     rownames(dat) <- NULL
