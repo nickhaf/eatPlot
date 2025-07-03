@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,14 +39,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="eatplot-development-version">eatPlot (development version)<a class="anchor" aria-label="anchor" href="#eatplot-development-version"></a></h2>
-</div>
+<h2 class="pkg-version" data-toc-text="1.1.2" id="eatplot-112">eatPlot 1.1.2<a class="anchor" aria-label="anchor" href="#eatplot-112"></a></h2>
+<ul><li>[process_bundesland()] now puts simple - signs between two-word Bundesländer instead of ndashes.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.1" id="eatplot-111">eatPlot 1.1.1<a class="anchor" aria-label="anchor" href="#eatplot-111"></a></h2>
 <ul><li>Bugfix in <code>prep_tableplot()</code>: groups that didn’t have any comparison were removed in the prepping process, this is changed now.</li>
 <li>Implemented stacked barplots.</li>
 <li>
-<code>columns_nudge_y</code> in <code><a href="../reference/plotsettings_tablebarplot.html">plotsettings_tablebarplot()</a></code> now works rowwise as well.</li>
+<code>columns_nudge_y</code> in [plotsettings_tablebarplot()] now works rowwise as well.</li>
 <li>Improved rendering of greek letters with linebreak, using lists instead of ´atop()´.</li>
 <li>Implemented more modular options for plotting lines for different years over different facets in <code><a href="../reference/plot_lineplot.html">plot_lineplot()</a></code>.</li>
 <li>Removed <code>standardize_pattern_spacing()</code>, as it did not work as expected. Try around with the pattern spacing instead, and take the template plots as orientation.</li>
