@@ -236,8 +236,7 @@ state_levels <- levels(dat_lineplot_2$state_var)
 
 years_lines_list <- stats::setNames(lapply(state_levels, function(x) list(c(2009, 2015), c(2015, 2022))), state_levels)
 
-years_lines_list$`Baden−Württemberg`[[1]] <- NULL
-
+years_lines_list$`Baden-Württemberg`[[1]] <- NULL
 years_lines_list$`Berlin` <- list()
 
 ```

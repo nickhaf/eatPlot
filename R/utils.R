@@ -695,9 +695,9 @@ process_bundesland <- function(vec, linebreak = FALSE, total_group = "total"){
 
 
   if(linebreak){
-    vec <- gsub("([a-z])([A-Z])", "\\1\u2212 <br> \\2", vec)
+    vec <- gsub("([a-z])([A-Z])", "\\1- <br> \\2", vec) #\u2212 for ndash
   }else{
-    vec <- gsub("([a-z])([A-Z])", "\\1\u2212\\2", vec)
+    vec <- gsub("([a-z])([A-Z])", "\\1-\\2", vec) #\u2212 for ndash
 }
 
   vec <- gsub(total_group, "Deutschland", vec)
