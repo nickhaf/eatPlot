@@ -616,7 +616,7 @@ construct_colour_scale <- function(colours, dat, colname) {
     colours <- rep(colours, length(unique(dat[, colname])))
   } else if (is.null(names(colours)) & colname %in% colnames(dat)) {
     check_colour_vector_length(dat, colname, colours)
-    names(colours) <- unique(dat[, colname])
+    names(colours) <- unique(dat[, colname])[!is.na(unique(dat[, colname]))]
   }
   return(colours)
 }
