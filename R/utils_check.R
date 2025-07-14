@@ -24,3 +24,9 @@ test_no_columns <- function(dat, cols) {
   checkmate::test_data_frame(dat)
   checkmate::test_disjunct(cols, colnames(dat))
 }
+
+check_colour_vector_length <- function(dat, colname, colours) {
+  if (length(colours) < length(unique(dat[[colname]][!is.na(dat[[colname]])]))) {
+    stop("You need to provide as many colours in `plotsettings$bar_fill_colour` or `plotsettings$bar_label_colour` as there are unique values in your `bar_fill` column.")
+  }
+}

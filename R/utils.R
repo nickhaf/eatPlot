@@ -615,11 +615,7 @@ construct_colour_scale <- function(colours, dat, colname) {
   if(length(colours) == 1){
     colours <- rep(colours, length(unique(dat[, colname])))
   } else if (is.null(names(colours)) & colname %in% colnames(dat)) {
-    if(length(colours) < length(unique(dat[, colname]))){
-      stop("You need to provide as many colours in `plotsettings$bar_fill_colour` or `plotsettings$bar_label_colour` as there are unique values in your `bar_fill` column.")
-      # stop(paste0("The length of plot_settings$bar_label_colour has to be either 1 or equal to the number of unique bar_fill values. Currently, it has the length: ", length(plot_settings$bar_label_colour), ". Your data has: ", length(unique(dat$bar_fill)), " unique bar_fill values."), call. = FALSE)
-
-    }
+    check_colour_vector_length(dat, colname, colours)
     names(colours) <- unique(dat[, colname])
   }
   return(colours)
