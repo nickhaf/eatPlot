@@ -90,7 +90,7 @@ test_that("simple tablebarplot can be plotted", {
       bar_fill_colour = c("red", "blue", "yellow", "green"),
       bar_pattern_fill_colour = "white",
       bar_pattern_type = c("stripe", "none"),
-      bar_background_lines = "scale_breaks",
+      bar_background_lines = c(0, 0.1, 0.3),
       bar_type = "pattern",
       columns_width = c(0.3, 0.2, 0.5),
       bar_pattern_width = 0.5,

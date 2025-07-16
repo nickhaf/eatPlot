@@ -1,3 +1,6 @@
+# eatPlot (development version)
+* Also allow numeric vectors in bar_background_lines. 
+
 # eatPlot 1.1.2
 * [process_bundesland()] now puts simple - signs between two-word Bundesländer instead of ndashes. 
 
