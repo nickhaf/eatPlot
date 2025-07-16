@@ -1,3 +1,5 @@
+# eatPlot (development version)
+
 # eatPlot 1.1.2
 * [process_bundesland()] now puts simple - signs between two-word Bundesländer instead of ndashes. 
 
