@@ -62,7 +62,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(is.numeric(settings_list$axis_x_stepsize) | is.null(settings_list$axis_x_stepsize))
   stopifnot(settings_list$background_stripes_border %in% c("Inf", "background_line_both", "background_line_left", "background_line_right"))
   stopifnot(all(is_colour(settings_list$background_stripes_colour)))
-  stopifnot(settings_list$bar_background_lines %in% c("border", "scale_breaks", "none"))
+  stopifnot(settings_list$bar_background_lines %in% c("border", "scale_breaks", "none") | is.numeric(settings_list$bar_background_lines))
   stopifnot(is.character(settings_list$bar_background_lines_linetype))
   stopifnot(is.character(settings_list$bar_background_lines_colour))
   stopifnot(is.character(settings_list$bar_background_0line_linetype))
@@ -112,7 +112,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param axis_x_stepsize Numeric for the distance between x-axis ticks. Default is `10`.
 #' @param background_stripes_border Character string of either `c("Inf", "background_line_both", "background_line_left", "background_line_right", "background_line_table")`. The background stripes will either be drawn over the whole plot (`"Inf"`), from the outer left background_line to the outer right background_line (`"background_line_both"`), from the outer left background line to the right of the plot (`"background_line_left"`), the outer right background line to the left of the plot (`"background_line_right`), or only over the table-part of the plot (`background_line_table"`).
 #' @param background_stripes_colour Character vector containing the background colour of each row. Defaults to `NULL`.
-#' @param bar_background_lines Character string of either `c("borders", "scale_breaks", "none")`, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.
+#' @param bar_background_lines Either a character string of either `c("borders", "scale_breaks", "none")` or a numeric vector, indicating whether the barplot should receive lines on its borders, at every scale break, none at all, or at some manually defined spots.
 #' @param bar_background_lines_linetype Character string indicating the linetype for the background lines of the barplot.
 #' @param bar_background_lines_colour Character string indicating the colour for the background lines of the barplot.
 #' @param bar_background_0line_linetype Character string indicating the linetype for the background line of the barplot at zero.

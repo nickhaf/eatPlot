@@ -788,7 +788,9 @@ add_vlines <- function(plot_settings, plot_borders, y_axis, bar_est) {
         y_2 <- y[2]
       }
 
-      if (plot_settings$bar_background_lines == "border") {
+      if (is.numeric(plot_settings$bar_background_lines)) {
+        x_intercepts <- plot_settings$bar_background_lines
+      } else if (plot_settings$bar_background_lines == "border") {
         x_intercepts <- range(scale_breaks)
       } else if (plot_settings$bar_background_lines == "scale_breaks") {
         x_intercepts <- scale_breaks
