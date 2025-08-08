@@ -174,6 +174,7 @@ plot_tablebarplot <- function(dat,
   }
   dat$bar_label <- dat[, bar_label]
 
+
   if (!is.null(bar_label)) {
     dat <- construct_label_2(
       dat,
@@ -185,6 +186,7 @@ plot_tablebarplot <- function(dat,
       round_est = 1,
       plot_settings = plot_settings
     )
+
   }
 
 
@@ -259,6 +261,14 @@ plot_tablebarplot <- function(dat,
     dat$x_axis_end <- round(stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum), 4)
     dat$x_axis_start <- round(dat$x_axis_end - dat$bar_est, 4)
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start) / 2
+    browser()
+    ## Hier jetzt auf -1 oder 101 setzen, wenn zu klein
+
+    if(dat$bar_label < plotsettings$bar_label_out){
+      dat$bar_label <- ifelse(dat$bar_label < plotsettings$bar_label_out & dat$bar_fill == "1", )
+    } # users set value, below which the value gets nudged out on left or right of bar
+
+
   }
 
   # Set some nudging parameters ---------------------------------------------
@@ -273,12 +283,14 @@ plot_tablebarplot <- function(dat,
     colname = "bar_fill"
   )
 
-  plot_settings$bar_label_colour <- construct_colour_scale(
-    colours = plot_settings$bar_label_colour,
-    dat = dat,
-    colname = "bar_fill"
-  )
-
+## Only construct if users didn't provide a color for each single label
+if(length(plot_settings$bar_label_colour) == nrow(dat)){
+    plot_settings$bar_label_colour <- construct_colour_scale(
+      colours = plot_settings$bar_label_colour,
+      dat = dat,
+      colname = "bar_fill"
+    )
+  }
   # Plot --------------------------------------------------------------------
   x_right_lim <- max(column_x_coords$right) +
     plot_settings$space_right
@@ -436,24 +448,51 @@ plot_tablebarplot <- function(dat,
   }
 
   if (!is.null(bar_label)) {
-    res_plot <- res_plot +
-      ggnewscale::new_scale_colour() +
-      ggtext::geom_richtext(
-        ggplot2::aes(
-          x = .data$bar_label,
-          y = .data$y_axis + .data$bar_label_nudge_y,
-          label = .data$bar_label_text,
-          colour = .data$bar_fill
-        ),
-        label.padding = grid::unit(rep(0, 4), "pt"),
-        fill = NA,
-        label.color = NA,
-        hjust = plot_settings$bar_label_nudge_x,
-        size = plot_settings$bar_label_size
-      )
+browser()
+    if(length(plot_settings$bar_label_colour) == nrow(dat)){
+      res_plot <- res_plot +
+        ggnewscale::new_scale_colour() +
+        ggtext::geom_richtext(
+          ggplot2::aes(
+            x = .data$bar_label,
+            y = .data$y_axis + .data$bar_label_nudge_y,
+            label = .data$bar_label_text
+          ),
+          color = plot_settings$bar_label_colour,
+          label.padding = grid::unit(rep(0, 4), "pt"),
+          fill = NA,
+          label.color = NA,
+          hjust = plot_settings$bar_label_nudge_x,
+          size = plot_settings$bar_label_size
+        )
+    }else{
+      res_plot <- res_plot +
+        ggnewscale::new_scale_colour() +
+        ggtext::geom_richtext(
+          ggplot2::aes(
+            x = .data$bar_label,
+            y = .data$y_axis + .data$bar_label_nudge_y,
+            label = .data$bar_label_text,
+            colour = .data$bar_fill
+          ),
+          label.padding = grid::unit(rep(0, 4), "pt"),
+          fill = NA,
+          label.color = NA,
+          hjust = plot_settings$bar_label_nudge_x,
+          size = plot_settings$bar_label_size
+        )
 
-   res_plot <- res_plot +
-      ggplot2::scale_colour_manual(values = c(plot_settings$bar_label_colour, 'black'))
+
+      res_plot <- res_plot +
+        ggplot2::scale_colour_manual(values = c(plot_settings$bar_label_colour, 'black'))
+
+    }
+
+   ## hjust works as expected, but I need it to right align at start of the bar in some cases.
+   ## Set bar_label to -1 or 101 in cases users can specify: IF a value is smaller than a specified value, AND the parameter lies left or right, put
+   ## the label left or right of the bar.
+
+
   }
   # Column spanners ---------------------------------------------------------
   plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)
