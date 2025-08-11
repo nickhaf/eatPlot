@@ -264,3 +264,29 @@ test_that("labels can be plotted in different combination without error", {
 })
 
 
+test_that("stacked barplot can be plotted", {
+
+df_stacked <- data.frame(
+  bar_value = c(1, 89, 10),
+  parameter = c("a", "b", "c"),
+  label = c("1", "89", "10"),
+  y_axis = rep(1, 3)
+)
+
+  p_stacked <- plot_tablebarplot(df_stacked,
+                                 bar_est = "bar_value",
+                                 bar_label = "label",
+                                 bar_fill = "parameter",
+                                 y_axis = "y_axis",
+                                 plot_settings = plotsettings_tablebarplot(
+                                   bar_fill_colour = c("a" = "#20D479", "b" = "#8DEBBC", "c" = "#EBFDF3"),
+                                   bar_label_colour = rep('black', 3),
+                                   bar_type = "stacked"
+                                 )
+  )
+
+})
+
+
+
+
