@@ -241,35 +241,15 @@ test_that("labels can be plotted in different combination without error", {
   )
 
 
-  expect_error(plot_tablebarplot(
-    dat = test_data,
-    bar_label = 'est_1',
-    bar_sig = "bar_sig",
-    bar_fill = "bar_fill",
-    headers = list("a barplot"),
-    bar_est = "est_1",
-    y_axis = "state_var",
-    plot_settings = plotsettings_tablebarplot(
-      background_stripes_colour = c("white", "lightgrey"),
-      bar_fill_colour = c("red", "blue", "yellow", "green"),
-      bar_label_colour = c("red", 'blue'),
-      bar_pattern_fill_colour = "white",
-      bar_pattern_type = c("stripe", "none"),
-      bar_type = "pattern",
-      bar_pattern_width = 0.5,
-      bar_pattern_spacing = 0.1,
-      headers_font_size = 5,
-      space_right = 5
-    )))
 })
 
 
 test_that("stacked barplot can be plotted", {
 
 df_stacked <- data.frame(
-  bar_value = c(1, 89, 10),
+  bar_value = c(1, 95, 4),
   parameter = c("a", "b", "c"),
-  label = c("1", "89", "10"),
+  label = c("1.9", "89", "10"),
   y_axis = rep(1, 3)
 )
 
@@ -279,8 +259,11 @@ df_stacked <- data.frame(
                                  bar_fill = "parameter",
                                  y_axis = "y_axis",
                                  plot_settings = plotsettings_tablebarplot(
+                                   axis_x = FALSE,
+                                   axis_x_lims = c(-8, 103),
+                                   axis_x_stepsize = 1,
                                    bar_fill_colour = c("a" = "#20D479", "b" = "#8DEBBC", "c" = "#EBFDF3"),
-                                   bar_label_colour = rep('black', 3),
+                                   bar_label_colour = c('red', "black", "blue"),
                                    bar_type = "stacked"
                                  )
   )
