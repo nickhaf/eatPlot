@@ -325,13 +325,20 @@ plot_tablebarplot <- function(dat,
     ggplot2::annotate("segment", x = -Inf, xend = Inf, y = max_y, yend = max_y, linewidth = 0.1)
 
   if (!plot_settings$axis_x) {
-    ## y_axis is not set correctly: Problem is, that the minimum can#t be set here, because it might be necessary to plot columns there. If no cols are plotted, set the lim to the lowest that is provided in the axis lims
     res_plot <- res_plot +
       ggplot2::theme(
         axis.title.x = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_blank(),
         axis.ticks.x = ggplot2::element_blank(),
         axis.line = ggplot2::element_blank()
+      ) +
+      ## Plot something invisible, so the y axis is the same over all plots:
+      ggplot2::annotate("segment",
+                        x = 0,
+                        xend = 0,
+                        y = 0.4,
+                        yend = 0.4,
+                        linewidth = 0.00000001
       )
 
     if (is.null(columns_table)) {
