@@ -337,7 +337,7 @@ plot_tablebarplot <- function(dat,
     if (is.null(columns_table)) {
       ## Zusammen mit set_x_lims in eine Funktion packen
       res_plot <- res_plot +
-        ggplot2::xlim(plot_settings$axis_x_lims)
+        ggplot2::xlim(plot_borders)
     }
   } else {
     res_plot <- res_plot +
@@ -895,12 +895,14 @@ prep_stacked <- function(dat, plot_settings) {
 
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start) / 2
 
+    if(!is.factor(dat$bar_fill)){
+      message("Convert dat$bar_fill into an ordered factor if you want to change the order of the stacked bars.")
+      dat$bar_fill <- factor(dat$bar_fill, ordered = TRUE)
+    }
 
-    ## Nicht 1 und drei nehmen. Wie wird die Reihenfolge nochmal festgelegt?
-    ## Ich glaube als Factor oder?
-    dat$bar_label <- ifelse(dat$bar_est < plot_settings$bar_label_nudge_out & dat$bar_fill == "a",
+    dat$bar_label <- ifelse(dat$bar_est < plot_settings$bar_label_nudge_out & dat$bar_fill == min(dat$bar_fill, na.rm = TRUE),
       yes = -1,
-      no = ifelse(dat$bar_est < plot_settings$bar_label_nudge_out & dat$bar_fill == "c",
+      no = ifelse(dat$bar_est < plot_settings$bar_label_nudge_out & dat$bar_fill == max(dat$bar_fill, na.rm = TRUE),
         yes = 101,
         no = dat$bar_label
       )
