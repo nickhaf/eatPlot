@@ -266,6 +266,7 @@ df_stacked$parameter <- factor(df_stacked$parameter, levels = c("b", "a", "c"), 
                                    axis_x_stepsize = 1,
                                    bar_fill_colour = c("a" = "#20D479", "b" = "#8DEBBC", "c" = "#EBFDF3"),
                                    bar_label_colour = c('red', "black", "blue"),
+                                   bar_label_nudge_x = c(-3, 0, 0, 5, 0, 0, 0, 0, 0),
                                    bar_type = "stacked"
                                  )
   )
