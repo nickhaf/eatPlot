@@ -885,6 +885,14 @@ prep_stacked <- function(dat, plot_settings) {
     dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
 
     rownames(dat) <- NULL
+
+    if(!is.factor(dat$bar_fill)){
+      message("Convert dat$bar_fill into an ordered factor if you want to change the order of the stacked bars.")
+      dat$bar_fill <- factor(dat$bar_fill, ordered = TRUE)
+    }
+
+    ## Sort by factor within y_axis
+    dat <- dat[with(dat, order(bar_fill)), ]
     dat <- dat[with(dat, order(y_axis, decreasing = TRUE)), ]
 
     ## Warnung einbauen, wenn die Balken nicht exakt zu 100 runden, und dann selber runden!
@@ -895,10 +903,6 @@ prep_stacked <- function(dat, plot_settings) {
 
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start) / 2
 
-    if(!is.factor(dat$bar_fill)){
-      message("Convert dat$bar_fill into an ordered factor if you want to change the order of the stacked bars.")
-      dat$bar_fill <- factor(dat$bar_fill, ordered = TRUE)
-    }
 
     dat$bar_label <- ifelse(dat$bar_est < plot_settings$bar_label_nudge_out & dat$bar_fill == min(dat$bar_fill, na.rm = TRUE),
       yes = -1,
