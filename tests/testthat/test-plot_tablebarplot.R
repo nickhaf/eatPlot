@@ -272,6 +272,11 @@ df_stacked$parameter <- factor(df_stacked$parameter, levels = c("b", "a", "c"), 
   )
 
   ## Scale x already present: Change into same function, currently set two times
+
+  vdiffr::expect_doppelganger(
+    "bar_stacked",
+    p_stacked
+  )
 })
 
 
