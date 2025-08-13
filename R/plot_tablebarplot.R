@@ -895,7 +895,6 @@ prep_stacked <- function(dat, plot_settings) {
 
     if(!is.factor(dat$bar_fill)){
       message("Convert dat$bar_fill into an ordered factor if you want to change the order of the stacked bars.")
-      browser()
 
       dat$bar_fill <- factor(dat$bar_fill, levels = unique(dat$bar_fill), ordered = TRUE)
     }
@@ -913,9 +912,9 @@ prep_stacked <- function(dat, plot_settings) {
     dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start) / 2
 
 
-    dat$bar_label <- ifelse(dat$bar_est < plot_settings$bar_label_nudge_out & dat$bar_fill == min(dat$bar_fill, na.rm = TRUE),
+    dat$bar_label <- ifelse(dat$bar_est < plot_settings$bar_label_nudge_x_out & dat$bar_fill == min(dat$bar_fill, na.rm = TRUE),
       yes = -1,
-      no = ifelse(dat$bar_est < plot_settings$bar_label_nudge_out & dat$bar_fill == max(dat$bar_fill, na.rm = TRUE),
+      no = ifelse(dat$bar_est < plot_settings$bar_label_nudge_x_out & dat$bar_fill == max(dat$bar_fill, na.rm = TRUE),
         yes = 101,
         no = dat$bar_label
       )

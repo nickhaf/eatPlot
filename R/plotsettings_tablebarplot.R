@@ -24,7 +24,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_label_colour",
         "bar_label_nudge_x",
         "bar_label_nudge_y",
-        "bar_label_nudge_out",
+        "bar_label_nudge_x_out",
         "bar_label_size",
         "bar_line_width",
         "bar_nudge_y",
@@ -74,7 +74,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(all(is_colour(settings_list$bar_label_colour)))
   stopifnot(is.numeric(settings_list$bar_label_nudge_x))
   stopifnot(is.numeric(settings_list$bar_label_nudge_y))
-  stopifnot(is.numeric(settings_list$bar_label_nudge_out))
+  stopifnot(is.numeric(settings_list$bar_label_nudge_x_out))
   stopifnot(is.numeric(settings_list$bar_label_size))
   stopifnot(is.numeric(settings_list$bar_line_width))
   stopifnot(is.numeric(settings_list$bar_nudge_y))
@@ -124,8 +124,8 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebarplot()`. Defaults to `solid`.
 #' @param bar_label_colour Colour of the bar labels. Can either be a single colour, or a named vector that contains the colour for each group defined in `bar_fill`. Defaults to `"black"`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
+#' @param bar_label_nudge_x_out Numeric. Necessary for stacked barplots. If the percentage of a subgroup lies below that value, the label will be nudged to the left or right of the stacked bar. Defaults to `0`.
 #' @param bar_label_nudge_y Numeric for nudging the bar labels in y direction.
-#' @param bar_label_nudge_out Numeric. Necessary for stacked barplots. If the percentage of a subgroup lies below that value, the label will be nudged to the left or right of the stacked bar. Defaults to `0`.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_width Numeric for the line-size around the bar.
 #' @param bar_nudge_y Numeric vector for nudging the bar in y direction. Either of the same length as the data, to nudge each bar sepearatly, or of length 1 to nudge all bars the same. Defaults to `0`.
@@ -207,7 +207,7 @@ plotsettings_tablebarplot <- function(
     bar_label_colour = NULL,
     bar_label_nudge_x = NULL,
     bar_label_nudge_y = NULL,
-    bar_label_nudge_out = NULL,
+    bar_label_nudge_x_out = NULL,
     bar_label_size = NULL,
     bar_line_width = NULL,
     bar_nudge_y = NULL,
@@ -258,7 +258,7 @@ plotsettings_tablebarplot <- function(
       "bar_label_size" = 2,
       "bar_label_nudge_x" = 0,
       "bar_label_nudge_y" = 0,
-      "bar_label_nudge_out" = 0,
+      "bar_label_nudge_x_out" = 0,
       "bar_line_width" = 0.5,
       "bar_nudge_y" = 0,
       "bar_pattern_fill_colour" = "white",

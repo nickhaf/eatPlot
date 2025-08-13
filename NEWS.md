@@ -1,6 +1,6 @@
 # eatPlot 1.1.3
 * Also allow numeric vectors in bar_background_lines. 
-* Implement new [plotsettings_tablebarplot()] argument: `bar_label_nudge_out` defines a value below which labels are nudged to the left or right of a stacked bar. Useful for small bars, where labels don't fit. 
+* Implement new [plotsettings_tablebarplot()] argument: `bar_label_nudge_x_out` defines a value below which labels are nudged to the left or right of a stacked bar. Useful for small bars, where labels don't fit. 
 * Now factor levels can be used to sort a stacked bar. 
 
 # eatPlot 1.1.2
