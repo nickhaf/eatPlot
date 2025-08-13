@@ -895,7 +895,9 @@ prep_stacked <- function(dat, plot_settings) {
 
     if(!is.factor(dat$bar_fill)){
       message("Convert dat$bar_fill into an ordered factor if you want to change the order of the stacked bars.")
-      dat$bar_fill <- factor(dat$bar_fill, ordered = TRUE)
+      browser()
+
+      dat$bar_fill <- factor(dat$bar_fill, levels = unique(dat$bar_fill), ordered = TRUE)
     }
 
     ## Sort by factor within y_axis
