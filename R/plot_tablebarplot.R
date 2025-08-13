@@ -17,7 +17,7 @@
 #' @param columns_round Numeric vector for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
 #'
-#' @return [ggplot2] object.
+#' @return `ggplot2` object.
 #' @export
 #'
 #' @examples # tbd
@@ -219,7 +219,7 @@ plot_tablebarplot <- function(dat,
         plot_borders <- c(0, 100)
       } else if (plot_settings$axis_x_lims[1] > 0 | plot_settings$axis_x_lims[2] < 100) {
         plot_borders <- plot_settings$axis_x_lims
-        error("Please set plot_settings(axis_x_lims = ...) to contain 0 and 100. Bars might not show otherwise.
+        stop("Please set plot_settings(axis_x_lims = ...) to contain 0 and 100. Bars might not show otherwise.
 ")
       } else {
         plot_borders <- plot_settings$axis_x_lims

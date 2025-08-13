@@ -7,7 +7,7 @@
 theme_table_col()
 }
 \value{
-\link{ggplot2} theme, that can be used for a plotted table column.
+\code{ggplot2} theme, that can be used for a plotted table column.
 }
 \description{
 Theme for a table column.

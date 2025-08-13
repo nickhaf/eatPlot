@@ -28,7 +28,7 @@ theme_table <- function(plot_settings) {
 #' Theme for a y-axis plot.
 #' @inheritParams plot_lineplot
 #'
-#' @return [ggplot2] theme, that can be used for a plotted y-axis.
+#' @return `ggplot2`theme, that can be used for a plotted y-axis.
 #' @export
 #'
 #' @examples # tbd
@@ -51,7 +51,7 @@ theme_y_axis <- function(plot_settings = plotsettings_lineplot()) {
 
 #' Theme for a table column.
 #'
-#' @return [ggplot2] theme, that can be used for a plotted table column.
+#' @return `ggplot2` theme, that can be used for a plotted table column.
 #' @export
 #'
 #' @examples # tbd
