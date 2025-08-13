@@ -628,7 +628,7 @@ p_stacked <- plot_tablebarplot(dat,
     bar_label_colour = c("niedrig" = "white", "mittel" = "black", "hoch" = "black"),
     columns_alignment = c(0, 0),
     columns_width = c(0.025, 0.3, 0.675),
-    bar_label_nudge_x = rep(0.5, nrow(dat)),
+    bar_label_nudge_x = rep(0.5, nrow(dat)), ## replace with one nudging value
     bar_label_nudge_y = nudge_rows,
     bar_nudge_y = nudge_rows,
     columns_nudge_y = c(list(0), list(nudge_rows)),
@@ -754,11 +754,9 @@ dat_table <- dat |>
 ## Now we can reduce the data set, because we can be sure every row receives a value, due to the y-axis column!
 dat_table_u <- unique(dat_table[, c("depVar", "subgroup_var", "state_var", "est_mean_comp_none_NA", "est_sd_comp_none_NA", "est_groupDiff", "se_groupDiff", "es_groupDiff", "sig_groupDiff", "y_axis")])
 
-library(dplyr)
-
-dat_table_u <- dat_table_u %>%
-  dplyr::group_by(depVar) %>%
-  dplyr::mutate(dplyr::across(dplyr::contains("groupDiff"), ~ ifelse(duplicated(.), NA, .))) %>%
+dat_table_u <- dat_table_u |>
+  dplyr::group_by(depVar) |>
+  dplyr::mutate(dplyr::across(dplyr::contains("groupDiff"), ~ ifelse(duplicated(.), NA, .))) |>
   dplyr::ungroup()
 ```
 

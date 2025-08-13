@@ -17,7 +17,7 @@
 #' @param columns_round Numeric vector for rounding the column values. Insert `NULL` or `0` for no rounding/character columns.
 #' @param plot_settings Named list constructed with `plotsettings_tablebarplot()`. Defaults to a list with all settings set to `0`. There are several predefined lists with optimized settings for different plots. See `plotsettings_tablebarplot()` for an overview.
 #'
-#' @return [ggplot2] object.
+#' @return `ggplot2` object.
 #' @export
 #'
 #' @examples # tbd
@@ -54,7 +54,7 @@ plot_tablebarplot <- function(dat,
     stop("Please provide a y-axis.")
   }
 
-  if(!y_axis %in% colnames(dat)){
+  if (!y_axis %in% colnames(dat)) {
     stop("Your y-axis column is not in the data frame. Please check the column names.")
   }
 
@@ -174,6 +174,7 @@ plot_tablebarplot <- function(dat,
   }
   dat$bar_label <- dat[, bar_label]
 
+
   if (!is.null(bar_label)) {
     dat <- construct_label_2(
       dat,
@@ -214,17 +215,26 @@ plot_tablebarplot <- function(dat,
 
   if (!is.null(bar_est)) {
     if (plot_settings$bar_type == "stacked") {
-      plot_borders <- c(0, 100)
+      if (is.null(plot_settings$axis_x_lims)) {
+        plot_borders <- c(0, 100)
+      } else if (plot_settings$axis_x_lims[1] > 0 | plot_settings$axis_x_lims[2] < 100) {
+        plot_borders <- plot_settings$axis_x_lims
+        stop("Please set plot_settings(axis_x_lims = ...) to contain 0 and 100. Bars might not show otherwise.
+")
+      } else {
+        plot_borders <- plot_settings$axis_x_lims
+      }
 
-        scale_breaks <- unique(c(
-          seq(0, plot_borders[1], by = -1*plot_settings$axis_x_stepsize),
-          seq(0, plot_borders[2], by = plot_settings$axis_x_stepsize)
-        ))
+      scale_breaks <- unique(c(
+        seq(0, plot_borders[1], by = -1 * plot_settings$axis_x_stepsize),
+        seq(0, plot_borders[2], by = plot_settings$axis_x_stepsize)
+      ))
 
+      scale_breaks <- scale_breaks[order(scale_breaks)]
     } else {
       plot_borders <- set_axis_limits(dat, x_value = c(dat$x_min, dat$bar_est), plot_settings)
       scale_breaks <- unique(c(
-        seq(0, plot_borders[1], by = -1*plot_settings$axis_x_stepsize),
+        seq(0, plot_borders[1], by = -1 * plot_settings$axis_x_stepsize),
         seq(0, plot_borders[2], by = plot_settings$axis_x_stepsize)
       ))
     }
@@ -234,35 +244,15 @@ plot_tablebarplot <- function(dat,
   }
   x_axis_range <- diff(range(plot_borders))
 
-  if (plot_settings$bar_type == "stacked") {
-    ## Remove duplicates: within each group
-    # Split data by y_axis, remove duplicates in each group, and combine back
 
-    ## and check for duplicates before
-    remove_column_duplicates <- function(df, cols) {
-      df[, cols] <- lapply(df[, cols], function(col) {
-        duplicated_mask <- duplicated(col) # Find duplicates
-        col[duplicated_mask] <- NA # Replace duplicates with NA
-        return(col)
-      })
-      return(df)
-    }
+  ## Into own function: prep_stacked
+  dat <- prep_stacked(dat, plot_settings)
 
-    # Apply function to each y_axis group
-    ## RN,it seems like the rows get reordered.
-    dat$row_id <- 1:nrow(dat)
-    dat2 <- do.call(rbind, lapply(split(dat, dat$y_axis), remove_column_duplicates, !colnames(dat) %in% c("bar_est", "bar_label_text", "bar_nudge_y", "bar_label_nudge_y", "y_axis", "background_stripes_colour")))
-    dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
 
-    rownames(dat) <- NULL
-    dat <- dat[with(dat, order(y_axis, decreasing = TRUE)), ]
-    dat$x_axis_end <- round(stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum), 4)
-    dat$x_axis_start <- round(dat$x_axis_end - dat$bar_est, 4)
-    dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start) / 2
-  }
 
   # Set some nudging parameters ---------------------------------------------
   header_y_coords <- set_header_y_coords(dat$y_axis, plot_settings)
+
   column_x_coords <- calc_column_coords(plot_borders, columns_table, plot_settings)
   max_y <- set_max_y(dat$y_axis, column_spanners, column_spanners_2, header_y_coords, plot_settings)
 
@@ -273,15 +263,19 @@ plot_tablebarplot <- function(dat,
     colname = "bar_fill"
   )
 
-  plot_settings$bar_label_colour <- construct_colour_scale(
-    colours = plot_settings$bar_label_colour,
-    dat = dat,
-    colname = "bar_fill"
-  )
-
+  ## Only construct if users didn't provide a color for each single label
+  if (length(plot_settings$bar_label_colour) == nrow(dat)) {
+    plot_settings$bar_label_colour <- construct_colour_scale(
+      colours = plot_settings$bar_label_colour,
+      dat = dat,
+      colname = "bar_fill"
+    )
+  }
   # Plot --------------------------------------------------------------------
+
   x_right_lim <- max(column_x_coords$right) +
     plot_settings$space_right
+
   res_plot <- ggplot2::ggplot(
     data = dat,
     mapping = ggplot2::aes(
@@ -337,7 +331,21 @@ plot_tablebarplot <- function(dat,
         axis.text.x = ggplot2::element_blank(),
         axis.ticks.x = ggplot2::element_blank(),
         axis.line = ggplot2::element_blank()
+      ) +
+      ## Plot something invisible, so the y axis is the same over all plots:
+      ggplot2::annotate("segment",
+                        x = 0,
+                        xend = 0,
+                        y = 0.4,
+                        yend = 0.4,
+                        linewidth = 0.00000001
       )
+
+    if (is.null(columns_table)) {
+      ## Zusammen mit set_x_lims in eine Funktion packen
+      res_plot <- res_plot +
+        ggplot2::xlim(plot_borders)
+    }
   } else {
     res_plot <- res_plot +
       plot_capped_x_axis(scale_breaks)
@@ -369,7 +377,6 @@ plot_tablebarplot <- function(dat,
         # }
         dat <- fill_na(dat, column_name = i, filling = "FALSE")
       }
-
       res_plot <- res_plot +
         ggnewscale::new_scale_fill() +
         ggpattern::scale_pattern_manual(values = plot_settings$bar_pattern_type) +
@@ -414,47 +421,14 @@ plot_tablebarplot <- function(dat,
         ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
         NULL
     } else if (plot_settings$bar_type == "stacked") {
-      res_plot <- res_plot +
-        ggnewscale::new_scale_fill() +
-        ggplot2::geom_rect(
-          data = dat,
-          ggplot2::aes(
-            xmin = .data$x_axis_start,
-            xmax = .data$x_axis_end,
-            ymin = .data$y_axis - plot_settings$bar_width / 2 + .data$bar_nudge_y,
-            ymax = .data$y_axis + plot_settings$bar_width / 2 + .data$bar_nudge_y,
-            fill = .data$bar_fill
-          ),
-          colour = "black",
-          linewidth = plot_settings$bar_line_width
-        ) +
-        ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour) +
-        NULL
+      res_plot <- plot_stacked_bar(res_plot, dat, plot_settings)
     } else {
       message("`bar_type` must be either \"frame\", \"pattern\" or \"stacked\"")
     }
   }
+  res_plot <- plot_bar_label(dat, res_plot, bar_label, plot_settings)
 
-  if (!is.null(bar_label)) {
-    res_plot <- res_plot +
-      ggnewscale::new_scale_colour() +
-      ggtext::geom_richtext(
-        ggplot2::aes(
-          x = .data$bar_label,
-          y = .data$y_axis + .data$bar_label_nudge_y,
-          label = .data$bar_label_text,
-          colour = .data$bar_fill
-        ),
-        label.padding = grid::unit(rep(0, 4), "pt"),
-        fill = NA,
-        label.color = NA,
-        hjust = plot_settings$bar_label_nudge_x,
-        size = plot_settings$bar_label_size
-      )
 
-   res_plot <- res_plot +
-      ggplot2::scale_colour_manual(values = c(plot_settings$bar_label_colour, 'black'))
-  }
   # Column spanners ---------------------------------------------------------
   plot_settings <- check_spanners_requirements(column_spanners, column_spanners_2, plot_settings)
 
@@ -744,7 +718,6 @@ calc_column_coords <- function(plot_borders, columns_table = NULL, plot_settings
 
 
 add_superscript <- function(df, column_name, x_coord, i, x_range, plot_settings) {
-
   if (paste0(column_name, "_sig_superscript") %in% colnames(df)) {
     if (any(df[, paste0(column_name, "_sig_superscript")] != "")) {
       ggtext::geom_richtext(
@@ -897,4 +870,135 @@ set_max_y <- function(y_axis, column_spanners, column_spanners_2, header_y_coord
     }
   }
   return(max_y)
+}
+
+## and check for duplicates before
+remove_column_duplicates <- function(df, cols) {
+  df[, cols] <- lapply(df[, cols], function(col) {
+    duplicated_mask <- duplicated(col) # Find duplicates
+    col[duplicated_mask] <- NA # Replace duplicates with NA
+    return(col)
+  })
+  return(df)
+}
+
+
+prep_stacked <- function(dat, plot_settings) {
+  if (plot_settings$bar_type != "stacked") {
+    return(dat)
+  } else {
+    dat$row_id <- 1:nrow(dat)
+    dat2 <- do.call(rbind, lapply(split(dat, dat$y_axis), remove_column_duplicates, !colnames(dat) %in% c("bar_est", "bar_label_text", "bar_nudge_y", "bar_label_nudge_y", "y_axis", "background_stripes_colour")))
+    dat <- merge(dat[, c("row_id", "y_axis")], dat2[, colnames(dat2) != "y_axis"])
+
+    rownames(dat) <- NULL
+
+    if(!is.factor(dat$bar_fill)){
+      message("Convert dat$bar_fill into an ordered factor if you want to change the order of the stacked bars.")
+
+      dat$bar_fill <- factor(dat$bar_fill, levels = unique(dat$bar_fill), ordered = TRUE)
+    }
+
+    ## Sort by factor within y_axis
+    dat <- dat[with(dat, order(bar_fill)), ]
+    dat <- dat[with(dat, order(y_axis, decreasing = TRUE)), ]
+
+    ## Warnung einbauen, wenn die Balken nicht exakt zu 100 runden, und dann selber runden!
+    ## Funktion dafür habe ich schon
+
+    dat$x_axis_end <- round(stats::ave(dat$bar_est, dat$y_axis, FUN = cumsum), 4)
+    dat$x_axis_start <- round(dat$x_axis_end - dat$bar_est, 4)
+
+    dat$bar_label <- dat$x_axis_start + (dat$x_axis_end - dat$x_axis_start) / 2
+
+
+    dat$bar_label <- ifelse(dat$bar_est < plot_settings$bar_label_nudge_x_out & dat$bar_fill == min(dat$bar_fill, na.rm = TRUE),
+      yes = -1,
+      no = ifelse(dat$bar_est < plot_settings$bar_label_nudge_x_out & dat$bar_fill == max(dat$bar_fill, na.rm = TRUE),
+        yes = 101,
+        no = dat$bar_label
+      )
+    )
+
+    dat$align_label <- ifelse(dat$bar_label == -1,
+      yes = 1,
+      no = ifelse(dat$bar_label == 101,
+        yes = 0,
+        no = 0.5
+      )
+    )
+    return(dat)
+  }
+}
+
+plot_bar_label <- function(dat, plot, bar_label, plot_settings) {
+  if (is.null(bar_label)) {
+    return(plot)
+  } else {
+    if (is.null(dat$align_label)) {
+      dat$align_label <- 0
+    }
+    if (length(plot_settings$bar_label_colour) == nrow(dat)) {
+      res_plot <- plot +
+        ggnewscale::new_scale_colour() +
+        ggtext::geom_richtext(
+          ggplot2::aes(
+            x = .data$bar_label,
+            y = .data$y_axis + .data$bar_label_nudge_y,
+            label = .data$bar_label_text
+          ),
+          color = plot_settings$bar_label_colour,
+          label.padding = grid::unit(rep(0, 4), "pt"),
+          fill = NA,
+          label.color = NA,
+          hjust = dat$align_label,
+          nudge_x = plot_settings$bar_label_nudge_x,
+          size = plot_settings$bar_label_size
+        )
+    } else {
+      res_plot <- plot +
+        ggnewscale::new_scale_colour() +
+        ggtext::geom_richtext(
+          ggplot2::aes(
+            x = .data$bar_label,
+            y = .data$y_axis + .data$bar_label_nudge_y,
+            label = .data$bar_label_text,
+            colour = .data$bar_fill
+          ),
+          label.padding = grid::unit(rep(0, 4), "pt"),
+          fill = NA,
+          label.color = NA,
+          hjust = dat$align_label,
+          nudge_x = plot_settings$bar_label_nudge_x,
+          size = plot_settings$bar_label_size
+        ) +
+        ggplot2::scale_colour_manual(values = c(plot_settings$bar_label_colour, "black"))
+    }
+
+    ## hjust works as expected, but I need it to right align at start of the bar in some cases.
+    ## Set bar_label to -1 or 101 in cases users can specify: IF a value is smaller than a specified value, AND the parameter lies left or right, put
+    ## the label left or right of the bar.
+  }
+  return(res_plot)
+}
+
+
+plot_stacked_bar <- function(res_plot, dat, plot_settings) {
+  res_plot <- res_plot +
+    ggnewscale::new_scale_fill() +
+    ggplot2::geom_rect(
+      data = dat,
+      ggplot2::aes(
+        xmin = .data$x_axis_start,
+        xmax = .data$x_axis_end,
+        ymin = .data$y_axis - plot_settings$bar_width / 2 + .data$bar_nudge_y,
+        ymax = .data$y_axis + plot_settings$bar_width / 2 + .data$bar_nudge_y,
+        fill = .data$bar_fill
+      ),
+      colour = "black",
+      linewidth = plot_settings$bar_line_width
+    ) +
+    ggplot2::scale_fill_manual(values = plot_settings$bar_fill_colour)
+
+  return(res_plot)
 }

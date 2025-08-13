@@ -22,6 +22,7 @@ plotsettings_tablebarplot(
   bar_label_colour = NULL,
   bar_label_nudge_x = NULL,
   bar_label_nudge_y = NULL,
+  bar_label_nudge_x_out = NULL,
   bar_label_size = NULL,
   bar_line_width = NULL,
   bar_nudge_y = NULL,
@@ -66,7 +67,7 @@ plotsettings_tablebarplot(
 
 \item{background_stripes_colour}{Character vector containing the background colour of each row. Defaults to \code{NULL}.}
 
-\item{bar_background_lines}{Character string of either \code{c("borders", "scale_breaks", "none")}, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.}
+\item{bar_background_lines}{Either a character string of either \code{c("borders", "scale_breaks", "none")} or a numeric vector, indicating whether the barplot should receive lines on its borders, at every scale break, none at all, or at some manually defined spots.}
 
 \item{bar_background_lines_linetype}{Character string indicating the linetype for the background lines of the barplot.}
 
@@ -87,6 +88,8 @@ plotsettings_tablebarplot(
 \item{bar_label_nudge_x}{Numeric for nudging the bar labels in x direction.}
 
 \item{bar_label_nudge_y}{Numeric for nudging the bar labels in y direction.}
+
+\item{bar_label_nudge_x_out}{Numeric. Necessary for stacked barplots. If the percentage of a subgroup lies below that value, the label will be nudged to the left or right of the stacked bar. Defaults to \code{0}.}
 
 \item{bar_label_size}{Numeric for the font size of the bar labels.}
 

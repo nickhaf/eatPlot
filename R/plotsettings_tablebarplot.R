@@ -2,7 +2,7 @@
 check_plotsettings_barplot <- function(settings_list) {
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct length. Please use the function 'plot_settings()' for constructing a list of the correct type." =
-      length(settings_list) == 45
+      length(settings_list) == 46
   )
   stopifnot(
     "The object provided for the 'default_list' argument does not have the correct names. Please use the function 'plot_settings()' for constructing a list of the correct type." =
@@ -24,6 +24,7 @@ check_plotsettings_barplot <- function(settings_list) {
         "bar_label_colour",
         "bar_label_nudge_x",
         "bar_label_nudge_y",
+        "bar_label_nudge_x_out",
         "bar_label_size",
         "bar_line_width",
         "bar_nudge_y",
@@ -73,6 +74,7 @@ check_plotsettings_barplot <- function(settings_list) {
   stopifnot(all(is_colour(settings_list$bar_label_colour)))
   stopifnot(is.numeric(settings_list$bar_label_nudge_x))
   stopifnot(is.numeric(settings_list$bar_label_nudge_y))
+  stopifnot(is.numeric(settings_list$bar_label_nudge_x_out))
   stopifnot(is.numeric(settings_list$bar_label_size))
   stopifnot(is.numeric(settings_list$bar_line_width))
   stopifnot(is.numeric(settings_list$bar_nudge_y))
@@ -122,6 +124,7 @@ check_plotsettings_barplot <- function(settings_list) {
 #' @param bar_frame_linetype Named vector with the bar frame linetypes. Names have to be found in the column defined in the `bar_sig`-argument of`plot_tablebarplot()`. Defaults to `solid`.
 #' @param bar_label_colour Colour of the bar labels. Can either be a single colour, or a named vector that contains the colour for each group defined in `bar_fill`. Defaults to `"black"`.
 #' @param bar_label_nudge_x Numeric for nudging the bar labels in x direction.
+#' @param bar_label_nudge_x_out Numeric. Necessary for stacked barplots. If the percentage of a subgroup lies below that value, the label will be nudged to the left or right of the stacked bar. Defaults to `0`.
 #' @param bar_label_nudge_y Numeric for nudging the bar labels in y direction.
 #' @param bar_label_size Numeric for the font size of the bar labels.
 #' @param bar_line_width Numeric for the line-size around the bar.
@@ -186,52 +189,54 @@ check_plotsettings_barplot <- function(settings_list) {
 #'   )
 #' )
 #'
-plotsettings_tablebarplot <- function(axis_x = NULL,
+plotsettings_tablebarplot <- function(
+    axis_x = NULL,
     axis_x_label_size = NULL,
-                                      axis_x_lims = NULL,
+    axis_x_lims = NULL,
     axis_x_stepsize = NULL,
-                                      background_stripes_border = NULL,
-                                      background_stripes_colour = NULL,
-                                      bar_background_lines = NULL,
-                                      bar_background_lines_linetype = NULL,
-                                      bar_background_lines_colour = NULL,
-                                      bar_background_0line_linetype = NULL,
-                                      bar_background_0line_colour = NULL,
-                                      bar_background_lines_spanners = NULL,
-                                      bar_fill_colour = NULL,
-                                      bar_frame_linetype = NULL,
-                                      bar_label_colour = NULL,
-                                      bar_label_nudge_x = NULL,
-                                      bar_label_nudge_y = NULL,
-                                      bar_label_size = NULL,
-                                      bar_line_width = NULL,
-                                      bar_nudge_y = NULL,
-                                      bar_pattern_fill_colour = NULL,
-                                      bar_pattern_spacing = NULL,
-                                      bar_pattern_type = NULL,
-                                      bar_pattern_width = NULL,
-                                      bar_type = NULL,
-                                      bar_width = NULL,
-                                      column_spanners_nudge_y = NULL,
-                                      column_spanners_row_height = NULL,
-                                      column_spanners_2_nudge_y = NULL,
-                                      column_spanners_2_row_height = NULL,
-                                      columns_alignment = NULL,
-                                      columns_nudge_x = NULL,
-                                      columns_nudge_y = NULL,
-                                      columns_table_sig_superscript_letter = NULL,
-                                      columns_table_sig_superscript_letter_nudge_x = NULL,
-                                      columns_width = NULL,
-                                      headers_alignment = NULL,
-                                      headers_background_colour = NULL,
-                                      headers_font_size = NULL,
-                                      headers_ggtext = NULL,
-                                      headers_nudge_x = NULL,
-                                      headers_nudge_y = NULL,
-                                      headers_row_height = NULL,
-                                      font_size = NULL,
-                                      space_right = NULL,
-                                      default_list = NULL) {
+    background_stripes_border = NULL,
+    background_stripes_colour = NULL,
+    bar_background_lines = NULL,
+    bar_background_lines_linetype = NULL,
+    bar_background_lines_colour = NULL,
+    bar_background_0line_linetype = NULL,
+    bar_background_0line_colour = NULL,
+    bar_background_lines_spanners = NULL,
+    bar_fill_colour = NULL,
+    bar_frame_linetype = NULL,
+    bar_label_colour = NULL,
+    bar_label_nudge_x = NULL,
+    bar_label_nudge_y = NULL,
+    bar_label_nudge_x_out = NULL,
+    bar_label_size = NULL,
+    bar_line_width = NULL,
+    bar_nudge_y = NULL,
+    bar_pattern_fill_colour = NULL,
+    bar_pattern_spacing = NULL,
+    bar_pattern_type = NULL,
+    bar_pattern_width = NULL,
+    bar_type = NULL,
+    bar_width = NULL,
+    column_spanners_nudge_y = NULL,
+    column_spanners_row_height = NULL,
+    column_spanners_2_nudge_y = NULL,
+    column_spanners_2_row_height = NULL,
+    columns_alignment = NULL,
+    columns_nudge_x = NULL,
+    columns_nudge_y = NULL,
+    columns_table_sig_superscript_letter = NULL,
+    columns_table_sig_superscript_letter_nudge_x = NULL,
+    columns_width = NULL,
+    headers_alignment = NULL,
+    headers_background_colour = NULL,
+    headers_font_size = NULL,
+    headers_ggtext = NULL,
+    headers_nudge_x = NULL,
+    headers_nudge_y = NULL,
+    headers_row_height = NULL,
+    font_size = NULL,
+    space_right = NULL,
+    default_list = NULL) {
   ## Build a list with sensible defaults if no default is provided
   if (is.null(default_list)) {
     plot_settings <- list(
@@ -253,6 +258,7 @@ plotsettings_tablebarplot <- function(axis_x = NULL,
       "bar_label_size" = 2,
       "bar_label_nudge_x" = 0,
       "bar_label_nudge_y" = 0,
+      "bar_label_nudge_x_out" = 0,
       "bar_line_width" = 0.5,
       "bar_nudge_y" = 0,
       "bar_pattern_fill_colour" = "white",

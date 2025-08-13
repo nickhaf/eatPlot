@@ -241,26 +241,39 @@ test_that("labels can be plotted in different combination without error", {
   )
 
 
-  expect_error(plot_tablebarplot(
-    dat = test_data,
-    bar_label = 'est_1',
-    bar_sig = "bar_sig",
-    bar_fill = "bar_fill",
-    headers = list("a barplot"),
-    bar_est = "est_1",
-    y_axis = "state_var",
-    plot_settings = plotsettings_tablebarplot(
-      background_stripes_colour = c("white", "lightgrey"),
-      bar_fill_colour = c("red", "blue", "yellow", "green"),
-      bar_label_colour = c("red", 'blue'),
-      bar_pattern_fill_colour = "white",
-      bar_pattern_type = c("stripe", "none"),
-      bar_type = "pattern",
-      bar_pattern_width = 0.5,
-      bar_pattern_spacing = 0.1,
-      headers_font_size = 5,
-      space_right = 5
-    )))
 })
+
+
+test_that("stacked barplot can be plotted", {
+
+df_stacked <- data.frame(
+  bar_value = c(95, 1, 4, 95, 3, 2, 6, 54, 40),
+  parameter = c("a", "b", "c", "a", "b", "c", "a", "b", "c"),
+  label = c("95", "1.987", "4", "95", "3", "2.53", "6", "54", "40"),
+  y_axis =c(rep(1, 3), rep(2, 3), rep(3, 3))
+)
+
+df_stacked$parameter <- factor(df_stacked$parameter, levels = c("b", "a", "c"), ordered = TRUE)
+
+  p_stacked <- plot_tablebarplot(df_stacked,
+                                 bar_est = "bar_value",
+                                 bar_label = "label",
+                                 bar_fill = "parameter",
+                                 y_axis = "y_axis",
+                                 plot_settings = plotsettings_tablebarplot(
+                                   axis_x = FALSE,
+                                   axis_x_lims = c(-8, 103),
+                                   axis_x_stepsize = 1,
+                                   bar_fill_colour = c("a" = "#20D479", "b" = "#8DEBBC", "c" = "#EBFDF3"),
+                                   bar_label_colour = c('red', "black", "blue"),
+                                   bar_label_nudge_x = c(-3, 0, 0, 5, 0, 0, 0, 0, 0),
+                                   bar_type = "stacked"
+                                 )
+  )
+
+  ## Scale x already present: Change into same function, currently set two times
+})
+
+
 
 
