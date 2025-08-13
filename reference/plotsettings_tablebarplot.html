@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">eatPlot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,7 @@
 <span>  bar_label_colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_nudge_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_label_nudge_x_out <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_label_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_line_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_nudge_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -124,7 +125,7 @@
 
 
 <dt id="arg-bar-background-lines">bar_background_lines<a class="anchor" aria-label="anchor" href="#arg-bar-background-lines"></a></dt>
-<dd><p>Character string of either <code>c("borders", "scale_breaks", "none")</code>, indicating whether the barplot should receive dotted lines on its borders, at every scale break or none at all.</p></dd>
+<dd><p>Either a character string of either <code>c("borders", "scale_breaks", "none")</code> or a numeric vector, indicating whether the barplot should receive lines on its borders, at every scale break, none at all, or at some manually defined spots.</p></dd>
 
 
 <dt id="arg-bar-background-lines-linetype">bar_background_lines_linetype<a class="anchor" aria-label="anchor" href="#arg-bar-background-lines-linetype"></a></dt>
@@ -165,6 +166,10 @@
 
 <dt id="arg-bar-label-nudge-y">bar_label_nudge_y<a class="anchor" aria-label="anchor" href="#arg-bar-label-nudge-y"></a></dt>
 <dd><p>Numeric for nudging the bar labels in y direction.</p></dd>
+
+
+<dt id="arg-bar-label-nudge-x-out">bar_label_nudge_x_out<a class="anchor" aria-label="anchor" href="#arg-bar-label-nudge-x-out"></a></dt>
+<dd><p>Numeric. Necessary for stacked barplots. If the percentage of a subgroup lies below that value, the label will be nudged to the left or right of the stacked bar. Defaults to <code>0</code>.</p></dd>
 
 
 <dt id="arg-bar-label-size">bar_label_size<a class="anchor" aria-label="anchor" href="#arg-bar-label-size"></a></dt>
@@ -346,6 +351,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x_out</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -492,6 +500,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x_out</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
@@ -642,6 +653,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bar_label_nudge_x_out</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bar_line_width</span>
