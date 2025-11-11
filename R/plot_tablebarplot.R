@@ -37,6 +37,7 @@ plot_tablebarplot <- function(dat,
                               column_spanners_2 = NULL,
                               columns_round = 0,
                               plot_settings = plotsettings_tablebarplot()) {
+
   if (inherits(dat, "list")) {
     dat <- dat$plot_tablebarplot
   }
@@ -61,6 +62,11 @@ plot_tablebarplot <- function(dat,
   if (plot_settings$bar_type != "stacked" & any(duplicated(dat[, y_axis]))) {
     stop("Your y-axis has to contain only unique values. Maybe you have to paste state_var and grouping_var into unique values?")
   }
+
+  if (tibble::is_tibble(dat)){
+    dat <- as.data.frame(dat)
+  }
+
   if (!is.numeric(dat[, bar_est]) & !is.null(bar_est)) {
     stop("Your 'bar_est' column needs to be numeric or NULL.", call. = FALSE)
   }
