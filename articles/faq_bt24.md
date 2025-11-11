@@ -1,0 +1,395 @@
+# FAQ BT24
+
+``` r
+library(eatPlot)
+```
+
+Hier sind die wichtigsten Richtlinien zur Vereinheitlichung der
+Abbildungen im Bildungstrend 24 gesammelt, zusammen mit
+Umsetzungsvorschlägen in `eatPlot`.  
+Die meisten Punkte sind bereits in den sogenannten [Default
+lists](https://nickhaf.github.io/eatPlot/articles/default_lists.html)
+umgesetzt, die in
+[`plotsettings_lineplot()`](https://nickhaf.github.io/eatPlot/reference/plotsettings_lineplot.md)
+und
+[`plotsettings_tablebarplot()`](https://nickhaf.github.io/eatPlot/reference/plotsettings_tablebarplot.md)
+angegeben werden können.
+
+## Plotübergreifend
+
+### Allgemeine Richtlinien
+
+Ganz generell ist wichtig zu wissen, dass die finalen Ausrichtungen,
+Schriftgrößen etc. immer davon abhängen, wie groß der Plot abgespeichert
+wird. Schaut euch den Plot also in der finalen Größe (abgespeichert als
+PDF) an, bevor ihr Text einrückt oder die Schriftgröße ändert. In der
+RStudio-Umgebung wird alles eventuell etwas verzogen dargestellt,
+weshalb ihr immer mit der finalen PDF-Größe abgleichen solltet.
+
+#### Ausrichtung von Kennwerten
+
+Ausrichtung von Zahlen erfolgt am Dezimalpunkt sowie rechtsbündig.
+
+In `eatPlot` kann das so erreicht werden:
+
+``` r
+plotsettings_tablebarplot(columns_alignment = c(0, 0.5, 2))
+```
+
+Eventuell muss ein wenig nachjustiert werden, um die Spalteninhalte so
+zu rücken, dass es stimmig aussieht (negative Zahl zum Rücken nach
+links, positiv zum Rücken nach rechts):
+
+``` r
+plotsettings_tablebarplot(columns_nudge_x = -1.5 )
+```
+
+#### Darstellung von Überschriften
+
+Bei Differenzen vor und nach langem Strich kein Leerzeichen setzen.
+Subscripts werden nicht kursiv dargestellt:
+
+- *M*_(M)–*M*_(J)
+- *M*₂₀₂₄-*M*₂₀₁₈
+
+Nach $\Delta$ wird ebenfalls kein Leerzeichen gesetzt, $\Delta$ wird
+auch nicht kursiv dargestellt:
+
+- `"Delta * italic(M)"`
+
+„Land“ und die oberen Zeile(n) im Tabellenkopf (`column_spanners` in
+`eatPlot` genannt) werden fettgedruckt; die Zeile mit M, SD etc. wird
+nicht fettgedruckt, dafür aber kursiv:
+
+``` r
+plot_tablebarplot(
+  headers = c("**Land**", "*M*", "*SD*", "*N*", "*p*"),
+  column_spanners =  column_spanners = list(
+    "**2009**" = c(2, 3),
+    "**2015**" = c(4, 5))
+)
+```
+
+Falls griechische Buchstaben in den Überschriften verwendet werden,
+müssen diese in `plotmath`-Notation angegeben werden. Dadurch ändert
+sich die gesamte Syntax:
+
+``` r
+plot_tablebarplot(headers = c("bold(Land)", "italic(M)", "Delta * italic(M)"), 
+                  plot_settings = plotsettings_tablebarplot(headers_ggtext = FALSE) ## Muss für plotmath-Notation gesetzt werden 
+                  )
+```
+
+Syntax kann in der Hilfe abgerufen werden:
+[`?plotmath`](https://rdrr.io/r/grDevices/plotmath.html)
+
+Falls ein Zeilenumbruch mit plotmath benötigt wird, bitte die jeweils
+obere und untere Zeile in ein eigenes Listenelement setzen, so wie hier
+der 2. header:
+
+     headers = list(
+        " ",
+        list(
+          "paste(Delta * italic(M[2015]), '-')",
+          "Delta * italic(M[2009])"
+        ),
+        "(italic(SE))",
+        " "
+      )
+
+#### Schriftgröße
+
+Die Schriftgröße kann nicht einheitlich festgelegt werden, weil sie von
+der Größe der finalen Abbildung abhängt. Falls euer Plot die gleiche
+Größe hat wie eine der Vorlagen, könnt ihr einfach die Default-list
+verwenden. Ansonsten orientiert ihr euch am besten an den Vorlagen, die
+in etwa die gleiche Größe haben wie eure Abbildung, und justiert die
+Schriftgröße dann:
+
+``` r
+plotsettings_tablebarplot(font_size = 2.5, 
+                          header_font_size = 2.5
+                          )
+```
+
+Die Schriftgröße könnt ihr aus den Default lists auslesen, die ihr für
+eure Abbildung verwendet, z.B mit:
+
+``` r
+abb_6.6$font_size
+#> [1] 2
+```
+
+### Export
+
+#### Exporttyp
+
+Exportieren als PDF und im Farbprofil cmyk. Voreingestellt in
+[`save_plot()`](https://nickhaf.github.io/eatPlot/reference/save_plot.md)
+
+#### Exportmaße
+
+Die Exportmaße können in `save_plot(height = ..., widht = ...)`
+eingestellt werden. Dabei bitte an den Vorlagen orientieren:
+
+- Ganzseitige Abbildung/Tabelle im Hochformat: z.B.
+  [Linienplot](https://nickhaf.github.io/eatPlot/articles/lineplots.html#lineplot-for-two-groups)
+- Ganzseitige Abbildung/Tabelle im Querformat: z.B. [große
+  Tabelle](https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-6)
+- Teilseitige Abbildung/Tabelle im Hochformat: z.B. [kleinere
+  Tabelle](https://nickhaf.github.io/eatPlot/articles/tableplots.html#abbildung-6-5)
+
+Dabei bitte die Breite bei Hochformat bzw. die Höhe bei Querformat immer
+beibehalten. Die Höhe kann sich je nach Plot unterscheiden.
+
+### Sonderzeichen
+
+#### Delta
+
+Ein String der Delta enthält kann in `eatPlot` auf zwei Arten erzeugt
+werden:
+
+##### ggtext
+
+Nutzt das Paket [`ggtext`](https://wilkelab.org/ggtext/) für HTML
+support.  
+Sonderzeichen können leider nicht immer in PDF mit cmyk-Farbschema
+exportiert werden, weshalb dann `plotmath` verwendet werden muss. Das
+ist für den BT eigentlich immer der Fall:
+
+##### plotmath
+
+`"Delta"` schreiben und dann `headers_ggtext = FALSE` setzen:
+
+``` r
+plotsettings_tablebarplot(headers_ggtext = FALSE)
+```
+
+#### Kursiv
+
+Kursiver Text kann durch `*kursiver Text*` erzeugt werden. Im
+`plotmath`-Modus durch `italic(kursiver Text)`.
+
+#### Fettdruck
+
+Fettgedruckter Text kann durch `**fettgedruckter Text**` erzeugt werden.
+Im `plotmath`-Modus durch `bold(fettgedruckter Text)`.
+
+### Balkendiagramme
+
+#### Balkenfüllung
+
+- Statistisch signifikante Werte (*p* \< .05) werden mit
+  **ausgefüllten** Balken dargestellt.
+- Statistisch nicht signifikante Werte werden mit **schraffierten**
+  Balken dargestellt (Schraffur von oben links nach unten rechts).
+- Größe des Balkenmusters muss manuell nachjustiert werden, da es wieder
+  von der Größe der Abbildung beim Abspeichern abhängt. Hier die Größe
+  bitte ungefähr den Vorlagen anpassen, und auch darauf achten, dass die
+  Muster vor allem innerhalb eines Plots gleich groß sind. Bei
+  zusammengesetzten Plots aus mehreren Balkendiagrammen kann die
+  Mustergröße sich leicht unterscheiden, selbst wenn die selben Werte
+  angegeben werden. Hier nochmal manuell nachjustieren, bis es
+  einheitlich aussieht.
+
+#### Balkenfarbe
+
+Fals es bis zu **drei Gruppen** gibt:
+
+- Erste Gruppe bzw. erster Kompetenzbereich in dunklem türkis
+  (`cmyk(85, 0, 43, 17)`)
+- Zweite Gruppe bzw. zweiter Kompetenzbereich in mittlerem türkis
+  (`cmyk(40, 0, 20, 8)`)
+- Dritte Gruppe bzw. dritter Kompetenzbereich in hellem türkis
+  (`cmyk(20, 0, 10, 4)`)
+
+Bei bis zu **fünf Gruppen** bitte folgende Farben verwenden:
+
+- Erste Gruppe: `cmyk(90, 0, 43, 35)`
+- Zweite Gruppe: `cmyk(85, 0, 43, 17)`
+- Dritte Gruppe: `cmyk(62, 0, 31, 10)`
+- Vierte Gruppe: `cmyk(45, 0, 20, 8)`
+- Fünfte Gruppe: `cmyk(30, 0, 15, 6)`
+
+Farben sind für drei Gruppen voreingestellt, können aber so gesetzt
+werden:
+
+``` r
+plotsettings_tablebarplot(
+  bar_fill_colour = c("Gruppe 1" = cmyk(85, 0, 43, 17), 
+                      "Gruppe 2" = cmyk(40, 0, 20, 8))
+)
+```
+
+#### Farben
+
+##### Farben zur Zeilenorientierung
+
+Farbliche Hinterlegungen zur Zeilenorientierung (wechselnd weiß /
+türkis) wird wie im Tabellenteil hinter dem Balkendiagramm
+weitergeführt. Die Deutschland-Zeile wird grau dargestellt:
+
+``` r
+plotsettings_tablebarplot(
+   background_stripes_colour = c(rep(c("white", "white", "white", rep(cmyk(7, 0, 4, 1), 3)), 8), rep(cmyk(0, 0, 0, 25), 3))
+)
+```
+
+##### x-Achse unterhalb der Balken
+
+In schwarz `cmyk(0, 0, 0, 100)`. Bereits voreingestellt.
+
+##### Nulllinie
+
+In schwarz `cmyk(0, 0, 0, 100)`. Bereits voreingestellt.
+
+##### Hilfslinien vertikal
+
+Grau `cmyk(0, 0, 0, 60)` und gestrichelt. Ist bereits vorgeingestellt,
+könnte aber so geändert werden:
+
+``` r
+plotsettings_tablebarplot(
+  bar_background_lines_colour = cmyk(0, 0, 0, 60),
+  bar_background_lines = "scale_breaks",
+  bar_background_lines_linetype = "dashed"
+)
+```
+
+#### Zeilenumbruch
+
+Zeilenumbrüche werden in Ländernamen nur dann gesetzt, wenn die Zeilen
+aus anderen Gründen breiter sind (z.B. weil je Land zwei Ergebniszeilen
+berichtet werden). Zeilenumbrüche für die Ländernamen werden vor dem
+Plotten eingefügt, am einfachsten mit:
+
+``` r
+my_dat$state_var <- process_bundesland(my_dat$state_var, linebreak = TRUE)
+```
+
+### Liniendiagramme
+
+#### Referenzband
+
+Das Referenzband wird mit `+/- 2 SE` angezeigt. Ist bereits
+voreingestellt.
+
+#### Label
+
+- Wenn SE einstellig ist, dann wird automatisch ein zusätzliches
+  Leerzeichen vor der Klammer eingefügt, sodass sowohl (SE) als auch der
+  Wert der Mittelwertsdifferenz rechtsbündig zueinanderstehen
+- Die Spitze der geschweiften Klammer zeigt auf das erste Leerzeichen
+  zwischen M und (SE). Ist bereits voreingestllt, kann aber zur Not
+  nachjustiert werden:
+
+``` r
+plotsettings_lineplot(
+  brace_label_nudge_x = 0.1
+)
+```
+
+#### Farben
+
+Die Farben sind alle voreingestellt, die Farbcodes können hier
+ausgelesen werden:
+
+``` r
+lineplot_4x4$axis_x_background_colour
+#> [1] "#8DEBBC"
+lineplot_4x4$background_line_colour
+#> [1] "#EBFDF3"
+lineplot_4x4$subgroup_colours
+#> [1] "#000000" "#666666" "#999999"
+```
+
+#### Signifikanzen
+
+- Statistisch signifikante Veränderung (*p* \< .05) mit durchgezogener
+  Linie darstellen.
+- Statistisch nicht signifikante Veränderung mit gestrichelter Linie
+  darstellen
+
+Ist bereits vorgeingestellt, kann zur Not so geändert werden:
+
+``` r
+plotsettings_lineplot(line_type = c(
+    "TRUE" = "solid",
+    "FALSE" = "dashed"
+  ))
+```
+
+- Hochgestelltes `a`:
+  - Bei bundesweiten Trends für Gruppen: Statistisch signifikante
+    Abweichung (*p* \< .05) zum Trend in der Gesamtpopulation aller
+    Neuntklässler:innen in Deutschland
+  - Bei länderspezifischen Trends für Gruppen: Statistisch signifikante
+    Abweichung (*p* \< .05) zum Trend der jeweiligen Schüler:innengruppe
+    in Deutschland insgesamt
+- Ausgefülltes Dreieck für Werte, die statistisch signifikant (*p* \<
+  .05) vom Wert der Gesamptgruppe in der Gesamtpopulation abweichen.
+- Ausgefülltes Quadrat für Werte, die statistisch signifikant (*p* \<
+  .05) vom Wert der selben Schüler:innengruppe in der Gesamtpopulation
+  abweichen.
+- Ausgefüllter Kreis statistisch nicht signifikante Werte.
+
+Ist bereits voreingestellt, kann zur Not so geändert werden:
+
+``` r
+plotsettings_lineplot(
+   point_shapes = c(
+    "TRUE" = 17,
+    "FALSE" = 16
+  )
+)
+```
+
+## Signifikanzen
+
+Hier findet sich eine Übersicht über die Signifikanzen der Vergleiche,
+die auf verschiedene Arten in den Plots dargestellt werden.
+
+### Länderspezifische Linienplots mit Gruppen
+
+Achtung: Im BT22 war es teilweise anders.
+
+| Darstellung                                         | Bedeutung                                                                                                                              | Werte                                                     | Umsetzung in `eatPlot`                                                                  | Name in `eatRep`                                                              |
+|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| Punktform                                           | Vergleich der MW für eine Gruppe im Bundesland zum MW für die gleiche Gruppe in Gesamtdeutschland                                      | rund: nicht signifikant, eckig (Quadrat): signifikant     | `point_sig = "sig_mean_comp_crossDiff_totalFacet_sameSubgroup"`                         | `crossDiff (Berlin_female - total_female) for year 2009`                      |
+| Linienart                                           | Signifikanz des Trends: Vergleich der Gruppe im Bundesland im einen Jahr zu der gleichen Gruppe im gleichen Bundesland im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                               | `trend (2015 - 2009) for BadenWuerttemberg_female`                            |
+| Stärke des Labels unter den Klammern                | So wie Linienart                                                                                                                       | Fett: signifikant, normal: nicht signifikant              | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                   | `trend (2015 - 2009) for BadenWuerttemberg_female`                            |
+| Hochgestellter Buchstabe am Label unter der Klammer | Vergleich des Trends für eine Gruppe im Bundesland zum Trend für die gleiche Gruppe in Gesamtdeutschland                               | hochgestelltes a: signifikant                             | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_totalFacet_sameSubgroup"` | `trend (2015 - 2009) for crossDiff (BadenWuerttemberg_female - total_female)` |
+
+#### Länderspezifische Linienplots mit Gruppen und Deutschland-Kachel
+
+Genau das gleiche wie in den separaten Linienplots. In den
+Länder-Kacheln wird als Vergleichsgruppe jeweils die gleiche Gruppe in
+Deutschland insgesamt herangezogen und signifikante Abweichungen durch
+Quadrate und hochgestellten Buchstaben gekennzeichnet. In der
+Deutschland-Kachel wird als Vergleichsgruppe die Gesamtgruppe aller
+Neuntklässler:innen in Gesamtdeutschland herangezogen und signifikante
+Abweichungen durch Dreieck und hochgestellten Buchstaben gekennzeichnet.
+
+### Gesamtdeutschland-Linienplots mit Gruppen
+
+| Darstellung                          | Bedeutung                                                                                                                                   | Werte                                                     | Umsetzung in `eatPlot`                                                                  | Name in `eatRep`                                                                          |
+|--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Punktform                            | Vergleich des MW für eine Gruppe in Gesamtdeutschland zum MW für die Gesamtgruppe in Gesamtdeutschland                                      | rund: nicht signifikant, eckig (Dreieck): signifikant     | `point_sig = "sig_mean_comp_crossDiff_sameFacet_totalSubgroup"`                         | `year=2009: (TR_BUNDESLAND=total, Kgender=female) - (TR_BUNDESLAND=total, Kgender=total)` |
+| Linienart                            | Signifikanz des Trends: Vergleich der Gruppe in Gesamtdeutschland in einem Jahr zu der gleichen Gruppe in Gesamtdeutschland im anderen Jahr | durchgezogen: signifikant, gestrichelt: nicht signifikant | `line_sig = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                               | `trend (2015 - 2009) for total_female`                                                    |
+| Stärke des Labels unter den Klammern | So wie Linienart                                                                                                                            | Fett: signifikant, normal: nicht signifikant              | `brace_label_sig_bold = "sig_mean_comp_trend_sameFacet_sameSubgroup"`                   | `trend (2015 - 2009) for total_female`                                                    |
+| Hochgestellter Buchstabe im Label    | Vergleich des Trends für eine Gruppe in Gesamtdeutschland zum Trend für die Gesamtgruppe in Gesamtdeutschland                               | hochgestelltes a: signifikant                             | `brace_label_sig_superscript = "sig_mean_comp_trend_crossDiff_sameFacet_totalSubgroup"` | `trend (2022 - 2015) for crossDiff (total_male - total_total)`                            |
+
+### Tableplots
+
+Die Darstellung der Signifikanzen ist hier sehr heterogen, und hängt
+immer von der jeweiligen Abbildung ab.  
+Generell kann sich hier an den Linienplots orientiert werden: Wenn eine
+Gruppe in einem der Länder (z.B. Mädchen in Berlin) gegen Deutschland
+verglichen wird, soll in der Regel nicht gegen Gesamtdeutschland,
+sonderen gegen diese Gruppe in Deutschland verglichen werden (also
+Mädchen in Deutschland insgesamt).
+
+## Anmerkungstexte
+
+Vorlagen finden sich hier:
+`Q:\BT2024\BT\60_Bericht\_Vorlagen_Richtlinien\BT2024_Vorlage_Tab-Abb_Anmerkungen.docx`
